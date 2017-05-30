@@ -8,7 +8,6 @@
 
    DataAccessCommon
    DataAccessMyBatis3
-   DataAccessJpa
    ExclusionControl
 
 .. raw:: latex

@@ -23,7 +23,6 @@ OWASP(Open Web Application Security Project)による観点
    * - A1
      - `Injection <https://www.owasp.org/index.php/Top_10_2013-A1-Injection>`_ SQL Injection
      - * \ :doc:`../ArchitectureInDetail/DataAccessDetail/DataAccessMyBatis3`\
-       * \ :doc:`../ArchitectureInDetail/DataAccessDetail/DataAccessJpa`\
 
        (クエリにパラメータを埋め込む場合は、バインド変数を使用する旨を記載)
    * - A1

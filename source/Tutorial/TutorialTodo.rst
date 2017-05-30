@@ -192,11 +192,10 @@ Delete TODO
 
 * データベースを使用せず\ ``java.util.Map``\ を使ったインメモリ実装のRepositoryImpl
 * MyBatis3を使用してデータベースにアクセスするRepositoryImpl
-* Spring Data JPAを使用してデータベースにアクセスするRepositoryImpl
 
 の3種類を用意している。用途に応じていずれかを選択する。
 
-チュートリアルの進行上、まずはインメモリ実装を試し、その後MyBatis3またはSpring Data JPAを選ぶのが円滑である。
+チュートリアルの進行上、まずはインメモリ実装を試し、その後MyBatis3を選ぶのが円滑である。
 
 プロジェクトの作成
 --------------------------------------------------------------------------------
@@ -216,9 +215,9 @@ Delete TODO
      .. code-block:: bash
 
         mvn archetype:generate -B\
-         -DarchetypeGroupId=org.terasoluna.gfw.blank\
-         -DarchetypeArtifactId=terasoluna-gfw-web-blank-archetype\
-         -DarchetypeVersion=5.3.0.RELEASE\
+         -DarchetypeGroupId=com.github.macchinetta.blank\
+         -DarchetypeArtifactId=macchinetta-web-blank-noorm-archetype\
+         -DarchetypeVersion=1.4.0.RELEASE\
          -DgroupId=todo\
          -DartifactId=todo\
          -Dversion=1.0.0-SNAPSHOT
@@ -236,9 +235,9 @@ O/R Mapperに依存しないブランクプロジェクトの作成
 .. code-block:: console
 
     mvn archetype:generate -B^
-     -DarchetypeGroupId=org.terasoluna.gfw.blank^
-     -DarchetypeArtifactId=terasoluna-gfw-web-blank-archetype^
-     -DarchetypeVersion=5.3.0.RELEASE^
+     -DarchetypeGroupId=com.github.macchinetta.blank^
+     -DarchetypeArtifactId=macchinetta-web-blank-noorm-archetype^
+     -DarchetypeVersion=1.4.0.RELEASE^
      -DgroupId=todo^
      -DartifactId=todo^
      -Dversion=1.0.0-SNAPSHOT
@@ -254,27 +253,9 @@ MyBatis3を使用してデータベースにアクセスするRepositoryImpl用�
 .. code-block:: console
 
     mvn archetype:generate -B^
-     -DarchetypeGroupId=org.terasoluna.gfw.blank^
-     -DarchetypeArtifactId=terasoluna-gfw-web-blank-mybatis3-archetype^
-     -DarchetypeVersion=5.3.0.RELEASE^
-     -DgroupId=todo^
-     -DartifactId=todo^
-     -Dversion=1.0.0-SNAPSHOT
-
-.. _TutorialCreateJPABlankProject:
-
-JPA用のブランクプロジェクトの作成
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Spring Data JPAの使用してデータベースにアクセスするRepositoryImpl用のプロジェクトを作成する場合は、
-以下のコマンドを実行してJPA用のブランクプロジェクトを作成する。このプロジェクト作成方法は\ :ref:`using_SpringDataJPA`\ で使用する。
-
-.. code-block:: console
-
-    mvn archetype:generate -B^
-     -DarchetypeGroupId=org.terasoluna.gfw.blank^
-     -DarchetypeArtifactId=terasoluna-gfw-web-blank-jpa-archetype^
-     -DarchetypeVersion=5.3.0.RELEASE^
+     -DarchetypeGroupId=com.github.macchinetta.blank^
+     -DarchetypeArtifactId=macchinetta-web-blank-archetype^
+     -DarchetypeVersion=1.4.0.RELEASE^
      -DgroupId=todo^
      -DartifactId=todo^
      -Dversion=1.0.0-SNAPSHOT
@@ -363,59 +344,6 @@ Root Directoryに \ ``C:\work\todo``\ を設定し、Projectsにtodoのpom.xml�
     **ただし、実プロジェクトで適用する場合は、マルチプロジェクト構成を強く推奨する。**
 
     マルチプロジェクトの作成方法は、「:doc:`../ImplementationAtEachLayer/CreateWebApplicationProject`」を参照されたい。
-
-|
-
-**[O/R Mapperに依存しないブランクプロジェクト、JPA用のブランクプロジェクト用を作成した場合の構成]**
-
-.. code-block:: console
-
-    src
-      └main
-          ├java
-          │  └todo
-          │    ├ app ... (1)
-          │    │   └todo
-          │    └domain ... (2)
-          │        ├model ... (3)
-          │        ├repository ... (4)
-          │        │   └todo
-          │        └service ... (5)
-          │            └todo
-          ├resources
-          │  └META-INF
-          │      └spring ... (6)
-          └wepapp
-              └WEB-INF
-                  └views ... (7)
-
-.. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
-.. list-table::
-    :header-rows: 1
-    :widths: 10 90
-
-    * - 項番
-      - 説明
-    * - | (1)
-      - アプリケーション層のクラスを格納するパッケージ。
-
-        本チュートリアルでは、Todo管理業務用のクラスを格納するためのパッケージを作成する。
-    * - | (2)
-      - ドメイン層のクラスを格納するパッケージ。
-    * - | (3)
-      - Domain Objectを格納するパッケージ。
-    * - | (4)
-      - Repositoryを格納するパッケージ。
-
-        本チュートリアルでは、Todoオブジェクト(Domain Object)用のRepositoryを格納するためのパッケージを作成する
-    * - | (5)
-      - Serviceを格納するパッケージ。
-
-        本チュートリアルでは、Todo管理業務用のServiceを格納するためのパッケージを作成する。
-    * - | (6)
-      - spring関連の設定ファイルを格納するディレクトリ。
-    * - | (7)
-      - jspを格納するディレクトリ。
 
 |
 
@@ -1075,7 +1003,7 @@ Package Explorer上で右クリック -> New -> Class を選択し、「New Java
 .. figure:: ./images/image064.png
 
 .. code-block:: java
-    :emphasize-lines: 19, 20, 25-26, 28-29, 32-33, 37-38, 44, 57-58, 61-62, 71, 90
+    :emphasize-lines: 19, 20, 25-26, 28-29, 32-33, 37-38, 44, 57-58, 61-62
 
     package todo.domain.service.todo;
 
@@ -1146,9 +1074,6 @@ Package Explorer上で右クリック -> New -> Class を選択し、「New Java
             todo.setFinished(false);
 
             todoRepository.create(todo);
-            /* REMOVE THIS LINE IF YOU USE JPA
-                todoRepository.save(todo); // 10
-               REMOVE THIS LINE IF YOU USE JPA */
 
             return todo;
         }
@@ -1165,9 +1090,6 @@ Package Explorer上で右クリック -> New -> Class を選択し、「New Java
             }
             todo.setFinished(true);
             todoRepository.update(todo);
-            /* REMOVE THIS LINE IF YOU USE JPA
-                todoRepository.save(todo); // (11)
-               REMOVE THIS LINE IF YOU USE JPA */
             return todo;
         }
 
@@ -1207,17 +1129,13 @@ Package Explorer上で右クリック -> New -> Class を選択し、「New Java
      - | 対象のデータが存在しない場合、共通ライブラリで用意されている\ ``org.terasoluna.gfw.common.exception.ResourceNotFoundException``\ をスローする。
    * - | (7)
      - | 参照のみ行う処理に関しては、\ ``readOnly=true``\ をつける。
-       | O/R Mapperによっては、この設定により、参照時のトランザクション制御の最適化が行われる(JPAを使用する場合、効果はない)。
+       | O/R Mapperによっては、この設定により、参照時のトランザクション制御の最適化が行われる。
        |
        | データベースを使用しない場合は、\ ``@Transactional``\ アノテーションは不要である。
    * - | (8)
      - | 業務エラーが発生した場合、共通ライブラリで用意されている\ ``org.terasoluna.gfw.common.exception.BusinessException``\ をスローする。
    * - | (9)
      - | 一意性のある値を生成するために、UUIDを使用している。データベースのシーケンスを用いてもよい。
-   * - | (10)
-     - | Spring Data JPAを使用してデータベースにアクセスする場合は、\ ``create``\ メソッドではなく、\ ``save``\ メソッドを呼び出す。
-   * - | (11)
-     - | Spring Data JPAを使用してデータベースにアクセスする場合は、\ ``update``\ メソッドではなく、\ ``save``\ メソッドを呼び出す。
 
 .. raw:: latex
 
@@ -2679,10 +2597,9 @@ CSSファイルを適用すると、以下のようなレイアウトになる�
 
 ここでは、Domainオブジェクトをデータベースに永続化するためのインフラストラクチャ層の実装方法について説明する。
 
-本チュートリアルでは、以下の2つのO/R Mapperを使用したインフラストラクチャ層の実装方法について説明する。
+本チュートリアルでは、以下のO/R Mapperを使用したインフラストラクチャ層の実装方法について説明する。
 
 * MyBatis3
-* Spring Data JPA
 
 |
 
@@ -2696,7 +2613,6 @@ O/R Mapperに依存したブランクプロジェクトの作成
 まず、使用するO/R Mapperに応じてプロジェクトを作成し直す。
 
 * \ :ref:`TutorialCreateMyBatis3BlankProject`\
-* \ :ref:`TutorialCreateJPABlankProject`\
 
 次に、\ :ref:`tutorial-todo_infra`\ までで作成した\ :file:`src`\ フォルダ以下のうち、
 \ **TodoRepositoryImplクラス以外のファイルを新規作成したプロジェクトにコピーする**\ 。
@@ -2767,8 +2683,6 @@ MyBatis3を使用したインフラストラクチャ層の作成
 --------------------------------------------------------------------------------
 
 ここでは、MyBatis3を使用してインフラストラクチャ層のRepositoryImplを作成する方法について説明する。
-
-Spring Data JPAを使用する場合は、本節を読み飛ばして、\ :ref:`using_SpringDataJPA`\ に進んでよい。
 
 TodoRepositoryの作成
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -2982,203 +2896,6 @@ Service及びアプリケーション層を作成後にAPサーバーを起動�
 
 |
 
-.. _using_SpringDataJPA:
-
-Spring Data JPAを使用したインフラストラクチャ層の作成
---------------------------------------------------------------------------------
-
-ここでは、\ `Spring Data JPA <http://www.springsource.org/spring-data/jpa>`_\ を使用してインフラストラクチャ層のRepositoryImplを作成する方法について説明する。
-
-Entityの修正
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-TodoクラスとデータベースのTODOテーブルをマッピングするために、JPAのアノテーションを設定する。
-
-.. code-block:: java
-    :emphasize-lines: 6-11,13-15,19-21,24,27,30-32
-
-    package todo.domain.model;
-
-    import java.io.Serializable;
-    import java.util.Date;
-
-    import javax.persistence.Column;
-    import javax.persistence.Entity;
-    import javax.persistence.Id;
-    import javax.persistence.Table;
-    import javax.persistence.Temporal;
-    import javax.persistence.TemporalType;
-
-    // (1)
-    @Entity
-    @Table(name = "todo")
-    public class Todo implements Serializable {
-        private static final long serialVersionUID = 1L;
-
-        // (2)
-        @Id
-        @Column(name = "todo_id")
-        private String todoId;
-
-        @Column(name = "todo_title")
-        private String todoTitle;
-
-        @Column(name = "finished")
-        private boolean finished;
-
-        // (3)
-        @Temporal(TemporalType.TIMESTAMP)
-        @Column(name = "created_at")
-        private Date createdAt;
-
-        public String getTodoId() {
-            return todoId;
-        }
-
-        public void setTodoId(String todoId) {
-            this.todoId = todoId;
-        }
-
-        public String getTodoTitle() {
-            return todoTitle;
-        }
-
-        public void setTodoTitle(String todoTitle) {
-            this.todoTitle = todoTitle;
-        }
-
-        public boolean isFinished() {
-            return finished;
-        }
-
-        public void setFinished(boolean finished) {
-            this.finished = finished;
-        }
-
-        public Date getCreatedAt() {
-            return createdAt;
-        }
-
-        public void setCreatedAt(Date createdAt) {
-            this.createdAt = createdAt;
-        }
-    }
-
-.. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
-.. list-table::
-   :header-rows: 1
-   :widths: 10 90
-
-
-   * - 項番
-     - 説明
-   * - | (1)
-     - | JPAのエンティティであることを示す\ ``@Entity``\ アノテーションを付け、対応するテーブル名を\ ``@Table``\ アノテーションで設定する。
-   * - | (2)
-     - | 主キーとなるカラムに対応するフィールドに、\ ``@Id``\ アノテーションをつける。
-   * - | (3)
-     - | \ ``java.util.Date``\ 型は、\ ``java.sql.Date``\ , \ ``java.sql.Time``\ , \ ``java.sql.Timestamp``\ のインスタンスを格納できるため、明示的にどの型のインスタンスを設定するか指定する必要がある。
-       | \ ``createdAt``\ プロパティには、\ ``Timestamp``\ を指定する。
-
-
-TodoRepositoryの作成
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Spring Data JPAのRepository機能を使用して\ ``TodoRepository``\ の作成を行う。
-
-Package Explorer上で右クリック -> New -> Interface を選択し、「New Java Interface」ダイアログを表示し、
-
- .. tabularcolumns:: |p{0.10\linewidth}|p{0.30\linewidth}|p{0.50\linewidth}|
- .. list-table::
-    :header-rows: 1
-    :widths: 10 30 50
-
-    * - 項番
-      - 項目
-      - 入力値
-    * - 1
-      - Package
-      - ``todo.domain.repository.todo``
-    * - 2
-      - Name
-      - ``TodoRepository``
-    * - 3
-      - Extended interfaces
-      - ``org.springframework.data.jpa.repository.JpaRepository<T, ID>``
-
-を入力して「Finish」する。
-
-
-
-.. code-block:: java
-    :emphasize-lines: 3-5,9-10,12,13
-
-    package todo.domain.repository.todo;
-
-    import org.springframework.data.jpa.repository.JpaRepository;
-    import org.springframework.data.jpa.repository.Query;
-    import org.springframework.data.repository.query.Param;
-
-    import todo.domain.model.Todo;
-
-    // (1)
-    public interface TodoRepository extends JpaRepository<Todo, String> {
-
-        @Query("SELECT COUNT(t) FROM Todo t WHERE t.finished = :finished") // (2)
-        long countByFinished(@Param("finished") boolean finished); // (3)
-
-    }
-
-.. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
-.. list-table::
-   :header-rows: 1
-   :widths: 10 90
-
-   * - 項番
-     - 説明
-   * - | (1)
-     - | \ ``JpaRepository``\のGenericsのパラメータを指定する。
-       | 左から順に、Entityのクラス(\ ``Todo``\)、主キーのクラス(\ ``String``\)を指定する。
-       | 基本的なCRUD操作(\ ``findOne``\ , \ ``findAll``\ , \ ``save``\ , \ ``delete``\ など)は、\ ``JpaRepository``\ インタフェースに定義済みであるため、\ ``TodoRepository``\ には\ ``countByFinished``\ メソッドのみ定義すればよい。
-   * - | (2)
-     - | \ ``countByFinished``\ メソッドを呼び出した際に実行するJPQLを、\ ``@Query``\ アノテーションで指定する。
-   * - | (3)
-     - | (2)で指定したJPQL内のバインド変数に対応するメソッド引数に、\ ``@Param``\ アノテーションを指定する。
-       | ここでは、JPQL中の\ ``”:finished”``\ に値を埋め込むために、メソッド引数の\ ``finished``\に\ ``@Param(“finished”)``\ を付けている。
-
-
-TodoRepositoryImplの作成
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Spring Data JPAを使用する場合、RepositoryImplはRepositoryインタフェースから自動生成される。
-そのため、\ ``TodoRepositoryImpl``\ の作成は不要である。作成した場合は削除すること。
-
-|
-
-以上で、Spring Data JPAを使用したインフラストラクチャ層の作成が完了したので、Service及びアプリケーション層の作成を行う。
-
-Service及びアプリケーション層を作成後にAPサーバーを起動し、Todoの表示を行うと、以下のようなSQLログや、トランザクションログが出力される。
-
-.. code-block:: console
-   :emphasize-lines: 2-11
-
-    date:2016-02-17 13:32:44	thread:tomcat-http--5	X-Track:7c34263e0a2143639f3ffd191b35c135	level:TRACE	logger:o.t.gfw.web.logging.TraceLoggingInterceptor     	message:[START CONTROLLER] TodoController.list(Model)
-    date:2016-02-17 13:32:44	thread:tomcat-http--5	X-Track:7c34263e0a2143639f3ffd191b35c135	level:DEBUG	logger:o.h.e.transaction.spi.AbstractTransactionImpl   	message:begin
-    date:2016-02-17 13:32:44	thread:tomcat-http--5	X-Track:7c34263e0a2143639f3ffd191b35c135	level:DEBUG	logger:o.h.e.transaction.internal.jdbc.JdbcTransaction 	message:initial autocommit status: false
-    date:2016-02-17 13:32:45	thread:tomcat-http--5	X-Track:7c34263e0a2143639f3ffd191b35c135	level:DEBUG	logger:jdbc.sqltiming                                  	message: org.hibernate.engine.jdbc.internal.ResultSetReturnImpl.extract(ResultSetReturnImpl.java:82)
-    5. /* select generatedAlias0 from Todo as generatedAlias0 */ select todo0_.todo_id as todo_id1_0_, todo0_.created_at as created_2_0_, todo0_.finished as finished3_0_, todo0_.todo_title as todo_tit4_0_ from todo todo0_ {executed in 1 msec}
-    date:2016-02-17 13:32:45	thread:tomcat-http--5	X-Track:7c34263e0a2143639f3ffd191b35c135	level:INFO 	logger:jdbc.resultsettable                             	message:|--------|-----------|---------|-----------|
-    date:2016-02-17 13:32:45	thread:tomcat-http--5	X-Track:7c34263e0a2143639f3ffd191b35c135	level:INFO 	logger:jdbc.resultsettable                             	message:|TODO_ID |CREATED_AT |FINISHED |TODO_TITLE |
-    date:2016-02-17 13:32:45	thread:tomcat-http--5	X-Track:7c34263e0a2143639f3ffd191b35c135	level:INFO 	logger:jdbc.resultsettable                             	message:|--------|-----------|---------|-----------|
-    date:2016-02-17 13:32:45	thread:tomcat-http--5	X-Track:7c34263e0a2143639f3ffd191b35c135	level:INFO 	logger:jdbc.resultsettable                             	message:|--------|-----------|---------|-----------|
-    date:2016-02-17 13:32:45	thread:tomcat-http--5	X-Track:7c34263e0a2143639f3ffd191b35c135	level:DEBUG	logger:o.h.e.transaction.spi.AbstractTransactionImpl   	message:committing
-    date:2016-02-17 13:32:45	thread:tomcat-http--5	X-Track:7c34263e0a2143639f3ffd191b35c135	level:DEBUG	logger:o.h.e.transaction.internal.jdbc.JdbcTransaction 	message:committed JDBC Connection
-    date:2016-02-17 13:32:45	thread:tomcat-http--5	X-Track:7c34263e0a2143639f3ffd191b35c135	level:TRACE	logger:o.t.gfw.web.logging.TraceLoggingInterceptor     	message:[END CONTROLLER  ] TodoController.list(Model)-> view=todo/list, model={todoForm=todo.app.todo.TodoForm@5dac2c75, todos=[], org.springframework.validation.BindingResult.todoForm=org.springframework.validation.BeanPropertyBindingResult: 0 errors}
-    date:2016-02-17 13:32:45	thread:tomcat-http--5	X-Track:7c34263e0a2143639f3ffd191b35c135	level:TRACE	logger:o.t.gfw.web.logging.TraceLoggingInterceptor     	message:[HANDLING TIME   ] TodoController.list(Model)-> 320,129,237 ns
-
-
-|
-
 おわりに
 ================================================================================
 このチュートリアルでは、以下の内容を学習した。
@@ -3193,7 +2910,6 @@ Service及びアプリケーション層を作成後にAPサーバーを起動�
  * POJO(+ Spring)を使用したドメイン層の実装
  * POJO(+ Spring MVC)とJSPタグライブラリを使用したアプリケーション層の実装
  * MyBatis3を使用したインフラストラクチャ層の実装
- * Spring Data JPAを使用したインフラストラクチャ層の実装
  * O/R Mapperを使用しないインフラストラクチャ層の実装
 
 本チュートリアルで作成したTODO管理アプリケーションには、以下の改善点がある。
@@ -3809,85 +3525,6 @@ MyBatis3用のブランクプロジェクトを作成した場合、以下のよ
 
         </configuration>
 
-JPA用のブランクプロジェクトを作成した場合のtodo-infra.xml
-''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
-
-JPA用のブランクプロジェクトを作成した場合、以下のような設定となっている。
-
-.. code-block:: xml
-    :emphasize-lines: 12-13, 15-16, 18-20, 25-27, 28-29, 32-33
-
-    <?xml version="1.0" encoding="UTF-8"?>
-    <beans xmlns="http://www.springframework.org/schema/beans"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xmlns:jpa="http://www.springframework.org/schema/data/jpa"
-        xmlns:util="http://www.springframework.org/schema/util"
-        xsi:schemaLocation="
-            http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-            http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
-            http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd
-        ">
-
-        <!-- (1) -->
-        <import resource="classpath:/META-INF/spring/todo-env.xml" />
-
-        <!-- (2) -->
-        <jpa:repositories base-package="todo.domain.repository"></jpa:repositories>
-
-        <!-- (3) -->
-        <bean id="jpaVendorAdapter"
-            class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
-            <property name="showSql" value="false" />
-            <property name="database" value="${database}" />
-        </bean>
-
-        <!-- (4) -->
-        <bean id="entityManagerFactory"
-            class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
-            <!-- (5) -->
-            <property name="packagesToScan" value="todo.domain.model" />
-            <property name="dataSource" ref="dataSource" />
-            <property name="jpaVendorAdapter" ref="jpaVendorAdapter" />
-            <!-- (6) -->
-            <property name="jpaPropertyMap">
-                <util:map>
-                    <entry key="hibernate.hbm2ddl.auto" value="" />
-                    <entry key="hibernate.ejb.naming_strategy"
-                        value="org.hibernate.cfg.ImprovedNamingStrategy" />
-                    <entry key="hibernate.connection.charSet" value="UTF-8" />
-                    <entry key="hibernate.show_sql" value="false" />
-                    <entry key="hibernate.format_sql" value="false" />
-                    <entry key="hibernate.use_sql_comments" value="true" />
-                    <entry key="hibernate.jdbc.batch_size" value="30" />
-                    <entry key="hibernate.jdbc.fetch_size" value="100" />
-                </util:map>
-            </property>
-        </bean>
-
-    </beans>
-
-.. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
-.. list-table::
-   :header-rows: 1
-   :widths: 10 90
-
-   * - 項番
-     - 説明
-   * - | (1)
-     - | 環境依存するコンポーネント(データソースやトランザクションマネージャなど)を定義するBean定義ファイルをimportする。
-   * - | (2)
-     - | Spring Data JPAを使用して、Repositoryインタフェースから実装クラスを自動生成する。
-       | \ ``<jpa:repository>``\ タグの\ ``base-package``\ 属性に、Repositoryを格納するパッケージを指定する。
-   * - | (3)
-     - | JPAの実装ベンダの設定を行う。
-       | JPA実装として、Hibernateを使うため、\ ``HibernateJpaVendorAdapter``\ を定義している。
-   * - | (4)
-     - | \ ``EntityManager``\ の定義を行う。
-   * - | (5)
-     - | JPAのエンティティとして扱うクラスが格納されているパッケージ名を指定する。
-   * - | (6)
-     - | Hibernateに関する詳細な設定を行う。
-
 |
 
 todo-infra.properties
@@ -3987,12 +3624,6 @@ todo-env.xml
             <jdbc:script location="classpath:/database/${database}-dataload.sql" encoding="UTF-8" />
         </jdbc:initialize-database>
 
-        <!--  REMOVE THIS LINE IF YOU USE JPA
-        <bean id="transactionManager"
-            class="org.springframework.orm.jpa.JpaTransactionManager">
-            <property name="entityManagerFactory" ref="entityManagerFactory" />
-        </bean>
-              REMOVE THIS LINE IF YOU USE JPA  -->
         <!-- (3) -->
         <bean id="transactionManager"
             class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
@@ -4021,18 +3652,6 @@ todo-env.xml
        | 別の名前を指定する場合は、\ ``<tx:annotation-driven>``\ タグにもトランザクションマネージャ名を指定する必要がある。
        |
        | ブランクプロジェクトでは、JDBCのAPIを使用してトランザクションを制御するクラス(\ ``org.springframework.jdbc.datasource.DataSourceTransactionManager``\)が設定されている。
-
-.. note::
-
-    JPA用のブランクプロジェクトを作成した場合は、トランザクションマネージャには、
-    JPAのAPIを使用してトランザクションを制御するクラス(\ ``org.springframework.orm.jpa.JpaTransactionManager``\)が設定されている。
-
-     .. code-block:: xml
-
-        <bean id="transactionManager"
-            class="org.springframework.orm.jpa.JpaTransactionManager">
-            <property name="entityManagerFactory" ref="entityManagerFactory" />
-        </bean>
 
 |
 
@@ -4111,15 +3730,6 @@ spring-mvc.xml
                     <property name="codeListIdPattern" value="CL_.+" />
                 </bean>
             </mvc:interceptor>
-            <!--  REMOVE THIS LINE IF YOU USE JPA
-            <mvc:interceptor>
-                <mvc:mapping path="/**" />
-                <mvc:exclude-mapping path="/resources/**" />
-                <mvc:exclude-mapping path="/**/*.html" />
-                <bean
-                    class="org.springframework.orm.jpa.support.OpenEntityManagerInViewInterceptor" />
-            </mvc:interceptor>
-                REMOVE THIS LINE IF YOU USE JPA  -->
         </mvc:interceptors>
 
         <!-- (6) -->
@@ -4236,24 +3846,6 @@ spring-mvc.xml
 
    \newpage
    
-.. note::
-
-    JPA用のブランクプロジェクトを作成した場合は、\ ``<mvc:interceptors>``\ の定義として、
-    \ ``OpenEntityManagerInViewInterceptor``\ の定義が有効な状態となっている。
-
-     .. code-block:: xml
-
-        <mvc:interceptor>
-            <mvc:mapping path="/**" />
-            <mvc:exclude-mapping path="/resources/**" />
-            <mvc:exclude-mapping path="/**/*.html" />
-            <bean
-                class="org.springframework.orm.jpa.support.OpenEntityManagerInViewInterceptor" />
-        </mvc:interceptor>
-
-    \ ``OpenEntityManagerInViewInterceptor``\ は、\ ``EntityManager``\ のライフサイクルの開始と終了を行う\ ``Interceptor``\ である。
-    この設定を追加することで、アプリケーション層(Controllerや、Viewクラス)でのLazy Loadが、サポートされる。
-
 |
 
 spring-security.xml
@@ -4402,11 +3994,6 @@ logback.xml
             <level value="info" />
         </logger>
 
-        <!--  REMOVE THIS LINE IF YOU USE JPA
-        <logger name="org.hibernate.engine.transaction">
-            <level value="debug" />
-        </logger>
-              REMOVE THIS LINE IF YOU USE JPA  -->
         <!--  REMOVE THIS LINE IF YOU USE MyBatis3
         <logger name="org.springframework.jdbc.datasource.DataSourceTransactionManager">
             <level value="debug" />
@@ -4448,14 +4035,6 @@ logback.xml
 .. note::
 
     O/R Mapperを使用するブランクプロジェクトを作成した場合は、トランザクション制御関連のログを出力するロガーが有効な状態となっている。
-
-    * JPA用のブランクプロジェクト
-
-     .. code-block:: xml
-
-        <logger name="org.hibernate.engine.transaction">
-            <level value="debug" />
-        </logger>
 
     * MyBatis3用のブランクプロジェクト
 

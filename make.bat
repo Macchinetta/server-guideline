@@ -3,7 +3,6 @@
 REM Command file for Sphinx documentation
 
 REM no maintenance pdf on windows
-REM https://github.com/terasolunaorg/guideline/pull/1569
 
 if "%SPHINXBUILD%" == "" (
 	set SPHINXBUILD=sphinx-build

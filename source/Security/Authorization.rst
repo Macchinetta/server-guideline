@@ -386,20 +386,11 @@ Spring Securityは定義した順番でリクエストとのマッチング処�
     Spring MVCとSpring Securityでは、リクエストとのマッチングの仕組みが厳密には異なっており、この差異を利用してSpring Securityの認可機能を突破し、ハンドラメソッドにアクセスできる脆弱性が存在する。
     本事象の詳細は「\ `CVE-2016-5007 Spring Security / MVC Path Matching Inconsistency <https://pivotal.io/security/cve-2016-5007>`_\」を参照されたい。
 
-    本事象は、\ `trimTokens` \ プロパティに \ `false` \ を設定した \ `org.springframework.util.AntPathMatcher` \ のBeanをSpring MVCに適用することで回避することができる。
-
-      .. code-block:: xml
-
-          <mvc:annotation-driven>
-              <mvc:path-matching path-matcher="pathMatcher" />
-          </mvc:annotation-driven>
-
-          <bean id="pathMatcher" class="org.springframework.util.AntPathMatcher">
-              <property name="trimTokens" value="false" />
-          </bean>
-
-    上記の対策をMacchinetta Server Framework で提供するブランクプロジェクトでは設定しているが、
-    設定を外すと脆弱性にさらされてしまうので注意する必要がある。
+     \ `trimTokens` \ プロパティに \ `true` \ を設定した\ `org.springframework.util.AntPathMatcher` \ のBeanがSpring MVCに適用されている場合に、本事象が発生する。
+     Spring Framework 4.2以前は \ `trimTokens` \ プロパティのデフォルト値が\ `true`\ となっていたが、Spring Framework 4.3 からデフォルト値は \ `false` \ となったため、意図的に変更しない限り本事象は発生しない。
+ 
+     なお、下記の様にTERASOLUNA Server Framework for Java (5.3.x)のブランクプロジェクトでは、明示的に\ `trimTokens` \ プロパティに \ `false` \を指定しているが、
+     \ `true` \ に変更した場合は本事象が発生する条件を満たしてしまうため、変更しない様に注意されたい。
 
     また、特定のURLに対してアクセスポリシーを設ける(\ ``pattern``\属性に\ ``*``\や\ ``**``\などのワイルドカード指定を含めない)場合、
     拡張子を付けたパターンとリクエストパスの末尾に\ ``/``\を付けたパターンに対するアクセスポリシーの追加が必須である。

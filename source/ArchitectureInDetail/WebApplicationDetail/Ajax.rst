@@ -502,13 +502,13 @@ Ajaxを使ってデータを取得する方法について説明する。
  .. code-block:: guess
     :emphasize-lines: 1,4
 
-    GET /terasoluna-gfw-web-blank/ajax/search?freeWord= HTTP/1.1
+    GET /macchinetta-web-blank/ajax/search?freeWord= HTTP/1.1
     Host: localhost:9999
     Connection: keep-alive
     Accept: application/json, text/javascript, */*; q=0.01
     X-Requested-With: XMLHttpRequest
     User-Agent: Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/30.0.1599.101 Safari/537.36
-    Referer: http://localhost:9999/terasoluna-gfw-web-blank/ajax/xxe
+    Referer: http://localhost:9999/macchinetta-web-blank/ajax/xxe
     Accept-Encoding: gzip,deflate,sdch
     Accept-Language: en-US,en;q=0.8,ja;q=0.6
     Cookie: JSESSIONID=3A486604D7DEE62032BA6C073FC6BE9F
@@ -794,7 +794,7 @@ Ajaxを使ってフォームのデータをPOSTし、処理結果を取得する
  .. code-block:: guess
     :emphasize-lines: 1,5,7,10,16
 
-    POST /terasoluna-gfw-web-blank/ajax/plusForForm HTTP/1.1
+    POST /macchinetta-web-blank/ajax/plusForForm HTTP/1.1
     Host: localhost:9999
     Connection: keep-alive
     Content-Length: 19
@@ -804,7 +804,7 @@ Ajaxを使ってフォームのデータをPOSTし、処理結果を取得する
     X-Requested-With: XMLHttpRequest
     User-Agent: Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/30.0.1599.101 Safari/537.36
     Content-Type: application/x-www-form-urlencoded; charset=UTF-8
-    Referer: http://localhost:9999/terasoluna-gfw-web-blank/ajax/xxe
+    Referer: http://localhost:9999/macchinetta-web-blank/ajax/xxe
     Accept-Encoding: gzip,deflate,sdch
     Accept-Language: en-US,en;q=0.8,ja;q=0.6
     Cookie: JSESSIONID=3A486604D7DEE62032BA6C073FC6BE9F
@@ -947,7 +947,7 @@ Ajaxを使ってフォームのデータをJSON形式に変換してからPOST�
  .. code-block:: guess
     :emphasize-lines: 10,16
 
-    POST /terasoluna-gfw-web-blank/ajax/plusForJson HTTP/1.1
+    POST /macchinetta-web-blank/ajax/plusForJson HTTP/1.1
     Host: localhost:9999
     Connection: keep-alive
     Content-Length: 31
@@ -957,7 +957,7 @@ Ajaxを使ってフォームのデータをJSON形式に変換してからPOST�
     X-Requested-With: XMLHttpRequest
     User-Agent: Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/30.0.1599.101 Safari/537.36
     Content-Type: application/json;charset=UTF-8
-    Referer: http://localhost:9999/terasoluna-gfw-web-blank/ajax/xxe?
+    Referer: http://localhost:9999/macchinetta-web-blank/ajax/xxe?
     Accept-Encoding: gzip,deflate,sdch
     Accept-Language: en-US,en;q=0.8,ja;q=0.6
     Cookie: JSESSIONID=CECD7A6CB0431266B8D1173CCFA66B95

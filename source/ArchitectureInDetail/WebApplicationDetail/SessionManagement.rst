@@ -1031,15 +1031,6 @@ component-scanを使用する方法を、以下に示す。
       - | Beanのスコープを\ ``"session"``\ にする。また、proxyMode 属性で \ ``"ScopedProxyMode.TARGET_CLASS"``\ を指定し、scoped-proxyを有効にする。
     * - | (2)
       - | 注文が完了した際にカートの状態をクリア(カート内の商品を削除)するためのメソッドを用意する。
- .. note::
-
-    JPAで扱うEntityクラスをsessionスコープのBeanとして定義したい場合は、直接sessionスコープのBeanとして定義するのではなく、ラッパークラスを用意することを推奨する。
-
-    JPAで扱うEntityクラスをsessionスコープのBeanとして定義すると、JPAのAPIでsessionスコープのBeanを直接扱うことができない(直接あつかうと、エラーとなる)。
-    そのため、JPAで扱うことができるEntityオブジェクトへの変換処理が、必要になってしまう。
-
-    上記例では、\ ``Cart``\ というJPAのEntityクラスを、\ ``SessionCart``\ というラッパークラスに包んで、sessionスコープのBeanとしている。
-    こうすることで、JPAで扱うことができるEntityオブジェクトへの変換処理が不要となるため、Controllerで行う処理がシンプルになる。
 
  .. note:: **scoped-proxyを有効化する理由について**
 

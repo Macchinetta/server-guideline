@@ -76,10 +76,6 @@ Spring Dataより提供されているページ検索用の機能は、以下の
       - | ページ情報(合計件数、該当ページのデータ、検索対象のページ位置、取得件数、ソート条件)を保持する。
         | この機能は、 ``org.springframework.data.domain.Page`` インタフェースとして提供されており、デフォルトの実装クラスとして ``org.springframework.data.domain.PageImpl`` が提供されている。
         | **共通ライブラリより提供しているページネーションリンクを出力するためのJSPタグライブラリでは、 Pageオブジェクトから必要なデータを取得する仕様となっている。**
-    * - 3
-      - | データベースアクセスとしてSpring Data JPAを使用する場合は、RepositoryのQueryメソッドの引数に ``Pageable`` オブジェクトを指定することで、該当ページの情報が ``Page`` オブジェクトとして返却される。
-        | 合計件数を取得するSQLの発行、ソート条件の追加、該当ページに一致するデータの抽出などの処理が全て自動で行われる。
-        | データベースアクセスとして、MyBatisを使用する場合は、Spring Data JPAが自動で行ってくれる処理を、Java(Service)及びSQLマッピングファイル内で実装する必要がある。
 
 .. _pagination_overview_pagesearch_requestparameter:
 
@@ -649,12 +645,10 @@ Spring Dataより提供されているページネーション機能と、共通
     上記フローの(5)と(6)の処理は、使用するO/R Mapperによって実装方法が異なる。
 
     * MyBatis3を使用する場合は、Java(Service)及びSQLマッピングファイルの実装が必要がある。
-    * Spring Data JPAを使用する場合は、Spring Data JPAの機能で自動的で行われるため実装は不要である。
 
     具体的な実装例については、
 
     * :doc:`../DataAccessDetail/DataAccessMyBatis3`
-    * :doc:`../DataAccessDetail/DataAccessJpa`
 
     を参照されたい。
 
@@ -898,19 +892,6 @@ Spring Dataのページネーション機能を有効化するための設定
 
 * :ref:`DataAccessMyBatis3HowToUseFindPageUsingMyBatisFunction`
 * :ref:`DataAccessMyBatis3HowToUseFindPageUsingSqlFilter`
-
-を参照されたい。
-
-|
-
-ドメイン層の実装(JPA編)
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-JPA(Spring Data JPA)を使用してデータベースにアクセスする場合は、Controllerから受け取った ``Pageable`` オブジェクトをRepositoryに引き渡す。
-
-ドメイン層で実装するページ検索処理の詳細については、
-
-* :ref:`DataAccessJpaHowToUseFindPage`
-
 
 を参照されたい。
 

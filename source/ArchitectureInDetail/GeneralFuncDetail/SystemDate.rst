@@ -164,7 +164,7 @@ pom.xmlの設定
 | terasoluna-gfw-jodatimeへの依存関係を追加する。
 | マルチプロジェクト構成の場合は、domainプロジェクトの\ :file:`pom.xml`\(:file:`projectName-domain/pom.xml`)に追加する。
 
-`ブランクプロジェクト <https://github.com/terasolunaorg/terasoluna-gfw-web-multi-blank>`_ \ からプロジェクトを生成した場合は、terasoluna-gfw-jodatimeへの依存関係は、設定済の状態である。
+`ブランクプロジェクト <https://github.com/Macchinetta/macchinetta-web-multi-blank>`_ \ からプロジェクトを生成した場合は、terasoluna-gfw-jodatimeへの依存関係は、設定済の状態である。
 
 .. code-block:: xml
 

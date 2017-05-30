@@ -17,10 +17,9 @@ RepositoryImplは、Repositoryインタフェースで定義したメソッド�
 RepositoryImplの実装
 --------------------------------------------------------------------------------
 
-以下に、MyBatis3とJPAを使って、リレーショナルデータベース用のRepositoryを作成する方法を紹介する。
+以下に、MyBatis3を使って、リレーショナルデータベース用のRepositoryを作成する方法を紹介する。
 
 * :ref:`repository-mybatis3-label`
-* :ref:`repository-jpa-label`
 
 
 .. _repository-mybatis3-label:
@@ -133,61 +132,6 @@ MyBatis3を使用する場合、アプリケーション開発者は、
 
         上記例のマッピング定義は、シンプルなO/Rマッピングなので自動マッピングを利用する事もできる。
 
-
-.. _repository-jpa-label:
-
-JPAを使ってRepositoryを実装
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-| リレーショナルデータベースとの永続APIとして、JPAを使う場合、Spring Data JPAの\ ``org.springframework.data.jpa.repository.JpaRepository``\ を使用すると、非常に簡単にRepositoryを作成することが出来る。
-| Spring Data JPAの使用方法の詳細は、\ :doc:`../ArchitectureInDetail/DataAccessDetail/DataAccessJpa`\ を参照されたい。
-
-| Spring Data JPAを使った場合、基本的なCRUD操作は、JpaRepositoryを継承したインタフェースを作成するだけでよい。つまり、基本的には、RepositoryImplは不要である。
-| ただし、動的なクエリ(JPQL)を発行する必要がある場合は、RepositoryImplが必要となる。
-| Spring Data JPA使用時のRepositoryImplの実装については、\ :doc:`../ArchitectureInDetail/DataAccessDetail/DataAccessJpa`\ を参照されたい。
-
-- TodoRepository.java
-
- .. code-block:: java
-    :emphasize-lines: 1
-
-    public interface TodoRepository extends JpaRepository<Todo, String> { // (1)
-        // ...
-    }
-
- .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
- .. list-table::
-    :header-rows: 1
-    :widths: 10 90
-
-    * - 項番
-      - 説明
-    * - | (1)
-      - JpaRepositoryを継承したインタフェースを定義するだけで、Todoエンティティに対する基本的なCRUD操作を実装なしで実現できる。
-
-| JpaRepositoryから提供されていない操作を追加する場合について説明する。
-| Spring Data JPAを使った場合、静的なクエリであればインタフェースにメソッドを追加し、そのメソッドが呼び出された時に実行するクエリ（JPQL）をアノテーションで指定すればよい。
-
-- TodoRepository.java
-
- .. code-block:: java
-    :emphasize-lines: 2
-
-    public interface TodoRepository extends JpaRepository<Todo, String> {
-        @Query("SELECT COUNT(t) FROM Todo t WHERE finished = :finished") // (1)
-        long countByFinished(@Param("finished") boolean finished);
-        // ...
-    }
-
- .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
- .. list-table::
-    :header-rows: 1
-    :widths: 10 90
-
-    * - 項番
-      - 説明
-    * - | (1)
-      - \ ``@Query``\ アノテーションで、クエリ（JPQL）を指定する。
 
 .. _repository-rest-label:
 

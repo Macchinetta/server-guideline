@@ -43,9 +43,6 @@
    * - `Beginning Java EE 6 GlassFish 3で始めるエンタープライズJava <http://www.shoeisha.co.jp/book/detail/9784798124605>`_
      - 翔泳社
      - 日本語
-   * - Seasar2とHibernateで学ぶデータベースアクセス JPA入門
-     - 毎日コミュニケーションズ
-     - 日本語
 
 .. raw:: latex
 

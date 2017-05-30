@@ -40,25 +40,15 @@ Web MVCフレームワークとしてSpring MVCを利用する。
 O/R Mapper
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-本ガイドラインでは、以下の\ **いずれか**\ を想定している。
+本ガイドラインでは、以下を想定している。
 
 * `MyBatis 3.4 <http://mybatis.github.io/mybatis-3/>`_
 
   * Spring Frameworkとの連携ライブラリとして、\ `MyBatis-Spring <http://mybatis.github.io/spring/>`_\ を使用する。
 
-* `JPA2.1 <http://download.oracle.com/otn-pub/jcp/persistence-2_1-fr-eval-spec/JavaPersistence.pdf>`_
-
-  * プロバイダは、\ `Hibernate 5.0 <http://docs.jboss.org/hibernate/orm/5.0/manual/en-US/html_single/>`_\ を使用する。
-
 .. note::
 
   MyBatisは正確には「SQL Mapper」であるが、本ガイドラインでは「O/R Mapper」に分類する。
-
-.. warning::
-
-  どんなプロジェクトでもJPAを採用できるわけではない。"テーブルがほとんど正規化されていない"、"テーブルのカラム数が多すぎる"というテーブル設計がされている場合に、JPAの利用は難しい。
-
-  また、本ガイドラインではJPAの基本的な説明は行っておらず、JPA利用経験者がチーム内にいることが前提である。
 
 View
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -292,67 +282,7 @@ version 1.4.0.RELEASEで利用するOSSの一覧を以下に示す。
       - mybatis-typehandlers-jsr310
       - 1.0.2
       -
-      - \*1*6
-    * - JPA(Hibernate)
-      - antlr
-      - antlr
-      - 2.7.7
-      - \*
-      - \*2
-    * - JPA(Hibernate)
-      - dom4j
-      - dom4j
-      - 1.6.1
-      - \*
-      - \*2
-    * - JPA(Hibernate)
-      - org.hibernate
-      - hibernate-core
-      - 5.0.11.Final
-      - \*
-      - \*2
-    * - JPA(Hibernate)
-      - org.hibernate
-      - hibernate-entitymanager
-      - 5.0.11.Final
-      - \*
-      - \*2
-    * - JPA(Hibernate)
-      - org.hibernate.common
-      - hibernate-commons-annotations
-      - 5.0.1.Final
-      - \*
-      - \*2 \*4
-    * - JPA(Hibernate)
-      - org.hibernate.javax.persistence
-      - hibernate-jpa-2.1-api
-      - 1.0.0.Final
-      - \*
-      - \*2 \*4
-    * - JPA(Hibernate)
-      - org.javassist
-      - javassist
-      - 3.20.0-GA
-      - \*
-      - \*2
-    * - JPA(Hibernate)
-      - org.jboss
-      - jandex
-      - 2.0.0.Final
-      - \*
-      - \*2 \*4
-    * - JPA(Hibernate)
-      - org.springframework.data
-      - spring-data-jpa
-      - 1.10.6.RELEASE
-      - \*
-      - \*2
-    * - JPA(Hibernate)
-      - org.apache.geronimo.specs
-      - geronimo-jta_1.1_spec
-      - 1.1.1
-      - \*
-      - \*2
+      - \*1*5
     * - DI
       - javax.inject
       - javax.inject
@@ -388,7 +318,7 @@ version 1.4.0.RELEASEで利用するOSSの一覧を以下に示す。
       - logback-core
       - 1.1.8
       - \*
-      - \*4
+      - \*3
     * - ログ出力
       - org.lazyluke
       - log4jdbc-remix
@@ -436,7 +366,7 @@ version 1.4.0.RELEASEで利用するOSSの一覧を以下に示す。
       - jackson-datatype-jsr310
       - 2.8.5
       - \*
-      - \*6
+      - \*5
     * - 入力チェック
       - javax.validation
       - validation-api
@@ -454,37 +384,37 @@ version 1.4.0.RELEASEで利用するOSSの一覧を以下に示す。
       - jboss-logging
       - 3.3.0.Final
       - \*
-      - \*4
+      - \*3
     * - 入力チェック
       - com.fasterxml
       - classmate
       - 1.3.3
       - \*
-      - \*4
+      - \*3
     * - Bean変換
       - commons-beanutils
       - commons-beanutils
       - 1.9.3
       - \*
-      - \*3
+      - \*2
     * - Bean変換
       - net.sf.dozer
       - dozer
       - 5.5.1
       -
-      - \*3
+      - \*2
     * - Bean変換
       - net.sf.dozer
       - dozer-spring
       - 5.5.1
       -
-      - \*3
+      - \*2
     * - Bean変換
       - org.apache.commons
       - commons-lang3
       - 3.4
       - \*
-      - \*3
+      - \*2
     * - 日付操作
       - joda-time
       - joda-time
@@ -496,91 +426,79 @@ version 1.4.0.RELEASEで利用するOSSの一覧を以下に示す。
       - joda-time-jsptags
       - 1.1.1
       -
-      - \*3
-    * - 日付操作
-      - org.jadira.usertype
-      - usertype.core
-      - 5.0.0.GA
-      -
-      - \*2
-    * - 日付操作
-      - org.jadira.usertype
-      - usertype.spi
-      - 5.0.0.GA
-      -
       - \*2
     * - コネクションプール
       - org.apache.commons
       - commons-dbcp2
       - 2.1.1
       - \*
-      - \*3
+      - \*2
     * - コネクションプール
       - org.apache.commons
       - commons-pool2
       - 2.4.2
       - \*
-      - \*3
+      - \*2
     * - Tiles
       - commons-digester
       - commons-digester
       - 2.1
       - \*
-      - \*3
+      - \*2
     * - Tiles
       - org.apache.tiles
       - tiles-api
       - 3.0.7
       - \*
-      - \*3
+      - \*2
     * - Tiles
       - org.apache.tiles
       - tiles-core
       - 3.0.7
       - \*
-      - \*3
+      - \*2
     * - Tiles
       - org.apache.tiles
       - tiles-jsp
       - 3.0.7
       - \*
-      - \*3
+      - \*2
     * - Tiles
       - org.apache.tiles
       - tiles-servlet
       - 3.0.7
       - \*
-      - \*3
+      - \*2
     * - Tiles
       - org.apache.tiles
       - tiles-template
       - 3.0.7
       - \*
-      - \*3 \*4
+      - \*2 \*3
     * - Tiles
       - org.apache.tiles
       - tiles-autotag-core-runtime
       - 1.2
       - \*
-      - \*3 \*4
+      - \*2 \*3
     * - Tiles
       - org.apache.tiles
       - tiles-request-servlet
       - 1.0.6
       - \*
-      - \*3 \*4
+      - \*2 \*3
     * - Tiles
       - org.apache.tiles
       - tiles-request-api
       - 1.0.6
       - \*
-      - \*3
+      - \*2
     * - Tiles
       - org.apache.tiles
       - tiles-request-jsp
       - 1.0.6
       - \*
-      - \*3 \*4
+      - \*2 \*3
     * - ユーティリティ
       - com.google.guava
       - guava
@@ -592,13 +510,13 @@ version 1.4.0.RELEASEで利用するOSSの一覧を以下に示す。
       - commons-collections
       - 3.2.2
       - \*
-      - \*3
+      - \*2
     * - ユーティリティ
       - commons-io
       - commons-io
       - 2.5
       - \*
-      - \*3
+      - \*2
     * - サーブレット
       - org.apache.taglibs
       - taglibs-standard-jstlel
@@ -610,16 +528,15 @@ version 1.4.0.RELEASEで利用するOSSの一覧を以下に示す。
       - taglibs-standard-spec
       - 1.2.5
       - \*
-      - \*4
+      - \*3
     * - サーブレット
       - org.apache.taglibs
       - taglibs-standard-impl
       - 1.2.5
       - \*
-      - \*4
+      - \*3
 
 #. | データアクセスに、MyBatis3を使用する場合に依存するライブラリ
-#. | データアクセスに、JPAを使用する場合に依存するライブラリ
 #. | 共通ライブラリに依存しないが、Macchinetta Server Framework (1.x)でアプリケーションを開発する場合に、利用することを推奨しているライブラリ
 #. | Spring IO platformでサポートしているライブラリが個別に依存しているライブラリ
    | (Spring IO platformとしては依存関係の管理は行っていないライブラリ)
@@ -637,7 +554,7 @@ version 1.4.0.RELEASEで利用するOSSの一覧を以下に示す。
 
 \ `共通ライブラリ <https://github.com/terasolunaorg/terasoluna-gfw>`_\ は、Macchinetta Server Framework (1.x)が含むSpring Ecosystem や、その他依存ライブラリでは足りない+αな機能を提供するライブラリである。
 基本的には、このライブラリがなくてもMacchinetta Server Framework (1.x)によるアプリケーション開発は可能であるが、"あると便利"な存在である。
-また、提供している2種類の \ `マルチプロジェクト構成のブランクプロジェクト <https://github.com/terasolunaorg/terasoluna-gfw-web-multi-blank>`_\ および \ `シングルプロジェクト構成のブランクプロジェクト <https://github.com/terasolunaorg/terasoluna-gfw-web-blank>`_\ の共通ライブラリの標準の組込状況は以下の通りである。
+また、提供している2種類の \ `マルチプロジェクト構成のブランクプロジェクト <https://github.com/Macchinetta/macchinetta-web-multi-blank>`_\ および \ `シングルプロジェクト構成のブランクプロジェクト <https://github.com/Macchinetta/macchinetta-gfw-web-blank>`_\ の共通ライブラリの標準の組込状況は以下の通りである。
 
 .. tabularcolumns:: |p{0.05\linewidth}|p{0.15\linewidth}|p{0.40\linewidth}|p{0.10\linewidth}|p{0.10\linewidth}|p{0.10\linewidth}|
 .. list-table::
@@ -763,8 +680,8 @@ version 1.4.0.RELEASEで利用するOSSの一覧を以下に示す。
       - terasoluna-gfw-jpa-dependencies
       - JPAを使用する場合の依存関係定義を提供する。
       - 無
-      - 有*4
-      - 有*4
+      - 無*4
+      - 無*4
     * - \ (20)
       - terasoluna-gfw-recommended-dependencies
       - Webに依存しない推奨ライブラリへの依存関係定義を提供する。
@@ -785,7 +702,7 @@ version 1.4.0.RELEASEで利用するOSSの一覧を以下に示す。
 #. | \ ``<dependency>``\ 要素ではないが、各プロジェクトの\ ``<parent>``\ 要素として組み込まれる。
 #. | \ ``<dependency>``\ 要素ではないが、\ ``<dependency>``\ 要素からの推移的依存関係として組み込まれる。
 #. | データアクセスに、MyBatis3を使用する場合に標準で組み込まれる共通ライブラリ
-#. | データアクセスに、JPAを使用する場合に標準で組み込まれる共通ライブラリ
+#. | データアクセスに、JPAを使用する場合に用いる共通ライブラリ。Macchinetta Server Framework (1.x)では使用しない
 
 
 Javaソースコードを含まないものは、ライブラリの依存関係のみ定義しているプロジェクトである。

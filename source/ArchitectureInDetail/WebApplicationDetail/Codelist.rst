@@ -1166,7 +1166,7 @@ BeanValidationや、メッセージ出力方法の詳細については、 :doc:
 \ ``@ExistInCodeList``\ アノテーションを使用して入力チェックを行う場合は、
 \ ``@ExistInCodeList``\ 用の「:ref:`Validation_message_def`」を行う必要がある。
 
-`ブランクプロジェクト <https://github.com/terasolunaorg/terasoluna-gfw-web-multi-blank>`_ \ からプロジェクトを生成した場合は、
+`ブランクプロジェクト <https://github.com/Macchinetta/macchinetta-web-multi-blank>`_ \ からプロジェクトを生成した場合は、
 \ ``xxx-web/src/main/resources``\ の直下の\ ``ValidationMessages.properties``\ ファイルの中に以下のメッセージが定義されている。
 メッセージは、アプリケーションの要件に合わせて変更すること。
 

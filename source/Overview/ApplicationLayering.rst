@@ -229,7 +229,7 @@ RepositoryImplの実装はRepositoryインタフェースによって隠蔽さ�
 
 .. tip::
 
-    MyBatis3やSpring Data JPAを使用する場合は、RepositoryImplの実体を(一部)自動で作成する仕組みが提供されている。
+    MyBatis3を使用する場合は、RepositoryImplの実体を(一部)自動で作成する仕組みが提供されている。
 
 |
 
@@ -238,12 +238,11 @@ O/R Mapper
 
 O/R Mapperは、データベースとEntityの相互マッピングを担う。
 
-MyBatis / JPA / Spring JDBCが、本機能を提供する。
+MyBatis / Spring JDBCが、本機能を提供する。
 
 具体的には、
 
 * MyBatis3を用いる場合は、Mapperインタフェースや\ ``SqlSession``\
-* JPAを用いる場合は、\ ``EntityManager``\
 * Spring JDBCを用いる場合は、\ ``JdbcTemplate``\
 
 が、O/R Mapperに該当する。
@@ -276,7 +275,7 @@ Integration System Connectorは、Repositoryインタフェースの実装に用
 本ガイドラインでは、実装技術として、
 
 * アプリケーション層にSpring MVC
-* インフラストラクチャ層にMyBatis, Spring Data JPA
+* インフラストラクチャ層にMyBatis
 
 を使用することを想定しているが、本質的には、実装技術が変わっても、それぞれの層で違いが吸収され、ドメイン層には影響を与えない。
 レイヤ間の結合部は、インタフェースとして公開することで、各層が使用している実装技術に依存しない形式とすることができる。

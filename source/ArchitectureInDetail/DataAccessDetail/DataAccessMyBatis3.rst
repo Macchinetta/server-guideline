@@ -363,7 +363,7 @@ How to use
         * :ref:`DataAccessMyBatis3HowToUseSettingsCooperateWithMyBatis3AndSpring`
         * :ref:`DataAccessMyBatis3HowToUseSettingsMyBatis3`
         
-        `MyBatis3用のブランクプロジェクト <https://github.com/terasolunaorg/terasoluna-gfw-web-multi-blank#multi-blank-project-with-mybatis3>`_ \ からプロジェクトを生成した場合は、
+        `MyBatis3用のブランクプロジェクト <https://github.com/Macchinetta/macchinetta-web-multi-blank>`_ \ からプロジェクトを生成した場合は、
         上記で説明している設定の多くが既に設定済みの状態となっているため、アプリケーションアーキテクトは、
         プロジェクト特性を判断し、必要に応じて設定の追加及び変更を行うことになる。
 
@@ -395,7 +395,7 @@ pom.xmlの設定
 | インフラストラクチャ層にMyBatis3を使用する場合は、\ :file:`pom.xml`\にterasoluna-gfw-mybatis3-dependenciesへの依存関係を追加する。
 | マルチプロジェクト構成の場合は、domainプロジェクトの\ :file:`pom.xml`\(:file:`projectName-domain/pom.xml`)に追加する。
 
-`MyBatis3用のブランクプロジェクト <https://github.com/terasolunaorg/terasoluna-gfw-web-multi-blank#multi-blank-project-with-mybatis3>`_ \ からプロジェクトを生成した場合は、terasoluna-gfw-mybatis3-dependenciesへの依存関係は、設定済の状態である。
+`MyBatis3用のブランクプロジェクト <https://github.com/Macchinetta/macchinetta-web-multi-blank>`_ \ からプロジェクトを生成した場合は、terasoluna-gfw-mybatis3-dependenciesへの依存関係は、設定済の状態である。
 
  .. code-block:: xml
     :emphasize-lines: 22-27
@@ -486,7 +486,7 @@ MyBatis3とSpringを連携するための設定
 
 MyBatis3とSpringを連携する場合、データソースはSpringのDIコンテナで管理しているデータソースを使用する必要がある。
 
-`MyBatis3用のブランクプロジェクト <https://github.com/terasolunaorg/terasoluna-gfw-web-multi-blank#multi-blank-project-with-mybatis3>`_ \ からプロジェクトを生成した場合は、Apache Commons DBCPのデータソースが設定済の状態であるため、
+`MyBatis3用のブランクプロジェクト <https://github.com/Macchinetta/macchinetta-web-multi-blank>`_ \ からプロジェクトを生成した場合は、Apache Commons DBCPのデータソースが設定済の状態であるため、
 プロジェクトの要件に合わせて設定を変更すること。
 
 データソースの設定方法については、共通編の「\ :ref:`data-access-common_howtouse_datasource` \」を参照されたい。
@@ -503,7 +503,7 @@ MyBatis3とSpringを連携する場合、データソースはSpringのDIコン�
 
 ローカルトランザクションを使用する場合は、JDBCのAPIを呼び出してトランザクション制御を行う\ ``DataSourceTransactionManager`` \を使用する。
 
-`MyBatis3用のブランクプロジェクト <https://github.com/terasolunaorg/terasoluna-gfw-web-multi-blank#multi-blank-project-with-mybatis3>`_ \ からプロジェクトを生成した場合は、\ ``DataSourceTransactionManager`` \が設定済みの状態である。
+`MyBatis3用のブランクプロジェクト <https://github.com/Macchinetta/macchinetta-web-multi-blank>`_ \ からプロジェクトを生成した場合は、\ ``DataSourceTransactionManager`` \が設定済みの状態である。
 
 設定例は以下の通り。
 
@@ -628,7 +628,7 @@ MyBatis3とSpringを連携する場合、MyBatis-Springのコンポーネント�
 
 を行う必要がある。
 
-`MyBatis3用のブランクプロジェクト <https://github.com/terasolunaorg/terasoluna-gfw-web-multi-blank#multi-blank-project-with-mybatis3>`_ \ からプロジェクトを生成した場合は、MyBatis3とSpringを連携するための設定は、
+`MyBatis3用のブランクプロジェクト <https://github.com/Macchinetta/macchinetta-web-multi-blank>`_ \ からプロジェクトを生成した場合は、MyBatis3とSpringを連携するための設定は、
 設定済みの状態である。
 
 設定例は以下の通り。
@@ -718,7 +718,7 @@ MyBatis3の設定
     本ガイドラインでは、MyBatis設定ファイルは、
     \ :file:`projectName-domain/src/main/resources/META-INF/mybatis/mybatis-config.xml`\ に格納することを推奨している。
 
-    `MyBatis3用のブランクプロジェクト <https://github.com/terasolunaorg/terasoluna-gfw-web-multi-blank#multi-blank-project-with-mybatis3>`_ \ からプロジェクトを生成した場合は、上記ファイルは格納済みの状態である。
+    `MyBatis3用のブランクプロジェクト <https://github.com/Macchinetta/macchinetta-web-multi-blank>`_ \ からプロジェクトを生成した場合は、上記ファイルは格納済みの状態である。
 
 |
 
@@ -809,7 +809,7 @@ MyBatis3では、SQLを実行するモードとして以下の3種類を用意�
       - SIMPLE
       - SQL実行毎に新しい\ ``java.sql.PreparedStatement``\を作成する。
 
-        MyBatisのデフォルトの動作であり、`MyBatis3用のブランクプロジェクト <https://github.com/terasolunaorg/terasoluna-gfw-web-multi-blank#multi-blank-project-with-mybatis3>`_ \ も\ ``SIMPLE``\モードとなっている。
+        MyBatisのデフォルトの動作であり、`MyBatis3用のブランクプロジェクト <https://github.com/Macchinetta/macchinetta-web-multi-blank>`_ \ も\ ``SIMPLE``\モードとなっている。
     * - (2)
       - REUSE
       - ``PreparedStatement``\をキャッシュし再利用する。
@@ -849,7 +849,7 @@ Javaクラスの完全修飾クラス名(FQCN)を指定する必要があるた�
 
 本ガイドラインでは、記述効率の向上、記述ミスの削減、マッピングファイルの可読性向上などを目的として、TypeAliasを使用することを推奨する。
 
-`MyBatis3用のブランクプロジェクト <https://github.com/terasolunaorg/terasoluna-gfw-web-multi-blank#multi-blank-project-with-mybatis3>`_ \ からプロジェクトを生成した場合は、
+`MyBatis3用のブランクプロジェクト <https://github.com/Macchinetta/macchinetta-web-multi-blank>`_ \ からプロジェクトを生成した場合は、
 Entityを格納するパッケージ(\ ``${projectPackage}.domain.model``\)配下に格納されるクラスがTypeAliasの対象となっている。
 必要に応じて、設定を追加されたい。
 
@@ -1034,7 +1034,7 @@ TypeHandlerの設定
 **JSR-310 Date and Time APIを使う場合の設定**
 
 MyBatis3でJSR-310 Date and Time APIから提供されている日付や時刻を表現するクラスを使用する場合には、MyBatisより別ライブラリ(\ ``mybatis-typehandlers-jsr310`` \)で提供されている\ ``TypeHandler`` \を使用する。
-なお、`MyBatis3用のブランクプロジェクト <https://github.com/terasolunaorg/terasoluna-gfw-web-multi-blank#multi-blank-project-with-mybatis3>`_ \では、デフォルトで\ ``mybatis-typehandlers-jsr310`` \が使用可能である。
+なお、`MyBatis3用のブランクプロジェクト <https://github.com/Macchinetta/macchinetta-web-multi-blank>`_ \では、デフォルトで\ ``mybatis-typehandlers-jsr310`` \が使用可能である。
 
 また、Macchinetta Server Framework (1.4.x)が使用しているMyBatis 3.4では\ ``TypeHandler`` \を自動検出する様になっているため、MyBatisの設定ファイルに\ ``TypeHandler``\を追加する必要はない。
 

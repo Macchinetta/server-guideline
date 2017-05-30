@@ -323,7 +323,7 @@ WebアプリケーションにSpring Securityを適用するためのセット�
 
 .. note::
 
-    開発プロジェクトを\ `ブランンクプロジェクト <https://github.com/terasolunaorg/terasoluna-gfw-web-multi-blank>`_\ から作成すると、ここで説明する各設定はセットアップ済みの状態になっている。
+    開発プロジェクトを\ `ブランンクプロジェクト <https://github.com/Macchinetta/macchinetta-web-multi-blank>`_\ から作成すると、ここで説明する各設定はセットアップ済みの状態になっている。
     開発プロジェクトの作成方法については、「:doc:`../ImplementationAtEachLayer/CreateWebApplicationProject`」を参照されたい。
 
 |
@@ -377,7 +377,7 @@ Spring Securityと共通ライブラリの関連については、:ref:`framewor
 
 bean定義ファイルの作成
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-Spring Securityのコンポーネントをbean定義するため、以下のようなXMLファイルを作成する。（`ブランクプロジェクト <https://github.com/terasolunaorg/terasoluna-gfw-web-multi-blank>`_\より抜粋）
+Spring Securityのコンポーネントをbean定義するため、以下のようなXMLファイルを作成する。（`ブランクプロジェクト <https://github.com/Macchinetta/macchinetta-web-multi-blank>`_\より抜粋）
 
 * xxx-web/src/main/resources/META-INF/spring/spring-security.xmlの定義例
 

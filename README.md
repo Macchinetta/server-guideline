@@ -1,6 +1,6 @@
 # Macchinetta Server Framework (1.x) Development Guideline
 
-This guideline provides best practices to develop highly maintainable Web applications using full stack framework focussing on Spring Framework, Spring MVC, Spring Security and MyBatis, JPA.
+This guideline provides best practices to develop highly maintainable Web applications using full stack framework focussing on Spring Framework, Spring MVC, Spring Security and MyBatis.
 
 This guideline helps to proceed with the software development (mainly coding) smoothly.
 

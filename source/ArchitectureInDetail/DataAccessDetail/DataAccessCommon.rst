@@ -16,8 +16,6 @@
 
     * | 複数データソースについて
       | 具体的な内容は、\ :ref:`Overviewの複数データソースについて <data-access-common_todo_multiple_datasource_overview>`\ および\ :ref:`How to extendsの複数データソースを使用するための設定 <data-access-common_todo_multiple_datasource_howtoextends>`\ を参照されたい。
-    * | JPA利用時の一意制約エラー及び悲観排他エラーのハンドリング方法について
-      | 具体的な内容は、\ :ref:`Overviewの例外ハンドリングについて <data-access-common_todo_exception>`\ を参照されたい。
 
 .. _data_access_overview-label:
 
@@ -29,7 +27,6 @@ Overview
 O/R Mapperに依存する部分については、
 
 * \ :doc:`DataAccessMyBatis3`\
-* \ :doc:`DataAccessJpa`\
 
 を参照されたい。
 
@@ -167,7 +164,7 @@ Spring Framework提供のJDBCデータソース
       - | org.springframework.dao.
         | OptimisticLockingFailureException
       - | 楽観ロックに成功しなかった場合に発生する例外。他の処理によって同一データが更新されていた場合に発生する。
-        | 本例外は、O/R MapperとしてJPAを使用する場合に発生する例外である。MyBatisには楽観ロックを行う機能がないため、O/R Mapper本体から本例外が発生することはない。
+        | MyBatisには楽観ロックを行う機能がないため、O/R Mapper本体から本例外が発生することはない。
     * - 3.
       - | org.springframework.dao.
         | PessimisticLockingFailureException
@@ -185,8 +182,6 @@ Spring Framework提供のJDBCデータソース
 .. _data-access-common_todo_exception:
 
  .. todo::
-
-    **JPA(Hibernate)を使用すると、現状意図しないエラーとなることが発覚している。**
 
     * 一意制約違反が発生した場合、\ ``DuplicateKeyException``\ ではなく、\ ``org.springframework.dao.DataIntegrityViolationException``\ が発生する。
 
@@ -387,7 +382,6 @@ Bean定義したDataSouceを使用する場合の設定
 PlatformTransactionManagerについては、使用するO/R Mapperによって使うクラスがかわるので、詳細設定は、
 
 * \ :doc:`DataAccessMyBatis3`\
-* \ :doc:`DataAccessJpa`\
 
 を参照されたい。
 
@@ -721,18 +715,12 @@ JOIN(Join Fetch)を使用して解決する
 
  | JOIN(Join Fetch)を使用すると、\ **1回のSQLの発行で必要なデータを全て取得することができる。**\
 
- .. note:: **JPQLでJOINする場合**
-
-     JPQLでJOINする場合の実装例については、\ :ref:`data-access-jpa_howtouse_join_fetch`\ を参照されたい。
-
  .. warning::
 
     関連テーブルとの関連が、1:Nの場合は、JOIN(Join Fetch)による解決も可能だが、以下の点に注意すること。
 
     * 1:Nの関連をもつレコードをJOINする場合、関連テーブルのレコード数に比例して、無駄なデータを取得することになる。
       詳細については、\ :ref:`一括取得時の注意事項 <DataAccessMyBatis3AppendixAcquireRelatedObjectsWarningSqlMapping>`\ を参照されたい。
-
-    * JPA(Hibernate)使用する際に、1:NのNの部分が、複数ある場合は、Nの部分を格納するコレクション型は、\ ``java.util.List``\ ではなく、\ ``java.util.Set``\ を使用する必要がある。
 
 
 関連レコードを一括で取得する事で解決する
@@ -981,7 +969,6 @@ LIKE検索を行う場合は、検索条件として使用する値を、LIKE検
 LIKE検索時のエスケープ処理の実装例については、使用するO/R Mapper向けのドキュメントを参照されたい。
 
 * MyBatis3を使用する場合は、\ :doc:`DataAccessMyBatis3`\ の\ :ref:`DataAccessMyBatis3HowToUseLikeEscape`\ を参照されたい。
-* JPA(Spring Data JPA)を使用する場合は、\ :doc:`DataAccessJpa`\ の\ :ref:`data-access-jpa_howtouse_like_escape`\ を参照されたい。
 
 .. note::
 
@@ -1032,15 +1019,6 @@ Sequencerについて
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 | Sequencerは、シーケンス値を取得するための共通ライブラリである。
 | Sequencerから取得したシーケンス値は、データベースのプライマリキーカラムの設定値などとして使用する。
-
- .. note:: **共通ライブラリとしてSequencerを用意した理由**
-
-    Sequencerを用意した理由は、JPAの機能として提供されているID採番機能において、シーケンス値を文字列としてフォーマットする仕組みがないためである。
-    実際のアプリケーション開発では、フォーマットされた文字列をプライマリキーに設定するケースもあるため、共通ライブラリとしてSequencerを提供している。
-
-    プライマリキーに設定する値が数値の場合は、JPAの機能として提供されているID採番機能を使用することを推奨する。JPAのID採番機能については、\ :doc:`DataAccessJpa`\ の\ :ref:`data-access-jpa_how_to_use_way_to_add_entity`\ を参照されたい。
-
-    Sequencerを用意した主な目的は、JPAでサポートされていない機能の補完であるが、JPAと関係ない処理で、シーケンス値が必要な場合に、使用することもできる。
 
 共通ライブラリから提供しているクラスについて
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
