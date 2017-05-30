@@ -87,7 +87,7 @@ URL一覧を以下に示す。
 プロジェクトの作成
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Mavenのアーキタイプを利用し、\ `TERASOLUNA Server Framework for Java (5.x)のブランクプロジェクト <https://github.com/terasolunaorg/terasoluna-gfw-web-blank>`_\ を作成する。
+Mavenのアーキタイプを利用し、\ `TERASOLUNA Server Framework for Java (5.x)のブランクプロジェクト <https://github.com/Macchinetta/macchinetta-gfw-web-blank>`_\ を作成する。
 
 本チュートリアルでは、MyBatis3用のブランクプロジェクトを作成する。
 
@@ -97,9 +97,9 @@ Mavenのアーキタイプを利用し、\ `TERASOLUNA Server Framework for Java
 .. code-block:: console
 
     mvn archetype:generate -B^
-     -DarchetypeGroupId=org.terasoluna.gfw.blank^
-     -DarchetypeArtifactId=terasoluna-gfw-web-blank-mybatis3-archetype^
-     -DarchetypeVersion=5.3.0.RELEASE^
+     -DarchetypeGroupId=com.github.macchinetta.blank^
+     -DarchetypeArtifactId=macchinetta-web-blank-archetype^
+     -DarchetypeVersion=1.4.0.RELEASE^
      -DgroupId=com.example.security^
      -DartifactId=first-springsecurity^
      -Dversion=1.0.0-SNAPSHOT
@@ -504,19 +504,11 @@ AccountSharedServiceの作成
             <jdbc:script location="classpath:/database/${database}-dataload.sql" encoding="UTF-8" />
         </jdbc:initialize-database>
 
-        <!--  REMOVE THIS LINE IF YOU USE JPA
-        <bean id="transactionManager"
-            class="org.springframework.orm.jpa.JpaTransactionManager">
-            <property name="entityManagerFactory" ref="entityManagerFactory" />
-        </bean>
-              REMOVE THIS LINE IF YOU USE JPA  -->
-        <!--  REMOVE THIS LINE IF YOU USE MyBatis3
         <bean id="transactionManager"
             class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
             <property name="dataSource" ref="dataSource" />
             <property name="rollbackOnCommitFailure" value="true" />
         </bean>
-              REMOVE THIS LINE IF YOU USE MyBatis3  -->
     </beans>
 
 .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
@@ -1302,15 +1294,6 @@ Spring Securityと関係のない設定については、説明を割愛する�
                     <property name="codeListIdPattern" value="CL_.+" />
                 </bean>
             </mvc:interceptor>
-            <!--  REMOVE THIS LINE IF YOU USE JPA
-            <mvc:interceptor>
-                <mvc:mapping path="/**" />
-                <mvc:exclude-mapping path="/resources/**" />
-                <mvc:exclude-mapping path="/**/*.html" />
-                <bean
-                    class="org.springframework.orm.jpa.support.OpenEntityManagerInViewInterceptor" />
-            </mvc:interceptor>
-                REMOVE THIS LINE IF YOU USE JPA  -->
         </mvc:interceptors>
 
         <!-- Settings View Resolver. -->

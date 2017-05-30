@@ -1024,8 +1024,7 @@ Serviceの作成単位は主に以下の３パターンとなる。
    * - 3
      - | イベント毎
      - | 画面から発生するイベントと対でServiceを作成する。
-     - | **画面からのイベントを中心にしてアプリケーションを設計・実装する場合で且つ「TERASOLUNA ViSC」を使用してBLogicクラスを生成する場合は、この単位でServiceを作成することになる。**
-       | 本ガイドラインでは、このような単位で作成されるServiceクラスの事を、BLogicと呼ぶ。
+     - | 本ガイドラインでは、このような単位で作成されるServiceクラスの事を、BLogicと呼ぶ。
        |
        | この単位でServiceを作成する場合の特徴としては、基本的にはユースケース毎に作成する際と同じである。
        | ただし、イベント毎にServiceクラスを設計・実装する事になるため、ユースケース毎に作成する場合に比べて、より共通化が行われない可能性が高くなる。
@@ -1049,9 +1048,6 @@ Serviceの作成単位は主に以下の３パターンとなる。
     * 画面からのイベントを処理するための業務ロジックについては、Controller毎のServiceクラスとして作成する。
     * Controller毎のServiceクラスでは、必要に応じてSharedServiceクラスのメソッドを呼び出す事で業務ロジックを実装する。
 
- .. tip::
-
-     「TERASOLUNA ViSC」を使用する場合は、BLogicは設計書から出力される。
 
 |
 
@@ -1418,8 +1414,6 @@ Serviceクラスのメソッド引数と返り値は、以下の点を考慮す�
      #. 入力オブジェクトとは、Serviceのメソッドを実行するために必要な入力値をまとめたオブジェクトのことをさす。
      #. 出力オブジェクトとは、Serviceのメソッドの実行結果（出力値）をまとめたオブジェクトのことをさす。
 
-      「TERASOLUNA ViSC」を使用して、業務ロジック(BLogicクラス)を生成する場合、BLogicの引数と返り値には、入出力オブジェクトを使用することになる。
-
 **メソッド引数/返り値として禁止するものを以下に示す。**
 
  * アプリケーション層の実装アーキテクチャ(Servlet APIやSpringのweb層のAPIなど)に依存するオブジェクト(``javax.servlet.http.HttpServletRequest`` 、 ``javax.servlet.http.HttpServletResponse`` 、 ``javax.servlet.http.HttpSession`` 、 ``org.springframework.http.server.ServletServerHttpRequest`` など)
@@ -1497,7 +1491,6 @@ ServiceおよびSharedServiceでは、アプリケーションで使用する業
 業務データ(Entity)の取得、更新の実装例については、
 
 * MyBatis3を使う場合は、\ :doc:`../ArchitectureInDetail/DataAccessDetail/DataAccessMyBatis3`\
-* JPAを使う場合は、\ :doc:`../ArchitectureInDetail/DataAccessDetail/DataAccessJpa`\
 
 を参照されたい。
 

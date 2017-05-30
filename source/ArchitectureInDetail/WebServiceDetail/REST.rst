@@ -1794,8 +1794,7 @@ RESTful Web Serviceで必要となるSpring MVCのコンポーネントを有効
         | ページ検索が必要ない場合は、本設定は不要であるが、定義があっても問題はない。
     * - | (5)
       - | Spring MVCのインターセプタをbean登録する。
-        | 上記例では、共通ライブラリから提供されている\ ``TraceLoggingInterceptor``\のみを定義しているが、データアクセスとしてJPAを使う場合は、別途\ ``OpenEntityManagerInViewInterceptor``\の設定を追加する必要がある。
-        | \ ``OpenEntityManagerInViewInterceptor``\については、「\ :doc:`../DataAccessDetail/DataAccessJpa`\」を参照されたい。
+        | 上記例では、共通ライブラリから提供されている\ ``TraceLoggingInterceptor``\のみを定義している。
     * - | (6)
       - | RESTful Web Service用のアプリケーション層のコンポーネント(ControllerやHelperクラスなど)をスキャンしてbean登録する。
         | \ ``"com.example.project.api"``\ の部分は\ **プロジェクト毎のパッケージ名となる。**\

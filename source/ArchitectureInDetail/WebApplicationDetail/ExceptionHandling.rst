@@ -267,12 +267,6 @@ Detail
   - ``org.springframework.dao.DuplicateKeyException`` (一意制約違反となった場合に発生する例外)。
   - etc ...
 
-.. todo::
-
-  **JPA(Hibernate)を使用すると、現状意図しないエラーとなることが発覚している。**
-
-  * 一意制約違反が発生した場合、\ ``DuplicateKeyException``\ ではなく、\ ``org.springframework.dao.DataIntegrityViolationException``\ が発生する。
-
 
 .. _exception-handling-exception-type-systemexception-label:
 

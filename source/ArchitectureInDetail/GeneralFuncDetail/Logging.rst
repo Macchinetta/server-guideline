@@ -291,16 +291,9 @@ logback.xml
           <level value="info" />
       </logger>
 
-      <!--  REMOVE THIS LINE IF YOU USE JPA
-      <logger name="org.hibernate.engine.transaction">
-          <level value="debug" />
-      </logger>
-            REMOVE THIS LINE IF YOU USE JPA  -->
-      <!--  REMOVE THIS LINE IF YOU USE MyBatis3
       <logger name="org.springframework.jdbc.datasource.DataSourceTransactionManager">
           <level value="debug" />
       </logger>
-            REMOVE THIS LINE IF YOU USE MyBatis3  -->
 
       <logger name="jdbc.sqltiming">
           <level value="debug" />

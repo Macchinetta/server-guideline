@@ -382,7 +382,7 @@ CSRFのトークンチェックエラー時に発生する例外は以下の通�
 
 \ ``DelegatingAccessDeniedHandler``\クラスを使用して上記の例外をハンドリングし、それぞれに \ ``AccessDeniedHandler``\ インタフェースの実装クラスを割り当てることで、例外毎の遷移先を設定することが可能である。
 
-CSRFトークンチェックエラー時に専用のエラー画面（JSP）に遷移させたい場合は、以下のようなBean定義を行う。(以下の定義例は、`ブランクプロジェクト <https://github.com/terasolunaorg/terasoluna-gfw-web-multi-blank>`_\ からの抜粋である)
+CSRFトークンチェックエラー時に専用のエラー画面（JSP）に遷移させたい場合は、以下のようなBean定義を行う。(以下の定義例は、`ブランクプロジェクト <https://github.com/Macchinetta/macchinetta-web-multi-blank>`_\ からの抜粋である)
 
 * spring-security.xmlの定義例
 

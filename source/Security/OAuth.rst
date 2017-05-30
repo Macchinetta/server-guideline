@@ -112,6 +112,7 @@ OAuth 2.0ではロールとして以下の4つを定義している。
 .. list-table:: **OAuth 2.0におけるロール**
     :header-rows: 1
     :widths: 25 75
+    :class: longtable
 
     * - ロール名
       - 説明
@@ -238,6 +239,7 @@ OAuth 2.0では、グラントタイプとして以下の4つを定義してい�
 .. list-table:: **認可コードグラントフロー**
     :header-rows: 1
     :widths: 10 90
+    :class: longtable
 
     * - 項番
       - 説明
@@ -276,6 +278,7 @@ OAuth 2.0では、グラントタイプとして以下の4つを定義してい�
 .. list-table:: **インプリシットグラントフロー**
     :header-rows: 1
     :widths: 10 90
+    :class: longtable
 
     * - 項番
       - 説明
@@ -363,6 +366,7 @@ OAuth 2.0では、グラントタイプとして以下の4つを定義してい�
 .. list-table:: **アクセストークンの発行から失効までのフロー**
     :header-rows: 1
     :widths: 10 90
+    :class: longtable
 
     * - 項番
       - 説明
@@ -644,6 +648,7 @@ Spring Security OAuthでは、クライアントの基本的な機能の実現�
 .. list-table:: **クライアントの動き**
     :header-rows: 1
     :widths: 10 90
+    :class: longtable
 
     * - 項番
       - 説明
@@ -888,6 +893,7 @@ Spring Security OAuthではクライアント情報を取得するためのイ�
 .. list-table::
     :header-rows: 1
     :widths: 10 90
+    :class: longtable
 
     * - 項番
       - 説明
@@ -1076,6 +1082,7 @@ Spring Security OAuthではクライアント情報を取得するためのイ�
 .. list-table::
     :header-rows: 1
     :widths: 10 90
+    :class: longtable
 
     * - 項番
       - 説明
@@ -1449,6 +1456,7 @@ Spring Securityの詳細については \ :doc:`../../Security/Authentication`\ 
 .. list-table::
     :header-rows: 1
     :widths: 10 20 70
+    :class: longtable
 
     * - 項番
       - 連携方法
@@ -1665,6 +1673,7 @@ HTTPアクセスを介した連携ついては本節のHow To Extendにて説明
 .. list-table::
     :header-rows: 1
     :widths: 10 90
+    :class: longtable
 
     * - 項番
       - 説明
@@ -1856,6 +1865,7 @@ HTTPアクセスを介した連携ついては本節のHow To Extendにて説明
 .. list-table::
     :header-rows: 1
     :widths: 10 90
+    :class: longtable
 
     * - 項番
       - 説明
@@ -1991,10 +2001,10 @@ Spring Security OAuthが用意している主なExpressionを紹介する。
 
 詳細については\ ``OAuth2SecurityExpressionMethods``\の\ `JavaDoc <http://docs.spring.io/spring-security/oauth/apidocs/org/springframework/security/oauth2/provider/expression/OAuth2SecurityExpressionMethods.html>`_\を参照されたい。
 
-.. tabularcolumns:: |p{0.30\linewidth}|p{0.70\linewidth}|
+.. tabularcolumns:: |p{0.35\linewidth}|p{0.65\linewidth}|
 .. list-table:: **Spring Security OAuthが用意しているExpression**
     :header-rows: 1
-    :widths: 30 70
+    :widths: 35 65
 
     * - Expression
       - 説明
@@ -2501,10 +2511,10 @@ OAuth2RestTemplateの設定
 
 |
 
-     .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
+     .. tabularcolumns:: |p{0.35\linewidth}|p{0.65\linewidth}|
      .. list-table::
          :header-rows: 1
-         :widths: 20 80
+         :widths: 35 65
 
          * - 項目
            - 説明
@@ -3003,6 +3013,7 @@ OAuth 2.0機能を独自に実装したAPI例を示す。
 .. list-table::
     :header-rows: 1
     :widths: 10 90
+    :class: longtable
 
     * - 項番
       - 説明

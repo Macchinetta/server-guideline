@@ -1,7 +1,7 @@
 このドキュメントが示すこと
 ================================================================================
 
-本ガイドラインではSpring、Spring MVCやJPA、MyBatisを中心としたフルスタックフレームワークを利用して、
+本ガイドラインではSpring、Spring MVCやMyBatisを中心としたフルスタックフレームワークを利用して、
 保守性の高いWebアプリケーション開発をするためのベストプラクティスを提供する。
 
 本ガイドラインを読むことで、ソフトウェア開発(主にコーディング)が円滑に進むことを期待する。
@@ -93,7 +93,7 @@ Spring Frameworkに関して、本ドキュメントを読むための基礎知�
 ================================================================================
 
 本ガイドラインで説明している内容の動作検証環境については、
-「\ `テスト済み環境 <https://github.com/terasolunaorg/terasoluna-gfw-functionaltest/wiki/Tested-Environment>`_\」を参照されたい。
+「\ `テスト済み環境 <https://github.com/Macchinetta/spring-functionaltest/wiki/Tested-Environment>`_\」を参照されたい。
 
 
 .. raw:: latex

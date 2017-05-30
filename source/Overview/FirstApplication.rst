@@ -49,9 +49,9 @@ Spring MVCを用いたWebアプリケーションの開発に対するイメー�
 .. code-block:: console
 
     mvn archetype:generate -B^
-     -DarchetypeGroupId=org.terasoluna.gfw.blank^
-     -DarchetypeArtifactId=terasoluna-gfw-web-blank-archetype^
-     -DarchetypeVersion=5.3.0.RELEASE^
+     -DarchetypeGroupId=com.github.macchinetta.blank^
+     -DarchetypeArtifactId=macchinetta-web-blank-noorm-archetype^
+     -DarchetypeVersion=1.4.0.RELEASE^
      -DgroupId=com.example.helloworld^
      -DartifactId=helloworld^
      -Dversion=1.0.0-SNAPSHOT
@@ -61,9 +61,9 @@ Spring MVCを用いたWebアプリケーションの開発に対するイメー�
 .. code-block:: console
 
     C:\work>mvn archetype:generate -B^
-    More?  -DarchetypeGroupId=org.terasoluna.gfw.blank^
-    More?  -DarchetypeArtifactId=terasoluna-gfw-web-blank-archetype^
-    More?  -DarchetypeVersion=5.3.0.RELEASE^
+    More?  -DarchetypeGroupId=com.github.macchinetta.blank^
+    More?  -DarchetypeArtifactId=macchinetta-web-blank-noorm-archetype^
+    More?  -DarchetypeVersion=1.4.0.RELEASE^
     More?  -DgroupId=com.example.helloworld^
     More?  -DartifactId=helloworld^
     More?  -Dversion=1.0.0-SNAPSHOT
@@ -79,9 +79,9 @@ Spring MVCを用いたWebアプリケーションの開発に対するイメー�
     [INFO]
     [INFO] --- maven-archetype-plugin:2.4:generate (default-cli) @ standalone-pom ---
     [INFO] Generating project in Batch mode
-    [INFO] Archetype repository not defined. Using the one from [org.terasoluna.gfw.blank:terasoluna-gfw-web-blank-archetype:5.3.0.RELEASE] found in catalog remote
+    [INFO] Archetype repository not defined. Using the one from [com.github.macchinetta.blank:macchinetta-web-blank-noorm-archetype:1.4.0.RELEASE] found in catalog remote
     [INFO] ----------------------------------------------------------------------------
-    [INFO] Using following parameters for creating project from Archetype: terasoluna-gfw-web-blank-archetype:5.3.0.RELEASE
+    [INFO] Using following parameters for creating project from Archetype: macchinetta-web-blank-noorm-archetype:1.4.0.RELEASE
     [INFO] ----------------------------------------------------------------------------
     [INFO] Parameter: groupId, Value: com.example.helloworld
     [INFO] Parameter: artifactId, Value: helloworld
@@ -185,15 +185,6 @@ Spring MVCの設定方法を理解するために、生成されたSpring MVCの
                     <property name="codeListIdPattern" value="CL_.+" />
                 </bean>
             </mvc:interceptor>
-            <!--  REMOVE THIS LINE IF YOU USE JPA
-            <mvc:interceptor>
-                <mvc:mapping path="/**" />
-                <mvc:exclude-mapping path="/resources/**" />
-                <mvc:exclude-mapping path="/**/*.html" />
-                <bean
-                    class="org.springframework.orm.jpa.support.OpenEntityManagerInViewInterceptor" />
-            </mvc:interceptor>
-                REMOVE THIS LINE IF YOU USE JPA  -->
         </mvc:interceptors>
 
         <!-- (3) Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->

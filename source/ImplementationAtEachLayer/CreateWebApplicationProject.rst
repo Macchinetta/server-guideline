@@ -26,23 +26,21 @@ Webアプリケーション向け開発プロジェクトの作成
 
     * - 種別
       - 使用用途
-    * - | `マルチプロジェクト構成のブランクプロジェクト <https://github.com/terasolunaorg/terasoluna-gfw-web-multi-blank>`_
+    * - | `マルチプロジェクト構成のブランクプロジェクト <https://github.com/Macchinetta/macchinetta-web-multi-blank>`_
       - 商用環境にリリースするような本格的なアプリケーションを開発する際に使用する。
 
-        プロジェクトの雛形は、MavenのArchetypeとして、以下の3種類を用意している。
+        プロジェクトの雛形は、MavenのArchetypeとして、以下の1種類を用意している。
 
         * MyBatis3用の設定が盛り込まれた雛形
-        * JPA(Spring Data JPA)用の設定が盛り込まれた雛形
 
         **本ガイドラインでは、マルチプロジェクト構成のプロジェクトを使用する事を推奨している。**
-    * - | `シングルプロジェクト構成のブランクプロジェクト <https://github.com/terasolunaorg/terasoluna-gfw-web-blank>`_
+    * - | `シングルプロジェクト構成のブランクプロジェクト <https://github.com/Macchinetta/macchinetta-web-blank>`_
       - POC(Proof Of Concept)、プロトタイプ、サンプルなどの簡易的なアプリケーションを作成する際に使用する。
 
-        プロジェクトの雛形は、MavenのArchetypeとして、以下の4種類を用意している。
+        プロジェクトの雛形は、MavenのArchetypeとして、以下の2種類を用意している。
         (EclipseのWTP用のプロジェクトも用意しているが、本節では説明は割愛する)
 
         * MyBatis3用の設定が盛り込まれた雛形
-        * JPA(Spring Data JPA)用の設定が盛り込まれた雛形
         * O/R Mapperに依存しない雛形
 
         本ガイドラインでは、各種チュートリアルをシングルプロジェクトを使用して行う手順となっている。
@@ -69,7 +67,7 @@ Webアプリケーション向け開発プロジェクトの作成
 
 |
 
-マルチプロジェクトを作成するためのArchetypeとして、以下の2種類を用意している。
+マルチプロジェクトを作成するためのArchetypeとして、以下の1種類を用意している。
 
 .. tabularcolumns:: |p{0.05\linewidth}|p{0.30\linewidth}|p{0.65\linewidth}|
 .. list-table::
@@ -80,11 +78,8 @@ Webアプリケーション向け開発プロジェクトの作成
       - Archetype(ArtifactId)
       - 説明
     * - 1.
-      - terasoluna-gfw-multi-web-blank-mybatis3-archetype
+      - macchinetta-multi-web-blank-archetype
       - O/R MapperとしてMyBatis3を使用するためのプロジェクトを生成するためのArchetype。
-    * - 2.
-      - terasoluna-gfw-multi-web-blank-jpa-archetype
-      - O/R MapperとしてJPA(with Spring Data JPA and Hibernate)を使用するためのプロジェクトを生成するためのArchetype。
 
 |
 
@@ -101,9 +96,9 @@ Webアプリケーション向け開発プロジェクトの作成
 .. code-block:: console
 
     mvn archetype:generate -B^
-     -DarchetypeGroupId=org.terasoluna.gfw.blank^
-     -DarchetypeArtifactId=terasoluna-gfw-multi-web-blank-mybatis3-archetype^
-     -DarchetypeVersion=5.3.0.RELEASE^
+     -DarchetypeGroupId=com.github.macchinetta.blank^
+     -DarchetypeArtifactId=macchinetta-multi-web-blank-archetype^
+     -DarchetypeVersion=1.4.0.RELEASE^
      -DgroupId=com.example.todo^
      -DartifactId=todo^
      -Dversion=1.0.0-SNAPSHOT
@@ -122,12 +117,10 @@ Webアプリケーション向け開発プロジェクトの作成
     * - | \-DarchetypeArtifactId
       - ブランクプロジェクトのarchetypeId(雛形を特定するためのID)を指定する。**(カスタマイズが必要)**
 
-        以下の何れかのarchetypeIdを指定する。
+        以下のarchetypeIdを指定する。
 
-        * ``terasoluna-gfw-multi-web-blank-mybatis3-archetype``
-        * ``terasoluna-gfw-multi-web-blank-jpa-archetype``
+        * ``macchinetta-multi-web-blank-archetype``
 
-        上記例では、\ ``terasoluna-gfw-multi-web-blank-mybatis3-archetype``\ を指定している。
     * - | \-DarchetypeVersion
       - ブランクプロジェクトのバージョンを指定する。(固定)
     * - | \-DgroupId
@@ -152,7 +145,7 @@ Webアプリケーション向け開発プロジェクトの作成
 
     (... omit)
     [INFO] ----------------------------------------------------------------------------
-    [INFO] Using following parameters for creating project from Archetype: terasoluna-gfw-multi-web-blank-mybatis3-archetype:5.3.0.RELEASE
+    [INFO] Using following parameters for creating project from Archetype: macchinetta-multi-web-blank-archetype:1.4.0.RELEASE
     [INFO] ----------------------------------------------------------------------------
     [INFO] Parameter: groupId, Value: com.example.todo
     [INFO] Parameter: artifactId, Value: todo
@@ -257,10 +250,10 @@ Maven Archetypeで作成したプロジェクトのPOMファイルでは、
 
     <!-- ... -->
 
-    <name>TERASOLUNA Server Framework for Java (5.x) Web Blank Multi Project</name>
-    <description>Web Blank Multi Project using TERASOLUNA Server Framework for Java (5.x)</description>
-    <url>http://terasoluna.org</url>
-    <inceptionYear>2014</inceptionYear>
+    <name>Macchinetta Server Framework (1.x) Web Blank Multi Project</name>
+    <description>Web Blank Multi Project using Macchinetta Server Framework (1.x)</description>
+    <url>http://macchietta.github.io</url>
+    <inceptionYear>2017</inceptionYear>
     <licenses>
         <license>
             <name>Apache License, Version 2.0</name>
@@ -269,9 +262,21 @@ Maven Archetypeで作成したプロジェクトのPOMファイルでは、
         </license>
     </licenses>
     <organization>
-        <name>TERASOLUNA Framework Team</name>
-        <url>http://terasoluna.org</url>
+        <name>Macchinetta Framework Team</name>
+        <url>http://macchinetta.github.io</url>
     </organization>
+    <developers>
+        <developer>
+            <name>Macchinetta</name>
+            <organization>Macchinetta</organization>
+            <organizationUrl>http://macchinetta.github.io</organizationUrl>
+        </developer>
+    </developers>
+    <scm>
+        <connection>scm:git:git@github.com:Macchinetta/macchinetta-web-multi-blank.git</connection>
+        <developerConnection>scm:git:git@github.com:Macchinetta/macchinetta-web-multi-blank</developerConnection>
+        <url>git@github.com:Macchietta/macchinetta-web-multi-blank</url>
+    </scm>
 
     <!-- ... -->
 
@@ -1837,8 +1842,7 @@ Mavenはオンライン環境での動作が前提であるが、
 	[INFO] ------------------------------------------------------------------------
 	[INFO] Reactor Summary:
 	[INFO]
-	[INFO] TERASOLUNA Server Framework for Java (5.x) Web Blank Multi Project (MyBa
-	tis3) SUCCESS [  0.006 s]
+	[INFO] Macchinetta Server Framework (1.x) Web Blank Multi Project SUCCESS [  0.006 s]
 	[INFO] todo-env ........................................... SUCCESS [ 46.565 s]
 	[INFO] todo-domain ........................................ SUCCESS [  0.684 s]
 	[INFO] todo-web ........................................... SUCCESS [ 12.832 s]

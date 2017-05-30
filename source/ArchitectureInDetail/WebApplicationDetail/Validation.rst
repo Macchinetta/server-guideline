@@ -2212,7 +2212,7 @@ Spring MVCによるBean Validationのエラーメッセージは、以下の順�
     * マルチプロジェクト構成を採用する場合は、\ ``ValidationMessages.properties``\ ファイルを複数のプロジェクトに配置しないように注意すること。
     * Bean Validation用の共通部品をjarファイルとして配布する際に、\ ``ValidationMessages.properties``\ ファイルをjarファイルの中に含めないように注意すること。
 
-    なお、version 1.0.2.RELEASE以降の `ブランクプロジェクト <https://github.com/terasolunaorg/terasoluna-gfw-web-multi-blank>`_ \ からプロジェクトを生成した場合は、
+    なお、version 1.0.2.RELEASE以降の `ブランクプロジェクト <https://github.com/Macchinetta/macchinetta-web-multi-blank>`_ \ からプロジェクトを生成した場合は、
     \ ``xxx-web/src/main/resources``\ の直下に\ ``ValidationMessages.properties``\ が格納されている。
 
 |

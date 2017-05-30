@@ -1671,7 +1671,7 @@ WebServiceインターフェースを実装したプロキシを生成する\ ``
          BindingProvider provider = (BindingProvider) todoWebService;
          int status = (int) provider.getResponseContext().get(MessageContext.HTTP_RESPONSE_CODE);
 
-    \ ``BindingProvider``\ の詳細については \ `The Java API for XML-Based Web Services(JAX-WS) 2.2 -4.2 javax.xml.ws.BindingProvider- <http://www.google.co.jp/url?sa=t&rct=j&q=&esrc=s&source=web&cd=1&cad=rja&uact=8&ved=0ahUKEwj1z_exk7TOAhUDnpQKHbk6AgwQFggfMAA&url=http%3A%2F%2Fdownload.oracle.com%2Fotn-pub%2Fjcp%2Fjaxws-2.2-mrel3-evalu-oth-JSpec%2Fjaxws-2_2-mrel3-spec.pdf&v6u=https%3A%2F%2Fs-v6exp1-ds.metric.gstatic.com%2Fgen_204%3Fip%3D163.135.151.80%26ts%3D1470739411479764%26auth%3Dk5tkj3erhgejiufbavruvdinx2iknps5%26rndm%3D0.9131593964234974&v6s=2&v6t=48530&usg=AFQjCNEfBm6Ji-bQy9GDL8l5crz9PZ188w&bvm=bv.129389765,d.dGo>`_\ を参照されたい。
+    \ ``BindingProvider``\ の詳細については \ `The Java API for XML-Based Web Services(JAX-WS) 2.2 -4.2 javax.xml.ws.BindingProvider- <http://download.oracle.com/otn-pub/jcp/jaxws-2.2-mrel3-evalu-oth-JSpec/jaxws-2_2-mrel3-spec.pdf>`_\ を参照されたい。
     
     ただし、クライアントの依存関係にApatch CXFライブラリが含まれる場合、通信エラー時に上記の方法でレスポンスの情報を取得することができない。
     これは、依存関係にApatch CXFライブラリが含まれる場合は自動的にApatch CXFのプロキシが使用されるため、およびApache CXFのプロキシは通信エラーが発生した場合にレスポンスの情報をレスポンスコンテキストに保持しないためである。
