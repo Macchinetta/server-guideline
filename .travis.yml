@@ -1,0 +1,21 @@
+sudo: false
+language: python
+python:
+  - "3.4"
+
+install:
+  - pip install --upgrade pip
+  - pip install -r requirements.txt
+  - mkdir -p $HOME/tmp/sphinx
+
+before_script:
+  - ERROR_LOG_FILE=$HOME/tmp/sphinx/build-error.log
+
+script:
+  - sh ./build-html.sh 2> $ERROR_LOG_FILE
+  - cat $ERROR_LOG_FILE
+
+after_script:
+  - ERROR_COUNT=`grep ERROR $ERROR_LOG_FILE | wc -l`
+  - WARNING_COUNT=`grep WARNING $ERROR_LOG_FILE | wc -l`
+  - if [[ $ERROR_COUNT -ne 0 || $WARNING_COUNT -ne 0 ]]; then echo "Build is failed. Please fix errors or warnings."; exit 1; fi

@@ -1,0 +1,14 @@
+.svn
+build
+build_en
+build-html_en.bat
+build-html_en.sh
+build-pdf_en.sh
+target
+source_en
+conf/latexpdfen
+.classpath
+.project
+.settings
+.idea
+*.iml
