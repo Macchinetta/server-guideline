@@ -109,7 +109,7 @@ Viewのレイアウトを共通化する場合は、
 利用するOSSのバージョン
 --------------------------------------------------------------------------------
 
-version 1.4.0.RELEASEで利用するOSSの一覧を以下に示す。
+version 1.4.1.RELEASEで利用するOSSの一覧を以下に示す。
 
 .. tip::
 
@@ -125,7 +125,7 @@ version 1.4.0.RELEASEで利用するOSSの一覧を以下に示す。
     への依存関係を解決しており、
     Macchinetta Server Framework (1.x)で使用するOSSのバージョンは、原則として、Spring IO platformの定義に準じている。
 
-    なお、version 1.4.0.RELEASEで指定しているSpring IO platformのバージョンは、`Athens-SR2 <http://docs.spring.io/platform/docs/Athens-SR2/reference/htmlsingle/>`_\ である。
+    なお、version 1.4.1.RELEASEで指定しているSpring IO platformのバージョンは、`Athens-SR2 <http://docs.spring.io/platform/docs/Athens-SR2/reference/htmlsingle/>`_\ である。
 
 .. tabularcolumns:: |p{0.15\linewidth}|p{0.27\linewidth}|p{0.25\linewidth}|p{0.15\linewidth}|p{0.05\linewidth}|p{0.08\linewidth}|
 .. list-table::

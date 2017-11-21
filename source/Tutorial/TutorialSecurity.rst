@@ -99,7 +99,7 @@ Mavenのアーキタイプを利用し、\ `TERASOLUNA Server Framework for Java
     mvn archetype:generate -B^
      -DarchetypeGroupId=com.github.macchinetta.blank^
      -DarchetypeArtifactId=macchinetta-web-blank-archetype^
-     -DarchetypeVersion=1.4.0.RELEASE^
+     -DarchetypeVersion=1.4.1.RELEASE^
      -DgroupId=com.example.security^
      -DartifactId=first-springsecurity^
      -Dversion=1.0.0-SNAPSHOT
