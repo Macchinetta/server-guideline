@@ -37,14 +37,14 @@ How to use
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Ajax向けのアプリケーションの設定について説明する。
 
-.. warning:: **StAX(Streaming API for XML)使用時のDOS攻撃対策について**
+.. warning:: **StAX(Streaming API for XML)使用時のDoS攻撃対策について**
 
-    XML形式のデータをStAXを使用して解析する場合は、DTDを使ったDOS攻撃を受けないように対応する必要がある。
+    XML形式のデータについてStAXを使用して解析する場合は、DTDを使ったDoS攻撃を受けないように対応する必要がある。
     詳細は、\ `CVE-2015-3192 - DoS Attack with XML Input <http://pivotal.io/security/cve-2015-3192>`_\ を参照されたい。
 
 Spring MVCのAjax関連の機能を有効化するための設定
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-Ajax通信時で使用されるContent-Type(``"application/xml"`` や ``"application/json"`` など)を、Controllerのハンドラメソッドでハンドリングできるようにする。
+Ajax通信時で使用されるContent-Type(``application/xml`` や ``application/json`` など)を、Controllerのハンドラメソッドでハンドリングできるようにする。
 
 - :file:`spring-mvc.xml`
 
@@ -194,7 +194,7 @@ Ajax通信時で使用されるContent-Type(``"application/xml"`` や ``"applica
        * - | (1)
          - | Spring-oxm を依存アーティファクトとして追加する。
        * - | (2)
-         - | Springのバージョンは、terasoluna-gfw-parent の :file:`pom.xml` に定義されているSpringのバージョン番号を管理するためのプレースフォルダ(${org.springframework-version})から取得すること。
+         - | Springのバージョンは、terasoluna-gfw-parent の :file:`pom.xml` に定義されているSpringのバージョン番号を管理するためのプレースホルダ(${org.springframework-version})から取得すること。
 
 
 
@@ -478,12 +478,12 @@ Ajaxを使ってデータを取得する方法について説明する。
        | 上記例では、ボタンの押下をAjax通信のトリガーとしているが、テキストボックスのキーダウンやキーアップをトリガーとすることでリアルタイム検索などを実現することができる。
    * - | (14)
      - | レスポンスとして受け取るデータ形式を指定する。
-       | 上記例では ``"json"`` を指定しているため、Acceptヘッダーに ``"application/json"`` が設定される。
+       | 上記例では ``json`` を指定しているため、Acceptヘッダーに ``application/json`` が設定される。
    * - | (15)
-     - | Ajax通信が正常終了した時(Httpステータスコードが ``"200"`` の時)の処理を実装する。
+     - | Ajax通信が正常終了した時(Httpステータスコードが ``200`` の時)の処理を実装する。
        | 上記例では、実装は省略している。
    * - | (16)
-     - | Ajax通信が正常終了しなかった時(Httpステータスコードが ``"4xx"`` や ``"5xx"`` の時)の処理を実装する。
+     - | Ajax通信が正常終了しなかった時(Httpステータスコードが ``4xx`` や ``5xx`` の時)の処理を実装する。
        | 上記例では、実装は省略している。
        | エラー処理の実装例は、 :ref:`ajax_post_formdata` を参照されたい。
 
@@ -499,7 +499,7 @@ Ajaxを使ってデータを取得する方法について説明する。
 
 - リクエストデータ
 
- .. code-block:: guess
+ .. code-block:: http
     :emphasize-lines: 1,4
 
     GET /macchinetta-web-blank/ajax/search?freeWord= HTTP/1.1
@@ -517,7 +517,7 @@ Ajaxを使ってデータを取得する方法について説明する。
 
 - レスポンスデータ
 
- .. code-block:: guess
+ .. code-block:: http
     :emphasize-lines: 4, 8
 
     HTTP/1.1 200 OK
@@ -791,7 +791,7 @@ Ajaxを使ってフォームのデータをPOSTし、処理結果を取得する
 
 - リクエストデータ
 
- .. code-block:: guess
+ .. code-block:: http
     :emphasize-lines: 1,5,7,10,16
 
     POST /macchinetta-web-blank/ajax/plusForForm HTTP/1.1
@@ -815,7 +815,7 @@ Ajaxを使ってフォームのデータをPOSTし、処理結果を取得する
 
 - レスポンスデータ
 
- .. code-block:: guess
+ .. code-block:: http
     :emphasize-lines: 4, 8
 
     HTTP/1.1 200 OK
@@ -832,7 +832,7 @@ Ajaxを使ってフォームのデータをPOSTし、処理結果を取得する
 - エラー時のレスポンスデータ
   下記のレスポンスデータは、入力エラーが発生時のものである。
 
- .. code-block:: guess
+ .. code-block:: http
     :emphasize-lines: 1, 4, 9
 
     HTTP/1.1 400 Bad Request
@@ -934,7 +934,7 @@ Ajaxを使ってフォームのデータをJSON形式に変換してからPOST�
    * - | (2)
      - | フォーム内のinput項目をJSON形式の文字列にするための関数。
    * - | (3)
-     - | リクエストBodyにJSONを格納するので、Content-Typeのメディアタイプを ``"application/json"`` にする。
+     - | リクエストBodyにJSONを格納するので、Content-Typeのメディアタイプを ``application/json`` にする。
 
 
 |
@@ -944,7 +944,7 @@ Ajaxを使ってフォームのデータをJSON形式に変換してからPOST�
 
 - リクエストデータ
 
- .. code-block:: guess
+ .. code-block:: http
     :emphasize-lines: 10,16
 
     POST /macchinetta-web-blank/ajax/plusForJson HTTP/1.1
@@ -985,7 +985,7 @@ Ajaxを使ってフォームのデータをJSON形式に変換してからPOST�
 BindException のハンドリング
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 | ``org.springframework.validation.BindException`` は、 リクエストパラメータとして送信したデータをJavaBeanにバインドする際に、入力値に不正な値が指定された場合に発生する例外クラスである。
-| GET時のリクエストパラメータや、フォームデータを ``"application/x-www-form-urlencoded"`` の形式として受け取る場合は、 ``BindException`` の例外ハンドリングが必要となる。
+| GET時のリクエストパラメータや、フォームデータを ``application/x-www-form-urlencoded`` の形式として受け取る場合は、 ``BindException`` の例外ハンドリングが必要となる。
 
 - Controller
 
@@ -1143,7 +1143,7 @@ BindException のハンドリング
 MethodArgumentNotValidException のハンドリング
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 | ``org.springframework.web.bind.MethodArgumentNotValidException`` は、 ``@RequestBody`` アノテーションを使用してリクエストBodyに格納されているデータをJavaBeanにバインドする際に、入力値に不正な値が指定された場合に発生する例外クラスである。
-| ``"application/json"`` や ``"application/xml"`` などの形式として受け取る場合は、 ``MethodArgumentNotValidException`` の例外ハンドリングが必要となる。
+| ``application/json`` や ``application/xml`` などの形式として受け取る場合は、 ``MethodArgumentNotValidException`` の例外ハンドリングが必要となる。
 
 - Controller
 
@@ -1179,13 +1179,13 @@ MethodArgumentNotValidException のハンドリング
 HttpMessageNotReadableException のハンドリング
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 | ``org.springframework.http.converter.HttpMessageNotReadableException`` は、 ``@RequestBody`` アノテーションを使用してリクエストBodyに格納されているデータをJavaBeanにバインドする際に、Bodyに格納されているデータからJavaBeanを生成できなかった場合に発生する例外クラスである。
-| ``"application/json"`` や ``"application/xml"`` などの形式として受け取る場合は、 ``MethodArgumentNotValidException`` の例外ハンドリングが必要となる。
+| ``application/json`` や ``application/xml`` などの形式として受け取る場合は、 ``MethodArgumentNotValidException`` の例外ハンドリングが必要となる。
 
     .. note::
 
         具体的なエラー原因は、使用する ``HttpMessageConverter`` や利用するライブラリの実装によって異なる。
 
-        JSON形式のデータをJacksonを使ってJavaBeanに変換する ``MappingJackson2HttpMessageConverter`` の実装では、Integer項目に数値以外の文字列を指定すると、 ``HttpMessageNotReadableException`` が発生する。
+        JSON形式のデータについてJacksonを使用してJavaBeanに変換する ``MappingJackson2HttpMessageConverter`` の実装では、Integer項目に数値以外の文字列を指定すると、 ``HttpMessageNotReadableException`` が発生する。
 
 - Controller
 

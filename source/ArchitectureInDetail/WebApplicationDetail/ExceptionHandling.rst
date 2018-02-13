@@ -604,7 +604,7 @@ Detail
 #. **Controllerクラスは、メッセージ情報(ResultMessage)を生成し、画面表示用としてModelに設定する。**
 #. **Controllerクラスは、遷移先のView名を返却する。**
 #. ExceptionHandlerExceptionResolverは、Controllerより返却されたView名を返却する。
-#. HandlerExceptionResolverLoggingInterceptorは、ExceptionLoggerを呼び出し、例外コードに対応するレベル(info, warn, error)のログ(監視ログとアプリケーションログ)を出力する。
+#. HandlerExceptionResolverLoggingInterceptorは、ExceptionLoggerを呼び出し、HTTPステータスコードに対応するレベル(info, warn, error)のログ(監視ログとアプリケーションログ)を出力する。
 #. HandlerExceptionResolverLoggingInterceptorは、ExceptionHandlerExceptionResolverより返却されたView名を返却する。
 #. DispatcherServletは、返却されたView名に対応するJSPを呼び出す。
 #. **JSPは、MessagesPanelTagを使用して、メッセージ情報(ResultMessage)を取得し、メッセージ表示用のHTMLコードを生成する。**
@@ -631,7 +631,7 @@ Detail
 #. DispatcherServletは、SystemExceptionを捕捉し、SystemExceptionResolverを呼び出す。
 #. SystemExceptionResolverは、SystemExceptionから例外コードを取得し、画面表示用にHttpServletRequestに設定する(6')。
 #. SystemExceptionResolverは、SystemException発生時の遷移先のView名を返却する。
-#. HandlerExceptionResolverLoggingInterceptorは、ExceptionLoggerを呼び出し、例外コードに対応するレベル(info, warn, error)のログ(監視ログとアプリケーションログ)を出力する。
+#. HandlerExceptionResolverLoggingInterceptorは、ExceptionLoggerを呼び出し、HTTPステータスコードに対応するレベル(info, warn, error)のログ(監視ログとアプリケーションログ)を出力する。
 #. HandlerExceptionResolverLoggingInterceptorは、SystemExceptionResolverより返却されたView名を返却する。
 #. DispatcherServletは、返却されたView名に対応するJSPを呼び出す。
 #. **JSPは、HttpServletRequestより例外コードを取得し、メッセージ表示用のHTMLコードに埋め込む。**
@@ -656,7 +656,7 @@ Webアプリケーション単位でサーブレットコンテナがハンド�
   **図-Webアプリケーション単位でサーブレットコンテナがハンドリングする場合の基本フロー**
 
 4. DispatcherServletは、XxxErrorを捕捉し、ServletExceptionにラップしてスローする。
-#. ExceptionLoggingFilterは、ServletExceptionを捕捉し、ExceptionLoggerを呼び出す。ExceptionLoggerは、例外コードに対応するレベル(info, warn, error)のログ(監視ログとアプリケーションログ)を出力する。ExceptionLoggingFilterは、ServletExceptionを再スローする。
+#. ExceptionLoggingFilterは、ServletExceptionを捕捉し、ExceptionLoggerを呼び出す。ExceptionLoggerは、errorレベルのログ(監視ログとアプリケーションログ)を出力する。ExceptionLoggingFilterは、ServletExceptionを再スローする。
 #. ServletContainerは、ServletExceptionを捕捉し、サーバログにログを出力する。ログのレベルは、アプリケーションサーバによって異なる。
 #. ServletContainerは、``web.xml`` に定義されている遷移先(HTMLなど)を呼び出す。
 #. 呼び出された遷移先で生成されたレスポンスが表示される。
@@ -733,12 +733,12 @@ How to use
       - | \ ``ExceptionCodeResolver``\ を、bean定義に追加する。
     * - | (2)
       - | ハンドリング対象とする例外名と、適用する「例外コード(メッセージID)」のマッピングを指定する。
-        | 上記の設定例では、例外クラス(又は親クラス)のクラス名に、"BusinessException"が含まれている場合は、"w.xx.fw.8001"、 "ResourceNotFoundException"が含まれている場合は、"w.xx.fw.5001"が「例外コード(メッセージID)」となる。
+        | 上記の設定例では、例外クラス(又は親クラス)のクラス名に、"BusinessException"が含まれている場合は、"e.xx.fw.8001"、 "ResourceNotFoundException"が含まれている場合は、"e.xx.fw.5001"が「例外コード(メッセージID)」となる。
 
         .. note:: **例外コード(メッセージID)について**
 
              ここでは、"BusinessException"に、メッセージIDが指定されなかった場合の対応で定義をしているが、
-             後述の"BusinessException"を発生させる実装側で、「例外コード(メッセージID)」を指定することを推奨する。
+             後述の"BusinessException"を発生させる実装側で、メッセージIDを指定することを推奨する。
              "BusinessException"に対する「例外コード(メッセージID)」の指定は、"BusinessException"発生時に指定されなかった場合の救済策である。
 
         | **【プロジェクト毎にカスタマイズする箇所】**
@@ -749,8 +749,8 @@ How to use
 
         .. note:: **例外コード(メッセージID)について**
 
-             例外コードは、ログに出力するのみ。（画面での取得もできる。JSPへのリンク）
-             プロパティに定義している形式でなくとも、運用上でわかるIDにすることが可能である。
+             例外コードは、ExceptionLoggerによりログに出力される。（画面での取得も可能である。View(JSP)から例外コードを参照する方法については、\ :ref:`exception-handling-how-to-use-codingpoint-jsp-exceptioncode-label`\ を参照されたい。）
+             またコード体系については、プロパティに定義している形式でなくともよい。
              例えば、MA7001等
 
     * - | (4)
@@ -855,7 +855,7 @@ How to use
         .. note:: **アプリケーションログ出力用のappender定義について**
 
              アプリケーションログ用のappenderは、例外出力用に個別に定義するのではなく、フレームワークや、アプリケーションコードで出力するログ用のappenderと、同じものを使うことを推奨する。
-             同じ出力先にすることで、例外の発生するまでの過程が追いやすくなる。
+             同じ出力先にすることで、例外が発生するまでの過程が追いやすくなる。
 
     * - | (3)
       - | 出力レベルを指定する。ExceptionLoggerでは、info, warn, errorの3種類のログを出力しているが、システム要件にあったレベルを指定すること。本ガイドラインでは、infoレベルを推奨する。
@@ -1123,7 +1123,7 @@ ResultMessagesを保持する例外(BisinessException,ResourceNotFoundException)
 
 - 出力ログ
 
- .. code-block:: guess
+ .. code-block:: text
 
     date:2013-09-25 19:51:52	thread:tomcat-http--3	X-Track:f94de92148f1489b9ceeac3b2f17c969	level:ERROR	logger:o.t.gfw.common.exception.ExceptionLogger        	message:[e.xx.fw.9001] An exception occurred processing JSP page /WEB-INF/views/exampleJSPException.jsp at line 13
 
@@ -1453,6 +1453,14 @@ Spring MVCの、デフォルトの例外ハンドリング機能によって行�
 ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 | 例外をキャッチして、処理を継続させる必要がある場合、発生した例外をログに出力してから、処理を継続するようにする。
 
+
+ .. note:: **監視ログの出力について**
+
+    発生した例外をログに出力する際には、例外の種類に応じて監視ログを出力する事を検討する。
+    共通ライブラリでは、アプリケーションログと監視ログを同時に出力する機能を持つ\ ``org.terasoluna.gfw.common.exception.ExceptionLogger``\を提供している。
+    アプリケーションログと合わせて、監視ログの出力も必要となる場合には、\ ``ExceptionLogger``\を使用する事を推奨する。
+
+
 | 下記は、外部システムから、顧客対応履歴の取得に失敗した場合に、顧客対応履歴以外の情報を取得する処理を、継続する場合の例である。
 | この例では、顧客対応履歴の情報が取得できなくても、業務は継続できるため、処理を継続している。
 
@@ -1485,17 +1493,21 @@ Spring MVCの、デフォルトの例外ハンドリング機能によって行�
     * - 項番
       - 説明
     * - | (1)
-      - | 共通ライブラリで提供している\ ``org.terasoluna.gfw.common.exception.ExceptionLogger``\ をログ出力するため、オブジェクトをDIする。
+      - | ログ出力のため、共通ライブラリで提供している\ ``org.terasoluna.gfw.common.exception.ExceptionLogger``\ をDIする。
     * - | (2)
-      - | ハンドリング対象の例外を、キャッチする。
+      - | ハンドリング対象の例外をキャッチする。
     * - | (3)
-      - | ハンドリングした例外を、ログに出力する。例では、logメソッドを呼び出しているが、出力レベルが決まっており、
+      - | \ ``ExceptionLogger``\を利用して、キャッチした例外をログに出力する。例では、例外コードに応じた出力レベルでログ出力するためlogメソッドを呼び出しているが、出力レベルが決まっており、
         | 後に変更する可能性がない場合は、info、warn、errorメソッドを直接呼び出してもよい。
     * - | (4)
       - | (3)でログを出力したのみで、処理を継続する。
 
 
-下記のような、アプリケーションログが出力される。
+| 上記例の場合、以下のような、アプリケーションログ、及び監視ログが出力される。
+| なお、この挙動は、\ ``ExceptionCodeResolver``\ の設定がデフォルトの場合を前提としている。
+| \ ``ExceptionCodeResolver``\ については、\ :ref:`exception-handling-about-classes-of-library-label`\ を参照されたい。
+
+* アプリケーションログ
 
  .. code-block:: console
 
@@ -1504,15 +1516,21 @@ Spring MVCの、デフォルトの例外ハンドリング機能によって行�
   ...
   // stackTarace omitted
 
- .. warning::
-
-    \ ``exceptionLogger``\ で、log()を使用した場合には、errorレベルで出力されるため、デフォルトで監視ログにも出力される。
+* 監視ログ
 
  .. code-block:: console
 
       date:2013-09-19 21:31:47	X-Track:df5271ece2304b12a2c59ff494806397	level:ERROR	message:[e.xx.fw.9001] Test example exception
 
-次の例のように、処理を継続させて問題ない場合に、運用監視で監視ログを監視している場合は、出力レベルで監視されないレベルにするか、メッセージから監視されないよう定義が必要である。
+| \ ``ExceptionLogger``\を利用してログ出力する場合、デフォルトの設定では、errorレベルのログが監視ログに出力される。
+| その為、処理を継続させて問題ない場合など、\ ``ExceptionLogger``\を利用してログ出力する際に監視ログへの出力対象外にするには、error以外のログレベルで出力すれば良い。
+| これには、以下のいずれかの方法を取れば良い。
+
+* infoまたはwarnメソッドでログ出力する。
+* \ ``ExceptionCodeResolver``\で該当する例外の例外コードの先頭をe（error）以外に設定し、logメソッドでログ出力する。
+* ログ出力する例外が\ ``SystemException``\である場合には、セットする例外コードの先頭をe（error）以外に設定し、logメソッドでログ出力する。
+
+次の例では、infoメソッドでログ出力する例を示す。
 
  .. code-block:: java
 
@@ -1520,7 +1538,7 @@ Spring MVCの、デフォルトの例外ハンドリング機能によって行�
           exceptionLogger.info(e);
       }
 
- | デフォルトの設定では、errorレベル以外の監視ログは出力されない。アプリケーションログには、以下のように出力される。
+上記例の場合は、以下のようにアプリケーションログのみが出力される。
 
  .. code-block:: console
 
@@ -1670,16 +1688,11 @@ Spring MVCの、デフォルトの例外ハンドリング機能によって行�
 
 .. tip::
 
-    Internet Explorerがサポートブラウザとなっている場合は、
-    エラー画面として応答するHTMLのサイズが513バイト以上になるように実装する必要がある。
+    アプリケーションでInternet Explorer/Microsoft Edgeをサポートする場合、エラー画面の応答として生成されるHTMLのサイズに注意する必要がある。
 
-    Internet Explorerでは、
-    
-    * 応答されたステータスコードがエラー系(4xxと5xx)
-    * 応答されたHTMLが512バイト以下
-    * ブラウザの設定が「HTTP簡易メッセージを表示する」が有効な状態
-    
-    という３つの条件を充たした際に、Internet Explorerが用意している簡易メッセージが表示される仕組みになっているためである。
+    Internet Explorer/Microsoft Edgeでは、応答されたHTMLのサイズが規定値以下だと、アプリケーションが用意したエラー画面の代わりに、Internet Explorer/Microsoft Edgeが用意した簡易メッセージが表示されるためである。
+
+    参考までに、Internet Explorerでの詳細な条件は、「`Friendly HTTP Error Pages <https://blogs.msdn.microsoft.com/ieinternals/2010/08/18/friendly-http-error-pages/>`_」を参照されたい。
 
 .. _exception-handling-how-to-use-codingpoint-jsp-panel-label:
 
@@ -1844,24 +1857,24 @@ Appendix
    * - | (8)
      - | BusinessException
      - | ビジネスルールの違反を検知したことを通知するための例外クラスで、ドメイン層のロジックで発生させる例外である。
-       | \ ``java.lang.RumtimeException``\ を継承しているため、デフォルトの動作として、トランザクションは、ロールバックされる。
+       | \ ``java.lang.RuntimeException``\ を継承しているため、デフォルトの動作として、トランザクションは、ロールバックされる。
        | トランザクションをコミットしたい場合は、\ ``@Transactional``\ アノテーションの noRollbackFor 、または noRollbackForClassName に、本例外クラスを指定する必要がある。
    * - | (9)
      - | Resource
        | NotFoundException
      - | 指定されたリソース（データ）が、システム内に存在しないことを通知するための例外クラスで、主に、ドメイン層のロジックで発生させる例外である。
-       | ``java.lang.RumtimeException`` を継承しているため、デフォルトの動作として、トランザクションは、ロールバックされる。
+       | ``java.lang.RuntimeException`` を継承しているため、デフォルトの動作として、トランザクションは、ロールバックされる。
    * - | (10)
      - | ResultMessages
        | Notification
        | Exception
      - | 結果メッセージ（\ ``ResultMessages``\ ）を保持している例外であることを通知するための抽象例外クラスで、共通ライブラリでは、\ ``BusinessException``\ と、\ ``ResourceNotFoundException``\ が継承している。
-       | \ ``java.lang.RumtimeException``\ を継承しているため、デフォルトの動作としてはトランザクションはロールバックされる。
+       | \ ``java.lang.RuntimeException``\ を継承しているため、デフォルトの動作としてトランザクションはロールバックされる。
        | 本例外クラスを継承すると、\ ``ResultMessagesLoggingInterceptor``\ によって、warnレベルのログが出力される。
    * - | (11)
      - | SystemException
      - | システム又はアプリケーションの異常を検知した事を通知するための例外クラスで、アプリケーション層又はドメイン層のロジックで発生させる例外である。
-       | \ ``java.lang.RumtimeException``\ を継承しているため、デフォルトの動作として、トランザクションは、ロールバックされる。
+       | \ ``java.lang.RuntimeException``\ を継承しているため、デフォルトの動作として、トランザクションは、ロールバックされる。
    * - | (12)
      - | ExceptionCodeProvider
      - | 例外コードを保持する役割があることを示すインタフェースで、共通ライブラリでは、\ ``SystemException``\ が実装している。
@@ -1883,7 +1896,7 @@ Appendix
      - | SystemException
        | Resolver
      - | \ ``<mvc:annotation-driven>``\ を指定した際に、自動的に登録される\ ``HandlerExceptionResolver``\ によって、ハンドリングされない例外をハンドリングするためのクラス。
-       | Spring MVCより提供されている\ ``SimpleMappingExceptionResolver``\ を継承し、例外コードのResultMessagesを、Viewから参照できるように機能追加を行っている。
+       | Spring MVCより提供されている\ ``SimpleMappingExceptionResolver``\ を継承し、例外コード及びResultMessagesを、Viewから参照できるように機能追加を行っている。
    * - | (14)
      - | HandlerException
        | ResolverLogging
@@ -1896,6 +1909,7 @@ Appendix
        |   4. "-99"の場合は ログ出力しない。
        | 本Interceptorを使用することで、Spring MVC管理下で発生する全ての例外を、ログに出力することができる。
        | ログは、\ ``ExceptionLogger``\ を使用して出力している。
+       | プロジェクトの要件に応じて\ ``log``\メソッドを拡張することで、デフォルトの挙動を変更してログ出力することが可能である。
    * - | (15)
      - | ExceptionLogging
        | Filter

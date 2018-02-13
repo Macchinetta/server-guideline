@@ -164,7 +164,7 @@ pom.xmlの設定
 | terasoluna-gfw-jodatimeへの依存関係を追加する。
 | マルチプロジェクト構成の場合は、domainプロジェクトの\ :file:`pom.xml`\(:file:`projectName-domain/pom.xml`)に追加する。
 
-`ブランクプロジェクト <https://github.com/Macchinetta/macchinetta-web-multi-blank>`_ \ からプロジェクトを生成した場合は、terasoluna-gfw-jodatimeへの依存関係は、設定済の状態である。
+`ブランクプロジェクト <https://github.com/Macchinetta/macchinetta-web-multi-blank>`_ \ からプロジェクトを生成した場合は、terasoluna-gfw-jodatimeへの依存関係は、設定済みの状態である。
 
 .. code-block:: xml
 
@@ -765,7 +765,7 @@ Unit Testでは、時刻を登録してその時刻が想定通りに更新さ�
    * - | (2)
      - | 対象のツアーのキャンセル期限日を計算する。
    * - | (3)
-     - | 今日がキャンセル期限日より後であるかの判定する。
+     - | 今日がキャンセル期限日より後であるか判定する。
    * - | (4)
      - | キャンセル期限日を過ぎた場合は\ ``BusinessException``\ をスローする。
 

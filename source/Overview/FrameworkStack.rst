@@ -29,13 +29,13 @@ DIコンテナ
 DIコンテナとしてSpring Frameworkを利用する。
 
 
-* `Spring Framework 4.3 <http://docs.spring.io/spring/docs/4.3.5.RELEASE/spring-framework-reference/html/beans.html>`_
+* `Spring Framework 4.3 <http://docs.spring.io/spring/docs/4.3.11.RELEASE/spring-framework-reference/html/beans.html>`_
 
 MVCフレームワーク
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Web MVCフレームワークとしてSpring MVCを利用する。
 
-* `Spring MVC 4.3 <http://docs.spring.io/spring/docs/4.3.5.RELEASE/spring-framework-reference/html/mvc.html>`_
+* `Spring MVC 4.3 <http://docs.spring.io/spring/docs/4.3.11.RELEASE/spring-framework-reference/html/mvc.html>`_
 
 O/R Mapper
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -85,7 +85,7 @@ Viewのレイアウトを共通化する場合は、
 
   * 実装は、\ `Hibernate Validator 5.2 <http://docs.jboss.org/hibernate/validator/5.2/reference/en-US/html/>`_\ を利用する。
 
-* 相関チェックには\ `Bean Validation <http://download.oracle.com/otn-pub/jcp/bean_validation-1_1-fr-eval-spec/bean-validation-specification.pdf>`_\ 、もしくは\ `Spring Validation <http://docs.spring.io/spring/docs/4.3.5.RELEASE/spring-framework-reference/html/validation.html#validator>`_\ を利用する。
+* 相関チェックには\ `Bean Validation <http://download.oracle.com/otn-pub/jcp/bean_validation-1_1-fr-eval-spec/bean-validation-specification.pdf>`_\ 、もしくは\ `Spring Validation <http://docs.spring.io/spring/docs/4.3.11.RELEASE/spring-framework-reference/html/validation.html#validator>`_\ を利用する。
 
   * 使い分けについては\ :doc:`../ArchitectureInDetail/WebApplicationDetail/Validation`\ を参照されたい。
 
@@ -109,7 +109,7 @@ Viewのレイアウトを共通化する場合は、
 利用するOSSのバージョン
 --------------------------------------------------------------------------------
 
-version 1.4.0.RELEASEで利用するOSSの一覧を以下に示す。
+version 1.5.0.RELEASEで利用するOSSの一覧を以下に示す。
 
 .. tip::
 
@@ -125,7 +125,7 @@ version 1.4.0.RELEASEで利用するOSSの一覧を以下に示す。
     への依存関係を解決しており、
     Macchinetta Server Framework (1.x)で使用するOSSのバージョンは、原則として、Spring IO platformの定義に準じている。
 
-    なお、version 1.4.0.RELEASEで指定しているSpring IO platformのバージョンは、`Athens-SR2 <http://docs.spring.io/platform/docs/Athens-SR2/reference/htmlsingle/>`_\ である。
+    なお、version 1.5.0.RELEASEで指定しているSpring IO platformのバージョンは、`Brussels-SR5 <http://docs.spring.io/platform/docs/Brussels-SR5/reference/htmlsingle/>`_\ である。
 
 .. tabularcolumns:: |p{0.15\linewidth}|p{0.27\linewidth}|p{0.25\linewidth}|p{0.15\linewidth}|p{0.05\linewidth}|p{0.08\linewidth}|
 .. list-table::
@@ -142,133 +142,133 @@ version 1.4.0.RELEASEで利用するOSSの一覧を以下に示す。
     * - Spring
       - org.springframework
       - spring-aop
-      - 4.3.5.RELEASE
+      - 4.3.11.RELEASE
       - \*
       -
     * - Spring
       - org.springframework
       - spring-aspects
-      - 4.3.5.RELEASE
+      - 4.3.11.RELEASE
       - \*
       -
     * - Spring
       - org.springframework
       - spring-beans
-      - 4.3.5.RELEASE
+      - 4.3.11.RELEASE
       - \*
       -
     * - Spring
       - org.springframework
       - spring-context
-      - 4.3.5.RELEASE
+      - 4.3.11.RELEASE
       - \*
       -
     * - Spring
       - org.springframework
       - spring-context-support
-      - 4.3.5.RELEASE
+      - 4.3.11.RELEASE
       - \*
       -
     * - Spring
       - org.springframework
       - spring-core
-      - 4.3.5.RELEASE
+      - 4.3.11.RELEASE
       - \*
       -
     * - Spring
       - org.springframework
       - spring-expression
-      - 4.3.5.RELEASE
+      - 4.3.11.RELEASE
       - \*
       -
     * - Spring
       - org.springframework
       - spring-jdbc
-      - 4.3.5.RELEASE
+      - 4.3.11.RELEASE
       - \*
       -
     * - Spring
       - org.springframework
       - spring-orm
-      - 4.3.5.RELEASE
+      - 4.3.11.RELEASE
       - \*
       -
     * - Spring
       - org.springframework
       - spring-tx
-      - 4.3.5.RELEASE
+      - 4.3.11.RELEASE
       - \*
       -
     * - Spring
       - org.springframework
       - spring-web
-      - 4.3.5.RELEASE
+      - 4.3.11.RELEASE
       - \*
       -
     * - Spring
       - org.springframework
       - spring-webmvc
-      - 4.3.5.RELEASE
+      - 4.3.11.RELEASE
       - \*
       -
     * - Spring
       - org.springframework
       - spring-jms
-      - 4.3.5.RELEASE
+      - 4.3.11.RELEASE
       - \*
       -
     * - Spring
       - org.springframework
       - spring-messaging
-      - 4.3.5.RELEASE
+      - 4.3.11.RELEASE
       - \*
       -
     * - Spring
       - org.springframework.data
       - spring-data-commons
-      - 1.12.6.RELEASE
+      - 1.13.7.RELEASE
       - \*
       -
     * - Spring
       - org.springframework.security
       - spring-security-acl
-      - 4.1.4.RELEASE
+      - 4.2.3.RELEASE
       - \*
       -
     * - Spring
       - org.springframework.security
       - spring-security-config
-      - 4.1.4.RELEASE
+      - 4.2.3.RELEASE
       - \*
       -
     * - Spring
       - org.springframework.security
       - spring-security-core
-      - 4.1.4.RELEASE
+      - 4.2.3.RELEASE
       - \*
       -
     * - Spring
       - org.springframework.security
       - spring-security-taglibs
-      - 4.1.4.RELEASE
+      - 4.2.3.RELEASE
       - \*
       -
     * - Spring
       - org.springframework.security
       - spring-security-web
-      - 4.1.4.RELEASE
+      - 4.2.3.RELEASE
       - \*
       -
     * - Spring
       - org.springframework.security.oauth
       - spring-security-oauth2
-      - 2.0.12.RELEASE
+      - 2.0.14.RELEASE
       - \*
       -
     * - MyBatis3
       - org.mybatis
       - mybatis
-      - 3.4.2
+      - 3.4.5
       -
       - \*1
     * - MyBatis3
@@ -298,25 +298,25 @@ version 1.4.0.RELEASEで利用するOSSの一覧を以下に示す。
     * - AOP
       - org.aspectj
       - aspectjrt
-      - 1.8.9
+      - 1.8.10
       - \*
       -
     * - AOP
       - org.aspectj
       - aspectjweaver
-      - 1.8.9
+      - 1.8.10
       - \*
       -
     * - ログ出力
       - ch.qos.logback
       - logback-classic
-      - 1.1.8
+      - 1.1.11
       - \*
       -
     * - ログ出力
       - ch.qos.logback
       - logback-core
-      - 1.1.8
+      - 1.1.11
       - \*
       - \*3
     * - ログ出力
@@ -328,43 +328,43 @@ version 1.4.0.RELEASEで利用するOSSの一覧を以下に示す。
     * - ログ出力
       - org.slf4j
       - jcl-over-slf4j
-      - 1.7.22
+      - 1.7.25
       - \*
       -
     * - ログ出力
       - org.slf4j
       - slf4j-api
-      - 1.7.22
+      - 1.7.25
       - \*
       -
     * - JSON
       - com.fasterxml.jackson.core
       - jackson-annotations
-      - 2.8.5
+      - 2.8.0
       - \*
       -
     * - JSON
       - com.fasterxml.jackson.core
       - jackson-core
-      - 2.8.5
+      - 2.8.10
       - \*
       -
     * - JSON
       - com.fasterxml.jackson.core
       - jackson-databind
-      - 2.8.5
+      - 2.8.10
       - \*
       -
     * - JSON
       - com.fasterxml.jackson.datatype
       - jackson-datatype-joda
-      - 2.8.5
+      - 2.8.10
       - \*
       -
     * - JSON
       - com.fasterxml.jackson.datatype
       - jackson-datatype-jsr310
-      - 2.8.5
+      - 2.8.10
       - \*
       - \*5
     * - 入力チェック
@@ -376,19 +376,19 @@ version 1.4.0.RELEASEで利用するOSSの一覧を以下に示す。
     * - 入力チェック
       - org.hibernate
       - hibernate-validator
-      - 5.2.4.Final
+      - 5.3.5.Final
       - \*
       -
     * - 入力チェック
       - org.jboss.logging
       - jboss-logging
-      - 3.3.0.Final
+      - 3.3.1.Final
       - \*
       - \*3
     * - 入力チェック
       - com.fasterxml
       - classmate
-      - 1.3.3
+      - 1.3.4
       - \*
       - \*3
     * - Bean変換
@@ -412,13 +412,13 @@ version 1.4.0.RELEASEで利用するOSSの一覧を以下に示す。
     * - Bean変換
       - org.apache.commons
       - commons-lang3
-      - 3.4
+      - 3.5
       - \*
       - \*2
     * - 日付操作
       - joda-time
       - joda-time
-      - 2.9.6
+      - 2.9.9
       - \*
       -
     * - 日付操作
@@ -502,7 +502,7 @@ version 1.4.0.RELEASEで利用するOSSの一覧を以下に示す。
     * - ユーティリティ
       - com.google.guava
       - guava
-      - 17.0
+      - 20.0
       - \*
       -
     * - ユーティリティ
@@ -552,7 +552,8 @@ version 1.4.0.RELEASEで利用するOSSの一覧を以下に示す。
 共通ライブラリの構成要素
 --------------------------------------------------------------------------------
 
-\ `共通ライブラリ <https://github.com/terasolunaorg/terasoluna-gfw>`_\ は、Macchinetta Server Framework (1.x)が含むSpring Ecosystem や、その他依存ライブラリでは足りない+αな機能を提供するライブラリである。
+Macchinetta Server Framework (1.x)では、\ `TERASOLUNA Server Framework for Java (5.x) <https://github.com/terasolunaorg>`_\ が提供する\ `共通ライブラリ <https://github.com/terasolunaorg/terasoluna-gfw>`_\ を使用する。（以降「共通ライブラリ」と記載する。）
+共通ライブラリは、Macchinetta Server Framework (1.x)やTERASOLUNA Server Framework for Java (5.x)が含むSpring Ecosystem や、その他依存ライブラリでは足りない+αな機能を提供するライブラリである。
 基本的には、このライブラリがなくてもMacchinetta Server Framework (1.x)によるアプリケーション開発は可能であるが、"あると便利"な存在である。
 また、提供している2種類の \ `マルチプロジェクト構成のブランクプロジェクト <https://github.com/Macchinetta/macchinetta-web-multi-blank>`_\ および \ `シングルプロジェクト構成のブランクプロジェクト <https://github.com/Macchinetta/macchinetta-gfw-web-blank>`_\ の共通ライブラリの標準の組込状況は以下の通りである。
 
@@ -576,16 +577,16 @@ version 1.4.0.RELEASEで利用するOSSの一覧を以下に示す。
       - 有*1
     * - \ (2)
       - terasoluna-gfw-common-libraries
-      - 共通ライブラリのうち、Javaソースコードを含むプロジェクトの構成を定義する。依存関係としてpom.xmlに追加する必要はない。
+      - 共通ライブラリのうち、Javaソースコードを含むプロジェクトの構成を定義する。依存関係としてpom.xmlに追加する必要はない。(5.2.0から追加)
       - 無
-      - 有*1
-      - 有*1
+      - 無
+      - 無
     * - \ (3)
       - terasoluna-gfw-dependencies
-      - 共通ライブラリのうち、依存関係定義のみを提供するプロジェクト(terasoluna-gfw-parent以外)の構成を定義する。依存関係としてpom.xmlに追加する必要はない。
+      - 共通ライブラリのうち、依存関係定義のみを提供するプロジェクト(terasoluna-gfw-parent以外)の構成を定義する。依存関係としてpom.xmlに追加する必要はない。(5.2.0から追加)
       - 無
-      - 有*1
-      - 有*1
+      - 無
+      - 無
     * - \ (4)
       - terasoluna-gfw-common
       - Webに依存しない汎用的に使用できる機能を提供する。本ライブラリを利用する場合は、依存関係としてterasoluna-gfw-common-dependenciesをpom.xmlに追加する。
@@ -594,7 +595,7 @@ version 1.4.0.RELEASEで利用するOSSの一覧を以下に示す。
       - 有*2
     * - \ (5)
       - terasoluna-gfw-common-dependencies
-      - terasoluna-gfw-commonプロジェクトが提供する機能を使用する場合の依存関係定義を提供する。
+      - terasoluna-gfw-commonプロジェクトが提供する機能を使用する場合の依存関係定義を提供する。(5.2.0から追加)
       - 無
       - 有
       - 有
@@ -606,7 +607,7 @@ version 1.4.0.RELEASEで利用するOSSの一覧を以下に示す。
       - 有*2
     * - \ (7)
       - terasoluna-gfw-jodatime-dependencies
-      - terasoluna-gfw-jodatimeプロジェクトが提供する機能を使用する場合の依存関係定義を提供する。
+      - terasoluna-gfw-jodatimeプロジェクトが提供する機能を使用する場合の依存関係定義を提供する。(5.2.0から追加)
       - 無
       - 有
       - 有
@@ -618,7 +619,7 @@ version 1.4.0.RELEASEで利用するOSSの一覧を以下に示す。
       - 有*2
     * - \ (9)
       - terasoluna-gfw-web-dependencies
-      - terasoluna-gfw-webプロジェクトが提供する機能を使用する場合の依存関係定義を提供する。
+      - terasoluna-gfw-webプロジェクトが提供する機能を使用する場合の依存関係定義を提供する。(5.2.0から追加)
       - 無
       - 有
       - 有
@@ -630,7 +631,7 @@ version 1.4.0.RELEASEで利用するOSSの一覧を以下に示す。
       - 有*2
     * - \ (11)
       - terasoluna-gfw-web-jsp-dependencies
-      - terasoluna-gfw-web-jspプロジェクトが提供する機能を使用する場合の依存関係定義を提供する。
+      - terasoluna-gfw-web-jspプロジェクトが提供する機能を使用する場合の依存関係定義を提供する。(5.2.0から追加)
       - 無
       - 有
       - 有
@@ -642,7 +643,7 @@ version 1.4.0.RELEASEで利用するOSSの一覧を以下に示す。
       - 有*2
     * - \ (13)
       - terasoluna-gfw-security-web-dependencies
-      - Spring Securityを使用する場合の依存関係定義(Web関連)と、terasoluna-gfw-security-webプロジェクトが提供する機能を使用する場合の依存関係定義を提供する。
+      - Spring Securityを使用する場合の依存関係定義(Web関連)と、terasoluna-gfw-security-webプロジェクトが提供する機能を使用する場合の依存関係定義を提供する。(5.2.0から追加)
       - 無
       - 有
       - 有
@@ -656,8 +657,8 @@ version 1.4.0.RELEASEで利用するOSSの一覧を以下に示す。
       - terasoluna-gfw-codepoints
       - 対象の文字列を構成するコードポイントがコードポイント集合に含まれることをチェックする機能を提供する。(5.1.0から追加)
       - 有
-      - 無
-      - 無
+      - 無*3
+      - 無*3
     * - \ (16)
       - terasoluna-gfw-validator
       - 汎用的なBean Validationの制約アノテーションを追加して提供する。(5.1.0から追加)
@@ -666,22 +667,22 @@ version 1.4.0.RELEASEで利用するOSSの一覧を以下に示す。
       - 無
     * - \ (17)
       - terasoluna-gfw-security-core-dependencies
-      - Spring Securityを使用する場合の依存関係定義(Web以外)を提供する。
+      - Spring Securityを使用する場合の依存関係定義(Web以外)を提供する。(5.2.0から追加)
       - 無
       - 有
       - 有
     * - \ (18)
       - terasoluna-gfw-mybatis3-dependencies
-      - MyBatis3を使用する場合の依存関係定義を提供する。
+      - MyBatis3を使用する場合の依存関係定義を提供する。(5.2.0から追加)
       - 無
-      - 有*3
-      - 有*3
+      - 有*4
+      - 有*4
     * - \ (19)
       - terasoluna-gfw-jpa-dependencies
-      - JPAを使用する場合の依存関係定義を提供する。
+      - JPAを使用する場合の依存関係定義を提供する。(5.2.0から追加)
       - 無
-      - 無*4
-      - 無*4
+      - 有*5
+      - 有*5
     * - \ (20)
       - terasoluna-gfw-recommended-dependencies
       - Webに依存しない推奨ライブラリへの依存関係定義を提供する。
@@ -701,6 +702,7 @@ version 1.4.0.RELEASEで利用するOSSの一覧を以下に示す。
 
 #. | \ ``<dependency>``\ 要素ではないが、各プロジェクトの\ ``<parent>``\ 要素として組み込まれる。
 #. | \ ``<dependency>``\ 要素ではないが、\ ``<dependency>``\ 要素からの推移的依存関係として組み込まれる。
+#. | 使用するコードポイント集合に応じて複数のアーティファクトを提供している。詳細は :ref:`StringProcessingHowToUseCodePointsClasses` を参照されたい。
 #. | データアクセスに、MyBatis3を使用する場合に標準で組み込まれる共通ライブラリ
 #. | データアクセスに、JPAを使用する場合に用いる共通ライブラリ。Macchinetta Server Framework (1.x)では使用しない
 
@@ -739,7 +741,7 @@ terasoluna-gfw-commonは以下の部品を提供している。
       - 汎用的に使用できる例外クラスを提供する。
     * -
       - 例外ロガー
-      - プリケーション内で発生した例外をログに出力するためのロガークラスを提供する。
+      - アプリケーション内で発生した例外をログに出力するためのロガークラスを提供する。
     * -
       - 例外コード
       - 例外クラスに対応する例外コード(メッセージID)を解決するための仕組み(クラス)を提供する。
@@ -815,8 +817,8 @@ terasoluna-gfw-validatorは以下の部品を提供している。
       - バイト長チェック用Bean Validation制約アノテーション
       - 入力文字列の文字コードにおけるバイト長が、指定した最大値以下であること、最小値以上であることのチェックをBean Validationで行うための制約アノテーションを提供する。
     * -
-      - フィールド値比較相関チェック用Bean Validation制約アノテーション
-      - 2つのフィールド値の大小関係チェックをBean Validationで行うための制約アノテーションを提供する。
+      - プロパティ値比較チェック用Bean Validation制約アノテーション
+      - 2つのプロパティ値の比較チェックをBean Validationで行うための制約アノテーションを提供する。
 
 terasoluna-gfw-jodatime
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

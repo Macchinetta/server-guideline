@@ -108,9 +108,9 @@ How to use
 現在日時で取得
 ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 
-| 利用用途に合わせて、 ``java.time.LocalTime`` , ``java.time.LocalDate`` , ``java.time.LocalDateTime``  を使い分けること。以下に例を示す。
+| 利用用途に合わせて ``java.time.LocalTime`` , ``java.time.LocalDate`` , ``java.time.LocalDateTime``  を使い分けること。以下に例を示す。
 
-1. 時刻のみ取得したい場合は、 ``java.time.LocalTime`` を使用する。
+1. 時刻のみ取得したい場合は ``java.time.LocalTime`` を使用する。
 
 .. code-block:: java
 
@@ -122,7 +122,7 @@ How to use
 
    LocalDate localDate =  LocalDate.now();
 
-3. 日付・時刻を取得したい場合は、、 ``java.time.LocalDateTime`` を使用する。
+3. 日付・時刻を取得したい場合は ``java.time.LocalDateTime`` を使用する。
 
 .. code-block:: java
 
@@ -135,9 +135,9 @@ How to use
 年月日時分秒を指定して取得
 ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 
-| ofメソッドを使うことで、特定の日時を指定することができる。以下に例を示す。
+| ofメソッドを使うことで特定の日時を指定することができる。以下に例を示す。
 
-1. 時刻を指定して、 ``java.time.LocalTime`` を取得する。
+1. 時刻を指定して ``java.time.LocalTime`` を取得する。
 
 .. code-block:: java
 
@@ -151,7 +151,7 @@ How to use
    // 2015/12/25
    LocalDate localDate =  LocalDate.of(2015, 12, 25);
 
-3. 日付・時刻）を指定して、 ``java.time.LocalDateTime`` を取得する。
+3. 日付・時刻）を指定して ``java.time.LocalDateTime`` を取得する。
 
 .. code-block:: java
 
@@ -192,14 +192,14 @@ How to use
    // Ex, 12:30:11.567+09:00
    OffsetTime offsetTime =  OffsetTime.now();
 
-2. 日付・時刻＋UTCとの時差を取得したい場合は、 ``java.time.OffsetDateTime`` を使用する。
+2. 日付・時刻＋UTCとの時差を取得したい場合は ``java.time.OffsetDateTime`` を使用する。
 
 .. code-block:: java
 
    // Ex, 2015-12-25T12:30:11.567+09:00
    OffsetDateTime offsetDateTime =  OffsetDateTime.now();
 
-3. 日付・時刻＋UTCとの時差・地域を取得したい場合は、 ``java.time.ZonedDateTime`` を使用する。
+3. 日付・時刻＋UTCとの時差・地域を取得したい場合は ``java.time.ZonedDateTime`` を使用する。
 
 .. code-block:: java
 
@@ -274,7 +274,7 @@ Date and Time APIの各クラスの相互運用性
 
 | ``java.time.LocalTime`` , ``java.time.LocalDate`` , ``java.time.LocalDateTime`` はそれぞれ容易に変換が可能である。以下に例を示す。
 
-1. ``java.time.LocalTime`` から、 ``java.time.LocalDateTime`` への変換。
+1. ``java.time.LocalTime`` から ``java.time.LocalDateTime`` への変換。
 
 .. code-block:: java
 
@@ -284,7 +284,7 @@ Date and Time APIの各クラスの相互運用性
    // 2015-12-25 12:10:30
    LocalDateTime localDateTime = localTime.atDate(LocalDate.of(2015, 12, 25));
 
-2. ``java.time.LocalDate`` から、 ``java.time.LocalDateTime`` への変換。
+2. ``java.time.LocalDate`` から ``java.time.LocalDateTime`` への変換。
 
 .. code-block:: java
 
@@ -294,7 +294,7 @@ Date and Time APIの各クラスの相互運用性
    // 2015-12-25 12:10:30
    LocalDateTime localDateTime = localDate.atTime(LocalTime.of(12, 10, 30));
 
-3. ``java.time.LocalDateTime`` から、 ``java.time.LocalTime`` ,  ``java.time.LocalDate`` への変換。
+3. ``java.time.LocalDateTime`` から ``java.time.LocalTime`` ,  ``java.time.LocalDate`` への変換。
 
 .. code-block:: java
 
@@ -318,9 +318,9 @@ Date and Time APIの各クラスの相互運用性
    OffsetTime offsetTime =  OffsetTime.now();
    
    // 2015-12-25T12:30:11.567+09:00
-   OffsetDateTime OffsetDateTime = offsetTime.atDate(LocalDate.of(2015, 12, 25));
+   OffsetDateTime offsetDateTime = offsetTime.atDate(LocalDate.of(2015, 12, 25));
 
-2. ``java.time.OffsetDateTime`` から、 ``java.time.ZonedDateTime`` への変換。
+2. ``java.time.OffsetDateTime`` から ``java.time.ZonedDateTime`` への変換。
 
 .. code-block:: java
 
@@ -330,7 +330,7 @@ Date and Time APIの各クラスの相互運用性
    // 2015-12-25T12:30:11.567+09:00[Asia/Tokyo]
    ZonedDateTime zonedDateTime = offsetDateTime.atZoneSameInstant(ZoneId.of("Asia/Tokyo"));
 
-3. ``java.time.ZonedDateTime`` から、 ``java.time.OffsetDateTime`` ,  ``java.time.OffsetTime`` への変換。
+3. ``java.time.ZonedDateTime`` から ``java.time.OffsetDateTime`` ,  ``java.time.OffsetTime`` への変換。
 
 .. code-block:: java
 
@@ -374,7 +374,7 @@ java.util.Dateとの相互運用性
    Instant instant = localDateTime.toInstant(ZoneOffset.ofHours(9));
    Date date = Date.from(instant);
 
-2. ``java.util.Date`` から、 ``java.time.LocalDateTime`` への変換。
+2. ``java.util.Date`` から ``java.time.LocalDateTime`` への変換。
 
 .. code-block:: java
 
@@ -394,28 +394,28 @@ java.sql パッケージとの相互運用性
 | Java8 より ``java.sql`` パッケージに改修が入り、 ``java.time`` パッケージとの相互変換メソッドが定義された。
 | 以下に例を示す。
 
-1. ``java.sql.Date`` から、 ``java.time.LocalDate`` への変換。
+1. ``java.sql.Date`` から ``java.time.LocalDate`` への変換。
 
 .. code-block:: java
 
    java.sql.Date date =  new java.sql.Date(System.currentTimeMillis());
    LocalDate localDate = date.toLocalDate();
 
-2. ``java.time.LocalDate`` から、 ``java.sql.Date`` への変換。
+2. ``java.time.LocalDate`` から ``java.sql.Date`` への変換。
 
 .. code-block:: java
 
    LocalDate localDate = LocalDate.now();
    java.sql.Date date =  java.sql.Date.valueOf(localDate);
    
-3. ``java.sql.Time`` から、 ``java.time.LocalTime`` への変換。
+3. ``java.sql.Time`` から ``java.time.LocalTime`` への変換。
 
 .. code-block:: java
 
    java.sql.Time time =  new java.sql.Time(System.currentTimeMillis());
    LocalTime localTime = time.toLocalTime();
 
-4. ``java.time.LocalTime`` から、 ``java.sql.Time`` への変換。
+4. ``java.time.LocalTime`` から ``java.sql.Time`` への変換。
 
 .. code-block:: java
 
@@ -423,14 +423,14 @@ java.sql パッケージとの相互運用性
    java.sql.Time time =  java.sql.Time.valueOf(localTime);
 
 
-5. ``java.sql.Timestamp`` から、 ``java.time.LocalDateTime`` への変換。
+5. ``java.sql.Timestamp`` から ``java.time.LocalDateTime`` への変換。
 
 .. code-block:: java
 
    java.sql.Timestamp timestamp =  new java.sql.Timestamp(System.currentTimeMillis());
    LocalDateTime localDateTime = timestamp.toLocalDateTime();
 
-6. ``java.time.LocalDateTime`` から、 ``java.sql.Timestamp`` への変換。
+6. ``java.time.LocalDateTime`` から ``java.sql.Timestamp`` への変換。
 
 .. code-block:: java
 
@@ -489,7 +489,7 @@ org.terasoluna.gfw.common.date パッケージの利用方法
                                              .withLocale(Locale.JAPANESE)
                                              .withResolverStyle(ResolverStyle.STRICT);
 
-| この際、文字列の形式の他に ``Locale`` と ``ResolverStyle`` （厳密性）を定義できる。
+| その際、文字列の形式の他に ``Locale`` と ``ResolverStyle`` （厳密性）を定義できる。
 | ``Locale`` のデフォルト値はシステムによって変化するため、初期化時に設定することが望ましい。
 | また、 ``ResolverStyle`` （厳密性）は ``ofPattern`` メソッドを使う場合、デフォルトで ``ResolverStyle.SMART`` が設定されるが、本ガイドラインでは予期せぬ挙動が起こらないよう、厳密に日付を解釈する ``ResolverStyle.STRICT`` の設定を推奨している。（ISOパターンのフォーマッタを利用する場合は ``ResolverStyle.STRICT`` が設定されている)
 |
@@ -595,7 +595,7 @@ org.terasoluna.gfw.common.date パッケージの利用方法
 ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 
 
-| 日時の計算をするために、 ``plus`` メソッドと ``minus`` メソッドが提供されている。
+| 日時の計算をするために ``plus`` メソッドと ``minus`` メソッドが提供されている。
 
 
 1. 時間の計算を行う場合の例。
@@ -739,7 +739,8 @@ org.terasoluna.gfw.common.date パッケージの利用方法
 和暦（JapaneseDate）
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-| Date and Time APIでは、``java.time.chrono.JapaneseDate`` という、和暦を扱うクラスが提供されている。
+| Date and Time APIでは ``java.time.chrono.JapaneseDate`` という、和暦を扱うクラスが提供されている。
+
 
     .. note::
 
@@ -806,7 +807,8 @@ org.terasoluna.gfw.common.date パッケージの利用方法
 西暦・和暦の変換
 ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 
-| fromメソッドを使うことで、``java.time.LocalDate`` からの変換を容易に行える。
+| fromメソッドを使うことで ``java.time.LocalDate`` からの変換を容易に行える。
+
 
 .. code-block:: java
 

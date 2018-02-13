@@ -817,7 +817,7 @@ Controllerで\ ``ResultMessages``\ を生成して画面に渡し、JSPで\ ``<t
 
  .. note::
 
-    \ ``ResourceBundleMessageSource``\ はメッセージを生成する際に\ ``java.text.MessageFormat``\ が使用するため、\ ``1024``\ は
+    \ ``ResourceBundleMessageSource``\ はメッセージを生成する際に\ ``java.text.MessageFormat``\ を使用するため、\ ``1024``\ は
     カンマ区切りで\ ``1,024``\ と表示される。カンマが不要な場合は、プロパティファイルには以下のように設定する。
 
         .. code-block:: properties
@@ -904,7 +904,7 @@ infoメッセージを表示したい場合は、次のように\ ``ResultMessag
   * - | warning
     - | \ ``ResultMessages.warning()``\
     - | alert alert-warning
-    - | CSSフレームワークである\ `Bootstrap <http://getbootstrap.com/>`_ の\ `Alertsコンポーネント <http://getbootstrap.com/components/#alerts>`_\ で用意されているメッセージタイプをデフォルトでサポートするために、terasoluna-gfw-common 5.0.0.RELEASEから追加。
+    - | CSSフレームワークである\ `Bootstrap <http://getbootstrap.com/>`_ の\ `Alertsコンポーネント <https://getbootstrap.com/docs/3.3/components/#alerts>`_\ で用意されているメッセージタイプをデフォルトでサポートするために、terasoluna-gfw-common 5.0.0.RELEASEから追加。
   * - | error
     - | \ ``ResultMessages.error()``\
     - | alert alert-error
@@ -967,7 +967,7 @@ infoメッセージを表示したい場合は、次のように\ ``ResultMessag
 
     .. tip::
 
-        CSSフレームワークである\ `Bootstrap <http://getbootstrap.com/>`_ 3.0.0の\ `Alertsコンポーネント <http://getbootstrap.com/components/#alerts>`_\ は、\ ``<t:messagesPanel />``\ のデフォルト設定で利用できる。
+        CSSフレームワークである\ `Bootstrap <http://getbootstrap.com/>`_ の\ `Alertsコンポーネント <https://getbootstrap.com/docs/3.3/components/#alerts>`_\ は、\ ``<t:messagesPanel />``\ のデフォルト設定で利用できる。
 
     .. warning::
 
@@ -1324,9 +1324,9 @@ Appendix
 .. code-block:: html
 
     <div class="error">
-      <ul>
-        <li>There are inconsistencies in the data.</li>
-      </ul>
+        <ul>
+            <li>There are inconsistencies in the data.</li>
+        </ul>
     </div>
 
 ブラウザで表示すると、以下のように出力される。
@@ -1489,7 +1489,7 @@ ResultMessagesを使用しない結果メッセージの表示
     - 説明
   * - | (1)
     - | 結果メッセージ表示用のCSSを再掲する。実際はCSSファイルに記述することを強く推奨する。
-  * - | (1)
+  * - | (2)
     - | ``Exception``\ オブジェクトが格納されている属性名を\ ``messagesAttributeName``\ 属性で指定する。
       | また、\ ``ResultMessages``\ オブジェクトとは異なり、メッセージタイプの情報をもたないため、
       | \ ``messagesType``\ 属性で、明示的に、メッセージタイプを指定する必要がある。
@@ -1520,6 +1520,10 @@ ResultMessagesを使用しない結果メッセージの表示
 
 | ここでは、簡易ツールとして、propertiesファイルからメッセージキー定数クラスを
 | 自動生成するプログラムおよび使用方法を紹介する。必要に応じてカスタマイズして利用されたい。
+
+.. raw:: latex
+
+   \newpage
 
 #. メッセージキー定数クラスの作成
 

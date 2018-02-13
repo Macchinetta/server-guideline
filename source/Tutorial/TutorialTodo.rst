@@ -193,7 +193,7 @@ Delete TODO
 * データベースを使用せず\ ``java.util.Map``\ を使ったインメモリ実装のRepositoryImpl
 * MyBatis3を使用してデータベースにアクセスするRepositoryImpl
 
-の3種類を用意している。用途に応じていずれかを選択する。
+の2種類を用意している。用途に応じていずれかを選択する。
 
 チュートリアルの進行上、まずはインメモリ実装を試し、その後MyBatis3を選ぶのが円滑である。
 
@@ -210,14 +210,14 @@ Delete TODO
 
 .. tip::
 
-    Bash上で\ ``mvn archetype:generate``\ を実行する場合は、以下のように\ ``^``\ を\ ``\``\ に置き換えて実行すればよい。
+    Bash上で\ ``mvn archetype:generate``\ を実行する場合は、以下のように"\ ``^``\" を"\ ``\``\" に置き換えて実行すればよい。
 
      .. code-block:: bash
 
         mvn archetype:generate -B\
          -DarchetypeGroupId=com.github.macchinetta.blank\
          -DarchetypeArtifactId=macchinetta-web-blank-noorm-archetype\
-         -DarchetypeVersion=1.4.0.RELEASE\
+         -DarchetypeVersion=1.5.0.RELEASE\
          -DgroupId=todo\
          -DartifactId=todo\
          -Dversion=1.0.0-SNAPSHOT
@@ -237,7 +237,7 @@ O/R Mapperに依存しないブランクプロジェクトの作成
     mvn archetype:generate -B^
      -DarchetypeGroupId=com.github.macchinetta.blank^
      -DarchetypeArtifactId=macchinetta-web-blank-noorm-archetype^
-     -DarchetypeVersion=1.4.0.RELEASE^
+     -DarchetypeVersion=1.5.0.RELEASE^
      -DgroupId=todo^
      -DartifactId=todo^
      -Dversion=1.0.0-SNAPSHOT
@@ -255,7 +255,7 @@ MyBatis3を使用してデータベースにアクセスするRepositoryImpl用�
     mvn archetype:generate -B^
      -DarchetypeGroupId=com.github.macchinetta.blank^
      -DarchetypeArtifactId=macchinetta-web-blank-archetype^
-     -DarchetypeVersion=1.4.0.RELEASE^
+     -DarchetypeVersion=1.5.0.RELEASE^
      -DgroupId=todo^
      -DartifactId=todo^
      -Dversion=1.0.0-SNAPSHOT
@@ -344,6 +344,59 @@ Root Directoryに \ ``C:\work\todo``\ を設定し、Projectsにtodoのpom.xml�
     **ただし、実プロジェクトで適用する場合は、マルチプロジェクト構成を強く推奨する。**
 
     マルチプロジェクトの作成方法は、「:doc:`../ImplementationAtEachLayer/CreateWebApplicationProject`」を参照されたい。
+
+|
+
+**[O/R Mapperに依存しないブランクプロジェクトを作成した場合の構成]**
+
+.. code-block:: console
+
+    src
+      └main
+          ├java
+          │  └todo
+          │    ├ app ... (1)
+          │    │   └todo
+          │    └domain ... (2)
+          │        ├model ... (3)
+          │        ├repository ... (4)
+          │        │   └todo
+          │        └service ... (5)
+          │            └todo
+          ├resources
+          │  └META-INF
+          │      └spring ... (6)
+          └wepapp
+              └WEB-INF
+                  └views ... (7)
+
+.. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
+.. list-table::
+    :header-rows: 1
+    :widths: 10 90
+
+    * - 項番
+      - 説明
+    * - | (1)
+      - アプリケーション層のクラスを格納するパッケージ。
+
+        本チュートリアルでは、Todo管理業務用のクラスを格納するためのパッケージを作成する。
+    * - | (2)
+      - ドメイン層のクラスを格納するパッケージ。
+    * - | (3)
+      - Domain Objectを格納するパッケージ。
+    * - | (4)
+      - Repositoryを格納するパッケージ。
+
+        本チュートリアルでは、Todoオブジェクト(Domain Object)用のRepositoryを格納するためのパッケージを作成する
+    * - | (5)
+      - Serviceを格納するパッケージ。
+
+        本チュートリアルでは、Todo管理業務用のServiceを格納するためのパッケージを作成する。
+    * - | (6)
+      - spring関連の設定ファイルを格納するディレクトリ。
+    * - | (7)
+      - jspを格納するディレクトリ。
 
 |
 
@@ -482,13 +535,13 @@ Todoアプリケーションの開発を始める前に、プロジェクトの�
      - | (4)でログ出力するためのロガーを生成している。
        | ロガーの実装はlogbackのものであるが、APIはSLF4Jの\ ``org.slf4j.Logger``\ を使用している。
    * - | (3)
-     - | ``@RequestMapping`` アノテーションを使用して、\ ``"/"``\ (ルート)へのアクセスに対するメソッドとしてマッピングを行っている。
+     - | ``@RequestMapping`` アノテーションを使用して、"\ ``/``\" (ルート)へのアクセスに対するメソッドとしてマッピングを行っている。
    * - | (4)
      - | メソッドが呼ばれたことを通知するためのログをinfoレベルで出力している。
    * - | (5)
-     - | 画面に表示するための日付文字列を、\ ``"serverTime"``\ という属性名でModelに設定している。
+     - | 画面に表示するための日付文字列を、\ ``serverTime``\ という属性名でModelに設定している。
    * - | (6)
-     - | view名として\ ``"welcome/home"``\ を返す。\ ``ViewResolver``\ の設定により、\ ``WEB-INF/views/welcome/home.jsp``\ が呼び出される。
+     - | view名として\ ``welcome/home``\ を返す。\ ``ViewResolver``\ の設定により、\ ``WEB-INF/views/welcome/home.jsp``\ が呼び出される。
 
 |
 
@@ -496,15 +549,14 @@ Todoアプリケーションの開発を始める前に、プロジェクトの�
 以下のような実装となっている。
 
 .. code-block:: jsp
-    :emphasize-lines: 12
+    :emphasize-lines: 11
 
     <!DOCTYPE html>
     <html>
     <head>
     <meta charset="utf-8">
     <title>Home</title>
-    <link rel="stylesheet"
-        href="${pageContext.request.contextPath}/resources/app/css/styles.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/app/css/styles.css">
     </head>
     <body>
         <div id="wrapper">
@@ -524,7 +576,7 @@ Todoアプリケーションの開発を始める前に、プロジェクトの�
    * - 項番
      - 説明
    * - | (7)
-     - | ControllerでModelに設定した\ ``"serverTime"``\ を表示する。
+     - | ControllerでModelに設定した\ ``serverTime``\ を表示する。
        | ここでは、XSS対策を行っていないが、ユーザの入力値を表示する場合は、\ ``f:h()``\ 関数を用いて、必ずXSS対策を行うこと。
 
 |
@@ -551,7 +603,7 @@ todoが「Configured」に含まれていることを確認して「Finish」を
 |
 
 起動すると以下のようなログが出力される。
-\ ``"/"``\ というパスに対して\ ``todo.app.welcome.HelloController``\ のhelloメソッドがマッピングされていることが分かる。
+\ ``/``\ というパスに対して\ ``todo.app.welcome.HelloController``\ のhelloメソッドがマッピングされていることが分かる。
 
 
 .. code-block:: console
@@ -1345,7 +1397,7 @@ Controllerの実装
    * - | (2)
      - | Formを初期化する。
        |
-       | \ ``@ModelAttribute``\ アノテーションをつけることで、このメソッドの返り値のformオブジェクトが、\ ``"todoForm"``\ という名前で\ ``Model``\ に追加される。
+       | \ ``@ModelAttribute``\ アノテーションをつけることで、このメソッドの返り値のformオブジェクトが、\ ``todoForm``\ という名前で\ ``Model``\ に追加される。
        | これは、\ ``TodoController``\ の各処理で、\ ``model.addAttribute("todoForm", form)``\ を実装するのと同義である。
    * - | (3)
      - | \ ``/todo/list``\ というパスにリクエストされた際に、一覧画面表示処理用のメソッド(\ ``list``\ メソッド)が実行されるように\ ``@RequestMapping``\ アノテーションを設定する。
@@ -1354,7 +1406,7 @@ Controllerの実装
    * - | (4)
      - | \ ``Model``\ にTodoのリストを追加して、Viewに渡す。
    * - | (5)
-     - | View名として\ ``"todo/list"``\ を返すと、spring-mvc.xmlに定義した\ ``ViewResolver``\ によって、\ :file:`WEB-INF/views/todo/list.jsp`\がレンダリングされることになる。
+     - | View名として\ ``todo/list``\ を返すと、spring-mvc.xmlに定義した\ ``ViewResolver``\ によって、\ :file:`WEB-INF/views/todo/list.jsp`\がレンダリングされることになる。
 
 JSPの作成
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -1804,7 +1856,7 @@ Formの修正
 完了処理用のFormについても、\ ``TodoForm``\ を使用する。
 
 \ ``TodoForm``\ に\ ``todoId``\ プロパティを追加する必要があるが、単純に追加してしまうと、新規作成処理でも\ ``todoId``\プロパティのチェックが実行されてしまう。
-一つのFormクラスを使用して複数のformから送信されるリクエストパラメータをバインドする場合は、\ ``groups``\ 属性を使用して、入力チェッックルールをグループ化する。
+一つのFormクラスを使用して複数のformから送信されるリクエストパラメータをバインドする場合は、\ ``groups``\ 属性を使用して、入力チェックルールをグループ化する。
 
 Formクラスに以下のプロパティを追加する。
 
@@ -1868,7 +1920,7 @@ Formクラスに以下のプロパティを追加する。
      - 説明
    * - | (1)
      - | 入力チェックルールをグループ化するためのインタフェースを作成する。
-       | 入力チェックルールのグループ化ついては、\ :doc:`../ArchitectureInDetail/WebApplicationDetail/Validation`\ を参照されたい。
+       | 入力チェックルールのグループ化については、\ :doc:`../ArchitectureInDetail/WebApplicationDetail/Validation`\ を参照されたい。
        |
        | ここでは、新規作成処理用のインタフェースとして\ ``TodoCreate``\を、完了処理用のインタフェースとして\ ``TodoFinish``\ を作成している。
    * - | (2)
@@ -2597,9 +2649,7 @@ CSSファイルを適用すると、以下のようなレイアウトになる�
 
 ここでは、Domainオブジェクトをデータベースに永続化するためのインフラストラクチャ層の実装方法について説明する。
 
-本チュートリアルでは、以下のO/R Mapperを使用したインフラストラクチャ層の実装方法について説明する。
-
-* MyBatis3
+本チュートリアルでは、MyBatis3を使用したインフラストラクチャ層の実装方法について説明する。
 
 |
 
@@ -2610,9 +2660,7 @@ O/R Mapperに依存したブランクプロジェクトの作成
 
 ここでは、O/R Mapperに依存したブランクプロジェクトの作成を行う。
 
-まず、使用するO/R Mapperに応じてプロジェクトを作成し直す。
-
-* \ :ref:`TutorialCreateMyBatis3BlankProject`\
+まず、\ :ref:`TutorialCreateMyBatis3BlankProject`\を参考にプロジェクトを作成し直す。
 
 次に、\ :ref:`tutorial-todo_infra`\ までで作成した\ :file:`src`\ フォルダ以下のうち、
 \ **TodoRepositoryImplクラス以外のファイルを新規作成したプロジェクトにコピーする**\ 。
@@ -2857,7 +2905,7 @@ Package Explorer上で右クリック -> New -> File を選択し、「New File�
        | \ ``<update>``\ 要素の\ ``parameterType``\ 属性に、パラメータのクラス名(FQCN又はエイリアス名)を指定する。
    * - | (7)
      - | 引数に指定されたTodoオブジェクトを削除するSQLを実装する。
-       | \ ``<delete>``\ 要素の\ ``parameterType``\ 属性に、パラメータのクラス名(FQCN又はエイリアス名)を指定する。
+       | \ ``<delete>``\ 要素の\ ``parameterType``\ 属性に、パラメータのクラス名(FQCN又はエイリアス名)を指定する。
    * - | (8)
      - | 引数に指定された\ ``finished``\ に一致するTodoの件数を取得するSQLを実装する。
 
@@ -3387,7 +3435,6 @@ todo-domain.xml
     \ ``<tx:annotation-driven>``\タグが設定されている。
 
      .. code-block:: xml
-        :emphasize-lines: 9-10, 12-13
 
          <tx:annotation-driven />
 
@@ -3530,7 +3577,7 @@ MyBatis3用のブランクプロジェクトを作成した場合、以下のよ
 todo-infra.properties
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-\ :file:`todo-infra.properties`\ には、Todoアプリのインフラストラクチャ層の環境依存値の設定を行う。
+\ :file:`todo-infra.properties`\ には、Todoアプリのインフラストラクチャ層における環境依存値の設定を行う。
 
 O/R Mapperに依存しないブランクプロジェクトを作成した際は、\ :file:`todo-infra.properties`\ は作成されない。
 
@@ -3585,7 +3632,7 @@ todo-env.xml
 なお、データベースにアクセスしないブランクプロジェクトを作成した際は、\ :file:`todo-env.xml`\ は作成されない。
 
 .. code-block:: xml
-    :emphasize-lines: 12, 27, 44
+    :emphasize-lines: 12, 27, 32, 35, 46
 
     <?xml version="1.0" encoding="UTF-8"?>
     <beans xmlns="http://www.springframework.org/schema/beans"
@@ -3618,13 +3665,15 @@ todo-env.xml
             <constructor-arg index="0" ref="realDataSource" />
         </bean>
 
+        <!-- (3) -->
         <jdbc:initialize-database data-source="dataSource"
             ignore-failures="ALL">
+            <!-- (4) -->
             <jdbc:script location="classpath:/database/${database}-schema.sql" encoding="UTF-8" />
             <jdbc:script location="classpath:/database/${database}-dataload.sql" encoding="UTF-8" />
         </jdbc:initialize-database>
 
-        <!-- (3) -->
+        <!-- (5) -->
         <bean id="transactionManager"
             class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
             <property name="dataSource" ref="dataSource" />
@@ -3647,6 +3696,16 @@ todo-env.xml
        | JDBC関連のログを出力する機能をもったデータソースを指定している。
        | \ ``net.sf.log4jdbc.Log4jdbcProxyDataSource``\ を使用すると、SQLなどのJDBC関連のログを出力できるため、デバッグに役立つ情報を出力することができる。
    * - | (3)
+     - | データベース初期化の設定。
+       | データベースを初期化するSQLファイルを実行するための設定を行っている。
+       |
+       | この設定は通常、開発中のみでしか使用しない(環境に依存する設定)ため、\ ``todo-env.xml`` \に定義されている。
+   * - | (4)
+     - | データベースを初期化するSQLファイルの設定。
+       | データベースを初期化するための、DDL文が記載されているSQLファイルとDML文が記載されているSQLファイルを指定している。
+       |
+       | ブランクプロジェクトの設定では\ ``todo-infra.properties`` \に\ ``database=H2`` \と定義されているため、\ ``H2-schema.sql`` \及び\ ``H2-dataload.sql`` \が実行される。
+   * - | (5)
      - | トランザクションマネージャの設定。
        | id属性には、\ ``transactionManager``\ を指定する。
        | 別の名前を指定する場合は、\ ``<tx:annotation-driven>``\ タグにもトランザクションマネージャ名を指定する必要がある。
@@ -3664,7 +3723,7 @@ spring-mvc.xml
 | なお、チュートリアルで使用しないコンポーネントについての説明は割愛する。
 
 .. code-block:: xml
-    :emphasize-lines: 15, 19, 33, 36, 42, 76
+    :emphasize-lines: 15, 19, 31, 34, 40, 74
 
     <?xml version="1.0" encoding="UTF-8"?>
     <beans xmlns="http://www.springframework.org/schema/beans"
@@ -3692,8 +3751,6 @@ spring-mvc.xml
                 <bean
                     class="org.springframework.security.web.method.annotation.AuthenticationPrincipalArgumentResolver" />
             </mvc:argument-resolvers>
-            <!-- workaround to CVE-2016-5007. -->
-            <mvc:path-matching path-matcher="pathMatcher" />
         </mvc:annotation-driven>
 
         <mvc:default-servlet-handler />
@@ -3786,11 +3843,6 @@ spring-mvc.xml
                 pointcut="execution(* org.springframework.web.servlet.HandlerExceptionResolver.resolveException(..))" />
         </aop:config>
 
-        <!-- Setting PathMatcher. -->
-        <bean id="pathMatcher" class="org.springframework.util.AntPathMatcher">
-            <property name="trimTokens" value="false" />
-        </bean>
-
     </beans>
 
 
@@ -3819,13 +3871,13 @@ spring-mvc.xml
        | どこにも\ ``styles.css``\ が格納されていない場合は、404エラーを返す。
 
        | ここでは\ ``cache-period``\ 属性で静的リソースのキャッシュ時間(3600秒=60分)も設定している。
-       | \ ``cache-period="3600"``\ と設定しても良いが、60分であることを明示するために `SpEL <http://docs.spring.io/spring/docs/4.3.5.RELEASE/spring-framework-reference/html/expressions.html#expressions-beandef-xml-based>`_ を使用して \ ``cache-period="#{60 * 60}"``\  と書く方が分かりやすい。
+       | \ ``cache-period="3600"``\ と設定しても良いが、60分であることを明示するために `SpEL <http://docs.spring.io/spring/docs/4.3.11.RELEASE/spring-framework-reference/html/expressions.html#expressions-beandef-xml-based>`_ を使用して \ ``cache-period="#{60 * 60}"``\  と書く方が分かりやすい。
    * - | (5)
      - | コントローラ処理のTraceログを出力するインターセプタを設定する。
        | \ ``/resources``\ 配下を除く任意のパスに適用されるように設定する。
    * - | (6)
      - | \ ``ViewResolver``\ の設定を行う。
-       | この設定により、例えばコントローラからview名として\ ``"hello"``\が返却された場合には\ ``/WEB-INF/views/hello.jsp``\ が実行される。
+       | この設定により、例えばコントローラからview名として\ ``hello``\が返却された場合には\ ``/WEB-INF/views/hello.jsp``\ が実行される。
 
        .. tip::
 
@@ -4034,7 +4086,7 @@ logback.xml
 
 .. note::
 
-    O/R Mapperを使用するブランクプロジェクトを作成した場合は、トランザクション制御関連のログを出力するロガーが有効な状態となっている。
+    MyBatis3を使用するブランクプロジェクトを作成した場合は、トランザクション制御関連のログを出力するロガーが有効な状態となっている。
 
     * MyBatis3用のブランクプロジェクト
 

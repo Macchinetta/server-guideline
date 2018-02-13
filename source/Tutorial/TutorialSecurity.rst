@@ -87,7 +87,7 @@ URL一覧を以下に示す。
 プロジェクトの作成
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Mavenのアーキタイプを利用し、\ `TERASOLUNA Server Framework for Java (5.x)のブランクプロジェクト <https://github.com/Macchinetta/macchinetta-gfw-web-blank>`_\ を作成する。
+Mavenのアーキタイプを利用し、\ `Macchinetta Server Framework (1.x)のブランクプロジェクト <https://github.com/Macchinetta/macchinetta-gfw-web-blank>`_\ を作成する。
 
 本チュートリアルでは、MyBatis3用のブランクプロジェクトを作成する。
 
@@ -99,7 +99,7 @@ Mavenのアーキタイプを利用し、\ `TERASOLUNA Server Framework for Java
     mvn archetype:generate -B^
      -DarchetypeGroupId=com.github.macchinetta.blank^
      -DarchetypeArtifactId=macchinetta-web-blank-archetype^
-     -DarchetypeVersion=1.4.0.RELEASE^
+     -DarchetypeVersion=1.5.0.RELEASE^
      -DgroupId=com.example.security^
      -DartifactId=first-springsecurity^
      -Dversion=1.0.0-SNAPSHOT
@@ -390,7 +390,7 @@ AccountSharedServiceの作成
      * - | (3)
        - | \ ``User``\ クラスのコンストラクタを呼び出す。第1引数はユーザー名、第2引数はパスワード、第3引数は権限リストである。
      * - | (4)
-       - | 簡易実装として、\ ``"ROLE_USER"``\ というロールのみ持つ権限を作成する。
+       - | 簡易実装として、\ ``ROLE_USER``\ というロールのみ持つ権限を作成する。
      * - | (5)
        - | アカウント情報のgetterを用意する。これにより、ログインユーザーの\ ``Account``\ オブジェクトを取得することができる。
 
@@ -458,81 +458,21 @@ AccountSharedServiceの作成
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 本チュートリアルでは、アカウント情報を保持するデータベースとしてH2 Database(インメモリデータベース)を使用する。
-そのため、アプリケーションサーバ起動時にSQLを実行してデータベースを初期化する必要がある。
+そのため、アプリケーション起動時にSQLを実行してデータベースを初期化する必要がある。
 
-| データベースを初期化するSQLスクリプトを実行するための設定を追加する。
+| ブランクプロジェクトには以下のように\ ``jdbc:initialize-database`` \が設定済みであり、\ ``${database}-schema.sql`` \にDDL文、\ ``${database}-dataload.sql`` \にDML文を追加するだけでアプリケーション起動時にSQLを実行してデータベースを初期化することができる。なお、ブランクプロジェクトの設定では\ ``first-springsecurity-infra.properties`` \に\ ``database=H2`` \と定義されているため、\ ``H2-schema.sql`` \及び\ ``H2-dataload.sql`` \が実行される。
+
 | ``src/main/resources/META-INF/spring/first-springsecurity-env.xml``
 
 .. code-block:: xml
-    :emphasize-lines: 4,6,30-36
 
-    <?xml version="1.0" encoding="UTF-8"?>
-    <beans xmlns="http://www.springframework.org/schema/beans"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xmlns:jdbc="http://www.springframework.org/schema/jdbc"
-        xsi:schemaLocation="
-            http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
-            http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-        ">
-
-        <bean id="dateFactory" class="org.terasoluna.gfw.common.date.jodatime.DefaultJodaTimeDateFactory" />
-
-        <bean id="realDataSource" class="org.apache.commons.dbcp2.BasicDataSource"
-            destroy-method="close">
-            <property name="driverClassName" value="${database.driverClassName}" />
-            <property name="url" value="${database.url}" />
-            <property name="username" value="${database.username}" />
-            <property name="password" value="${database.password}" />
-            <property name="defaultAutoCommit" value="false" />
-            <property name="maxTotal" value="${cp.maxActive}" />
-            <property name="maxIdle" value="${cp.maxIdle}" />
-            <property name="minIdle" value="${cp.minIdle}" />
-            <property name="maxWaitMillis" value="${cp.maxWait}" />
-        </bean>
-
-
-        <bean id="dataSource" class="net.sf.log4jdbc.Log4jdbcProxyDataSource">
-            <constructor-arg index="0" ref="realDataSource" />
-        </bean>
-
-        <!-- (1) -->
-        <jdbc:initialize-database data-source="dataSource"
-            ignore-failures="ALL">
-            <!-- (2) -->
-            <jdbc:script location="classpath:/database/${database}-schema.sql" encoding="UTF-8" />
-            <!-- (3) -->
-            <jdbc:script location="classpath:/database/${database}-dataload.sql" encoding="UTF-8" />
-        </jdbc:initialize-database>
-
-        <bean id="transactionManager"
-            class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-            <property name="dataSource" ref="dataSource" />
-            <property name="rollbackOnCommitFailure" value="true" />
-        </bean>
-    </beans>
-
-.. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
-.. list-table::
-    :header-rows: 1
-    :widths: 10 90
-
-    * - 項番
-      - 説明
-    * - | (1)
-      - \ ``<jdbc:initialize-database>``\ タグにデータベースを初期化するSQLスクリプトを実行するための設定を行う。
-
-        この設定は通常、開発中のみでしか使用しない(環境に依存する設定)ため、\ ``first-springsecurity-env.xml``\ に定義する。
-    * - | (2)
-      - アカウント情報を保持するテーブルを作成するためのDDL文が記載されているSQLファイルを指定する。
-
-        ブランクプロジェクトの設定では、\ ``first-springsecurity-infra.properties``\ に\ ``database=H2``\ と定義されているため、\ ``H2-schema.sql``\ が実行される。
-    * - | (3)
-      - デモユーザーを登録するためのDML文が記載されているSQLファイルを指定する。
-
-        ブランクプロジェクトの設定では、\ ``first-springsecurity-infra.properties``\ に\ ``database=H2``\ と定義されているため、\ ``H2-dataload.sql``\ が実行される。
+    <jdbc:initialize-database data-source="dataSource"
+        ignore-failures="ALL">
+        <jdbc:script location="classpath:/database/${database}-schema.sql" encoding="UTF-8" />
+        <jdbc:script location="classpath:/database/${database}-dataload.sql" encoding="UTF-8" />
+    </jdbc:initialize-database>
 
 |
-
 | アカウント情報を保持するテーブルを作成するためのDDL文を作成する。
 | ``src/main/resources/database/H2-schema.sql``
 
@@ -565,7 +505,7 @@ AccountSharedServiceの作成
     * - | (1)
       - ブランクプロジェクトの設定では、\ ``applicationContext.xml``\ にパスワードをハッシュ化するためのクラスとして\ ``org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder``\ が設定されている。
 
-        本チュートリアルでは、\ ``BCryptPasswordEncoder``\を使用してパスワードのハッシュ化を行うため、パスワードには\ ``"demo"``\という文字列をBCryptアルゴリズムでハッシュ化した文字列を投入する。
+        本チュートリアルでは、\ ``BCryptPasswordEncoder``\を使用してパスワードのハッシュ化を行うため、パスワードには\ ``demo``\という文字列をBCryptアルゴリズムでハッシュ化した文字列を投入する。
 
 |
 
@@ -758,8 +698,7 @@ Spring Securityの設定
     <html>
     <head>
     <title>Login Page</title>
-    <link rel="stylesheet"
-        href="${pageContext.request.contextPath}/resources/app/css/styles.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/app/css/styles.css">
     </head>
     <body>
         <div id="wrapper">
@@ -778,7 +717,7 @@ Spring Securityの設定
                     <tr>
                         <td><label for="username">User:</label></td>
                         <td><input type="text" id="username"
-                            name="username" value='demo'>(demo)</td><!-- (4) -->
+                            name="username" value="demo">(demo)</td><!-- (4) -->
                     </tr>
                     <tr>
                         <td><label for="password">Password:</label></td>
@@ -803,16 +742,16 @@ Spring Securityの設定
     * - 項番
       - 説明
     * - | (1)
-      - 認証が失敗した場合、\ ``"/login.jsp?error=true"``\ が呼び出され、ログインページを表示する。
+      - 認証が失敗した場合、\ ``/login.jsp?error=true``\ が呼び出され、ログインページを表示する。
         そのため、認証エラー後の表示の時のみエラーメッセージが表示されるように\ ``<c:if>``\ タグを使用する。
     * - | (2)
       - 共通ライブラリから提供されている\ ``<t:messagesPanel>``\ タグを使用してエラーメッセージを表示する。
 
-        認証が失敗した場合、認証エラーの例外オブジェクトが\ ``"SPRING_SECURITY_LAST_EXCEPTION"``\ という属性名でセッションスコープに格納される。
+        認証が失敗した場合、認証エラーの例外オブジェクトが\ ``SPRING_SECURITY_LAST_EXCEPTION``\ という属性名でセッションスコープに格納される。
     * - | (3)
-      - \ ``<form:form>``\ タグの\ ``action``\ 属性に、認証処理用のURL(\ ``"/login"``\ )を設定する。このURLはSpring Securityのデフォルトである。
+      - \ ``<form:form>``\ タグの\ ``action``\ 属性に、認証処理用のURL(\ ``/login``\ )を設定する。このURLはSpring Securityのデフォルトである。
 
-        認証処理に必要なパラメータ(ユーザー名とパスワード)をPOSTメソッドを使用して送信する。
+        認証処理に必要なパラメータ(ユーザー名とパスワード)をPOSTメソッドで送信する。
     * - | (4)
       - ユーザー名を指定するテキストボックスを作成する。
 
@@ -871,15 +810,14 @@ JSPからログインユーザーのアカウント情報へアクセス
 | ``src/main/webapp/WEB-INF/views/welcome/home.jsp``
 
 .. code-block:: xml
-    :emphasize-lines: 10-11,17-18
+    :emphasize-lines: 9-10,16-17
   
     <!DOCTYPE html>
     <html>
     <head>
     <meta charset="utf-8">
     <title>Home</title>
-    <link rel="stylesheet"
-        href="${pageContext.request.contextPath}/resources/app/css/styles.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/app/css/styles.css">
     </head>
 
     <!-- (1) -->
@@ -909,7 +847,7 @@ JSPからログインユーザーのアカウント情報へアクセス
       - \ ``<sec:authentication>``\ タグを使用して、ログインユーザーの\ ``org.springframework.security.core.Authentication``\ オブジェクトにアクセスする。
 
         \ ``property``\ 属性を使用すると\ ``Authentication``\ オブジェクトが保持する任意のプロパティにアクセスする事ができ、アクセスしたプロパティ値は\ ``var``\ 属性を使用して任意のスコープに格納することできる。
-        デフォルトではpageスコープの設定され、このJSP内のみで参照可能となる。
+        デフォルトではpageスコープが設定され、このJSP内のみで参照可能となる。
 
         チュートリアルでは、ログインユーザーの\ ``Account``\ オブジェクトを\ ``account``\ という属性名でpageスコープに格納する。
     * - | (2)
@@ -930,15 +868,14 @@ JSPからログインユーザーのアカウント情報へアクセス
 | ``src/main/webapp/WEB-INF/views/welcome/home.jsp``
 
 .. code-block:: xml
-    :emphasize-lines: 18-21
+    :emphasize-lines: 17-20
 
     <!DOCTYPE html>
     <html>
     <head>
     <meta charset="utf-8">
     <title>Home</title>
-    <link rel="stylesheet"
-        href="${pageContext.request.contextPath}/resources/app/css/styles.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/app/css/styles.css">
     </head>
 
     <sec:authentication property="principal.account" var="account" />
@@ -971,7 +908,7 @@ JSPからログインユーザーのアカウント情報へアクセス
     * - | (1)
       - \ ``<form:form>``\ タグを使用して、ログアウト用のフォームを追加する。
 
-        \ ``action``\ 属性には、ログアウト処理用のURL(\ ``"/logout"``\ )を指定して、Logoutボタンを追加する。このURLはSpring Securityのデフォルトである。
+        \ ``action``\ 属性には、ログアウト処理用のURL(\ ``/logout``\ )を指定して、Logoutボタンを追加する。このURLはSpring Securityのデフォルトである。
 
 |
 
@@ -1039,8 +976,7 @@ Controllerからログインユーザーのアカウント情報へアクセス
     <head>
     <meta charset="utf-8">
     <title>Home</title>
-    <link rel="stylesheet"
-        href="${pageContext.request.contextPath}/resources/app/css/styles.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/app/css/styles.css">
     </head>
     <body>
         <div id="wrapper">
@@ -1195,7 +1131,7 @@ spring-security.xml
         ブランクプロジェクトのデフォルトの設定では、静的リソース(js, css, imageファイルなど)にアクセスするためのURLを認証・認可の対象外にしている。
     * - \ (2)
       - \ ``<sec:form-login>``\ タグを使用して、フォーム認証を使用したログインに関する動作を制御する。
-        \ 使用方法については、「:ref:`form-login`」 を参照されたい
+        \ 使用方法については、「:ref:`form-login`」 を参照されたい。
     * - \ (3)
       - \ ``<sec:logout>``\ タグ を使用して、ログアウトに関する動作を制御する。
         \ 使用方法については、「:ref:`SpringSecurityAuthenticationLogout`」 を参照されたい。
@@ -1232,7 +1168,7 @@ spring-mvc.xml
 Spring Securityと関係のない設定については、説明を割愛する。
 
 .. code-block:: xml
-    :emphasize-lines: 22-24,87-89
+    :emphasize-lines: 22-24,85-87
 
     <?xml version="1.0" encoding="UTF-8"?>
     <beans xmlns="http://www.springframework.org/schema/beans"
@@ -1259,8 +1195,6 @@ Spring Securityと関係のない設定については、説明を割愛する�
                 <bean
                     class="org.springframework.security.web.method.annotation.AuthenticationPrincipalArgumentResolver" />
             </mvc:argument-resolvers>
-            <!-- workaround to CVE-2016-5007. -->
-            <mvc:path-matching path-matcher="pathMatcher" />
         </mvc:annotation-driven>
 
         <mvc:default-servlet-handler />
@@ -1355,11 +1289,6 @@ Spring Securityと関係のない設定については、説明を割愛する�
             <aop:advisor advice-ref="handlerExceptionResolverLoggingInterceptor"
                 pointcut="execution(* org.springframework.web.servlet.HandlerExceptionResolver.resolveException(..))" />
         </aop:config>
-
-        <!-- Setting PathMatcher. -->
-        <bean id="pathMatcher" class="org.springframework.util.AntPathMatcher">
-            <property name="trimTokens" value="false" />
-        </bean>
 
     </beans>
 

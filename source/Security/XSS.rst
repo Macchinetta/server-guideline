@@ -54,7 +54,7 @@ Output Escaping
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 XSSの脆弱性への対応としては、HTML特殊文字をエスケープすることが基本である。
-エスケープが必要なHTML上の特殊文字の例と、エスケープ後の例は、以下の通りである。
+HTMLにおいてエスケープが必要な特殊文字の例と、エスケープ後の例は、以下の通りである。
 
 .. tabularcolumns:: |p{0.50\linewidth}|p{0.50\linewidth}|
 .. list-table::
@@ -63,15 +63,15 @@ XSSの脆弱性への対応としては、HTML特殊文字をエスケープす�
 
    * - | エスケープ前
      - | エスケープ後
-   * - | ``&``
+   * - | "``&``"
      - | ``&amp;``
-   * - | ``<``
+   * - | "``<``"
      - | ``&lt;``
-   * - | ``>``
+   * - | "``>``"
      - | ``&gt;``
-   * - | ``"``
+   * - | "\ ``"``\"
      - | ``&quot;``
-   * - | ``'``
+   * - | "``'``"
      - | ``&#39;``
 
 XSSを防ぐために、文字列として出力するすべての表示項目に、\ ``f:h()``\ を使用すること。
@@ -210,7 +210,7 @@ JavaScript Escaping
 XSSの脆弱性への対応としては、JavaScript特殊文字をエスケープすることが基本である。
 ユーザーからの入力をもとに、JavaScriptの文字列リテラルを動的に生成する場合に、エスケープが必要となる。
 
-エスケープが必要なJavaScriptの特殊文字の例と、エスケープ後の例は、以下のとおりである。
+JavaScriptにおいてエスケープが必要な特殊文字の例と、エスケープ後の例は、以下のとおりである。
 
 .. tabularcolumns:: |p{0.50\linewidth}|p{0.50\linewidth}|
 .. list-table::
@@ -219,17 +219,17 @@ XSSの脆弱性への対応としては、JavaScript特殊文字をエスケー�
 
    * - | エスケープ前
      - | エスケープ後
-   * - | ``'``
+   * - | "``'``"
      - | ``\'``
-   * - | ``"``
+   * - | "\ ``"``\"
      - | ``\"``
-   * - | ``\``
+   * - | "``\``"
      - | ``\\``
-   * - | ``/``
+   * - | "``/``"
      - | ``\/``
-   * - | ``<``
+   * - | "``<``"
      - | ``\x3c``
-   * - | ``>``
+   * - | "``>``"
      - | ``\x3e``
    * - | ``0x0D(復帰)``
      - | ``\r``
@@ -247,10 +247,10 @@ XSS問題が発生する例を、以下に示す。
 
   <html>
     <script  type="text/javascript">
-        var aaa = '<script>${warnCode}<\/script>';
-        document.write(aaa);
+        var aaa = '${warnCode}';
+        alert(aaa);
     </script>
-  <html>
+  </html>
 
 .. tabularcolumns:: |p{0.20\linewidth}|p{0.80\linewidth}|
 .. list-table::
@@ -260,13 +260,13 @@ XSS問題が発生する例を、以下に示す。
    * - 属性名
      - 値
    * - | warnCode
-     - | ``<script></script><script>alert('XSS Attack!');</script><\/script>``
+     - | ``';alert('XSS Attack!');aaa='message``
 
 上記例のように、ユーザーの入力を導出元としてコードを出力するなど、JavaScriptの要素を動的に生成する場合、意図せず文字列リテラルが閉じられ、XSSの脆弱性が生じる。
 
 .. figure:: ./images_XSS/javascript_xss_screen_no_escape_result.png
    :alt: javascript_xss_screen_no_escape_result
-   :width: 30%
+   :width: 35%
    :align: center
 
    **Picture - No Escape Result**
@@ -276,8 +276,8 @@ XSS問題が発生する例を、以下に示す。
 .. code-block:: html
 
     <script type="text/javascript">
-        var aaa = '<script><\/script><script>alert('XSS Attack!');<\/script><\/script>';
-        document.write(aaa);
+        var aaa = '';alert('XSS Attack!');aaa='message';
+        alert(aaa);
     </script>
 
 .. tip::
@@ -296,8 +296,8 @@ XSSを防ぐために、ユーザーの入力値、が設定される値にEL式
 .. code-block:: html
 
     <script type="text/javascript">
-      var message = '<script>${f:js(message)}<\/script>';  // (1)
-      <!-- omitted -->
+        var aaa = '${f:js(warnCode)}';  // (1)
+        alert(aaa);
     </script>
 
 .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
@@ -310,14 +310,79 @@ XSSを防ぐために、ユーザーの入力値、が設定される値にEL式
    * - | (1)
      - | EL式の\ ``f:js()``\ を使用することにより、エスケープして変数に設定している。
 
+.. figure:: ./images_XSS/javascript_xss_screen_escape_result.png
+   :alt: javascript_xss_screen_escape_result
+   :width: 35%
+   :align: center
+
+   **Picture - Escape Result**
+
 **出力結果**
 
 .. code-block:: html
 
     <script  type="text/javascript">
-        var aaa = '<script>\x3c\/script\x3e\x3cscript\x3ealert(\'XSS Attack!\');\x3c\/script\x3e<\/script>';
-        document.write(aaa);
+        var aaa = '\';alert(\'XSS Attack!\');aaa=\'message';
+        alert(aaa);
     </script>
+
+.. Warning::
+
+    スクリプトタグが含まれる値を、HTMLエスケープせず\ ``f:js()``\でエスケープさせて出力する場合、document.write()を使用すると、
+    ブラウザにHTMLソースとして解釈させるよう出力するので、XSSの脆弱性が生じる。以下に例を示すが、 **このような実装は決して行わないこと。**
+
+    **JSP**
+
+      .. code-block:: html
+
+        <script  type="text/javascript">
+           var aaa = '${f:js(warnCode)}';
+           document.write(aaa);
+        </script>
+
+      .. tabularcolumns:: |p{0.20\linewidth}|p{0.80\linewidth}|
+      .. list-table::
+         :header-rows: 1
+         :widths: 20 80
+
+         * - 属性名
+           - 値
+         * - | warnCode
+           - | ``<script>alert('XSS Attack!');</script>``
+
+    **出力結果**
+
+      .. code-block:: html
+
+        <script  type="text/javascript">
+           var aaa = '\x3cscript\x3ealert(\'XSS Attack!\');\x3c\/script\x3e';
+           document.write(aaa);
+        </script>
+
+    出力結果をソースだけ確認するとエスケープできているように見える。
+    しかし、これは\ ``<script>alert('XSS Attack!');</script>`` \という内容の文字列を変数aaaに格納するコードとなるため、
+    \ ``document.write(aaa);`` \と実装してしまうと、HTMLのソースとして\ ``<script>alert('XSS Attack!');</script>`` \を出力することになる。
+    その結果、スクリプトが実行される。
+
+    ブラウザに値を出力させたい場合は、JavaScriptを使用せず、HTML特殊文字をエスケープする\ ``f:h()``\を使用することが望ましい。
+
+    **JSP**
+
+      .. code-block:: html
+
+        ${f:h(warnCode)}
+                
+
+    **出力結果**
+
+      .. code-block:: html
+
+        &lt;script&gt;alert(&#39;XSS Attack!&#39;);&lt;/script&gt;
+
+    あえて\ ``f:js()``\を使用し、document.write()で出力したい場合は、以下のいずれかのような、追加のXSS対策が必要である。
+
+    * HTMLエスケープ用のJavaScript関数を用意し、document.write()の引数をエスケープする。
+    * \ ``f:h()``\でユーザーの入力値が設定される値をHTMLエスケープした後、\ ``f:js()``\でJavaScriptの文字列リテラル用のエスケープを行う。
 
 .. _xss_how_to_use_event_handler_escaping:
 
@@ -326,7 +391,7 @@ Event handler Escaping
 
 javascript のイベントハンドラの値をエスケープする場合、\ ``f:h()``\ や、\ ``f:js()``\ を使用するのではなく、\ ``f:hjs()``\ を使用すること。\ ``${f:h(f:js())}``\ と同義である。
 
-理由としては、 \ ``<input type="submit" onclick="callback('xxxx');">``\ のようなイベントハンドラの値に\ ``"');alert("XSS Attack");// "``\ を指定された場合、別のスクリプトを挿入できてしまうため、文字参照形式にエスケープ後、HTMLエスケープを行う必要がある。
+理由としては、 \ ``<input type="submit" onclick="callback('xxxx');">``\ のようなイベントハンドラの値に\ ``');alert("XSS Attack");//``\ を指定された場合、別のスクリプトを挿入できてしまうため、文字参照形式にエスケープ後、HTMLエスケープを行う必要がある。
 
 出力値をエスケープしない脆弱性のある例
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
