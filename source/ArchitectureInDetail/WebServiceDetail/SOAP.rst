@@ -71,12 +71,29 @@ JAX-WSとは
 
 |
 
+.. _SOAPOverviewAboutRESTfulWebServiceDevelopment:
+
+JAX-WSを利用したWebサービスの開発について
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+| Macchinetta Server Framework (1.x)では、APサーバのJAX-WS実装とSpringの機能を利用してWebサービスの開発を行うことを推奨する。
+| SOAPサーバ、クライアントどちらにおいても、通常のWebアプリケーション同様に、ブランクプロジェクト内のwebプロジェクトから作成したWARファイルをAPサーバにデプロイすることで、SOAP Web Serviceを実現することができる。
+
+.. Note::
+
+    APサーバのJAX-WS実装によって、JAX-WS仕様への対応状況や実際のWebサービスの動作やが異なる場合があり、必ずしも本ガイドラインの実装が全てのAPサーバで同様に動作するわけではない。
+    
+    開発を始める前には必ず、「\ :ref:`SOAPApplicationConfiguration`\」のNoteから使用するAPサーバのマニュアルを確認されたい。
+
+|
+
+
 .. _SOAPOverviewJaxWSSpring:
 
 Spring FrameworkのJAX-WS連携機能について
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-| Spring FrameworkはJAX-WSの連携機能をサポートしており、その機能を使用することでSOAPサーバ、クライアントともに簡単に実装することができる。
-| 以下はその機能を用いた、推奨アクセスフローの概要である。ここではSOAPのクライアント(図左)であるWebアプリケーションがSOAPサーバ(図右)にアクセスすることを前提としている。
+| Spring FrameworkはJAX-WSの連携機能をサポートしており、その機能を使用することでJAX-WSを利用して作成されたSOAP Web Serviceに接続するアプリケーションを簡単に実装することができる。
+| 以下はその機能を用いた、推奨アクセスフローの概要である。
+| ここではSOAPのクライアント(図左)であるWebアプリケーションがSOAPサーバ(図右)にアクセスすることを前提としている。
 
 .. figure:: images_SOAP/SOAPProcessFlow.png
     :alt: Server and Client Projects for SOAP
@@ -94,7 +111,7 @@ Spring FrameworkのJAX-WS連携機能について
       - | [クライアント] ControllerがServiceを呼び出す。
         | 通常の呼び出しと変更点は特にない。
     * - | (2)
-      - | [クライアント] ServiceがSOAPサーバ提供側が用意したWebServiceインターフェースを呼び出す。
+      - | [クライアント] ServiceがSOAPサーバ提供側で用意したWebServiceインターフェースを呼び出す。
         | この図では、ServiceがWebServiceインターフェースを呼び出しているが、要件に応じてControllerから直接WebServiceインターフェースを呼び出してもよい。
     * - | (3)
       - | [クライアント] WebServiceインターフェースが呼び出されると実体として「動的プロキシ(Dynamic Proxy)」(以下「プロキシ」)が呼び出される。
@@ -108,11 +125,25 @@ Spring FrameworkのJAX-WS連携機能について
 
             厳密には、SOAPサーバとクライアントはXMLを使用して通信を行っている。
             送信時、および受信時にはJAXBを使用して、Domain ObjectとXMLの相互変換が行われているが、SOAP Web Service作成者はXMLをあまり意識せず、開発を行うことができるようになっている。
-        
+                
     * - | (5)
       - | [サーバ] WebServiceインターフェースが呼び出されると実体としてWebService実装クラスが呼び出される。
         | SOAPサーバでは、WebServiceインターフェースの実装クラスとしてWebService実装クラスを用意する。
-        | このWebService実装クラスは、\ ``org.springframework.web.context.support.SpringBeanAutowiringSupport``\を継承することで、SpringのDIコンテナ上のBeanを\ ``@Inject``\などでインジェクションすることができる。
+        | このWebService実装クラスは、\ ``org.springframework.web.context.support.SpringBeanAutowiringSupport``\を継承することで、SpringのDIコンテナ上のBeanを\ ``@Autowired``\などでインジェクションすることができる。
+
+        .. Note::
+
+            WebService実装クラスは、Spring Frameworkが提供するDispatcherServlet上ではなく、APサーバのJAX-WSエンジンが実装するサーブレットとして動作する。このためガイドラインのアプリケーション層の実装に記載している実装方法とは以下のような違いがあることに注意されたい。
+            
+            * WebService実装クラスがSpringのDIコンテナ上で管理されないため、例えばSpringのAOPによる横断的な処理をかけることができない。（ただし、JAX-WS実装としてApache CXFを利用する場合にはSpringのDIコンテナ上で管理される）
+            * SpringのControllerクラスではないため、 \ ``@ControllerAdvice``\ や \ ``@ExceptionHandler`` \などが適用されない。
+            
+            また、SOAPサーバは、\ ``@Inject``\ではなく、\ ``@Autowired``\でインジェクションすることを推奨する。
+
+            \ ``@Inject``\の場合、Java EEサーバが提供するDI機能で使用されるため、Java EEサーバのDIコンテナに存在しないとエラーになってしまう。
+
+            上記に対して、\ ``@Autowired``\であればSpringのDI機能のみで使用されるため、意図せずJava EEサーバのDI機能でエラーになるのを防止することができる。
+
     * - | (6)
       - | [サーバ] WebService実装クラスでは、業務処理を行うServiceを呼び出す。
     * - | (7)
@@ -125,26 +156,12 @@ Spring FrameworkのJAX-WS連携機能について
 
 .. note::
 
-    Springでは、ドキュメントドリブンでWebサービスを開発するSpring Web Servicesをが提供されているが、ここでは扱わない。
+    Springでは、ドキュメントドリブンでWebサービスを開発するSpring Web Servicesが提供されているが、ここでは扱わない。
     詳細は\ `Spring Web Services <http://projects.spring.io/spring-ws/>`_\ を参照されたい。
 
 .. note::
 
-    SpringでのJAX-WS実装の詳細は、\ `Spring Framework Reference Documentation -Remoting and web services using Spring(Web services)- <http://docs.spring.io/spring/docs/4.3.5.RELEASE/spring-framework-reference/html/remoting.html#remoting-web-services>`_\ を参照されたい。
-
-|
-
-.. _SOAPOverviewAboutRESTfulWebServiceDevelopment:
-
-JAX-WSを利用したWebサービスの開発について
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-| Macchinetta Server Framework (1.x)では、APサーバのJAX-WS実装とSpringの機能を利用してWebサービスの開発を行うことを推奨する。
-
-
-.. Note:: **APサーバへのデプロイについて**
-
-    SOAPサーバ、クライアントどちらにおいても、通常のWebアプリケーション同様に、ブランクプロジェクト内のwebプロジェクトから作成したWARファイルをAPサーバにデプロイすることで、SOAP Web Serviceを実現することができる。
-
+    SpringでのJAX-WS実装の詳細は、\ `Spring Framework Reference Documentation -Remoting and web services using Spring(Web services)- <http://docs.spring.io/spring/docs/4.3.11.RELEASE/spring-framework-reference/html/remoting.html#remoting-web-services>`_\ を参照されたい。
 
 |
 
@@ -326,6 +343,8 @@ SOAPサーバの作成
 
 |
 
+.. _SOAPApplicationConfiguration:
+
 アプリケーションの設定
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
@@ -343,6 +362,8 @@ SOAPサーバの作成
     JBoss Enterprise Application Platform 7.0: \ `DEVELOPING JAX-WS WEB SERVICES <https://access.redhat.com/documentation/en/red-hat-jboss-enterprise-application-platform/7.0/paged/developing-web-services-applications/chapter-3-developing-jax-ws-web-services>`_\
 
     JBoss Enterprise Application Platform 6.4: \ `DEVELOPMENT GUIDE JAX-WS WEB SERVICES <https://access.redhat.com/documentation/en-US/JBoss_Enterprise_Application_Platform/6.4/html/Development_Guide/chap-JAX-WS_Web_Services.html>`_\
+    
+    WebSphere Application Server 9.0: \ `IBM Knowledge Center - Web services <https://www.ibm.com/support/knowledgecenter/SSEQTP_9.0.0/com.ibm.websphere.base.doc/ae/cwbs_wbs2.html>`_\
 
 |
 
@@ -548,7 +569,7 @@ webserviceプロジェクト内にWebサービスを呼び出すインターフ�
         :alt: Server and Client Projects for SOAP
         :width: 50%
 
-    仕様ではないが、Namespaceとパッケージの命名について、\ `XML Namespace Mapping(Red Hat JBoss Fuse) <https://access.redhat.com/documentation/en-US/Red_Hat_JBoss_Fuse/6.0/html/Developing_Applications_Using_JAX-WS/files/JAXWSDataNamespaceMapping.html>`_\ にまとまっている。
+    仕様ではないが、Namespaceとパッケージの命名について、\ `XML Namespace Mapping(Red Hat JBoss Fuse) <https://access.redhat.com/documentation/en-us/red_hat_jboss_fuse/6.0/html/developing_applications_using_jax-ws/jaxwsdatanamespacemapping>`_\ にまとまっている。
 
 |
 
@@ -566,12 +587,12 @@ webプロジェクト内にWebServiceインターフェースの実装クラス�
 
     import java.util.List;
 
-    import javax.inject.Inject;
     import javax.jws.HandlerChain;
     import javax.jws.WebService;
     import javax.xml.ws.BindingType;
     import javax.xml.ws.soap.SOAPBinding;
 
+    import org.springframework.beans.factory.annotation.Autowired;
     import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
     import com.example.domain.model.Todo;
@@ -589,7 +610,7 @@ webプロジェクト内にWebServiceインターフェースの実装クラス�
     @BindingType(SOAPBinding.SOAP12HTTP_BINDING) // (2)
     public class TodoWebServiceImpl extends SpringBeanAutowiringSupport implements TodoWebService { // (3)
 
-        @Inject // (4)
+        @Autowired // (4)
         TodoService todoService;
 
         @Override // (5)
@@ -603,6 +624,7 @@ webプロジェクト内にWebServiceインターフェースの実装クラス�
 .. list-table::
     :header-rows: 1
     :widths: 10 90
+    :class: longtable
 
     * - 項番
       - 説明
@@ -620,6 +642,12 @@ webプロジェクト内にWebServiceインターフェースの実装クラス�
       - | \ ``@BindingType``\ を付けることで、バインディングの方式を設定する。
         | \ ``SOAPBinding.SOAP12HTTP_BINDING``\ を定義するとSOAP1.2でのバインディングとなる。
         | 何もつけない場合は、SOAP1.1でのバインディングとなる。
+
+        .. note::
+          使用するAPサーバのJAX-WS実装により、バインディング方式で挙動が異なる場合があるため注意すること。
+          
+          たとえば、WebSphere Application Serverの特定のバージョンではSOAP1.2でのバインディングの場合にWSDLが自動生成されない。詳細については\ `IBM Knowledge Center - Using annotations to create web services <https://www.ibm.com/support/knowledgecenter/SSRTLW_9.0.0/com.ibm.webservice.doc/topics/jaxws/cwsandoc001.html>`_\を参照されたい。
+
     * - | (3)
       - | 先ほど作成した\ ``TodoWebService``\ インターフェースを実装する。
         | \ ``org.springframework.web.context.support.SpringBeanAutowiringSupport``\ を継承することで、SpringのBeanをDIできるようにする。
@@ -675,6 +703,7 @@ webプロジェクト内にWebServiceインターフェースの実装クラス�
 .. list-table::
     :header-rows: 1
     :widths: 10 90
+    :class: longtable
 
     * - 項番
       - 説明
@@ -732,6 +761,7 @@ webプロジェクト内にWebServiceインターフェースの実装クラス�
 .. list-table::
     :header-rows: 1
     :widths: 10 90
+    :class: longtable
 
     * - 項番
       - 説明
@@ -777,6 +807,7 @@ webプロジェクト内にWebServiceインターフェースの実装クラス�
 .. list-table::
     :header-rows: 1
     :widths: 10 90
+    :class: longtable
 
     * - 項番
       - 説明
@@ -1142,7 +1173,7 @@ Serviceからスローされる例外は以下を想定している。必要に�
 
     * - 例外名
       - 内容
-    * - | \ ``org.springframework.security.access.AccessDeniedException``\		
+    * - | \ ``org.springframework.security.access.AccessDeniedException``\
       - | 認可エラー時の例外
     * - | \ ``javax.validation.ConstraintViolationException``\
       - | 入力チェックエラー時の例外
@@ -1162,11 +1193,11 @@ Serviceからスローされる例外は以下を想定している。必要に�
     import java.util.Locale;
     import java.util.Set;
 
-    import javax.inject.Inject;
     import javax.validation.ConstraintViolation;
     import javax.validation.ConstraintViolationException;
     import javax.validation.Path;
 
+    import org.springframework.beans.factory.annotation.Autowired;
     import org.springframework.context.MessageSource;
     import org.springframework.security.access.AccessDeniedException;
     import org.springframework.stereotype.Component;
@@ -1185,13 +1216,13 @@ Serviceからスローされる例外は以下を想定している。必要に�
     @Component  // (1)
     public class WsExceptionHandler {
 
-        @Inject
+        @Autowired
         MessageSource messageSource; // (2)
 
-        @Inject
+        @Autowired
         ExceptionCodeResolver exceptionCodeResolver; // (3)
 
-        @Inject
+        @Autowired
         ExceptionLogger exceptionLogger; // (4)
 
         // (5)
@@ -1291,9 +1322,9 @@ Webサービスクラスにて、例外ハンドラーを呼び出す。以下�
             endpointInterface = "com.example.ws.todo.TodoWebService")
     @BindingType(SOAPBinding.SOAP12HTTP_BINDING)
     public class TodoWebServiceImpl extends SpringBeanAutowiringSupport implements TodoWebService {
-        @Inject
+        @Autowired
         TodoService todoService;
-        @Inject
+        @Autowired
         WsExceptionHandler handler; // (1)
 
         @Override
@@ -1382,13 +1413,13 @@ MTOMを利用した大容量のバイナリデータを扱う方法
     import java.util.List;
 
     import javax.activation.DataHandler;
-    import javax.inject.Inject;
     import javax.jws.HandlerChain;
     import javax.jws.WebService;
     import javax.xml.ws.BindingType;
     import javax.xml.ws.soap.MTOM;
     import javax.xml.ws.soap.SOAPBinding;
 
+    import org.springframework.beans.factory.annotation.Autowired;
     import org.springframework.web.context.support.SpringBeanAutowiringSupport;
     import org.terasoluna.gfw.common.exception.SystemException;
 
@@ -1407,7 +1438,7 @@ MTOMを利用した大容量のバイナリデータを扱う方法
     @BindingType(SOAPBinding.SOAP12HTTP_BINDING)
     public class TodoWebServiceImpl extends SpringBeanAutowiringSupport implements TodoWebService {
 
-        @Inject
+        @Autowired
         TodoService todoService;
 
         // omitted
@@ -1559,7 +1590,7 @@ WebServiceインターフェースを実装したプロキシを生成する\ ``
 
         .. Note:: **wsdlDocumentResourceへのWSDLファイルのURL以外の指定**
 
-            上記の例では、SOAPサーバがWSDLファイルを公開している前提である。\ ``classpath:``\ や\ ``file:``\ プレフィックスを使用して指定することで静的ファイルを指定することもできる。指定できる文字列は、\ `Spring Framework Reference Documentation -Resources(The ResourceLoader)- <http://docs.spring.io/spring/docs/4.3.5.RELEASE/spring-framework-reference/html/resources.html#resources-resourceloader>`_\ を参照されたい。
+            上記の例では、SOAPサーバがWSDLファイルを公開している前提である。\ ``classpath:``\ や\ ``file:``\ プレフィックスを使用して指定することで静的ファイルを指定することもできる。指定できる文字列は、\ `Spring Framework Reference Documentation -Resources(The ResourceLoader)- <http://docs.spring.io/spring/docs/4.3.11.RELEASE/spring-framework-reference/html/resources.html#resources-resourceloader>`_\ を参照されたい。
 
 
 .. Note:: **エンドポイントアドレスの上書き指定**
@@ -1621,8 +1652,7 @@ WebServiceインターフェースを実装したプロキシを生成する\ ``
 
     import java.util.List;
 
-    import javax.inject.Inject;
-
+    import org.springframework.beans.factory.annotation.Autowired;
     import org.springframework.stereotype.Service;
 
     import com.example.domain.model.Todo;
@@ -1632,7 +1662,7 @@ WebServiceインターフェースを実装したプロキシを生成する\ ``
     @Service
     public class TodoServiceImpl implements TodoService {
 
-        @Inject
+        @Autowired
         TodoWebService todoWebService;
 
         @Override
@@ -1800,8 +1830,8 @@ WebServiceインターフェースを実装したプロキシを生成する\ ``
         <property name="customProperties">
             <map>
                 <!-- (2) -->
-                <entry key="com.sun.xml.internal.ws.connect.timeout" value-type="java.lang.Integer" value="${webservice.connect.timeout}"/>
-                <entry key="com.sun.xml.internal.ws.request.timeout" value-type="java.lang.Integer" value="${webservice.request.timeout}"/>
+                <entry key="com.sun.xml.internal.ws.connect.timeout" value="${webservice.connect.timeout}"/>
+                <entry key="com.sun.xml.internal.ws.request.timeout" value="${webservice.request.timeout}"/>
             </map>
         </property>
     </bean>
@@ -1830,7 +1860,25 @@ WebServiceインターフェースを実装したプロキシを生成する\ ``
         .. warning:: **タイムアウト定義に使用するキーについて**
 
             それぞれのタイムアウトを定義するキーはJAX-WSの実装により異なる値を設定する必要がある。
-            詳細は\ `JAX_WS-1166 Standardize timeout settings <https://java.net/jira/browse/JAX_WS-1166>`_\を参照されたい。
+            詳細は\ `JAX_WS-1166 Standardize timeout settings <https://github.com/javaee/metro-jax-ws/issues/1166>`_\を参照されたい。
+
+        .. note::
+
+            WebLogicで該当キーを指定する場合は、\ ``value-type``\ 属性で\ ``Integer``\ 型を指定する必要がある。
+
+            指定をしない場合、WebLogicのJAX-WS実装ライブラリが
+            \ ``String``\ 型から\ ``Integer``\ 型へのキャストを試みて失敗し、結果的に\ ``ClassCastException``\ が原因の\ ``org.springframework.remoting.RemoteAccessException``\ 例外が発生する。
+
+            設定の方法は以下のとおりである。
+
+             .. code-block:: xml
+
+                <property name="customProperties">
+                    <map>
+                        <entry key="com.sun.xml.internal.ws.connect.timeout" value-type="java.lang.Integer" value="${webservice.connect.timeout}"/>
+                        <entry key="com.sun.xml.internal.ws.request.timeout" value-type="java.lang.Integer" value="${webservice.request.timeout}"/>
+                    </map>
+                </property>
 
     * - | (3)
       - | \ ``[client projectName]-domain.xml``\ で定義したプロパティのキーの値を設定する。コネクションタイムアウトとリクエストタイムアウトを記述する。
@@ -1848,7 +1896,7 @@ SOAPサーバ用にプロジェクトの設定を変更する
 | SOAPサーバを作成する場合、ブランクプロジェクトにmodelプロジェクトとwebserviceプロジェクトを追加することを推奨する。
 | 以下にその方法を記述する。
 
-| ブランクプロジェクトは初期状態は以下の構成になっている。
+| ブランクプロジェクトの初期状態は以下の構成になっている。
 | なお、artifactIdにはブランクプロジェクト作成時に指定したartifactIdが設定される。
 
 .. code-block:: console
@@ -2396,7 +2444,7 @@ wsimportの使い方
       - 説明
     * - | (1)
       - | wsimportの引数としてWSDLのURLを指定する。
-        | オプションとして以下を使用をする。
+        | オプションとして以下を使用する。
         
           * -keep ソースも出力する。
           * -p 出力するソースのパッケージを指定する。
@@ -2571,12 +2619,12 @@ Webサービス実装クラスをエンドポイントとして設定する。
 
     import java.util.List;
 
-    import javax.inject.Inject;
     import javax.jws.HandlerChain;
     import javax.jws.WebService;
     import javax.xml.ws.BindingType;
     import javax.xml.ws.soap.SOAPBinding;
 
+    import org.springframework.beans.factory.annotation.Autowired;
     import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
     import org.springframework.stereotype.Component;

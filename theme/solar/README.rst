@@ -4,11 +4,11 @@ Solar is an attempt to create a theme for Sphinx based on the `Solarized <http:/
 
 Preview
 -------
-http://vimalkumar.in/sphinx-themes/solar
+https://vimalkvn.github.io/solar-theme
 
 Download
 --------
-Released versions are available from http://github.com/vkvn/sphinx-themes/downloads
+Released versions are available from https://pypi.python.org/pypi/solar-theme
 
 Installation
 ------------

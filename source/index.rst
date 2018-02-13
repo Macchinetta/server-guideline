@@ -18,6 +18,7 @@ Macchinetta Server Framework (1.x) Development Guideline
    ./ArchitectureInDetail/GeneralFuncDetail/index
    ./ArchitectureInDetail/MessagingDetail/index
    ./Security/index
+   ./UnitTest/index
    ./Tutorial/index
    ./Appendix/index
 

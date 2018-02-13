@@ -14,7 +14,7 @@ Overview
 
 認可処理は、アプリケーションの利用者がアクセスできるリソースを制御するための処理である。
 利用者がアクセスできるリソースを制御するためのもっとも標準的な方法は、
-リソース(又はリソースの集合)毎にアクセスポリシーを定義してき、利用者がリソースにアクセスしようとした時にアクセスポリシーを調べて制御する方法である。
+リソース(又はリソースの集合)毎にアクセスポリシーを定義しておき、利用者がリソースにアクセスしようとした時にアクセスポリシーを調べて制御する方法である。
 
 アクセスポリシーには、どのリソースにどのユーザーからのアクセスを許可するかを定義する。
 Spring Securityでは、以下の3つのリソースに対してアクセスポリシーを定義することができる。
@@ -26,7 +26,7 @@ Spring Securityでは、以下の3つのリソースに対してアクセスポ�
 
 本節では、「Webリソース」「Javaメソッド」「JSPの画面項目」のアクセスに対して認可処理を適用するための実装例(定義例)を紹介しながら、Spring Securityの認可機能について説明する。
 
-.. [#fSpringSecurityAuthorization1] ドメインオブジェクトのアクセスに対する認可処理については、 \ `Spring Security Reference -Domain Object Security (ACLs)- <http://docs.spring.io/spring-security/site/docs/4.1.4.RELEASE/reference/htmlsingle/#domain-acls>`_\ を参照されたい。
+.. [#fSpringSecurityAuthorization1] ドメインオブジェクトのアクセスに対する認可処理については、 \ `Spring Security Reference -Domain Object Security (ACLs)- <http://docs.spring.io/spring-security/site/docs/4.2.3.RELEASE/reference/htmlsingle/#domain-acls>`_\ を参照されたい。
 
 |
 
@@ -155,7 +155,7 @@ How to use
 
 Spring Securityは、アクセスポリシーを指定する記述方法としてSpring Expression Language(SpEL)をサポートしている。
 SpELを使わない方法もあるが、本ガイドラインではExpressionを使ってアクセスポリシーを指定する方法で説明を行う。
-SpELの使い方については本節でも紹介するが、より詳しい使い方を知りたい場合は \ `Spring Framework Reference Documentation -Spring Expression Language (SpEL)- <http://docs.spring.io/spring/docs/4.3.5.RELEASE/spring-framework-reference/htmlsingle/#expressions>`_\ を参照されたい。
+SpELの使い方については本節でも紹介するが、より詳しい使い方を知りたい場合は \ `Spring Framework Reference Documentation -Spring Expression Language (SpEL)- <http://docs.spring.io/spring/docs/4.3.11.RELEASE/spring-framework-reference/htmlsingle/#expressions>`_\ を参照されたい。
 
 |
 
@@ -175,7 +175,7 @@ Spring Securityが用意している共通的なExpressionは以下の通り。
     * - | \ ``hasRole(String role)``\
       - | ログインユーザーが、引数に指定したロールを保持している場合に\ ``true``\ を返却する。
     * - | \ ``hasAnyRole(String... roles)``\
-      - | ログインユーザー、が引数に指定したロールのいずれかを保持している場合に\ ``true``\ を返却する。
+      - | ログインユーザーが、引数に指定したロールのいずれかを保持している場合に\ ``true``\ を返却する。
     * - | \ ``isAnonymous()``\
       - | ログインしていない匿名ユーザーの場合に\ ``true``\ を返却する。
     * - | \ ``isRememberMe()``\
@@ -203,7 +203,7 @@ Spring Securityが用意している共通的なExpressionは以下の通り。
 
 .. note:: **ロール名のプレフィックス** 
 
-    Spring Security 3.2までは、ロール名には\ ``"ROLE_"`` \ プレフィックスを指定する必要があったが、Spring Security 4.0から\ ``"ROLE_"`` \ プレフィックスの指定が不要となっている。 
+    Spring Security 3.2までは、ロール名には\ ``ROLE_`` \ プレフィックスを指定する必要があったが、Spring Security 4.0から\ ``ROLE_`` \ プレフィックスの指定が不要となっている。 
 
     例）
 
@@ -261,6 +261,8 @@ Spring Securityが用意しているWebアプリケーション向けExpression�
        - | 式が真の場合は偽を、偽の場合は真を返す。
 
 |
+
+.. _AuthorizationToWebResources:
 
 Webリソースへの認可
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -327,7 +329,7 @@ bean定義ファイルを使用して、Webリソースに対してアクセス�
       - | 「http」、もしくは「https」を指定する。指定したプロトコルでのアクセスを強制するための属性。
         | 指定しない場合、どちらでもアクセス可能である。
 
-上記以外の属性については、\ `<intercept-url> <http://docs.spring.io/spring-security/site/docs/4.1.4.RELEASE/reference/htmlsingle/#nsa-intercept-url>`_\ を参照されたい。
+上記以外の属性については、\ `<intercept-url> <http://docs.spring.io/spring-security/site/docs/4.2.3.RELEASE/reference/htmlsingle/#nsa-intercept-url>`_\ を参照されたい。
 
 * \ ``<sec:intercept-url>``\ タグ\ ``pattern``\ 属性の定義例（spring-security.xml）
 
@@ -348,12 +350,12 @@ Spring Securityは定義した順番でリクエストとのマッチング処�
 
     Spring Securityのデフォルトの動作では、パスパターンはAnt形式で解釈する。
     パスパターンを正規表現で指定したい場合は、\ ``<sec:http>``\ タグの\ ``request-matcher``\ 属性に
-    \ ``"regex"``\ を指定すること。
+    \ ``regex``\ を指定すること。
 
       .. code-block:: xml
 
           <sec:http request-matcher="regex">
-              <sec:intercept-url pattern="/admin/accounts/.*" access=hasRole('ACCOUNT_MANAGER')" />
+              <sec:intercept-url pattern="/admin/accounts/.*" access="hasRole('ACCOUNT_MANAGER')" />
               <!-- omitted -->
           </sec:http>
 
@@ -361,8 +363,8 @@ Spring Securityは定義した順番でリクエストとのマッチング処�
     Spring Security 4.1以降、Spring Securityがデフォルトで使用している\ `AntPathRequestMatcher` \のパスマッチングの仕様が大文字・小文字を区別する様になった。
 
     例えば以下に示すように、\ ``/Todo/List``\というパスが割り当てられたSpring MVCのエンドポイントに対してアクセスポリシーを定義する場合は、 
-    \ ``<sec:intercept-url>``\ タグの \ ``pattern``\属性に指定する値は \ ``/Todo/List``\や \ ``/Todo/*``\など大文字・小文字を揃える必要がある。
-    誤って\ ``/todo/list``\や\ ``/todo/**``\など大文字・小文字が揃っていない値を指定してしまうと、意図した認可制御が行われなくなるので注意されたい。
+    \ ``<sec:intercept-url>``\ タグの \ ``pattern``\属性に指定する値は \ ``/Todo/List``\や \ ``/Todo/*``\など大文字・小文字をそろえる必要がある。
+    誤って\ ``/todo/list``\や\ ``/todo/**``\など大文字・小文字がそろっていない値を指定してしまうと、意図した認可制御が行われなくなるので注意されたい。
 
     * Spring MVCのエンドポイントの実装例
 
@@ -382,18 +384,17 @@ Spring Securityは定義した順番でリクエストとのマッチング処�
              <!-- omitted -->
          </sec:http>
 
-.. warning::
+.. note::
     Spring MVCとSpring Securityでは、リクエストとのマッチングの仕組みが厳密には異なっており、この差異を利用してSpring Securityの認可機能を突破し、ハンドラメソッドにアクセスできる脆弱性が存在する。
     本事象の詳細は「\ `CVE-2016-5007 Spring Security / MVC Path Matching Inconsistency <https://pivotal.io/security/cve-2016-5007>`_\」を参照されたい。
 
-     \ `trimTokens` \ プロパティに \ `true` \ を設定した\ `org.springframework.util.AntPathMatcher` \ のBeanがSpring MVCに適用されている場合に、本事象が発生する。
-     Spring Framework 4.2以前は \ `trimTokens` \ プロパティのデフォルト値が\ `true`\ となっていたが、Spring Framework 4.3 からデフォルト値は \ `false` \ となったため、意図的に変更しない限り本事象は発生しない。
- 
-     なお、下記の様にTERASOLUNA Server Framework for Java (5.3.x)のブランクプロジェクトでは、明示的に\ `trimTokens` \ プロパティに \ `false` \を指定しているが、
-     \ `true` \ に変更した場合は本事象が発生する条件を満たしてしまうため、変更しない様に注意されたい。
+    \ `trimTokens` \ プロパティに \ `true` \ を設定した\ `org.springframework.util.AntPathMatcher` \ のBeanがSpring MVCに適用されている場合に、本事象が発生する。
+    Spring Framework 4.2以前は \ `trimTokens` \ プロパティのデフォルト値が\ `true`\ となっていたが、Spring Framework 4.3 からデフォルト値は \ `false` \ となったため、意図的に変更しない限り本事象は発生しない。
 
-    また、特定のURLに対してアクセスポリシーを設ける(\ ``pattern``\属性に\ ``*``\や\ ``**``\などのワイルドカード指定を含めない)場合、
-    拡張子を付けたパターンとリクエストパスの末尾に\ ``/``\を付けたパターンに対するアクセスポリシーの追加が必須である。
+
+.. warning::
+    特定のURLに対してアクセスポリシーを設ける(\ ``pattern``\属性に"\ ``*``\"や\ ``**``\などのワイルドカード指定を含めない)場合、
+    拡張子を付けたパターンとリクエストパスの末尾に"\ ``/``\"を付けたパターンに対するアクセスポリシーの追加が必須である。
 
     下記の設定例は、\ ``/restrict``\に対して「ROLE_ADMIN」ロールを持つユーザからのアクセスのみを許可している。
 
@@ -417,7 +418,7 @@ Spring Securityは定義した順番でリクエストとのマッチング処�
          * - | (1)
            - | \ ``/restrict``\に拡張子を付けたパターン(\ ``/restrict.json``\など)のアクセスポリシーを定義する。
          * - | (2)
-           - | \ ``/restrict``\にリクエストパスの末尾に\ ``/``\を付けたパターン(\ ``/restrict/``\など)のアクセスポリシーを定義する。
+           - | \ ``/restrict``\にリクエストパスの末尾に"\ ``/``\"を付けたパターン(\ ``/restrict/``\など)のアクセスポリシーを定義する。
          * - | (3)
            - | \ ``/restrict``\に対するアクセスポリシーを定義する。
 
@@ -519,53 +520,78 @@ Spring Securityは定義した順番でリクエストとのマッチング処�
 Spring Security 4.1以降では、アクセスポリシーを適用するリソースを指定する際にパス変数\ [#fPathVariableDescription]_\を使用することができ、
 アクセスポリシーの定義内で\ ``#パス変数名``\と指定することで参照できる。
 
+ただし、拡張子を付けてアクセス可能なパスに対してパス変数を使用するアクセスポリシーを定義する場合は、パス変数値に拡張子部分が格納されない様に定義する必要がある。
+
+例えば、パターンに\ ``/users/{userName}``\と定義し、\ ``/users/personName.json``\というリクエストパスを送信した際、
+アクセスポリシーの定義内で参照しているパス変数\ ``#userName``\には\ ``personName``\ではなく\ ``personName.json``\が格納され、
+意図しない認可制御が行われてしまう。
+
+この事象を防ぐためには、「拡張子を付けたパスに対するアクセスポリシー」を定義した後に、「拡張子を付けないパスに対するアクセスポリシー」を定義する必要がある。
+
 以下の例は、ログインユーザが自身のユーザ情報のみアクセスできる様にアクセスポリシーを定義している。
 
-* spring-security.xmlの定義例
+* spring-security.xmlの定義例（ワイルドカードを使用する場合）
 
   .. code-block:: xml
 
     <sec:http>
-        <sec:intercept-url pattern="/users/{userName}" access="isAuthenticated() and #userName == principal.username"/>
+        <!-- (1) -->
+        <sec:intercept-url pattern="/users/{userName}.*"  access="isAuthenticated() and #userName == principal.username"/>
+        <!-- (2) -->
+        <sec:intercept-url pattern="/users/{userName}/**" access="isAuthenticated() and #userName == principal.username"/>
         <!-- omitted -->
     </sec:http>
 
-.. warning:: **パス変数を使用するアクセスポリシーを定義する際の注意点**
+  .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
+  .. list-table::
+      :header-rows: 1
+      :widths: 10 90
+      :class: longtable
+  
+      * - 項番
+        - 説明
+      * - | (1)
+        - | 「拡張子を付けたパスに対するアクセスポリシー」を定義する。
+      * - | (2)
+        - | 「拡張子を付けないパスに対するアクセスポリシー」を定義する。
+          | ワイルドカードを使用して\ ``/users/{userName}``\ で始まるパスに対するアクセスポリシーを定義する。
 
-   拡張子を付けてアクセス可能なパスに対してパス変数を使用するアクセスポリシーを定義する場合は、パス変数値に拡張子部分が格納されない様に定義する必要がある。
+|
 
-   例えば、パターンに\ ``/users/{userName}``\と定義し、\ ``/users/personName.json``\というリクエストパスを送信した際、
-   アクセスポリシーの定義内で参照しているパス変数\ ``#userName``\には\ ``personName``\ではなく\ ``personName.json``\が格納され、
-   意図しない認可制御が行われてしまう。
+* spring-security.xmlの定義例（ワイルドカードを使用しない場合）
 
-   この事象を防ぐためには、以下の例の様に「拡張子を付けたパスに対するアクセスポリシー」を定義した後に、「拡張子を付けないパスに対するアクセスポリシー」を定義する必要がある。
+  .. code-block:: xml
 
-   * spring-security.xmlの定義例
+    <sec:http>
+        <!-- (1) -->
+        <sec:intercept-url pattern="/users/{userName}.*" access="isAuthenticated() and #userName == principal.username"/>
+        <!-- (2) -->
+        <sec:intercept-url pattern="/users/{userName}/"  access="isAuthenticated() and #userName == principal.username"/>
+        <sec:intercept-url pattern="/users/{userName}"   access="isAuthenticated() and #userName == principal.username"/>
+        <!-- omitted -->
+    </sec:http>
 
-    .. code-block:: xml
+  .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
+  .. list-table::
+      :header-rows: 1
+      :widths: 10 90
+      :class: longtable
+  
+      * - 項番
+        - 説明
+      * - | (1)
+        - | 「拡張子を付けたパスに対するアクセスポリシー」を定義する。
+      * - | (2)
+        - | 「拡張子を付けないパスに対するアクセスポリシー」を定義する。
+          | ワイルドカードを使用しない場合、Spring MVCとSpring Securityのパスマッチングの差を吸収するために
+          | 末尾が "\ ``/``\" で終わるパスに対するアクセスポリシーも定義する。
 
-      <sec:http>
-       <sec:intercept-url pattern="/users/{userName}.*" access="isAuthenticated() and #userName == principal.username"/> <!-- (1) -->
-       <sec:intercept-url pattern="/users/{userName}" access="isAuthenticated() and #userName == principal.username"/> <!-- (2) -->
-       <!-- omitted -->
-      </sec:http>
-
-    .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
-    .. list-table::
-        :header-rows: 1
-        :widths: 10 90
-        :class: longtable
-    
-        * - 項番
-          - 説明
-        * - | (1)
-          - | 「拡張子を付けたパスに対するアクセスポリシー」を定義する。
-        * - | (2)
-          - | 「拡張子を付けないパスに対するアクセスポリシー」を定義する。
 
 .. [#fPathVariableDescription] パス変数の説明は :doc:`../ImplementationAtEachLayer/ApplicationLayer` の\ :ref:`controller_method_argument-pathvariable-label`\ を参照されたい。
 
 |
+
+.. _AuthorizationToMethod:
 
 メソッドへの認可
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -607,8 +633,8 @@ Spring Securityは、以下のアノテーションをサポートしている�
     * - | (1)
       - | \ ``<sec:global-method-security>``\ タグを付与すると、メソッド呼び出しに対する認可処理を行うAOPが有効になる。
     * - | (2)
-      - | \ ``pre-post-annotations``\ 属性に\ ``true``\ を指定する。
-        | \ ``pre-post-annotations``\ 属性に\ ``true``\ を指定すると、Expressionを指定してアクセスポリシーを定義できるアノテーションが有効になる。
+      - | \ ``pre-post-annotations``\ 属性に\ ``enabled``\ を指定する。
+        | \ ``pre-post-annotations``\ 属性に\ ``enabled``\ を指定すると、Expressionを指定してアクセスポリシーを定義できるアノテーションが有効になる。
 
 |
 
@@ -776,7 +802,7 @@ Webリソースに指定したアクセスポリシーと連動させる場合�
       - | ボタンやリンクを出力する部分を\ ``<sec:authorize>``\ タグで囲む。
     * - | (2)
       - | \ ``<sec:authorize>``\ タグの\ ``url``\ 属性にWebリソースへアクセスするためのURLを指定する。
-        | ここでは、「\ ``"/admin/accounts"``\ というURLが割り振られているWebリソースにアクセス可能な場合は表示を許可する」というアクセスポリシーを定義しており、Webリソースに定義されているアクセスポリシーを直接意識する必要がない。
+        | ここでは、「\ ``/admin/accounts``\ というURLが割り振られているWebリソースにアクセス可能な場合は表示を許可する」というアクセスポリシーを定義しており、Webリソースに定義されているアクセスポリシーを直接意識する必要がない。
 
 .. note:: **HTTPメソッドによるポリシーの指定**
 
@@ -821,6 +847,8 @@ Webリソースに指定したアクセスポリシーと連動させる場合�
       - | 変数の値を参照して表示処理を実装する。
 
 |
+
+.. _AuthorizationErrorResponse:
 
 認可エラー時のレスポンス
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -915,7 +943,7 @@ Spring Securityのデフォルトの設定では、認証方式に対応する\ 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 Spring Securityのデフォルトの設定だと、認証済みのユーザーからのアクセスを拒否した際は、アプリケーションサーバのエラーページが表示される。
-アプリケーションサーバーのエラーページを表示してしまうと、システムのセキュリティを低下させる要因になるのため、適切なエラー画面を表示することを推奨する。
+アプリケーションサーバーのエラーページを表示してしまうと、システムのセキュリティを低下させる要因になるため、適切なエラー画面を表示することを推奨する。
 エラーページの指定は、以下のようなbean定義を行うことで可能である。
 
 * spring-security.xmlの定義例
@@ -1118,7 +1146,7 @@ Spring Securityが提供しているデフォルトの動作をカスタマイ�
 
 例えば、「ROLE_ADMIN」が上位ロール、「ROLE_USER」が下位ロールという階層関係を設けた場合、
 下記のようアクセスポリシーを設定すると、「ROLE_ADMIN」権限を持つユーザーは、
-\ ``"/user"``\ 配下のパス(「ROLE_USER」権限を持つユーザーがアクセスできるパス)にアクセスすることができる。
+\ ``/user``\ 配下のパス(「ROLE_USER」権限を持つユーザーがアクセスできるパス)にアクセスすることができる。
 
 * spring-security.xmlの定義例
 

@@ -155,7 +155,7 @@ Problems
 
  .. warning::
 
-    上記のケースのように、不正な画面操作を行った後でも更新処理が実行できてしまうと、悪意のある攻撃者によって、正規のルート経由せずに直接更新処理が実行される危険度が高まる。
+    上記のケースのように、不正な画面操作を行った後でも更新処理が実行できてしまうと、悪意のある攻撃者によって、正規のルートを経由せずに直接更新処理が実行される危険度が高まる。
     
         .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
         .. list-table::
@@ -288,7 +288,7 @@ PRG(Post-Redirect-Get)パターンについて
  .. warning::
  
     \ :abbr:`PRG (Post-Redirect-Get)`\ パターンでは、完了画面でブラウザの戻るボタンを押下することで、更新処理を再度実行されることを防ぐことはできない。
-    ブラウザの戻るボタンを使った不正な画面遷移後の更新処理の再実行を防ぐ場合は、トランザクショントークンチェックを行う必要がある。
+    ブラウザの戻るボタンを使用して不正な遷移をした画面から、更新処理の再実行を防ぐ場合は、トランザクショントークンチェックを行う必要がある。
     
 .. _double-submit_transactiontokencheck:
 
@@ -629,7 +629,7 @@ PRG(Post-Redirect-Get)パターンの適用
        | **POSTメソッドでリクエストを受け取る。**
    * - | (6)
      - | **完了画面を表示するためのURLへリダイレクトする。**
-       | 上記例では、\ ``"prgExample/create?complete"``\ というURLに対して\ ``GET``\メソッドで リクエストされる。
+       | 上記例では、\ ``prgExample/create?complete``\ というURLに対して\ ``GET``\メソッドで リクエストされる。
        | リダイレクト先にデータを引き渡す場合は、 \ ``RedirectAttributes``\のaddFlashAttributeメソッドを呼び出し、引き渡すデータを追加する。
        | \ ``Model``\ のaddAttributeメソッドは、リダイレクト先にデータを引き渡すことはできない。
    * - | (7)
@@ -688,7 +688,7 @@ PRG(Post-Redirect-Get)パターンの適用
    * - 項番
      - 説明
    * - | (6)
-     - | 更新処理を行うためのボタンが押下された場合は、 **POSTメソッドでリクエスト送る。**
+     - | 更新処理を行うためのボタンが押下された場合は、 **POSTメソッドでリクエストを送る。**
 
 - :file:`createComplete.jsp`
 
@@ -714,7 +714,7 @@ PRG(Post-Redirect-Get)パターンの適用
      - 説明
    * - | (7)
      - | リダイレクト先にて、更新処理から引き渡したデータを参照する場合は、\ ``RedirectAttributes``\ の **addFlashAttributeメソッドで追加したデータの属性名を指定する。**
-       | 上記例では、 \ ``"output"``\が引き渡したデータを参照するための属性名となる。
+       | 上記例では、 \ ``output``\が引き渡したデータを参照するための属性名となる。
 
 .. _doubleSubmit_how_to_use_transaction_token_check:
 
@@ -837,14 +837,14 @@ PRG(Post-Redirect-Get)パターンの適用
      - * NameSpaceは、一連の画面遷移を識別するための論理的な名称を付与するための要素となる。
        * NameSpaceを設けることで、異なるNameSpaceに属するリクエストが干渉しあう事を防ぐ事が出来るため、並行して操作を行うことができる画面遷移を増やすことが出来る。
        * NameSpaceとして使用する値は、\ ``@TransactionTokenCheck``\アノテーションのvalue属性で指定した値が使用される。
-       * クラスアノテーションのvalue属性とメソッドアノテーションのvalue属性の両方を指定した場合は、 両方の値を\ ``"/"``\で連結した値がNameSpaceとなる。複数のメソッドで同じ値を指定した場合は、同じNameSpaceに属するメソッドとなる。
+       * クラスアノテーションのvalue属性とメソッドアノテーションのvalue属性の両方を指定した場合は、 両方の値を"\ ``/``\"で連結した値がNameSpaceとなる。複数のメソッドで同じ値を指定した場合は、同じNameSpaceに属するメソッドとなる。
        * クラスアノテーションにのみvalue属性を指定した場合は、そのクラスで生成されるトランザクショントークンのNameSpaceは、全てクラスアノテーションで指定した値となる。
        * メソッドアノテーションにのみvalue属性を指定した場合は、生成されるトランザクショントークンのNameSpaceはメソッドアノテーションで指定した値となる。複数のメソッドで同じ値を指定した場合は、同じNameSpaceに属するメソッドとなる。
        * クラスアノテーションのvalue属性とメソッドアノテーションのvalue属性の両方を省略した場合は、グローバルトークンに属するメソッドとなる。グローバルトークンについては、\ :ref:`doubleSubmit_appendix_global_token`\を参照されたい。
    * - | (2)
      - TokenKey
      - * TokenKeyは、ネームスペース内で管理されているトランザクションを識別するための要素となる。
-       * TokenKeyは、\ ``@TransactionTokenCheck``\アノテーションのtype属性に\ ``TransactionTokenType.BEGIN``\が宣言されているメソッドが実行されたタイミングで生成れる。
+       * TokenKeyは、\ ``@TransactionTokenCheck``\アノテーションのtype属性に\ ``TransactionTokenType.BEGIN``\が宣言されているメソッドが実行されたタイミングで生成される。
        * | 複数のTokenKeyを同時に保持することが出来る数には上限数があり、デフォルト10である。TokenKeyの保持数はNameSpace毎に管理される。
        * | \ ``TransactionTokenType.BEGIN``\時にNameSpace毎に管理されている保持数が最大値に達している場合は、実行された日時が最も古いTokenKeyを破棄することで(Least Recently Used (LRU))、新しいトランザクションを有効なトランザクションとして管理する仕組みとなっている。
        * | 破棄されたトランザクショントークンを使ってアクセスした場合は、トランザクショントークンエラーとなる。
@@ -928,7 +928,7 @@ PRG(Post-Redirect-Get)パターンの適用
     上限値に達していた場合は、実行された日時が最も古いTokenKeyをもつトランザクショントークンを破棄(Least Recently Used (LRU))することで、
     新しいトランザクションを有効なトランザクションとして管理する仕組みとなっている。
 
-    NameSpaceごとに保持できるトランザクショントークンの上限数のデフォルト10個である。
+    NameSpaceごとに保持できるトランザクショントークンの上限数はデフォルトで10となっている。
     上限値を変更する場合は、\ :ref:`doubleSubmit_how_to_extend_change_max_count`\を参照されたい。
 
 |
@@ -1023,7 +1023,7 @@ PRG(Post-Redirect-Get)パターンの適用
    * - | (3)
      - | \ ``@TransactionTokenCheck``\ アノテーションを使用して、トランザクショントークンの生成及びチェックを実施するためのクラス(\ ``TransactionTokenInterceptor``\)を指定する。
    * - | (4)
-     - | トランザクショントークンを、Spring MVCの\ ``<fomr:form>``\タグを使用してHidden領域に自動的に埋め込むためのクラス(\ ``TransactionTokenRequestDataValueProcessor``\)を設定する。
+     - | トランザクショントークンを、Spring MVCの\ ``<form:form>``\タグを使用してHidden領域に自動的に埋め込むためのクラス(\ ``TransactionTokenRequestDataValueProcessor``\)を設定する。
 
 
 トランザクショントークンエラーをハンドリングするための設定
@@ -1129,7 +1129,7 @@ PRG(Post-Redirect-Get)パターンの適用
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 | トランザクショントークンチェックを行う場合、払い出されたトランザクショントークンが、リクエストパラメータとして送信されるようにView(JSP)を実装する必要がある。
-| リクエストパラメータとして送信されるようにする方法としては、\ :ref:`setting`\を行った上で、\ ``<form:form>``\タグを使して自動的にトランザクショントークンをhidden要素に埋め込む方法を推奨する。
+| リクエストパラメータとして送信されるようにする方法としては、\ :ref:`setting`\を行った上で、\ ``<form:form>``\タグを使用して自動的にトランザクショントークンをhidden要素に埋め込む方法を推奨する。
 
 - :file:`firstView.jsp`
 
@@ -1209,12 +1209,12 @@ PRG(Post-Redirect-Get)パターンの適用
    * - | (2)
      - | HTMLの\ ``<form>``\タグを使用する場合は、\ ``<t:transaction />`` を使用することで、(1)と同様のhiddenタグが埋め込まれる。
    * - | (3)
-     - | HTMLの\ ``<form>``\タグを使用する場合は、Spring Securityから提供されているCSRFトークンチェックで必要となるcsrfトークンをhidden項目として埋め込む必要がある。
-       | CSRFトークンチェックで必要となるcsrfトークンについては、\ :ref:`csrf_formtag-use`\ を参照されたい。
+     - | HTMLの\ ``<form>``\タグを使用する場合は、Spring Securityから提供されているCSRFトークンチェックで必要となるCSRFトークンをhidden項目として埋め込む必要がある。
+       | CSRFトークンチェックで必要となるCSRFトークンについては、\ :ref:`csrf_formtag-use`\ を参照されたい。
 
  .. note::
     
-    \ ``<form:form>``\タグでを使用すると、CSRFトークンチェックで必要となるパラメータも自動的に埋め込まれる。 CSRFトークンチェックで必要となるパラメータについては、\ :ref:`csrf_htmlformtag-use`\ を参照されたい。
+    \ ``<form:form>``\タグを使用すると、CSRFトークンチェックで必要となるパラメータも自動的に埋め込まれる。 CSRFトークンチェックで必要となるパラメータについては、\ :ref:`csrf_htmlformtag-use`\ を参照されたい。
 
  .. note::
     
@@ -1230,12 +1230,12 @@ PRG(Post-Redirect-Get)パターンの適用
 出力されたHTMLを確認すると、
 
 * | NameSpaceは、クラスアノテーションのvalue属性で指定した値が設定される。
-  | 上記例だと、 \ ``"transactionTokenCheckExample"``\(橙色の下線)がNameSpaceとなる。
+  | 上記例だと、 \ ``transactionTokenCheckExample``\(橙色の下線)がNameSpaceとなる。
 * | TokenKeyは、トランザクション開始時に払い出された値が引き回されて設定される。
-  | 上記例だと、 \ ``"c0123252d531d7baf730cd49fe0422ef"``\(青色の下線)がTokenKeyとなる。
+  | 上記例だと、 \ ``c0123252d531d7baf730cd49fe0422ef``\(青色の下線)がTokenKeyとなる。
 * | TokenValueは、リクエスト毎に値が変化している。
-  | 上記例だと、 \ ``"3f610684e1cb546a13b79b9df30a7523"``\、\ ``"da770ed81dbca9a694b232e84247a13b"``\、
-  | \ ``"bd5a2d88ec446b27c06f6d4f486d4428"``\(緑色の下線)がTokenValueとなる。
+  | 上記例だと、 \ ``3f610684e1cb546a13b79b9df30a7523``\、\ ``da770ed81dbca9a694b232e84247a13b``\、
+  | \ ``bd5a2d88ec446b27c06f6d4f486d4428``\(緑色の下線)がTokenValueとなる。
 
 ことが、わかる。
 
@@ -1344,18 +1344,18 @@ PRG(Post-Redirect-Get)パターンの適用
      - | クラスアノテーションのvalue属性でNameSpaceを指定する。
        | 上記例では、本ガイドラインの推奨パターンである \ ``@RequestMapping``\のvalue属性と同じ値を指定している。
    * - | (2)
-     - | \ ``"flowOne"``\という名前を持つユースケースの処理に対して、トランザクショントークンチェックを行う。
+     - | \ ``flowOne``\という名前を持つユースケースの処理に対して、トランザクショントークンチェックを行う。
        | 上記例では、本ガイドラインの推奨パターンである \ ``@RequestMapping``\のvalue属性と同じ値を指定している。
    * - | (3)
-     - | \ ``"flowTwo"``\という名前を持つユースケースの処理に対して、トランザクショントークンチェックを行う。
+     - | \ ``flowTwo``\という名前を持つユースケースの処理に対して、トランザクショントークンチェックを行う。
        | 上記例では、本ガイドラインの推奨パターンである \ ``@RequestMapping``\のvalue属性と同じ値を指定している。
    * - | (4)
-     - | \ ``"flowThree"``\という名前を持つユースケースの処理に対して、トランザクショントークンチェックを行う。
+     - | \ ``flowThree``\という名前を持つユースケースの処理に対して、トランザクショントークンチェックを行う。
        | 上記例では、本ガイドラインの推奨パターンである \ ``@RequestMapping``\のvalue属性と同じ値を指定している。
 
  .. note::
  
-    ユースケース毎にNameSpaceを割り振ることで、各ユースケース毎にトランザクショントークンのチェックを行うことが出来る。
+    ユースケースごとにNameSpaceを割り振ることで、ユースケースごとのトランザクショントークンチェックを行うことが出来る。
 
 
 .. _usecase_of_transaction_token_type_CHECK:
@@ -1521,7 +1521,7 @@ TransactionTokenTypeを正しく設定しない場合、通常のオペレーシ
    * - 項番
      - 説明
    * - | (1)
-     - | クラスアノテーションとして、\ ``"user"``\というNameSpaceを設定している。
+     - | クラスアノテーションとして、\ ``user``\というNameSpaceを設定している。
        | 上記例では、推奨パターンの\ ``@RequestMapping``\アノテーションのvalue属性と同じ値を指定している。
    * - | (2)
      - | 入力画面の表示するためのハンドラメソッド。
@@ -1551,7 +1551,7 @@ TransactionTokenTypeを正しく設定しない場合、通常のオペレーシ
 
 こうような不整合な状態になっている画面からのリクエストを不正なリクエストとして防ぐ方法として、トランザクショントークンチェック機能を使用することができる。
 
-NameSpaceごとに保持できるトランザクショントークンの上限数を1を設定する。
+NameSpaceごとに保持できるトランザクショントークンの上限数に1を設定する。
 
 - :file:`spring-mvc.xml`
 
@@ -1653,18 +1653,18 @@ HTTPレスポンスヘッダの\ ``Cache-Control``\ の設定により、ブラ�
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 | \ ``@TransactionTokenCheck``\アノテーションのvalue属性の指定を省略すると、グローバルなトランザクショントークンとして扱われる。
-| グローバルなトランザクショントークンのNameSpaceには、\ ``"globalToken"``\(固定値)が使用される。
+| グローバルなトランザクショントークンのNameSpaceには、\ ``globalToken``\(固定値)が使用される。
 
  .. note::
 
     アプリケーション全体として、単一の画面遷移のみを許容する場合は、NameSpaceごとに保持できるトランザクショントークンの上限数を1に設定し、グルーバルトークンを使用することで実現することが出来る。
 
-アプリケーション全体として、単一の画面遷移のみを許容する場合場合の設定及び実装例を以下に示す。
+アプリケーション全体として、単一の画面遷移のみを許容する場合の設定及び実装例を以下に示す。
  
 NameSpaceごとに保持できるトランザクショントークンの上限数の変更
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-NameSpaceごとに保持できるトランザクショントークンの上限数を1を設定する。
+NameSpaceごとに保持できるトランザクショントークンの上限数に1を設定する。
 
 - :file:`spring-mvc.xml`
 
@@ -1749,7 +1749,7 @@ Controllerの実装
 * HTMLの出力例
 
  | JSPは、\ :ref:`doubleSubmit_how_to_use_transaction_token_check_jsp`\で用意したJSPと同等のものを用意する。
- | actionを、\ ``"transactionTokenCheckExample"``\から\ ``"globalTokenCheckExample"``\に変更したのみで、他は同じである。
+ | actionを、\ ``transactionTokenCheckExample``\から\ ``globalTokenCheckExample``\に変更したのみで、他は同じである。
 
  .. figure:: ./images/transaction-token-global-html.png
    :alt: transaction token global html
@@ -1757,12 +1757,12 @@ Controllerの実装
 
 出力されたHTMLを確認すると、
 
-* | NameSpaceは、\ ``"globalToken"``\という固定値が設定される。
+* | NameSpaceは、\ ``globalToken``\という固定値が設定される。
 * | TokenKeyは、トランザクション開始時に払い出された値が引き回されて設定される。
-  | 上記例だと、 \ ``"9d937be4adc2f5dd2032292d153f1133"``\(青色の下線)がTokenKeyとなる。
+  | 上記例だと、 \ ``9d937be4adc2f5dd2032292d153f1133``\(青色の下線)がTokenKeyとなる。
 * | TokenValueは、リクエスト毎に値が変化している。
-  | 上記例だと、 \ ``"9204d7705ce7a17f16ca6cec24cfd88b"``\、\ ``"69c809fefcad541dbd00bd1983af2148"``\、
-  | \ ``"6b83f33b365f1270ee1c1b263f046719"``\(緑色の下線)がTokenValueとなる。
+  | 上記例だと、 \ ``9204d7705ce7a17f16ca6cec24cfd88b``\、\ ``69c809fefcad541dbd00bd1983af2148``\、
+  | \ ``6b83f33b365f1270ee1c1b263f046719``\(緑色の下線)がTokenValueとなる。
 
 ことが、わかる。
 
@@ -1906,7 +1906,7 @@ Quick Reference
      - | 指定無し
      - | create
      - | create~key~value
-     - | アプリケーション全体でcreateという同一のNamespaceが作成され、その中の同時実行数は、1に制限されること。Accountと、Customerという業務が別にあり、createメソッドでTransactionTokenのNameSpaceに"create"と指定した場合、Accountと、Customerのcreateは、同時に行えない。
+     - | アプリケーション全体でcreateという同一のNamespaceが作成され、その中の同時実行数は、1に制限されること。AccountとCustomerという業務が別にあり、createメソッドでTransactionTokenのNameSpaceに"create"と指定した場合、AccountとCustomerのcreateは同時に行えない。
    * - | (14)
      - |  1 (Custom Setting in spring-mvc.xml)
      - | 指定無し
@@ -1924,7 +1924,7 @@ Quick Reference
      - | 指定無し
      - | 指定無し
      - | globalToken~key~value
-     - | アプリケーション全体の同時実行できる業務は、1に制限される。1セッションでは、1つの操作のみをするプロジェクトで使用すること。
+     - | アプリケーション全体で同時に実行できる業務は、1に制限される。1セッションでは1つの操作のみを許容するプロジェクトで使用すること。
 
 .. raw:: latex
 

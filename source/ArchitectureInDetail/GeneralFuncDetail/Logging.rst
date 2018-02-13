@@ -116,6 +116,10 @@ Overview
      例外が発生した際に、ログや画面にメッセージID(例外コード)を含めるための仕組み(コンポーネント)を共通ライブラリから提供している。
      詳細については、「:doc:`../WebApplicationDetail/ExceptionHandling`」を参照されたい。
 
+.. raw:: latex
+
+   \newpage
+
 2. | トレーサビリティ
    | トレーサビリティ向上のために、各ログにリクエスト単位で、一意となるようなTrack ID(以降X-Trackと呼ぶ)を出力させることを推奨する。
    | X-Trackを含めたログの例を、以下に示す。
@@ -159,7 +163,7 @@ Overview
      - | 業務処理の処理時間を計測し、業務処理実行後に出力したり、リクエストの処理時間を計測し、レスポンスを返す際に、ログを出力する。
        | 通常は、AOPやサーブレットフィルタ等で実装する。
        |
-       | 共通ライブラリでは、SpringMVCのControllerのハンドラメソッドの処理時間を、Controllerのハンドラメソッド実行後に、TRACEログで出力する、
+       | 共通ライブラリでは、Spring MVCのControllerのハンドラメソッドの処理時間を、Controllerのハンドラメソッド実行後に、TRACEログで出力する、
        | \ ``org.terasoluna.gfw.web.logging.TraceLoggingInterceptor``\ を提供している。
    * - | デバッグログ
      - | 開発時にデバッグ情報を出力する必要がある場合、ソースコード中に、適宜ログ出力処理を実装する。
@@ -370,7 +374,7 @@ logback.xml
     * フィールドの区切り文字としてタブを使用することで、他の区切り文字に比べてフィールドを分割しやすい。
     * フィールドにラベル(名前)を設けることで、フィールド定義の変更(定義位置の変更、フィールドの追加、フィールドの削除)を行ってもパース処理には影響を与えない。
 
-    また、エクセルに貼付けるだけで最低限のフォーマットが行える点も特徴の一つである。
+    また、エクセルに貼り付けるだけで最低限のフォーマットが行える点も特徴の一つである。
 
 |
 
@@ -774,11 +778,11 @@ How to extend
        | 詳細は、\ :doc:`../../ArchitectureInDetail/WebApplicationDetail/MessageManagement`\ の\ :ref:`properties-display`\ を参照されたい。
    * - | (5)
      - | 国際化を考慮し\ ``setBasenames``\ メソッドを使用してプロパティファイルを指定する。
-       | \ ``setBasenames``\ の詳細は\ `ReloadableResourceBundleMessageSourceクラスのsetBasenamesのJavaDoc <http://docs.spring.io/spring/docs/4.3.5.RELEASE/javadoc-api/org/springframework/context/support/ReloadableResourceBundleMessageSource.html#setBasenames-java.lang.String...->`_\を参照されたい。
+       | \ ``setBasenames``\ の詳細は\ `ReloadableResourceBundleMessageSourceクラスのsetBasenamesのJavaDoc <http://docs.spring.io/spring/docs/4.3.11.RELEASE/javadoc-api/org/springframework/context/support/ReloadableResourceBundleMessageSource.html#setBasenames-java.lang.String...->`_\を参照されたい。
    * - | (6)
      - | Loggerラッパークラスにおいても、SLF4Jを使用する。ロギングライブラリの実装を直接使用しない。
    * - | (7)
-     - | DEBUGレベルのログ出力を許可してるか、判定する。
+     - | DEBUGレベルのログ出力を許可しているか、判定する。
        | 使用時の注意点については、\ :ref:`note-description-of-log-output`\ を参照されたい。
    * - | (8)
      - | 本実装例ではDEBUGレベルのログにはログIDを使わない。引数のログメッセージをそのまま、ログ出力する。
@@ -809,7 +813,9 @@ How to extend
      
      アプリケーションの性質やメッセージの管理方法に合わせてファイルの単位を決めること。
 
+.. raw:: latex
 
+   \newpage
 
 実行結果は、以下のようになる。
 

@@ -25,7 +25,7 @@ Overview
     一部のアプリケーションサーバ上でServlet 3.0のファイルアップロード機能を使用すると、
     リクエストパラメータやファイル名のマルチバイト文字が文字化けすることがある。
 
-    version 1.4.0.RELEASE時点で問題の発生が確認されているアプリケーションサーバは以下の通りである。
+    version 1.5.0.RELEASE時点で問題の発生が確認されているアプリケーションサーバは以下の通りである。
     
     * WebLogic 12.1.3
     * JBoss EAP 7.0
@@ -136,7 +136,7 @@ Spring Webから提供されているファイルアップロード用のクラ�
 
  .. tip::
 
-    本ガイドラインでは、Servlet 3.0から導入されたファイルアップロード機能を使うことを前提としているが、Spring Webでは、\ `「Apache Commons FileUpload」用の実装クラスも提供している <http://docs.spring.io/spring/docs/4.3.5.RELEASE/spring-framework-reference/html/mvc.html#mvc-multipart-resolver-commons>`_\ 。
+    本ガイドラインでは、Servlet 3.0から導入されたファイルアップロード機能を使うことを前提としているが、Spring Webでは、\ `「Apache Commons FileUpload」用の実装クラスも提供している <http://docs.spring.io/spring/docs/4.3.11.RELEASE/spring-framework-reference/html/mvc.html#mvc-multipart-resolver-commons>`_\ 。
     アップロード処理の実装の違いは、\ ``MultipartResolver``\ と、\ ``MultipartFile``\ オブジェクトによって吸収されるため、Controllerの実装に影響を与えることはない。
 
 |
@@ -220,9 +220,9 @@ Servlet 3.0のアップロード機能を有効化するために、以下の設
 
  .. warning::
 
-    Dos攻撃に対する攻撃耐性を高めるため、\ ``max-file-size``\ と、\ ``max-request-size``\ は、かならず指定すること。
+    DoS攻撃に対する攻撃耐性を高めるため、\ ``max-file-size``\ と、\ ``max-request-size``\ は、かならず指定すること。
 
-    Dos攻撃については、\ :ref:`file-upload_security_related_warning_points_dos`\ を参照されたい。
+    DoS攻撃については、\ :ref:`file-upload_security_related_warning_points_dos`\ を参照されたい。
 
 
  .. note::
@@ -259,8 +259,8 @@ Servlet 3.0のアップロード機能を有効化するために、以下の設
 
         本パラメータは、以下の点でトレードオフの関係となっているため、\ **システム特性にあった設定値を指定すること。**\
 
-        * 設定値を大きくすると、メモリ内で処理が完結するため、処理性能は向上するが、 Dos攻撃などによって\ ``OutOfMemoryError``\ が発生する可能性が高くなる。
-        * 設定値を小さくすると、メモリを使用率を最小限に抑えることができるため、Dos攻撃などによって\ ``OutOfMemoryError``\ が発生する可能性を抑えることができるが、
+        * 設定値を大きくすると、メモリ内で処理が完結するため、処理性能は向上するが、 DoS攻撃などによって\ ``OutOfMemoryError``\ が発生する可能性が高くなる。
+        * 設定値を小さくすると、メモリの使用率を最小限に抑えることができるため、DoS攻撃などによって\ ``OutOfMemoryError``\ が発生する可能性を抑えることができるが、
           ディスクIOの発生頻度が高くなるため、性能劣化が発生する可能性が高くなる。
 
 
@@ -339,7 +339,7 @@ multipart/form-dataリクエストの時、ファイルアップロードで許�
     また、プロジェクト独自で作成するServlet Filterでリクエストパラメータにアクセスするものがある場合は、そのServlet Filterより前に定義すること。
 
     ただし、\ ``springSecurityFilterChain``\ より前に定義することで、認証又は認可されていないユーザーからのアップロード(一時ファイル作成)を許容することになる。
-    この動作を回避する方法が\ `Spring Security Reference -Cross Site Request Forgery (CSRF)- <http://docs.spring.io/spring-security/site/docs/4.1.4.RELEASE/reference/htmlsingle/#csrf-include-csrf-token-in-action>`_\ の中で紹介されているが、セキュリティ上のリスクを含む回避方法になるため、本ガイドラインでは回避策の適用は推奨していない。
+    この動作を回避する方法が\ `Spring Security Reference -Cross Site Request Forgery (CSRF)- <http://docs.spring.io/spring-security/site/docs/4.2.3.RELEASE/reference/htmlsingle/#csrf-include-csrf-token-in-action>`_\ の中で紹介されているが、セキュリティ上のリスクを含む回避方法になるため、本ガイドラインでは回避策の適用は推奨していない。
 
  .. warning:: **ファイルアップロードの許容サイズを超過した場合の注意点**
 
@@ -386,7 +386,7 @@ multipart/form-dataリクエストの時、ファイルアップロードで許�
    * - | (2)
      - | \ ``MultipartException``\ が発生した際に表示するファイルを指定する。
        |
-       | 上記例では、\ ``"/WEB-INF/views/common/error/fileUploadError.jsp"``\ を指定している。
+       | 上記例では、\ ``/WEB-INF/views/common/error/fileUploadError.jsp``\ を指定している。
 
 - :file:`fileUploadError.jsp`
 
@@ -411,8 +411,8 @@ multipart/form-dataリクエストの時、ファイルアップロードで許�
    * - | (3)
      - | HTTPステータスコードは、\ ``HttpServletResponse``\ のAPIを呼び出して設定する。
        |
-       | 上記例では、\ ``"400"``\ (Bad Request) を設定している。
-       | 明示的に設定しない場合、HTTPステータスコードは\ ``"500"``\ (Internal Server Error)となる。
+       | 上記例では、\ ``400``\ (Bad Request) を設定している。
+       | 明示的に設定しない場合、HTTPステータスコードは\ ``500``\ (Internal Server Error)となる。
 
 |
 
@@ -454,11 +454,11 @@ multipart/form-dataリクエストの時、ファイルアップロードで許�
    * - | (4)
      - | \ ``SystemExceptionResolver``\ の\ ``exceptionMappings``\ に、\ ``MultipartException``\ が発生した際に表示するView(JSP)の定義を追加する。
        |
-       | 上記例では、\ ``"common/error/fileUploadError"``\ を指定している。
+       | 上記例では、\ ``common/error/fileUploadError``\ を指定している。
    * - | (5)
      - | ``MultipartException`` が発生した際に応答するHTTPステータスコードの定義を追加する。
        |
-       | 上記例では、\ ``"400"``\ (Bad Request) を指定している。
+       | 上記例では、\ ``400``\ (Bad Request) を指定している。
        | クライアントエラー(HTTPレスポンスコード = 4xx)を指定することで、
        | 共通ライブラリの例外ハンドリング機能から提供しているクラス( ``HandlerExceptionResolverLoggingInterceptor`` )によって出力されるログは、\ ``ERROR``\ レベルではなく、\ ``WARN``\ レベルとなる。
 
@@ -496,7 +496,7 @@ multipart/form-dataリクエストの時、ファイルアップロードで許�
    * - | (6)
      - | \ ``SimpleMappingExceptionCodeResolver``\ の\ ``exceptionMappings``\ に、\ ``MultipartException``\ が発生した際に適用する、例外コードを追加する。
        |
-       | 上記例では、\ ``"e.xx.fw.6001"``\ を指定している。
+       | 上記例では、\ ``e.xx.fw.6001``\ を指定している。
        | 個別に定義を行わない場合は、\ ``defaultExceptionCode``\ に指定した例外コードが適用される。
 
 
@@ -582,13 +582,13 @@ JSPの実装
    * - 項番
      - 説明
    * - | (1)
-     - | \ ``<form:form>``\ 要素のenctype属性に、\ ``"multipart/form-data"``\ を指定する。
+     - | \ ``<form:form>``\ 要素のenctype属性に、\ ``multipart/form-data``\ を指定する。
    * - | (2)
      - | \ ``<form:form>``\ 要素のmodelAttribute属性に、フォームオブジェクトの属性名を指定する。
-       | 上記例では、\ ``"fileUploadForm"``\ を指定している。
+       | 上記例では、\ ``fileUploadForm``\ を指定している。
    * - | (3)
-     - | \ ``<form:input>``\ 要素type属性に、\ ``"file"``\ を指定し、path属性に、\ ``MultipartFile``\ プロパティ名を指定する。
-       | 上記例では、アップロードされたファイルは、\ ``FileUploadForm``\ オブジェクトの\ ``"file"``\ プロパティに格納される。
+     - | \ ``<form:input>``\ 要素type属性に、\ ``file``\ を指定し、path属性に、\ ``MultipartFile``\ プロパティ名を指定する。
+       | 上記例では、アップロードされたファイルは、\ ``FileUploadForm``\ オブジェクトの\ ``file``\ プロパティに格納される。
 
 
 Controllerの実装
@@ -677,7 +677,7 @@ Controllerの実装
      - 説明
    * - | (1)
      - | ファイルアップロード用のフォームオブジェクトを、\ ``Model``\ に格納するためのメソッド。
-       | 上記例では、\ ``Model``\ に格納するための属性名は、\ ``"fileUploadForm"``\ となる。
+       | 上記例では、\ ``Model``\ に格納するための属性名は、\ ``fileUploadForm``\ となる。
    * - | (2)
      - | アップロード画面を表示するためのハンドラメソッド。
    * - | (3)
@@ -716,7 +716,7 @@ Controllerの実装
  .. note:: **MultipartFileについて**
 
     MultipartFileには、アップロードされたファイルを操作するためのメソッドが用意されている。
-    各メソッドの利用方法については、\ `MultipartFileクラスのJavaDoc <http://docs.spring.io/spring/docs/4.3.5.RELEASE/javadoc-api/org/springframework/web/multipart/MultipartFile.html>`_\ を参照されたい。
+    各メソッドの利用方法については、\ `MultipartFileクラスのJavaDoc <http://docs.spring.io/spring/docs/4.3.11.RELEASE/javadoc-api/org/springframework/web/multipart/MultipartFile.html>`_\ を参照されたい。
 
 .. _fileupload_validator:
 
@@ -843,6 +843,9 @@ Controllerの実装
    * - | (4)
      - | ファイルが、空でないことを検証するための、実装を行うクラスを作成する。
 
+.. raw:: latex
+
+   \newpage
 
 ファイルのサイズが許容サイズ内であることを検証するためのバリデーションの実装
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -1100,7 +1103,7 @@ JSPの実装
      - 説明
    * - | (1)
      - | アップロードファイルをバインドするList内の位置を指定する。
-       | バインドするリスト内の位置は、\ ``[]``\ の中に指定する。開始位置は、\ ``0``\ 開始となる。
+       | バインドするリスト内の位置は、\ ``[]``\ の中に指定する。開始位置は、"\ ``0``\" 開始となる。
 
 
 Controllerの実装
@@ -1344,7 +1347,7 @@ Controllerの実装
  .. note::
 
     \ ``MultipartFile``\ オブジェクトで保持しているファイルの中身は、アップロードしたリクエストが完了した時点で消滅する可能性がある。
-    そのため、ファイルの中身をリクエストを跨いで扱いたい場合は、\ ``MultipartFile``\ オブジェクトで保持しているファイルの中身や、メタ情報(ファイル名など)をファイルやフォームに退避する必要がある。
+    そのため、ファイルの中身についてリクエストを跨いで扱いたい場合は、\ ``MultipartFile``\ オブジェクトで保持しているファイルの中身や、メタ情報(ファイル名など)をファイルやフォームに退避する必要がある。
 
     \ ``MultipartFile``\ オブジェクトで保持しているファイルの中身は、下記処理フローの(3)が完了した時点で、消滅する。
 
@@ -1467,7 +1470,7 @@ Controllerの実装
      - 説明
    * - | (3)
      - | アップロードファイルを一時保存するためのHelperメソッドを呼び出す。
-       | 上記例では、一時保存したファイルの識別するためのIDがHelperメソッドの返り値として返却される。
+       | 上記例では、一時保存したファイルを識別するためのIDがHelperメソッドの返り値として返却される。
    * - | (4)
      - | アップロードしたファイルのメタ情報（ファイルを識別するためのID、ファイル名など）をフォームオブジェクトに格納する。
        | 上記例では、アップロードファイルのファイル名と一時保存したファイルを識別するためのIDをフォームオブジェクトに格納している。
@@ -1482,7 +1485,7 @@ Controllerの実装
     上記例では、アプリケーションサーバ上のローカルディスクに一時保存する例としているが、アプリケーションサーバがクラスタ化されている場合は、
     データベース又は共有ディスクに保存する必要がでてくるので、非機能要件も考慮して保存先を設計する必要がある。
     
-    データベースに保存する場合は、トランザクション管理が必要となるため、 データベースに保存す処理をServiceのメソッドに委譲することになる。
+    データベースに保存する場合は、トランザクション管理が必要となるため、 データベースに保存する処理をServiceのメソッドに委譲することになる。
 
 |
 
@@ -1506,7 +1509,7 @@ How to extend
     不要なファイルを残したままにすると、ディスクを圧迫する可能性があるため、必ず不要なファイルを削除する仕組みを用意すること。
 
 本ガイドラインでは、Spring Frameworkから提供されている「Task Scheduler」機能を使用して、不要なファイルを削除する方法について説明する。
-「Task Scheduler」の詳細については、\ `公式リファレンスの"Task Execution and Scheduling" <http://docs.spring.io/spring/docs/4.3.5.RELEASE/spring-framework-reference/html/scheduling.html>`_\ を参照されたい。
+「Task Scheduler」の詳細については、\ `公式リファレンスの"Task Execution and Scheduling" <http://docs.spring.io/spring/docs/4.3.11.RELEASE/spring-framework-reference/html/scheduling.html>`_\ を参照されたい。
 
  .. note::
 
@@ -1628,7 +1631,7 @@ How to extend
      - 説明
    * - | (3)
      - | 不要ファイルを削除するPOJOクラスをbean登録する。
-       | 上記例では、 ``"uploadTemporaryFileCleaner"`` というIDで登録している。
+       | 上記例では、 ``uploadTemporaryFileCleaner`` というIDで登録している。
    * - | (4)
      - | 不要ファイルを削除する処理を、実行するためのタスクスケジューラのbeanを、登録する。
        | 上記例では、pool-size属性を省略しているため、このタスクスケジュールは、シングルスレッドでタスクを実行する。
@@ -1656,7 +1659,7 @@ How to extend
      * ``0 0 * * * *`` : 毎時 0分に実行される。
      * ``0 0 9-17 * * MON-FRI`` : 平日9時～17時の間の毎時0分に実行される。
 
-    cronの指定値の詳細については、\ `CronSequenceGeneratorのJavaDoc <http://docs.spring.io/spring/docs/4.3.5.RELEASE/javadoc-api/org/springframework/scheduling/support/CronSequenceGenerator.html>`_\ を参照されたい。
+    cronの指定値の詳細については、\ `CronSequenceGeneratorのJavaDoc <http://docs.spring.io/spring/docs/4.3.11.RELEASE/javadoc-api/org/springframework/scheduling/support/CronSequenceGenerator.html>`_\ を参照されたい。
 
     実行タイミングは、アプリケーションをデプロイする環境によって異なる可能性があるため、外部プロパティから取得すること。
     外部プロパティの詳細については、\ :doc:`../GeneralFuncDetail/PropertyManagement`\ を参照されたい。
@@ -1684,13 +1687,13 @@ Appendix
 
 .. _file-upload_security_related_warning_points_dos:
 
-アップロード機能に対するDos攻撃
+アップロード機能に対するDoS攻撃
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-アップロード機能に対するDos攻撃とは、巨大なサイズのファイルを連続してアップロードしてサーバに対して負荷を掛けることで、
+アップロード機能に対するDoS攻撃とは、巨大なサイズのファイルを連続してアップロードしてサーバに対して負荷を掛けることで、
 サーバのダウンや、レスポンス速度の低下を狙った攻撃方法のことである。
 
-| アップロード可能なファイルのサイズに制限がない場合や、マルチパートリクエストのサイズに制限がない場合、Dos攻撃への耐性が脆弱となる。
-| Dos攻撃の耐性を高めるためには、\ :ref:`file-upload_how_to_usr_application_settings`\ で説明した\ ``<multipart-config>``\ 要素を用いて、リクエストのサイズ制限を設ける必要がある。
+| アップロード可能なファイルのサイズに制限がない場合や、マルチパートリクエストのサイズに制限がない場合、DoS攻撃への耐性が脆弱となる。
+| DoS攻撃の耐性を高めるためには、\ :ref:`file-upload_how_to_usr_application_settings`\ で説明した\ ``<multipart-config>``\ 要素を用いて、リクエストのサイズ制限を設ける必要がある。
 
 |
 
@@ -1718,7 +1721,7 @@ Appendix
 | 例えば、ユーザからアップロードされたファイルをサーバ上の所定のディレクトリに配置するWebアプリケーションでは、実装方法によっては"../../../../somewhere/attack" というファイル名のファイルがアップロードされた際に所定外のディレクトリにファイルが配置されてしまう。
 | その場合、攻撃者からアップロードされたファイルによってサーバ上のファイルが改ざんされてしまう恐れがある。
 | ファイルアップロード機能を提供する場合の他、ファイルダウンロード機能を提供する際にもディレクトリトラバーサル攻撃のリスクがある。
-| これは例えば、ユーザからの入力されたファイル名に従ってファイルをダウンロードするWebアプリケーションにおいて、"../../../../etc/passwd" と入力されることで攻撃者に"/etc/passwd" の内容を取得されてしまうといった攻撃が考えらえれる。
+| これは例えば、ユーザからの入力されたファイル名に従ってファイルをダウンロードするWebアプリケーションにおいて、"../../../../etc/passwd" と入力されることで攻撃者に"/etc/passwd" の内容を取得されてしまうといった攻撃が考えられる。
 
 この攻撃への対策方法は、以下の通りである。
 
@@ -1784,7 +1787,7 @@ Commons FileUploadを使用する場合は以下の設定を行う。
 
     Apache Commons FileUploadを使用する場合、1.3.2以上を使用する必要がある。
 
-    なお、Macchinetta Server Framework version 1.4.0.RELEASEが準拠しているSpring IO Platform Athens-SR2.RELEASEで管理されているバージョンを使用すれば、CVE-2014-0050およびCVE-2016-3092で報告されている脆弱性は発生しない。
+    なお、Macchinetta Server Framework version 1.5.0.RELEASEが準拠しているSpring IO Platform Brussels-SR5.RELEASEで管理されているバージョンを使用すれば、CVE-2014-0050およびCVE-2016-3092で報告されている脆弱性は発生しない。
     意図的にApache Commons FileUploadのバージョンを変更する場合は、当該脆弱性が対処されているバージョンを指定すること。
 
 |
@@ -1810,11 +1813,11 @@ Commons FileUploadを使用する場合は以下の設定を行う。
      - | 説明
    * - | (1)
      - | Commons FileUploadを使用した\ ``MultipartResolver``\ 実装である\ ``CommonsMultipartResolver``\のbean定義を行う。
-       | bean IDには\ ``"filterMultipartResolver"``\ を指定する。
+       | bean IDには\ ``filterMultipartResolver``\ を指定する。
    * - | (2)
      - | ファイルアップロードで許容する最大サイズを設定する。
-       | Commons FileUploadに場合、最大値はヘッダ含めたリクエスト全体のサイズであることに注意すること。
-       | また、**デフォルト値は-1(無制限)なので、必ず値を設定すること。** その他のプロパティは\ `JavaDoc <http://docs.spring.io/spring-framework/docs/4.3.5.RELEASE/javadoc-api/org/springframework/web/multipart/commons/CommonsMultipartResolver.html>`_\ を参照されたい。
+       | Commons FileUploadの場合、最大値はHTTPヘッダを含めたリクエスト全体のサイズであることに注意すること。
+       | また、**デフォルト値は-1(無制限)なので、必ず値を設定すること。** その他のプロパティは\ `JavaDoc <http://docs.spring.io/spring-framework/docs/4.3.11.RELEASE/javadoc-api/org/springframework/web/multipart/commons/CommonsMultipartResolver.html>`_\ を参照されたい。
 
 .. warning::
 
@@ -1870,7 +1873,7 @@ Commons FileUploadを使用する場合は以下の設定を行う。
 
 .. tip::
 
-    \ ``MultipartFilter``\ は、DIコンテナ(:file:`applicationContext.xml`)から\ ``"filterMultipartResolver"``\ というbean IDで登録されている\ ``MultipartResolver``\ を取得して、
+    \ ``MultipartFilter``\ は、DIコンテナ(:file:`applicationContext.xml`)から\ ``filterMultipartResolver``\ というbean IDで登録されている\ ``MultipartResolver``\ を取得して、
     ファイルアップロード処理を行う仕組みになっている。
 
 |

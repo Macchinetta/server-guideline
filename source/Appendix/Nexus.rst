@@ -181,7 +181,7 @@ RDBMSとしてoracleを使用する場合に必須だが、
 セントラルリポジトリはもちろん、インターネット上の公開リポジトリに格納されていることはほとんどない。
 そのため、組織内のパッケージリポジトリに格納しておく必要がある。
 
-1. adminユーザーでログインします。（デフォルトのパスワードはadmin123）
+1. adminユーザーでログインする。（デフォルトのパスワードはadmin123）
 
  .. figure:: ./images/appendix-nexus-login.png
 
@@ -189,7 +189,7 @@ RDBMSとしてoracleを使用する場合に必須だが、
 
  .. figure:: ./images/appendix-nexus-select-3rdparty.png
 
-3. GAV情報を入力します。(GAV = groupId, artifactId, version)
+3. GAV情報を入力する。(GAV = groupId, artifactId, version)
 
  .. figure:: ./images/appendix-nexus-ojdbc6-input-gav.png
 

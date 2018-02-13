@@ -14,7 +14,7 @@ Overview
 本節では、Spring Securityが提供しているCross site request forgeries(以下、CSRFと略す）対策の機能について説明する。
 
 CSRFとは、Webサイトにスクリプトや自動転送(HTTPリダイレクト)を実装することにより、
-ユーザーが、ログイン済みの別のWebサイト上で、意図しない何らかの操作を行わせる攻撃手法のことである。
+ログイン済みの別のWebサイト上で、ユーザーが意図しない何らかの操作を行わせる攻撃手法のことである。
 
 サーバ側でCSRFを防ぐには、以下の方法が知られている。
 
@@ -110,7 +110,7 @@ How to use
 CSRF対策機能の適用
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-CSRFトークン用の\ ``RequestDataValueProcessor``\ 実装クラスを利用し、Springのタグライブラリの\ ``<form:form>``\ タグを使うことで、自動的にCSRFトークンを、hiddenに埋め込むことができる。
+CSRFトークン用の\ ``RequestDataValueProcessor``\ 実装クラスを利用し、Springのタグライブラリの\ ``<form:form>``\ タグを使うことで、自動的にCSRFトークンを、hidden項目に埋め込むことができる。
 
 * spring-mvc.xmlの設定例
 

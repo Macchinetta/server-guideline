@@ -177,7 +177,7 @@ Spring MVCとTilesの連携
 
 - tiles-definitions.xml
 
- .. code-block:: guess
+ .. code-block:: xml
 
     <?xml version="1.0" encoding="UTF-8" ?>
     <!DOCTYPE tiles-definitions PUBLIC
@@ -218,15 +218,14 @@ Spring MVCとTilesの連携
    * - | (4)
      - | footerを定義しているjspファイルを指定する。
    * - | (5)
-     - | 描画のリクエストの際にnameのパターンと同じ場合に呼ばれるレイアウト定義。
+     - | 描画の際にControllerから返却されたView名がnameのパターンと同じ場合に呼ばれるレイアウト定義。
        | extendsしている layouts定義も適用される。
    * - | (6)
      - | タイトルを指定する。
        | valueはspring-mvcに取り込まれているpropertiesの中から取得する。(以下の説明では application-messages.propertiesに設定する。)
-       | {1},{2}はリクエストの"\*/\*"の「*」の1つ目、2つ目に該当する。
+       | {1},{2}はControllerから返却されたView名の"\*/\*"の「*」の1つ目、2つ目に該当する。
    * - | (7)
-     - | bodyを定義しているjspファイルの置き場所について、{1}にリクエストパス、{2}にJSP名が一致するように設計する。
-       | これにより、リクエストごとの定義を記述する手間を省くことができる。
+     - | bodyを定義しているjspファイルの置き場所について、{1},{2}にControllerから返却されたView名の"\*/\*"の「*」の1つ目、2つ目が一致するように設計する。これにより、Controllerから返却されるView名ごとの定義を記述する手間を省くことができる。
 
  .. note::
 
@@ -330,19 +329,11 @@ Tilesのカスタムタグの詳細は、\ `こちら <http://tiles.apache.org/f
  .. code-block:: xml
 
   <!DOCTYPE html>
-  <!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-  <!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-  <!--[if IE 8]>    <html class="no-js lt-ie9"> <![endif]-->
-  <!--[if gt IE 8]><!-->
   <html class="no-js">
-  <!--<![endif]-->
   <head>
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
   <meta name="viewport" content="width=device-width" />
-  <link rel="stylesheet"
-      href="${pageContext.request.contextPath}/resources/app/css/styles.css"
-      type="text/css" media="screen, projection">
   <script type="text/javascript">
 
   </script> <!-- (1) -->
@@ -350,6 +341,7 @@ Tilesのカスタムタグの詳細は、\ `こちら <http://tiles.apache.org/f
       <tiles:insertAttribute name="title" ignore="true" />
   </c:set>
   <title><spring:message code="${titleKey}" text="Create Staff Information" /></title><!-- (3) -->
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/app/css/styles.css">
   </head>
   <body>
       <div id="header">
@@ -444,8 +436,7 @@ Tilesのカスタムタグの詳細は、\ `こちら <http://tiles.apache.org/f
 
  .. code-block:: jsp
 
-  <p style="text-align: center; background: #e5eCf9;">Copyright &copy;
-      20XX CompanyName</p>
+  <p style="text-align: center; background: #e5eCf9;">Copyright &copy; 20XX CompanyName</p>
 
  .. note::
 
@@ -454,9 +445,7 @@ Tilesのカスタムタグの詳細は、\ `こちら <http://tiles.apache.org/f
 
 **Controller作成**
 
-
-Controllerを作成するとき、リクエストが ``<contextPath>/staff/create?form`` の場合、
-Controllerからのリターンが"staff/createForm"となるように設定する。
+ControllerからView名として"staff/createForm"を返却する。
 
 - StaffCreateController.java
 
@@ -481,7 +470,7 @@ Controllerからのリターンが"staff/createForm"となるように設定す�
 
 **画面描画**
 
-リクエストに ``<contextPath>/staff/create?form`` が呼ばれると、
+View名に"staff/createForm"が指定されると、
 以下のようにTilesがレイアウトを構築して画面描画を行う。
 
  .. code-block:: xml
@@ -510,7 +499,7 @@ Controllerからのリターンが"staff/createForm"となるように設定す�
    * - 項番
      - 説明
    * - | (1)
-     - | リクエストの時、親レイアウトである layouts が呼ばれ、テンプレートが /WEB-INF/views/layout/template.jspに設定される。
+     - | 該当するView名が指定された時、親レイアウトである layouts が呼ばれ、テンプレートが /WEB-INF/views/layout/template.jspに設定される。
    * - | (2)
      - | テンプレート /WEB-INF/views/layout/template.jsp内に存在する ``header`` に WEB-INF/views/layout/header.jspが設定される。
    * - | (3)
@@ -544,7 +533,7 @@ How to extend
 
 - tiles-definitions.xml
 
- .. code-block:: guess
+ .. code-block:: xml
    :emphasize-lines: 7-20
 
     <?xml version="1.0" encoding="UTF-8" ?>
@@ -594,22 +583,21 @@ How to extend
      - | 今回追加するレイアウト構成の親定義。
        | 別のレイアウトを使用する場合、difinitionタグのname属性について、既存のレイアウト定義"layouts"と重複しないようにする。
    * - | (2)
-     - | 今回追加するレイアウトについて、描画のリクエストの際にnameのパターンと同じ場合に呼ばれるレイアウト定義。
-       | リクエストが<contextPath>/\*/search\*に該当する場合、このレイアウト定義が読み込まれる。
+     - | 今回追加するレイアウトについて、描画の際にControllerから返却されたView名がnameのパターンと同じ場合に呼ばれるレイアウト定義。
+       | View名が"\*/search\*"に該当する場合、このレイアウト定義が読み込まれる。
        | extendsしている レイアウト定義"layoutsOfSearch"も適用される。
    * - | (3)
      - | 今回追加するレイアウトで使用するタイトルを指定する。
        | valueはspring-mvcに取り込まれているpropertiesの中から取得する。(以下の説明では application-messages.propertiesに設定する。)
-       | {1}はリクエストの"\*/search\*"の「*」の1つ目。
-       | {2}はリクエストの"\*/search\*"の"search*"に該当する為、先頭が"search"で始まる必要がある。
+       | {1}はControllerから返却されるView名の"\*/search\*"の「\*」の1つ目、"search{2}"はView名の"\*/search\*"の"search\*"に該当する為、先頭が"search"で始まる必要がある。
    * - | (4)
-     - | bodyを定義しているjspファイルの置き場所について、{1}にリクエストパス、{2}に先頭に"search"を含んだJSPファイル名が一致するように設計する。
+     - | bodyを定義しているjspファイルの置き場所について、{1}にControllerから返却されるView名の"\*/search\*"の「\*」の1つ目、"search{2}"はView名の"\*/search\*"の"search\*"であるため、先頭に"search"を含んだJSPファイル名が一致するように設計する。
        | JSPファイルの置き場所の構成によってvalue属性の値を変更する必要がある。
 
  .. note::
 
-     リクエストがdefinitionタグのname属性のパターンに複数該当する場合、上から順に確認し、1番最初に該当するパターンが採用される。
-     上記の場合、スタッフ検索画面へのリクエストが複数パターンに該当するため、1番上にレイアウト定義している。
+     Controllerから返却されるView名がdefinitionタグのname属性のパターンに複数該当する場合、上から順に確認し、1番最初に該当するパターンが採用される。
+     上記の場合、スタッフ検索画面のView名が、definitionタグのname属性のパターンに複数該当するため、1番上にレイアウト定義している。
 
 - `application-messages.properties`
 
@@ -628,8 +616,8 @@ How to extend
      - 説明
    * - | (1)
      - | 今回追加するメッセージ。
-       | "staff"はリクエストの"\*/search\*"の「*」の1つ目。
-       | "searchStaff"はリクエストの"\*/search\*"の"search\*"に該当する為、先頭が"search"で始まる必要がある。
+       | "staff"はControllerから返却されたView名の"\*/search\*"の「*」の1つ目。
+       | "searchStaff"はControllerから返却されたView名の"\*/search\*"の"search\*"に該当する為、先頭が"search"で始まる必要がある。
 
 **レイアウト作成**
 
@@ -640,19 +628,13 @@ How to extend
  .. code-block:: xml
 
   <!DOCTYPE html>
-  <!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-  <!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-  <!--[if IE 8]>    <html class="no-js lt-ie9"> <![endif]-->
-  <!--[if gt IE 8]><!-->
   <html class="no-js">
-  <!--<![endif]-->
   <head>
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
   <meta name="viewport" content="width=device-width" />
-  <link rel="stylesheet"
-      href="${pageContext.request.contextPath}/resources/app/css/styles.css"
-      type="text/css" media="screen, projection">
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/app/css/styles.css"
+      media="screen, projection">
   <script type="text/javascript">
 
   </script>
@@ -717,10 +699,10 @@ How to extend
      - 説明
    * - | (1)
      - | menu部分のstyleを設定する。
-       | ここでは、float:leftでメニュー画面を左側に寄せて、width:20%で横幅2割で表示をするようにしている。
+       | ここでは、float:leftでメニュー画面を左側に寄せて、width:20%として横幅2割で表示をするようにしている。
    * - | (2)
      - | body部分のstyleを設定する。
-       | ここでは、float:rightで業務画面を右側に寄せて、width:80%で横幅8割で表示をするようにしている。
+       | ここでは、float:rightで業務画面を右側に寄せて、width:80%として横幅8割で表示をするようにしている。
        | 名前をsearchBodyにしているのは、既存のレイアウトと名前が重複することにより、既存のレイアウトのstyleに影響を与えないためである。
    * - | (3)
      - | footer部分のstyleを設定する。
@@ -789,9 +771,7 @@ How to extend
 
 **Controller作成**
 
-
-Controllerを作成するとき、リクエストが ``<contextPath>/staff/search`` の場合、
-Controllerからのリターンが"staff/searchStaff"となるように設定する。
+ControllerからView名として"staff/searchStaff"を返却する。
 
 - StaffSearchController.java
 
@@ -816,7 +796,7 @@ Controllerからのリターンが"staff/searchStaff"となるように設定す
 
 **画面描画**
 
-リクエストに ``<contextPath>/staff/search`` が呼ばれると、
+View名に"staff/searchStaff"が指定されると、
 以下のように別のレイアウトを構築して画面描画を行う。
 
 
@@ -846,7 +826,7 @@ Controllerからのリターンが"staff/searchStaff"となるように設定す
    * - 項番
      - 説明
    * - | (1)
-     - | 該当するリクエストの時、親レイアウトであるlayoutsOfSearchが呼ばれ、テンプレートが /WEB-INF/views/layout/templateSearch.jspに設定される。
+     - | 該当するView名が指定された時、親レイアウトであるlayoutsOfSearchが呼ばれ、テンプレートが /WEB-INF/views/layout/templateSearch.jspに設定される。
    * - | (2)
      - | テンプレート /WEB-INF/views/layout/templateSearch.jsp内に存在する ``header`` に WEB-INF/views/layout/header.jspが設定される。
    * - | (3)
@@ -854,7 +834,7 @@ Controllerからのリターンが"staff/searchStaff"となるように設定す
    * - | (4)
      - | テンプレート /WEB-INF/views/layout/templateSearch.jsp内に存在する ``footer`` に /WEB-INF/views/layout/footer.jspが設定される。
    * - | (5)
-     - | リクエストが<contextPath>/\*/search\*に該当する場合、このレイアウト定義が読み込まれる。
+     - | Controllerから返却されたView名が"\*/search\*"に該当する場合、このレイアウト定義が読み込まれる。
        | その時、親レイアウトである"layoutsOfSearch"も読み込まれる。
    * - | (6)
      - | staffが{1}、searchStaffが"search{2}"となり、spring-mvcに取り込まれているpropertiesから ``title.staff.searchStaff`` をkeyにvalueを取得する。
