@@ -78,4 +78,4 @@ $ ./build-pdf.sh
 
 ## Terms of use
 
-Terms of use refer to [here](https://github.com/Macchinetta/server-guideline/blob/master/source/Introduction/TermsOfUse.rst).
+Terms of use refer to [here](https://github.com/Macchinetta/server-guideline/blob/1.5.x/source/Introduction/TermsOfUse.rst).

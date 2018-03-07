@@ -42,7 +42,7 @@ Overview
 | クラスは、modelの情報を用いてExcelファイルをレンダリングするときに、サブクラスとして利用するクラスである。
 |
 | Spring では上記以外にも、いろいろなViewの実装を提供している。
-| Viewの技術詳細は、\ `Spring Reference View technologies <http://docs.spring.io/spring/docs/4.3.11.RELEASE/spring-framework-reference/html/view.html>`_\ を参照されたい。
+| Viewの技術詳細は、\ `Spring Reference View technologies <http://docs.spring.io/spring/docs/4.3.14.RELEASE/spring-framework-reference/html/view.html>`_\ を参照されたい。
 
 | 共通ライブラリから提供している、\ ``org.terasoluna.gfw.web.download.AbstractFileDownloadView``\ は、
 | 任意のファイルをダウンロードするために使用する抽象クラスである。
@@ -352,7 +352,7 @@ Excelファイルのダウンロード
         上記の依存ライブラリはterasoluna-gfw-parentが利用している\ `Spring IO Platform <http://platform.spring.io/platform/>`_\ で定義済みである。
 
         また、\ ``AbstractExcelView``\ はSpring Framework 4.2から@Deprecatedとなった。そのため、xlsファイルを使用したい場合も同様に\ ``AbstractXlsxView``\ の使用を推奨する。
-        詳細は、\ `AbstractExcelViewのJavaDoc <https://docs.spring.io/spring/docs/4.3.11.RELEASE/javadoc-api/org/springframework/web/servlet/view/document/AbstractExcelView.html>`_\ を参照されたい。
+        詳細は、\ `AbstractExcelViewのJavaDoc <https://docs.spring.io/spring/docs/4.3.14.RELEASE/javadoc-api/org/springframework/web/servlet/view/document/AbstractExcelView.html>`_\ を参照されたい。
           
 
 ViewResolverの定義
@@ -490,7 +490,7 @@ ViewResolverの定義
 
         前述してきたように、SpringはModelの情報をいろいろなViewにレンダリングすることができる。
         Springでは、Jasper Reportsのようなレンダリングエンジンをサポートし、さまざまなViewを返却することも可能である。
-        詳細は、Spring の公式ドキュメント\ `Spring reference <http://docs.spring.io/spring/docs/4.3.11.RELEASE/spring-framework-reference/html/view.html#view-jasper-reports>`_\ を参照されたい。
+        詳細は、Spring の公式ドキュメント\ `Spring reference <http://docs.spring.io/spring/docs/4.3.14.RELEASE/spring-framework-reference/html/view.html#view-jasper-reports>`_\ を参照されたい。
 
 .. raw:: latex
 

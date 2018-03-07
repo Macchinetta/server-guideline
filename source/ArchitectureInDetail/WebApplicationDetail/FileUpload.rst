@@ -25,7 +25,7 @@ Overview
     一部のアプリケーションサーバ上でServlet 3.0のファイルアップロード機能を使用すると、
     リクエストパラメータやファイル名のマルチバイト文字が文字化けすることがある。
 
-    version 1.5.0.RELEASE時点で問題の発生が確認されているアプリケーションサーバは以下の通りである。
+    version 1.5.1.RELEASE時点で問題の発生が確認されているアプリケーションサーバは以下の通りである。
     
     * WebLogic 12.1.3
     * JBoss EAP 7.0
@@ -136,7 +136,7 @@ Spring Webから提供されているファイルアップロード用のクラ�
 
  .. tip::
 
-    本ガイドラインでは、Servlet 3.0から導入されたファイルアップロード機能を使うことを前提としているが、Spring Webでは、\ `「Apache Commons FileUpload」用の実装クラスも提供している <http://docs.spring.io/spring/docs/4.3.11.RELEASE/spring-framework-reference/html/mvc.html#mvc-multipart-resolver-commons>`_\ 。
+    本ガイドラインでは、Servlet 3.0から導入されたファイルアップロード機能を使うことを前提としているが、Spring Webでは、\ `「Apache Commons FileUpload」用の実装クラスも提供している <http://docs.spring.io/spring/docs/4.3.14.RELEASE/spring-framework-reference/html/mvc.html#mvc-multipart-resolver-commons>`_\ 。
     アップロード処理の実装の違いは、\ ``MultipartResolver``\ と、\ ``MultipartFile``\ オブジェクトによって吸収されるため、Controllerの実装に影響を与えることはない。
 
 |
@@ -339,7 +339,7 @@ multipart/form-dataリクエストの時、ファイルアップロードで許�
     また、プロジェクト独自で作成するServlet Filterでリクエストパラメータにアクセスするものがある場合は、そのServlet Filterより前に定義すること。
 
     ただし、\ ``springSecurityFilterChain``\ より前に定義することで、認証又は認可されていないユーザーからのアップロード(一時ファイル作成)を許容することになる。
-    この動作を回避する方法が\ `Spring Security Reference -Cross Site Request Forgery (CSRF)- <http://docs.spring.io/spring-security/site/docs/4.2.3.RELEASE/reference/htmlsingle/#csrf-include-csrf-token-in-action>`_\ の中で紹介されているが、セキュリティ上のリスクを含む回避方法になるため、本ガイドラインでは回避策の適用は推奨していない。
+    この動作を回避する方法が\ `Spring Security Reference -Cross Site Request Forgery (CSRF)- <http://docs.spring.io/spring-security/site/docs/4.2.4.RELEASE/reference/htmlsingle/#csrf-include-csrf-token-in-action>`_\ の中で紹介されているが、セキュリティ上のリスクを含む回避方法になるため、本ガイドラインでは回避策の適用は推奨していない。
 
  .. warning:: **ファイルアップロードの許容サイズを超過した場合の注意点**
 
@@ -716,7 +716,7 @@ Controllerの実装
  .. note:: **MultipartFileについて**
 
     MultipartFileには、アップロードされたファイルを操作するためのメソッドが用意されている。
-    各メソッドの利用方法については、\ `MultipartFileクラスのJavaDoc <http://docs.spring.io/spring/docs/4.3.11.RELEASE/javadoc-api/org/springframework/web/multipart/MultipartFile.html>`_\ を参照されたい。
+    各メソッドの利用方法については、\ `MultipartFileクラスのJavaDoc <http://docs.spring.io/spring/docs/4.3.14.RELEASE/javadoc-api/org/springframework/web/multipart/MultipartFile.html>`_\ を参照されたい。
 
 .. _fileupload_validator:
 
@@ -1509,7 +1509,7 @@ How to extend
     不要なファイルを残したままにすると、ディスクを圧迫する可能性があるため、必ず不要なファイルを削除する仕組みを用意すること。
 
 本ガイドラインでは、Spring Frameworkから提供されている「Task Scheduler」機能を使用して、不要なファイルを削除する方法について説明する。
-「Task Scheduler」の詳細については、\ `公式リファレンスの"Task Execution and Scheduling" <http://docs.spring.io/spring/docs/4.3.11.RELEASE/spring-framework-reference/html/scheduling.html>`_\ を参照されたい。
+「Task Scheduler」の詳細については、\ `公式リファレンスの"Task Execution and Scheduling" <http://docs.spring.io/spring/docs/4.3.14.RELEASE/spring-framework-reference/html/scheduling.html>`_\ を参照されたい。
 
  .. note::
 
@@ -1659,7 +1659,7 @@ How to extend
      * ``0 0 * * * *`` : 毎時 0分に実行される。
      * ``0 0 9-17 * * MON-FRI`` : 平日9時～17時の間の毎時0分に実行される。
 
-    cronの指定値の詳細については、\ `CronSequenceGeneratorのJavaDoc <http://docs.spring.io/spring/docs/4.3.11.RELEASE/javadoc-api/org/springframework/scheduling/support/CronSequenceGenerator.html>`_\ を参照されたい。
+    cronの指定値の詳細については、\ `CronSequenceGeneratorのJavaDoc <http://docs.spring.io/spring/docs/4.3.14.RELEASE/javadoc-api/org/springframework/scheduling/support/CronSequenceGenerator.html>`_\ を参照されたい。
 
     実行タイミングは、アプリケーションをデプロイする環境によって異なる可能性があるため、外部プロパティから取得すること。
     外部プロパティの詳細については、\ :doc:`../GeneralFuncDetail/PropertyManagement`\ を参照されたい。
@@ -1787,7 +1787,7 @@ Commons FileUploadを使用する場合は以下の設定を行う。
 
     Apache Commons FileUploadを使用する場合、1.3.2以上を使用する必要がある。
 
-    なお、Macchinetta Server Framework version 1.5.0.RELEASEが準拠しているSpring IO Platform Brussels-SR5.RELEASEで管理されているバージョンを使用すれば、CVE-2014-0050およびCVE-2016-3092で報告されている脆弱性は発生しない。
+    なお、Macchinetta Server Framework version 1.5.1.RELEASEが準拠しているSpring IO Platform Brussels-SR5.RELEASEで管理されているバージョンを使用すれば、CVE-2014-0050およびCVE-2016-3092で報告されている脆弱性は発生しない。
     意図的にApache Commons FileUploadのバージョンを変更する場合は、当該脆弱性が対処されているバージョンを指定すること。
 
 |
@@ -1817,7 +1817,7 @@ Commons FileUploadを使用する場合は以下の設定を行う。
    * - | (2)
      - | ファイルアップロードで許容する最大サイズを設定する。
        | Commons FileUploadの場合、最大値はHTTPヘッダを含めたリクエスト全体のサイズであることに注意すること。
-       | また、**デフォルト値は-1(無制限)なので、必ず値を設定すること。** その他のプロパティは\ `JavaDoc <http://docs.spring.io/spring-framework/docs/4.3.11.RELEASE/javadoc-api/org/springframework/web/multipart/commons/CommonsMultipartResolver.html>`_\ を参照されたい。
+       | また、**デフォルト値は-1(無制限)なので、必ず値を設定すること。** その他のプロパティは\ `JavaDoc <http://docs.spring.io/spring-framework/docs/4.3.14.RELEASE/javadoc-api/org/springframework/web/multipart/commons/CommonsMultipartResolver.html>`_\ を参照されたい。
 
 .. warning::
 

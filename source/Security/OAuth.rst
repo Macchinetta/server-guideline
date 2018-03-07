@@ -1319,7 +1319,7 @@ Spring Security OAuthではクライアント情報を取得するためのイ�
         | \ ``authentication-manager-ref``\ 属性に(7)で定義しているクライアント認証用の\ ``AuthenticationManager``\のBeanを指定する。
     * - | (3)
       - | クライアント認証にBasic認証を適用する。
-        | 詳細については\ `Basic and Digest Authentication <http://docs.spring.io/spring-security/site/docs/4.2.3.RELEASE/reference/html/basic.html>`_\を参照されたい。
+        | 詳細については\ `Basic and Digest Authentication <http://docs.spring.io/spring-security/site/docs/4.2.4.RELEASE/reference/html/basic.html>`_\を参照されたい。
     * - | (4)
       - | \ ``/oauth/*token*/**``\ へのアクセスに対してCSRF対策機能を無効化する。
         | Spring Security OAuthでは、OAuth 2.0のCSRF対策として推奨されている、stateパラメータを使用したリクエストの正当性確認を採用している。
@@ -5256,13 +5256,6 @@ RFCに準拠したエンドポイントや、認可サーバ内でフォワー�
     * - | (2)
       - | アクセストークン操作に関するエンドポイントのURLを含むように、アクセス制御の対象を変更する。
 
-
-.. Warning::
-
-    Spring Security OAuthのバージョン2.0.12以前を使用する場合、\ ``check-token-endpoint-url``\ は、\ ``authorization-endpoint-url``\ または\ ``token-endpoint-url``\ を指定していない場合は反映されないため注意が必要である。
-    これは以下のissueで取り上げられており、バージョン2.0.13で改修される予定である。
-
-    https://github.com/spring-projects/spring-security-oauth/issues/897
 
 |
 

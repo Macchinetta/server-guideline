@@ -205,7 +205,7 @@ Spring Securityは、以下のような流れでフォーム認証を行う。
            - | フォーム認証処理を行うSecurity Filter(\ ``UsernamePasswordAuthenticationFilter``\ )が適用される。
          * - | \ ``<http-basic>``\
            - | RFC1945に準拠したBasic認証を行うSecurity Filter(\ ``BasicAuthenticationFilter``\ )が適用される。
-             | 詳細な利用方法は、\ `BasicAuthenticationFilterのJavaDoc <http://docs.spring.io/spring-security/site/docs/4.2.3.RELEASE/apidocs/org/springframework/security/web/authentication/www/BasicAuthenticationFilter.html>`_\ を参照されたい。
+             | 詳細な利用方法は、\ `BasicAuthenticationFilterのJavaDoc <http://docs.spring.io/spring-security/site/docs/4.2.4.RELEASE/apidocs/org/springframework/security/web/authentication/www/BasicAuthenticationFilter.html>`_\ を参照されたい。
          * - | \ ``<logout>``\
            - | ログアウト処理を行うSecurity Filter(\ ``LogoutFilter``\ )が適用される。
              | ログアウト処理の詳細については、「\ :ref:`SpringSecurityAuthenticationLogout`\ 」を参照されたい。
@@ -871,19 +871,19 @@ Spring Securityは、\ ``PasswordEncoder``\ インタフェースの実装クラ
       - 説明
     * - | \ ``BCryptPasswordEncoder``\
       - | BCryptアルゴリズムを使用してパスワードのハッシュ化及び照合を行う実装クラス。
-        | 詳細は、\ `BCryptPasswordEncoderのJavaDoc <http://docs.spring.io/spring-security/site/docs/4.2.3.RELEASE/apidocs/org/springframework/security/crypto/bcrypt/BCryptPasswordEncoder.html>`_\ を参照されたい。
+        | 詳細は、\ `BCryptPasswordEncoderのJavaDoc <http://docs.spring.io/spring-security/site/docs/4.2.4.RELEASE/apidocs/org/springframework/security/crypto/bcrypt/BCryptPasswordEncoder.html>`_\ を参照されたい。
     * - | \ ``StandardPasswordEncoder``\
       - | SHA-256アルゴリズムを使用してパスワードのハッシュ化及び照合を行う実装クラス。
-        | 詳細は、\ `StandardPasswordEncoderのJavaDoc <http://docs.spring.io/spring-security/site/docs/4.2.3.RELEASE/apidocs/org/springframework/security/crypto/password/StandardPasswordEncoder.html>`_\ を参照されたい。
+        | 詳細は、\ `StandardPasswordEncoderのJavaDoc <http://docs.spring.io/spring-security/site/docs/4.2.4.RELEASE/apidocs/org/springframework/security/crypto/password/StandardPasswordEncoder.html>`_\ を参照されたい。
     * - | \ ``NoOpPasswordEncoder``\
       - | ハッシュ化しない実装クラス。
         | テスト用のクラスであり、実際のアプリケーションで使用することはない。
     * - | \ ``Pbkdf2PasswordEncoder``\
       - | PBKDF2アルゴリズムを使用してパスワードのハッシュ化及び照合を行う実装クラス。\ ``Pbkdf2PasswordEncoder``\ はSpring Security 4.1から追加されたクラスである。
-        | 詳細は、\ `Pbkdf2PasswordEncoderのJavaDoc <https://docs.spring.io/spring-security/site/docs/4.2.3.RELEASE/apidocs/org/springframework/security/crypto/password/Pbkdf2PasswordEncoder.html>`_\ を参照されたい。
+        | 詳細は、\ `Pbkdf2PasswordEncoderのJavaDoc <https://docs.spring.io/spring-security/site/docs/4.2.4.RELEASE/apidocs/org/springframework/security/crypto/password/Pbkdf2PasswordEncoder.html>`_\ を参照されたい。
     * - | \ ``SCryptPasswordEncoder``\
       - | SCryptアルゴリズムを使用してパスワードのハッシュ化及び照合を行う実装クラス。\ ``SCryptPasswordEncoder``\ はSpring Security 4.1から追加されたクラスである。
-        | 詳細は、\ `SCryptPasswordEncoderのJavaDoc <https://docs.spring.io/spring-security/site/docs/4.2.3.RELEASE/apidocs/org/springframework/security/crypto/scrypt/SCryptPasswordEncoder.html>`_\ を参照されたい。
+        | 詳細は、\ `SCryptPasswordEncoderのJavaDoc <https://docs.spring.io/spring-security/site/docs/4.2.4.RELEASE/apidocs/org/springframework/security/crypto/scrypt/SCryptPasswordEncoder.html>`_\ を参照されたい。
 
 本節では、\ ``BCryptPasswordEncoder``\ の使い方について説明する。
 
@@ -1396,7 +1396,7 @@ Javaからのアクセス
     * ``org.springframework.security.web.authentication.session.SessionFixationProtectionStrategy``
 
     具体的な定義方法については、
-    `Spring Security Reference -Web Application Security (Concurrency Control)- <http://docs.spring.io/spring-security/site/docs/4.2.3.RELEASE/reference/htmlsingle/#concurrent-sessions>`_ のサンプルコードを参考にされたい。
+    `Spring Security Reference -Web Application Security (Concurrency Control)- <http://docs.spring.io/spring-security/site/docs/4.2.4.RELEASE/reference/htmlsingle/#concurrent-sessions>`_ のサンプルコードを参考にされたい。
 
 |
 
@@ -2144,7 +2144,7 @@ Bean Validationに関する詳細は \ :doc:`../ArchitectureInDetail/WebApplicat
 認証処理の拡張
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Spring Securityから提供されている\ `認証プロバイダ <http://docs.spring.io/spring-security/site/docs/4.2.3.RELEASE/apidocs/org/springframework/security/authentication/AuthenticationProvider.html>`_\ で対応できない認証要件がある場合は、
+Spring Securityから提供されている\ `認証プロバイダ <http://docs.spring.io/spring-security/site/docs/4.2.4.RELEASE/apidocs/org/springframework/security/authentication/AuthenticationProvider.html>`_\ で対応できない認証要件がある場合は、
 \ ``org.springframework.security.authentication.AuthenticationProvider``\ インタフェースを実装したクラスを作成する必要がある。
 
 ここでは、ユーザー名、パスワード、\ **会社識別子(独自の認証パラメータ)**\ の3つのパラメータを使用してDB認証を行うための拡張例を示す。
@@ -2775,13 +2775,13 @@ Spring MVCでリクエストを受けてログインフォームを表示する�
 Remember Me認証の利用
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-「\ `Remember Me認証 <http://docs.spring.io/spring-security/site/docs/4.2.3.RELEASE/reference/htmlsingle/#remember-me>`_\ 」とは、
+「\ `Remember Me認証 <http://docs.spring.io/spring-security/site/docs/4.2.4.RELEASE/reference/htmlsingle/#remember-me>`_\ 」とは、
 Webサイトに頻繁にアクセスするユーザーの利便性を高めるための機能の一つで、ログイン状態を通常のライフサイクルより長く保持するための機能である。
 本機能を使用すると、ブラウザを閉じた後やセッションタイムが発生した後でも、Cookieに保持しているRemember Me認証用のTokenを使用して、
 ユーザ名とパスワードを再入力することなく自動でログインすることができる。
 なお、本機能は、ユーザーがログイン状態を保持することを許可した場合のみ有効となる。
 
-Spring Securityは、「`Hash-Based Token <http://docs.spring.io/spring-security/site/docs/4.2.3.RELEASE/reference/htmlsingle/#remember-me-hash-token>`_ 方式のRemember Me認証」と「`Persistent Token <http://docs.spring.io/spring-security/site/docs/4.2.3.RELEASE/reference/htmlsingle/#remember-me-persistent-token>`_ 方式のRemember Me認証」をサポートしており、
+Spring Securityは、「`Hash-Based Token <http://docs.spring.io/spring-security/site/docs/4.2.4.RELEASE/reference/htmlsingle/#remember-me-hash-token>`_ 方式のRemember Me認証」と「`Persistent Token <http://docs.spring.io/spring-security/site/docs/4.2.4.RELEASE/reference/htmlsingle/#remember-me-persistent-token>`_ 方式のRemember Me認証」をサポートしており、
 デフォルトではHash-Based Token方式が使用される。
 
 |
@@ -2816,7 +2816,7 @@ Remember Me認証を利用する場合は、\ ``<sec:remember-me>``\ タグを�
         | 指定が無い場合、デフォルトで14日間が有効時間になる。
         | 上記例では、有効時間として30日間を設定している。
 
-上記以外の属性については、\ `Spring Security Reference -The Security Namespace (<remember-me>) - <http://docs.spring.io/spring-security/site/docs/4.2.3.RELEASE/reference/htmlsingle/#nsa-remember-me>`_\ を参照されたい。
+上記以外の属性については、\ `Spring Security Reference -The Security Namespace (<remember-me>) - <http://docs.spring.io/spring-security/site/docs/4.2.4.RELEASE/reference/htmlsingle/#nsa-remember-me>`_\ を参照されたい。
 
 .. note:: **Spring Security 4.0における変更**
 
@@ -2856,7 +2856,7 @@ Remember Me認証を利用する場合は、\ ``<sec:remember-me>``\ タグを�
 
 .. tip:: **value属性の設定値について**
 
-    \ ``value``\ 属性には、\ ``true``\を設定する旨が\ `rememberMeRequestedのJavaDoc <http://docs.spring.io/autorepo/docs/spring-security/4.2.3.RELEASE/apidocs/org/springframework/security/web/authentication/rememberme/AbstractRememberMeServices.html#rememberMeRequested-javax.servlet.http.HttpServletRequest-java.lang.String->`_\ に記載されているが、
+    \ ``value``\ 属性には、\ ``true``\を設定する旨が\ `rememberMeRequestedのJavaDoc <http://docs.spring.io/autorepo/docs/spring-security/4.2.4.RELEASE/apidocs/org/springframework/security/web/authentication/rememberme/AbstractRememberMeServices.html#rememberMeRequested-javax.servlet.http.HttpServletRequest-java.lang.String->`_\ に記載されているが、
     実装上は\ ``on``\ 、\ ``yes``\ 、"\ ``1``\" も設定可能である。
 
 .. raw:: latex
