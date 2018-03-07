@@ -43,20 +43,20 @@ DIコンテナ
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 テスト用のDIコンテナとして
-\ `Spring TestのDI機能 <https://docs.spring.io/spring/docs/4.3.11.RELEASE/spring-framework-reference/html/integration-testing.html#testing-fixture-di>`_\を使用する。
+\ `Spring TestのDI機能 <https://docs.spring.io/spring/docs/4.3.14.RELEASE/spring-framework-reference/html/integration-testing.html#testing-fixture-di>`_\を使用する。
 
 MVCフレームワーク
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 テスト用のMVCフレームワークとして
-\ `Spring MVC Test Framework <https://docs.spring.io/spring/docs/4.3.11.RELEASE/spring-framework-reference/html/integration-testing.html#spring-mvc-test-framework>`_\を使用する。
+\ `Spring MVC Test Framework <https://docs.spring.io/spring/docs/4.3.14.RELEASE/spring-framework-reference/html/integration-testing.html#spring-mvc-test-framework>`_\を使用する。
 
 
 トランザクション管理
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 テスト用のトランザクション管理として
-\ `Spring Testのトランザクション管理機能 <https://docs.spring.io/spring/docs/4.3.11.RELEASE/spring-framework-reference/html/integration-testing.html#testing-tx>`_\を使用する。
+\ `Spring Testのトランザクション管理機能 <https://docs.spring.io/spring/docs/4.3.14.RELEASE/spring-framework-reference/html/integration-testing.html#testing-tx>`_\を使用する。
 
 
 データアクセス
@@ -64,7 +64,7 @@ MVCフレームワーク
 
 テスト用のデータアクセスとして、Spring TestまたはDBUnitとSpring Test DBUnitを使用することを想定している。
 
-* \ `Spring Test <https://docs.spring.io/spring/docs/4.3.11.RELEASE/spring-framework-reference/html/testing-introduction.html>`_\
+* \ `Spring Test <https://docs.spring.io/spring/docs/4.3.14.RELEASE/spring-framework-reference/html/testing-introduction.html>`_\
 
   * Spring Testは\ ``@Sql``\ アノテーションや\ ``JdbcTemplate``\ などを使用してSQLを発行する機能を提供している。
 
@@ -96,7 +96,7 @@ MVCフレームワーク
     への依存関係を解決しており、Macchinetta Server Framework (1.x)で使用するOSSのバージョンは、原則として、
     Spring IO platformの定義に準じている。
 
-    なお、version 1.5.0.RELEASEで指定しているSpring IO platformのバージョンは、
+    なお、version 1.5.1.RELEASEで指定しているSpring IO platformのバージョンは、
     \ `Brussels-SR5 <https://docs.spring.io/platform/docs/Brussels-SR5/reference/htmlsingle/>`_\ である。
 
 |
@@ -137,7 +137,7 @@ MVCフレームワーク
     * - Spring Test
       - org.springframework
       - spring-test
-      - 4.3.11.RELEASE
+      - 4.3.14.RELEASE
       - \*
     * - DBUnit
       - org.dbunit
