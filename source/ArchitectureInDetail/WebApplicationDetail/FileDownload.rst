@@ -42,7 +42,7 @@ Overview
 | クラスは、modelの情報を用いてExcelファイルをレンダリングするときに、サブクラスとして利用するクラスである。
 |
 | Spring では上記以外にも、いろいろなViewの実装を提供している。
-| Viewの技術詳細は、\ `Spring Reference View technologies <http://docs.spring.io/spring/docs/4.3.5.RELEASE/spring-framework-reference/html/view.html>`_\ を参照されたい。
+| Viewの技術詳細は、\ `Spring Reference View technologies <http://docs.spring.io/spring/docs/4.3.14.RELEASE/spring-framework-reference/html/view.html>`_\ を参照されたい。
 
 | 共通ライブラリから提供している、\ ``org.terasoluna.gfw.web.download.AbstractFileDownloadView``\ は、
 | 任意のファイルをダウンロードするために使用する抽象クラスである。
@@ -238,8 +238,8 @@ Springのコンテキストで管理されたbean名を用いて実行するView
 
         @RequestMapping(value = "home", params= "pdf", method = RequestMethod.GET)
         public String homePdf(Model model) {
-        	model.addAttribute("serverTime", new Date());
-        	return "samplePdfView";   // (1)
+            model.addAttribute("serverTime", new Date());
+            return "samplePdfView";   // (1)
         }
 
 .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
@@ -268,7 +268,7 @@ Excelファイルのダウンロード
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 | EXCELファイルのレンダリングには、Springから提供されている、
 | \ ``org.springframework.web.servlet.view.document.AbstractXlsxView``\ を継承したクラスを作成する必要がある。
-| コントローラでEXCELファイルをダウンロードを実装するための手順は、以下で説明する。
+| コントローラでEXCELファイルをダウンロードさせるための実装手順は、以下で説明する。
 
 カスタムViewの実装
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -352,7 +352,7 @@ Excelファイルのダウンロード
         上記の依存ライブラリはterasoluna-gfw-parentが利用している\ `Spring IO Platform <http://platform.spring.io/platform/>`_\ で定義済みである。
 
         また、\ ``AbstractExcelView``\ はSpring Framework 4.2から@Deprecatedとなった。そのため、xlsファイルを使用したい場合も同様に\ ``AbstractXlsxView``\ の使用を推奨する。
-        詳細は、\ `AbstractExcelViewのJavaDoc <https://docs.spring.io/spring/docs/4.3.5.RELEASE/javadoc-api/org/springframework/web/servlet/view/document/AbstractExcelView.html>`_\ を参照されたい。
+        詳細は、\ `AbstractExcelViewのJavaDoc <https://docs.spring.io/spring/docs/4.3.14.RELEASE/javadoc-api/org/springframework/web/servlet/view/document/AbstractExcelView.html>`_\ を参照されたい。
           
 
 ViewResolverの定義
@@ -372,8 +372,8 @@ ViewResolverの定義
 
         @RequestMapping(value = "home", params= "excel", method = RequestMethod.GET)
         public String homeExcel(Model model) {
-        	model.addAttribute("serverTime", new Date());
-        	return "sampleExcelView";  // (1)
+            model.addAttribute("serverTime", new Date());
+            return "sampleExcelView";  // (1)
         }
 
 .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
@@ -490,7 +490,7 @@ ViewResolverの定義
 
         前述してきたように、SpringはModelの情報をいろいろなViewにレンダリングすることができる。
         Springでは、Jasper Reportsのようなレンダリングエンジンをサポートし、さまざまなViewを返却することも可能である。
-        詳細は、Spring の公式ドキュメント\ `Spring reference <http://docs.spring.io/spring/docs/4.3.5.RELEASE/spring-framework-reference/html/view.html#view-jasper-reports>`_\ を参照されたい。
+        詳細は、Spring の公式ドキュメント\ `Spring reference <http://docs.spring.io/spring/docs/4.3.14.RELEASE/spring-framework-reference/html/view.html#view-jasper-reports>`_\ を参照されたい。
 
 .. raw:: latex
 

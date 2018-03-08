@@ -30,8 +30,8 @@
 .. note::
 
   アプリケーション層、ドメイン層、インフラストラクチャー層は
-  Eric Evansの"Domain-Driven Design (2004, Addison-Wesley)"で説明されてる用語である。
-  ただし、用語は使用しているが以後Domain Driven Designの考えにのっとっているわけではない。
+  Eric Evansの"Domain-Driven Design (2004, Addison-Wesley)"で説明されている用語である。
+  ただし、用語は使用しているが以後"Domain-Driven Design"の考えにのっとっているわけではない。
 
 |
 
@@ -62,7 +62,7 @@ Controller
 
 Controllerは、主に以下の役割を担う。
 
-* 画面遷移の制御（リクエストマッピングと処理結果に対応するViewを返却する)
+* 画面遷移の制御(リクエストマッピングと処理結果に対応するViewを返却する)
 * ドメイン層のServiceの呼び出し (リクエストに対応する主処理を実行する)
 
 Spring MVCでは、\ ``@Controller``\ アノテーションが付与されているPOJOクラスが該当する。
@@ -164,7 +164,7 @@ Domain Objectはビジネスを行う上で必要な資源や、ビジネスを�
 
 Domain Objectは、大きく分けて、以下3つに分類される。
 
-* EmployeeやCustomer, Productなどのリソース系モデル(一般的には、名詞で表現される）
+* EmployeeやCustomer, Productなどのリソース系モデル(一般的には、名詞で表現される)
 * Order, Paymentなどイベント系モデル(一般的には動詞で表現される)
 * YearlySales, MonthlySalesなどのサマリ系モデル
 

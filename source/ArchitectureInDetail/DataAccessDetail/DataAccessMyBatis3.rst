@@ -363,7 +363,7 @@ How to use
         * :ref:`DataAccessMyBatis3HowToUseSettingsCooperateWithMyBatis3AndSpring`
         * :ref:`DataAccessMyBatis3HowToUseSettingsMyBatis3`
         
-        `MyBatis3用のブランクプロジェクト <https://github.com/Macchinetta/macchinetta-web-multi-blank>`_ \ からプロジェクトを生成した場合は、
+        `ブランクプロジェクト <https://github.com/Macchinetta/macchinetta-web-multi-blank#multi-blank-project>`_ \ からプロジェクトを生成した場合は、
         上記で説明している設定の多くが既に設定済みの状態となっているため、アプリケーションアーキテクトは、
         プロジェクト特性を判断し、必要に応じて設定の追加及び変更を行うことになる。
 
@@ -395,7 +395,7 @@ pom.xmlの設定
 | インフラストラクチャ層にMyBatis3を使用する場合は、\ :file:`pom.xml`\にterasoluna-gfw-mybatis3-dependenciesへの依存関係を追加する。
 | マルチプロジェクト構成の場合は、domainプロジェクトの\ :file:`pom.xml`\(:file:`projectName-domain/pom.xml`)に追加する。
 
-`MyBatis3用のブランクプロジェクト <https://github.com/Macchinetta/macchinetta-web-multi-blank>`_ \ からプロジェクトを生成した場合は、terasoluna-gfw-mybatis3-dependenciesへの依存関係は、設定済の状態である。
+`ブランクプロジェクト <https://github.com/Macchinetta/macchinetta-web-multi-blank#multi-blank-project>`_ \ からプロジェクトを生成した場合は、terasoluna-gfw-mybatis3-dependenciesへの依存関係は、設定済みの状態である。
 
  .. code-block:: xml
     :emphasize-lines: 22-27
@@ -486,7 +486,7 @@ MyBatis3とSpringを連携するための設定
 
 MyBatis3とSpringを連携する場合、データソースはSpringのDIコンテナで管理しているデータソースを使用する必要がある。
 
-`MyBatis3用のブランクプロジェクト <https://github.com/Macchinetta/macchinetta-web-multi-blank>`_ \ からプロジェクトを生成した場合は、Apache Commons DBCPのデータソースが設定済の状態であるため、
+`ブランクプロジェクト <https://github.com/Macchinetta/macchinetta-web-multi-blank#multi-blank-project>`_ \ からプロジェクトを生成した場合は、Apache Commons DBCPのデータソースが設定済みの状態であるため、
 プロジェクトの要件に合わせて設定を変更すること。
 
 データソースの設定方法については、共通編の「\ :ref:`data-access-common_howtouse_datasource` \」を参照されたい。
@@ -503,7 +503,7 @@ MyBatis3とSpringを連携する場合、データソースはSpringのDIコン�
 
 ローカルトランザクションを使用する場合は、JDBCのAPIを呼び出してトランザクション制御を行う\ ``DataSourceTransactionManager`` \を使用する。
 
-`MyBatis3用のブランクプロジェクト <https://github.com/Macchinetta/macchinetta-web-multi-blank>`_ \ からプロジェクトを生成した場合は、\ ``DataSourceTransactionManager`` \が設定済みの状態である。
+`ブランクプロジェクト <https://github.com/Macchinetta/macchinetta-web-multi-blank#multi-blank-project>`_ \ からプロジェクトを生成した場合は、\ ``DataSourceTransactionManager`` \が設定済みの状態である。
 
 設定例は以下の通り。
 
@@ -628,7 +628,7 @@ MyBatis3とSpringを連携する場合、MyBatis-Springのコンポーネント�
 
 を行う必要がある。
 
-`MyBatis3用のブランクプロジェクト <https://github.com/Macchinetta/macchinetta-web-multi-blank>`_ \ からプロジェクトを生成した場合は、MyBatis3とSpringを連携するための設定は、
+`ブランクプロジェクト <https://github.com/Macchinetta/macchinetta-web-multi-blank#multi-blank-project>`_ \ からプロジェクトを生成した場合は、MyBatis3とSpringを連携するための設定は、
 設定済みの状態である。
 
 設定例は以下の通り。
@@ -718,7 +718,7 @@ MyBatis3の設定
     本ガイドラインでは、MyBatis設定ファイルは、
     \ :file:`projectName-domain/src/main/resources/META-INF/mybatis/mybatis-config.xml`\ に格納することを推奨している。
 
-    `MyBatis3用のブランクプロジェクト <https://github.com/Macchinetta/macchinetta-web-multi-blank>`_ \ からプロジェクトを生成した場合は、上記ファイルは格納済みの状態である。
+    `ブランクプロジェクト <https://github.com/Macchinetta/macchinetta-web-multi-blank#multi-blank-project>`_ \ からプロジェクトを生成した場合は、上記ファイルは格納済みの状態である。
 
 |
 
@@ -809,7 +809,7 @@ MyBatis3では、SQLを実行するモードとして以下の3種類を用意�
       - SIMPLE
       - SQL実行毎に新しい\ ``java.sql.PreparedStatement``\を作成する。
 
-        MyBatisのデフォルトの動作であり、`MyBatis3用のブランクプロジェクト <https://github.com/Macchinetta/macchinetta-web-multi-blank>`_ \ も\ ``SIMPLE``\モードとなっている。
+        MyBatisのデフォルトの動作であり、`ブランクプロジェクト <https://github.com/Macchinetta/macchinetta-web-multi-blank#multi-blank-project>`_ \ も\ ``SIMPLE``\モードとなっている。
     * - (2)
       - REUSE
       - ``PreparedStatement``\をキャッシュし再利用する。
@@ -849,7 +849,7 @@ Javaクラスの完全修飾クラス名(FQCN)を指定する必要があるた�
 
 本ガイドラインでは、記述効率の向上、記述ミスの削減、マッピングファイルの可読性向上などを目的として、TypeAliasを使用することを推奨する。
 
-`MyBatis3用のブランクプロジェクト <https://github.com/Macchinetta/macchinetta-web-multi-blank>`_ \ からプロジェクトを生成した場合は、
+`ブランクプロジェクト <https://github.com/Macchinetta/macchinetta-web-multi-blank#multi-blank-project>`_ \ からプロジェクトを生成した場合は、
 Entityを格納するパッケージ(\ ``${projectPackage}.domain.model``\)配下に格納されるクラスがTypeAliasの対象となっている。
 必要に応じて、設定を追加されたい。
 
@@ -944,7 +944,7 @@ NULL値とJDBC型のマッピング設定
 | \ ``null``\値を設定した際に、以下の様なスタックトレースを伴うエラーが発生した場合は、\ ``null``\値とJDBC型のマッピングが必要となる。
 | MyBatis3のデフォルトでは、\ ``OTHER``\と呼ばれる汎用的なJDBC型が指定されるが、\ ``OTHER``\だとエラーとなるJDBCドライバもある。
 
- .. code-block:: guess
+ .. code-block:: text
     :emphasize-lines: 1
 
     java.sql.SQLException: Invalid column type: 1111
@@ -1034,7 +1034,7 @@ TypeHandlerの設定
 **JSR-310 Date and Time APIを使う場合の設定**
 
 MyBatis3でJSR-310 Date and Time APIから提供されている日付や時刻を表現するクラスを使用する場合には、MyBatisより別ライブラリ(\ ``mybatis-typehandlers-jsr310`` \)で提供されている\ ``TypeHandler`` \を使用する。
-なお、`MyBatis3用のブランクプロジェクト <https://github.com/Macchinetta/macchinetta-web-multi-blank>`_ \では、デフォルトで\ ``mybatis-typehandlers-jsr310`` \が使用可能である。
+なお、`ブランクプロジェクト <https://github.com/Macchinetta/macchinetta-web-multi-blank#multi-blank-project>`_ \では、デフォルトで\ ``mybatis-typehandlers-jsr310`` \が使用可能である。
 
 また、Macchinetta Server Framework (1.4.x)が使用しているMyBatis 3.4では\ ``TypeHandler`` \を自動検出する様になっているため、MyBatisの設定ファイルに\ ``TypeHandler``\を追加する必要はない。
 
@@ -1048,7 +1048,7 @@ MyBatis3でJSR-310 Date and Time APIから提供されている日付や時刻�
     MyBatis3のデフォルトの動作では、Enum型はEnumの定数名(文字列)とマッピングされる。
 
     下記のようなEnum型の場合は、
-    \ ``"WAITING_FOR_ACTIVE"`` \, \ ``"ACTIVE"`` \, \ ``"EXPIRED"`` \, \ ``"LOCKED"`` \
+    \ ``WAITING_FOR_ACTIVE`` \, \ ``ACTIVE`` \, \ ``EXPIRED`` \, \ ``LOCKED`` \
     という文字列とマッピングされてテーブルに格納される。
 
      .. code-block:: java
@@ -1124,7 +1124,7 @@ Joda-TimeのクラスとJDBC型をマッピングする\ ``TypeHandler`` \の作
 
     |
 
-    更に、\ ``TypeHandler`` \の中でDIコンテナで管理されているbeanを使用したい場合は、
+    更に、\ ``TypeHandler`` \の中でDIコンテナが管理しているbeanを使用したい場合は、
     bean定義ファイル内で\ ``TypeHandler`` \を指定すればよい。
 
     - :file:`projectName-domain/src/main/resources/META-INF/spring/projectName-infra.xml`
@@ -1312,7 +1312,7 @@ Repositoryインタフェース毎にマッピングファイルを作成する�
     
     具体的には、
     \ ``com.example.domain.repository.todo.TodoRepository``\というRepositoryインターフェースに対するマッピングファイル(\ :file:`TodoRepository.xml`\)は、
-    \ ``projectName-domain/src/main/resources/com/example/domain/repository/todo``\ディレクトリに格納すればいよい。
+    \ ``projectName-domain/src/main/resources/com/example/domain/repository/todo``\ディレクトリに格納すればよい。
 
 |
 
@@ -1555,7 +1555,7 @@ MyBatis3では、検索結果(\ ``ResultSet``\)のカラムとJavaBeanのプロ�
 
  .. tip:: **アンダースコア区切りのカラム名とキャメルケース形式のプロパティ名のマッピング方法について**
  
-         上記例では、アンダースコア区切りのカラム名とキャメルケース形式のプロパティ名の違いをAS句を使って吸収しているが、
+         上記例では、アンダースコア区切りのカラム名とキャメルケース形式のプロパティ名の違いについてAS句を使って吸収しているが、
          アンダースコア区切りのカラム名とキャメルケース形式のプロパティ名の違いを吸収するだけならば、
          MyBatis3の設定を変更する事で実現可能である。
 
@@ -1594,7 +1594,7 @@ MyBatis設定ファイル(\ :file:`mybatis-config.xml`\)に以下の設定を追
       - \ ``mapUnderscoreToCamelCase`` \を\ `true`\にする設定を追加する。
       
         設定を\ `true`\にすると、アンダースコア区切りのカラム名がキャメルケース形式に自動変換される。
-        具体例としては、カラム名が\ ``"todo_id"``\の場合、\ ``"todoId"``\に変換されてマッピングが行われる。
+        具体例としては、カラム名が\ ``todo_id``\の場合、\ ``todoId``\に変換されてマッピングが行われる。
 
 - :file:`projectName-domain/src/main/resources/com/example/domain/repository/todo/TodoRepository.xml`
 
@@ -1754,7 +1754,7 @@ Entityの検索処理
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Entityの検索処理の実装方法について、目的別に説明を行う。
 
-Entityの検索処理の実装方法の説明を読む前に、「:ref:`DataAccessMyBatis3HowToUseResultSetMapping`」を一読して頂きたい。
+Entityの検索処理の実装方法に対する説明を読む前に、「:ref:`DataAccessMyBatis3HowToUseResultSetMapping`」を一読して頂きたい。
 
 以降の説明では、アンダースコア区切りのカラム名をキャメルケース形式のプロパティ名に自動でマッピングする設定を有効にした場合の実装例となる。
 
@@ -2028,6 +2028,9 @@ PKが単一カラムで構成されるテーブルより、PKを指定してEnti
 
         <!-- omitted -->
 
+    MyBatis 3.4.1以降では、JDK 8 から追加されたコンパイルオプション(\ ``-parameters``\)を使用することで、\ ``@Param``\アノテーションを省略する事ができる。
+
+
 |
 
 .. _DataAccessMyBatis3HowToUseFindMultiple:
@@ -2229,12 +2232,12 @@ Entityの検索
 
  .. tip:: **CDATAセクションの活用方法について**
  
-    SQL内にXMLのエスケープが必要な文字(\ ``"<"``\や\ ``">"``\など)を指定する場合は、
+    SQL内にXMLのエスケープが必要な文字("\ ``<``\"や"\ ``>``\"など)を指定する場合は、
     CDATAセクションを使用すると、SQLの可読性を保つことができる。
-    CDATAセクションを使用しない場合は、\ ``"&lt;"``\や\ ``"&gt;"``\といったエンティティ参照文字を指定する必要があり、
+    CDATAセクションを使用しない場合は、\ ``&lt;``\や\ ``&gt;``\といったエンティティ参照文字を指定する必要があり、
     SQLの可読性を損なう要因となる。
     
-    上記例では、\ ``created_at``\に対する条件として\ ``"<"``\を使用しているため、CDATAセクションを指定している。
+    上記例では、\ ``created_at``\に対する条件として"\ ``<``\"を使用しているため、CDATAセクションを指定している。
 
 |
 
@@ -2308,8 +2311,8 @@ Entityの件数の取得
 
  .. tip:: **プリミティブ型のエイリアス名について**
  
-    プリミティブ型のエイリアス名は、先頭に\ ``"_"``\(アンダースコア)を指定する必要がある。
-    \ ``"_"``\(アンダースコア)を指定しない場合は、プリミティブのラッパ型(\ ``java.lang.Long``\など)として扱われる。
+    プリミティブ型のエイリアス名は、先頭に"\ ``_``\"(アンダースコア)を指定する必要がある。
+    "\ ``_``\"(アンダースコア)を指定しない場合は、プリミティブのラッパ型(\ ``java.lang.Long``\など)として扱われる。
 
 |
 
@@ -2319,7 +2322,7 @@ Entityのページネーション検索(MyBatis3標準方式)
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 MyBatis3の取得範囲指定機能を使用してEntityを検索する際の実装例を以下に示す。
 
-MyBatisでは取得範囲を指定するクラスとして\ ``org.apache.ibatis.session.RowBounds``\クラスを用意されており、
+MyBatisでは取得範囲を指定するクラスとして\ ``org.apache.ibatis.session.RowBounds``\クラスが用意されており、
 SQLに取得範囲の条件を記述する必要がない。
 
  .. warning:: **検索条件に一致するデータ件数が多くなる場合の注意点について**
@@ -2330,7 +2333,7 @@ SQLに取得範囲の条件を記述する必要がない。
     カーソルの移動処理は、JDBCの結果セット型に応じて以下の２種類がサポートされており、デフォルトの動作は、
     JDBCドライバのデフォルトの結果セット型に依存する。
 
-    * 結果セット型が\ ``FORWARD_ONLY``\の場合は、\ ``ResultSet#next()``\を繰返し呼び出して取得範囲外のデータをスキップする。
+    * 結果セット型が\ ``FORWARD_ONLY``\の場合は、\ ``ResultSet#next()``\を繰り返し呼び出して取得範囲外のデータをスキップする。
     * 結果セット型が\ ``SCROLL_SENSITIVE``\又は\ ``SCROLL_INSENSITIVE``\の場合は、\ ``ResultSet#absolute(int)``\を呼び出して取得範囲外のデータをスキップする。
 
     \ ``ResultSet#absolute(int)``\を使用することで、性能劣化を最小限に抑える事ができる可能性はあるが、
@@ -2375,7 +2378,7 @@ SQLに取得範囲の条件を記述する必要がない。
     * - (1)
       - 検索条件に一致するEntityの総件数を取得するメソッドを定義する。
     * - (2)
-      - 検索条件に一致するEntityの中から、取得範囲のEntityを抽出メソッドを定義する。
+      - 検索条件に一致するEntityの中から、取得範囲のEntityを抽出するメソッドを定義する。
       
         定義したメソッドの引数として、取得範囲の情報(offsetとlimit)を保持する\ ``RowBounds``\を指定する。
 
@@ -2542,7 +2545,7 @@ SQLに取得範囲の条件を記述する必要がない。
 
         具体的には、
 
-        * offsetに\ ``0``\、limitに\ ``20``\を指定した場合、1～20件目
+        * offsetに"\ ``0``\"、limitに\ ``20``\を指定した場合、1～20件目
         * offsetに\ ``20``\、limitに\ ``20``\を指定した場合、21～40件目
 
         が取得範囲となる。
@@ -2606,7 +2609,7 @@ MyBatis3標準方式に比べて効率的に取得範囲のEntityを取得する
     * - (1)
       - 検索条件に一致するEntityの総件数を取得するメソッドを定義する。
     * - (2)
-      - 検索条件に一致するEntityの中から、取得範囲のEntityを抽出メソッドを定義する。
+      - 検索条件に一致するEntityの中から、取得範囲のEntityを抽出するメソッドを定義する。
 
         定義したメソッドの引数として、取得範囲の情報(offsetとlimit)を保持する\ ``org.springframework.data.domain.Pageable``\を指定する。
 
@@ -2913,7 +2916,7 @@ Entityを1件登録する際の実装例を以下に示す。
         * IDとして「UUID」
         * 登録日時として「システム日時」
         * 完了フラグに「\ ``false``\ : 未完了」
-        * バージョンに「\ ``1``\」
+        * バージョンに「"\ ``1``\"」
         
         を設定している。
     * - (6)
@@ -3072,7 +3075,7 @@ MyBatis3では、マッピングファイル内でキーを生成する仕組み
         「`MyBatis3 REFERENCE DOCUMENTATION (Mapper XML Files-insert, update and delete-) <http://mybatis.github.io/mybatis-3/sqlmap-xml.html#insert_update_and_delete>`_\」を参照されたい。
     * -
       - keyProperty
-      - データベース上で自動でインクリメントされたキー値を格納するEntityのプロパティ名を指定する。
+      - データベース上で自動的にインクリメントされたキー値を格納するEntityのプロパティ名を指定する。
 
         上記例では、INSERT文実行後に、Entityの\ ``logId``\プロパティに\ ``Statement#getGeneratedKeys()``\で取得したキー値が設定される。
 
@@ -3096,7 +3099,7 @@ Entityを一括で登録する場合は、
 
 JDBCのバッチ更新機能を使用する方法については、「:ref:`DataAccessMyBatis3HowToExtendExecutorTypeBatch`」を参照されたい。
 
-ここでは、複数のレコードを同時に登録するINSERT文を発行するする方法について説明する。
+ここでは、複数のレコードを同時に登録するINSERT文を発行する方法について説明する。
 下記例は、データベースとしてH2 Databaseを使用している。
 
 
@@ -3187,7 +3190,7 @@ JDBCのバッチ更新機能を使用する方法については、「:ref:`Data
       - 処理対象のコレクションを指定する。
       
         上記例では、Repositoryのメソッド引数のリストに対して繰り返し処理を行っている。
-        Repositoryメソッドの引数に\ ``@Param``\を指定していない場合は、\ ``"list"``\を指定する。
+        Repositoryメソッドの引数に\ ``@Param``\を指定していない場合は、\ ``list``\を指定する。
         \ ``@Param``\を指定した場合は、\ ``@Param``\の\ ``value``\属性に指定した値を指定する。
     * -
       - item
@@ -3198,7 +3201,7 @@ JDBCのバッチ更新機能を使用する方法については、「:ref:`Data
       - separator
       - リスト内の要素間を区切るための文字列を指定する。
       
-        上記例では、\ ``","``\を指定することで、要素毎のVALUE句を\ ``","``\で区切っている。
+        上記例では、"\ ``,``\"を指定することで、要素毎のVALUE句を"\ ``,``\"で区切っている。
 
 \
 
@@ -3580,7 +3583,7 @@ JDBCのバッチ更新機能を使用する方法については、「:ref:`Data
       - separator
       - リスト内の要素間を区切るための文字列を指定する。
 
-        上記例では、IN句の区切り文字である\ ``","``\を指定している。
+        上記例では、IN句の区切り文字である"\ ``,``\"を指定している。
 
 |
 
@@ -4283,17 +4286,17 @@ foreach要素の実装例
       - 説明
     * - (1)
       - \-
-      - 繰返し処理を行う対象のコレクション又は配列に対して、\ ``null``\チェックを行う。
+      - 繰り返し処理を行う対象のコレクション又は配列に対して、\ ``null``\チェックを行う。
 
         \ ``null``\にならない事がない場合は、このチェックは実装しなくてもよい。
     * - (2)
       - \-
-      - \ ``foreach``\要素を使用して、コレクションや配列に対して繰返し処理を行い、動的SQLを組み立てる。
+      - \ ``foreach``\要素を使用して、コレクションや配列に対して繰り返し処理を行い、動的SQLを組み立てる。
 
         上記例では、レコードの作成日付が、指定された日付(日付リスト)の何れかと一致するレコードを検索するためのWHERE句を組み立てている。
     * -
       - collection
-      - \ ``collection``\属性に、繰返し処理を行うコレクションや配列を指定する。
+      - \ ``collection``\属性に、繰り返し処理を行うコレクションや配列を指定する。
 
         上記例では、Repositoryメソッドの引数に指定されたコレクションを指定している。
 
@@ -4506,14 +4509,14 @@ LIKE検索用のエスケープ処理は、
       - \ ``bind``\要素(OGNL式)を使用して、共通ライブラリから提供しているLIKE検索用のエスケープ処理メソッドを呼び出す。
 
         上記例では、部分一致用のエスケープ処理を行い\ ``todoTitleContainingCondition``\という変数に格納している。
-        \ ``QueryEscapeUtils@toContainingCondition(String)``\メソッドは、エスケープした文字列の前後に\ "``%``"\を付与するメソッドである。
+        \ ``QueryEscapeUtils@toContainingCondition(String)``\メソッドは、エスケープした文字列の前後に"\ ``%``\"を付与するメソッドである。
     * - (2)
       - 部分一致用のエスケープを行った文字列を、LIKE句のバインド変数として指定する。
     * - (3)
       - ESCAPE句にエスケープ文字を指定する。
 
         共通ライブラリから提供しているエスケープ処理では、
-        エスケープ文字として\ ``"~"``\を使用しているため、ESCAPE句に\ ``'~'``\を指定している。
+        エスケープ文字として"\ ``~``\"を使用しているため、ESCAPE句に\ ``'~'``\を指定している。
 
  .. tip::
 
@@ -4614,7 +4617,7 @@ MyBatis3では、SQLに値を埋め込む仕組みとして、以下の2つの�
       - 説明
     * - (1)
       - バインドする値が格納されているプロパティのプロパティ名を、
-        \ ``#{`` \と\ ``}`` \で囲み、バインド変数として指定する。
+        \ ``#{`` \と"\ ``}`` \"で囲み、バインド変数として指定する。
 
  .. tip::
 
@@ -4688,8 +4691,8 @@ MyBatis3では、SQLに値を埋め込む仕組みとして、以下の2つの�
       - 説明
     * - (1)
       - 置換する値が格納されているプロパティのプロパティ名を\ ``${`` \と
-        \ ``}`` \で囲み、置換変数として指定する。上記例では、\ ``${direction}`` \
-        の部分は、\ ``"DESC"`` \または\ ``"ASC"`` \で置換される。
+        "\ ``}`` \"で囲み、置換変数として指定する。上記例では、\ ``${direction}`` \
+        の部分は、\ ``DESC`` \または\ ``ASC`` \で置換される。
 
  .. warning::
 
@@ -5165,7 +5168,7 @@ MyBatis3では、検索結果を1件単位で処理する仕組みを提供し�
 
  .. tip:: **ResultContextのメソッドについて**
 
-    \ ``ResultHandler#handleResult``\メソッドの引数である\ ``ResultContext``\には、以下のメソッドが用意がされている。
+    \ ``ResultHandler#handleResult``\メソッドの引数である\ ``ResultContext``\には、以下のメソッドが用意されている。
 
      .. tabularcolumns:: |p{0.10\linewidth}|p{0.15\linewidth}|p{0.65\linewidth}|
      .. list-table::
@@ -5825,7 +5828,7 @@ Repositoryのメソッドの呼び出し順番を間違えると、性能向上�
     * - 項番
       - 説明
     * - (1)
-      - 上記例のように実装した場合、繰返し処理の先頭にクエリを発行しているため、
+      - 上記例のように実装した場合、繰り返し処理の先頭にクエリを発行しているため、
         1件毎にSQLがバッチ実行される事になってしまう。
         これはほぼ、シンプルモード(\ ``SIMPLE``\)で実行しているのと同義である。
 
@@ -5883,9 +5886,9 @@ MyBatis3から呼び出す方法について説明を行う。
 
 以下で説明する実装例では、PostgreSQLに登録されているファンクションを呼び出している。
 
-* ストアードプロシージャ（ファンクション）を登録する。
+* ストアドプロシージャ（ファンクション）を登録する。
 
- .. code-block:: guess
+ .. code-block:: postgresql
 
     /* (1) */
     CREATE FUNCTION findTodo(pTodoId CHAR)
@@ -5979,7 +5982,7 @@ MyBatis3から呼び出す方法について説明を行う。
     * - (4)
       - ストアドプロシージャを呼び出す。
 
-        ストアドプロシージャ（ファクション）を呼び出す場合は、
+        ストアドプロシージャ（ファンクション）を呼び出す場合は、
 
         * \ ``{call Procedure or Function名(INパラメータ...)}``\
 
@@ -6011,7 +6014,7 @@ Mapperインタフェースの仕組みについて
 - Mapperインタフェースの作成例
 
   本ガイドラインでは、MyBatis3のMapperインタフェースをRepositoryインタフェースとして使用することを前提としているため、
-  インタフェース名は、「Entity名」 + \ ``"Repository"`` \というネーミングにしている。
+  インタフェース名は、「Entity名」 + \ ``Repository`` \というネーミングにしている。
 
  .. code-block:: java
 
@@ -6253,7 +6256,7 @@ TypeAliasを設定したいクラスに\ ``@org.apache.ibatis.type.Alias`` \ア�
 
 .. _DataAccessMyBatis3AppendixSwitchingSqlByDatabase:
 
-データベースによるSQL切替について
+データベースによるSQL切り替えについて
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 MyBatis3では、JDBCドライバから接続しているデータベースのベンダー情報を取得して、
@@ -6273,7 +6276,7 @@ MyBatis3では、JDBCドライバから接続しているデータベースの�
     * 各種試験環境
     * 商用環境
 
-    毎の差分を吸収するためのサブプロジェクトであり、
+    上記それぞれの差分を吸収するためのサブプロジェクトであり、
     複数のデータベースをサポートするアプリケーションの開発でも利用する事ができる。
 
     基本的には、環境依存するコンポーネントや設定ファイルは、
@@ -6343,21 +6346,21 @@ MyBatis3では、JDBCドライバから接続しているデータベースの�
     * - (2)
       - \ ``properties``\プロパティには、JDBCドライバから取得したデータベースのプロダクト名とデータベースIDのマッピングを指定する。
 
-        マッピング仕様ついては、「`MyBatis3 REFERENCE DOCUMENTATION(Configuration-databaseIdProvider-) <http://mybatis.github.io/mybatis-3/configuration.html#databaseIdProvider>`_\」を参照されたい。
+        マッピング仕様については、「`MyBatis3 REFERENCE DOCUMENTATION(Configuration-databaseIdProvider-) <http://mybatis.github.io/mybatis-3/configuration.html#databaseIdProvider>`_\」を参照されたい。
     * - (3)
       - データベースIDを使用する\ ``SqlSessionFactoryBean``\の\ ``databaseIdProvider``\プロパティ対して、
         (1)で定義した\ ``DatabaseIdProvider``\を指定する。
 
-        この指定を行うと、マッッピングファイルからデータベースIDを参照する事が可能となる。
+        この指定を行うと、マッピングファイルからデータベースIDを参照する事が可能となる。
 
  .. note::
 
     本ガイドラインでは、\ ``properties``\プロパティを指定して、
     データベースのプロダクト名とデータベースIDをマッピングする方式を推奨する。
 
-    理由は、JDBCドライバから取得したデータベースのプロダクト名は、
-    JDBCのバージョンによって変わる可能性があるためである。
-    \ ``properties``\プロパティを使用すると、使用するバージョン毎のプロダクト名の違いを、
+    理由は、JDBCドライバから取得できるデータベースのプロダクト名は、
+    JDBCドライバのバージョンによって変わる可能性があるためである。
+    \ ``properties``\プロパティを使用すると、使用するJDBCドライバのバージョンによるプロダクト名の違いを、
     一箇所で管理する事ができる。
 
 |
@@ -7047,12 +7050,12 @@ SQLの実装
 
 内訳は、
 
-* 1～3行目は、注文IDが\ ``2``\の\ ``Order``\オブジェクトを生成するためのレコード
-* 4～9行目は、注文IDが\ ``1``\の\ ``Order``\オブジェクトを生成するためレコード
+* 1～3行目は、注文IDが"\ ``2``\"の\ ``Order``\オブジェクトを生成するためのレコード
+* 4～9行目は、注文IDが"\ ``1``\"の\ ``Order``\オブジェクトを生成するためレコード
 
 となる。
 
-以降の説明では、注文IDが\ ``1``\のレコードを例に、
+以降の説明では、注文IDが"\ ``1``\"のレコードを例に、
 どのように検索結果(\ ``ResultSet``\)をJavaBeanにマッピングするかを説明していく。
 
 
@@ -7544,7 +7547,7 @@ OrderCouponオブジェクトへのマッピングの実装
 
         これは\ ``t_coupon``\テーブルにレコードが存在しない時に、
         \ ``OrderCoupon``\オブジェクトを生成させないための設定である。
-        本実装例では、\ ``id``\カラムが\ ``2``\のデータには\ ``t_coupon``\テーブルのレコードを格納していないため、
+        本実装例では、\ ``id``\カラムが"\ ``2``\"のデータには\ ``t_coupon``\テーブルのレコードを格納していないため、
         検索結果をみると、\ ``coupon_code``\と\ ``coupon_name``\と\ ``coupon_price``\の値が\ ``null``\になっているのがわかる。
 
         \ ``OrderCoupon``\オブジェクトにマッピングするカラムがこの3つだけであれば、

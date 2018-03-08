@@ -86,7 +86,7 @@
     開発規模が大きいシステムでは、アプリケーションを複数のチームに分担して開発を行う場合がある。
     その場合は、EntityクラスおよびRepositoryを設計するための共通チームを設けることを強く推奨する。
 
-    共通チームを設ける体制が組めない場合は、EntityクラスおよびRepositoryの作成せずに、
+    共通チームを設ける体制が組めない場合は、EntityクラスおよびRepositoryを作成せずに、
     ServiceからO/R Mapper(MyBatisなど)を直接呼び出して、業務データにアクセスする方法を採用することを検討すること。
 
 
@@ -126,7 +126,6 @@ Entityクラスの作成方針
  .. warning::
 
     テーブルが正規化されていない場合は、 以下の点を考慮して **EntityクラスおよびRepositoryを作成する方式を採用すべきか検討した方がよい。**
-    特に正規化されていないテーブルとJPAとの相性はあまりよくないので、テーブルが正規化されていない場合は、JPAを使用してEntityオブジェクトを操作する方式は採用しない方が無難である。
 
     * | Entityを作成する難易度が高くなるため、適切なEntityクラスの作成が出来ない可能性がある。
       | 加えて、Entityクラスを作成するために、必要な工数が多くなる可能性も高い。
@@ -190,7 +189,7 @@ Entityクラスの作成例
     * - | (3)
       - |
       - | t_order_coupon
-      - | １つの注文で使用されたクーポンを保持するテーブル。１つの注文で複数のクーポンが使用された場合はクーポン数分レコードが格納される。クーポンを使用しなかった場合はレコードは格納されない。
+      - | １つの注文で使用されたクーポンを保持するテーブル。１つの注文で複数のクーポンが使用された場合はクーポン数分レコードが格納される。クーポンを使用しなかった場合、レコードは格納されない。
     * - | (4)
       - | マスタ系
       - | m_item
@@ -404,15 +403,6 @@ Repositoryは、RepositoryインタフェースとRepositoryImplで構成され�
     可能な限り、永続先に依存するロジックは、Serviceではなく、RepositoryImplで実装することを推奨するが、
     永続先に依存するロジックを排除するのが難しい場合や、排除することで得られるメリットが少ない場合は、
     無理に排除せず、業務ロジック(Service)の処理として、永続先に依存するロジックを実装してもよい。
-
-    排除できない具体例として、Spring Data JPAから提供されている\ ``org.springframework.data.jpa.repository.JpaRepository``\ インタフェース
-    のsaveメソッドの呼び出し時に、一意制約エラーをハンドリングしたい場合である。
-    JPAではEntityへの操作はキャッシュされ、トランザクションコミット時にSQLを発行する仕組みになっている。
-    そのため、JpaRepositoryのsaveメソッドを呼び出しても、SQLは発行されないので、一意制約違反をロジックでハンドリングすることができない。
-    JPAでは、明示的にSQLを発行する手段として、キャッシュされている操作を反映するためのメソッド（flushメソッド）があり、
-    JpaRepositoryではsaveAndFlush、flushというメソッドが同じ目的で提供されている。
-    そのため、Spring Data JPAのJpaRepositoryを使って、一意制約違反エラーをハンドリングする必要がある場合は、
-    JPA依存のメソッド（saveAndFlushや、flush）を呼び出す必要がある。
 
  .. warning::
 
@@ -791,7 +781,7 @@ Serviceクラスから、別のServiceクラスの呼び出しを禁止する理
 
  .. note::
 
-    大規模開発において、サービスイン後の保守性等を考慮して業務ロジックの作りを合わせておきたい場合や、開発者のひとりひとりのスキルがあまり高くない場合などの状況下では、
+    大規模開発において、サービスイン後の保守性等を考慮して業務ロジックの作りを合わせておきたい場合や、開発者のスキルがあまり高くない場合などの状況下では、
     シグネチャを限定するようなインタフェースを設けることも、選択肢の一つとして考えてもよい。
 
     本ガイドラインでは、シグネチャを限定するようなインタフェースを作成することは、特に推奨していないが、
@@ -1247,7 +1237,7 @@ Serviceクラスを作成する際の注意点を、以下に示す。
 
     #. AOPを使う場合に、JDK標準のDynamic proxies機能が使われる。
        インタフェースがない場合はSpring Frameworkに内包されているCGLIBが使われるが、finalメソッドに対してAdviceできないなどの制約がある。
-       詳細は、\ `Spring Reference Document -Aspect Oriented Programming with Spring(Proxying mechanisms)- <http://docs.spring.io/spring/docs/4.3.5.RELEASE/spring-framework-reference/html/aop.html#aop-proxying>`_\ を参照されたい。
+       詳細は、\ `Spring Reference Document -Aspect Oriented Programming with Spring(Proxying mechanisms)- <http://docs.spring.io/spring/docs/4.3.14.RELEASE/spring-framework-reference/html/aop.html#aop-proxying>`_\ を参照されたい。
     #. 業務ロジックをスタブ化しやすくなる。
        アプリケーション層とドメイン層を別々の体制で並行して開発する場合は、アプリケーション層を開発するために、Serviceのスタブが必要になるケースがある。
        スタブを作成する必要がある場合は、インタフェースを設けておくことを推奨する。
@@ -1424,7 +1414,7 @@ Serviceクラスのメソッド引数と返り値は、以下の点を考慮す�
 
     #. アプリケーション層の実装アーキテクチャに依存するオブジェクトを許可してしまうと、アプリケーション層とドメイン層が密結合になってしまう。
     #. \ ``java.util.Map``\ は、インタフェースとして汎用性が高すぎるため、メソッドの引数や返り値に使うと、
-       どのようなオブジェクが格納されているかわかりづらい。 また、値の管理がキー名で行われるため、以下の問題が発生しやすくなる。
+       どのようなオブジェクトが格納されているかわかりづらい。 また、値の管理がキー名で行われるため、以下の問題が発生しやすくなる。
 
      * 値を設定する処理と値を取得する処理で異なるキー名を指定してしまい、値が取得できない。
      * キー名の変更した場合の影響範囲の把握が困難になる。
@@ -1727,7 +1717,7 @@ ServiceおよびSharedServiceでは、アプリケーションで使用する業
 * XML(bean定義ファイル)で宣言する。
 * **アノテーション（@Transactional）で宣言する。（推奨）**
 
-Spring Frameworkから提供されている「宣言型トランザクション管理」の詳細については、\ `Spring Reference Document -Transaction Management(Declarative transaction management)- <http://docs.spring.io/spring/docs/4.3.5.RELEASE/spring-framework-reference/html/transaction.html#transaction-declarative>`_\ を参照されたい。
+Spring Frameworkから提供されている「宣言型トランザクション管理」の詳細については、\ `Spring Reference Document -Transaction Management(Declarative transaction management)- <http://docs.spring.io/spring/docs/4.3.14.RELEASE/spring-framework-reference/html/transaction.html#transaction-declarative>`_\ を参照されたい。
 \
 
  .. note:: **「アノテーションで指定する」方法を推奨する理由**
@@ -1843,7 +1833,7 @@ Spring Frameworkから提供されている「宣言型トランザクション�
 
     **クラスまたはクラスのメソッドに指定することを推奨する。**
     インタフェースまたはインタフェースのメソッドでない点が、ポイント。
-    理由は、\ `Spring Reference Document -Transaction Management(Using @Transactional)- <http://docs.spring.io/spring/docs/4.3.5.RELEASE/spring-framework-reference/html/transaction.html#transaction-declarative-annotations>`_\ の2個めのTipsを参照されたい。
+    理由は、\ `Spring Reference Document -Transaction Management(Using @Transactional)- <http://docs.spring.io/spring/docs/4.3.14.RELEASE/spring-framework-reference/html/transaction.html#transaction-declarative-annotations>`_\ の2個目のTipsを参照されたい。
 
  .. warning:: **例外発生時のrollbackとcommitのデフォルト動作**
 
@@ -1855,8 +1845,8 @@ Spring Frameworkから提供されている「宣言型トランザクション�
  .. note:: **@Transactionalアノテーションのvalue属性について**
 
     \ ``@Transactional``\ アノテーションにはvalue属性があるが、これは複数のTransaction Managerを宣言した際に、どのTransaction Managerを使うのかを指定する属性である。
-    Transaction Managerが一つの場合は指定は不要である。
-    複数のTransaction Managerを使う必要がある場合は、\ `Spring Reference Document -Transaction Management(Multiple Transaction Managers with @Transactional)- <http://docs.spring.io/spring/docs/4.3.5.RELEASE/spring-framework-reference/html/transaction.html#tx-multiple-tx-mgrs-with-attransactional>`_\ を参照されたい。
+    Transaction Managerが一つの場合、指定は不要である。
+    複数のTransaction Managerを使う必要がある場合は、\ `Spring Reference Document -Transaction Management(Multiple Transaction Managers with @Transactional)- <http://docs.spring.io/spring/docs/4.3.14.RELEASE/spring-framework-reference/html/transaction.html#tx-multiple-tx-mgrs-with-attransactional>`_\ を参照されたい。
 
  .. note:: **主要DBのisolationのデフォルトについて**
 
@@ -1867,6 +1857,18 @@ Spring Frameworkから提供されている「宣言型トランザクション�
     * PostgreSQL : READ_COMMITTED
     * SQL Server : READ_COMMITTED
     * MySQL : REPEATABLE_READ
+
+ .. note:: **@Transactionalアノテーションのtimeout属性について**
+
+    クエリ発行時（Repositoryのメソッド実行時）に\ ``timeout``\属性に指定した時間に従って、トランザクションタイムアウトのチェックが行なわれるが、このときの挙動について以下の点に注意されたい。
+
+    * タイムアウトチェック時に既にタイムアウトしていないかを確認するため、\ ``timeout``\属性に指定した時間が経過したタイミングで例外が発生するわけではない。
+    * タイムアウトチェック後に、関係ない業務処理にいくら時間がかかってもタイムアウトにはならない。
+
+    また、トランザクションタイムアウトに関して以下の事象にも注意されたい。
+
+    * クエリを発行した後のタイムアウトの挙動はJDBCドライバの実装に依存する。
+    * 使用するTransaction Managerによっては、コミット時にもトランザクションタイムアウトのチェックが行われる。
 
 .. _DomainLayerTransactionManagementWarningDisableCase:
 
@@ -1879,7 +1881,7 @@ Spring Frameworkから提供されている「宣言型トランザクション�
 
     * コネクションプールからコネクションを取得する際に、ヘルスチェックを行う。
     * コネクションプールから取得したコネクションの自動コミットを無効にする。
-    * \ ``PlatformTransactionManager``\ として、\ ``DataSourceTransactionManager``\ 又は\ ``JpaTransactionManager``\ を使用する。(\ ``JtaTransactionManager``\ を使用する場合は本事象は発生しない)
+    * \ ``PlatformTransactionManager``\ として、\ ``DataSourceTransactionManager``\ 又は\ ``JpaTransactionManager``\ を使用する。(\ ``JtaTransactionManager``\ を使用する場合、本事象は発生しない)
 
     **[本事象の発生が確認されているJDBCドライバ]**
 
@@ -1916,12 +1918,6 @@ Spring Frameworkから提供されている「宣言型トランザクション�
         org.postgresql.util.PSQLException: Cannot change transaction read-only property in the middle of a transaction.
             at org.postgresql.jdbc2.AbstractJdbc2Connection.setReadOnly(AbstractJdbc2Connection.java:741) ~[postgresql-9.3-1102-jdbc41.jar:na]
             ...
-
- .. note:: **@Transactionalアノテーションのtimeout属性について**
-
-    \ ``@Transactional``\ アノテーションには\ ``timeout``\属性があるが、MyBatis 3.3とMyBatis-Spring 1.2の組み合わせでは
-    \ ``timeout``\属性に指定した値は無視され、使用されない。
-
 
 トランザクションの伝播
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -1994,9 +1990,9 @@ Spring Frameworkから提供されている「宣言型トランザクション�
 
  .. note:: **内部呼び出しをトランザクション管理対象にしたい場合**
 
-   AOPモードを\ ``"aspectj"``\ にすることで、内部呼び出しをトランザクション管理対象にすることができる。
+   AOPモードを\ ``aspectj``\ にすることで、内部呼び出しをトランザクション管理対象にすることができる。
    ただし、内部呼び出しもトランザクション管理対象にしてしまうと、トランザクション管理の経路が複雑になる可能性があるので、
-   基本的にはAOPモードはデフォルトの\ ``"proxy"``\ を使用することを推奨する。
+   基本的にはAOPモードはデフォルトの\ ``proxy``\ を使用することを推奨する。
 
 .. _service_enable_transaction_management:
 .. _DomainLayerAppendixTransactionManagement:
@@ -2112,7 +2108,7 @@ PlatformTransactionManagerの設定
  .. note:: **プログラマティックにトランザクションを管理する方法**
 
     本ガイドラインでは、「宣言型トランザクション管理」を推奨しているが、プログラマティックにトランザクションを管理することもできる。
-    詳細については、\ `Spring Reference Document -Transaction Management(Programmatic transaction management)- <http://docs.spring.io/spring/docs/4.3.5.RELEASE/spring-framework-reference/html/transaction.html#transaction-programmatic>`_\ を参照されたい。
+    詳細については、\ `Spring Reference Document -Transaction Management(Programmatic transaction management)- <http://docs.spring.io/spring/docs/4.3.14.RELEASE/spring-framework-reference/html/transaction.html#transaction-programmatic>`_\ を参照されたい。
 
 
 <tx:annotation-driven>要素の属性について
@@ -2145,7 +2141,7 @@ PlatformTransactionManagerの設定
 
     * - 2
       - mode
-      - AOPのモードを指定する。省略した場合、\ ``"proxy"``\ となる。\ ``"aspectj"``\ を指定できるが、原則デフォルトの\ ``"proxy"``\ を使う。
+      - AOPのモードを指定する。省略した場合、\ ``proxy``\ となる。\ ``aspectj``\ を指定できるが、原則デフォルトの\ ``proxy``\ を使う。
 
     * - 3
       - proxy-target-class

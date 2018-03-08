@@ -8,7 +8,7 @@ Spring Framework理解度チェックテスト
 
     .. code-block:: java
     
-        @Contoller
+        @Controller
         public class XxxController {
           (1)
           protected (2) yyyService;

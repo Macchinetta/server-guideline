@@ -205,7 +205,7 @@ JSPでのコードリスト使用
    * - | (2)
      - | CodeListInterceptor クラスをbean定義する。
    * - | (3)
-     - | 自動でリクエストスコープに設定するコードリストのbeanIDのパターンを設定する。
+     - | 自動でリクエストスコープに設定する、コードリストのbeanIDのパターンを設定する。
        | パターンには ``java.util.regex.Pattern`` で使用する正規表現を設定すること。
        | 上記例では、idが"CL\_XXX"形式で定義されているデータのみを対象とする。その場合、idが"CL\_"で始まらないbean定義は取り込まれない。
        | "CL\_"で定義したbeanIDは、リクエストスコープに設定されるため、JSPで使用可能となる。
@@ -680,9 +680,9 @@ EnumCodeListの使用方法
 
         上記例では、以下の3つの定数を定義している。
 
-        * \ ``RECEIVED``\ (コード値=\ ``"1"``\ , ラベル=\ ``"Received"``\ )
-        * \ ``SENT``\  (コード値=\ ``"2"``\ , ラベル=\ ``"Sent"``\ )
-        * \ ``CANCELLED``\  (コード値=\ ``"3"``\ , ラベル=\ ``"Cancelled"``\ )
+        * \ ``RECEIVED``\ (コード値="\ ``1``\" , ラベル=\ ``Received``\ )
+        * \ ``SENT``\  (コード値="\ ``2``\" , ラベル=\ ``Sent``\ )
+        * \ ``CANCELLED``\  (コード値="\ ``3``\" , ラベル=\ ``Cancelled``\ )
 
         .. note::
 
@@ -767,7 +767,7 @@ SimpleI18nCodeListの使用方法
 
 ``SimpleI18nCodeList``\ は行が\ ``Locale``\ 、列がコード値、セルの内容がラベルである2次元のテーブルをイメージすると理解しやすい。
 
-料金を選択するセレクトボックスの場合の例に上げると以下のようなテーブルができる。
+料金を選択するセレクトボックスの場合を例に挙げると以下のようなテーブルができる。
 
 .. tabularcolumns:: |p{0.10\linewidth}|p{0.15\linewidth}|p{0.14\linewidth}|p{0.14\linewidth}|p{0.14\linewidth}|p{0.14\linewidth}|p{0.14\linewidth}|
 .. list-table::
@@ -1146,7 +1146,7 @@ JSPからコードリストを参照する場合は、 ``java.util.Map`` イン�
    * - 項番
      - 説明
    * - | (1)
-     - コードリストを定義したbeanID(この例では ``"CL_ORDERSTATUS"`` ) を属性名として、コードリスト( ``java.util.Map`` インタフェース)を取得する。
+     - コードリストを定義したbeanID(この例では ``CL_ORDERSTATUS`` ) を属性名として、コードリスト( ``java.util.Map`` インタフェース)を取得する。
        取得した ``Map`` インタフェースのキーとしてコード値(この例では ``orderStatus`` に格納された値) を指定することで、対応するコード名を表示することができる。
 
 
@@ -1284,7 +1284,7 @@ JdbcCodeListは、ReloadableCodeListインターフェースを実装してい�
 #. Task Schedulerで実現する方法
 #. Controller(Service)クラスでrefreshメソッドを呼び出す方法
 
-本ガイドラインでは、\ `Springから提供されているTask Scheduler <http://docs.spring.io/spring/docs/4.3.5.RELEASE/spring-framework-reference/html/scheduling.html>`_\ を使用して、コードリストを定期的にリロードする方式を基本的に推奨する。
+本ガイドラインでは、\ `Springから提供されているTask Scheduler <http://docs.spring.io/spring/docs/4.3.14.RELEASE/spring-framework-reference/html/scheduling.html>`_\ を使用して、コードリストを定期的にリロードする方式を基本的に推奨する。
 
 ただし、任意のタイミングでコードリストをリフレッシュする必要がある場合はControllerクラスでrefreshメソッドを呼び出す方法で実現すればよい。
 
@@ -1340,7 +1340,7 @@ Task Schedulerの設定例について、以下に示す。
        | 平日の9-17時の毎時実行 「0 0 9-17 \* \* MON-FRI」
        |
        | 詳細はJavaDocを参照されたい。
-       | http://docs.spring.io/spring/docs/4.3.5.RELEASE/javadoc-api/org/springframework/scheduling/support/CronSequenceGenerator.html
+       | http://docs.spring.io/spring/docs/4.3.14.RELEASE/javadoc-api/org/springframework/scheduling/support/CronSequenceGenerator.html
 
 |
 
@@ -1367,7 +1367,7 @@ JdbcCodeListのrefreshメソッドをServiceクラスで呼び出す場合の実
 
     @Controller
     @RequestMapping(value = "codelist")
-    public class CodeListContoller {
+    public class CodeListController {
 
         @Inject
         CodeListService codeListService; // (1)
@@ -1505,7 +1505,7 @@ JdbcCodeListのrefreshメソッドをServiceクラスで呼び出す場合の実
      - 説明
    * - | (1)
      - | ``@Component`` で、コードリストをコンポーネント登録する。
-       | Valueに ``"CL_YEAR"`` を指定することで、bean定義で設定したコードリストインターセプトによりコードリストをコンポーネント登録する。
+       | Valueに ``CL_YEAR`` を指定することで、bean定義で設定したコードリストインターセプトによりコードリストをコンポーネント登録する。
    * - | (2)
      - | ``org.terasoluna.gfw.common.codelist.AbstractCodeList`` を継承する。
        | 今年と来年の年のリストを作る時、動的にシステム日付から算出して作成しているため、リロードは不要。
@@ -1533,7 +1533,7 @@ JdbcCodeListのrefreshメソッドをServiceクラスで呼び出す場合の実
    * - 項番
      - 説明
    * - | (5)
-     - | items属性にコンポーネント登録した ``"CL_YEAR"`` を ``${}`` プレースホルダー で指定することで、該当のコードリストを取得することができる。
+     - | items属性にコンポーネント登録した ``CL_YEAR`` を ``${}`` プレースホルダー で指定することで、該当のコードリストを取得することができる。
 
 **出力HTML**
 

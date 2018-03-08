@@ -18,7 +18,7 @@ Overview
 がある。
 
 1.の例としては必須チェックや、桁数チェックがあり、2.の例としては
-登録済みのEMailかどうかのチェックや、注文数が在庫数以内であるかどうかのチェックが挙げられる。
+登録済みのE-mailかどうかのチェックや、注文数が在庫数以内であるかどうかのチェックが挙げられる。
 
 本節では、基本的には前者のことを説明し、このチェックのことを「入力チェック」を呼ぶ。
 後者のチェックは「業務ロジックチェック」と呼ぶ。業務ロジックチェックについては
@@ -67,7 +67,7 @@ Webアプリケーションの入力チェックには、サーバサイドで�
    * - 相関項目チェック
      - | 複数のフィールドを比較するチェック
      - | パスワードと確認用パスワードの一致チェック
-     - | `org.springframework.validation.Validator <http://docs.spring.io/spring/docs/4.3.5.RELEASE/spring-framework-reference/html/validation.html#validator>`_\ インタフェースを実装したValidationクラス
+     - | `org.springframework.validation.Validator <http://docs.spring.io/spring/docs/4.3.14.RELEASE/spring-framework-reference/html/validation.html#validator>`_\ インタフェースを実装したValidationクラス
        | または Bean Validation
 
 
@@ -179,7 +179,7 @@ Bean ValidationのAPI仕様クラス(\ ``javax.validation``\ パッケージの�
      - | 入力必須
        | 1文字以上
        | 50文字以下
-       | Email形式
+       | E-mail形式
    * - | age
      - | ``java.lang.Integer``
      - | 入力必須
@@ -245,8 +245,9 @@ Bean ValidationのAPI仕様クラス(\ ``javax.validation``\ パッケージの�
          | 上記の通り、Spring MVCではデフォルトで、未入力の文字列フィールドには、空文字がバインドされるため、
          | 1文字以上というルールが入力必須を表す。
      * - | (3)
-       - | 対象のフィールドがRFC2822準拠のE-mail形式であることを示す\ ``org.hibernate.validator.constraints.Email``\ を付ける。
-         | E-mail形式の要件がRFC2822準拠の制限よりも緩い場合は、\ ``@Email``\ を使用せず、\ ``javax.validation.constraints.Pattern``\ を用いて、正規表現を指定する必要がある。
+       - | 対象のフィールドがE-mail形式であることを示す\ ``org.hibernate.validator.constraints.Email``\ を付ける。
+         | E-mail形式の要件が\ ``@Email`` \のチェックと合致しない場合は、\ ``javax.validation.constraints.Pattern``\を用いて、正規表現を指定する必要がある。
+         | \ ``@Email`` \については、\ :ref:`Validation_validator_list`\を参照されたい。
      * - | (4)
        - | 数値の入力フィールドに未入力の状態でフォームを送信した場合、フォームオブジェクトに\ ``null`` \ がバインドされるため、\ ``@NotNull``\ が\ ``age``\ の入力必須条件を表す。
      * - | (5)
@@ -261,7 +262,7 @@ Bean ValidationのAPI仕様クラス(\ ``javax.validation``\ パッケージの�
   
   .. tip::
   
-    入力フィールドが未入力の場合に、空文字ではなく\ ``null``\ にバインドする方法に関しては、\ :ref:`Validation_string_trimmer_editor`\ を参照されたい、
+    入力フィールドが未入力の場合に、空文字ではなく\ ``null``\ にバインドする方法に関しては、\ :ref:`Validation_string_trimmer_editor`\ を参照されたい。
 
 * Controllerクラス
 
@@ -418,7 +419,7 @@ NameとEmailが空文字であることに対するエラーメッセージと�
   :width: 60%
 
 | Nameの入力値は、チェック条件を満たすため、エラーメッセージが表示されない。
-| Emailの入力値は文字列長に関する条件は満たすが、Email形式ではないため、エラーメッセージが表示される。
+| E-mailの入力値は文字列長に関する条件は満たすが、E-mail形式ではないため、エラーメッセージが表示される。
 | Ageの入力値は最大値を超えているため、エラーメッセージが表示される。
 
 
@@ -535,7 +536,7 @@ NameとEmailが空文字であることに対するエラーメッセージと�
    * - 項番
      - 説明
    * - | (1)
-     - | \ ``<form:form>``\ タグ内で、\ ``<form:errors>``\ の\ ``path``\ 属性に\ ``*``\ を指定することで、
+     - | \ ``<form:form>``\ タグ内で、\ ``<form:errors>``\ の\ ``path``\ 属性に"\ ``*``\" を指定することで、
        | \ ``<form:form>``\ の\ ``modelAttribute``\ 属性に指定したModelに関する全エラーメッセージを出力できる。
        | ``element``\ 属性に、これらのエラーメッセージを包含するタグ名を指定できる。デフォルトでは、\ ``span``\ であるが、
        | ここではエラーメッセージ一覧をブロック要素として出力するために、\ ``div``\ を指定する。
@@ -597,7 +598,7 @@ NameとEmailが空文字であることに対するエラーメッセージと�
 
    「エラーメッセージを一覧で表示する」方式では、
 
-   * フィード単位のエラーメッセージ定義
+   * フィールド単位のエラーメッセージ定義
    * エラーメッセージの出力順序を制御するための拡張実装
 
    が必要となるため、「入力フィールドの横にエラーメッセージを表示する」方式に比べて対応コストが高くなる。
@@ -649,7 +650,7 @@ NameとEmailが空文字であることに対するエラーメッセージと�
 | \ ``@DateTimeFormat``\ アノテーションの使用方法については、\ :ref:`ApplicationLayer-DateTimeFormat`\ を参照されたい。
 | Bean Validationの\ ``@Pattern``\ アノテーションを使用することでも日時フォーマットのチェックは可能である。
 | しかし、\ ``@Pattern``\ アノテーションを使用すると、日時フォーマットを正規表現で記述する必要があり、存在しない日時をチェックする場合には、記述が煩雑化する。
-| そのため、\ ``@Pattern``\ アノテーションよりも\ ``@DateTimeFormat``\ アノテーションのほうが実装がシンプルになる。
+| そのため、\ ``@Pattern``\ アノテーションよりも\ ``@DateTimeFormat``\ アノテーションのほうが実装はシンプルになる。
 
 
 | \ ``@DateTimeFormat``\ アノテーションはSpringが提供する型変換の仕組みのひとつであるので、入力エラーの場合には、Bean Validationのエラーメッセージではなく、型のミスマッチが発生した時にスローされる例外(\ ``TypeMismatchException``\ )の例外メッセージがそのまま画面へ表示される。
@@ -945,7 +946,6 @@ ECサイトにおける「注文」処理の例を考える。「注文」フォ
   \ ``AddressForm``\ のリストを、フィールドに追加する。
 
   .. code-block:: java
-    :emphasize-lines: 32-35
 
     package com.example.sample.app.validation;
 
@@ -998,7 +998,6 @@ ECサイトにおける「注文」処理の例を考える。「注文」フォ
 * JSP
 
   .. code-block:: jsp
-    :emphasize-lines: 26-58
 
     <!DOCTYPE html>
     <html>
@@ -1076,17 +1075,19 @@ ECサイトにおける「注文」処理の例を考える。「注文」フォ
      * - 項番
        - 説明
      * - | (1)
-       - | \ ``address``\ フィールドに対するエラーメッセージを表示する。
+       - | \ ``addresses``\ フィールドに対するエラーメッセージを表示する。
      * - | (2)
        - | 子フォームのコレクションを、\ ``<c:forEach>``\ タグを使ってループで処理する。
      * - | (3)
        - | コレクション中の子フォームのフィールドは、\ ``親フィールド名[インデックス].子フィールド名``\ で指定する。
 
+.. raw:: latex
+
+   \newpage
 
 * Controllerクラス
 
   .. code-block:: java
-    :emphasize-lines: 20-22
 
     package com.example.sample.app.validation;
 
@@ -1220,7 +1221,7 @@ ECサイトにおける「注文」処理の例を考える。「注文」フォ
 バリデーショングループを作成し、一つのフィールドに対して、グループごとに入力チェックルールを指定することができる。
 
 前述の「新規ユーザー登録」の例で、\ ``age``\ フィールドに「成年であること」というルールを追加する。
-「成年」かどうかは国によってルールが違うため、\ ``country``\ フィールドも追加する。
+「成年かどうか」は国によってルールが違うため、\ ``country``\ フィールドも追加する。
 
 Bean Validationでグループを指定する場合、アノテーションの\ ``group``\ 属性に、グループを示す任意の\ ``java.lang.Class``\ オブジェクトを設定する。
 
@@ -1247,7 +1248,6 @@ Bean Validationでグループを指定する場合、アノテーションの\ 
 * フォームクラス
 
   .. code-block:: java
-    :emphasize-lines: 18-26,38-42
 
     package com.example.sample.app.validation;
 
@@ -1315,8 +1315,8 @@ Bean Validationでグループを指定する場合、アノテーションの\ 
        - | 一つのフィールドに同じルールを複数指定するために、\ ``@Min.List``\ アノテーションを使用する。
          | 他のアノテーションを使用する場合も同様である。
      * - | (3)
-       - | 各グループごとにルールを定義し、グループを指定するために、\ ``group``\ 属性に対象のグループクラスを指定する。
-         | \ ``group``\ 属性を省略した場合、\ ``javax.validation.groups.Default``\ グループが使用される。
+       - | グループごとにルールを定義する。グループを指定するために、\ ``groups``\ 属性に対象のグループクラスを指定する。
+         | \ ``groups``\ 属性を省略した場合、\ ``javax.validation.groups.Default``\ グループが使用される。
      * - | (4)
        - | グループを振り分けるための、フィールドを追加する。
 
@@ -1326,7 +1326,6 @@ Bean Validationでグループを指定する場合、アノテーションの\ 
   JSPに大きな変更はない。
 
   .. code-block:: jsp
-      :emphasize-lines: 16-22
 
       <form:form modelAttribute="userForm" method="post"
           class="form-horizontal"
@@ -1359,7 +1358,6 @@ Bean Validationでグループを指定する場合、アノテーションの\ 
   \ ``@Validated``\ に、対象のグループを設定することで、バリデーションルールを変更できる。
 
   .. code-block:: java
-      :emphasize-lines: 46-58
 
       package com.example.sample.app.validation;
 
@@ -1432,7 +1430,7 @@ Bean Validationでグループを指定する場合、アノテーションの\ 
      * - | (1)
        - | グループを振り分けるためのパラメータの条件を、\ ``param``\ 属性に追加する。
      * - | (2)
-       - | \ ``age``\ フィールドの\ ``@Min``\ 以外のアノテーションは、\ ``Default``\ グループに属しているため、\ ``Default``\ の指定も必要である。
+       - | \ ``@Min``\ 以外のアノテーションは、\ ``Default``\ グループに属しているため、\ ``Default``\ の指定も必要である。
 
 
 
@@ -1498,7 +1496,7 @@ Bean Validationでグループを指定する場合、アノテーションの\ 
 
 .. warning::
 
-   このControllerの実装は、\ ``country``\ の値が、"cn"、"jp"、"sg"のいづれでもない場合のハンドリングが行われておらず、不十分である。
+   このControllerの実装は、\ ``country``\ の値が、"cn"、"jp"、"sg"のいずれでもない場合のハンドリングが行われておらず、不十分である。
    \ ``country``\ の値が、想定外の場合に、400エラーが返却される。
 
 次にチェック対象の国が増えたため、成人条件18歳以上をデフォルトルールとしたい場合を考える。
@@ -1567,7 +1565,7 @@ Bean Validationでグループを指定する場合、アノテーションの\ 
                 @Min(value = 18, groups = Default.class), // (2)
                 @Min(value = 20, groups = Japanese.class),
                 @Min(value = 21, groups = Singaporean.class) })
-        @Max(200)
+        @Max(value = 200, groups = { Default.class, Japanese.class, Singaporean.class })
         private Integer age;
 
         @NotNull(groups = { Default.class, Japanese.class, Singaporean.class })
@@ -1586,7 +1584,7 @@ Bean Validationでグループを指定する場合、アノテーションの\ 
      * - 項番
        - 説明
      * - | (1)
-       - | \ ``age``\ フィールドの\ ``@Min``\ 以外のアノテーションにも、全グループを設定する。
+       - | \ ``@Min``\ 以外のアノテーションにも、全グループを設定する。
      * - | (2)
        - | \ ``Default``\ グループに対するルールを設定する。
 
@@ -2079,9 +2077,19 @@ Spring Validatorによる相関項目チェック実装
             | 上記の例では空文字を設定している。
 
 
-.. note::
+.. warning::
 
-   一つのControllerで複数のフォームを扱う場合は、Validatorの対象を限定するために、\ ``@InitBinder("xxx")``\ でモデル名を指定する必要がある。
+    \ ``@InitBinder``\ アノテーションを付与したメソッドでValidatorが登録されると、Validatorの \ ``supports``\ メソッドでValidatorのサポート対象の型かどうか判定される。このとき、サポート対象でない場合は\ ``java.lang.IllegalStateException``\ が発生する点に注意されたい。
+    
+    \ ``@InitBinder``\ アノテーションを付与したメソッドは、Modelに独自の型のオブジェクトが追加された際に必ず実行されるが、 \ ``@InitBinder("xxx")``\ でモデル名を指定することで、適用範囲を限定することが可能である。
+    
+    例えば以下のようなケースが該当するため、注意されたい。
+    
+    * 一つのControllerで複数のフォームを扱う場合（複数のフォームオブジェクトを \ ``@ModelAttribute``\ アノテーションを付与したメソッドで登録する場合や、ハンドラメソッドの引数として受け取る場合）
+    * フォームオブジェクトに限らず、ハンドラメソッドの引数として受け取った\ ``Model``\に、\ ``ResultMessages``\ オブジェクトや\ ``Page``\オブジェクトなどの独自の型のオブジェクトを登録する場合
+    * 同様に\ ``RedirectAttributes``\に独自の型のオブジェクトを登録する場合
+    
+    以下に、一つのControllerで複数のフォームを扱う場合の実装例を示す。
 
      .. code-block:: java
 
@@ -2169,7 +2177,7 @@ Bean Validationによって、相関項目チェックの実装するために�
 Spring MVCによるBean Validationのエラーメッセージは、以下の順で解決される。
 
 #. | \ ``org.springframework.context.MessageSource``\ に定義されているメッセージの中に、ルールに合致するものがあればそれをエラーメッセージとして使用する (Springのルール)。
-   | Springのデフォルトのルールについては、「`DefaultMessageCodesResolverのJavaDoc <http://docs.spring.io/spring/docs/4.3.5.RELEASE/javadoc-api/org/springframework/validation/DefaultMessageCodesResolver.html>`_」を参照されたい。
+   | Springのデフォルトのルールについては、「`DefaultMessageCodesResolverのJavaDoc <http://docs.spring.io/spring/docs/4.3.14.RELEASE/javadoc-api/org/springframework/validation/DefaultMessageCodesResolver.html>`_」を参照されたい。
 #. 1.でメッセージが見つからない場合、アノテーションの\ ``message``\ 属性に、指定されたメッセージからエラーメッセージを取得する (Bean Validationのルール)
 
   #. \ ``message``\ 属性に指定されたメッセージが、"{メッセージキー}"形式でない場合、そのテキストをエラーメッセージとして使用する。
@@ -2360,7 +2368,7 @@ Bean Validationのアノテーションの\ ``message``\ 属性に指定され�
 
 .. note::
 
-  \ ``{0}``\ でフィールド名を埋め込めむのは、Bean Validationの機能ではなく、Springの機能である。
+  \ ``{0}``\ でフィールド名を埋め込めるのは、Bean Validationの機能ではなく、Springの機能である。
   したがって、フィールド名変更の設定は、Spring管理下のapplication-messages.properties(\ ``ResourceBundleMessageSource``\ )に定義する必要がある。
 
 .. tip::
@@ -2437,7 +2445,7 @@ Bean Validationのアノテーションの\ ``message``\ 属性に指定され�
 application-messages.propertiesに定義するメッセージ
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-ValidationMessages.propertiesでシステムで利用するデフォルトのメッセージを定義したが、
+ValidationMessages.propertiesでシステムが利用するデフォルトのメッセージを定義したが、
 画面によっては、デフォルトメッセージから変更したい場合が出てくる。
 
 その場合、application-messages.propertiesに、以下の形式でメッセージを定義する。
@@ -2476,7 +2484,7 @@ ValidationMessages.propertiesでシステムで利用するデフォルトのメ
 * \ ``{2}``\  : \ ``min``\ 属性の値
 
 となる。
-仕様の詳細については \ `SpringValidatorAdapterのJavaDoc <http://docs.spring.io/spring/docs/4.3.5.RELEASE/javadoc-api/org/springframework/validation/beanvalidation/SpringValidatorAdapter.html#getArgumentsForConstraint-java.lang.String-java.lang.String-javax.validation.metadata.ConstraintDescriptor->`_\
+仕様の詳細については \ `SpringValidatorAdapterのJavaDoc <http://docs.spring.io/spring/docs/4.3.14.RELEASE/javadoc-api/org/springframework/validation/beanvalidation/SpringValidatorAdapter.html#getArgumentsForConstraint-java.lang.String-java.lang.String-javax.validation.metadata.ConstraintDescriptor->`_\
 を参照されたい。
 
 エラーメッセージは以下のように変更される。
@@ -2487,7 +2495,7 @@ ValidationMessages.propertiesでシステムで利用するデフォルトのメ
 
 .. note::
 
-  application-messages.propertiesのメッセージキーの形式は、\ `これ以外にも用意されている <http://docs.spring.io/spring/docs/4.3.5.RELEASE/javadoc-api/org/springframework/validation/DefaultMessageCodesResolver.html>`_\ が、
+  application-messages.propertiesのメッセージキーの形式は、\ `これ以外にも用意されている <http://docs.spring.io/spring/docs/4.3.14.RELEASE/javadoc-api/org/springframework/validation/DefaultMessageCodesResolver.html>`_\ が、
   デフォルトメッセージを一部上書きする目的で使用するのであれば、基本的に、\ ``アノテーション名.フォーム属性名.プロパティ名``\ 形式でよい。
 
 |
@@ -2571,7 +2579,7 @@ Bean Validationは標準で用意されているチェックルール以外に�
 * 半角英数字の文字種に限定する\ ``@Alphanumeric``\ アノテーションの実装例
 
   .. code-block:: java
-    :emphasize-lines: 22-23,25
+    :emphasize-lines: 19,22-23,25
 
     package com.example.common.validation;
 
@@ -2631,7 +2639,7 @@ Bean Validationは標準で用意されているチェックルール以外に�
 * 正の数に限定する\ ``@NotNegative``\ アノテーションの実装例
 
   .. code-block:: java
-    :emphasize-lines: 22-23,25
+    :emphasize-lines: 19,22-23,25
 
     package com.example.common.validation;
 
@@ -2675,7 +2683,7 @@ Bean Validationは標準で用意されているチェックルール以外に�
 * 「ユーザーID」のフォーマットを規定する\ ``@UserId``\ アノテーションの実装例
 
   .. code-block:: java
-    :emphasize-lines: 23-25,27
+    :emphasize-lines: 20,23-25,27
 
     package com.example.sample.domain.validation;
 
@@ -2720,7 +2728,7 @@ Bean Validationは標準で用意されているチェックルール以外に�
 * 「年齢」の制限を規定する\ ``@Age``\ アノテーションの実装例
 
   .. code-block:: java
-    :emphasize-lines: 23-25,27
+    :emphasize-lines: 20,23-25,27
 
     package com.example.sample.domain.validation;
 
@@ -2964,7 +2972,7 @@ Java Beanを使ったStringのラッパークラスによる実装
 Java SE 8とHibernate Validatorの独自機能を使用しない場合では前述したようなコレクション内の要素に対してBean Validationのアノテーションを使用することができないため、
 Java Beanで\ ``String``\ をラップし、ネストしたBeanのプロパティに対して\ ``@ExistInCodeList``\ を付加することによって入力チェックを行う。
 
-ラッパークラスに対してSpring提供のタグライブラリを使用する場合、フォームへバインドするためには文字列とラッパークラスとの型変換を実施する必要がある。これは `Springが提供している型変換の仕組み(Formatter) <http://docs.spring.io/spring/docs/4.3.5.RELEASE/spring-framework-reference/htmlsingle/#format>`_
+ラッパークラスに対してSpring提供のタグライブラリを使用する場合、フォームへバインドするためには文字列とラッパークラスとの型変換を実施する必要がある。これは `Springが提供している型変換の仕組み(Formatter) <http://docs.spring.io/spring/docs/4.3.14.RELEASE/spring-framework-reference/htmlsingle/#format>`_
 を利用して実装を行うことができる。
 
 Formatterで\ ``String``\ から\ ``Role``\ 、\ ``Role``\ から\ ``String``\ への型変換を追加することで、\ ``List<String>``\ にした時と同様に、
@@ -2988,7 +2996,7 @@ Formatterで\ ``String``\ から\ ``Role``\ 、\ ``Role``\ から\ ``String``\ �
 
 .. note::
 
-    選択済みの判定方法の詳細については実際に判定を行う\ ``org.springframework.web.servlet.tags.form.SelectedValueComparator``\クラスの `javadoc <https://github.com/spring-projects/spring-framework/blob/v4.3.5.RELEASE/spring-webmvc/src/main/java/org/springframework/web/servlet/tags/form/SelectedValueComparator.java>`__ を参照されたい。
+    選択済みの判定方法の詳細については実際に判定を行う\ ``org.springframework.web.servlet.tags.form.SelectedValueComparator``\クラスの `javadoc <https://github.com/spring-projects/spring-framework/blob/v4.3.14.RELEASE/spring-webmvc/src/main/java/org/springframework/web/servlet/tags/form/SelectedValueComparator.java>`__ を参照されたい。
 
 
 複数項目設定可能な\ ``Role``\ (Java Bean の\ ``List``\ )に対する入力チェックを例に用いて説明する。
@@ -3221,7 +3229,6 @@ Controller側では\ ``Role``\の\ ``List``\ 、JSP側では\ ``String``\ の\ `
 * アノテーション
 
   .. code-block:: java
-    :emphasize-lines: 16
 
     package com.example.common.validation;
 
@@ -3343,6 +3350,12 @@ Controller側では\ ``Role``\の\ ``List``\ 、JSP側では\ ``String``\ の\ `
 
 以下では、「あるフィールドとその確認用フィールドの内容が一致すること」というルールを実現する例を挙げる。
 
+.. tip::
+
+  共通ライブラリでは、2つのフィールドの内容を比較する相関項目チェックの実装として\ :ref:`@Compare <Validation_terasoluna_gfw_list>`\アノテーションを用意している。
+  
+  \ `@Compare`\アノテーションを利用することで、このルールをより簡単に実現することができる。 詳細は\ :ref:`Validation_terasoluna_gfw_how_to_extend`\を参照されたい。
+
 ここでは、確認用フィールドの先頭に、「confirm」を付与する規約を設ける。
 
 * アノテーション
@@ -3350,7 +3363,6 @@ Controller側では\ ``Role``\の\ ``List``\ 、JSP側では\ ``String``\ の\ `
   相関項目チェック用のアノテーションはクラスレベルに付与できるようにする。
 
   .. code-block:: java
-    :emphasize-lines: 14,26
 
     package com.example.common.validation;
 
@@ -3679,7 +3691,6 @@ Controller側では\ ``Role``\の\ ``List``\ 、JSP側では\ ``String``\ の\ `
 * Validatorクラス
 
   .. code-block:: java
-    :emphasize-lines: 11,15-16
 
     package com.example.sample.domain.validation;
 
@@ -4274,7 +4285,7 @@ Bean Validationの標準アノテーション(\ ``javax.validation.*``\ )を以�
             
    * - \ ``@AssertTrue``\
      - \ ``boolean``\ ,\ ``Boolean``\
-     - 対象のフィールドが\ ``true``\ であることを検証する(例：規約に同意したかどうか）
+     - 対象のフィールドが\ ``true``\ であることを検証する(例：規約に同意したかどうか)
      - .. code-block:: java
 
             @AssertTrue
@@ -4367,7 +4378,7 @@ Hibernate Validatorの代表的なアノテーション(\ ``org.hibernate.valida
             
    * - \ ``@Email``\
      - 任意の\ ``CharSequence``\ インタフェースの実装クラスに適用可能
-     - RFC2822に準拠したEmailアドレスかどうか検証する。
+     - E-mailアドレスとして妥当であること検証する。
      - .. code-block:: java
 
             @Email
@@ -4398,6 +4409,16 @@ Hibernate Validatorの代表的なアノテーション(\ ``org.hibernate.valida
 
             @NotEmpty
             private String password;
+
+.. warning::
+
+    E-mailの形式は\ `RFC2822 <https://www.ietf.org/rfc/rfc2822.txt>`_\ で定義されているが、\ ``@Email``\は厳密にRFC2822に準拠していることをチェックするものではない。
+
+    例えばマルチバイト文字（全角文字）を含んでいても\ ``@Email``\でのチェックをパスすることが確認されている。
+    また、実際に利用されているEmailアドレスも、必ずしもRFC2822に厳密に準拠しているわけではない。
+
+    これらの注意点を考慮した上で、利用・サポートするSMTPサーバなどによって適切なルールでの入力チェックを実装することを推奨する。
+    実装の際は、\ :ref:`Validation_convine_existing_constraint`\ を参照されたい。
 
 .. tip::
 
@@ -4466,12 +4487,11 @@ hibernate-validator-<version>.jar内のorg/hibernate/validatorに、ValidationMe
 共通ライブラリでは、独自の検証用アノテーションを提供している。
 ここでは、共通ライブラリで提供しているアノテーションを使用した入力チェックルールの指定方法について説明する。
 
-.. _Validation_terasoluna_gfw_list:
 
 terasoluna-gfw-commonのチェックルール
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-\ `terasoluna-gfw-common <https://github.com/terasolunaorg/terasoluna-gfw/tree/5.3.1.RELEASE/terasoluna-gfw-common-libraries/terasoluna-gfw-common>`_\ が提供するアノテーション(\ ``org.terasoluna.gfw.common.codelist.*``\ )を以下に示す。
+\ `terasoluna-gfw-common <https://github.com/terasolunaorg/terasoluna-gfw/tree/5.3.2.RELEASE/terasoluna-gfw-common-libraries/terasoluna-gfw-common>`_\ が提供するアノテーション(\ ``org.terasoluna.gfw.common.codelist.*``\ )を以下に示す。
 
 .. tabularcolumns:: |p{0.15\linewidth}|p{0.30\linewidth}|p{0.30\linewidth}|p{0.25\linewidth}|
 .. list-table::
@@ -4493,7 +4513,7 @@ terasoluna-gfw-commonのチェックルール
 terasoluna-gfw-codepointsのチェックルール
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-\ `terasoluna-gfw-codepoints <https://github.com/terasolunaorg/terasoluna-gfw/tree/5.3.1.RELEASE/terasoluna-gfw-common-libraries/terasoluna-gfw-codepoints>`_\ が提供するアノテーション(\ ``org.terasoluna.gfw.common.codepoints.*``\ )を以下に示す。なお、\ ``terasoluna-gfw-codepoints``\ はバージョン5.1.0.RELEASE以上で利用することができる。
+\ `terasoluna-gfw-codepoints <https://github.com/terasolunaorg/terasoluna-gfw/tree/5.3.2.RELEASE/terasoluna-gfw-common-libraries/terasoluna-gfw-codepoints>`_\ が提供するアノテーション(\ ``org.terasoluna.gfw.common.codepoints.*``\ )を以下に示す。なお、\ ``terasoluna-gfw-codepoints``\ はバージョン5.1.0.RELEASE以上で利用することができる。
 
 .. tabularcolumns:: |p{0.15\linewidth}|p{0.30\linewidth}|p{0.30\linewidth}|p{0.25\linewidth}|
 .. list-table::
@@ -4510,11 +4530,12 @@ terasoluna-gfw-codepointsのチェックルール
       - チェック対象の文字列が指定したコードポイント集合に全て含まれるかどうかを検証する。
       - \ :ref:`@ConsistOf <StringProcessingHowToUseCodePointsValidator>`\ 参照
 
+.. _Validation_terasoluna_gfw_list:
 
 terasoluna-gfw-validatorのチェックルール
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-\ `terasoluna-gfw-validator <https://github.com/terasolunaorg/terasoluna-gfw/tree/5.3.1.RELEASE/terasoluna-gfw-common-libraries/terasoluna-gfw-validator>`_\ が提供するアノテーション(\ ``org.terasoluna.gfw.common.validator.constraints.*``\ )を以下に示す。なお、\ ``terasoluna-gfw-validator``\ はバージョン5.1.0.RELEASE以上で利用することができる。
+\ `terasoluna-gfw-validator <https://github.com/terasolunaorg/terasoluna-gfw/tree/5.3.2.RELEASE/terasoluna-gfw-common-libraries/terasoluna-gfw-validator>`_\ が提供するアノテーション(\ ``org.terasoluna.gfw.common.validator.constraints.*``\ )を以下に示す。なお、\ ``terasoluna-gfw-validator``\ はバージョン5.1.0.RELEASE以上で利用することができる。
 
 .. tabularcolumns:: |p{0.15\linewidth}|p{0.30\linewidth}|p{0.30\linewidth}|p{0.25\linewidth}|
 .. list-table::
@@ -4552,19 +4573,22 @@ terasoluna-gfw-validatorのチェックルール
 
     * - \ ``@Compare``\
       - | \ ``Comparable``\ インタフェースの実装クラスをプロパティにもつ任意のJavaBeanに適用可能
-      - | 指定したプロパティの値の大小関係が正しいことを検証する。
+      - | 指定したプロパティの値の比較結果が正しいことを検証する。
         |
         | **[アノテーションの属性]**
         | \ ``String left``\  - オブジェクト内の比較元としたいプロパティ名を指定する。検証エラーとなった場合は、このプロパティにメッセージを表示される。
         | \ ``String right``\  - オブジェクト内の比較先としたいプロパティ名を指定する。
-        | \ ``org.terasoluna.gfw.common.validator.constraints.Compare.Operator operator``\  - 期待する大小関係を示す列挙型\ ``Operator``\ の値を指定する。指定可能な値は以下の通り。
+        | \ ``org.terasoluna.gfw.common.validator.constraints.Compare.Operator operator``\  - 比較方法を示す列挙型\ ``Operator``\ の値を指定する。指定可能な値は以下の通り。
 
         * \ ``EQUAL``\  : \ ``left = right``\ である
+        * \ ``NOT_EQUAL``\  : \ ``left != right``\ である
         * \ ``GREATER_THAN``\  : \ ``left > right``\ である
         * \ ``GREATER_THAN_OR_EQUAL``\  : \ ``left >= right``\ である
         * \ ``LESS_THAN``\  : \ ``left < right``\ である
         * \ ``LESS_THAN_OR_EQUAL``\  : \ ``left <= right``\ である
 
+        | \ ``NOT_EQUAL``\ は、terasoluna-gfw-validator 5.3.2.RELEASE以上で利用可能な値である。
+        |
         | \ ``boolean requireBoth``\  - \ ``left``\ 属性と\ ``right``\ 属性で指定したフィールドの両方が入力されている（\ ``null``\ でない）必要があるかどうかを指定する。
 
         * \ ``true``\  : どちらか一方だけ入力されている場合は検証エラーとする。ただし、両方とも未入力の場合は検証成功とする
@@ -4715,7 +4739,7 @@ terasoluna-gfw-validatorのチェックルール
     * - 項番
       - 説明
     * - | (1)
-      - アノテーションごとにメッセージ定義を追加する。アノテーションの属性値は、プレースフォルダー（\ ``{属性名}``\ の形式）を使用してメッセージの中に埋め込むことができる。
+      - アノテーションごとにメッセージ定義を追加する。アノテーションの属性値は、プレースホルダ（\ ``{属性名}``\ の形式）を使用してメッセージの中に埋め込むことができる。
 
 最後に、\ :ref:`Validation_basic_validation`\ で説明したように、JavaBeanのプロパティにアノテーションを付与する。
 
@@ -4752,7 +4776,6 @@ terasoluna-gfw-validatorのチェックルール
     import javax.validation.Constraint;
     import javax.validation.OverridesAttribute;
     import javax.validation.Payload;
-    import javax.validation.ReportAsSingleViolation;
     
     import org.terasoluna.gfw.common.validator.constraints.Compare;
     
@@ -4760,20 +4783,20 @@ terasoluna-gfw-validatorのチェックルール
     @Constraint(validatedBy = {})
     @Target({ TYPE, ANNOTATION_TYPE }) // (1)
     @Retention(RUNTIME)
-    @ReportAsSingleViolation // (2)
-    @Compare(left = "", right = "", operator = Compare.Operator.EQUAL, requireBoth = true) // (3)
+    @Compare(left = "", right = "", operator = Compare.Operator.EQUAL, requireBoth = true) // (2)
     public @interface Confirm {
     
-        String message() default "{com.example.sample.domain.validation.Confirm.message}"; // (4)
+        @OverridesAttribute(constraint = Compare.class, name = "message") // (3)
+        String message() default "{com.example.sample.domain.validation.Confirm.message}";
     
         Class<?>[] groups() default {};
     
         Class<? extends Payload>[] payload() default {};
     
-        @OverridesAttribute(constraint = Compare.class, name = "left") // (5)
+        @OverridesAttribute(constraint = Compare.class, name = "left") // (4)
         String field();
     
-        @OverridesAttribute(constraint = Compare.class, name = "right") // (6)
+        @OverridesAttribute(constraint = Compare.class, name = "right") // (5)
         String confirmField();
     
         @Documented
@@ -4794,15 +4817,19 @@ terasoluna-gfw-validatorのチェックルール
     * - | (1)
       - | このアノテーションを付与できる場所を、クラスまたはアノテーションに限定する。
     * - | (2)
-      - | エラー時にこのアノテーションの\ ``message``\ 属性に指定したメッセージが使用されるようにする。
-    * - | (3)
       - | \ ``@Compare``\ アノテーションの\ ``operator``\ 属性に\ ``Compare.Operator.EQUAL``\ (同値であること)を指定する。どちらか一方が未入力の場合はエラーとするため、\ ``requireBoth``\ 属性に\ ``true``\ を指定する。
+    * - | (3)
+      - | \ ``@Compare``\ アノテーションの\ ``message``\ 属性をオーバーライドし、エラー時に\ ``message``\ 属性に指定したメッセージが使用されるようにする。
     * - | (4)
-      - | エラーメッセージのデフォルト値を定義する。
-    * - | (5)
       - | \ ``@Compare``\ アノテーションの\ ``left``\ 属性をオーバーライドし、属性名を\ ``field``\ に変更する。
-    * - | (6)
+    * - | (5)
       - | 同様に\ ``right``\ 属性をオーバーライドし、属性名を\ ``confirmField``\ に変更する。
+
+.. note::
+
+     「:ref:`Validation_convine_existing_constraint`\」では\ ``@ReportAsSingleViolation``\ を付与する方法を紹介しているが、\ ``@ReportAsSingleViolation``\ を付与するとラップされた\ ``@Compare``\ のエラーメッセージは使用されず、\ ``@Confirm``\ のエラーメッセージのみが表示される。\ ``@Confirm``\ はフォームオブジェクトに対する入力チェックであるため、エラーメッセージはフォームオブジェクトに割り当てられ、実際に表示したい\ ``field``\ 属性に指定したフィールドには割り当てられない。
+     
+     これを回避するためには、\ ``@ReportAsSingleViolation``\ を付与せず、\ ``@Confirm``\ の\ ``message``\ 属性で\ ``@Compare``\ の\ ``message``\ 属性をオーバーライドする必要がある。これにより、\ ``@Compare``\ のルールに従い\ ``left``\ 属性（つまり\ ``@Confirm``\ の\ ``field``\ 属性）に\ ``@Confirm``\ のエラーメッセージを割り当てることができるようになる。
 
 \ :ref:`Validation_correlation_item_check`\ で実装したアノテーションの代わりに、上記で作成したアノテーションを使用する。
 
@@ -4914,7 +4941,7 @@ application-messages.propertiesに以下の定義を行った場合、
 
 .. tip::
 
-  メッセージキーのルールの詳細は、\ `DefaultMessageCodesResolverのJavadoc <http://docs.spring.io/spring/docs/4.3.5.RELEASE/javadoc-api/org/springframework/validation/DefaultMessageCodesResolver.html>`_\ を参照されたい。
+  メッセージキーのルールの詳細は、\ `DefaultMessageCodesResolverのJavadoc <http://docs.spring.io/spring/docs/4.3.14.RELEASE/javadoc-api/org/springframework/validation/DefaultMessageCodesResolver.html>`_\ を参照されたい。
 
 
 .. _Validation_string_trimmer_editor:
@@ -5064,7 +5091,7 @@ OSコマンドインジェクションとは、アプリケーション内でユ
 
 .. tip::
 
-    詳細は、OWASPの\ `解説ページ <https://www.owasp.org/index.php/OS_Command_Injection>`_\ などを参照されたい。
+    詳細は、OWASPの\ `解説ページ <https://www.owasp.org/index.php/Command_Injection>`_\ などを参照されたい。
 
 Javaでは\ ``ProcessBuilder``\ クラスや、\ ``Runtime``\ クラスの\ ``exec``\ メソッドを用いてコマンドを実行する際に、実行するコマンドとして以下のものを利用する場合に、
 OSコマンドインジェクションが発生する可能性がある。
@@ -5105,7 +5132,7 @@ OSコマンドインジェクションを起こさないためには、可能な
 以下の対策を行った上で外部プロセス実行を実装すること。
 
 * 極力、\ ``/bin/sh``\ （Unix系の場合）や\ ``cmd.exe``\ （Windowsの場合）を使用したコマンド実行を行わない
-* ユーザーにより入力された文字が、アプリケーションとして許可されたものであるかをホワイトリスト方式を用いてチェックする
+* ユーザーにより入力された文字が、アプリケーションとして許可されたものであるか、ホワイトリスト方式を用いてチェックする
 
 以下では、ユーザーが入力したコマンドと引数が指定された文字列で構成されているかをホワイトリスト方式でチェックするルールの例を示す。
 
@@ -5128,7 +5155,7 @@ OSコマンドインジェクションを起こさないためには、可能な
     * - | (1)
       - | コマンドとして \ ``batch0X.sh``\ （Xは0から9までの半角数字）のみ許可するルールを指定する。
     * - | (2)
-      - | 引数として、無害な文字である半角英数字（\\w）、\ ``=``\ 、\ ``_``\ から構成された文字列のみ許可するルールを指定する。
+      - | 引数として、無害な文字である半角英数字（\\w）、"\ ``=``\" 、"\ ``_``\" から構成された文字列のみ許可するルールを指定する。
 
 .. note::
 

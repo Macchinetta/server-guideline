@@ -46,9 +46,9 @@ Spring Securityがデフォルトでサポートしているレスポンスヘ�
 
     これらのヘッダに対する処理は、一部のブラウザではサポートされていない。ブラウザの公式サイトまたは以下のページを参照されたい。
 
-    * https://www.owasp.org/index.php/HTTP_Strict_Transport_Security (Strict-Transport-Security)
+    * https://www.owasp.org/index.php/HTTP_Strict_Transport_Security_Cheat_Sheet (Strict-Transport-Security)
     * https://www.owasp.org/index.php/Clickjacking_Defense_Cheat_Sheet (X-Frame-Options)
-    * https://www.owasp.org/index.php/List_of_useful_HTTP_headers (X-Content-Type-Options, X-XSS-Protection, Content-Security-Policy, Public-Key-Pins)
+    * https://www.owasp.org/index.php/OWASP_Secure_Headers_Project#tab=Headers (X-Content-Type-Options, X-XSS-Protection, Content-Security-Policy, Public-Key-Pins)
 
 
 Cache-Control
@@ -70,7 +70,7 @@ Cache-Controlヘッダは、コンテンツのキャッシュ方法を指示す�
 .. note:: **Cache-Controlヘッダの上書き**
 
     Spring MVCのControllerクラスが \ ``@SessionAttributes`` \のフォームクラスを定義している、もしくは、
-    リクエストハンドラで \ ``@SessionAttributes`` \属性のModelを使用してる場合は、 Cache-Controlヘッダが上書きされる。
+    リクエストハンドラで \ ``@SessionAttributes`` \属性のModelを使用している場合は、 Cache-Controlヘッダが上書きされる。
 
 .. note:: **HTTP1.0互換のブラウザ**
 
@@ -186,7 +186,7 @@ Content-Security-Policyヘッダーを送信しない場合、ブラウザは標
 Public-Key-Pins
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-Public-Key-Pinsヘッダはサイトの証明書の真正性を担保するために、サイトに紐付く証明書の公開鍵をブラウザに提示するヘッダである。
+Public-Key-Pinsヘッダはサイトの証明書の真正性を担保するために、サイトに紐づく証明書の公開鍵をブラウザに提示するヘッダである。
 サイトへの再訪問時に中間者攻撃と呼ばれる攻撃手法を使って悪意のあるサイトに誘導された場合でも、
 ブラウザが保持する真性のサイト証明書の公開鍵と悪意あるサイトが提示する証明書の公開鍵の不一致を検知して、
 アクセスをブロックすることができる。
@@ -311,7 +311,72 @@ How to use
 
 上記の例だと、Cache-Control関連のヘッダだけが出力されなくなる。 
 
-セキュリティヘッダの詳細については\ `公式リファレンス <http://docs.spring.io/spring-security/site/docs/4.1.4.RELEASE/reference/htmlsingle/#default-security-headers>`_\ を参照されたい。
+セキュリティヘッダの詳細については\ `公式リファレンス <http://docs.spring.io/spring-security/site/docs/4.1.5.RELEASE/reference/htmlsingle/#default-security-headers>`_\ を参照されたい。
+
+.. warning:: **アプリケーションサーバによってはCache-Controlヘッダが正しく設定されない問題**
+
+    Spring Security 4.1.0により、キャッシュ制御ヘッダの付与に関する仕様が変更された(\ `spring-projects/spring-security#2953 <https://github.com/spring-projects/spring-security/issues/2953>`_ \)。
+    その仕様変更が起因になり「アプリケーションサーバによってはCache-Controlヘッダが正しく設定されない問題」が発生することが判明している。
+
+    この仕様変更は、Spring Security 4.2.0では取り下げられた修正がされているため、Spring Security 4.2.x以降は発生しない。
+
+    Spring Security 4.1.xを使用しているMacchinettaフレームワーク1.4.xではこの問題に当たる可能性があるが、問題の起因となるHeaderWriterFilterをSpring Security 4.2.xのものに差し替えることで回避が可能である。
+
+    1. Spring Securityの \ `HeaderWriterFilter  <https://github.com/spring-projects/spring-security/blob/4.2.0.RELEASE/web/src/main/java/org/springframework/security/web/header/HeaderWriterFilter.java>`_ \ をコピーして適当な場所に配置する。
+    ただし、\ ``defaults-disabled="true"``\ と同じ動作をさせるにはフィルタ内で出力制御を実装する必要がある。 
+
+    この例では、\ ``com.example.security.filter.HeaderWriterFilterEx``\ とする。
+
+    2. spring-security.xmlの定義を変更する。
+
+    * spring-security.xmlの定義例
+
+    .. code-block:: xml
+
+        <!-- (1) -->
+        <bean id="secureCacheControlHeadersWriter"
+              class="org.springframework.security.web.header.writers.DelegatingRequestMatcherHeaderWriter">
+            <constructor-arg>
+                <bean class="org.springframework.security.web.util.matcher.AntPathRequestMatcher">
+                    <constructor-arg value="/secure/**"/> <!-- (2) -->
+                </bean>
+            </constructor-arg>
+            <constructor-arg>
+                <bean class="org.springframework.security.web.header.writers.CacheControlHeadersWriter"/>
+            </constructor-arg>
+        </bean>
+
+        <sec:http pattern="/secure/**"/> <!-- (2) -->
+            <!-- omitted -->
+            <sec:headers disabled="true" /> <!-- (3) -->
+            <sec:custom-filter position="HEADERS_FILTER" ref="customizedHeaderWriterFilter"/> <!-- (4) -->
+            <!-- omitted -->
+        </sec:http>
+
+        <!-- (5) -->
+        <bean id="customizedHeaderWriterFilter" class= "com.example.security.filter.HeaderWriterFilterEx" >
+            <constructor-arg ref="secureCacheControlHeadersWriter" />
+        </bean>
+
+    .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
+    .. list-table::
+        :header-rows: 1
+        :widths: 10 90
+
+        * - 項番
+          - 説明
+        * - | (1)
+          - | \ ``RequestMatcher``\ と\ ``HeadersWriter``\ インタフェースの実装クラスを指定して\ ``DelegatingRequestMatcherHeaderWriter``\ クラスのbeanを定義する。
+        * - | (2)
+          - | \ ``AntPathRequestMatcher``\ で設定したパスと\ ``<sec:http>`` の\ ``pattern``\ 属性で設定したパスと一致させる。
+        * - | (3)
+          - | \ ``<sec:headers>``\ 要素の子要素として\ ``<sec:header>`` を追加し、\ ``disabled``\ 属性を\ ``true``\ に設定する。
+        * - | (4)
+          - | \ ``<sec:headers>``\ 要素の子要素として\ ``<sec:custom-filter>``\ を追加し、\ ``position``\ 属性に\ ``HEADERS_FILTER``\ を指定し、
+            | \ ``ref``\ 属性に\ (5)で定義した\ ``HeaderWriterFilterEx``\ のbeanを指定する。
+        * - | (5)
+          - | (1)で定義した\ ``HeaderWriter``\ のbean指定して\ ``HeaderWriterFilterEx``\ クラスのbeanを定義する。
+
 
 
 セキュリティヘッダのオプション指定
@@ -333,7 +398,7 @@ Spring Securityのbean定義を変更することで、各要素の属性にオ�
 
     <sec:frame-options policy="SAMEORIGIN" />
 
-.. [#fSpringSecurityLinkageWithBrowser2] 各要素で指定できるオプションは http://docs.spring.io/spring-security/site/docs/4.1.4.RELEASE/reference/htmlsingle/#nsa-headers を参照されたい。
+.. [#fSpringSecurityLinkageWithBrowser2] 各要素で指定できるオプションは http://docs.spring.io/spring-security/site/docs/4.1.5.RELEASE/reference/htmlsingle/#nsa-headers を参照されたい。
 
 カスタムヘッダの出力
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

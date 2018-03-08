@@ -126,8 +126,8 @@ Spring Frameworkが提供するHTTPクライアントである。
         * メディアタイプが\ ``multipart/form-data``\ の場合、\ ``MultiValueMap<String, Object>``\ として書込され、\ ``Object``\ は\ ``AllEncompassingFormHttpMessageConverter``\ 内に別途設定される\ ``HttpMessageConveter``\ で変換される。
           （注意： Note 参照）
 
-        | デフォルトで登録されるパートデータ変換用の\ ``HttpMessageConveter``\ は、`AllEncompassingFormHttpMessageConverter <https://github.com/spring-projects/spring-framework/blob/v4.3.5.RELEASE/spring-web/src/main/java/org/springframework/http/converter/support/AllEncompassingFormHttpMessageConverter.java>`_\
-          と `FormHttpMessageConverter <https://github.com/spring-projects/spring-framework/blob/v4.3.5.RELEASE/spring-web/src/main/java/org/springframework/http/converter/FormHttpMessageConverter.java>`_\ のソースを参照されたい。なお、任意の\ ``HttpMessageConverter``\ を登録することもできる。
+        | デフォルトで登録されるパートデータ変換用の\ ``HttpMessageConveter``\ は、`AllEncompassingFormHttpMessageConverter <https://github.com/spring-projects/spring-framework/blob/v4.3.14.RELEASE/spring-web/src/main/java/org/springframework/http/converter/support/AllEncompassingFormHttpMessageConverter.java>`_\
+          と `FormHttpMessageConverter <https://github.com/spring-projects/spring-framework/blob/v4.3.14.RELEASE/spring-web/src/main/java/org/springframework/http/converter/FormHttpMessageConverter.java>`_\ のソースを参照されたい。なお、任意の\ ``HttpMessageConverter``\ を登録することもできる。
       - | ``MultiValueMap`` [#p3]_
 
 .. raw:: latex
@@ -280,7 +280,7 @@ Spring Frameworkが提供するHTTPクライアントである。
 
 が定義されており、Spring Frameworkはデフォルト実装として\ ``org.springframework.web.client.DefaultResponseErrorHandler``\ を提供している。
 
-\ ``DefaultResponseErrorHandler``\ は、サーバから応答されたHTTPのステータスコードの値によって以下のようなエラー処理を行う。
+\ ``DefaultResponseErrorHandler``\ は、サーバから応答されたHTTPステータスコードの値によって以下のようなエラー処理を行う。
 
 * レスポンスコードが正常系(2xx)の場合は、エラー処理は行わない。
 * レスポンスコードがクライアントエラー系(4xx)の場合は、\ ``org.springframework.web.client.HttpClientErrorException``\ を発生させる。
@@ -331,7 +331,7 @@ How to use
 
     本ガイドラインでは、GETメソッドとPOSTメソッドを使用したクライアント処理の実装例のみを紹介するが、
     \ ``RestTemplate``\ は他のHTTPメソッド(PUT, PATCH, DELETE, HEAD, OPTIONSなど)もサポートしており、同じような要領で使用することができる。
-    詳細は\ `RestTemplate <http://docs.spring.io/spring/docs/4.3.5.RELEASE/javadoc-api/org/springframework/web/client/RestTemplate.html>`_\ のJavadocを参照されたい。
+    詳細は\ `RestTemplate <http://docs.spring.io/spring/docs/4.3.14.RELEASE/javadoc-api/org/springframework/web/client/RestTemplate.html>`_\ のJavadocを参照されたい。
 
 .. _RestClientHowToUseSetup:
 
@@ -530,8 +530,8 @@ HTTPステータスコード、レスポンスヘッダ、レスポンスボデ�
 
 .. note:: **ResponseEntityとは**
 
-    ``ResponseEntity``\ はHTTPレスポンスを表すクラスで、HTTPステータスコード、レスポンスヘッダ、レスポンスボティの情報を取得することができる。
-    詳細は\ `ResponseEntity <http://docs.spring.io/spring/docs/4.3.5.RELEASE/javadoc-api/org/springframework/http/ResponseEntity.html>`_\ のJavadocを参照されたい。
+    ``ResponseEntity``\ はHTTPレスポンスを表すクラスで、HTTPステータスコード、レスポンスヘッダ、レスポンスボディの情報を取得することができる。
+    詳細は\ `ResponseEntity <http://docs.spring.io/spring/docs/4.3.14.RELEASE/javadoc-api/org/springframework/http/ResponseEntity.html>`_\ のJavadocを参照されたい。
 
 
 
@@ -592,7 +592,7 @@ import部
 .. note:: **RequestEntityとは**
 
     ``RequestEntity``\ はHTTPリクエストを表すクラスで、接続URI、HTTPメソッド、リクエストヘッダ、リクエストボディを設定することができる。
-    詳細は\ `RequestEntity <http://docs.spring.io/spring/docs/4.3.5.RELEASE/javadoc-api/org/springframework/http/RequestEntity.html>`_\ のJavadocを参照されたい。
+    詳細は\ `RequestEntity <http://docs.spring.io/spring/docs/4.3.14.RELEASE/javadoc-api/org/springframework/http/RequestEntity.html>`_\ のJavadocを参照されたい。
 
     なお、リクエストヘッダの設定方法については、:ref:`RestClientHowToUseRequestHeader` を参照されたい。
 
@@ -763,7 +763,7 @@ import部
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 \ ``RequestEntity``\ と\ ``exchange``\ メソッドを使用すると、\ ``RequestEntity``\ のメソッドを使用して特定のヘッダ及び任意のヘッダを設定することができる。
-詳細は\ `RequestEntity <http://docs.spring.io/spring/docs/4.3.5.RELEASE/javadoc-api/org/springframework/http/RequestEntity.html>`_\ のJavadocを参照されたい。
+詳細は\ `RequestEntity <http://docs.spring.io/spring/docs/4.3.14.RELEASE/javadoc-api/org/springframework/http/RequestEntity.html>`_\ のJavadocを参照されたい。
 
 本ガイドラインでは、
 
@@ -1279,8 +1279,8 @@ Basic認証
 .. code-block:: java
 
 
-    @Value("${api.auth.userid}")
-    String userid;
+    @Value("${api.auth.username}")
+    String username;
 
     @Value("${api.auth.password}")
     String password;
@@ -1290,7 +1290,7 @@ Basic認証
 
 .. code-block:: java
 
-    String plainCredentials = userid + ":" + password; // (1)
+    String plainCredentials = username + ":" + password; // (1)
     String base64Credentials = Base64.getEncoder()
             .encodeToString(plainCredentials.getBytes(StandardCharsets.UTF_8)); // (2)
 
@@ -1307,7 +1307,7 @@ Basic認証
     * - 項番
       - 説明
     * - | (1)
-      - | ユーザIDとパスワードを「\ ``":"``\ 」でつなげる。
+      - | ユーザ名とパスワードを「"\ ``:``\" 」でつなげる。
     * - | (2)
       - | （1）をバイト配列に変換して、Base64エンコードする。
     * - | (3)
@@ -1560,7 +1560,7 @@ RESTfulなURLを扱うには、URIテンプレートを使用して実装を行�
       - | URIテンプレートの変数{action}は、``RestTeamplate``\の使用時に指定の値に変換される。
     * - | (2)
       - | ``UriComponentsBuilder``\ を使用することで、URIテンプレートの変数1つ目が ``buildAndExpand``\ の引数で指定した値に置換され、『http://localhost:8080/api/users/create』のURIが作成される。
-        | 詳細は\ `UriComponentsBuilder <http://docs.spring.io/spring/docs/4.3.5.RELEASE/javadoc-api/org/springframework/web/util/UriComponentsBuilder.html>`_\ のJavadocを参照されたい。
+        | 詳細は\ `UriComponentsBuilder <http://docs.spring.io/spring/docs/4.3.14.RELEASE/javadoc-api/org/springframework/web/util/UriComponentsBuilder.html>`_\ のJavadocを参照されたい。
 
 
 
@@ -1614,14 +1614,8 @@ How to extend
 共通処理の適用（\ ``ClientHttpRequestInterceptor``\）
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-``ClientHttpRequestInterceptor``\ を使用することで、サーバとの通信処理の前後に任意の処理を実行させることができる。
-
-ここでは、
-
-* :ref:`RestClientHowToExtendClientHttpRequestInterceptorLogging`
-* :ref:`RestClientHowToExtendClientHttpRequestInterceptorBasicAuthentication`
-
-の実装例を紹介する。
+| ``ClientHttpRequestInterceptor``\ を使用することで、サーバとの通信処理の前後に任意の処理を実行させることができる。
+| ここでは、:ref:`RestClientHowToExtendClientHttpRequestInterceptorLogging` と、:ref:`RestClientBasicAuthorizationInterceptorBeanDefinition` を適用する方法を紹介する。
 
 .. _RestClientHowToExtendClientHttpRequestInterceptorLogging:
 
@@ -1680,7 +1674,7 @@ How to extend
       - | \ ``ClientHttpRequestInterceptor``\ インタフェースを実装する。
     * - | (2)
       - | リクエストする前に行いたい共通処理を実装する。
-        | 上記の実装例では、リクエストヘッとリクエストボディの内容をログに出力している。
+        | 上記の実装例では、リクエストヘッダーとリクエストボディの内容をログに出力している。
     * - | (3)
       - | \ ``intercept``\ メソッドの引数として受け取った\ ``ClientHttpRequestExecution``\ の\ ``execute``\ メソッドを実行し、リクエストの送信を実行する。
     * - | (4)
@@ -1691,50 +1685,12 @@ How to extend
     * - | (6)
       - | (3)で受信したレスポンスをリターンする。
 
+**bean定義ファイル(applicationContext.xml)の定義例**
 
-.. _RestClientHowToExtendClientHttpRequestInterceptorBasicAuthentication:
+.. code-block:: xml
 
-Basic認証用のリクエストヘッダ設定処理
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-サーバにアクセスするためにBasic認証用のリクエストヘッダを設定する必要がある場合は、以下のような実装を行う。
-
-**Basic認証用のリクエストヘッダ設定処理の実装例**
-
-.. code-block:: java
-
-    package com.example.restclient;
-
-    import org.springframework.http.HttpRequest;
-    import org.springframework.http.client.ClientHttpRequestExecution;
-    import org.springframework.http.client.ClientHttpRequestInterceptor;
-    import org.springframework.http.client.ClientHttpResponse;
-
-    public class BasicAuthInterceptor implements ClientHttpRequestInterceptor { //(1)
-
-        private static final Logger log = LoggerFactory.getLogger(BasicAuthInterceptor.class);
-
-        @Value("${api.auth.userid}")
-        String userid;
-
-        @Value("${api.auth.password}")
-        String password;
-
-        @Override
-        public ClientHttpResponse intercept(HttpRequest request, byte[] body,
-                ClientHttpRequestExecution execution) throws IOException {
-          
-            String plainCredentials = userid + ":" + password;
-            String base64Credentials = Base64.getEncoder()
-                    .encodeToString(plainCredentials.getBytes(StandardCharsets.UTF_8));
-            request.getHeaders().add("Authorization", "Basic " + base64Credentials); // (1)
-
-            ClientHttpResponse response = execution.execute(request, body);
-          
-            return response;
-        }
-
-    }
+    <!-- (1) -->
+    <bean id="loggingInterceptor" class="com.example.restclient.LoggingInterceptor" />
 
 .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
 .. list-table::
@@ -1744,7 +1700,38 @@ Basic認証用のリクエストヘッダ設定処理
     * - 項番
       - 説明
     * - | (1)
-      - | ``intercept``\ メソッド内で、Basic認証のリクエストヘッダを追加する。
+      - | \ ``ClientHttpRequestInterceptor``\ の実装クラスのbean定義を行う。
+
+.. _RestClientBasicAuthorizationInterceptorBeanDefinition:
+
+Basic認証用のリクエストヘッダ設定処理
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+サーバにアクセスするためにBasic認証用のリクエストヘッダを設定する必要がある場合は、以下のようなbean定義を行う。
+
+**bean定義ファイル(applicationContext.xml)の定義例**
+
+.. code-block:: xml
+
+    <!-- (1) -->
+    <bean id="basicAuthInterceptor" class="org.springframework.http.client.support.BasicAuthorizationInterceptor">
+        <constructor-arg index="0" value="${api.auth.username}" /><!-- (2) -->
+        <constructor-arg index="1" value="${api.auth.password}" /><!-- (3) -->
+    </bean>
+
+.. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
+.. list-table::
+    :header-rows: 1
+    :widths: 10 90
+
+    * - 項番
+      - 説明
+    * - | (1)
+      - | \ ``ClientHttpRequestInterceptor``\ インタフェースを実装した\ ``BasicAuthorizationInterceptor``\ のbean定義を行う。
+    * - | (2)
+      - | コンストラクタの第一引数にユーザ名を設定する。
+    * - | (3)
+      - | コンストラクタの第二引数にパスワードを設定する。
 
 
 \ ``ClientHttpRequestInterceptor``\ の適用
@@ -1756,12 +1743,8 @@ Basic認証用のリクエストヘッダ設定処理
 
 .. code-block:: xml
 
-    <!-- (1) -->
-    <bean id="basicAuthInterceptor" class="com.example.restclient.BasicAuthInterceptor" />
-    <bean id="loggingInterceptor" class="com.example.restclient.LoggingInterceptor" />
-
     <bean id="restTemplate" class="org.springframework.web.client.RestTemplate">
-        <property name="interceptors"><!-- (2) -->
+        <property name="interceptors"><!-- (1) -->
             <list>
                 <ref bean="basicAuthInterceptor" />
                 <ref bean="loggingInterceptor" />
@@ -1777,11 +1760,9 @@ Basic認証用のリクエストヘッダ設定処理
     * - 項番
       - 説明
     * - | (1)
-      - | \ ``ClientHttpRequestInterceptor``\ の実装クラスのbean定義を行う。
-    * - | (2)
       - | ``interceptors``\ プロパティに\ ``ClientHttpRequestInterceptor``\ のbeanをインジェクションする。
         | 複数のbeanをインジェクションした場合は、リストの先頭から順にチェーン実行される。
-        | 上記の例だと、\ ``BasicAuthInterceptor``\  -> \ ``LoggingInterceptor``\  -> \ ``ClientHttpRequest``\  の順番でリクエスト前の処理が実行される。(レスポンス後の処理は順番が逆転する)
+        | 上記の例だと、\ ``BasicAuthorizationInterceptor``\  -> \ ``LoggingInterceptor``\  -> \ ``ClientHttpRequest``\  の順番でリクエスト前の処理が実行される。(レスポンス後の処理は順番が逆転する)
 
 
 .. _RestClientAsync:
@@ -1856,10 +1837,10 @@ Basic認証用のリクエストヘッダ設定処理
 
     本ガイドラインでは、タスク実行処理をカスタマイズする実装例のみを紹介するが、
     \ ``AsyncRestTemplate``\は、HTTP通信処理もカスタマイズ出来る。
-    詳細は\ `AsyncRestTemplate <http://docs.spring.io/spring/docs/4.3.5.RELEASE/javadoc-api/org/springframework/web/client/AsyncRestTemplate.html>`_\ のJavadocを参照されたい。
+    詳細は\ `AsyncRestTemplate <http://docs.spring.io/spring/docs/4.3.14.RELEASE/javadoc-api/org/springframework/web/client/AsyncRestTemplate.html>`_\ のJavadocを参照されたい。
     
     また、\ ``ThreadPoolTaskExecutor``\ についても、スレッドプールサイズ以外のカスタマイズが出来る。
-    詳細は\ `ThreadPoolTaskExecutor <http://docs.spring.io/spring/docs/4.3.5.RELEASE/javadoc-api/org/springframework/scheduling/concurrent/ThreadPoolTaskExecutor.html>`_\ のJavadocを参照されたい。
+    詳細は\ `ThreadPoolTaskExecutor <http://docs.spring.io/spring/docs/4.3.14.RELEASE/javadoc-api/org/springframework/scheduling/concurrent/ThreadPoolTaskExecutor.html>`_\ のJavadocを参照されたい。
 
 
 
@@ -2011,6 +1992,9 @@ Basic認証用のリクエストヘッダ設定処理
     * - | (5)
       - | (3)で受け取った\ ``ListenableFuture``\ をリターンする。
 
+.. raw:: latex
+
+   \newpage
 
 **bean定義ファイル(applicationContext.xml)の定義例**
 
@@ -2062,7 +2046,7 @@ HTTP Proxyサーバの設定方法
 SimpleClientHttpRequestFactoryを使用したHTTP Proxyサーバの設定方法
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-資格情報が不要なHTTP Proxyサーバの接続先の指定は、\ ``RestTemplate``\ でデフォルトで使用されている\ ``SimpleClientHttpRequestFactory``\ に指定することが可能である。
+資格情報が不要なHTTP Proxyサーバの接続先の指定については、\ ``RestTemplate``\ がデフォルトで使用する\ ``SimpleClientHttpRequestFactory``\ で指定することが可能である。
 
 **Bean定義ファイル**
 

@@ -76,6 +76,10 @@ Spring Dataより提供されているページ検索用の機能は、以下の
       - | ページ情報(合計件数、該当ページのデータ、検索対象のページ位置、取得件数、ソート条件)を保持する。
         | この機能は、 ``org.springframework.data.domain.Page`` インタフェースとして提供されており、デフォルトの実装クラスとして ``org.springframework.data.domain.PageImpl`` が提供されている。
         | **共通ライブラリより提供しているページネーションリンクを出力するためのJSPタグライブラリでは、 Pageオブジェクトから必要なデータを取得する仕様となっている。**
+    * - 3
+      - | データベースアクセスとしてSpring Data JPAを使用する場合は、RepositoryのQueryメソッドの引数に ``Pageable`` オブジェクトを指定することで、該当ページの情報が ``Page`` オブジェクトとして返却される。
+        | 合計件数を取得するSQLの発行、ソート条件の追加、該当ページに一致するデータの抽出などの処理が全て自動で行われる。
+        | データベースアクセスとして、MyBatisを使用する場合は、Spring Data JPAが自動で行ってくれる処理を、Java(Service)及びSQLマッピングファイル内で実装する必要がある。
 
 .. _pagination_overview_pagesearch_requestparameter:
 
@@ -95,7 +99,7 @@ Spring Dataより提供されているページ検索用の機能は、以下の
            - page
            - | 検索対象のページ位置を指定するためのリクエストパラメータ。
              | 値には、0以上の数値を指定する。
-             | デフォルトの設定では、ページ位置の値は ``0`` から開始する。そのため、1ページ目のデータを取得する場合は ``0`` を、2ページ目のデータを取得する場合は ``1`` を指定する必要がある。
+             | デフォルトの設定では、ページ位置の値は "``0``" から開始する。そのため、1ページ目のデータを取得する場合は "``0``" を、2ページ目のデータを取得する場合は "``1``" を指定する必要がある。
          * - 2.
            - size
            - | 取得する件数を指定するためのリクエストパラメータ。
@@ -104,18 +108,18 @@ Spring Dataより提供されているページ検索用の機能は、以下の
          * - 3.
            - sort
            - | ソート条件を指定するためのパラメータ(複数指定可能)。
-             | 値には、``"{ソート項目名(,ソート順)}"`` の形式で指定する。
-             | ソート順には、``"ASC"`` 又は ``"DESC"`` のどちらかの値を指定し、省略した場合は ``"ASC"`` が適用される。
-             | 項目名は ``","`` 区切りで複数指定することが可能である。
-             | 例えば、クエリ文字列として ``"sort=lastModifiedDate,id,DESC&sort=subId"`` を指定した場合、 ``"ORDER BY lastModifiedDate DESC, id DESC, subId ASC"`` というOrder By句がQueryに追加される。
+             | 値には、``{ソート項目名(,ソート順)}`` の形式で指定する。
+             | ソート順には、``ASC`` 又は ``DESC`` のどちらかの値を指定し、省略した場合は ``ASC`` が適用される。
+             | 項目名は "``,``" 区切りで複数指定することが可能である。
+             | 例えば、クエリ文字列として ``sort=lastModifiedDate,id,DESC&sort=subId`` を指定した場合、 ``ORDER BY lastModifiedDate DESC, id DESC, subId ASC`` というOrder By句がQueryに追加される。
 
  .. warning:: **spring-data-commons 1.6.1.RELEASEにおける「size=0」指定時の動作について**
 
-    terasoluna-gfw-common 1.0.0.RELEASEが依存するspring-data-commons 1.6.1.RELEASEでは、``"size=0"`` を指定すると条件に一致するレコードを全件取得するという不具合がある。
+    terasoluna-gfw-common 1.0.0.RELEASEが依存するspring-data-commons 1.6.1.RELEASEでは、``size=0`` を指定すると条件に一致するレコードを全件取得するという不具合がある。
     そのため、大量のレコードが取得対象となる可能性がある場合は、``java.lang.OutOfMemoryError`` が発生する可能性が高くなる。
 
     この問題はSpring Data CommonsのJIRA「`DATACMNS-377 <https://jira.springsource.org/browse/DATACMNS-377>`_」で対応され、spring-data-commons 1.6.3.RELEASEで解消されている。
-    改修後の動作としては、``"size<=0"`` を指定した場合は、 sizeパラメータ省略時のデフォルト値が適用される。
+    改修後の動作としては、``size<=0`` を指定した場合は、 sizeパラメータ省略時のデフォルト値が適用される。
     
     terasoluna-gfw-common 1.0.0.RELEASEを使用している場合は、terasoluna-gfw-common 1.0.1.RELEASE以上へバージョンアップする必要がある。
 
@@ -204,10 +208,10 @@ Spring Dataより提供されているページ検索用の機能は、以下の
     * - | (6)
       - | 現在表示しているページで操作することができないリンクであることを示す状態。
         | 具体的には、1ページ目を表示している時の「最初のページに移動するためのリンク」「前のページに移動するためのリンク」と、最終ページを表示している時の「次のページに移動するためのリンク」「最後のページに移動するためのリンク」がこの状態となる。
-        | 共通ライブラリから提供しているJSPタグライブラリでは、この状態を ``"disabled"`` と定義している。
+        | 共通ライブラリから提供しているJSPタグライブラリでは、この状態を ``disabled`` と定義している。
     * - | (7)
       - | 現在表示しているページであることを示す状態。
-        | 共通ライブラリから提供しているJSPタグライブラリでは、この状態を ``"active"`` と定義している。
+        | 共通ライブラリから提供しているJSPタグライブラリでは、この状態を ``active`` と定義している。
 
 |
 
@@ -314,22 +318,22 @@ Spring Dataより提供されているページ検索用の機能は、以下の
 
     デフォルトの設定では、ページ位置によって、以下3つの値となる。
 
-    * ``"disabled"`` : 現在表示しているページでは操作することができないリンクであることを示すためのスタイルクラス。
-    * ``"active"`` : 現在表示しているページのリンクであることを示すためのスタイルクラス。
+    * ``disabled`` : 現在表示しているページでは操作することができないリンクであることを示すためのスタイルクラス。
+    * ``active`` : 現在表示しているページのリンクであることを示すためのスタイルクラス。
     * 指定なし : 上記以外のリンクであることを示す。
 
-    ``"disabled"`` と ``"active"`` は、JSPタグライブラリのパラメータの指定によって別の値に変更することができる。
+    ``disabled`` と ``active`` は、JSPタグライブラリのパラメータの指定によって別の値に変更することができる。
 
 
 .. _pagination_overview_paginationlink_pagelinkurl:
 
  .. note:: **「Page Link URL」のデフォルト値について**
 
-    リンクの状態が\ ``"disabled"``\と\ ``"active"``\ の場合は\ ``"javascript:void(0)"``\ 、それ以外の場合は\ ``"?page={page}&size={size}"``\ となる。
+    リンクの状態が\ ``disabled``\と\ ``active``\ の場合は\ ``javascript:void(0)``\ 、それ以外の場合は\ ``?page={page}&size={size}``\ となる。
 
     「Page Link URL」は、JSPタグライブラリのパラメータの指定によって別の値に変更することができる。
 
-    terasoluna-gfw-web 5.0.0.RELEASEより、\ ``"active"``\ 状態のリンクのデフォルト値を\ ``"?page={page}&size={size}"``\から\ ``"javascript:void(0)"``\に変更している。
+    terasoluna-gfw-web 5.0.0.RELEASEより、\ ``active``\ 状態のリンクのデフォルト値を\ ``?page={page}&size={size}``\から\ ``javascript:void(0)``\に変更している。
     これは、メジャーなWebサイトのページネーションリンクの実装やメジャーなCSSライブラリ(Bootstrapなど)の実装に合わせるためである。
 
 .. _pagination_overview_paginationlink_pagelinktext:
@@ -346,20 +350,20 @@ Spring Dataより提供されているページ検索用の機能は、以下の
            - デフォルト値
          * - 1.
            - 最初のページに移動するためのリンク
-           - ``"<<"``
+           - ``<<``
          * - 2.
            - 前のページに移動するためのリンク
-           - ``"<"``
+           - "``<``"
          * - 3.
            - 指定したページに移動するためのリンク
            - | 該当ページのページ番号
              | (変更不可)
          * - 4.
            - 次のページに移動するためのリンク
-           - ``">"``
+           - "``>``"
          * - 5.
            - 最後のページに移動するためのリンク
-           - ``">>"``
+           - ``>>``
 
     「指定したページに移動するためのリンク」以外は、JSPタグライブラリのパラメータの指定によって、別の値に変更することができる。
 
@@ -398,11 +402,11 @@ JSPタグライブラリのパラメータに値を指定することで、デ�
         | 例) span
     * - 4.
       - disabledClass
-      - | ``"disabled"`` 状態と判断された「Inner Element」のclass属性に設定する値を指定する。
+      - | ``disabled`` 状態と判断された「Inner Element」のclass属性に設定する値を指定する。
         | 例) hiddenPageLink
     * - 5.
       - activeClass
-      - | ``"active"`` 状態の「Inner Element」のclass属性に設定する値を指定する。
+      - | ``active`` 状態の「Inner Element」のclass属性に設定する値を指定する。
         | 例) currentPageLink
     * - 6.
       - firstLinkText
@@ -427,7 +431,7 @@ JSPタグライブラリのパラメータに値を指定することで、デ�
     * - 10.
       - maxDisplayCount
       - | 「指定したページに移動するためのリンク」の最大表示数を指定する。
-        | ``0`` を指定すると、「指定したページに移動するためのリンク」自体が出力されなくなる。
+        | "``0``" を指定すると、「指定したページに移動するためのリンク」自体が出力されなくなる。
         | 例) 5
 
  .. raw:: latex
@@ -482,7 +486,7 @@ JSPタグライブラリのパラメータに値を指定することで、デ�
       - 説明
     * - 1.
       - disabledHref
-      - | ``"disabled"`` 状態のリンクの「Page Link URL」に設定する値を指定する。
+      - | ``disabled`` 状態のリンクの「Page Link URL」に設定する値を指定する。
     * - 2.
       - pathTmpl
       - | 「Page Link URL」に設定するリクエストパスのテンプレートを指定する。
@@ -504,7 +508,7 @@ JSPタグライブラリのパラメータに値を指定することで、デ�
         | **「Page Link URL」に検索条件を引き継ぐ場合は、このパラメータに検索条件用のクエリ文字列を指定すること。**
         | **指定した値はURLエンコーディングされないため、URLエンコーディング済みのクエリ文字列を指定する必要がある。**
         |
-        | フォームオブジェクトに格納されている検索条件をURLエンコーディング済みのクエリ文字列に変換する場合は、共通ライブラリから提供しているELファクション(\ ``f:query(Object)``\)を使用すると、簡単に条件を引き継ぐことができる。
+        | フォームオブジェクトに格納されている検索条件をURLエンコーディング済みのクエリ文字列に変換する場合は、共通ライブラリから提供しているELファンクション(\ ``f:query(Object)``\)を使用すると、簡単に条件を引き継ぐことができる。
         |
         | terasoluna-gfw-web 1.0.1.RELEASE以上で利用可能なパラメータである。
     * - 5.
@@ -516,8 +520,8 @@ JSPタグライブラリのパラメータに値を指定することで、デ�
         | terasoluna-gfw-web 1.0.1.RELEASE以上で利用可能なパラメータである。
     * - 6.
       - enableLinkOfCurrentPage
-      - | \ ``"active"``\ 状態のページリンクを押下した際に、該当ページを再表示するためのリクエストを送信するためのフラグ。
-        | \ ``true``\ を指定する事で、「Page Link URL」に該当ページを再表示するためのURL(デフォルト値は\ ``"?page={page}&size={size}"``\ )が設定される。(デフォルト値は\ ``false``\で、「Page Link URL」には\ ``disabledHref``\ 属性の値が設定される)
+      - | \ ``active``\ 状態のページリンクを押下した際に、該当ページを再表示するためのリクエストを送信するためのフラグ。
+        | \ ``true``\ を指定する事で、「Page Link URL」に該当ページを再表示するためのURL(デフォルト値は\ ``?page={page}&size={size}``\ )が設定される。(デフォルト値は\ ``false``\で、「Page Link URL」には\ ``disabledHref``\ 属性の値が設定される)
         |
         | terasoluna-gfw-web 5.0.0.RELEASE以上で利用可能なパラメータである。
 
@@ -527,16 +531,16 @@ JSPタグライブラリのパラメータに値を指定することで、デ�
 
  .. note:: **disabledHrefの設定値について**
 
-    デフォルトでは、\ ``disabledHref``\ 属性には\ ``"javascript:void(0)"``\ が設定されている。
+    デフォルトでは、\ ``disabledHref``\ 属性には\ ``javascript:void(0)``\ が設定されている。
     ページリンク押下時の動作を無効化するだけであれば、デフォルトのままでよい。
 
     ただし、デフォルトの状態でページリンクにフォーカスを移動又はマウスオーバーした場合、
-    ブラウザのステータスバーに\ ``"javascript:void(0)"``\ が表示されることがある。
+    ブラウザのステータスバーに\ ``javascript:void(0)``\ が表示されることがある。
     この挙動を変えたい場合は、JavaScriptを使用してページリンク押下時の動作を無効化する必要がある。
     実装例については、「:ref:`PaginationHowToUseDisablePageLinkUsingJavaScript`」を参照されたい。
 
-    terasoluna-gfw-web 5.0.0.RELEASEより、\ ``disabledHref``\ 属性のデフォルト値を\ ``"#"``\から\ ``"javascript:void(0)"``\ に変更している。
-    この変更を行うことで、\ ``"disabled"``\ 状態のページリンクを押下した際に、フォーカスがページのトップへ移動しないようになっている。
+    terasoluna-gfw-web 5.0.0.RELEASEより、\ ``disabledHref``\ 属性のデフォルト値を"\ ``#``\"から\ ``javascript:void(0)``\ に変更している。
+    この変更を行うことで、\ ``disabled``\ 状態のページリンクを押下した際に、フォーカスがページのトップへ移動しないようになっている。
 
 
  .. note:: **パス変数(プレースホルダ)について**
@@ -564,7 +568,7 @@ JSPタグライブラリのパラメータに値を指定することで、デ�
               - sortOrderDirection
               - ソート条件のソート順を埋め込むためのパス変数。
 
-    パス変数は、``"{パス変数名}"`` の形式で指定する。
+    パス変数は、``{パス変数名}`` の形式で指定する。
 
  .. warning:: **ソート条件の制約事項**
 
@@ -599,7 +603,7 @@ JSPタグライブラリのパラメータに値を指定することで、デ�
 
 ページネーション機能使用時の処理フロー
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-Spring Dataより提供されているページネーション機能と、共通ライブラリから提供してるJSPタグライブラリを利用した際の処理フローは、以下の通り。
+Spring Dataより提供されているページネーション機能と、共通ライブラリから提供しているJSPタグライブラリを利用した際の処理フローは、以下の通り。
 
  .. figure:: ./images/pagination-overview_flow.png
    :alt: processing flow of pagination
@@ -642,11 +646,7 @@ Spring Dataより提供されているページネーション機能と、共通
 
  .. note:: **Repositoryの実装について**
 
-    上記フローの(5)と(6)の処理は、使用するO/R Mapperによって実装方法が異なる。
-
-    * MyBatis3を使用する場合は、Java(Service)及びSQLマッピングファイルの実装が必要がある。
-
-    具体的な実装例については、
+    上記フローの(5)と(6)の具体的な実装例については、
 
     * :doc:`../DataAccessDetail/DataAccessMyBatis3`
 
@@ -788,7 +788,7 @@ Spring Dataのページネーション機能を有効化するための設定
     * - | (2)
       - | ページ位置のデフォルト値を変更する場合は、 ``@PageableDefault`` のpage属性に値を指定する。
         | 通常変更する必要はない。
-      - | ``0``
+      - | "``0``"
         | (1ページ目)
     * - | (3)
       - | 取得件数のデフォルト値を変更する場合は、 ``@PageableDefault`` のsize又はvalue属性に値を指定する。
@@ -800,14 +800,14 @@ Spring Dataのページネーション機能を有効化するための設定
     * - | (5)
       - | ソート条件のソート項目を指定する場合は、 ``@PageableDefault`` のsort属性にソート項目を指定する。
         | 複数の項目でソートする場合は、ソートするプロパティ名を配列で指定する。
-        | 上記例では、 ``"ORDER BY publishedDate DESC, articleId DESC"`` というソート条件がQueryに追加される。
+        | 上記例では、 ``ORDER BY publishedDate DESC, articleId DESC`` というソート条件がQueryに追加される。
       - | 空の配列
         | (ソート項目なし)
 
  .. note:: **@PageableDefaultアノテーションで指定できるソート順について**
 
     ``@PageableDefault`` アノテーションで指定できるソート順は昇順か降順のどちらか一つなので、項目ごとに異なるソート順を指定したい場合は ``@org.springframework.data.web.SortDefaults`` アノテーションを使用する必要がある。
-    具体的には、 ``"ORDER BY publishedDate DESC, articleId ASC"`` というソート順にしたい場合である。
+    具体的には、 ``ORDER BY publishedDate DESC, articleId ASC`` というソート順にしたい場合である。
 
  .. tip:: **取得件数のデフォルト値のみ変更する場合の指定方法**
 
@@ -867,7 +867,7 @@ Spring Dataのページネーション機能を有効化するための設定
       - | ``Direction.ASC``
         | (昇順)
 
- 上記例では、 ``"ORDER BY publishedDate DESC, articleId ASC"`` というソート条件がQueryに追加される。
+ 上記例では、 ``ORDER BY publishedDate DESC, articleId ASC`` というソート条件がQueryに追加される。
 
  .. tip:: **ソート項目のデフォルト値のみ指定する場合の指定方法**
 
@@ -935,8 +935,8 @@ JSPの実装(基本編)
     * - 項番
       - 説明
     * - | (1)
-      - | ``"page"`` という属性名で ``Page`` オブジェクトを ``Model`` に格納する。
-        | JSPでは ``"page"`` という属性名を指定して ``Page`` オブジェクトにアクセスすることになる。
+      - | ``page`` という属性名で ``Page`` オブジェクトを ``Model`` に格納する。
+        | JSPでは ``page`` という属性名を指定して ``Page`` オブジェクトにアクセスすることになる。
 
 
 - JSP
@@ -948,45 +948,45 @@ JSPの実装(基本編)
     <%-- (2) --%>
     <c:when test="${page != null && page.totalPages != 0}">
 
-      <table class="maintable">
-        <thead>
-          <tr>
-            <th class="no">No</th>
-            <th class="articleClass">Class</th>
-            <th class="title">Title</th>
-            <th class="overview">Overview</th>
-            <th class="date">Published Date</th>
-          </tr>
-        </thead>
+        <table class="maintable">
+            <thead>
+                <tr>
+                    <th class="no">No</th>
+                    <th class="articleClass">Class</th>
+                    <th class="title">Title</th>
+                    <th class="overview">Overview</th>
+                    <th class="date">Published Date</th>
+                </tr>
+            </thead>
 
-        <%-- (3) --%>
-        <c:forEach var="article" items="${page.content}" varStatus="rowStatus">
-          <tr>
-            <td class="no">
-              ${(page.number * page.size) + rowStatus.count}
-            </td>
-            <td class="articleClass">
-              ${f:h(article.articleClass.name)}
-            </td>
-            <td class="title">
-              ${f:h(article.title)}
-            </td>
-            <td class="overview">
-              ${f:h(article.overview)}
-            </td>
-            <td class="date">
-              ${f:h(article.publishedDate)}
-            </td>
-          </tr>
-        </c:forEach>
+            <%-- (3) --%>
+            <c:forEach var="article" items="${page.content}" varStatus="rowStatus">
+                <tr>
+                    <td class="no">
+                        ${(page.number * page.size) + rowStatus.count}
+                    </td>
+                    <td class="articleClass">
+                        ${f:h(article.articleClass.name)}
+                    </td>
+                    <td class="title">
+                        ${f:h(article.title)}
+                    </td>
+                    <td class="overview">
+                        ${f:h(article.overview)}
+                    </td>
+                    <td class="date">
+                        ${f:h(article.publishedDate)}
+                    </td>
+                </tr>
+            </c:forEach>
 
-      </table>
+        </table>
 
-      <div class="paginationPart">
+        <div class="paginationPart">
 
         <%-- ... --%>
 
-      </div>
+        </div>
     </c:when>
 
     <%-- ... --%>
@@ -1064,25 +1064,25 @@ JSPの実装(基本編)
 
 - 出力されるHTML
 
- 下記の出力例は、``"?page=0&size=6"`` を指定して検索した際の結果である。
+ 下記の出力例は、``?page=0&size=6`` を指定して検索した際の結果である。
 
  .. code-block:: html
 
      <ul>
-        <li class="disabled"><a href="javascript:void(0)">&lt;&lt;</a></li>
-        <li class="disabled"><a href="javascript:void(0)">&lt;</a></li>
-        <li class="active"><a href="javascript:void(0)">1</a></li>
-        <li><a href="?page=1&size=6">2</a></li>
-        <li><a href="?page=2&size=6">3</a></li>
-        <li><a href="?page=3&size=6">4</a></li>
-        <li><a href="?page=4&size=6">5</a></li>
-        <li><a href="?page=5&size=6">6</a></li>
-        <li><a href="?page=6&size=6">7</a></li>
-        <li><a href="?page=7&size=6">8</a></li>
-        <li><a href="?page=8&size=6">9</a></li>
-        <li><a href="?page=9&size=6">10</a></li>
-        <li><a href="?page=1&size=6">&gt;</a></li>
-        <li><a href="?page=9&size=6">&gt;&gt;</a></li>
+         <li class="disabled"><a href="javascript:void(0)">&lt;&lt;</a></li>
+         <li class="disabled"><a href="javascript:void(0)">&lt;</a></li>
+         <li class="active"><a href="javascript:void(0)">1</a></li>
+         <li><a href="?page=1&size=6">2</a></li>
+         <li><a href="?page=2&size=6">3</a></li>
+         <li><a href="?page=3&size=6">4</a></li>
+         <li><a href="?page=4&size=6">5</a></li>
+         <li><a href="?page=5&size=6">6</a></li>
+         <li><a href="?page=6&size=6">7</a></li>
+         <li><a href="?page=7&size=6">8</a></li>
+         <li><a href="?page=8&size=6">9</a></li>
+         <li><a href="?page=9&size=6">10</a></li>
+         <li><a href="?page=1&size=6">&gt;</a></li>
+         <li><a href="?page=9&size=6">&gt;&gt;</a></li>
     </ul>
 
 |
@@ -1126,7 +1126,7 @@ JSPの実装(基本編)
       - 説明
     * - | (4)
       - | ページネーションリンクであることを示すクラス名を指定する。
-        | クラス名を指定することでスタイルシートで指定するスタイルの適用範囲をページネーションリンクに限定することができる。
+        | クラス名を指定することによってスタイルシートで指定するスタイルの適用範囲をページネーションリンクに限定することができる。
 
 - スタイルシート
 
@@ -1279,7 +1279,7 @@ JSPの実装(基本編)
       - | 検索条件に一致するデータの合計件数を表示する場合は、 ``Page`` オブジェクトの ``totalElements`` プロパティから値を取得する。
     * - | (2)
       - | 表示しているページのページ数を表示する場合は、 ``Page`` オブジェクトの ``number`` プロパティから値を取得し、``+1`` する。
-        | ``Page`` オブジェクトの ``number`` プロパティは ``0`` 開始のため、 ページ番号を表示する際は ``+1`` が必要となる。
+        | ``Page`` オブジェクトの ``number`` プロパティは "``0``" 開始のため、 ページ番号を表示する際は ``+1`` が必要となる。
     * - | (3)
       - | 検索条件に一致するデータの合計ページ数を表示する場合は、 ``Page`` オブジェクトの ``totalPages`` プロパティから値をする。
 
@@ -1314,7 +1314,7 @@ JSPの実装(基本編)
       - 説明
     * - | (4)
       - | 開始位置を表示する場合は、 ``Page`` オブジェクトの ``number`` プロパティと ``size`` プロパティを使って計算する。
-        | ``Page`` オブジェクトの ``number`` プロパティは ``0`` 開始のため、データ開始位置を表示する際は ``+1`` が必要となる。
+        | ``Page`` オブジェクトの ``number`` プロパティは "``0``" 開始のため、データ開始位置を表示する際は ``+1`` が必要となる。
     * - | (5)
       - | 終了位置を表示する場合は、 ``Page`` オブジェクトの ``number`` プロパティ、 ``size`` プロパティ、 ``numberOfElements`` プロパティ を使って計算する。
         | 最終ページは端数となる可能性があるので、 ``numberOfElements`` を加算する必要がある。
@@ -1343,12 +1343,12 @@ JSPの実装(基本編)
 
     <%-- (1) --%>
     <div id="criteriaPart">
-      <form:form action="${pageContext.request.contextPath}/article/list" method="get"
-                 modelAttribute="articleSearchCriteriaForm">
-        <form:input path="word" />
-        <form:button>Search</form:button>
-        <br>
-      </form:form>
+        <form:form action="${pageContext.request.contextPath}/article/list" method="get"
+            modelAttribute="articleSearchCriteriaForm">
+            <form:input path="word" />
+            <form:button>Search</form:button>
+            <br>
+        </form:form>
     </div>
 
     <%-- ... --%>
@@ -1369,8 +1369,8 @@ JSPの実装(基本編)
         | 検索条件として ``word`` が存在する。
     * - | (2)
       - | ページ移動時のリクエストに検索条件を引き継ぐ場合は、 \ ``criteriaQuery``\属性に\ **URLエンコーディング済みのクエリ文字列**\を指定する。
-        | 検索条件をフォームオブジェクトに格納する場合は、共通ライブラリから提供しているELファクション( ``f:query(Object)`` ) を使用すると、簡単に条件を引き継ぐことができる。
-        | 上記例の場合、 \ ``"?page=ページ位置&size=取得件数&word=入力値"``\という形式のクエリ文字列が生成される。
+        | 検索条件をフォームオブジェクトに格納する場合は、共通ライブラリから提供しているELファンクション( ``f:query(Object)`` ) を使用すると、簡単に条件を引き継ぐことができる。
+        | 上記例の場合、 \ ``?page=ページ位置&size=取得件数&word=入力値``\という形式のクエリ文字列が生成される。
         |
         | \ ``criteriaQuery``\属性は、terasoluna-gfw-web 1.0.1.RELEASE以上で利用可能な属性である。
 
@@ -1414,7 +1414,7 @@ JSPの実装(基本編)
     * - | (1)
       - | ページ移動時のリクエストにソート条件を引き継ぐ場合は、 ``queryTmpl`` を指定し、クエリ文字列にソート条件を追加する。
         | ソート条件を指定するためのパラメータの仕様については、「 :ref:`ページ検索用のリクエストパラメータについて <pagination_overview_pagesearch_requestparameter>` 」を参照されたい。
-        | 上記例の場合、 ``"?page=0&size=20&sort=ソート項目,ソート順(ASC or DESC)"`` がクエリ文字列となる。
+        | 上記例の場合、 ``?page=0&size=20&sort=ソート項目,ソート順(ASC or DESC)`` がクエリ文字列となる。
 
 |
 
@@ -1460,7 +1460,7 @@ JSPの実装(レイアウト変更編)
 
 前ページと次ページに移動するリンクの削除
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-「最初のページに移動するためのリンク」と「最後のページに移動するためのリンク」を削除するための実装例を、以下に示す。
+「前のページに移動するためのリンク」と「次のページに移動するためのリンク」を削除するための実装例を、以下に示す。
 
 - 画面例
 
@@ -1494,8 +1494,8 @@ JSPの実装(レイアウト変更編)
 
 disabled状態のリンクの削除
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-| ``"disabled"`` 状態のリンクを削除するための実装例を、以下に示す。
-| ``"disabled"`` 時のスタイルシートに、以下の定義を追加する。
+| ``disabled`` 状態のリンクを削除するための実装例を、以下に示す。
+| ``disabled`` 時のスタイルシートに、以下の定義を追加する。
 
 - 画面例
 
@@ -1520,7 +1520,7 @@ disabled状態のリンクの削除
     * - 項番
       - 説明
     * - | (1)
-      - | ``"disabled"`` クラスの属性値として、 ``"display: none;"`` を指定する。
+      - | ``disabled`` クラスの属性値として、 ``display: none;`` を指定する。
 
 |
 
@@ -1582,7 +1582,7 @@ disabled状態のリンクの削除
     * - 項番
       - 説明
     * - | (1)
-      - | 指定したページに移動するためのリンクを非表示にする場合は、 ``<t:pagination>`` タグの maxDisplayCount属性に ``"0"`` を指定する。
+      - | 指定したページに移動するためのリンクを非表示にする場合は、 ``<t:pagination>`` タグの maxDisplayCount属性に "``0``" を指定する。
 
 
 |
@@ -1605,18 +1605,18 @@ JSPの実装(動作編)
  .. code-block:: jsp
 
     <div id="criteriaPart">
-      <form:form
-        action="${pageContext.request.contextPath}/article/search"
-        method="get" modelAttribute="articleSearchCriteriaForm">
-        <form:input path="word" />
-        <%-- (1) --%>
-        <form:select path="sort">
-            <form:option value="publishedDate,DESC">Newest</form:option>
-            <form:option value="publishedDate,ASC">Oldest</form:option>
-        </form:select>
-        <form:button>Search</form:button>
-        <br>
-      </form:form>
+        <form:form
+            action="${pageContext.request.contextPath}/article/search"
+            method="get" modelAttribute="articleSearchCriteriaForm">
+            <form:input path="word" />
+            <%-- (1) --%>
+            <form:select path="sort">
+                <form:option value="publishedDate,DESC">Newest</form:option>
+                <form:option value="publishedDate,ASC">Oldest</form:option>
+            </form:select>
+            <form:button>Search</form:button>
+            <br>
+        </form:form>
     </div>
 
  .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
@@ -1637,8 +1637,8 @@ JSPの実装(動作編)
 
 JavaScriptを使用したページリンクの無効化
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-デフォルトでは、\ ``"disabled"``\ 状態と\ ``"active"``\ 状態のページリンク押下時の動作を無効化するために、\ ``<t:pagination>``\ タグの\ ``disabledHref``\ 属性に\ ``"javascript:void(0)"``\ を設定している。
-この状態でページリンクにフォーカスを移動又はマウスオーバーすると、 ブラウザのステータスバーに\ ``"javascript:void(0)"``\ が表示されることがある。
+デフォルトでは、\ ``disabled``\ 状態と\ ``active``\ 状態のページリンク押下時の動作を無効化するために、\ ``<t:pagination>``\ タグの\ ``disabledHref``\ 属性に\ ``javascript:void(0)``\ を設定している。
+この状態でページリンクにフォーカスを移動又はマウスオーバーすると、 ブラウザのステータスバーに\ ``javascript:void(0)``\ が表示されることがある。
 この挙動を変えたい場合は、JavaScriptを使用してページリンク押下時の動作を無効化する必要がある。
 
 以下に実装例を示す。
@@ -1677,11 +1677,11 @@ JavaScriptを使用したページリンクの無効化
 
         上記例では、JavaScriptを使用してページリンク押下時の動作を無効化するためにjQueryのAPIを利用する。
     * - | (2)
-      - jQueryのAPIを使用して、\ ``"disabled"``\ 状態と\ ``"active"``\ 状態のページリンクのクリックイベントを無効化する。
+      - jQueryのAPIを使用して、\ ``disabled``\ 状態と\ ``active``\ 状態のページリンクのクリックイベントを無効化する。
 
-        ただし、\ ``<t:pagination>``\ タグの\ ``enableLinkOfCurrentPage``\ 属性に\ ``"true"``\ を指定している場合は、\ ``"active"``\ 状態のページリンクのクリックイベントを無効化してはいけない。
+        ただし、\ ``<t:pagination>``\ タグの\ ``enableLinkOfCurrentPage``\ 属性に\ ``true``\ を指定している場合は、\ ``active``\ 状態のページリンクのクリックイベントを無効化してはいけない。
     * - | (3)
-      - \ ``disabledHref``\ 属性に\ ``"#"``\ を指定する。
+      - \ ``disabledHref``\ 属性に"\ ``#``\" を指定する。
 
 |
 
@@ -1727,11 +1727,11 @@ Appendix
     * - 4.
       - pageParameterName
       - | ページ位置を指定するためのリクエストパラメータ名を指定する。
-      - | ``"page"``
+      - | ``page``
     * - 5.
       - sizeParameterName
       - | 取得件数を指定するためのリクエストパラメータ名を指定する。
-      - | ``"size"``
+      - | ``size``
     * - 6.
       - prefix
       - | ページ位置と取得件数を指定するためのリクエストパラメータの接頭辞(ネームスペース)を指定する。
@@ -1744,7 +1744,7 @@ Appendix
       - | 同一リクエストで複数のページ検索が必要になる場合、ページ検索に必要な情報(検索対象のページ位置、取得件数など)を区別するために、リクエストパラメータ名は ``qualifier + delimiter + 標準パラメータ名`` の形式で指定する。
         | 本プロパティは、上記形式の中の ``delimiter`` の値を設定する。
         | この設定を変更する場合は、 ``SortHandlerMethodArgumentResolver`` の ``qualifierDelimiter`` 設定も合わせて変更する必要がある。
-      - | ``"_"``
+      - | "``_``"
 
  .. raw:: latex
 
@@ -1843,7 +1843,7 @@ Appendix
       - | ``Sort`` のコンストラクタの第1引数に、 デフォルト値として使用する ``Order`` オブジェクトのリストを設定する。
     * - | (8)
       - | ``Order`` のインスタンスを生成し、 デフォルト値として使用する ``Order`` オブジェクトのリストに追加する。
-        | 上記例ではリクエストパラメータにソート条件の指定がない場合は ``"ORDER BY x.lastModifiedDate DESC, x.id ASC"`` というソート条件がQueryに追加される。
+        | 上記例ではリクエストパラメータにソート条件の指定がない場合は ``ORDER BY x.lastModifiedDate DESC, x.id ASC`` というソート条件がQueryに追加される。
     * - | (9)
       - | ``Order`` のコンストラクタの第1引数に、ソート順(ASC/DESC)を指定する。
     * - | (10)
@@ -1881,16 +1881,16 @@ Appendix
       - sortParameter
       - | ソート条件を指定するためのリクエストパラメータ名を指定する。
         | デフォルトのパラメータ名がアプリケーションで使用するパラメータと衝突する場合は、リクエストパラメータ名を変更することで衝突を防ぐことができる。
-      - | ``"sort"``
+      - | ``sort``
     * - 3.
       - propertyDelimiter
       - | ソート項目及びソート順(ASC,DESC)の区切り文字を指定する。
-      - | ``","``
+      - | "``,``"
     * - 4.
       - qualifierDelimiter
       - | 同一リクエストで複数のページ検索が必要になる場合、ページ検索に必要な情報(ソート条件)を区別するために、リクエストパラメータ名は ``qualifier + delimiter + sortParameter`` の形式で指定する。
         | 本プロパティは、上記形式の中の ``delimiter`` の値を設定する。
-      - | ``"_"``
+      - | "``_``"
 
 .. raw:: latex
 

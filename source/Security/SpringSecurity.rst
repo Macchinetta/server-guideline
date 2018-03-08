@@ -16,7 +16,7 @@ Spring Securityはスタンドアロンなアプリケーションでも利用�
 .. tip:: **ガイドラインで紹介していない機能**
 
     Spring Securityは、本ガイドラインで紹介していない機能も多く提供している。
-    Spring Securityが提供するすべての機能を知りたい場合は、\ `Spring Security Reference <http://docs.spring.io/spring-security/site/docs/4.1.4.RELEASE/reference/htmlsingle/#security-filter-chain>`_\ を参照されたい。
+    Spring Securityが提供するすべての機能を知りたい場合は、\ `Spring Security Reference <http://docs.spring.io/spring-security/site/docs/4.1.5.RELEASE/reference/htmlsingle/#security-filter-chain>`_\ を参照されたい。
 
 .. note:: **Spring Securityのバージョン**
 
@@ -144,7 +144,7 @@ Spring Securityのモジュール
     * - \ ``spring-security-remoting``\
       - JNDI経由でDNSにアクセス、Basic認証が必要なWebサイトにアクセス、Spring Securityを使用してセキュリティ対策しているメソッドにRMI経由でアクセスする際に必要となるコンポーネントが格納されている。
     * - \ ``spring-security-aspects``\
-      - Javaのメソッドに対して認可機能を適用する際にAspectJの機能を使用する際に必要となるコンポーネントが格納されています。
+      - AspectJを使用してJavaのメソッドに認可機能を適用する際、必要となるコンポーネントが格納されている。
         このモジュールは、AOPとしてSpring AOPを使う場合は不要である。
     * - \ ``spring-security-messaging``\ \ [#fSpringSecurityArchitecture5]_\ 
       - SpringのWeb Socket機能に対してセキュリティ対策を追加するためのコンポーネントが格納されている。 
@@ -196,7 +196,7 @@ Spring Security 4.0からはテストを支援するためのモジュールが�
 
 |
 
-.. [#fSpringSecurityArchitecture1] OpenIDは、簡単に言うと「1つのIDで複数のサイトにログインできるようする」ための仕組みである。
+.. [#fSpringSecurityArchitecture1] OpenIDは、簡単に言うと「1つのIDで複数のサイトにログインできるようにする」ための仕組みである。
 .. [#fSpringSecurityArchitecture2] CASは、OSSとして提供されているシングルサインオン用のサーバーコンポーネントである。詳細は https://www.apereo.org/cas を参照されたい。
 .. [#fSpringSecurityArchitecture3] 詳細は http://projects.spring.io/spring-security-oauth/ を参照されたい。
 .. [#fSpringSecurityArchitecture4] OAuth 2.0は、OAuth 1.0が抱えていた課題(署名と認証フローの複雑さ、モバイルやデスクトップのクライアントアプリの未対応など)を改善したバージョンで、OAuth 1.0との後方互換性はない。
@@ -227,7 +227,7 @@ Spring Securityは、サーブレットフィルタの仕組みを使用してWe
       - クライアントは、Webアプリケーションに対してリクエストを送る。
     * - \ (2)
       - Spring Securityの\ ``FilterChainProxy``\ クラス(サーブレットフィルタ)がリクエストを受け取り、
-        \ ``HttpFirewall``\ インタフェースのメソッドを呼び出して\ ``HttpServletRequest``\ と\ ``HttpServletResponse``\ に対してファイアフォール機能を組み込む。
+        \ ``HttpFirewall``\ インタフェースのメソッドを呼び出して\ ``HttpServletRequest``\ と\ ``HttpServletResponse``\ に対してファイアウォール機能を組み込む。
     * - \ (3)
       - \ ``FilterChainProxy``\ クラスは、Spring Securityが提供しているセキュリティ対策用のSecurity Filter(サーブレットフィルタ)クラスに処理を委譲する。
     * - \ (4)
@@ -240,7 +240,7 @@ Spring Securityは、サーブレットフィルタの仕組みを使用してWe
 |
 
 Webアプリケーション向けのフレームワーク処理を構成する主要なコンポーネントは以下の通りである。
-詳細は \ `Spring Security Reference -The Security Filter Chain- <http://docs.spring.io/spring-security/site/docs/4.1.4.RELEASE/reference/htmlsingle/#security-filter-chain>`_\ を参照されたい。
+詳細は \ `Spring Security Reference -The Security Filter Chain- <http://docs.spring.io/spring-security/site/docs/4.1.5.RELEASE/reference/htmlsingle/#security-filter-chain>`_\ を参照されたい。
 
 
 FilterChainProxy
@@ -252,7 +252,7 @@ FilterChainProxy
 HttpFirewall
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-\ ``HttpFirewall``\ インタフェースは、\ ``HttpServletRequest``\ と\ ``HttpServletResponse``\ に対してファイアフォール機能を組み込むためのインタフェースである。
+\ ``HttpFirewall``\ インタフェースは、\ ``HttpServletRequest``\ と\ ``HttpServletResponse``\ に対してファイアウォール機能を組み込むためのインタフェースである。
 デフォルトでは、\ ``DefaultHttpFirewall``\ クラスが使用され、ディレクトリトラバーサル攻撃やHTTPレスポンス分割攻撃に対するチェックなどが実装されている。
 
 SecurityFilterChain
@@ -282,7 +282,7 @@ Security Filterクラスは、フレームワーク機能やセキュリティ�
 
 Spring Securityは、複数のSecurity Filterを連鎖させることでWebアプリケーションのセキュリティ対策を行う仕組みになっている。
 ここでは、認証と認可機能を実現するために必要となるコアなクラスを紹介する。
-詳細は \ `Spring Security Reference -Core Security Filters- <http://docs.spring.io/spring-security/site/docs/4.1.4.RELEASE/reference/htmlsingle/#core-web-filters>`_\ を参照されたい。
+詳細は \ `Spring Security Reference -Core Security Filters- <http://docs.spring.io/spring-security/site/docs/4.1.5.RELEASE/reference/htmlsingle/#core-web-filters>`_\ を参照されたい。
 
 .. _SpringSecurityTableSecurityFilter:
 
@@ -294,7 +294,7 @@ Spring Securityは、複数のSecurity Filterを連鎖させることでWebア�
     * - クラス名
       - 説明
     * - \ ``SecurityContextPersistenceFilter``\
-      - 認証情報をリクエストを跨いで共有するための処理を提供するクラス。
+      - 認証情報についてリクエストを跨いで共有するための処理を提供するクラス。
         デフォルトの実装では、\ ``HttpSession``\ に認証情報を格納することで、リクエストをまたいで認証情報を共有している。
     * - \ ``UsernamePasswordAuthenticationFilter``\
       - リクエストパラメータで指定されたユーザー名とパスワードを使用して認証処理を行うクラス。
@@ -323,7 +323,7 @@ WebアプリケーションにSpring Securityを適用するためのセット�
 
 .. note::
 
-    開発プロジェクトを\ `ブランンクプロジェクト <https://github.com/Macchinetta/macchinetta-web-multi-blank>`_\ から作成すると、ここで説明する各設定はセットアップ済みの状態になっている。
+    開発プロジェクトを\ `ブランクプロジェクト <https://github.com/Macchinetta/macchinetta-web-multi-blank>`_\ から作成すると、ここで説明する各設定はセットアップ済みの状態になっている。
     開発プロジェクトの作成方法については、「:doc:`../ImplementationAtEachLayer/CreateWebApplicationProject`」を参照されたい。
 
 |
@@ -424,7 +424,7 @@ Spring Securityのコンポーネントをbean定義するため、以下のよ�
     * - 項番
       - 説明
     * - \ (1)
-      - Spring Securityから提供されているXMLネームスペースを有効する。
+      - Spring Securityから提供されているXMLネームスペースを有効にする。
         上記例では、\ ``sec``\ という名前を割り当てている。
         XMLネームスペースを使用すると、Spring Securityのコンポーネントのbean定義を簡単に行うことができる。
     * - \ (2)
@@ -434,8 +434,8 @@ Spring Securityのコンポーネントをbean定義するため、以下のよ�
       - \ ``<sec:http>``\ タグを定義する。
         \ ``<sec:http>``\ タグを定義すると、Spring Securityを利用するために必要となるコンポーネントのbean定義が自動的に行われる。
     * - \ (4)
-      - \ ``<sec:form-login>``\ タグを定義し、フォーム認証を使用したログインに関する設定行う。
-        \ 詳細は :ref:`form-login` を参照されたい
+      - \ ``<sec:form-login>``\ タグを定義し、フォーム認証を使用したログインに関する設定を行う。
+        \ 詳細は :ref:`form-login` を参照されたい。
     * - \ (5)
       - \ ``<sec:logout>``\ タグ を定義し、ログアウトに関する設定を行う。
         \ 詳細は :ref:`SpringSecurityAuthenticationLogout` を参照されたい。
@@ -446,7 +446,7 @@ Spring Securityのコンポーネントをbean定義するため、以下のよ�
       - ログ出力するユーザ情報をMDCに格納するための共通ライブラリのフィルタを定義する。
     * - \ (8)
       - \ ``<sec:session-management>``\ タグ を定義し、セッション管理に関する設定を行う。
-        \ 詳細は :ref:`SpringSecuritySessionManagement` を参照されたい
+        \ 詳細は :ref:`SpringSecuritySessionManagement` を参照されたい。
     * - \ (9)
       - \ ``<sec:authentication-manager>``\ タグを定義して、認証機能用のコンポーネントをbean定義する。
         このタグを定義しておかないとサーバ起動時にエラーが発生する。

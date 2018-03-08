@@ -38,12 +38,11 @@ Webアプリケーション向け開発プロジェクトの作成
       - POC(Proof Of Concept)、プロトタイプ、サンプルなどの簡易的なアプリケーションを作成する際に使用する。
 
         プロジェクトの雛形は、MavenのArchetypeとして、以下の2種類を用意している。
-        (EclipseのWTP用のプロジェクトも用意しているが、本節では説明は割愛する)
 
         * MyBatis3用の設定が盛り込まれた雛形
         * O/R Mapperに依存しない雛形
 
-        本ガイドラインでは、各種チュートリアルをシングルプロジェクトを使用して行う手順となっている。
+        本ガイドラインでは、各種チュートリアルについてシングルプロジェクトを使用して行う手順となっている。
 
 .. _CreateWebApplicationProject:
 
@@ -98,7 +97,7 @@ Webアプリケーション向け開発プロジェクトの作成
     mvn archetype:generate -B^
      -DarchetypeGroupId=com.github.macchinetta.blank^
      -DarchetypeArtifactId=macchinetta-multi-web-blank-archetype^
-     -DarchetypeVersion=1.4.1.RELEASE^
+     -DarchetypeVersion=1.4.2.RELEASE^
      -DgroupId=com.example.todo^
      -DartifactId=todo^
      -Dversion=1.0.0-SNAPSHOT
@@ -126,15 +125,15 @@ Webアプリケーション向け開発プロジェクトの作成
     * - | \-DgroupId
       - 作成するプロジェクトのgroupIdを指定する。**(カスタマイズが必要)**
 
-        上記例では、\ ``"com.example.todo"``\ を指定している。
+        上記例では、\ ``com.example.todo``\ を指定している。
     * - | \-DartifactId
       - 作成するプロジェクトのartifactIdを指定する。**(カスタマイズが必要)**
 
-        上記例では、\ ``"todo"``\ を指定している。
+        上記例では、\ ``todo``\ を指定している。
     * - | \-Dversion
       - 作成するプロジェクトのバージョンを指定する。**(カスタマイズが必要)**
 
-        上記例では、\ ``"1.0.0-SNAPSHOT"``\ を指定している。
+        上記例では、\ ``1.0.0-SNAPSHOT``\ を指定している。
 
 |
 
@@ -145,7 +144,7 @@ Webアプリケーション向け開発プロジェクトの作成
 
     (... omit)
     [INFO] ----------------------------------------------------------------------------
-    [INFO] Using following parameters for creating project from Archetype: macchinetta-multi-web-blank-archetype:1.4.1.RELEASE
+    [INFO] Using following parameters for creating project from Archetype: macchinetta-multi-web-blank-archetype:1.4.2.RELEASE
     [INFO] ----------------------------------------------------------------------------
     [INFO] Parameter: groupId, Value: com.example.todo
     [INFO] Parameter: artifactId, Value: todo
@@ -252,7 +251,7 @@ Maven Archetypeで作成したプロジェクトのPOMファイルでは、
 
     <name>Macchinetta Server Framework (1.x) Web Blank Multi Project</name>
     <description>Web Blank Multi Project using Macchinetta Server Framework (1.x)</description>
-    <url>http://macchietta.github.io</url>
+    <url>http://macchinetta.github.io</url>
     <inceptionYear>2017</inceptionYear>
     <licenses>
         <license>
@@ -275,7 +274,7 @@ Maven Archetypeで作成したプロジェクトのPOMファイルでは、
     <scm>
         <connection>scm:git:git@github.com:Macchinetta/macchinetta-web-multi-blank.git</connection>
         <developerConnection>scm:git:git@github.com:Macchinetta/macchinetta-web-multi-blank</developerConnection>
-        <url>git@github.com:Macchietta/macchinetta-web-multi-blank</url>
+        <url>git@github.com:Macchinetta/macchinetta-web-multi-blank</url>
     </scm>
 
     <!-- ... -->
@@ -379,7 +378,7 @@ Maven Archetypeで作成したプロジェクトでは、\ ``x.xx.fw.9999``\ 形
       - Webアプリケーション用のアプリケーションコンテキストを作成するためのBean定義ファイル
 
         ``artifactId/artifactId-web/src/main/resources/META-INF/spring/applicationContext.xml``
-      - BeanIDが\ ``"exceptionCodeResolver"``\ のBean定義内で指定している例外コード(メッセージID)のプロジェクト区分の暫定値「\ ``xx``\ 」を、適切な値に修正する。
+      - BeanIDが\ ``exceptionCodeResolver``\ のBean定義内で指定している例外コード(メッセージID)のプロジェクト区分の暫定値「\ ``xx``\ 」を、適切な値に修正する。
 
 |
 
@@ -455,8 +454,7 @@ Maven Archetypeで作成したプロジェクトでは、エラーの種類毎�
     <head>
     <meta charset="utf-8">
     <title>Resource Not Found Error!</title>
-    <link rel="stylesheet"
-        href="${pageContext.request.contextPath}/resources/app/css/styles.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/app/css/styles.css">
     </head>
     <body>
         <div id="wrapper">
@@ -466,9 +464,9 @@ Maven Archetypeで作成したプロジェクトでは、エラーの種類毎�
                 <spring:message code="e.xx.fw.5001" />
             </div>
             <t:messagesPanel />
-        <br>
-        <!-- ... -->
-        <br>
+            <br>
+            <!-- ... -->
+            <br>
         </div>
     </body>
     </html>
@@ -518,11 +516,10 @@ Maven Archetypeで作成したプロジェクトでは、Tilesを使用して画
 .. code-block:: jsp
 
     <div class="container">
-      <tiles:insertAttribute name="header" />
-      <tiles:insertAttribute name="body" />
-      <hr>
-      <p style="text-align: center; background: #e5eCf9;">Copyright
-        &copy; 20XX CompanyName</p>
+        <tiles:insertAttribute name="header" />
+        <tiles:insertAttribute name="body" />
+        <hr>
+        <p style="text-align: center; background: #e5eCf9;">Copyright &copy; 20XX CompanyName</p>
     </div>
 
 .. note::
@@ -570,14 +567,14 @@ Maven Archetypeで作成したプロジェクトには、インメモリデー�
 
 .. code-block:: console
 
-        └── src
-            └── main
-                └── resources
-                    ├── META-INF
+        └── src
+            └── main
+                └── resources
+                    ├── META-INF
                   (...)
-                    ├── database
-                    │   ├── H2-dataload.sql
-                    │   └── H2-schema.sql
+                    ├── database
+                    │   ├── H2-dataload.sql
+                    │   └── H2-schema.sql
 
 .. note::
 
@@ -748,14 +745,14 @@ Maven Archetypeで作成したプロジェクトでは、インメモリデー�
                              <version>${postgresql.version}</version>
                          </dependency>
         <!--             <dependency> -->
-        <!--                 <groupId>com.oracle</groupId> -->
+        <!--                 <groupId>com.oracle.jdbc</groupId> -->
         <!--                 <artifactId>ojdbc7</artifactId> -->
         <!--                 <version>${ojdbc.version}</version> -->
         <!--             </dependency> -->
 
             <!-- ... -->
 
-            <postgresql.version>9.4-1206-jdbc41</postgresql.version>
+            <postgresql.version>9.4.1212</postgresql.version>
             <ojdbc.version>12.1.0.2</ojdbc.version>
 
     * ``artifactId/artifactId-web/pom.xml``
@@ -768,7 +765,7 @@ Maven Archetypeで作成したプロジェクトでは、インメモリデー�
                          <scope>runtime</scope><!-- (1) -->
                      </dependency>
         <!--         <dependency> -->
-        <!--             <groupId>com.oracle</groupId> -->
+        <!--             <groupId>com.oracle.jdbc</groupId> -->
         <!--             <artifactId>ojdbc7</artifactId> -->
         <!--             <scope>runtime</scope> -->
         <!--         </dependency> -->
@@ -1047,22 +1044,22 @@ webモジュールの構成
         └── src
             ├── main
             │   ├── java
-            │   │   └── com
-            │   │       └── example
-            │   │           └── project
-            │   │               └── app  ... (2)
-            │   │                   └── welcome
-            │   │                       └── HelloController.java  ... (3)
-            │   ├── resources
-            │   │   ├── META-INF
-            │   │   │   ├── dozer  ... (4)
-            │   │   │   └── spring  ... (5)
-            │   │   │       ├── application.properties  ... (6)
-            │   │   │       ├── applicationContext.xml  ... (7)
-            │   │   │       ├── spring-mvc.xml  ... (8)
-            │   │   │       └── spring-security.xml  ... (9)
-            │   │   └── i18n  ... (10)
-            │   │       └── application-messages.properties  ... (11)
+            │   │   └── com
+            │   │       └── example
+            │   │           └── project
+            │   │               └── app  ... (2)
+            │   │                   └── welcome
+            │   │                       └── HelloController.java  ... (3)
+            │   ├── resources
+            │   │   ├── META-INF
+            │   │   │   ├── dozer  ... (4)
+            │   │   │   └── spring  ... (5)
+            │   │   │       ├── application.properties  ... (6)
+            │   │   │       ├── applicationContext.xml  ... (7)
+            │   │   │       ├── spring-mvc.xml  ... (8)
+            │   │   │       └── spring-security.xml  ... (9)
+            │   │   └── i18n  ... (10)
+            │   │       └── application-messages.properties  ... (11)
 
 .. raw:: latex
 
@@ -1153,33 +1150,33 @@ webモジュールの構成
 
 .. code-block:: console
 
-            │   └── webapp
-            │       ├── WEB-INF
-            │       │   ├── tiles  ... (12)
-            │       │   │   └── tiles-definitions.xml
-            │       │   ├── views  ... (13)
-            │       │   │   ├── common
-            │       │   │   │   ├── error  ... (14)
-            │       │   │   │   │   ├── accessDeniedError.jsp
-            │       │   │   │   │   ├── businessError.jsp
-            │       │   │   │   │   ├── dataAccessError.jsp
-            │       │   │   │   │   ├── invalidCsrfTokenError.jsp
-            │       │   │   │   │   ├── missingCsrfTokenError.jsp
-            │       │   │   │   │   ├── resourceNotFoundError.jsp
-            │       │   │   │   │   ├── systemError.jsp
-            │       │   │   │   │   ├── transactionTokenError.jsp
-            │       │   │   │   │   └── unhandledSystemError.html
-            │       │   │   │   └── include.jsp  ... (15)
-            │       │   │   ├── layout  ... (16)
-            │       │   │   │   ├── header.jsp
-            │       │   │   │   └── template.jsp
-            │       │   │   └── welcome
-            │       │   │       └── home.jsp  ... (17)
-            │       │   └── web.xml  ... (18)
-            │       └── resources  ... (19)
-            │           └── app
-            │               └── css
-            │                   └── styles.css  ... (20)
+            │   └── webapp
+            │       ├── WEB-INF
+            │       │   ├── tiles  ... (12)
+            │       │   │   └── tiles-definitions.xml
+            │       │   ├── views  ... (13)
+            │       │   │   ├── common
+            │       │   │   │   ├── error  ... (14)
+            │       │   │   │   │   ├── accessDeniedError.jsp
+            │       │   │   │   │   ├── businessError.jsp
+            │       │   │   │   │   ├── dataAccessError.jsp
+            │       │   │   │   │   ├── invalidCsrfTokenError.jsp
+            │       │   │   │   │   ├── missingCsrfTokenError.jsp
+            │       │   │   │   │   ├── resourceNotFoundError.jsp
+            │       │   │   │   │   ├── systemError.jsp
+            │       │   │   │   │   ├── transactionTokenError.jsp
+            │       │   │   │   │   └── unhandledSystemError.html
+            │       │   │   │   └── include.jsp  ... (15)
+            │       │   │   ├── layout  ... (16)
+            │       │   │   │   ├── header.jsp
+            │       │   │   │   └── template.jsp
+            │       │   │   └── welcome
+            │       │   │       └── home.jsp  ... (17)
+            │       │   └── web.xml  ... (18)
+            │       └── resources  ... (19)
+            │           └── app
+            │               └── css
+            │                   └── styles.css  ... (20)
             └── test
                 ├── java
                 └── resources
@@ -1251,7 +1248,7 @@ domainモジュールの構成
 .. code-block:: console
 
     artifactId-domain
-        ├── pom.xml  ... (1)
+        ├── pom.xml  ... (1)
 
 .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
 .. list-table::
@@ -1271,23 +1268,23 @@ domainモジュールの構成
 
 .. code-block:: console
 
-        └── src
-            ├── main
-            │   ├── java
-            │   │   └── com
-            │   │       └── example
-            │   │           └── project
-            │   │               └── domain  ... (2)
-            │   │                   ├── model
-            │   │                   ├── repository
-            │   │                   └── service
-            │   └── resources
-            │       └── META-INF
-            │           ├── dozer  ... (3)
-            │           └── spring  ... (4)
-            │               ├── artifactId-codelist.xml  ... (5)
-            │               ├── artifactId-domain.xml  ... (6)
-            │               └── artifactId-infra.xml  ... (7)
+        └── src
+            ├── main
+            │   ├── java
+            │   │   └── com
+            │   │       └── example
+            │   │           └── project
+            │   │               └── domain  ... (2)
+            │   │                   ├── model
+            │   │                   ├── repository
+            │   │                   └── service
+            │   └── resources
+            │       └── META-INF
+            │           ├── dozer  ... (3)
+            │           └── spring  ... (4)
+            │               ├── artifactId-codelist.xml  ... (5)
+            │               ├── artifactId-domain.xml  ... (6)
+            │               └── artifactId-infra.xml  ... (7)
 
 
 .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
@@ -1335,16 +1332,16 @@ domainモジュールの構成
 
 .. code-block:: console
 
-            └── test
-                ├── java
-                │   └── com
-                │       └── example
-                │           └── project
-                │               └── domain
-                │                   ├── repository
-                │                   └── service
-                └── resources
-                    └── test-context.xml  ... (8)
+            └── test
+                ├── java
+                │   └── com
+                │       └── example
+                │           └── project
+                │               └── domain
+                │                   ├── repository
+                │                   └── service
+                └── resources
+                    └── test-context.xml  ... (8)
 
 
 .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
@@ -1363,24 +1360,24 @@ domainモジュールの構成
 
 .. code-block:: console
 
-        └── src
-            ├── main
-            │   ├── java
+        └── src
+            ├── main
+            │   ├── java
            (...)
-            │   └── resources
-            │       ├── META-INF
-            │       │   ├── dozer
-            │       │   ├── mybatis  ... (9)
-            │       │   │   └── mybatis-config.xml  ... (10)
-            │       │   └── spring
+            │   └── resources
+            │       ├── META-INF
+            │       │   ├── dozer
+            │       │   ├── mybatis  ... (9)
+            │       │   │   └── mybatis-config.xml  ... (10)
+            │       │   └── spring
            (...)
-            │       └── com
-            │           └── example
-            │               └── project
-            │                   └── domain
-            │                       └── repository  ... (11)
-            │                           └── sample
-            │                               └── SampleRepository.xml  ... (12)
+            │       └── com
+            │           └── example
+            │               └── project
+            │                   └── domain
+            │                       └── repository  ... (11)
+            │                           └── sample
+            │                               └── SampleRepository.xml  ... (12)
 
 .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
 .. list-table::
@@ -1415,12 +1412,12 @@ envモジュールの構成
 .. code-block:: console
 
     artifactId-env
-        ├── configs  ... (1)
-        │   ├── production-server  ... (2)
-        │   │   └── resources
-        │   └── test-server
-        │       └── resources
-        ├── pom.xml  ... (3)
+        ├── configs  ... (1)
+        │   ├── production-server  ... (2)
+        │   │   └── resources
+        │   └── test-server
+        │       └── resources
+        ├── pom.xml  ... (3)
 
 
 .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
@@ -1453,19 +1450,19 @@ envモジュールの構成
 
 .. code-block:: console
 
-        └── src
-            └── main
-                └── resources  ... (4)
-                    ├── META-INF
-                    │   └── spring
-                    │       ├── artifactId-env.xml  ... (5)
-                    │       └── artifactId-infra.properties  ... (6)
-                    ├── database  ... (7)
-                    │   ├── H2-dataload.sql
-                    │   └── H2-schema.sql
-                    ├── dozer.properties  ... (8)
-                    ├── log4jdbc.properties  ... (9)
-                    └── logback.xml  ... (10)
+        └── src
+            └── main
+                └── resources  ... (4)
+                    ├── META-INF
+                    │   └── spring
+                    │       ├── artifactId-env.xml  ... (5)
+                    │       └── artifactId-infra.properties  ... (6)
+                    ├── database  ... (7)
+                    │   ├── H2-dataload.sql
+                    │   └── H2-schema.sql
+                    ├── dozer.properties  ... (8)
+                    ├── log4jdbc.properties  ... (9)
+                    └── logback.xml  ... (10)
 
 .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
 .. list-table::
@@ -1520,10 +1517,10 @@ initdbモジュールの構成
 .. code-block:: console
 
     artifactId-initdb
-        ├── pom.xml  ... (1)
-        └── src
-            └── main
-                └── sqls  ... (2)
+        ├── pom.xml  ... (1)
+        └── src
+            └── main
+                └── sqls  ... (2)
 
 .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
 .. list-table::
@@ -1543,7 +1540,7 @@ initdbモジュールの構成
       - データベースを初期化するためのSQLファイルを格納するためのディレクトリ。
 
         作成時点では、空のディレクトリである。
-        作成例については、`サンプルアプリケーションのinitdbプロジェクト <https://github.com/terasolunaorg/terasoluna-tourreservation-mybatis3/tree/5.3.1.RELEASE/terasoluna-tourreservation-initdb/src/main/sqls>`_ を参照されたい。
+        作成例については、`サンプルアプリケーションのinitdbプロジェクト <https://github.com/terasolunaorg/terasoluna-tourreservation-mybatis3/tree/5.3.2.RELEASE/terasoluna-tourreservation-initdb/src/main/sqls>`_ を参照されたい。
 
 .. note::
 
@@ -1565,21 +1562,21 @@ Seleniumを使用したE2E(End To End)テスト用のコンポーネントを管
 .. code-block:: console
 
     artifactId-selenium
-        ├── pom.xml  ... (1)
-        └── src
-            └── test  ... (2)
-                ├── java
-                │   └── com
-                │       └── example
-                │           └── project
-                │               └── selenium
-                │                   └── welcome
-                │                       └── HelloTest.java  ... (3)
-                └── resources
+        ├── pom.xml  ... (1)
+        └── src
+            └── test  ... (2)
+                ├── java
+                │   └── com
+                │       └── example
+                │           └── project
+                │               └── selenium
+                │                   └── welcome
+                │                       └── HelloTest.java  ... (3)
+                └── resources
                     └── META-INF
-                        └── spring
-                            ├── selenium.properties  ... (4)
-                            └── seleniumContext.xml  ... (5)
+                        └── spring
+                            ├── selenium.properties  ... (4)
+                            └── seleniumContext.xml  ... (5)
 
 .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
 .. list-table::
@@ -1599,7 +1596,7 @@ Seleniumを使用したE2E(End To End)テスト用のコンポーネントを管
     * - | (2)
       - テスト用のコンポーネントと設定ファイルを格納するディレクトリ。
 
-        作成例については、`サンプルアプリケーションのseleniumプロジェクト <https://github.com/terasolunaorg/terasoluna-tourreservation-mybatis3/tree/5.3.1.RELEASE/terasoluna-tourreservation-selenium>`_ を参照されたい。
+        作成例については、`サンプルアプリケーションのseleniumプロジェクト <https://github.com/terasolunaorg/terasoluna-tourreservation-mybatis3/tree/5.3.2.RELEASE/terasoluna-tourreservation-selenium>`_ を参照されたい。
 
     * - | (3)
       - Selenium WebDriverを使用したサンプルテストクラス。
@@ -1647,8 +1644,8 @@ Maven Archetypeで作成したプロジェクトのプロジェクト階層の�
         Maven Archetypeで作成したプロジェクトはマルチモジュール構成となっており、
         親プロジェクトと各サブモジュールは相互参照の関係になっている。
 
-        version 1.4.1.RELEASE用のMaven Archetypeで作成したプロジェクトでは、
-        親プロジェクトとして「org.terasoluna.gfw:terasoluna-gfw-parent:5.3.1.RELEASE」を指定している。
+        version 1.4.2.RELEASE用のMaven Archetypeで作成したプロジェクトでは、
+        親プロジェクトとして「org.terasoluna.gfw:terasoluna-gfw-parent:5.3.2.RELEASE」を指定している。
     * - | (2)
       - TERASOLUNA Server Framework for Java (5.x) Parentプロジェクト。
 

@@ -20,7 +20,7 @@
 本チュートリアルは以下の流れで実施する。
 
 #. 作成するwebアプリケーションの要件を確認する
-#. 要件を満たすようなContollerの実装方法とデータの設計を行う手順を確認する
+#. 要件を満たすようなControllerの実装方法とデータの設計を行う手順を確認する
 #. 設計情報をもとに実装する
 
 
@@ -157,7 +157,7 @@ ECサイトにおいて、ユーザは以下が行える。
 
 使用性
 
-* 複数ブラウザ及びタブ上での動作保障はしない
+* 複数ブラウザ及びタブ上での動作保証はしない
 
 性能
 
@@ -248,7 +248,7 @@ URLの抽出
 
 画面イメージをもとに、アプリケーションが処理をするURLを決定する。
 
-各画面から発生するイベントごとにURLとパラメータを設定する。
+画面から発生するイベントごとにURLとパラメータを設定する。
 それぞれ、次の規約通りに名称を付与する。
 
 * URL：/<ユースケース名>
@@ -531,7 +531,7 @@ URLの抽出
 以上から、アカウント更新情報、アカウント情報、カート情報、商品検索情報の4つについて、セッションを利用することを検討する。
 
 次に、セッションを利用することのデメリットを検証する。
-この検証によって、デメリットの影響が無視できないと判断される場合はセッションは利用しない。
+この検証によって、デメリットの影響が無視できないと判断される場合はセッションを利用しない。
 
 セッション利用によるデメリットとして大きく以下の3点が挙げられる。
 
@@ -550,9 +550,9 @@ URLの抽出
     * - 観点
       - 検討内容
     * - | データの整合性
-      - | 本アプリケーションでは、複数ブラウザ及びタブ上での動作保障はしない。そのため、データの整合性を担保する対策は不要である。
+      - | 本アプリケーションでは、複数ブラウザ及びタブ上での動作保証はしない。そのため、データの整合性を担保する対策は不要である。
     * - | メモリ使用量
-      - | セッションの利用を検討しているデータのサイズを見積もる。文字列要素は最大100文字240バイト(4文字8バイト+初期40バイト)、日付要素は24バイト、数値要素は16バイトとして推定する。また、ログイン認証時ににセッションに格納される認証情報\ ``UserDetails``\ のサイズも含める。\ ``UserDetails``\ には大きく、ID、パスワード、ユーザの権限が含まれる。ユーザの権限は複数指定できるが、ここでは1つとして推定を行う。各項目の推定結果は、以下のようになる。
+      - | セッションの利用を検討しているデータのサイズを見積もる。文字列要素は最大100文字240バイト(4文字8バイト+初期40バイト)、日付要素は24バイト、数値要素は16バイトとして推定する。また、ログイン認証時にセッションへ格納される認証情報\ ``UserDetails``\ のサイズも含める。\ ``UserDetails``\ には大きく、ID、パスワード、ユーザの権限が含まれる。ユーザの権限は複数指定できるが、ここでは1つとして推定を行う。各項目の推定結果は、以下のようになる。
       
         * アカウント情報(文字列：7項目、日付：2項目)： 最大1.7Kバイト
         
@@ -564,7 +564,7 @@ URLの抽出
         
         * \ ``UserDetails``\ ：(文字列：3項目)：0.7Kバイト
 
-        | 1ユーザで最大合計19KB使用する。安全率を10%を考慮すると1ユーザ約21KB使用する。同時接続人数1万人を考慮しても使用量は約210MBであり、その他のメモリ使用量を考えてもメモリ搭載量8GBを大幅に下回るため、メモリ枯渇が発生する可能性は小さい。
+        | 1ユーザで最大合計19KB使用する。安全率を10%と考慮すると1ユーザ約21KB使用する。同時接続人数1万人を考慮しても使用量は約210MBであり、その他のメモリ使用量を考えてもメモリ搭載量8GBを大幅に下回るため、メモリ枯渇が発生する可能性は小さい。
     * - | APサーバの多重化
       - | 本アプリケーションでは高い可用性は求められていないため、障害発生時におけるユースケースの継続は不要で、再ログインによるユースケースのやり直しを許容している。そのため、同一セッション内で発生するリクエストを全て同じAPサーバに振り分けるようにロードバランサを設定する対処のみとし、セッションのAPサーバ間でのレプリケーションを実現しない。
 
@@ -591,7 +591,7 @@ URLの抽出
 
 本チュートリアルでは、セッションを利用してデータの持ち回りを実現するという判断を下した。
 しかし、検討の結果、セッションを利用しないという判断を下すことも考えられる。
-セッションを利用しない場合は、一例としてhiddenを利用してデータを持ち回りを実現する。
+セッションを利用しない場合は、一例としてhiddenを利用してデータの持ち回りを実現する。
 
 
 また、セッションを利用する際にデータの整合性を保つ方式やレプリケーションの設定が必要になることがある。
@@ -618,7 +618,7 @@ URLの抽出
 ガイドラインでは、データの利用場所に応じて2種類の実装方法を提供している。
 :doc:`../ArchitectureInDetail/WebApplicationDetail/SessionManagement` では、1つのController内で完結するデータかどうかによって利用方法を区別している。
 したがって、セッションに格納するデータのライフサイクルとURLマッピングを考慮して実装方法を決める必要がある。
-また、認証情報に紐ずくデータである場合は、Spring Securityの機能によってセッション管理を実現することが望ましい。
+また、認証情報に紐づくデータである場合は、Spring Securityの機能によってセッション管理を実現することが望ましい。
 
 これらを考慮して、セッションで扱うデータを整理した最終的な結果が以下である。
 
@@ -732,53 +732,53 @@ gitで取得した初期プロジェクトの構成について述べる。
         └── src
             └── main
                  ├── java
-                 │   └── com
-                 │       └── example
-                 │           └── session
-                 │               └── domain
-                 │                   ├── model  ... (1)
-                 │                   │  ├── Account.java  ... (2)
-                 │                   │  ├── Cart.java  ... (3)
-                 │                   │  ├── CartItem.java  ... (3)
-                 │                   │  ├── Goods.java
-                 │                   │  ├── Order.java  ... (4)
-                 │                   │  └── OrderLine.java  ... (4)
-                 │                   ├── repository  ... (5)
-                 │                   │  ├── account
-                 │                   │  │  └── AccountRepository.java
-                 │                   │  ├── goods
-                 │                   │  │  └── GoodsRepository.java
-                 │                   │  └── order
-                 │                   │      └── OrderRepository.java
-                 │                   └── service  ... (6)
-                 │                       ├── account
-                 │                       │  └── AccountService.java
-                 │                       ├── goods
-                 │                       │  └── GoodsService.java
-                 │                       ├── order
-                 │                       │  ├── EmptyCartOrderException.java
-                 │                       │  ├── InvalidCartOrderException.java
-                 │                       │  └── OrderService.java
-                 │                       └── userdetails
-                 │                           ├── AccountDetails.java
-                 │                           └── AccountDetailsService.java
-                 └── resources
-                      ├── com
-                      │  └── example
-                      │      └── session
-                      │          └── domain
-                      │              └── repository  ... (7)
-                      │                  ├── account
-                      │                  │  └── AccountRepository.xml
-                      │                  ├── goods
-                      │                  │  └── GoodsRepository.xml
-                      │                  └── order
-                      │                      └── OrderRepository.xml
-                      └── META-INF
-                           ├── dozer
-                           │  └── order-mapping.xml  ... (8)
-                           └── spring
-                               └── session-tutorial-init-codelist.xml  ... (9)
+                 │   └── com
+                 │       └── example
+                 │           └── session
+                 │               └── domain
+                 │                   ├── model  ... (1)
+                 │                   │  ├── Account.java  ... (2)
+                 │                   │  ├── Cart.java  ... (3)
+                 │                   │  ├── CartItem.java  ... (3)
+                 │                   │  ├── Goods.java
+                 │                   │  ├── Order.java  ... (4)
+                 │                   │  └── OrderLine.java  ... (4)
+                 │                   ├── repository  ... (5)
+                 │                   │  ├── account
+                 │                   │  │  └── AccountRepository.java
+                 │                   │  ├── goods
+                 │                   │  │  └── GoodsRepository.java
+                 │                   │  └── order
+                 │                   │      └── OrderRepository.java
+                 │                   └── service  ... (6)
+                 │                       ├── account
+                 │                       │  └── AccountService.java
+                 │                       ├── goods
+                 │                       │  └── GoodsService.java
+                 │                       ├── order
+                 │                       │  ├── EmptyCartOrderException.java
+                 │                       │  ├── InvalidCartOrderException.java
+                 │                       │  └── OrderService.java
+                 │                       └── userdetails
+                 │                           ├── AccountDetails.java
+                 │                           └── AccountDetailsService.java
+                 └── resources
+                      ├── com
+                      │  └── example
+                      │      └── session
+                      │          └── domain
+                      │              └── repository  ... (7)
+                      │                  ├── account
+                      │                  │  └── AccountRepository.xml
+                      │                  ├── goods
+                      │                  │  └── GoodsRepository.xml
+                      │                  └── order
+                      │                      └── OrderRepository.xml
+                      └── META-INF
+                           ├── dozer
+                           │  └── order-mapping.xml  ... (8)
+                           └── spring
+                               └── session-tutorial-init-codelist.xml  ... (9)
 
 
 
@@ -823,9 +823,9 @@ gitで取得した初期プロジェクトの構成について述べる。
         └── src
             └── main
                  └── resources
-                     └── database  ... (1)
-                         ├── H2-dataload.sql
-                         └── H2-schema.sql
+                     └── database  ... (1)
+                         ├── H2-dataload.sql
+                         └── H2-schema.sql
 
 
 
@@ -846,55 +846,55 @@ gitで取得した初期プロジェクトの構成について述べる。
         └── src
             └── main
                  ├── java
-                 │   └── com
-                 │       └── example
-                 │           └── session
-                 │               └── app  ... (1)
-                 │                   ├── account 
-                 │                   │  ├── AccountCreateController.java 
-                 │                   │  ├── AccountCreateForm.java 
-                 │                   │  ├── IlleagalOperationException.java  
-                 │                   │  └── IlleagalOperationExceptionHandler.java
-                 │                   ├── goods
-                 │                   │  ├── GoodsController.java  
-                 │                   │  └── GoodsViewForm.java
-                 │                   ├── login
-                 │                   │  └── LoginController.java
-                 │                   └── validation
-                 │                       ├── Confirm.java
-                 │                       └── ConfirmValidator.java
-                 ├── resources
-                 │   ├── i18n
-                 │   │  └── application-messages.properties  ... (2)
-                 │   ├── META-INF
-                 │   │   └── spring  ... (3)
-                 │   │       ├── spring-mvc.xml
-                 │   │       └── spring-security.xml
-                 │   └── ValidationMessages.properties  ... (2)
-                 └── webapp
-                      ├── resources  ... (4)
-                      │  ├── app
-                      │  │  └── css
-                      │  │      └── styles.css
-                      │  └── vendor
-                      │      └── bootstrap-3.0.0
-                      │          └── css
-                      │              └── bootstrap.css
-                      └── WEB-INF
-                          └── views  ... (5)
-                              ├── account
-                              │  ├── createConfirm.jsp
-                              │  ├── createFinish.jsp
-                              │  └── createForm.jsp
-                              ├── common
-                              │  ├── error
-                              │  │  └── illegalOperationError.jsp
-                              │  └── include.jsp
-                              ├── goods
-                              │  ├── showGoods.jsp
-                              │  └── showGoodsDetails.jsp
-                              └── login
-                                  └── loginForm.jsp
+                 │   └── com
+                 │       └── example
+                 │           └── session
+                 │               └── app  ... (1)
+                 │                   ├── account 
+                 │                   │  ├── AccountCreateController.java 
+                 │                   │  ├── AccountCreateForm.java 
+                 │                   │  ├── IlleagalOperationException.java  
+                 │                   │  └── IlleagalOperationExceptionHandler.java
+                 │                   ├── goods
+                 │                   │  ├── GoodsController.java  
+                 │                   │  └── GoodsViewForm.java
+                 │                   ├── login
+                 │                   │  └── LoginController.java
+                 │                   └── validation
+                 │                       ├── Confirm.java
+                 │                       └── ConfirmValidator.java
+                 ├── resources
+                 │   ├── i18n
+                 │   │  └── application-messages.properties  ... (2)
+                 │   ├── META-INF
+                 │   │   └── spring  ... (3)
+                 │   │       ├── spring-mvc.xml
+                 │   │       └── spring-security.xml
+                 │   └── ValidationMessages.properties  ... (2)
+                 └── webapp
+                      ├── resources  ... (4)
+                      │  ├── app
+                      │  │  └── css
+                      │  │      └── styles.css
+                      │  └── vendor
+                      │      └── bootstrap-3.0.0
+                      │          └── css
+                      │              └── bootstrap.css
+                      └── WEB-INF
+                          └── views  ... (5)
+                              ├── account
+                              │  ├── createConfirm.jsp
+                              │  ├── createFinish.jsp
+                              │  └── createForm.jsp
+                              ├── common
+                              │  ├── error
+                              │  │  └── illegalOperationError.jsp
+                              │  └── include.jsp
+                              ├── goods
+                              │  ├── showGoods.jsp
+                              │  └── showGoodsDetails.jsp
+                              └── login
+                                  └── loginForm.jsp
 
 
 .. tabularcolumns::  |p{0.20\linewidth}|p{0.80\linewidth}|
@@ -907,7 +907,7 @@ gitで取得した初期プロジェクトの構成について述べる。
    * - | (1)
      - | 本アプリケーションで使用するアプリケーション層のクラスを格納するためのパッケージ。
    * - | (2)
-     - | 本アプリケーションで使用するメッセージが定義されているプロパディファイル
+     - | 本アプリケーションで使用するメッセージが定義されているプロパティファイル
    * - | (3)
      - | 本アプリケーションで使用するコンポーネントが定義されているBean定義ファイル
    * - | (4)
@@ -1315,15 +1315,15 @@ Controllerでは、入力情報を受け取るフォームを ``@SessionAttribut
       - 説明
     * - | (1)
       - | ``@SessionAttributes`` アノテーションのvalue属性に、セッションに格納するオブジェクトの属性名を指定する。
-        | 上記例は、属性名が ``"accountUpdateForm"`` のオブジェクトが、セッションに格納される。
+        | 上記例は、属性名が ``accountUpdateForm`` のオブジェクトが、セッションに格納される。
     * - | (2)
       - | Modelオブジェクトに格納する属性名を、value属性に指定する。
-        | 上記例では、返却したオブジェクトが、 ``"accountUpdateForm"`` という属性名でセッションに格納される。
+        | 上記例では、返却したオブジェクトが、 ``accountUpdateForm`` という属性名でセッションに格納される。
         | value属性を指定した場合、セッションにオブジェクトを格納した後のリクエストで、 ``@ModelAttribute`` アノテーションの付与されたメソッドが呼び出されなくなるため、無駄なオブジェクトの生成が行われないというメリットがある。
     * - | (3)
       - | ``@SessionAttributes`` アノテーションによって管理されたオブジェクトを利用するには、そのオブジェクトを受け取れるようメソッドに引数を追加する。
-        | 入力チェックが必要がであれば ``@Validated`` アノテーションを利用する。
-        | 上記例では、 ``AccountUpdateForm`` のデフォルトの属性名である ``"accountUpdateForm"`` を属性名にもつオブジェクトが引数として渡される。
+        | 入力チェックが必要であれば ``@Validated`` アノテーションを利用する。
+        | 上記例では、 ``AccountUpdateForm`` のデフォルトの属性名である ``accountUpdateForm`` を属性名にもつオブジェクトが引数として渡される。
     * - | (4)
       - | ``SessionStatus`` オブジェクトの ``setComplete`` メソッドを呼び出し、オブジェクトをセッションから削除する。
       
@@ -1355,8 +1355,7 @@ JSPの作成
     <head>
     <meta charset="UTF-8" />
     <title>Account Update Page</title>
-    <link rel="stylesheet"
-        href="${pageContext.request.contextPath}/resources/app/css/styles.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/app/css/styles.css">
     </head>
     <body>
 
@@ -1422,7 +1421,7 @@ JSPの作成
       - 説明
     * - | (1)
       - | 入力データを受け取るフォームオブジェクトの属性名をmodelAttribute属性に指定する。
-        | 上記例は、属性名が ``"accountUpdateForm"`` のオブジェクトが入力データを受け取る。
+        | 上記例は、属性名が ``accountUpdateForm`` のオブジェクトが入力データを受け取る。
     * - | (2)
       - | form:inputタグのpath属性に入力データを格納するオブジェクトの要素名を指定する。
         | この方法を利用すると、指定したオブジェクトの要素名にすでにデータがある場合、その値が入力フォームのデフォルト値となる。
@@ -1440,8 +1439,7 @@ JSPの作成
     <head>
     <meta charset="UTF-8" />
     <title>Account Update Page</title>
-    <link rel="stylesheet"
-        href="${pageContext.request.contextPath}/resources/app/css/styles.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/app/css/styles.css">
     </head>
     <body>
 
@@ -1505,8 +1503,7 @@ JSPの作成
     <head>
     <meta charset="UTF-8" />
     <title>Account Update Page</title>
-    <link rel="stylesheet"
-        href="${pageContext.request.contextPath}/resources/app/css/styles.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/app/css/styles.css">
     </head>
     <body>
         <div class="container">
@@ -1583,8 +1580,7 @@ JSPの作成
     <head>
     <meta charset="UTF-8" />
     <title>Account Update Page</title>
-    <link rel="stylesheet"
-        href="${pageContext.request.contextPath}/resources/app/css/styles.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/app/css/styles.css">
     </head>
     <body>
         <div class="container">
@@ -1736,7 +1732,7 @@ Beanとして登録したいクラスに以下のアノテーションを追加�
     * - | (1)
       - | component-scanの対象となるように\ ``@Component``\ アノテーションを指定する
     * - | (2)
-      - | Beanのスコープを\ ``"session"``\ にする。また、proxyMode 属性で\ ``"ScopedProxyMode.TARGET_CLASS"``\ を指定し、scoped-proxyを有効にする。
+      - | Beanのスコープを\ ``session``\ にする。また、proxyMode 属性で\ ``ScopedProxyMode.TARGET_CLASS``\ を指定し、scoped-proxyを有効にする。
 
 また、component-scanの対象となるbase-packageをBean定義ファイルに指定する必要がある。
 しかし、本チュートリアルでは作成済みのBean定義ファイルにすでに以下の記述があるため、新たに記述を追加する必要はない。
@@ -1923,18 +1919,16 @@ JSPもすでに作成されているため、以下に示すコードをbodyタ�
 ``/session-tutorial-init-web/src/main/webapp/WEB-INF/views/goods/showGoods.jsp``
 
 .. code-block:: jsp
-    :emphasize-lines: 45, 53-59, 72-97
+    :emphasize-lines: 43, 51-57, 70-95
 
     <!DOCTYPE html>
     <html>
     <head>
     <meta charset="UTF-8" />
     <title>Item List Page</title>
-    <link rel="stylesheet"
-        href="${pageContext.request.contextPath}/resources/app/css/styles.css">
-    <link rel="stylesheet"
-        href="${pageContext.request.contextPath}/resources/vendor/bootstrap-3.0.0/css/bootstrap.css"
-        type="text/css" media="screen, projection">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/app/css/styles.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/vendor/bootstrap-3.0.0/css/bootstrap.css"
+        media="screen, projection">
     </head>
     <body>
 
@@ -2050,15 +2044,14 @@ JSPもすでに作成されているため、以下に示すコードをbodyタ�
 ``/session-tutorial-init-web/src/main/webapp/WEB-INF/views/goods/showGoodsDetail.jsp``
 
 .. code-block:: jsp
-    :emphasize-lines: 44-51, 57-81
+    :emphasize-lines: 43-50, 56-80
 
     <!DOCTYPE html>
     <html>
     <head>
     <meta charset="UTF-8" />
     <title>Item List Page</title>
-    <link rel="stylesheet"
-        href="${pageContext.request.contextPath}/resources/app/css/styles.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/app/css/styles.css">
     </head>
     <body>
 
@@ -2155,7 +2148,7 @@ JSPもすでに作成されているため、以下に示すコードをbodyタ�
 しかし、商品追加後に遷移する画面は、常に「book」カテゴリの1ページ目となっている。
 
 本チュートリアルでは、選択カテゴリやページ番号といった商品検索情報は注文が完了するまで保持する仕様となっている。
-そのため、商品追加後やアカウント更新画面から戻ってきたきたときに前の状態に遷移するように実装を修正する。
+そのため、商品追加後やアカウント更新画面から戻ってきたときに前の状態に遷移するように実装を修正する。
 
 
 :ref:`development_policy` で説明したとおり、商品検索情報はセッションスコープのBeanとして管理する。
@@ -2250,7 +2243,7 @@ JSPもすでに作成されているため、以下に示すコードをbodyタ�
     * - | (1)
       - | component-scanの対象となるように\ ``@Component``\ アノテーションを指定する
     * - | (2)
-      - | Beanのスコープを\ ``"session"``\ にする。また、proxyMode 属性で\ ``"ScopedProxyMode.TARGET_CLASS"``\ を指定し、scoped-proxyを有効にする。
+      - | Beanのスコープを\ ``session``\ にする。また、proxyMode 属性で\ ``ScopedProxyMode.TARGET_CLASS``\ を指定し、scoped-proxyを有効にする。
 
 
 また、component-scanの対象となるbase-packageをBean定義ファイルに指定する必要がある。 しかし、本チュートリアルでは作成済みのBean定義ファイルにすでに以下の記述があるため、新たに記述を追加する必要はない。
@@ -2542,7 +2535,7 @@ Controllerを作成する。
     * - 項番
       - 説明
     * - | (1)
-      - | セッションスコープのBeanをDIコンテナからから取得する。
+      - | セッションスコープのBeanをDIコンテナから取得する。
     * - | (2)
       - | セッションスコープのBeanのデータを削除する。
 
@@ -2562,8 +2555,7 @@ JSPの作成
     <head>
     <meta charset="UTF-8" />
     <title>View Cart Page</title>
-    <link rel="stylesheet"
-        href="${pageContext.request.contextPath}/resources/app/css/styles.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/app/css/styles.css">
     </head>
     <body>
 
@@ -2786,7 +2778,7 @@ Controllerを作成する。
     * - 項番
       - 説明
     * - | (1)
-      - | セッションスコープのBeanをDIコンテナからから取得する。
+      - | セッションスコープのBeanをDIコンテナから取得する。
     * - | (2)
       - | ドメイン層にあるServiceのメソッドにて、セッションスコープのBeanの中身を空にしている。
         | これによりセッションスコープのBeanの破棄が行われたことになる。
@@ -2821,8 +2813,7 @@ JSPの作成
     <head>
     <meta charset="UTF-8" />
     <title>Order Page</title>
-    <link rel="stylesheet"
-        href="${pageContext.request.contextPath}/resources/app/css/styles.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/app/css/styles.css">
     </head>
     <body>
 
@@ -2949,8 +2940,7 @@ JSPの作成
     <head>
     <meta charset="UTF-8" />
     <title>Order Page</title>
-    <link rel="stylesheet"
-        href="${pageContext.request.contextPath}/resources/app/css/styles.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/app/css/styles.css">
     </head>
     <body>
 

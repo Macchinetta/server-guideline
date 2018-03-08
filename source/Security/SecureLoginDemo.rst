@@ -41,7 +41,7 @@
 セキュリティ要件
 --------------------------------------------------------------------------------
 
-本アプリケーションが満たすセキュリティ要件の一覧を以下に示す。各分類ごとに、:ref:`implement-description` にて実装例の解説を行う。
+本アプリケーションが満たすセキュリティ要件の一覧を以下に示す。分類ごとに、:ref:`implement-description` にて実装例の解説を行う。
 
 .. tabularcolumns:: |p{0.10\linewidth}|p{0.20\linewidth}|p{0.50\linewidth}|p{0.20\linewidth}|
 .. list-table::
@@ -116,7 +116,7 @@
       - パスワード再発行画面のURLの漏えいに備え、秘密情報はメール以外の方法でユーザに配布する
     * - | (16)
       - :ref:`パスワード再発行実行時の検査 <reissue-info-validate>`
-      - パスワード再発行用の認証情報の有効期限の設定
+      - パスワード再発行用の認証情報に対する有効期限の設定
       - パスワード再発行画面のURLと秘密情報に有効期限を設定し、有効期限が切れた場合はパスワード再発行画面のURLと秘密情報を使用不能にする
     * - | (17)
       - :ref:`パスワード再発行の失敗上限回数の設定 <reissue-info-invalidate>`
@@ -497,8 +497,8 @@ ER図
 ================================================================================
 
 | セキュリティ要件の分類ごとに、本アプリケーションにおける実装の方法とコードの説明を行う。
-| ここでは各分類ごとに要件の実現のために必要最小限のコード片のみを掲載している。コード全体を確認したい場合は `GitHub <https://github.com/terasolunaorg/tutorial-apps/tree/release/5.3.1.RELEASE/secure-login-demo>`_ を参照すること。
-| 本アプリケーションを動作させるための初期データ登録用SQLは `ここ <https://github.com/terasolunaorg/tutorial-apps/tree/release/5.3.1.RELEASE/secure-login-demo/secure-login-env/src/main/resources/database>`_ に配置されている。
+| ここでは分類ごとで要件の実現のために必要最小限なコード片のみを掲載している。コード全体を確認したい場合は `GitHub <https://github.com/terasolunaorg/tutorial-apps/tree/release/5.3.2.RELEASE/secure-login-demo>`_ を参照すること。
+| 本アプリケーションを動作させるための初期データ登録用SQLは `ここ <https://github.com/terasolunaorg/tutorial-apps/tree/release/5.3.2.RELEASE/secure-login-demo/secure-login-demo/secure-login-env/src/main/resources/database>`_ に配置されている。
 
 .. note::
 
@@ -896,7 +896,7 @@ ER図
      isInitialPassword および isCurrentPasswordExpired に付与されている \ ``@Cacheable``\ は Spring の Cache Abstraction 機能を使用するためのアノテーションである。
      \ ``@Cacheable`` \ アノテーションを付与することで、メソッドの引数に対する結果をキャッシュすることができる。
      ここでは、キャッシュの使用により初期パスワード判定、パスワード期限切れ判定のたびにデータベースへのアクセスが発生することを防止し、パフォーマンスの低下を防いでいる。
-     Cache Abstraction については `公式ドキュメント - Cache <http://docs.spring.io/spring/docs/4.3.5.RELEASE/spring-framework-reference/html/cache.html>`_ を参照すること。
+     Cache Abstraction については `公式ドキュメント - Cache <http://docs.spring.io/spring/docs/4.3.14.RELEASE/spring-framework-reference/html/cache.html>`_ を参照すること。
 
      尚、キャッシュを使用する際には、必要なタイミングでキャッシュをクリアする必要があることに注意すること。
      本アプリケーションではパスワード変更時や、ログアウト時には再度初期パスワード判定、パスワード期限切れ判定を行うためにキャッシュをクリアする。
@@ -1120,7 +1120,7 @@ ER図
 実装方法
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 | パスワード変更時等にユーザが指定したパスワードの品質を検査するためには、 :doc:`../ArchitectureInDetail/WebApplicationDetail/Validation` の機能を利用することができる。本アプリケーションではBean Validationを用いてパスワードの品質を検査する。
-| パスワードの品質として求められる要件はアプリケーションによって異なり、多岐に渡る。
+| パスワードの品質として求められる要件はアプリケーションによって異なり、多岐にわたる。
 | そこで、パスワード入力チェック用のライブラリとして `Passay <http://www.passay.org/>`_ を利用し、必要なBean Validationのアノテーションを作成する。
 | Passayではパスワード入力チェックで一般的に使用される機能の多くを提供しており、提供されていない機能についても標準機能を拡張することで容易に実装することができる。
 | Passayの概要については :ref:`Appendix <passay_overview>` を参照。
@@ -1198,7 +1198,7 @@ ER図
      * - 項番
        - 説明
      * - | (1)
-       - | パスワードが過去に使用したパスワードに含まれないをチェックするための\ ``org.passay.HistoryRule`` \を拡張する。
+       - | パスワードが過去に使用したパスワードに含まれないかをチェックするための\ ``org.passay.HistoryRule`` \を拡張する。
      * - | (2)
        - | パスワードのハッシュ化に用いている\ ``PasswordEncoder`` \ をインジェクションする。
      * - | (3)
@@ -1642,7 +1642,7 @@ ER図
      import lombok.Data;
 
      @Data
-     @Compare(source = "newPasssword", destination = "confirmNewPassword", operator = Compare.Operator.EQUAL) // (1)
+     @Compare(left = "newPassword", right = "confirmNewPassword", operator = Compare.Operator.EQUAL) // (1)
      @StrongPassword(usernamePropertyName = "username", newPasswordPropertyName = "newPassword") // (2)
      @NotReusedPassword(usernamePropertyName = "username", newPasswordPropertyName = "newPassword") // (3)
      @ConfirmOldPassword(usernamePropertyName = "username", oldPasswordPropertyName = "oldPassword") // (4)
@@ -1994,7 +1994,7 @@ ER図
            @Override
            public List<FailedAuthentication> findLatestFailureEvents(
                            String username, int count) {
-               return failedAuthenticationRepository.findLatestEvents(username, count);
+               return failedAuthenticationRepository.findLatest(username, count);
            }
 
 
@@ -2347,7 +2347,7 @@ ER図
   * ロックアウト状態の解除
 
     ロックアウト状態の判定に認証失敗イベントエンティティを使用しているため、認証失敗イベントエンティティを削除することでロックアウト状態を解除することができる。
-    ロックアウト解除機能の使用を管理権限を持つユーザに限定するための認可の設定と、ドメイン層・アプリケーション層の実装を行う。
+    ロックアウト解除機能の使用を「管理権限を持つユーザ」に限定するための認可の設定と、ドメイン層・アプリケーション層の実装を行う。
 
     * 認可の設定
 
@@ -2507,8 +2507,8 @@ ER図
 
         <body>
             <div id="wrapper">
-                  <h1>${f:h(username)}'s account was successfully unlocked.</h1>
-                  <a href="${f:h(pageContext.request.contextPath)}/">go to Top</a>
+                <h1>${f:h(username)}'s account was successfully unlocked.</h1>
+                <a href="${f:h(pageContext.request.contextPath)}/">go to Top</a>
             </div>
         </body>
 
@@ -3717,6 +3717,7 @@ ER図
      * - | (2)
        - | (1)で取得した値と、生成したパスワード再発行用の認証情報に含まれるトークンを使用して、ユーザに配布するパスワード再発行画面のURLを作成する。
          | URLの作成には \ ``org.springframework.web.util.UriComponentsBuilder`` \ を利用する。\ ``UriComponentsBuilder`` \ については、:ref:`RESTAppendixHyperMediaLink` の中で説明されている。
+         | 上記例では、作成されるURLのパス以下は"reissue/resetpassword?form&token=512f1a33-da20-4b9f-9e26-8961e9071618"のようになる。（token部分はランダムに生成される。）
      * - | (3)
        - | ユーザの登録メールアドレス宛てに、パスワード再発行画面のURLを本文に記したメールを送付する。
 
@@ -3727,7 +3728,7 @@ ER図
 --------------------------------------------------------------------------------
 実装する要件一覧
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-* :ref:`パスワード再発行用の認証情報の有効期限の設定 <sec-requirements>`
+* :ref:`パスワード再発行用の認証情報に対する有効期限の設定 <sec-requirements>`
 
 動作イメージ
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -3753,7 +3754,7 @@ URLに含まれるトークンと秘密情報の組が正しい場合にのみ�
 | データベースから取得した認証情報中の秘密情報と、ユーザが入力した秘密情報が一致すれば認証成功であり、パスワードを再発行する。
 | 具体的には以下の三つの処理を実装することで要件を実現する。
 
-* パスワード再発行用の認証情報の有効期限の設定
+* パスワード再発行用の認証情報に対する有効期限の設定
 
   :ref:`reissue-info-create` で説明した処理の中で、生成した認証情報に有効期限を設定する。
 
@@ -3771,7 +3772,7 @@ URLに含まれるトークンと秘密情報の組が正しい場合にのみ�
 コード解説
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-* パスワード再発行用の認証情報の有効期限の設定
+* パスワード再発行用の認証情報に対する有効期限の設定
 
   パスワード再発行用の認証情報への有効期限の設定自体は、 :ref:`reissue-info-create` で説明した処理に含まれている。ここでは、関連する実装箇所のみ再掲する。
 
@@ -3917,6 +3918,7 @@ URLに含まれるトークンと秘密情報の組が正しい場合にのみ�
 
            // omitted
 
+           @RequestMapping(value = "resetpassword", params = "form")
            public String showPasswordResetForm(PasswordResetForm form, Model model,
                    @RequestParam("token") String token) { // (1)
 
@@ -4050,7 +4052,7 @@ URLに含まれるトークンと秘密情報の組が正しい場合にのみ�
        // omitted
 
        @Data
-       @Compare(source = "newPasssword", destination = "confirmNewPassword", operator = Compare.Operator.EQUAL)
+       @Compare(left = "newPassword", right = "confirmNewPassword", operator = Compare.Operator.EQUAL)
        @StrongPassword(usernamePropertyName = "username", newPasswordPropertyName = "newPassword") // (1)
        @NotReusedPassword(usernamePropertyName = "username", newPasswordPropertyName = "newPassword") // (2)
        public class PasswordResetForm implements Serializable{
@@ -4263,7 +4265,7 @@ URLに含まれるトークンと秘密情報の組が正しい場合にのみ�
 
   * Entityの実装
 
-    パスワード再発行失敗イベントエンティティの実装の実装は以下の通り。
+    パスワード再発行失敗イベントエンティティの実装は以下の通り。
 
     .. code-block:: java
 
@@ -4490,7 +4492,7 @@ URLに含まれるトークンと秘密情報の組が正しい場合にのみ�
      * - | (2)
        - | パスワード再発行用の認証情報に含まれるハッシュ化された秘密情報と、引数として与えられた秘密情報を比較する。
      * - | (3)
-       - | パスワード再発行失敗時の処理を行うSharedServiceのメソッド呼び出す。
+       - | パスワード再発行失敗時の処理を行うSharedServiceのメソッドを呼び出す。
      * - | (4)
        - | 実行時例外をthrowするが、パスワード再発行失敗時の処理は別のトランザクションで実行されるため、影響を与えることはない。
 
@@ -4803,7 +4805,7 @@ URLに含まれるトークンと秘密情報の組が正しい場合にのみ�
      * - 項番
        - 説明
      * - | (1)
-       - | \ ``InvalidCharacterException`` \はクライアントの入力に起因して発生する例外であるため、のHTTPステータスコードを\ ``"400"`` \(Bad Request)に設定する
+       - | \ ``InvalidCharacterException`` \はクライアントの入力に起因して発生する例外であるため、のHTTPステータスコードを\ ``400`` \(Bad Request)に設定する
 
   **applicationContext.xml**
 
@@ -4897,7 +4899,7 @@ URLに含まれるトークンと秘密情報の組が正しい場合にのみ�
          - | 正規表現を用いた入力チェックを行うために\ ``@Pattern`` \アノテーションを付与する
            | \ ``\P{Cntrl}`` \はJavaの正規表現において「制御文字以外の文字」を意味するため、\ ``^\\P{Cntrl}*$`` \は最初から最後まで制御文字を含まない文字列のみにマッチする
 
-    | 同様に、改行コードを許容する場合のアノテーションをの実装例を以下に示す。
+    | 同様に、改行コードを許容する場合のアノテーションの実装例を以下に示す。
 
     .. code-block:: java
 
@@ -5492,7 +5494,7 @@ URLに含まれるトークンと秘密情報の組が正しい場合にのみ�
 
     アドバイスとは、AOPにおいて指定されたタイミングで実行する処理のことを指す。
     また、アドバイスを織り込むことのできる箇所のことをジョインポイントと呼び、どのジョインポイントにアドバイスを織り込むかを定義したものポイントカットと呼ぶ。
-    Springが提供するAOP機能に関しては、`公式ドキュメント - AOP <http://docs.spring.io/spring/docs/4.3.5.RELEASE/spring-framework-reference/html/aop.html>`_ を参照すること。
+    Springが提供するAOP機能に関しては、`公式ドキュメント - AOP <http://docs.spring.io/spring/docs/4.3.14.RELEASE/spring-framework-reference/html/aop.html>`_ を参照すること。
 
 コード解説
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -5679,7 +5681,7 @@ URLに含まれるトークンと秘密情報の組が正しい場合にのみ�
 
      SpringのAOPは、自動的に作成されたプロキシクラスがメソッド呼び出しをハンドリングする、プロキシ方式を採用している。
      プロキシ方式のAOPの制限として、可視性が\ ``public`` \以外のメソッドの呼び出しや、同一クラス内のメソッド呼び出しの際にはアドバイスが実行されない点に注意する必要がある。
-     詳細は `公式ドキュメント <http://docs.spring.io/spring/docs/4.3.5.RELEASE/spring-framework-reference/html/aop.html#aop-understanding-aop-proxies>`_ を参照すること。
+     詳細は `公式ドキュメント <http://docs.spring.io/spring/docs/4.3.14.RELEASE/spring-framework-reference/html/aop.html#aop-understanding-aop-proxies>`_ を参照すること。
 
   ログの出力結果を以下に示す。
 
@@ -5859,7 +5861,7 @@ How to use
    * - | (3)
      - | 文字数を指定する。ここでは"1"を渡しているため、半角英大文字を一文字以上含むことをチェックする検証規則となる。
    * - | (4)
-     - | (1)-(3)と同様だが、文字種別として\ ``org.passay.EnglishCharacterData.UpperCase`` \を渡しているため、半角英小文字を一文字以上含むことをチェックする検証規則のBean定義となる。
+     - | (1)-(3)と同様だが、文字種別として\ ``org.passay.EnglishCharacterData.LowerCase`` \を渡しているため、半角英小文字を一文字以上含むことをチェックする検証規則のBean定義となる。
    * - | (5)
      - | (1)-(3)と同様だが、文字種別として\ ``org.passay.EnglishCharacterData.Digit`` \を渡しているため、半角数字を一文字以上含むことをチェックする検証規則のBean定義となる。
    * - | (6)
@@ -5966,7 +5968,7 @@ How to use
    * - | (3)
      - | 文字数を指定する。ここでは"1"を渡しているため、半角英大文字を一文字以上含むことをチェックする検証規則となる。
    * - | (4)
-     - | (1)-(3)と同様だが、文字種別として\ ``org.passay.EnglishCharacterData.UpperCase`` \を渡しているため、半角英小文字を一文字以上含むことをチェックする検証規則のBean定義となる。
+     - | (1)-(3)と同様だが、文字種別として\ ``org.passay.EnglishCharacterData.LowerCase`` \を渡しているため、半角英小文字を一文字以上含むことをチェックする検証規則のBean定義となる。
    * - | (5)
      - | (1)-(3)と同様だが、文字種別として\ ``org.passay.EnglishCharacterData.Digit`` \を渡しているため、半角数字を一文字以上含むことをチェックする検証規則のBean定義となる。
    * - | (6)
