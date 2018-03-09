@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>1.8. 更新履歴 &#8212; Macchinetta Server Framework (1.x) Development Guideline 1.4.2.RELEASE documentation</title>
+    
+    <link rel="stylesheet" href="../_static/solar.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.4.2.RELEASE',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="2. アーキテクチャ概要" href="../Overview/index.html" />
+    <link rel="prev" title="1.7. ガイドラインの観点別マッピング" href="CriteriaBasedMapping.html" /><script src="../_static/jquery.treeview.js" type="text/javascript"></script>
+<!-- <link href='http://fonts.googleapis.com/css?family=Source+Code+Pro|Open+Sans:300italic,400italic,700italic,400,300,700' rel='stylesheet' type='text/css'> -->
+<link href="../_static/solarized-dark.css" rel="stylesheet">
+<link href="../_static/jquery.treeview.css" rel="stylesheet">
+  </head>
+  <body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../Overview/index.html" title="2. アーキテクチャ概要"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="CriteriaBasedMapping.html" title="1.7. ガイドラインの観点別マッピング"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Macchinetta Server Framework (1.x) Development Guideline 1.4.2.RELEASE documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">1. はじめに</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><label><input id="scroll" type="checkbox"> scroll sidebar</label>
+
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="CriteriaBasedMapping.html"
+                        title="previous chapter">1.7. ガイドラインの観点別マッピング</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../Overview/index.html"
+                        title="next chapter">2. アーキテクチャ概要</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/Introduction/ChangeLog.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="id1">
+<h1>1.8. 更新履歴<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
+<table border="1" class="colwidths-given docutils">
+<colgroup>
+<col width="15%" />
+<col width="25%" />
+<col width="60%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">更新日付</th>
+<th class="head">更新箇所</th>
+<th class="head">更新内容</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>2018-03-09</td>
+<td>-</td>
+<td>1.4.2 RELEASE版公開</td>
+</tr>
+<tr class="row-odd"><td>&#160;</td>
+<td><a class="reference internal" href="../Overview/FrameworkStack.html"><span class="doc">Macchinetta Server Framework (1.x)のスタック</span></a></td>
+<td><p class="first">CVE-2018-1199への対応のため、利用するOSSのバージョンを更新</p>
+<ul class="last simple">
+<li>Spring Frameworkのバージョンを4.3.14に更新</li>
+<li>Spring Securityのバージョンを4.1.5に更新</li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td>&#160;</td>
+<td><a class="reference internal" href="../ImplementationAtEachLayer/DomainLayer.html"><span class="doc">ドメイン層の実装</span></a></td>
+<td><p class="first">記載内容の追加</p>
+<ul class="last simple">
+<li><code class="docutils literal"><span class="pre">&#64;Transactional</span></code> アノテーションの<code class="docutils literal"><span class="pre">timeout</span></code> 属性に関する記載を追加</li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td>&#160;</td>
+<td><a class="reference internal" href="../ArchitectureInDetail/WebApplicationDetail/Validation.html"><span class="doc">入力チェック</span></a></td>
+<td><p class="first">記載内容の追加</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">&#64;Compare</span></code> アノテーションの<code class="docutils literal"><span class="pre">operator</span></code> 属性に新たに追加された<code class="docutils literal"><span class="pre">NOT_EQUAL</span></code> の説明を追加</li>
+<li><code class="docutils literal"><span class="pre">&#64;Email</span></code> アノテーションを使用する際の注意事項を追加</li>
+</ul>
+<p>ガイドラインのバグ修正</p>
+<ul class="last simple">
+<li>共通ライブラリのチェックルールの拡張方法の実装例を修正</li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td>&#160;</td>
+<td><a class="reference internal" href="../ArchitectureInDetail/WebApplicationDetail/ExceptionHandling.html"><span class="doc">例外ハンドリング</span></a></td>
+<td><p class="first">記載内容の修正</p>
+<ul class="last simple">
+<li>既存の誤記の修正</li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td>&#160;</td>
+<td><a class="reference internal" href="../ArchitectureInDetail/WebApplicationDetail/TilesLayout.html"><span class="doc">Tilesによる画面レイアウト</span></a></td>
+<td><p class="first">記載内容の修正</p>
+<ul class="last simple">
+<li><code class="docutils literal"><span class="pre">&lt;definition&gt;</span></code> タグ(Tiles定義ファイル)の<code class="docutils literal"><span class="pre">name</span></code> 属性のマッチングに関する説明、及び関連する箇所の誤解を招く表現を修正</li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td>&#160;</td>
+<td><a class="reference internal" href="../ArchitectureInDetail/WebServiceDetail/RestClient.html"><span class="doc">RESTクライアント（HTTPクライアント）</span></a></td>
+<td><p class="first">Spring Framework 4.3対応に伴う修正</p>
+<ul class="last simple">
+<li>Basic認証用のリクエストヘッダの設定に関する記載を変更</li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td>&#160;</td>
+<td><a class="reference internal" href="../ArchitectureInDetail/WebServiceDetail/SOAP.html"><span class="doc">SOAP Web Service（サーバ/クライアント）</span></a></td>
+<td><p class="first">記載内容の修正</p>
+<ul class="last simple">
+<li>SOAP Web Serviceの実装に伴うインジェクションで使用するアノテーションを<code class="docutils literal"><span class="pre">&#64;Inject</span></code> から<code class="docutils literal"><span class="pre">&#64;Autowired</span></code> に変更</li>
+<li>Spring FrameworkのJAX-WS連携機能についての誤記修正と、SOAPサーバがJavaEEサーバのJAW-WS実装上で動作することに伴なう注意事項の追記</li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td>&#160;</td>
+<td><a class="reference internal" href="../ArchitectureInDetail/MessagingDetail/JMS.html"><span class="doc">JMS(Java Message Service)</span></a></td>
+<td><p class="first">記載内容の修正</p>
+<ul class="last simple">
+<li>非同期送信のトランザクション管理はChainedTransactionManagerではなくDefaultMessageListenerContainerで行うよう記述を修正</li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td>&#160;</td>
+<td><a class="reference internal" href="../Security/Authentication.html"><span class="doc">認証</span></a></td>
+<td><p class="first">記載内容の追加</p>
+<ul class="simple">
+<li>パスワードを<code class="docutils literal"><span class="pre">StandardPasswordEncoder</span></code> によるハッシュ化によって管理する場合の注意事項を追加</li>
+</ul>
+<p>記載内容の修正</p>
+<ul class="last simple">
+<li>パスワードハッシュ化のためのクラス（<code class="docutils literal"><span class="pre">Pbkdf2PasswordEncoder</span></code>）の説明を追記し、それに伴い<code class="docutils literal"><span class="pre">BCryptPasswordEncoder</span></code>を推奨する記述を削除</li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td>&#160;</td>
+<td><a class="reference internal" href="../Security/Authorization.html"><span class="doc">認可</span></a></td>
+<td><p class="first">Spring Framework 4.3対応に伴う修正</p>
+<ul class="simple">
+<li>ブランクプロジェクトから<code class="docutils literal"><span class="pre">mvc:path-matching</span></code> の定義を削除しSpring MVCのデフォルト設定を使用するよう変更したことに伴う記載内容の修正</li>
+</ul>
+<p>記載内容の修正</p>
+<ul class="last simple">
+<li>Spring Securityでパス変数を使用するアクセスポリシーの定義に関する記載内容を修正</li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td>&#160;</td>
+<td><a class="reference internal" href="../Security/LinkageWithBrowser.html"><span class="doc">ブラウザのセキュリティ対策機能との連携</span></a></td>
+<td><p class="first">記載内容の追加</p>
+<ul class="last simple">
+<li>アプリケーションサーバによってはCache-Controlヘッダが正しく設定されない問題についての注意事項を追加</li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td>&#160;</td>
+<td><a class="reference internal" href="../Security/XSS.html"><span class="doc">XSS対策</span></a></td>
+<td><p class="first">記載内容の修正、追加</p>
+<ul class="last simple">
+<li>JavaScript Escapingのサンプルソースを修正</li>
+<li><code class="docutils literal"><span class="pre">document.write()</span></code> を使用する際の注意事項を追加</li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td>&#160;</td>
+<td><a class="reference internal" href="../Security/OAuth.html"><span class="doc">OAuth</span></a></td>
+<td><p class="first">構成見直し</p>
+<ul class="simple">
+<li>How to useをグラントタイプ毎に説明する章構成に変更</li>
+</ul>
+<p>記載内容の追加</p>
+<ul class="simple">
+<li>Spring Security OAuthで発生する例外の一覧とハンドリング方法の追加</li>
+<li>Spring Security OAuthの拡張ポイントについての説明を追加</li>
+<li>リソースサーバに対するBasic認証設定方法の追加</li>
+<li>インプリシットにおける後処理（アクセストークンクリア）の追加</li>
+</ul>
+<p>記載内容の改善</p>
+<ul class="last simple">
+<li>サンプルコードの修正</li>
+<li>フロー図およびその説明の改善</li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td>2017-11-10</td>
+<td>-</td>
+<td>1.4.1 RELEASE版公開</td>
+</tr>
+<tr class="row-odd"><td>&#160;</td>
+<td>全般</td>
+<td>ガイドラインの誤記(タイプミスや単純な記述ミスなど)の修正</td>
+</tr>
+<tr class="row-even"><td>2017-03-10</td>
+<td>-</td>
+<td>1.4.0 RELEASE版公開</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../Overview/index.html" title="2. アーキテクチャ概要"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="CriteriaBasedMapping.html" title="1.7. ガイドラインの観点別マッピング"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Macchinetta Server Framework (1.x) Development Guideline 1.4.2.RELEASE documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >1. はじめに</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013-2018, NTT Corporation.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.6.2.Theme is <a href="http://github.com/vimalkvn/solar-theme">Solar</a>
+    </div>
+    
+    <script>
+     
+     $(function() {
+    	   var $sidebar	= $('.sphinxsidebar'),
+    		     $window		= $(window),
+    		     offset		= $sidebar.offset(),
+    		     topPadding	= 3,
+    		     $scroll		= $('#scroll');
+    	   
+    	   $window.scroll(function() {
+    		     if ($scroll.is(':checked')) {
+				         if ($window.scrollTop() > offset.top) {
+					           $sidebar.stop().animate({
+						             marginTop:$window.scrollTop() - offset.top + topPadding
+					           });
+				         } else {
+					           $sidebar.stop().animate({
+						             marginTop:0
+					           });
+				         }
+			       }
+		     });
+    	   
+    	   var $navList = $('ul:first', $sidebar);
+    	   $('li:first', $navList).addClass('open');
+    	   
+    	   $navList.treeview({
+    		     persist: "location",
+    		     collapsed: true,
+    		     unique: false
+    	   });
+    	   
+	   });
+    </script>
+    
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-113850349-2"></script>
+    <script>
+     window.dataLayer = window.dataLayer || [];
+     function gtag(){dataLayer.push(arguments);}
+     gtag('js', new Date());
+
+     gtag('config', 'UA-113850349-2');
+    </script>
+  </body>
+</html>
