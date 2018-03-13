@@ -13,7 +13,7 @@ Source files of this guideline are stored into following directories.
 
 ## Source file format
 
-This guideline is written by the reStructuredText format(`.rst`).
+This guideline is written in the reStructuredText format(`.rst`).
 About the reStructuredText format, refer to the [Sphinx documentation contents](http://sphinx-doc.org/contents.html).
 
 
