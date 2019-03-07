@@ -749,7 +749,7 @@ How to use
 
         .. note:: **例外コード(メッセージID)について**
 
-             例外コードは、ExceptionLoggerによりログに出力される。（画面での取得も可能である。View(JSP)から例外コードを参照する方法については、\ :ref:`exception-handling-how-to-use-codingpoint-jsp-exceptioncode-label`\ を参照されたい。）
+             例外コードは、ExceptionLoggerによりログに出力される。（画面での取得も可能である。View(JSP)から例外コードを参照する方法については、\ :ref:`exception-handling-how-to-use-codingpoint-view-exceptioncode-label`\ を参照されたい。）
              またコード体系については、プロパティに定義している形式でなくともよい。
              例えば、MA7001等
 
@@ -1011,20 +1011,6 @@ ResultMessagesを保持する例外(BisinessException,ResourceNotFoundException)
 
         が遷移先となる。
 
-        .. tip::
-
-            \ ``<mvc:view-resolvers>``\ 要素はSpring Framework 4.1から追加されたXML要素である。
-            \ ``<mvc:view-resolvers>``\ 要素を使用すると、\ ``ViewResolver``\ をシンプルに定義することが出来る。
-
-            従来通り\ ``<bean>``\ 要素を使用した場合の定義例を以下に示す。
-
-             .. code-block:: xml
-
-                <bean id="viewResolver"
-                    class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-                    <property name="prefix" value="/WEB-INF/views/" />
-                    <property name="suffix" value=".jsp" />
-                </bean>
 
  .. raw:: latex
 
@@ -1684,7 +1670,7 @@ Spring MVCの、デフォルトの例外ハンドリング機能によって行�
 例外ハンドリングを行う際の、JSPでのコーディングポイントを、以下に示す。
 
 #. :ref:`exception-handling-how-to-use-codingpoint-jsp-panel-label`
-#. :ref:`exception-handling-how-to-use-codingpoint-jsp-exceptioncode-label`
+#. :ref:`exception-handling-how-to-use-codingpoint-view-exceptioncode-label`
 
 .. tip::
 
@@ -1715,7 +1701,7 @@ MessagesPanelTagを使用して、メッセージを画面表示する方法
       -  メッセージを出力したい場所に、<t:messagesPanel>タグを指定する。 <t:messagesPanel>タグの使用方法の詳細については、\ :doc:`../WebApplicationDetail/MessageManagement`\ を参照されたい。
 
 
-.. _exception-handling-how-to-use-codingpoint-jsp-exceptioncode-label:
+.. _exception-handling-how-to-use-codingpoint-view-exceptioncode-label:
 
 システム例外の例外コードを、画面表示する方法
 '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''

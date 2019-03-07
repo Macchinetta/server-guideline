@@ -532,7 +532,7 @@ web.xmlの修正
 spring-mvc-rest.xmlの作成
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-| \ :file:`src/main/resources/META-INF/spring/spring-mvc.xml`\ をコピーして、REST用のSpring MVC設定ファイルを作成する。
+| REST用のSpring MVC設定ファイルを作成する。
 | REST用のSpring MVC設定ファイルは以下のような定義となる。
 
 .. figure:: ./images_rest/add-spring-mvc-rest.png
@@ -540,7 +540,7 @@ spring-mvc-rest.xmlの作成
 ``src/main/resources/META-INF/spring/spring-mvc-rest.xml``
 
 .. code-block:: xml
-    :emphasize-lines: 25-39,44
+    :emphasize-lines: 15,20-34,37,39,50
 
     <?xml version="1.0" encoding="UTF-8"?>
     <beans xmlns="http://www.springframework.org/schema/beans"
@@ -556,25 +556,20 @@ spring-mvc-rest.xmlの作成
             http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
         ">
 
+        <!-- (1) -->
         <context:property-placeholder
             location="classpath*:/META-INF/spring/*.properties" />
 
         <mvc:annotation-driven>
-            <mvc:argument-resolvers>
-                <bean
-                    class="org.springframework.data.web.PageableHandlerMethodArgumentResolver" />
-                <bean
-                    class="org.springframework.security.web.method.annotation.AuthenticationPrincipalArgumentResolver" />
-            </mvc:argument-resolvers>
             <mvc:message-converters register-defaults="false">
-                <!-- (1) -->
+                <!-- (2) -->
                 <bean
                     class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
-                    <!-- (2) -->
+                    <!-- (3) -->
                     <property name="objectMapper">
                         <bean class="com.fasterxml.jackson.databind.ObjectMapper">
                             <property name="dateFormat">
-                                <!-- (3) -->
+                                <!-- (4) -->
                                 <bean class="com.fasterxml.jackson.databind.util.StdDateFormat"/>
                             </property>
                         </bean>
@@ -583,10 +578,9 @@ spring-mvc-rest.xmlの作成
             </mvc:message-converters>
         </mvc:annotation-driven>
 
-        <mvc:default-servlet-handler />
+        <context:component-scan base-package="com.example.todo.api" /> <!-- (5) -->
 
-        <context:component-scan base-package="todo.api" /> <!-- (4) -->
-
+        <!-- (6) -->
         <mvc:interceptors>
             <mvc:interceptor>
                 <mvc:mapping path="/**" />
@@ -595,66 +589,9 @@ spring-mvc-rest.xmlの作成
                 <bean
                     class="org.terasoluna.gfw.web.logging.TraceLoggingInterceptor" />
             </mvc:interceptor>
-            <mvc:interceptor>
-                <mvc:mapping path="/**" />
-                <mvc:exclude-mapping path="/resources/**" />
-                <mvc:exclude-mapping path="/**/*.html" />
-                <bean
-                    class="org.terasoluna.gfw.web.token.transaction.TransactionTokenInterceptor" />
-            </mvc:interceptor>
-            <mvc:interceptor>
-                <mvc:mapping path="/**" />
-                <mvc:exclude-mapping path="/resources/**" />
-                <mvc:exclude-mapping path="/**/*.html" />
-                <bean class="org.terasoluna.gfw.web.codelist.CodeListInterceptor">
-                    <property name="codeListIdPattern" value="CL_.+" />
-                </bean>
-            </mvc:interceptor>
         </mvc:interceptors>
 
-        <!-- Settings View Resolver. -->
-        <mvc:view-resolvers>
-            <mvc:jsp prefix="/WEB-INF/views/" />
-        </mvc:view-resolvers>
-
-        <bean id="requestDataValueProcessor"
-            class="org.terasoluna.gfw.web.mvc.support.CompositeRequestDataValueProcessor">
-            <constructor-arg>
-                <util:list>
-                    <bean
-                        class="org.springframework.security.web.servlet.support.csrf.CsrfRequestDataValueProcessor" />
-                    <bean
-                        class="org.terasoluna.gfw.web.token.transaction.TransactionTokenRequestDataValueProcessor" />
-                </util:list>
-            </constructor-arg>
-        </bean>
-
-        <!-- Setting Exception Handling. -->
-        <!-- Exception Resolver. -->
-        <bean id="systemExceptionResolver"
-            class="org.terasoluna.gfw.web.exception.SystemExceptionResolver">
-            <property name="exceptionCodeResolver" ref="exceptionCodeResolver" />
-            <!-- Setting and Customization by project. -->
-            <property name="order" value="3" />
-            <property name="exceptionMappings">
-                <map>
-                    <entry key="ResourceNotFoundException" value="common/error/resourceNotFoundError" />
-                    <entry key="BusinessException" value="common/error/businessError" />
-                    <entry key="InvalidTransactionTokenException" value="common/error/transactionTokenError" />
-                    <entry key=".DataAccessException" value="common/error/dataAccessError" />
-                </map>
-            </property>
-            <property name="statusCodes">
-                <map>
-                    <entry key="common/error/resourceNotFoundError" value="404" />
-                    <entry key="common/error/businessError" value="409" />
-                    <entry key="common/error/transactionTokenError" value="409" />
-                    <entry key="common/error/dataAccessError" value="500" />
-                </map>
-            </property>
-            <property name="defaultErrorView" value="common/error/systemError" />
-            <property name="defaultStatusCode" value="500" />
-        </bean>
+        <!-- (7) -->
         <!-- Setting AOP. -->
         <bean id="handlerExceptionResolverLoggingInterceptor"
             class="org.terasoluna.gfw.web.exception.HandlerExceptionResolverLoggingInterceptor">
@@ -675,24 +612,30 @@ spring-mvc-rest.xmlの作成
    * - 項番
      - 説明
    * - | (1)
+     - \ アプリケーション層のコンポーネントでプロパティファイルに定義されている値を参照する必要がある場合は、\ ``<context:property-placeholder>``\要素を使用してプロパティファイルを読み込む必要がある。
+   * - | (2)
      - \ ``<mvc:message-converters>``\ に、Controllerの引数と返り値で扱うJavaBeanをシリアライズ/デシリアライズするためのクラス(\ ``org.springframework.http.converter.HttpMessageConverter``\ )を設定する。
 
        \ ``HttpMessageConverter``\ は複数設定する事ができるが、本チュートリアルではJSONしか使用しないため、\ ``MappingJackson2HttpMessageConverter``\ のみ指定している。
-   * - | (2)
+   * - | (3)
      - \ ``MappingJackson2HttpMessageConverter``\ の\ ``objectMapper``\ プロパティに、Jacksonより提供されている\ ``ObjectMapper``\ (「JSON <-> JavaBean」の変換を行うためのコンポーネント)を指定する。
 
        本チュートリアルでは、日時型のフォーマットをカスタマイズした\ ``ObjectMapper``\ を指定している。
        カスタマイズする必要がない場合は\ ``objectMapper``\ プロパティは省略可能である。
-   * - | (3)
+   * - | (4)
      - \ ``ObjectMapper``\ の\ ``dateFormat``\ プロパティに、日時型フィールドの形式を指定する。
 
        本チュートリアルでは、\ ``java.util.Date``\ オブジェクトをシリアライズする際にISO-8601形式とする。
        \ ``Date``\ オブジェクトをシリアライズする際にISO-8601形式にする場合は、\ ``com.fasterxml.jackson.databind.util.StdDateFormat``\ を設定する事で実現する事ができる。
-   * - | (4)
+   * - | (5)
      - REST API用のパッケージ配下のコンポーネントをスキャンする。
 
-       本チュートリアルでは、REST API用のパッケージを\ ``todo.api``\ にしている。
+       本チュートリアルでは、REST API用のパッケージを\ ``com.example.todo.api``\ にしている。
        画面遷移用のControllerは、\ ``app``\ パッケージ配下に格納していたが、REST API用のControllerは、\ ``api``\ パッケージ配下に格納する事を推奨する。
+   * - | (6)
+     - \ Controllerの処理開始、終了時の情報をログに出力するために、共通ライブラリから提供されている\ ``TraceLoggingInterceptor``\を定義する。
+   * - | (7)
+     - \ Spring MVCのフレームワークでハンドリングされた例外を、ログ出力するためのAOP定義を指定する。
 
 |
 
@@ -790,7 +733,7 @@ REST API用パッケージの作成
 REST API用のクラスを格納するパッケージを作成する。
 
 | REST API用のクラスを格納するルートパッケージのパッケージ名は\ ``api``\ として、配下にリソース毎のパッケージ(リソース名の小文字)を作成する事を推奨する。
-| 本チュートリアルで扱うリソースのリソース名はTodoなので、\ ``todo.api.todo``\ パッケージを作成する。
+| 本チュートリアルで扱うリソースのリソース名はTodoなので、\ ``com.example.todo.api.todo``\ パッケージを作成する。
 
 .. figure:: ./images_rest/make-package-for-rest.png
 
@@ -820,11 +763,11 @@ Resourceクラスの作成
 | Todoリソースを表現する\ ``TodoResource``\ クラスを作成する。
 | 本ガイドラインでは、REST APIの入出力となるJSON(またはXML)を表現するJava Beanを\ **Resourceクラス**\ と呼ぶ。
 
-``src/main/java/todo/api/todo/TodoResource.java``
+``src/main/java/com/example/todo/api/todo/TodoResource.java``
 
 .. code-block:: java
 
-    package todo.api.todo;
+    package com.example.todo.api.todo;
 
     import java.io.Serializable;
     import java.util.Date;
@@ -900,11 +843,11 @@ Controllerクラスの作成
 
 \ ``TodoResource``\ のREST APIを提供する\ ``TodoRestController``\ クラスを作成する。
 
-``src/main/java/todo/api/todo/TodoRestController.java``
+``src/main/java/com/example/todo/api/todo/TodoRestController.java``
 
 .. code-block:: java
 
-    package todo.api.todo;
+    package com.example.todo.api.todo;
     
     import org.springframework.web.bind.annotation.RequestMapping;
     import org.springframework.web.bind.annotation.RestController;
@@ -936,12 +879,12 @@ GET Todosの実装
 
 作成済みのTodoリソースを全件取得するAPI(GET Todos)の処理を、\ ``TodoRestController``\ の\ ``getTodos``\ メソッドに実装する。
 
-``src/main/java/todo/api/todo/TodoRestController.java``
+``src/main/java/com/example/todo/api/todo/TodoRestController.java``
 
 .. code-block:: java
     :emphasize-lines: 23-37
 
-    package todo.api.todo;
+    package com.example.todo.api.todo;
     
     import java.util.ArrayList;
     import java.util.Collection;
@@ -949,15 +892,15 @@ GET Todosの実装
     
     import javax.inject.Inject;
     
-    import org.dozer.Mapper;
+    import com.github.dozermapper.core.Mapper;
     import org.springframework.http.HttpStatus;
     import org.springframework.web.bind.annotation.RequestMapping;
     import org.springframework.web.bind.annotation.RequestMethod;
     import org.springframework.web.bind.annotation.ResponseStatus;
     import org.springframework.web.bind.annotation.RestController;
     
-    import todo.domain.model.Todo;
-    import todo.domain.service.todo.TodoService;
+    import com.example.todo.domain.model.Todo;
+    import com.example.todo.domain.service.todo.TodoService;
     
     @RestController
     @RequestMapping("todos")
@@ -995,7 +938,7 @@ GET Todosの実装
        | HTTPステータスとして、"200 OK"を設定するため、\ ``value``\ 属性には\ ``HttpStatus.OK``\ を設定する。
    * - | (3)
      - | \ ``TodoService``\ の\ ``findAll``\ メソッドから返却された\ ``Todo``\ オブジェクトを、応答するJSONを表現する\ ``TodoResource``\ 型のオブジェクトに変換する。
-       | \ ``Todo``\ と\ ``TodoResource``\ の変換処理は、Dozerの\ ``org.dozer.Mapper``\ インタフェースを使うと便利である。
+       | \ ``Todo``\ と\ ``TodoResource``\ の変換処理は、Dozerの\ ``com.github.dozermapper.core.Mapper``\ インタフェースを使うと便利である。
    * - | (4)
      - | \ ``List<TodoResource>``\ オブジェクトを返却することで、\ ``spring-mvc-rest.xml``\ に定義した\ ``MappingJackson2HttpMessageConverter``\ によってJSONにシリアライズされる。
 
@@ -1024,12 +967,12 @@ POST Todosの実装
 
 Todoリソースを新規作成するAPI(POST Todos)の処理を、\ ``TodoRestController``\ の\ ``postTodos``\ メソッドに実装する。
 
-``src/main/java/todo/api/todo/TodoRestController.java``
+``src/main/java/com/example/todo/api/todo/TodoRestController.java``
 
 .. code-block:: java
     :emphasize-lines: 41-47
 
-    package todo.api.todo;
+    package com.example.todo.api.todo;
 
     import java.util.ArrayList;
     import java.util.Collection;
@@ -1037,7 +980,7 @@ Todoリソースを新規作成するAPI(POST Todos)の処理を、\ ``TodoRestC
 
     import javax.inject.Inject;
 
-    import org.dozer.Mapper;
+    import com.github.dozermapper.core.Mapper;
     import org.springframework.http.HttpStatus;
     import org.springframework.validation.annotation.Validated;
     import org.springframework.web.bind.annotation.RequestBody;
@@ -1046,8 +989,8 @@ Todoリソースを新規作成するAPI(POST Todos)の処理を、\ ``TodoRestC
     import org.springframework.web.bind.annotation.ResponseStatus;
     import org.springframework.web.bind.annotation.RestController;
 
-    import todo.domain.model.Todo;
-    import todo.domain.service.todo.TodoService;
+    import com.example.todo.domain.model.Todo;
+    import com.example.todo.domain.service.todo.TodoService;
 
     @RestController
     @RequestMapping("todos")
@@ -1138,19 +1081,19 @@ GET Todoの実装
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 ﻿\ :doc:`./TutorialTodo`\ では、\ ``TodoService``\ に一件取得用のメソッド(\ ``findOne``\ )を作成しなかったため、
-\ ``TodoService``\ と\ ``TodoServiceImpl``\ に以下のハイライト部を追加する。
+\ ``TodoService``\ と\ ``TodoServiceImpl``\ に以下のハイライト部を修正・追加する。
 
 | \ ``findOne``\ メソッドの定義を追加する。
-| ``src/main/java/todo/domain/service/todo/TodoService.java``
+| ``src/main/java/com/example/todo/domain/service/todo/TodoService.java``
 
 .. code-block:: java
     :emphasize-lines: 10
 
-    package todo.domain.service.todo;
+    package com.example.todo.domain.service.todo;
       
     import java.util.Collection;
       
-    import todo.domain.model.Todo;
+    import com.example.todo.domain.model.Todo;
       
     public interface TodoService {
         Collection<Todo> findAll();
@@ -1166,13 +1109,13 @@ GET Todoの実装
 
 |
 
-| \ ``findOne``\ メソッド呼び出し時に開始されるトランザクションを読み取り専用に設定する。
-| ``src/main/java/todo/domain/service/todo/TodoServiceImpl.java``
+| \ ``findOne``\ メソッド呼び出し時に開始されるトランザクションを読み取り専用に設定し、アクセス修飾子を\ ``public``\ に変更する。
+| ``src/main/java/com/example/todo/domain/service/todo/TodoServiceImpl.java``
 
 .. code-block:: java
-    :emphasize-lines: 29
+    :emphasize-lines: 28-30
 
-    package todo.domain.service.todo;
+    package com.example.todo.domain.service.todo;
 
     import java.util.Collection;
     import java.util.Date;
@@ -1187,8 +1130,8 @@ GET Todoの実装
     import org.terasoluna.gfw.common.message.ResultMessage;
     import org.terasoluna.gfw.common.message.ResultMessages;
 
-    import todo.domain.model.Todo;
-    import todo.domain.repository.todo.TodoRepository;
+    import com.example.todo.domain.model.Todo;
+    import com.example.todo.domain.repository.todo.TodoRepository;
 
     @Service
     @Transactional
@@ -1267,12 +1210,12 @@ GET Todoの実装
 |
 
 | Todoリソースを一件取得するAPI(GET Todo)の処理を、\ ``TodoRestController``\ の\ ``getTodo``\ メソッドに実装する。
-| ``src/main/java/todo/api/todo/TodoRestController.java``
+| ``src/main/java/com/example/todo/api/todo/TodoRestController.java``
 
 .. code-block:: java
     :emphasize-lines: 50-56
 
-    package todo.api.todo;
+    package com.example.todo.api.todo;
 
     import java.util.ArrayList;
     import java.util.Collection;
@@ -1280,7 +1223,7 @@ GET Todoの実装
 
     import javax.inject.Inject;
 
-    import org.dozer.Mapper;
+    import com.github.dozermapper.core.Mapper;
     import org.springframework.http.HttpStatus;
     import org.springframework.validation.annotation.Validated;
     import org.springframework.web.bind.annotation.PathVariable;
@@ -1290,8 +1233,8 @@ GET Todoの実装
     import org.springframework.web.bind.annotation.ResponseStatus;
     import org.springframework.web.bind.annotation.RestController;
 
-    import todo.domain.model.Todo;
-    import todo.domain.service.todo.TodoService;
+    import com.example.todo.domain.model.Todo;
+    import com.example.todo.domain.service.todo.TodoService;
 
     @RestController
     @RequestMapping("todos")
@@ -1364,12 +1307,12 @@ PUT Todoの実装
 
 Todoリソースを一件更新(完了状態へ更新)するAPI(PUT Todo)の処理を、\ ``TodoRestController``\ の\ ``putTodo``\ メソッドに実装する。
 
-``src/main/java/todo/api/todo/TodoRestController.java``
+``src/main/java/com/example/todo/api/todo/TodoRestController.java``
 
 .. code-block:: java
     :emphasize-lines: 58-64
 
-    package todo.api.todo;
+    package com.example.todo.api.todo;
     
     import java.util.ArrayList;
     import java.util.Collection;
@@ -1377,7 +1320,7 @@ Todoリソースを一件更新(完了状態へ更新)するAPI(PUT Todo)の処�
     
     import javax.inject.Inject;
     
-    import org.dozer.Mapper;
+    import com.github.dozermapper.core.Mapper;
     import org.springframework.http.HttpStatus;
     import org.springframework.validation.annotation.Validated;
     import org.springframework.web.bind.annotation.PathVariable;
@@ -1387,8 +1330,8 @@ Todoリソースを一件更新(完了状態へ更新)するAPI(PUT Todo)の処�
     import org.springframework.web.bind.annotation.ResponseStatus;
     import org.springframework.web.bind.annotation.RestController;
     
-    import todo.domain.model.Todo;
-    import todo.domain.service.todo.TodoService;
+    import com.example.todo.domain.model.Todo;
+    import com.example.todo.domain.service.todo.TodoService;
     
     @RestController
     @RequestMapping("todos")
@@ -1475,12 +1418,12 @@ DELETE Todoの実装
 
 最後に、Todoリソースを一件削除するAPI(DELETE Todo)の処理を、\ ``TodoRestController``\ の\ ``deleteTodo``\メソッドに実装する。
 
-``src/main/java/todo/api/todo/TodoRestController.java``
+``src/main/java/com/example/todo/api/todo/TodoRestController.java``
 
 .. code-block:: java
     :emphasize-lines: 66-70
 
-    package todo.api.todo;
+    package com.example.todo.api.todo;
 
     import java.util.ArrayList;
     import java.util.Collection;
@@ -1488,7 +1431,7 @@ DELETE Todoの実装
 
     import javax.inject.Inject;
 
-    import org.dozer.Mapper;
+    import com.github.dozermapper.core.Mapper;
     import org.springframework.http.HttpStatus;
     import org.springframework.validation.annotation.Validated;
     import org.springframework.web.bind.annotation.PathVariable;
@@ -1498,8 +1441,8 @@ DELETE Todoの実装
     import org.springframework.web.bind.annotation.ResponseStatus;
     import org.springframework.web.bind.annotation.RestController;
 
-    import todo.domain.model.Todo;
-    import todo.domain.service.todo.TodoService;
+    import com.example.todo.domain.model.Todo;
+    import com.example.todo.domain.service.todo.TodoService;
 
     @RestController
     @RequestMapping("todos")
@@ -1610,12 +1553,12 @@ DELETE Todoの実装
 | そのため、例外ハンドリングの実装を行う前に、\ :doc:`./TutorialTodo`\ で作成したServiceクラスの実装を以下のように変更する。
 
 | ハードコーディングされていたエラーメッセージの代わりに、エラーコードを指定するように変更する。
-| ``src/main/java/todo/domain/service/todo/TodoServiceImpl.java``
+| ``src/main/java/com/example/todo/domain/service/todo/TodoServiceImpl.java``
 
 .. code-block:: java
     :emphasize-lines: 33, 50, 74
 
-    package todo.domain.service.todo;
+    package com.example.todo.domain.service.todo;
 
     import java.util.Collection;
     import java.util.Date;
@@ -1629,8 +1572,8 @@ DELETE Todoの実装
     import org.terasoluna.gfw.common.exception.ResourceNotFoundException;
     import org.terasoluna.gfw.common.message.ResultMessages;
 
-    import todo.domain.model.Todo;
-    import todo.domain.repository.todo.TodoRepository;
+    import com.example.todo.domain.model.Todo;
+    import com.example.todo.domain.repository.todo.TodoRepository;
 
     @Service
     @Transactional
@@ -1776,7 +1719,7 @@ DELETE Todoの実装
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^  
 
 | エラーハンドリング用のクラスを格納するためのパッケージを作成する。
-| 本チュートリアルでは、\ ``todo.api.common.error``\をエラーハンドリング用のクラスを格納するためのパッケージとする。
+| 本チュートリアルでは、\ ``com.example.todo.api.common.error``\をエラーハンドリング用のクラスを格納するためのパッケージとする。
 
 .. figure:: ./images_rest/exception-package.png
 
@@ -1786,15 +1729,15 @@ REST APIのエラーハンドリングを行うクラスの作成
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^  
 
 | REST APIのエラーハンドリングは、Spring MVCから提供されている\ ``org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler``\ を継承したクラスを作成し、\ ``@ControllerAdvice``\アノテーションを付与する方法でハンドリングする。
-| 以下に、\ ``ResponseEntityExceptionHandler``\を継承した\ ``todo.api.common.error.RestGlobalExceptionHandler``\ クラスを作成する。
+| 以下に、\ ``ResponseEntityExceptionHandler``\を継承した\ ``com.example.todo.api.common.error.RestGlobalExceptionHandler``\ クラスを作成する。
 
 .. figure:: ./images_rest/exception-handlingclass.png
 
-``src/main/java/todo/api/common/error/RestGlobalExceptionHandler.java``
+``src/main/java/com/example/todo/api/common/error/RestGlobalExceptionHandler.java``
 
 .. code-block:: java
 
-    package todo.api.common.error;
+    package com.example.todo.api.common.error;
     
     import org.springframework.web.bind.annotation.ControllerAdvice;
     import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
@@ -1809,16 +1752,16 @@ REST APIのエラーハンドリングを行うクラスの作成
 REST APIのエラー情報を保持するJavaBeanの作成
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^  
 
-| REST APIで発生したエラー情報を保持するクラスとして、\ ``ApiError``\クラスを\ ``todo.api.common.error``\ パッケージに作成する。
+| REST APIで発生したエラー情報を保持するクラスとして、\ ``ApiError``\クラスを\ ``com.example.todo.api.common.error``\ パッケージに作成する。
 | \ ``ApiError``\クラスがJSONに変換されて、クライアントに応答される。
 
 .. figure:: ./images_rest/exception-apierror.png
 
-``src/main/java/todo/api/common/error/ApiError.java``
+``src/main/java/com/example/todo/api/common/error/ApiError.java``
 
 .. code-block:: java
 
-    package todo.api.common.error;
+    package com.example.todo.api.common.error;
 
     import java.io.Serializable;
     import java.util.ArrayList;
@@ -1880,12 +1823,12 @@ HTTPレスポンスBODYにエラー情報を出力するための実装
 \ ``ResponseEntityExceptionHandler``\ はデフォルトではHTTPステータス(400や500など)の設定のみを行い、HTTPレスポンスのBODYは設定しない。
 そのため、\ ``handleExceptionInternal``\ メソッドを以下のようにオーバーライドして、BODYを出力するように実装する。
 
-``src/main/java/todo/api/common/error/RestGlobalExceptionHandler.java``
+``src/main/java/com/example/todo/api/common/error/RestGlobalExceptionHandler.java``
 
 .. code-block:: java
     :emphasize-lines: 16-17, 19-28, 30-34
 
-    package todo.api.common.error;
+    package com.example.todo.api.common.error;
 
     import javax.inject.Inject;
 
@@ -1952,12 +1895,12 @@ HTTPレスポンスBODYにエラー情報を出力するための実装
 | 本チュートリアルでは、\ ``MethodArgumentNotValidException``\ のエラーハンドリングの実装を行う。
 | \ ``MethodArgumentNotValidException``\は、HTTPリクエストBODYに格納されているデータに入力エラーがあった場合に発生する例外である。
 
-``src/main/java/todo/api/common/error/RestGlobalExceptionHandler.java``
+``src/main/java/com/example/todo/api/common/error/RestGlobalExceptionHandler.java``
 
 .. code-block:: java
     :emphasize-lines: 40-54, 56-61
 
-    package todo.api.common.error;
+    package com.example.todo.api.common.error;
     
     import javax.inject.Inject;
     
@@ -2050,12 +1993,12 @@ HTTPレスポンスBODYにエラー情報を出力するための実装
 
 業務例外が発生した場合は、"409 Conflict"のHTTPステータスを設定する。
 
-``src/main/java/todo/api/common/error/RestGlobalExceptionHandler.java``
+``src/main/java/com/example/todo/api/common/error/RestGlobalExceptionHandler.java``
 
 .. code-block:: java
     :emphasize-lines: 67-72, 74-81
 
-    package todo.api.common.error;
+    package com.example.todo.api.common.error;
 
     import javax.inject.Inject;
 
@@ -2160,12 +2103,12 @@ HTTPレスポンスBODYにエラー情報を出力するための実装
 
 リソース未検出例外が発生した場合、"404 NotFound"のHTTPステータスを設定する。
 
-``src/main/java/todo/api/common/error/RestGlobalExceptionHandler.java``
+``src/main/java/com/example/todo/api/common/error/RestGlobalExceptionHandler.java``
 
 .. code-block:: java
     :emphasize-lines: 84-89
 
-    package todo.api.common.error;
+    package com.example.todo.api.common.error;
 
     import javax.inject.Inject;
 
@@ -2276,12 +2219,12 @@ HTTPレスポンスBODYにエラー情報を出力するための実装
 
 システム例外が発生した場合、"500 InternalServerError"のHTTPステータスを設定する。
 
-``src/main/java/todo/api/common/error/RestGlobalExceptionHandler.java``
+``src/main/java/com/example/todo/api/common/error/RestGlobalExceptionHandler.java``
 
 .. code-block:: java
     :emphasize-lines: 91-97
 
-    package todo.api.common.error;
+    package com.example.todo.api.common.error;
 
     import javax.inject.Inject;
 
@@ -2435,8 +2378,8 @@ DHCを開いてURLに\ ``localhost:8080/todo/api/v1/todos``\ を入力し、メ�
                     created_at
                 FROM
                     todo [42102-182]
-        ### The error may exist in todo/domain/repository/todo/TodoRepository.xml
-        ### The error may involve todo.domain.repository.todo.TodoRepository.findAll
+        ### The error may exist in com/example/todo/domain/repository/todo/TodoRepository.xml
+        ### The error may involve com.example.todo.domain.repository.todo.TodoRepository.findAll
         ### The error occurred while executing a query
 
         ... (omitted)

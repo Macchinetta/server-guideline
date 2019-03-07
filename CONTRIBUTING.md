@@ -3,8 +3,8 @@
 This document describes how to contribute the Development Guideline updates.
 
 The Development Guideline is written by the reStructuredText format(`.rst`).
-We build to the HTML and PDF files using the [Sphinx](http://sphinx-doc.org/index.html).
-About Sphinx and reStructuredText format, refer to the [Sphinx documentation contents](http://sphinx-doc.org/contents.html).
+We build to the HTML and PDF files using the [Sphinx](https://www.sphinx-doc.org/en/master/).
+About Sphinx and reStructuredText format, refer to the [Sphinx documentation contents](https://www.sphinx-doc.org/en/master/contents.html).
 
 Contribution procedures are follows:
 
@@ -83,7 +83,7 @@ Please modify the development guideline for contributing.
 
 > **Note: Build to the HTML**
 >
-> If possible, please build to the HTML using the [Sphinx](http://sphinx-doc.org/index.html) and check your modification on the web browser. (Optional)
+> If possible, please build to the HTML using the [Sphinx](https://www.sphinx-doc.org/en/master/) and check your modification on the web browser. (Optional)
 
 
 

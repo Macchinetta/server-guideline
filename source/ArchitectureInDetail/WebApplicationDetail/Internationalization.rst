@@ -19,7 +19,7 @@ Overview
 * 画面内のテキスト要素（コード値の名称、メッセージ、GUIコンポーネントのラベルなど）は、プログラム内でハードコードせずに、プロパティファイルなどの外部定義から取得する。
 * クライアントからLocaleを指定する仕組みを提供する。
 
-クライアントからLocaleを指定する方法は通りである。
+クライアントからLocaleを指定する方法は以下の通りである。
 
 * 標準のリクエストヘッダを使用する。(ブラウザの言語設定で指定)
 * リクエストパラメータを使用してCookieに保存する。
@@ -304,7 +304,7 @@ LocaleChangeInterceptorの設定
       - | 説明
     * - | (1)
       - | Spring MVCのインタセプターに、 ``org.springframework.web.servlet.i18n.LocaleChangeInterceptor`` を定義する。
-        | この設定により、"リクエストURL?locale=xx"で :ref:`使用可能<i18n_set_locale_jsp>` となる。
+        | この設定により、"リクエストURL?locale=xx"で :ref:`使用可能<i18n_set_locale_view>` となる。
 
 .. note::
 
@@ -422,7 +422,7 @@ Localeをクライアントに保存する場合は、\ ``CookieLocaleResolver``
 
 |
 
-.. _i18n_set_locale_jsp:
+.. _i18n_set_locale_view:
 
 JSPの実装
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""

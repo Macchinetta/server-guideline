@@ -581,6 +581,17 @@ Lombokのアノテーションを使用して\ ``equals``\ メソッドと\ ``ha
         デフォルトコンストラクタを使用した場合は3ステップ必要だったものが、
         1ステップでインスタンスの生成が出来るようになった。
 
+.. warning:: **@Dataと@NoArgsConstructorを付与する順序について**
+
+    Macchinetta Framework 1.6.0が利用するLombok 1.6.22では、\ ``@Data``\と\ ``@NoArgsConstructor``\の付与順序によってはコンパイルエラーが発生するという事象が確認されている。
+    具体的には、\ ``@Data``\により生成されたデフォルトコンストラクタを\ ``@NoArgsConstructor``\が再度生成することによりコンパイルエラーになる事象で、Lombok 1.18.0で修正されている。
+    
+    この事象を回避するには、\ ``@NoArgsConstructor``\を\ ``@Data``\より上に付与すれば良い。
+    また、Lombokのバージョンを1.18.0以上に上げることでも回避可能である。
+    詳しくは、`Lombok-1.16.22-constructor already defined in class <https://github.com/rzwitserloot/lombok/issues/1703>`_ を参照されたい。
+
+|
+
 .. tip::
 
     上記例で扱っている\ ``User``\クラスを、JavaBeanではなく、Immutableなクラスにしたい場合は、

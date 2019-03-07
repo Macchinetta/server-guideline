@@ -25,7 +25,7 @@ Beanマッピングは、一つのBeanを他のBeanにフィールド値をコ�
    :width: 80%
 
 | このオブジェクト間のマッピングは、Beanのgetter/setterを呼び出して、データの受け渡しを行うことで実現できる。
-| しかしながら、処理が煩雑になり、プログラムの見通しが悪くなるため、本ガイドラインでは、BeanマッピングライブラリであるOSSで利用可能な `Dozer <http://dozer.sourceforge.net>`_ を使用することを推奨する。
+| しかしながら、処理が煩雑になり、プログラムの見通しが悪くなるため、本ガイドラインでは、BeanマッピングライブラリであるOSSで利用可能な `Dozer <https://dozermapper.github.io/gitbook/>`_ を使用することを推奨する。
 
 | Dozerを使用することで下図のように、コピー元クラスとコピー先クラスで型が異なるコピーや、ネストしたBean同士のコピーも容易に行うことができる。
 
@@ -78,22 +78,22 @@ Dozerは、Java Beanのマッピング機能ライブラリである。
 Dozerを使用するためのBean定義
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-Dozerは、単独で使用するとき、以下のように、 ``org.dozer.Mapper`` のインスタンスを作成する。
+Dozerは、単独で使用するとき、以下のように、 ``com.github.dozermapper.core.DozerBeanMapperBuilder`` を利用してMapper のインスタンスを作成する。
 
 .. code-block:: java
 
-    Mapper mapper = new DozerBeanMapper();
+    Mapper mapper = DozerBeanMapperBuilder.buildDefault();
 
 
 Mapper のインスタンスを毎回作成するのは、効率が悪いため、
-Dozerが提供している ``org.dozer.spring.DozerBeanMapperFactoryBean`` を使用すること。
+Dozerが提供している ``com.github.dozermapper.spring.DozerBeanMapperFactoryBean`` を使用すること。
 
 
-Bean定義ファイル(applicationContext.xml)に、Mapperを作成するFactoryクラスである\ ``org.dozer.spring.DozerBeanMapperFactoryBean``\ を定義する
+Bean定義ファイル(applicationContext.xml)に、Mapperを作成するFactoryクラスである\ ``com.github.dozermapper.spring.DozerBeanMapperFactoryBean``\ を定義する
 
 .. code-block:: xml
 
-    <bean class="org.dozer.spring.DozerBeanMapperFactoryBean">
+    <bean class="com.github.dozermapper.spring.DozerBeanMapperFactoryBean">
         <property name="mappingFiles"
             value="classpath*:/META-INF/dozer/**/*-mapping.xml" /><!-- (1) -->
     </bean>
@@ -107,7 +107,7 @@ Bean定義ファイル(applicationContext.xml)に、Mapperを作成するFactory
      - 説明
    * - | (1)
      - | mappingFilesに、マッピング定義XMLファイルを指定する。
-       | ``org.dozer.spring.DozerBeanMapperFactoryBean`` は、 interfaceとして ``org.dozer.Mapper`` を保持している。そのため、 ``@Inject`` 時は ``Mapper`` を指定する。
+       | ``com.github.dozermapper.spring.DozerBeanMapperFactoryBean`` は、 interfaceとして ``com.github.dozermapper.core.Mapper`` を保持している。そのため、 ``@Inject`` 時は ``Mapper`` を指定する。
        | この例では、クラスパス直下の、/META-INF/dozerの任意フォルダ内の
        | (任意の値)-mapping.xmlを、すべて読み込む。このXMLファイルの内容については、以降で説明する。
 
@@ -314,7 +314,7 @@ Bean間のフィールド名は同じ、型が異なる場合のマッピング
 
     123.45
 
-サポートされている型変換については、 `マニュアル <http://dozer.sourceforge.net/documentation/simpleproperty.html>`_ を参照されたい。
+サポートされている型変換については、 `マニュアル <https://dozermapper.github.io/gitbook/documentation/simpleproperty.html#_Data_type_conversion>`_ を参照されたい。
 
 
 .. _beanconverter-difference-item-xml-mapping-label:
@@ -353,9 +353,9 @@ src/main/resources/META-INF/dozerフォルダ内に、(任意の値)-mapping.xml
 .. code-block:: xml
 
     <?xml version="1.0" encoding="UTF-8"?>
-    <mappings xmlns="http://dozer.sourceforge.net" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:schemaLocation="http://dozer.sourceforge.net
-              http://dozer.sourceforge.net/schema/beanmapping.xsd">
+    <mappings xmlns="http://dozermapper.github.io/schema/bean-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://dozermapper.github.io/schema/bean-mapping
+              https://dozermapper.github.io/schema/bean-mapping.xsd">
 
         <mapping>
           <class-a>com.xx.xx.Source</class-a><!-- (1) -->
@@ -443,9 +443,9 @@ src/main/resources/META-INF/dozerフォルダ内に、(任意の値)-mapping.xml
 .. code-block:: xml
 
     <?xml version="1.0" encoding="UTF-8"?>
-    <mappings xmlns="http://dozer.sourceforge.net" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:schemaLocation="http://dozer.sourceforge.net
-              http://dozer.sourceforge.net/schema/beanmapping.xsd">
+    <mappings xmlns="http://dozermapper.github.io/schema/bean-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://dozermapper.github.io/schema/bean-mapping
+              https://dozermapper.github.io/schema/bean-mapping.xsd">
             <!-- omitted -->
             <mapping type="one-way">
                   <class-a>com.xx.xx.Source</class-a>
@@ -529,13 +529,69 @@ src/main/resources/META-INF/dozerフォルダ内に、(任意の値)-mapping.xml
     1
     SourceName
 
-.. _beanconverter-custom-converter-label:
+.. note:: **Dozer 6.1.0以前のバージョンに存在する単方向マッピングのバグについて**
 
+    Dozer 6.1.0以前では、同名フィールドは\ ``<mapping>``\ タグの\ ``type``\ 属性に\ ``one-way``\ を付与しても正常に単方向マッピングとならず、逆方向でもマッピングされるバグが存在する。
+    Macchinetta Server Framework for Java 1.5.X以前はDozer 6.1.0以前のバージョンを使用しているため、バグの影響を受けていた。
+    
+    具体的には、\ ``<mapping>``\ タグの\ ``type``\ 属性に\ ``one-way``\ を付与した場合、フィールドが別名であれば正常に単方向マッピングとなる。
+    それ以外の項目は双方向マッピングされてしまう。
+    
+    具体例を以下に示す。
+    
+    変換元のBean定義
+    
+     .. code-block:: java
+    
+        public class Source {
+            private int id;
+            private String sameNameField1;
+            private String sameNameField2;
+            // omitted setter/getter
+        }
+    
+    
+    変換先のBean定義
+    
+     .. code-block:: java
+    
+        public class Destination {
+            private int destinationId;
+            private String sameNameField1;
+            private String sameNameField2;
+            // omitted setter/getter
+        }
+    
+    
+    マッピング定義
+    
+     .. code-block:: xml
+    
+        <mapping type="one-way">
+            <class-a>xxx.Source</class-a>
+            <class-b>xxx.Destination</class-b>
+            <!-- fieldタグを利用してマッピング定義した異名フィールドは、正常に単方向マッピングとなる。 -->
+            <field>
+                <a>id</a>
+                <b>destinationId</b>
+            </field>
+            <!-- fieldタグを利用してマッピング定義した同名フィールドは、双方向マッピングとなってしまう。 -->
+            <field>
+                <a>sameNameField1</a>
+                <b>sameNameField1</b>
+            </field>
+            <!-- 自動でマッピングされた同名フィールド（sameNameField2）も、双方向マッピングとなってしまう。 -->
+        </mapping>
+    
+    上記のようにマッピング定義した場合、\ ``sameNameField1``\ 、\ ``sameNameField2``\ は逆方向にもマッピングされてしまっていた。
+
+
+.. _beanconverter-custom-converter-label:
 
 Nestしたフィールドのマッピング
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 コピー元Beanが持つフィールドを、コピー先Beanが持つNestしたBeanのフィールドにも、マッピングできることである。
-(Dozerの用語で、 `Deep Mapping <http://dozer.sourceforge.net/documentation/deepmapping.html>`_ と呼ばれる。)
+(Dozerの用語で、 `Deep Mapping <https://dozermapper.github.io/gitbook/documentation/deepmapping.html>`_ と呼ばれる。)
 
 
 変換元のBean定義
@@ -574,9 +630,9 @@ Nestしたフィールドのマッピング
 .. code-block:: xml
 
     <?xml version="1.0" encoding="UTF-8"?>
-    <mappings xmlns="http://dozer.sourceforge.net" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:schemaLocation="http://dozer.sourceforge.net
-              http://dozer.sourceforge.net/schema/beanmapping.xsd">
+    <mappings xmlns="http://dozermapper.github.io/schema/bean-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://dozermapper.github.io/schema/bean-mapping
+              https://dozermapper.github.io/schema/bean-mapping.xsd">
         <!-- omitted -->
         <mapping map-empty-string="false" map-null="false">
             <class-a>com.xx.aa.EmployeeForm</class-a>
@@ -844,9 +900,9 @@ Dozerは、以下のCollectionタイプの双方向自動マッピングをサ�
     :emphasize-lines: 9
 
     <?xml version="1.0" encoding="UTF-8"?>
-    <mappings xmlns="http://dozer.sourceforge.net" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:schemaLocation="http://dozer.sourceforge.net
-              http://dozer.sourceforge.net/schema/beanmapping.xsd">
+    <mappings xmlns="http://dozermapper.github.io/schema/bean-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://dozermapper.github.io/schema/bean-mapping
+              https://dozermapper.github.io/schema/bean-mapping.xsd">
         <!-- omitted -->
         <mapping>
             <class-a>com.example.dozer.AccountForm</class-a>
@@ -896,9 +952,9 @@ Dozerは、以下のCollectionタイプの双方向自動マッピングをサ�
     :emphasize-lines: 9
 
     <?xml version="1.0" encoding="UTF-8"?>
-    <mappings xmlns="http://dozer.sourceforge.net" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:schemaLocation="http://dozer.sourceforge.net
-              http://dozer.sourceforge.net/schema/beanmapping.xsd">
+    <mappings xmlns="http://dozermapper.github.io/schema/bean-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://dozermapper.github.io/schema/bean-mapping
+              https://dozermapper.github.io/schema/bean-mapping.xsd">
         <!-- omitted -->
         <mapping>
             <class-a>com.example.dozer.AccountForm</class-a>
@@ -936,9 +992,9 @@ Dozerは、以下のCollectionタイプの双方向自動マッピングをサ�
     :emphasize-lines: 9
 
     <?xml version="1.0" encoding="UTF-8"?>
-    <mappings xmlns="http://dozer.sourceforge.net" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:schemaLocation="http://dozer.sourceforge.net
-              http://dozer.sourceforge.net/schema/beanmapping.xsd">
+    <mappings xmlns="http://dozermapper.github.io/schema/bean-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://dozermapper.github.io/schema/bean-mapping
+              https://dozermapper.github.io/schema/bean-mapping.xsd">
         <!-- omitted -->
         <mapping>
             <class-a>com.example.dozer.AccountForm</class-a>
@@ -1050,27 +1106,7 @@ Dozerは、以下のCollectionタイプの双方向自動マッピングをサ�
 .. tip::
 
    Dozerでは、Genericsを使用しないリスト間でもマッピングできる。このとき、変換元と変換先に含まれているオブジェクトのデータ型をHINTとして指定できる。
-   詳細は、 `Dozerの公式マニュアル -Collection and Array Mapping(Using Hints for Collection Mapping)- <http://dozer.sourceforge.net/documentation/collectionandarraymapping.html#Using_Hints_for_Collection_Mapping>`_ を参照されたい。
-
-.. todo::
-
-    Collection<T>を使用したBean間のマッピングは失敗することが確認されている。
-
-    例 :
-
-        .. code-block:: java
-        
-            public class ListNestedBean<T> {
-               private List<T> nest;
-               // omitted other declarations
-            }
-
-     実行結果 :
-     
-        .. code-block:: console
-        
-            java.lang.ClassCastException: sun.reflect.generics.reflectiveObjects.TypeVariableImpl cannot be cast to java.lang.Class
-
+   詳細は、 `Dozerの公式マニュアル -Collection and Array Mapping(Using Hints for Collection Mapping)- <https://dozermapper.github.io/gitbook/documentation/collectionandarraymapping.html#_Using_Hints_for_Collection_Mapping>`_ を参照されたい。
 
 How to extend
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -1082,7 +1118,7 @@ How to extend
 
 * 例 : ``java.lang.String`` <=> ``org.joda.time.DateTime``
 
-| カスタムコンバーターは、Dozerが提供している ``org.dozer.CustomConverter`` を実装したクラスである。
+| カスタムコンバーターは、Dozerが提供している ``com.github.dozermapper.core.CustomConverter`` を実装したクラスである。
 | カスタムコンバーターの指定は、以下3パターンで行える。
 
 * Global Configuration
@@ -1091,13 +1127,13 @@ How to extend
 
 アプリケーション全体で、同様のロジックにより変換を行いたい場合は、Global Configurationを推奨する。
 
-カスタムコンバーターを実装する場合は\ ``org.dozer.DozerConverter``\ を継承するのが便利である。
+カスタムコンバーターを実装する場合は\ ``com.github.dozermapper.core.DozerConverter``\ を継承するのが便利である。
 
 .. code-block:: java
 
     package com.example.yourproject.common.bean.converter;
   
-    import org.dozer.DozerConverter;
+    import com.github.dozermapper.core.DozerConverter;
     import org.joda.time.DateTime;
     import org.joda.time.format.DateTimeFormat;
     import org.joda.time.format.DateTimeFormatter;
@@ -1139,7 +1175,7 @@ How to extend
    * - 項番
      - 説明
    * - | (1)
-     - | \ ``org.dozer.DozerConverter``\ を継承する。
+     - | \ ``com.github.dozermapper.core.DozerConverter``\ を継承する。
    * - | (2)
      - | コンストラクタで対象の2つのクラスを設定する。
    * - | (3)
@@ -1154,9 +1190,9 @@ dozer-configration-mapping.xml
 .. code-block:: xml
 
     <?xml version="1.0" encoding="UTF-8"?>
-    <mappings xmlns="http://dozer.sourceforge.net" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:schemaLocation="http://dozer.sourceforge.net
-              http://dozer.sourceforge.net/schema/beanmapping.xsd">
+    <mappings xmlns="http://dozermapper.github.io/schema/bean-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://dozermapper.github.io/schema/bean-mapping
+              https://dozermapper.github.io/schema/bean-mapping.xsd">
     
         <configuration>
             <custom-converters><!-- (1) -->
@@ -1235,7 +1271,7 @@ dozer-configration-mapping.xml
     assertThat(source.getId(), is(1));
     assertThat(source.getDate(),is("2012-08-10 23:12:12"));
 
-カスタムコンバーターに関する詳細は、 `Dozerの公式マニュアル -Custom Converters- <http://dozer.sourceforge.net/documentation/customconverter.html>`_ を参照されたい。
+カスタムコンバーターに関する詳細は、 `Dozerの公式マニュアル -Custom Converters- <https://dozermapper.github.io/gitbook/documentation/customconverter.html>`_ を参照されたい。
 
 
 .. note::
@@ -1247,7 +1283,7 @@ Appendix
 
 マッピング定義XMLファイルで指定できるオプションを説明する。
 
-すべてのオプションは、 `Dozerの公式マニュアル -Custom Mappings Via Dozer XML Files- <http://dozer.sourceforge.net/documentation/mappings.html>`_ で確認できる。
+すべてのオプションは、 `Dozerの公式マニュアル -Custom Mappings Via Dozer XML Files- <https://dozermapper.github.io/gitbook/documentation/mappings.html>`_ で確認できる。
 
 .. _fieldexclude:
 
@@ -1289,9 +1325,9 @@ Beanを変換する際に、コピーしてほしくないフィールドを除�
 .. code-block:: xml
 
     <?xml version="1.0" encoding="UTF-8"?>
-    <mappings xmlns="http://dozer.sourceforge.net" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:schemaLocation="http://dozer.sourceforge.net
-              http://dozer.sourceforge.net/schema/beanmapping.xsd">
+    <mappings xmlns="http://dozermapper.github.io/schema/bean-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://dozermapper.github.io/schema/bean-mapping
+              https://dozermapper.github.io/schema/bean-mapping.xsd">
         <!-- omitted -->
         <mapping>
             <class-a>com.xx.xx.Source</class-a>
@@ -1354,9 +1390,9 @@ Beanを変換する際に、コピーしてほしくないフィールドを除�
 .. code-block:: xml
 
     <?xml version="1.0" encoding="UTF-8"?>
-    <mappings xmlns="http://dozer.sourceforge.net" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:schemaLocation="http://dozer.sourceforge.net
-              http://dozer.sourceforge.net/schema/beanmapping.xsd">
+    <mappings xmlns="http://dozermapper.github.io/schema/bean-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://dozermapper.github.io/schema/bean-mapping
+              https://dozermapper.github.io/schema/bean-mapping.xsd">
         <!-- omitted -->
         <mapping map-id="mapidTitleFieldExclude">
             <class-a>com.xx.xx.Source</class-a>
@@ -1432,7 +1468,7 @@ map-idを指定しない場合はこの設定は適用されず、全フィー�
 .. tip::
 
    map-idの指定は、mapping項目だけでなく、フィールドの定義でも行える。
-   詳細は、 `Dozerの公式マニュアル -Context Based Mapping- <http://dozer.sourceforge.net/documentation/contextmapping.html>`_ を参照されたい。
+   詳細は、 `Dozerの公式マニュアル -Context Based Mapping- <https://dozermapper.github.io/gitbook/documentation/contextmapping.html>`_ を参照されたい。
 
 |
 
@@ -1458,9 +1494,9 @@ map-idを指定しない場合はこの設定は適用されず、全フィー�
 .. code-block:: xml
 
     <?xml version="1.0" encoding="UTF-8"?>
-    <mappings xmlns="http://dozer.sourceforge.net" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:schemaLocation="http://dozer.sourceforge.net
-              http://dozer.sourceforge.net/schema/beanmapping.xsd">
+    <mappings xmlns="http://dozermapper.github.io/schema/bean-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://dozermapper.github.io/schema/bean-mapping
+              https://dozermapper.github.io/schema/bean-mapping.xsd">
         <!-- omitted -->
         <mapping map-null="false" map-empty-string="false"><!-- (1) -->
             <class-a>com.xx.xx.Source</class-a>
@@ -1568,9 +1604,9 @@ map-idを指定しない場合はこの設定は適用されず、全フィー�
 .. code-block:: xml
 
     <?xml version="1.0" encoding="UTF-8"?>
-    <mappings xmlns="http://dozer.sourceforge.net" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:schemaLocation="http://dozer.sourceforge.net
-              http://dozer.sourceforge.net/schema/beanmapping.xsd">
+    <mappings xmlns="http://dozermapper.github.io/schema/bean-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://dozermapper.github.io/schema/bean-mapping
+              https://dozermapper.github.io/schema/bean-mapping.xsd">
         <!-- omitted -->
         <mapping>
             <class-a>com.xx.xx.Source</class-a>
@@ -1631,9 +1667,9 @@ map-idを指定しない場合はこの設定は適用されず、全フィー�
 .. code-block:: xml
 
     <?xml version="1.0" encoding="UTF-8"?>
-    <mappings xmlns="http://dozer.sourceforge.net" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:schemaLocation="http://dozer.sourceforge.net
-              http://dozer.sourceforge.net/schema/beanmapping.xsd">
+    <mappings xmlns="http://dozermapper.github.io/schema/bean-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://dozermapper.github.io/schema/bean-mapping
+              https://dozermapper.github.io/schema/bean-mapping.xsd">
         <!-- omitted -->
         <configuration>
             <date-format>yyyy-MM-dd HH:mm:ss.SSS</date-format>
@@ -1646,12 +1682,12 @@ map-idを指定しない場合はこの設定は適用されず、全フィー�
 | ファイル名には制限はないが、src/main/resources/META-INF/dozer/dozer-configration-mapping.xmlを推奨する。
 | dozer-configration-mapping.xml内の設定の範囲は、この設定ファイル内でアプリケーション全体に影響を与える、Global Configurationを行えばよい。
 
-設定可能な項目の詳細について、 `Dozerの公式マニュアル -Global Configuration- <http://dozer.sourceforge.net/documentation/globalConfiguration.html>`_ を参照されたい。
+設定可能な項目の詳細について、 `Dozerの公式マニュアル -Global Configuration- <https://dozermapper.github.io/gitbook/documentation/xmlConfiguration.html>`_ を参照されたい。
 
 
 マッピングのエラー
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-マッピング中にマッピング処理が失敗したら、\ ``org.dozer.MappingException``\ (実行時例外)がスローされる。
+マッピング中にマッピング処理が失敗したら、\ ``com.github.dozermapper.core.MappingException``\ (実行時例外)がスローされる。
 
 \ ``MappingException`` がスローされる代表的な例を、以下に挙げる。
 
@@ -1660,6 +1696,13 @@ map-idを指定しない場合はこの設定は適用されず、全フィー�
 * Dozerがサポートしていない変換の場合、かつ、その変換用のカスタムコンバーターも存在しない場合。
 
 これらは通常プログラムバグであるので、\ ``map``\ メソッドの呼び出しの部分を正しく修正する必要がある。
+
+.. warning::
+
+    Dozer 6.3.0から、マッピング定義XMLファイルの解析にデフォルトでJAXBが利用されるようになった。
+    これにより、Dozer 6.2.0以前では無視されていたマッピング定義XMLファイルのコンテンツ部の両端に存在する改行コードは、Dozer 6.3.0以降では値として読み取られるようになった。
+    
+    マッピング定義XMLファイルのコンテンツ部の両端に改行コードが存在する場合、指定されたフィールド名が正しく認識されない等の不具合が生じる可能性があるため、注意されたい。
 
 .. raw:: latex
 

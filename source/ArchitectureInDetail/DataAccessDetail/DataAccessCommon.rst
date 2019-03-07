@@ -8,15 +8,6 @@
     :depth: 3
 
 
-.. todo::
-
-    **TBD**
-
-    本章では以下の内容について、現在精査中である。
-
-    * | 複数データソースについて
-      | 具体的な内容は、\ :ref:`Overviewの複数データソースについて <data-access-common_todo_multiple_datasource_overview>`\ および\ :ref:`How to extendsの複数データソースを使用するための設定 <data-access-common_todo_multiple_datasource_howtoextends>`\ を参照されたい。
-
 .. _data_access_overview-label:
 
 Overview
@@ -223,13 +214,6 @@ Spring Framework提供のJDBCデータソース
 
  .. _data-access-common_todo_multiple_datasource_overview:
 
- .. todo::
-
-    **TBD**
-
-    今後、以下の内容を追加する予定である。
-
-    * 概念レベルのイメージ図
 
 
 共通ライブラリから提供しているクラスについて
@@ -361,7 +345,7 @@ Bean定義したDataSourceを使用する場合の設定
         | 設定項目の詳細については、\ `DBCP Configuration <http://commons.apache.org/proper/commons-dbcp/configuration.html>`_\ を参照されたい。
     * - | (8)
       - | 設定例では値を直接指定しているが、環境によって設定値がかわる項目については、Placeholder(${...})を使用して、実際の設定値はプロパティファイルに指定すること。
-        | Placeholderについては、\ `Spring Reference Document <http://docs.spring.io/spring/docs/4.3.14.RELEASE/spring-framework-reference/html/beans.html#beans-factory-extension-factory-postprocessors>`_\ の\  ``PropertyPlaceholderConfigurer``\ を参照されたい。
+        | Placeholderについては、\ `Spring Framework Documentation <https://docs.spring.io/spring/docs/5.0.8.RELEASE/spring-framework-reference/core.html#beans-factory-extension-factory-postprocessors>`_\ の\  ``Example: the Class name substitution PropertyPlaceholderConfigurer``\ を参照されたい。
 
 
 トランザクション管理を有効化するための設定
@@ -398,10 +382,10 @@ log4jdbc提供のデータソースの設定
 
  .. code-block:: xml
 
-    <jee:jndi-lookup id="dataSourceSpied" jndi-name="jdbc/SampleDataSource" /> <!-- (1) -->
+    <jee:jndi-lookup id="realDataSource" jndi-name="jdbc/SampleDataSource" /> <!-- (1) -->
 
     <bean id="dataSource" class="net.sf.log4jdbc.Log4jdbcProxyDataSource"> <!-- (2) -->
-        <constructor-arg ref="dataSourceSpied" /> <!-- (3) -->
+        <constructor-arg ref="realDataSource" /> <!-- (3) -->
     </bean>
 
  .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
@@ -422,7 +406,7 @@ log4jdbc提供のデータソースの設定
 
     **性能試験及び商用環境にリリースする場合、データソースとしてLog4jdbcProxyDataSourceは使用しないこと。**
 
-    具体的には、(2)と(3)の設定を外し、\ ``dataSourceSpied``\ のbean名を\ ``dataSource``\ に変更する。
+    具体的には、(2)と(3)の設定を外し、\ ``realDataSource``\ のbean名を\ ``dataSource``\ に変更する。
 
 
 log4jdbc用ロガーの設定
@@ -524,18 +508,6 @@ How to extend
 --------------------------------------------------------------------------------
 
 .. _data-access-common_todo_multiple_datasource_howtoextends:
-
-複数データソースを使用するための設定
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
- .. todo::
-
-    **TBD**
-
-    今後、以下の内容を追加する予定である。
-
-    * 処理パターン（複数のデータソースに対して更新あり、更新は１つのデータソース、参照のみ、同時アクセスはなしなど）によってトランザクション管理の方法がかわると思うので、その辺りを中心にブレークダウンする予定である。
-
 
 動的にデータソースを切り替えるための設定
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

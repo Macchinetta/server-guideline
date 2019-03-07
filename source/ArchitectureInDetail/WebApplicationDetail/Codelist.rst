@@ -146,7 +146,7 @@ bean定義ファイルは、コードリスト用に作成することを推奨�
 コードリスト用bean定義ファイルを作成後、既存bean定義ファイルにimportを行う必要がある。
 
 .. code-block:: xml
-   :emphasize-lines: 1,4
+   :emphasize-lines: 1
 
     <import resource="classpath:META-INF/spring/projectName-codelist.xml" /> <!-- (3) -->
     <context:component-scan base-package="com.example.domain" />
@@ -208,10 +208,10 @@ JSPでのコードリスト使用
      - | 自動でリクエストスコープに設定する、コードリストのbeanIDのパターンを設定する。
        | パターンには ``java.util.regex.Pattern`` で使用する正規表現を設定すること。
        | 上記例では、idが"CL\_XXX"形式で定義されているデータのみを対象とする。その場合、idが"CL\_"で始まらないbean定義は取り込まれない。
-       | "CL\_"で定義したbeanIDは、リクエストスコープに設定されるため、JSPで使用可能となる。
+       | "CL\_"で定義したbeanIDは、リクエストスコープに設定されるため、JSPで容易に参照できる。
        |
        | \ ``codeListIdPattern``\ プロパティは省略可能である。
-       | \ ``codeListIdPattern``\ を省略した場合は、すべてのコードリスト(\ ``org.terasoluna.gfw.common.codelist.CodeList``\ インタフェースを実装しているbean)がJSPで使用可能となる。
+       | \ ``codeListIdPattern``\ を省略した場合は、すべてのコードリスト(\ ``org.terasoluna.gfw.common.codelist.CodeList``\ インタフェースを実装しているbean)がリクエストスコープに設定される。
 
 |
 
@@ -241,7 +241,7 @@ JSPでのコードリスト使用
 .. code-block:: html
 
   <select id="orderStatus" name="orderStatus">
-     <option value="">"--Select--</option>
+     <option value="">--Select--</option>
      <option value="1">Received</option>
      <option value="2">Sent</option>
      <option value="3">Cancelled</option>
@@ -669,8 +669,8 @@ EnumCodeListの使用方法
 
         \ ``EnumCodeList.CodeListItem``\ インタフェースには、コードリストを作成するために必要な情報(コード値とラベル)を取得するためのメソッドとして、
 
-        * コード値を取得する\ ``getCodeValue()``\ メソッド
-        * ラベルを取得する\ ``getCodeLabel()``\ メソッド
+        * コード値を取得する\ ``getCodeValue``\ メソッド
+        * ラベルを取得する\ ``getCodeLabel``\ メソッド
 
         が定義されている。
     * - | (2)
@@ -1001,6 +1001,8 @@ JSPでのコードリスト使用
 
 基本的な設定は、前述した :ref:`JSPでのコードリスト使用<clientSide>` と同様のため、説明は省略する。
 
+ここでは、 リクエストのロケールがコードリスト定義されていなかった場合に対応するため、インターセプターでリクエストスコープに ``SimpleI18nCodeList`` を設定し、JSPに渡す方法を紹介する。 
+
 **bean定義ファイル(spring-mvc.xml)の定義**
 
 .. code-block:: xml
@@ -1128,7 +1130,7 @@ Javaクラスでのコードリスト使用
 特定のコード値からコード名を表示する
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-JSPからコードリストを参照する場合は、 ``java.util.Map`` インタフェースと同じ方法で参照することができる。
+JSPからコードリストを参照する場合は、 ``CodeListInterceptor`` がリクエストスコープにコードリストを  ``java.util.Map`` で格納しているため、``Map`` インターフェースと同じ方法で参照することができる。 
 
 コードリストを用いて特定のコード値からコード名を表示する方法について、以下に実装例を示す。
 
@@ -1284,7 +1286,7 @@ JdbcCodeListは、ReloadableCodeListインターフェースを実装してい�
 #. Task Schedulerで実現する方法
 #. Controller(Service)クラスでrefreshメソッドを呼び出す方法
 
-本ガイドラインでは、\ `Springから提供されているTask Scheduler <http://docs.spring.io/spring/docs/4.3.14.RELEASE/spring-framework-reference/html/scheduling.html>`_\ を使用して、コードリストを定期的にリロードする方式を基本的に推奨する。
+本ガイドラインでは、\ `Springから提供されているTask Scheduler <https://docs.spring.io/spring/docs/5.0.8.RELEASE/spring-framework-reference/integration.html#scheduling>`_\ を使用して、コードリストを定期的にリロードする方式を基本的に推奨する。
 
 ただし、任意のタイミングでコードリストをリフレッシュする必要がある場合はControllerクラスでrefreshメソッドを呼び出す方法で実現すればよい。
 
@@ -1340,7 +1342,7 @@ Task Schedulerの設定例について、以下に示す。
        | 平日の9-17時の毎時実行 「0 0 9-17 \* \* MON-FRI」
        |
        | 詳細はJavaDocを参照されたい。
-       | http://docs.spring.io/spring/docs/4.3.14.RELEASE/javadoc-api/org/springframework/scheduling/support/CronSequenceGenerator.html
+       | https://docs.spring.io/spring/docs/5.0.8.RELEASE/javadoc-api/org/springframework/scheduling/support/CronSequenceGenerator.html
 
 |
 
@@ -1473,14 +1475,21 @@ JdbcCodeListのrefreshメソッドをServiceクラスで呼び出す場合の実
 
 .. code-block:: java
 
-    @Component("CL_YEAR") // (1)
-    public class DepYearCodeList extends AbstractCodeList { // (2)
 
-        @Inject
-        JodaTimeDateFactory dateFactory; // (3)
+    package com.example.sample.domain.codelist;
+
+    ...
+
+    public class DepYearCodeList extends AbstractCodeList { // (1)
+
+        private JodaTimeDateFactory dateFactory;
+
+        public void setDateFactory(JodaTimeDateFactory dateFactory) { //(2)
+            this.dateFactory = dateFactory;
+        }
 
         @Override
-        public Map<String, String> asMap() {  // (4)
+        public Map<String, String> asMap() {  // (3)
             DateTime dateTime = dateFactory.newDateTime();
             DateTime nextYearDateTime = dateTime.plusYears(1);
 
@@ -1504,18 +1513,37 @@ JdbcCodeListのrefreshメソッドをServiceクラスで呼び出す場合の実
    * - 項番
      - 説明
    * - | (1)
-     - | ``@Component`` で、コードリストをコンポーネント登録する。
-       | Valueに ``CL_YEAR`` を指定することで、bean定義で設定したコードリストインターセプトによりコードリストをコンポーネント登録する。
-   * - | (2)
-     - | ``org.terasoluna.gfw.common.codelist.AbstractCodeList`` を継承する。
+     - | ``AbstractCodeList`` を継承する。
        | 今年と来年の年のリストを作る時、動的にシステム日付から算出して作成しているため、リロードは不要。
-   * - | (3)
-     - | システム日付のDateクラスを作成する ``org.terasoluna.gfw.common.date.jodatime.JodaTimeDateFactory`` をインジェクトしている。
+   * - | (2)
+     - | システム日付のDateクラスを作成する ``org.terasoluna.gfw.common.date.jodatime.JodaTimeDateFactory`` をインジェクションするためのセッターを用意する。
        | ``JodaTimeDateFactory`` を利用して今年と来年の年を取得することができる。
-       | 事前に、bean定義ファイルにDataFactory実装クラスを設定する必要がある。
-   * - | (4)
-     - | ``asMap()`` メソッドをオーバライドして、今年と来年の年のリストを作成する。
+   * - | (3)
+     - | ``asMap`` メソッドをオーバライドして、今年と来年の年のリストを作成する。
        | 作成したいコードリスト毎に実装が異なる。
+
+**bean定義ファイル(xxx-codelist.xml)の定義**
+
+.. code-block:: xml
+
+    <bean id="CL_YEAR" class="com.example.sample.domain.codelist.DepYearCodeList"> <!-- (1) -->
+        <property name="dateFactory" ref="dateFactory" /> <!-- (2) -->
+    </bean>
+
+.. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
+.. list-table::
+   :header-rows: 1
+   :widths: 10 90
+
+
+   * - 項番
+     - 説明
+   * - | (1)
+     - | 作成したコードリストクラスをbean定義する。
+       | id に ``CL_YEAR`` を指定することで、bean定義で設定した ``CodeListInterceptor`` によりコードリストをコンポーネント登録する。
+   * - | (2)
+     - | システム日付のDateクラスを作成する ``JodaTimeDateFactory`` を設定する。
+       | 事前に、bean定義ファイルにDataFactory実装クラスを設定する必要がある。
 
 |
 
@@ -1523,7 +1551,7 @@ JdbcCodeListのrefreshメソッドをServiceクラスで呼び出す場合の実
 
 .. code-block:: jsp
 
-  <form:select path="mostRecentYear" items="${CL_YEAR}" /> <!-- (5) -->
+  <form:select path="mostRecentYear" items="${CL_YEAR}" /> <!-- (1) -->
 
 .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
 .. list-table::
@@ -1532,7 +1560,7 @@ JdbcCodeListのrefreshメソッドをServiceクラスで呼び出す場合の実
 
    * - 項番
      - 説明
-   * - | (5)
+   * - | (1)
      - | items属性にコンポーネント登録した ``CL_YEAR`` を ``${}`` プレースホルダー で指定することで、該当のコードリストを取得することができる。
 
 **出力HTML**
@@ -1826,4 +1854,258 @@ NumberRangeCodeListのインターバルの変更
 .. raw:: latex
 
    \newpage
+   
+.. _directRefCodeList:
+
+JSPから直接コードリストBeanを参照する
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+:ref:`clientSide` では、Spring MVCを経由する全てのリクエストに対して、``CodeListIntercepter`` がコードリストのBeanをリクエスト属性として登録するため、コードリストの数が多くなるとリクエスト毎のオーバーヘッドの増加が懸念される。
+
+ここでは、リクエスト毎のオーバーヘッドの増加を防ぐ方法の一つとして、コードリストBeanをJSPから直接参照する方法を紹介する。
+JSPではSpELを利用して直接Beanを参照することができるが、こちらを利用することでオーバーヘッドの増加を防止することができる。
+いずれの方法を利用するかは、プロジェクトの要件によって適切に検討されたい。
+
+.. note::
+
+ 国際化対応のため ``SimpleI18nCodeList`` を使用している場合は :ref:`CodeListAppendixDirectReferenceSimpleI18nCodeList` で紹介している方法を参照されたい。
+ :ref:`directRefCodeList` を使用する場合は、``CodeListInterceptor`` が実施しているような、``SimpleI18nCodeList`` の ``asMap`` メソッドに渡すロケールを決定するロジックを独自に実装する必要があるためである。
+
+.. _codeListDirectRefCodeListSpringMvc:
+
+**bean定義ファイル(spring-mvc.xml)の定義**
+
+.. code-block:: xml
+  :emphasize-lines: 3,4,5,6,7
+
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/**" />
+            <bean class="org.terasoluna.gfw.web.codelist.CodeListInterceptor"> <!-- (1) -->
+                <property name="codeListIdPattern" value="CL_.+" />
+            </bean>
+        </mvc:interceptor>
+
+    <!-- omitted -->
+
+    </mvc:interceptors>
+
+.. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
+.. list-table::
+  :header-rows: 1
+  :widths: 10 90
+
+  * - 項番
+    - 説明
+  * - | (1)
+    - | ``CodeListInterceptor`` の設定があれば、削除する。
+
+
+**bean定義ファイル(xxx-codelist.xml)の定義**
+
+.. code-block:: xml
+
+    <bean id="CL_ORDERSTATUS" class="org.terasoluna.gfw.common.codelist.SimpleMapCodeList">
+        <property name="map">
+            <util:map>
+                <entry key="1" value="Received" />
+                <entry key="2" value="Sent" />
+                <entry key="3" value="Cancelled" />
+            </util:map>
+        </property>
+    </bean>
+
+**jspの実装例**
+
+.. code-block:: jsp
+
+  <spring:eval var="statuses" expression="@CL_ORDERSTATUS.asMap()"/> <!-- (1) -->
+  <form:select items="${statuses}" path="orderStatus" />
+
+
+.. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
+.. list-table::
+  :header-rows: 1
+  :widths: 10 90
+
+  * - 項番
+    - 説明
+  * - | (1)
+    - | SpELにより取得した ``CodeList`` 型Beanの ``asMap`` メソッドにより、``Map`` 形式で取得することができる。
+
+**出力HTML**
+
+.. code-block:: html
+
+    <select id="orderStatus" name="orderStatus">
+        <option value="1">Received</option>
+        <option value="2">Sent</option>
+        <option value="3">Cancelled</option>
+    </select>
+
+|
+
+.. _CodeListAppendixDirectReferenceSimpleI18nCodeList:
+
+SimpleI18nCodeListをJSPから直接参照する方法
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+ここでは、``CodeListInterceptor`` の実装と同様に、リクエストのロケールに対するコードリストに定義されていなかった場合、デフォルトで設定したロケールに対するコードリストを表示する例を紹介する。
+
+**bean定義ファイル(spring-mvc.xml)の定義**
+
+:ref:`bean定義ファイル(spring-mvc.xml)の定義<codeListDirectRefCodeListSpringMvc>` と同様なため割愛する。
+
+**bean定義ファイル(xxx-codelist.xml)の定義**
+
+.. code-block:: xml
+
+    <bean id="CL_I18N_PRICE"
+        class="org.terasoluna.gfw.common.codelist.i18n.SimpleI18nCodeList">
+        <property name="rowsByCodeList">
+            <util:map>
+                <entry key="en" value-ref="CL_PRICE_EN" />
+                <entry key="ja" value-ref="CL_PRICE_JA" />
+            </util:map>
+        </property>
+    </bean>
+
+    <bean id="CL_PRICE_EN" class="org.terasoluna.gfw.common.codelist.SimpleMapCodeList">
+        <property name="map">
+            <util:map>
+                <entry key="0" value="unlimited" />
+                <entry key="10000" value="Less than \\10,000" />
+                <entry key="20000" value="Less than \\20,000" />
+                <entry key="30000" value="Less than \\30,000" />
+                <entry key="40000" value="Less than \\40,000" />
+                <entry key="50000" value="Less than \\50,000" />
+            </util:map>
+        </property>
+    </bean>
+
+    <bean id="CL_PRICE_JA" class="org.terasoluna.gfw.common.codelist.SimpleMapCodeList">
+        <property name="map">
+            <util:map>
+                <entry key="0" value="上限なし" />
+                <entry key="10000" value="10,000円以下" />
+                <entry key="20000" value="20,000円以下" />
+                <entry key="30000" value="30,000円以下" />
+                <entry key="40000" value="40,000円以下" />
+                <entry key="50000" value="50,000円以下" />
+            </util:map>
+        </property>
+    </bean>
+    
+
+**プロパティファイル**
+
+.. code-block:: properties
+
+    simpleI18nCodeList.fallback.locale = en
+
+**Controllerクラス**
+
+.. code-block:: java
+
+    ...
+    
+    @Controller
+    public class OrderController {
+        
+        @Value("${simpleI18nCodeList.fallback.locale}") // (1)
+        private Locale fallBackLocale;
+
+        @RequestMapping(value = "price", method = RequestMethod.GET) 
+        public String price(Model model, HttpServletRequest request) {
+            model.addAttribute("requestLocale", RequestContextUtils
+                .getLocale(request)); // (2)
+            model.addAttribute("fallBackLocale",fallBackLocale); // (3)
+
+            return "order/price";
+        }
+    }
+
+.. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
+.. list-table::
+   :header-rows: 1
+   :widths: 10 90
+
+
+   * - 項番
+     - 説明
+   * - | (1)
+     - | リクエストで指定したロケールがコードリストに定義されていなかった場合に、どのロケールのコードリストを取得するかをプロパティファイルから取得し、``fallBackLocale`` 変数に設定する。
+   * - | (2)
+     - | ``org.springframework.web.servlet.support.RequestContextUtils`` 利用してリクエストで指定されたロケールを取得し、Modelに登録する。
+         ``RequestContextUtils`` の ``getLocale`` メソッドは、引数に ``javax.servlet.http.HttpServletRequest`` を取るため、この場合は ``HttpServletRequest`` をハンドラメソッドの引数にとっても良い。
+   * - | (3)
+     - | (1) で取得した ``fallBackLocale`` をModelに登録する。
+
+**jspの実装例**
+
+.. code-block:: jsp
+
+    <spring:eval var="price" expression="@CL_I18N_PRICE.asMap(requestLocale).isEmpty() ? @CL_I18N_PRICE.asMap(fallBackLocale) : @CL_I18N_PRICE.asMap(requestLocale)" /> <!-- (1) -->
+    <form:select path="basePrice" items="${price}" />
+
+.. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
+.. list-table::
+  :header-rows: 1
+  :widths: 10 90
+
+  * - 項番
+    - 説明
+  * - | (1)
+    - | リクエストで指定したロケールに対応するコードリストを ``Map`` 形式で取得する。
+      | リクエストで指定したロケールがコードリストに定義されていなかった場合、``fallbackLocale`` 変数に設定したロケールで対応するコードリストを ``Map`` 形式で取得する。
+
+**出力HTML lang=en**
+
+.. code-block:: html
+
+    <select id="basePrice" name="basePrice">
+        <option value="0">unlimited</option>
+        <option value="1">Less than \\10,000</option>
+        <option value="2">Less than \\20,000</option>
+        <option value="3">Less than \\30,000</option>
+        <option value="4">Less than \\40,000</option>
+        <option value="5">Less than \\50,000</option>
+    </select>
+
+**出力HTML lang=ja**
+
+.. code-block:: html
+
+    <select id="basePrice" name="basePrice">
+        <option value="0">上限なし</option>
+        <option value="1">10,000円以下</option>
+        <option value="2">20,000円以下</option>
+        <option value="3">30,000円以下</option>
+        <option value="4">40,000円以下</option>
+        <option value="5">50,000円以下</option>
+    </select>
+    
+**出力HTML lang=undefined**
+
+.. code-block:: html
+
+    <select id="basePrice" name="basePrice">
+        <option value="0">unlimited</option> <!-- (1) -->
+        <option value="1">Less than \\10,000</option>
+        <option value="2">Less than \\20,000</option>
+        <option value="3">Less than \\30,000</option>
+        <option value="4">Less than \\40,000</option>
+        <option value="5">Less than \\50,000</option>
+    </select>
+
+.. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
+.. list-table::
+  :header-rows: 1
+  :widths: 10 90
+
+  * - 項番
+    - 説明
+  * - | (1)
+    - | リクエストで指定したロケールがコードリストに定義されていなかった場合に、``fallbackLocale`` 変数で指定した"en" が設定されるため、ロケールが"en"である ``CL_PRICE_EN`` コードリストが表示される。
+ 
 

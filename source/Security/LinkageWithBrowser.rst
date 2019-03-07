@@ -108,6 +108,7 @@ X-Content-Type-Optionsヘッダは、コンテンツの種類の決定方法を�
 
     X-Content-Type-Options: nosniff
 
+.. _LinkageWithBrowserXXSSProtection:
 
 X-XSS-Protection
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -311,7 +312,20 @@ How to use
 
 上記の例だと、Cache-Control関連のヘッダだけが出力されなくなる。 
 
-セキュリティヘッダの詳細については\ `公式リファレンス <http://docs.spring.io/spring-security/site/docs/4.2.4.RELEASE/reference/htmlsingle/#default-security-headers>`_\ を参照されたい。
+セキュリティヘッダの詳細については\ `公式リファレンス <https://docs.spring.io/spring-security/site/docs/5.0.7.RELEASE/reference/htmlsingle/#default-security-headers>`_\ を参照されたい。
+
+.. note:: **Spring Securityによるセキュリティヘッダ付与の仕様変更**
+
+    Macchinetta Server Framework for Java 1.5.1の依存ライブラリであるSpring Security 4.2.4では、Spring Securityによって先にセキュリティヘッダが付与されることによりController等で任意に付与したヘッダが有効にならないことがあった。
+    例えば、Controllerで個別にキャッシュ制御のヘッダを付与した場合でもSpring Securityが先に付与した\ ``Pragma: no-cache``\ ヘッダが残ることにより意図したキャッシュ制御ができないといった問題があった。
+
+    このため、Spring Security 4.2.5及び5.0.2以降ではレスポンスコミットのタイミングでセキュリティヘッダを付与するように変更(\ `spring-projects/spring-security/issues/#5004 <https://github.com/spring-projects/spring-security/issues/5004>`_\ )されている。
+
+.. warning:: **個別に付与したセキュリティヘッダがSpring Securityにより上書き（追加）される問題**
+
+    ``DispatcherServlet``\ 内の処理で付与したセキュリティヘッダがSpring Securityの\ ``HeaderWriter``\ により上書き（追加）される問題(\ `spring-projects/spring-security/issues/#5193 <https://github.com/spring-projects/spring-security/issues/5193>`_\ )が報告されている。
+    Spring Securityでデフォルトのセキュリティヘッダを付与するが、一部のユースケースのみController等で個別にセキュリティヘッダを付与したい場合は、この問題の影響を受けることになる。
+    ただし、\ `CacheControlHeaderWriter <https://github.com/spring-projects/spring-security/blob/5.0.7.RELEASE/web/src/main/java/org/springframework/security/web/header/writers/CacheControlHeadersWriter.java#L62-L63>`_\ は既に付与されているヘッダを優先する実装となっているため、キャッシュ制御に関するヘッダ（Cache-Control, Pragma, Expires）ではこの問題は発生しない。
 
 
 セキュリティヘッダのオプション指定
@@ -333,7 +347,7 @@ Spring Securityのbean定義を変更することで、各要素の属性にオ�
 
     <sec:frame-options policy="SAMEORIGIN" />
 
-.. [#fSpringSecurityLinkageWithBrowser2] 各要素で指定できるオプションは http://docs.spring.io/spring-security/site/docs/4.2.4.RELEASE/reference/htmlsingle/#nsa-headers を参照されたい。
+.. [#fSpringSecurityLinkageWithBrowser2] 各要素で指定できるオプションは https://docs.spring.io/spring-security/site/docs/5.0.7.RELEASE/reference/htmlsingle/#nsa-headers を参照されたい。
 
 カスタムヘッダの出力
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -409,6 +423,14 @@ Spring Securityは、\ ``RequestMatcher``\ インタフェースの仕組みを�
       - | \ ``RequestMatcher``\ と\ ``HeadersWriter``\ インタフェースの実装クラスを指定して\ ``DelegatingRequestMatcherHeaderWriter``\ クラスのbeanを定義する。
     * - | (2)
       - | \ ``<sec:headers>``\ 要素の子要素として\ ``<sec:header>`` を追加し、\ ``ref``\ 属性に(1)で定義した\ ``HeaderWriter``\ のbeanを指定する。
+
+.. warning:: **アプリケーションサーバによっては指定したパスが意図した通りに認識されない問題**
+
+    一部のアプリケーションサーバでは、上記の定義例のように\ ``AntPathRequestMatcher``\ で指定したリクエストパスが意図した通りに認識されない場合がある。
+    Spring Securityはレスポンスのコミット時にセキュリティヘッダを付与するが、一部のアプリケーションサーバではJSPへのフォワード時にサーブレットパスをJSPのパスに変更しており、元のリクエストパスとは合致しなくなるため、ヘッダを付与する処理が行われない。
+
+    なお、現時点でWebLogic 12.2.1.2.0でこの問題が発生することが確認されているが、当該アプリケーションサーバ以外においても同様の問題が発生する可能性がある。
+    ``AntPathRequestMatcher``\ で指定するパスは、アプリケーションサーバの仕様に合わせて適切に設定する必要がある。
 
 
 .. raw:: latex

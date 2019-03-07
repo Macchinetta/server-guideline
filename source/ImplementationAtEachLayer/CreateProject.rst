@@ -382,6 +382,7 @@ SNAPSHOTバージョンのソフトウェアのデリバリーフローは下図
  * コンパイルエラー、コードメトリクスでの一定以上のviolationの発生、テストの失敗の場合、以降の作業を中止する。
 
 3. mavenパッケージリポジトリサーバにartifact(jar,warファイル)をアップロード(mvn deploy)する。
+
 |
 
 RELEASEバージョンの運用
@@ -403,11 +404,6 @@ RELEASEバージョンの運用
  * 失敗した場合はVCS上のtagを削除する。
 
 6. mavenパッケージリポジトリサーバにartifact(jar,warファイル)をアップロード(mvn deploy)する。
-
-.. todo:: 
- 
- ここで最後にtrunkのソースツリーのpom.xmlのversionタグを、
- 次のSNAPSHOTバージョンに書き変えてコミットするところまで書くべきか？！
 
 .. note::
 

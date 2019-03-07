@@ -133,6 +133,18 @@ JMSとは
       | JavaBeanを送信したい場合は、\ ``ObjectMessage``\ を利用する。
       | その場合は、JavaBeanをクライアント間で共有する必要がある。
 
+ .. _JMSWarningDeserialization:
+
+ .. warning:: **デシリアライズ時の注意点**
+
+    Queueに\ ``ObjectMessage``\ が入るとメッセージを取り出す際にデシリアライズが行われる。
+
+    デシリアライズ処理は、不正なデータや予期しないデータを使用して業務ロジックの乱用、サービスの拒否、任意のコードの実行が行われる危険があるため、
+    信頼できない送信元から受信しうるものをデシリアライズしてはならない。
+    そのため、Queueも(信頼できない送信元を含み得る)不特定多数からのメッセージを受け付ける構成であってはならない。
+
+    詳細については\ `Deserialization of untrusted data <https://www.owasp.org/index.php/Deserialization_of_untrusted_data>`_\ を参照されたい。
+
 
 .. _JMSOverviewAPI:
 
@@ -742,7 +754,7 @@ How to use
 
  .. note:: **業務ロジック内でJMSの例外ハンドリング**
 
-    \ `JMS (Java Message Service)のIntroduction <http://docs.spring.io/spring/docs/4.3.14.RELEASE/javadoc-api/org/springframework/jms/core/JmsTemplate.html>`_\ で触れられているように、Spring Frameworkでは検査例外を非検査例外に変換している。
+    \ `JMS (Java Message Service)のIntroduction <https://docs.spring.io/spring/docs/5.0.8.RELEASE/javadoc-api/org/springframework/jms/core/JmsTemplate.html>`_\ で触れられているように、Spring Frameworkでは検査例外を非検査例外に変換している。
     そのため、業務ロジック内でJMSの例外をハンドリングする場合は、非検査例外を扱う必要がある。
 
      .. tabularcolumns:: |p{0.20\linewidth}|p{0.60\linewidth}|p{0.20\linewidth}|
@@ -1094,7 +1106,7 @@ DBのトランザクション管理を行う必要があるアプリケーショ
       - xmlns:jms
       - | JMS Namespaceを定義する。
         | 値として\ ``http://www.springframework.org/schema/jms``\ を指定する。
-        | JMS Namespaceの詳細については、\ `JMS Namespace Support <http://docs.spring.io/autorepo/docs/spring-framework/4.3.14.RELEASE/spring-framework-reference/html/jms.html#jms-namespace>`_\ を参照されたい。
+        | JMS Namespaceの詳細については、\ `JMS namespace support <https://docs.spring.io/spring/docs/5.0.8.RELEASE/spring-framework-reference/integration.html#jms-namespace>`_\ を参照されたい。
     * -
       - xsi:schemaLocation
       - | スキーマのURLを指定する。
@@ -1108,12 +1120,12 @@ DBのトランザクション管理を行う必要があるアプリケーショ
         | \ ``<jms:listener-container/>``\ の属性には、利用したい\ ``ConnectionFactory``\ のBeanを指定できる\ ``connection-factory``\ 属性が存在する。\ ``connection-factory``\ 属性のデフォルト値は\ ``connectionFactory``\ である。
         | この例では、\ :ref:`JMSHowToUseConnectionFactory`\ で示した\ ``ConnectionFactory``\ のBean(Bean名は\ ``connectionFactory``\ )を利用するため、\ ``connection-factory``\ 属性を省略している。
         | \ ``<jms:listener-container/>``\ には、ここで紹介した以外の属性も存在する。
-        | 詳細については、\ `Attributes of the JMS <listener-container> element <http://docs.spring.io/spring/docs/4.3.14.RELEASE/spring-framework-reference/html/jms.html#jms-namespace-listener-container-tbl>`_\ を参照されたい。
+        | 詳細については、\ `Attributes of the JMS <listener-container> element <https://docs.spring.io/spring/docs/5.0.8.RELEASE/spring-framework-reference/integration.html#jms-namespace-listener-container-tbl>`_\ を参照されたい。
 
         .. warning::
 
             \ ``DefaultMessageListenerContainer``\ 内部には独自のキャッシュ機能が備わっている。一方で、APサーバ製品やMOM製品によって関連リソースをキャッシュする場合もある。両者の管理に不整合が生じないように\ ``cache``\ 属性でキャッシュレベルを指定すること。
-            詳細については、\ `DefaultMessageListenerContainerのJavadoc <http://docs.spring.io/autorepo/docs/spring-framework/4.3.14.RELEASE/javadoc-api/org/springframework/jms/listener/DefaultMessageListenerContainer.html>`_\ を参照されたい。
+            詳細については、\ `DefaultMessageListenerContainerのJavadoc <https://docs.spring.io/spring/docs/5.0.8.RELEASE/javadoc-api/org/springframework/jms/listener/DefaultMessageListenerContainer.html>`_\ を参照されたい。
             本ガイドラインでは、\ ``<jms:listener-container/>``\ の\ ``connection-factory``\ 属性には、\ :ref:`JMSHowToUseConnectionFactory`\ で定義した\ ``ConnectionFactory``\ を指定する。
 
     * -
@@ -1192,7 +1204,7 @@ DBのトランザクション管理を行う必要があるアプリケーショ
 
 
  \ ``@JmsListener``\ アノテーションの主な属性の一覧を以下に示す。
- 詳細やその他の属性については、\ `@JmsListenerアノテーションのJavadoc <http://docs.spring.io/spring-framework/docs/4.3.14.RELEASE/javadoc-api/org/springframework/jms/annotation/JmsListener.html#destination-->`_\ を参照されたい。
+ 詳細やその他の属性については、\ `@JmsListenerアノテーションのJavadoc <https://docs.spring.io/spring-framework/docs/5.0.8.RELEASE/javadoc-api/org/springframework/jms/annotation/JmsListener.html>`_\ を参照されたい。
 
 
  .. tabularcolumns:: |p{0.10\linewidth}|p{0.20\linewidth}|p{0.70\linewidth}|
@@ -1253,7 +1265,7 @@ DBのトランザクション管理を行う必要があるアプリケーショ
       - 説明
     * - | (1)
       - | 受信メッセージのヘッダ属性\ ``JMSReplyTo``\ の値を取得するために、\ ``@Header``\ アノテーションを指定する。
-        | JMSの標準ヘッダ属性を取得する場合に指定するキーの値については、\ `JmsHeadersの定数の定義 <https://docs.spring.io/spring/docs/4.3.14.RELEASE/javadoc-api/constant-values.html#org.springframework.jms.support.JmsHeaders.CORRELATION_ID>`_\ を参照されたい。
+        | JMSの標準ヘッダ属性を取得する場合に指定するキーの値については、\ `JmsHeadersの定数の定義 <https://docs.spring.io/spring/docs/5.0.8.RELEASE/javadoc-api/constant-values.html#org.springframework.jms.support.JmsHeaders.CORRELATION_ID>`_\ を参照されたい。
 
 
 .. _JMSHowToUseListenerContainerReSendMessage:
@@ -1360,7 +1372,7 @@ DBのトランザクション管理を行う必要があるアプリケーショ
          - | メッセージ送信するオブジェクトを返却する。
 
    ヘッダ属性\ ``JMSReplyTo``\ はConsumer側で指定したデフォルトのDestinationよりも優先される。
-   詳細については、\ `Response management <http://docs.spring.io/spring/docs/4.3.14.RELEASE/spring-framework-reference/htmlsingle/#jms-annotated-response>`_\ を参照されたい。
+   詳細については、\ `Response management <https://docs.spring.io/spring/docs/5.0.8.RELEASE/spring-framework-reference/integration.html#jms-annotated-response>`_\ を参照されたい。
 
 
 .. _JMSHowToUseMessageSelectorForAsyncReceive:
@@ -2023,12 +2035,7 @@ DBトランザクション境界がJMSトランザクション境界の外側に
     * - 4.
       - \ ``sessionAcknowledgeMode``\
       - | \ ``sessionAcknowledgeMode``\ はセッションの確認応答モードを設定する。
-        | 詳細については\ `JmsTemplateのJavaDoc <http://docs.spring.io/spring/docs/4.3.14.RELEASE/javadoc-api/org/springframework/jms/core/JmsTemplate.html>`_\ を参照されたい。
-
-        .. todo::
-
-           sessionAcknowledgeModeの詳細については今後追記する。
-
+        | 詳細については\ `JmsTemplateのJavaDoc <https://docs.spring.io/spring/docs/5.0.8.RELEASE/javadoc-api/org/springframework/jms/core/JmsTemplate.html>`_\ を参照されたい。
       - \-
       - | 1
     * - 5.

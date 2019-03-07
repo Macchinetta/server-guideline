@@ -198,12 +198,7 @@ Controllerクラスの作成方法
     @RequestMapping(value = {"hello", "bonjour"})
     public String hello() {
 
-指定するリクエストパスは、具体的な値ではなくパターンを指定することも可能である。パターン指定の詳細は、Spring FrameworkのReference Documentを参照。
-
-- `URI Template Patterns <http://docs.spring.io/spring/docs/4.3.14.RELEASE/spring-framework-reference/html/mvc.html#mvc-ann-requestmapping-uri-templates>`_\
-- `URI Template Patterns with Regular Expressions <http://docs.spring.io/spring/docs/4.3.14.RELEASE/spring-framework-reference/html/mvc.html#mvc-ann-requestmapping-uri-templates-regex>`_\
-- `Path Patterns <http://docs.spring.io/spring/docs/4.3.14.RELEASE/spring-framework-reference/html/mvc.html#mvc-ann-requestmapping-patterns>`_\
-- `Patterns with Placeholders <http://docs.spring.io/spring/docs/4.3.14.RELEASE/spring-framework-reference/html/mvc.html#mvc-ann-requestmapping-placeholders>`_\
+指定するリクエストパスは、具体的な値ではなくパターンを指定することも可能である。パターン指定の詳細は、`URI patterns <https://docs.spring.io/spring/docs/5.0.8.RELEASE/spring-framework-reference/web.html#mvc-ann-requestmapping-uri-templates>`_ を参照されたい。
 
 |
 
@@ -212,7 +207,7 @@ Controllerクラスの作成方法
 HTTPメソッドでマッピング
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 下記の定義の場合、 ``sample/hello`` というURLにPOSTメソッドでアクセスすると、helloメソッドが実行される。
-サポートしているHTTPメソッドの一覧は `RequestMethodのJavadoc <http://docs.spring.io/spring/docs/4.3.14.RELEASE/javadoc-api/org/springframework/web/bind/annotation/RequestMethod.html>`_ を参照されたい。
+サポートしているHTTPメソッドの一覧は `RequestMethodのJavadoc <https://docs.spring.io/spring/docs/5.0.8.RELEASE/javadoc-api/org/springframework/web/bind/annotation/RequestMethod.html>`_ を参照されたい。
 指定しない場合、サポートしている全てのHTTPメソッドがマッピング対象となる。
 
  .. code-block:: java
@@ -413,7 +408,7 @@ Acceptヘッダでマッピング
 
  .. note::
 
-     Entity参照、Entity更新、Entity削除処理のURL内に指定している ``{id}`` は、`URI Template Patterns <http://docs.spring.io/spring/docs/4.3.14.RELEASE/spring-framework-reference/html/mvc.html#mvc-ann-requestmapping-uri-templates>`_\ と呼ばれ、任意の値を指定する事ができる。
+     Entity参照、Entity更新、Entity削除処理のURL内に指定している ``{id}`` は、`URI patterns <https://docs.spring.io/spring/docs/5.0.8.RELEASE/spring-framework-reference/web.html#mvc-ann-requestmapping-uri-templates>`_\ と呼ばれ、任意の値を指定する事ができる。
      サンプルアプリケーションでは、操作するEntityのIDを指定する。
 
  画面フロー図に各処理に割り振られたURLをマッピングすると以下のようになる。
@@ -1069,7 +1064,7 @@ Backボタン押下時の動作については、 :ref:`controller-mapping-polic
 ハンドラメソッドの引数について
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-`ハンドラメソッドの引数は様々な値をとることができる <http://docs.spring.io/spring/docs/4.3.14.RELEASE/spring-framework-reference/html/mvc.html#mvc-ann-arguments>`_ が、
+`ハンドラメソッドの引数は様々な値をとることができる <https://docs.spring.io/spring/docs/5.0.8.RELEASE/spring-framework-reference/web.html#mvc-ann-arguments>`_ が、
 基本的には次に挙げるものは原則として使用しないこと。
 
 * ServletRequest
@@ -1515,7 +1510,7 @@ URLのパスから値を取得する
    * - | (5)
      - | リダイレクト後のハンドラメソッドでは、(2)(3)で追加したデータを表示する画面のView名を返却する。
    * - | (6)
-     - | View(JSP)側では、「${属性名}」と記述することで\ ``RedirectAttributes``\ オブジェクトに追加したデータを取得することができる。
+     - | View(JSP)側では、「${属性名}」と記述することで\ ``RedirectAttributes``\を通じてflash scopeに追加したデータを取得することができる。
        | 例ではHTMLエスケープを行うEL式の関数を呼び出しているため、「${f:h(属性名)}」としている。
        | HTMLエスケープを行うEL式の関数の詳細については、 :doc:`Cross Site Scripting <../Security/XSS>` を参照されたい。
    * - | (7)
@@ -1735,7 +1730,7 @@ Cookieに値を書き込む
 
 ハンドラメソッドの返り値について
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-`ハンドラメソッドの返り値についても様々な値をとることができる <http://docs.spring.io/spring/docs/4.3.14.RELEASE/spring-framework-reference/html/mvc.html#mvc-ann-return-types>`_ が、
+`ハンドラメソッドの返り値についても様々な値をとることができる <https://docs.spring.io/spring/docs/5.0.8.RELEASE/spring-framework-reference/web.html#mvc-ann-return-types>`_ が、
 基本的には次に挙げるもののみを使用すること。
 
 - String(View名)
@@ -1752,30 +1747,17 @@ Cookieに値を書き込む
 HTMLを応答する
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 | ハンドラメソッドの実行結果をHTMLとして応答する場合、ハンドラメソッドの返り値は、JSPのView名を返却する。
-| JSPを使ってHTMLを生成する場合の\ ``ViewResolver``\ は、基本的には\ ``UrlBasedViewResolver``\ の継承クラス(\ ``InternalViewResolver``\ や \ ``TilesViewResolver``\ 等)となる。
+| JSPを使ってHTMLを生成する場合の\ ``ViewResolver``\ は、基本的には\ ``UrlBasedViewResolver``\ の継承クラス(\ ``InternalResourceViewResolver``\ や \ ``TilesViewResolver``\ 等)となる。
 
-| 以下では、JSP用の\ ``InternalViewResolver``\ を使用する場合の例を記載するが、画面レイアウトがテンプレート化されている場合は\ ``TilesViewResolver``\ を使用することを推奨する。
+| 以下では、JSP用の\ ``InternalResourceViewResolver``\ を使用する場合の例を記載するが、画面レイアウトがテンプレート化されている場合は\ ``TilesViewResolver``\ を使用することを推奨する。
 | \ ``TilesViewResolver``\ の使用方法については、 :doc:`../ArchitectureInDetail/WebApplicationDetail/TilesLayout` を参照されたい。
 
 - spring-mvc.xml
 
- \ ``<bean>``\ 要素を使用する場合の定義例
-
- .. code-block:: xml
-
-    <!-- (1) -->
-    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-        <property name="prefix" value="/WEB-INF/views/" /> <!-- (2) -->
-        <property name="suffix" value=".jsp" /> <!-- (3) -->
-        <property name="order" value="1" /> <!-- (4) -->
-    </bean>
-
- Spring Framework 4.1から追加された\ ``<mvc:view-resolvers>``\ 要素を使用する場合の定義例
-
  .. code-block:: xml
 
     <mvc:view-resolvers>
-        <mvc:jsp prefix="/WEB-INF/views/" /> <!-- (5) -->
+        <mvc:jsp prefix="/WEB-INF/views/" /> <!-- (1) -->
     </mvc:view-resolvers>
 
 
@@ -1787,7 +1769,7 @@ HTMLを応答する
     @RequestMapping("hello")
     public String hello() {
         // omitted
-        return "sample/hello"; // (6)
+        return "sample/hello"; // (2)
     }
 
  .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
@@ -1798,21 +1780,7 @@ HTMLを応答する
    * - 項番
      - 説明
    * - | (1)
-     - JSP用の\ ``InternalViewResolver``\ を定義する。
-   * - | (2)
-     - JSPファイルが格納されているベースディレクトリ(ファイルパスのプレフィックス)を指定する。
-
-       プレフィックスを指定しておくことで、ControllerでView名を返却する際に、JSPの物理的な格納場所を意識する必要がなくなる。
-   * - | (3)
-     - JSPファイルの拡張子(ファイルパスのサフィックス)を指定する。
-
-       サフィックスを指定しておくことで、ControllerでView名を返却する際に、JSPの拡張子を意識する必要がなくなる。
-   * - | (4)
-     - 複数の\ ``ViewResolver``\ を指定した場合の実行順番を指定する。
-
-       \ ``Integer``\ の範囲で指定することが可能で、値が小さいものから順に実行される。
-   * - | (5)
-     - Spring Framework 4.1から追加された\ ``<mvc:jsp>``\ 要素に使用して、JSP用の\ ``InternalViewResolver``\ を定義する。
+     - \ ``<mvc:jsp>``\ 要素を使用して、JSP用の\ ``InternalResourceViewResolver``\ を定義する。
 
        * \ ``prefix``\ 属性には、JSPファイルが格納されているベースディレクトリ(ファイルパスのプレフィックス)を指定する。
        * \ ``suffix``\ 属性には、デフォルト値として\ ``.jsp``\が適用されているため、明示的に指定する必要はない。
@@ -1822,7 +1790,7 @@ HTMLを応答する
            \ ``<mvc:view-resolvers>``\ 要素を使用すると、\ ``ViewResolver``\ をシンプルに定義することが出来るため、
            本ガイドラインでは\ ``<mvc:view-resolvers>``\ を使用することを推奨する。
 
-   * - | (6)
+   * - | (2)
      - ハンドラメソッドの返り値として ``sample/hello`` というView名を返却した場合、 ``/WEB-INF/views/sample/hello.jsp`` が呼び出されてHTMLが応答される。
 
 
@@ -1845,7 +1813,7 @@ HTMLを応答する
 
 .. warning:: **<mvc:view-controller>使用に関する留意点**
 
-    Spring Framework 4.3へのバージョンアップによって、\ ``<mvc:view-controller>``\ が許可するHTTPメソッドはGETとHEADのみに限定される様になったため(`SPR-13130 <https://jira.spring.io/browse/SPR-13130>`_)、
+    Spring Framework 4.3以降では、\ ``<mvc:view-controller>``\ が許可するHTTPメソッドはGETとHEADのみに限定される様になったため(`SPR-13130 <https://jira.spring.io/browse/SPR-13130>`_)、
     HTTPメソッドがGETとHEAD以外(POSTなど)でアクセスするページの場合、\ ``<mvc:view-controller>``\ は使用できない。
     GETとHEAD以外(POSTなど)からフォワードされた場合も同様となるため、エラーページへの遷移などフォワード元のHTTPメソッドが限定できない場合には\ ``<mvc:view-controller>``\ を使用しないよう注意されたい。
 
@@ -1865,29 +1833,11 @@ HTMLを応答する
 
 - spring-mvc.xml
 
- \ ``<bean>``\ 要素を使用する場合の定義例
-
- .. code-block:: xml
-    :emphasize-lines: 1-4
-
-    <!-- (1) -->
-    <bean class="org.springframework.web.servlet.view.BeanNameViewResolver">
-        <property name="order" value="0"/> <!-- (2) -->
-    </bean>
-
-    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-        <property name="prefix" value="/WEB-INF/views/" />
-        <property name="suffix" value=".jsp" />
-        <property name="order" value="1" />
-    </bean>
-
- Spring Framework 4.1から追加された\ ``<mvc:view-resolvers>``\ 要素を使用する場合の定義例
-
  .. code-block:: xml
     :emphasize-lines: 2
 
     <mvc:view-resolvers>
-        <mvc:bean-name /> <!-- (3) -->
+        <mvc:bean-name /> <!-- (1) -->
         <mvc:jsp prefix="/WEB-INF/views/" />
     </mvc:view-resolvers>
 
@@ -1899,7 +1849,7 @@ HTMLを応答する
     @RequestMapping("report")
     public String report() {
         // omitted
-        return "sample/report"; // (4)
+        return "sample/report"; // (2)
     }
 
 
@@ -1908,8 +1858,8 @@ HTMLを応答する
  .. code-block:: java
     :emphasize-lines: 1-2
 
-    @Component("sample/report") // (5)
-    public class XxxExcelView extends AbstractExcelView { // (6)
+    @Component("sample/report") // (3)
+    public class XxxExcelView extends AbstractExcelView { // (4)
         @Override
         protected void buildExcelDocument(Map<String, Object> model,
                 HSSFWorkbook workbook, HttpServletRequest request,
@@ -1937,29 +1887,22 @@ HTMLを応答する
    * - 項番
      - 説明
    * - | (1)
-     - \ ``BeanNameViewResolver``\ を定義する。
-
-       \ ``BeanNameViewResolver``\ は、返却されたView名に一致するBeanをアプリケーションコンテキストから探してViewを解決するクラスとなっている。
-   * - | (2)
-     - JSP用の\ ``InternalViewResolver``\ や \ ``TilesViewResolver``\ と併用する場合は、これらの\ ``ViewResolver``\ より、高い優先度を指定する事を推奨する。
-       上記例では、 "``0``" を指定することで、\ ``InternalViewResolver``\ より先に\ ``BeanNameViewResolver``\によるView解決が行われる。
-   * - | (3)
-     - Spring Framework 4.1から追加された\ ``<mvc:bean-name>``\ 要素を使用して、\ ``BeanNameViewResolver``\ を定義する。
+     - \ ``<mvc:bean-name>``\ 要素を使用して、\ ``BeanNameViewResolver``\ を定義する。
 
        \ ``<mvc:view-resolvers>``\ 要素を使用して\ ``ViewResolver``\ を定義する場合は、子要素に指定する\ ``ViewResolver``\の定義順が優先順位となる。
-       上記例では、JSP用の\ ``InternalViewResolver``\を定義するための要素(\ ``<mvc:jsp>``\)より上に定義することで、JSP用の\ ``InternalViewResolver``\ より先に\ ``BeanNameViewResolver``\によるView解決が行われる。
+       上記例では、JSP用の\ ``InternalResourceViewResolver``\を定義するための要素(\ ``<mvc:jsp>``\)より上に定義することで、JSP用の\ ``InternalResourceViewResolver``\ より先に\ ``BeanNameViewResolver``\によるView解決が行われる。
 
        .. note::
 
            \ ``<mvc:view-resolvers>``\ 要素を使用すると、\ ``ViewResolver``\ をシンプルに定義することが出来るため、
            本ガイドラインでは\ ``<mvc:view-resolvers>``\ を使用することを推奨する。
-   * - | (4)
+   * - | (2)
      - ハンドラメソッドの返り値として ``sample/report`` というView名を返却した場合、 (5)でBean登録されたViewインスタンスによって生成されたデータがダウンロードデータとして応答される。
-   * - | (5)
+   * - | (3)
      - コンポーネントの名前にView名を指定して、ViewオブジェクトをBeanとして登録する。
 
        上記例では、 ``sample/report`` というbean名(View名)で ``x.y.z.app.views.XxxExcelView`` のインスタンスがBean登録される。
-   * - | (6)
+   * - | (4)
      - Viewの実装例。
 
        上記例では、 ``org.springframework.web.servlet.view.document.AbstractExcelView`` を継承し、Excelデータを生成するViewクラスの実装となる。
@@ -2297,9 +2240,9 @@ Spring Frameworkでは、HTML formから送信されたリクエストパラメ�
 
     Spring Frameworkは、以下の3つの仕組みを使って型変換を行っており、基本的な型への変換は標準でサポートされている。各変換機能の詳細については、リンク先のページを参照されたい。
 
-    * `Spring Type Conversion <http://docs.spring.io/spring/docs/4.3.14.RELEASE/spring-framework-reference/html/validation.html#core-convert>`_\
-    * `Spring Field Formatting <http://docs.spring.io/spring/docs/4.3.14.RELEASE/spring-framework-reference/html/validation.html#format>`_\
-    * `java.beans.PropertyEditor implementations <http://docs.spring.io/spring/docs/4.3.14.RELEASE/spring-framework-reference/html/validation.html#beans-beans-conversion>`_\
+    * `Spring Type Conversion <https://docs.spring.io/spring/docs/5.0.8.RELEASE/spring-framework-reference/core.html#core-convert>`_\
+    * `Spring Field Formatting <https://docs.spring.io/spring/docs/5.0.8.RELEASE/spring-framework-reference/core.html#format>`_\
+    * `Built-in PropertyEditor implementations <https://docs.spring.io/spring/docs/5.0.8.RELEASE/spring-framework-reference/core.html#beans-beans-conversion>`_\
 
  .. warning::
 
@@ -2345,7 +2288,7 @@ Spring Frameworkでは、HTML formから送信されたリクエストパラメ�
      - 説明
    * - 1.
      - style
-     - 数値のスタイルを指定する。詳細は、`NumberFormat.StyleのJavadoc <http://docs.spring.io/spring/docs/4.3.14.RELEASE/javadoc-api/org/springframework/format/annotation/NumberFormat.Style.html>`_\ を参照されたい。
+     - 数値のスタイルを指定する。詳細は、`NumberFormat.StyleのJavadoc <https://docs.spring.io/spring/docs/5.0.8.RELEASE/javadoc-api/org/springframework/format/annotation/NumberFormat.Style.html>`_\ を参照されたい。
    * - 2.
      - pattern
      - Javaの数値形式を指定する。詳細は、`DecimalFormatのJavadoc <http://docs.oracle.com/javase/8/docs/api/java/text/DecimalFormat.html>`_\ を参照されたい。
@@ -2390,7 +2333,7 @@ Spring Frameworkでは、HTML formから送信されたリクエストパラメ�
      - 説明
    * - 1.
      - iso
-     - ISOの日時形式を指定する。詳細は、`DateTimeFormat.ISOのJavadoc <http://docs.spring.io/spring/docs/4.3.14.RELEASE/javadoc-api/org/springframework/format/annotation/DateTimeFormat.ISO.html>`_\ を参照。
+     - ISOの日時形式を指定する。詳細は、`DateTimeFormat.ISOのJavadoc <https://docs.spring.io/spring/docs/5.0.8.RELEASE/javadoc-api/org/springframework/format/annotation/DateTimeFormat.ISO.html>`_\ を参照。
    * - 2.
      - pattern
      - Javaの日時形式を指定する。詳細は、`SimpleDateFormatのJavadoc <http://docs.oracle.com/javase/8/docs/api/java/text/SimpleDateFormat.html>`_\ を参照されたい。
@@ -2539,7 +2482,7 @@ form-backing beanの初期化は、\ ``@ModelAttribute``\ アノテーション�
 HTML formへのバインディング方法
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 | \ ``Model``\ に追加されたフォームオブジェクトは\ ``<form:xxx>``\ タグを用いて、HTML(JSP)のformにバインドすることができる。
-| \ ``<form:xxx>``\ タグの詳細は、 `Using Spring's form tag library <http://docs.spring.io/spring/docs/4.3.14.RELEASE/spring-framework-reference/html/view.html#view-jsp-formtaglib>`_\ を参照されたい。
+| \ ``<form:xxx>``\ タグの詳細は、 `Using Spring's form tag library <https://docs.spring.io/spring/docs/5.0.8.RELEASE/spring-framework-reference/web.html#mvc-view-jsp-formtaglib>`_\ を参照されたい。
 
  .. code-block:: jsp
     :emphasize-lines: 1
@@ -2731,11 +2674,10 @@ JSPの実装
      - ドキュメント
    * - 1.
      - Spring's form tag library
-     - - `<http://docs.spring.io/spring/docs/4.3.14.RELEASE/spring-framework-reference/html/view.html#view-jsp-formtaglib>`_\
-       - `<http://docs.spring.io/spring/docs/4.3.14.RELEASE/spring-framework-reference/html/spring-form-tld.html>`_\
+     - - `<https://docs.spring.io/spring/docs/5.0.8.RELEASE/spring-framework-reference/web.html#mvc-view-jsp-formtaglib>`_\
    * - 2.
      - Spring's tag library
-     - - `<http://docs.spring.io/spring/docs/4.3.14.RELEASE/spring-framework-reference/html/spring-tld.html>`_\
+     - - `<https://docs.spring.io/spring/docs/5.0.8.RELEASE/spring-framework-reference/web.html#mvc-view-jsp-tags>`_\
    * - 3.
      - JSTL
      - - `<http://download.oracle.com/otndocs/jcp/jstl-1.2-mrel2-eval-oth-JSpec/>`_\
@@ -3077,7 +3019,7 @@ HTMLの\ ``<form>``\ 要素(JSPタグライブラリの\ ``<form:form>``\ 要素
         \ ``arg``\ メソッドや\ ``buildAndExpand``\ メソッドを呼び出す必要がある。
 
         \ ``arg``\ メソッドと\ ``buildAndExpand``\ メソッドの具体的な使用例については、
-        「\ `Spring Framework Reference Documentation(Building URIs to Controllers and methods from views) <http://docs.spring.io/spring/docs/4.3.14.RELEASE/spring-framework-reference/html/mvc.html#mvc-links-to-controllers-from-views>`_\ 」を参照されたい。
+        「\ `Spring Framework Documentation(Links in views) <https://docs.spring.io/spring/docs/5.0.8.RELEASE/spring-framework-reference/web.html#mvc-links-to-controllers-from-views>`_\ 」を参照されたい。
 
 
  .. note:: **リクエストマッピング名について**
@@ -3134,7 +3076,7 @@ Spring Frameworkから提供されている ``<form:form>`` タグを使用し�
      - \ ``<form:xxx>``\ タグのpath属性に、バインドしたいプロパティのプロパティ名を指定する。  ``xxx`` の部分は、入力項目のタイプによってかわる。
 
 .. note::
-    \ ``<form:form>``\ 、\ ``<form:xxx>``\ タグの詳細は、 `Using Spring's form tag library <http://docs.spring.io/spring/docs/4.3.14.RELEASE/spring-framework-reference/html/view.html#view-jsp-formtaglib>`_\ を参照されたい。
+    \ ``<form:form>``\ 、\ ``<form:xxx>``\ タグの詳細は、 `Using Spring's form tag library <https://docs.spring.io/spring/docs/5.0.8.RELEASE/spring-framework-reference/web.html#mvc-view-jsp-formtaglib>`_\ を参照されたい。
 
 |
 
@@ -3425,12 +3367,6 @@ Spring Securityから提供されている ``<sec:authorize>`` を使用して�
 JavaScriptの実装
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 画面描画後に画面項目の制御(表示/非表示、活性/非活性などの制御)を行う必要がある場合は、JavaScriptを使用して、項目の制御を行う。
-
-.. todo::
-
-    **TBD**
-
-    次版以降で詳細を記載する予定である。
 
 |
 

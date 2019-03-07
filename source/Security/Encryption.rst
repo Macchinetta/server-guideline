@@ -26,7 +26,7 @@ Overview
 * JCA (Java Cryptography Architecture) を利用した公開鍵暗号化方式の暗号化と復号
 * JCAを利用したハイブリッド暗号化方式の暗号化と復号
 
-Spring Securityの暗号化機能の詳細については、\ `Spring Security Reference -Spring Security Crypto Module- <http://docs.spring.io/spring-security/site/docs/4.2.4.RELEASE/reference/htmlsingle/#crypto>`_\ を参照されたい。
+Spring Securityの暗号化機能の詳細については、\ `Spring Security Reference -Spring Security Crypto Module- <https://docs.spring.io/spring-security/site/docs/5.0.7.RELEASE/reference/htmlsingle/#crypto>`_\ を参照されたい。
 
 .. _EncryptionOverviewEncryptionScheme:
 
@@ -191,12 +191,15 @@ Oracleなど、一部のJava製品ではAESの鍵長256ビットを扱うため�
 
 .. note:: **JCE管轄ポリシーファイル**
 
-   輸入規制の関係上、一部のJava製品ではデフォルトの暗号化アルゴリズム強度が制限されている。より強力なアルゴリズムを利用する場合は、強度が無制限のJCE管轄ポリシーファイルを入手し、JDK/JREにインストールする必要がある。詳細については、\ `Java Cryptography Architecture Oracle Providers Documentation <https://docs.oracle.com/javase/8/docs/technotes/guides/security/SunProviders.html>`_\を参照されたい。
+   輸入規制の関係上、一部のJava製品ではデフォルトの暗号化アルゴリズム強度が制限されている。その為、より強力なアルゴリズムを利用する場合は、強度が無制限のJCE管轄ポリシーファイルを入手し、JDK/JREにインストールする必要があった。
+
+   しかし、JDK/JRE 8u151以降からは、強度が無制限のJCE管轄ポリシーファイルが予め含まれるようになったため、別途入手する必要はなくなった。また、JDK/JRE 8u161以降では、当該ポリシーファイルがデフォルトで適用されているため、インストールも不要となった。
+
+   詳細については、\ `Java Cryptography Architecture Oracle Providers Documentation <https://docs.oracle.com/javase/8/docs/technotes/guides/security/SunProviders.html>`_\を参照されたい。
 
    JCE管轄ポリシーファイルのダウンロード先
 
    * \ `Oracle Java 8 用 <http://www.oracle.com/technetwork/java/javase/downloads/jce8-download-2133166.html>`_\
-   * \ `Oracle Java 7 用 <http://www.oracle.com/technetwork/java/embedded/embedded-se/downloads/jce-7-download-432124.html>`_\
 
 .. _EncryptionHowToUseCommonKey:
 

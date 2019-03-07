@@ -24,9 +24,13 @@ Overview
 
 |
 
+.. _pagination_overview_page:
+
 ページ分割時の一覧画面の表示について
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-ページネーション機能を利用してページ分割した場合、以下のような画面になる。
+| ページネーション機能を利用してページ分割した場合、以下のような画面になる。
+| 各要素の表示にはサーバ側で行う検索処理をページ検索に対応させる必要がある。ページ検索機能については、「:ref:`ページ検索について <pagination_overview_page_search>` 」を参照されたい。
+| また、各要素の概要及びHTML構造等については、「:ref:`ページネーションの表示について<pagination_overview_page_display>`」を参照されたい。
 
  .. figure:: ./images/pagination-overview_screen.png
    :alt: Screen image of Pagination.
@@ -40,13 +44,16 @@ Overview
     * - 項番
       - 説明
     * - | (1)
-      - | ページを移動するためのリンクを表示する。
-        | リンク押下時には、該当ページを表示するためのリクエストを送信する。この領域を表示するためのJSPタグライブラリを共通ライブラリとして提供している。
+      - | ページ検索処理で取得したデータを表示する。
     * - | (2)
+      - | ページを移動するためのリンクを表示する。
+        | リンク押下時には、該当ページを表示するためのリクエストを送信する。
+    * - | (3)
       - | ページネーションに関連する情報(合計件数、合計ページ数、表示ページ数など)を表示する。
-        | この領域を表示するためのタグライブラリは存在しないため、JSPの処理として個別に実装する必要がある。
 
 |
+
+.. _pagination_overview_page_search:
 
 ページ検索について
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -111,59 +118,42 @@ Spring Dataより提供されているページ検索用の機能は、以下の
              | 値には、``{ソート項目名(,ソート順)}`` の形式で指定する。
              | ソート順には、``ASC`` 又は ``DESC`` のどちらかの値を指定し、省略した場合は ``ASC`` が適用される。
              | 項目名は "``,``" 区切りで複数指定することが可能である。
-             | 例えば、クエリ文字列として ``sort=lastModifiedDate,id,DESC&sort=subId`` を指定した場合、 ``ORDER BY lastModifiedDate DESC, id DESC, subId ASC`` というOrder By句がQueryに追加される。
+             | 例えば、クエリ文字列として ``sort=lastModifiedDate,id,DESC&sort=subId`` が指定された場合、 ``ORDER BY lastModifiedDate DESC, id DESC, subId ASC`` のようなOrder By句をQueryに追加することになる。
 
- .. warning:: **spring-data-commons 1.6.1.RELEASEにおける「size=0」指定時の動作について**
+.. _pagination_overview_page_display:
 
-    terasoluna-gfw-common 1.0.0.RELEASEが依存するspring-data-commons 1.6.1.RELEASEでは、``size=0`` を指定すると条件に一致するレコードを全件取得するという不具合がある。
-    そのため、大量のレコードが取得対象となる可能性がある場合は、``java.lang.OutOfMemoryError`` が発生する可能性が高くなる。
+ページネーションの表示について
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+「:ref:`ページ分割時の一覧画面の表示について<pagination_overview_page>`」にて説明した画面の各要素について説明する。
 
-    この問題はSpring Data CommonsのJIRA「`DATACMNS-377 <https://jira.springsource.org/browse/DATACMNS-377>`_」で対応され、spring-data-commons 1.6.3.RELEASEで解消されている。
-    改修後の動作としては、``size<=0`` を指定した場合は、 sizeパラメータ省略時のデフォルト値が適用される。
-    
-    terasoluna-gfw-common 1.0.0.RELEASEを使用している場合は、terasoluna-gfw-common 1.0.1.RELEASE以上へバージョンアップする必要がある。
+.. _pagination_overview_page_display_fetcheddata:
 
- .. warning:: **spring-data-commons 1.6.1.RELEASEにおけるリクエストパラメータに不正な値を指定した際の動作について**
-
-    terasoluna-gfw-common 1.0.0.RELEASEが依存するspring-data-commons 1.6.1.RELEASEでは、ページ検索用のリクエストパラメータ(page, size, sort)に不正な値を指定した場合、
-    ``java.lang.IllegalArgumentException`` 又は ``java.lang.ArrayIndexOutOfBoundsException`` が発生し、Spring MVCのデフォルトの設定だとシステムエラー(HTTPステータスコード=500)となってしまうという不具合がある。
-
-    この問題はSpring Data CommonsのJIRA「`DATACMNS-379 <https://jira.springsource.org/browse/DATACMNS-379>`_」と「`DATACMNS-408 <https://jira.springsource.org/browse/DATACMNS-408>`_」で対応され、spring-data-commons 1.6.3.RELEASEで解消されている。
-    改修後の動作としては、不正な値を指定した場合は、 パラメータ省略時のデフォルト値が適用される。
-
-    terasoluna-gfw-common 1.0.0.RELEASEを使用している場合は、terasoluna-gfw-common 1.0.1.RELEASE以上へバージョンアップする必要がある。
-
- .. note:: **Spring Data CommonsのAPI仕様の変更に伴う注意点**
-
-    terasoluna-gfw-common 5.0.0.RELEASE以上が依存するspring-data-commons(1.9.1.RELEASE以上)では、
-    ページ検索機能用のインタフェース(\ ``org.springframework.data.domain.Page``\ )とクラス(\ ``org.springframework.data.domain.PageImpl``\ と\ ``org.springframework.data.domain.Sort.Order``\ )のAPI仕様が変更になっている。
-
-    具体的には、
-
-    * \ ``Page``\ インタフェースと\ ``PageImpl``\ クラスでは、\ ``isFirst()``\ と\ ``isLast()``\ メソッドがspring-data-commons 1.8.0.RELEASEで追加、\ ``isFirstPage()``\ と\ ``isLastPage()``\ メソッドがspring-data-commons 1.9.0.RELEASEで削除
-    * \ ``Sort.Order``\ クラスでは、 \ ``nullHandling``\ プロパティがspring-data-commons 1.8.0.RELEASEで追加
-
-    されている。
-
-    削除されたAPIを使用している場合はコンパイルエラーとなるので、アプリケーションの修正が必要になる。
-    加えて、REST APIのリソースオブジェクトとして\ ``Page``\ インタフェース(\ ``PageImpl``\ クラス)を使用している場合は、
-    JSONやXMLのフォーマットが変わってしまうため、こちらもアプリケーションの修正が必要になるケースがある。
+取得データの表示について
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+| ページ検索処理で検索条件(検索対象のページ位置、取得件数、ソート条件等)を指定して取得したデータを表示する。
+| ページ検索については、「:ref:`ページ検索について <pagination_overview_page_search>` 」を参照されたい。
 
 |
 
-.. _pagination_overview_paginationlink:
+.. _pagination_overview_page_display_paginationlink:
 
 ページネーションリンクの表示について
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-| 共通ライブラリから提供しているJSPタグライブラリを使って出力されるページネーションリンクについて説明する。
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+| 共通ライブラリから提供しているJSPタグライブラリを使って出力されるページネーションリンクについて以下の流れで説明する。
+
+#. :ref:`ページネーションリンクの構成<pagination_overview_page_display_paginationlink_structure>`
+#. :ref:`ページネーションリンクのHTML構造<pagination_overview_page_display_paginationlink_htmlstructure>`
+#. :ref:`JSPタブライブラリのパラメータについて<pagination_overview_page_display_paginationlink_taglibparameters>`
 
 | 共通ライブラリからはページネーションリンクを表示するためのスタイルシートの提供は行っていないため、各プロジェクトにて用意すること。
 | 以降の説明で使用する画面は、Bootstrap v3.0.0のスタイルシートを適用している。
 
 |
 
+.. _pagination_overview_page_display_paginationlink_structure:
+
 ページネーションリンクの構成
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 ページネーションリンクは、以下の要素から構成される。
 
  .. figure:: ./images/pagination-how_to_use_jsp_pagelink_description.png
@@ -233,8 +223,10 @@ Spring Dataより提供されているページ検索用の機能は、以下の
 
 |
 
+.. _pagination_overview_page_display_paginationlink_htmlstructure:
+
 ページネーションリンクのHTML構造
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 共通ライブラリを使って出力されるページネーションリンクのHTMLは、以下の構造となる。
 
 - HTML
@@ -369,10 +361,10 @@ Spring Dataより提供されているページ検索用の機能は、以下の
 
 |
 
-.. _pagination_overview_paginationlink_taglibparameters:
+.. _pagination_overview_page_display_paginationlink_taglibparameters:
 
 JSPタブライブラリのパラメータについて
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 JSPタグライブラリのパラメータに値を指定することで、デフォルト動作を変更することができる。
 
 以下にパラメータの一覧を示す。
@@ -601,6 +593,22 @@ JSPタグライブラリのパラメータに値を指定することで、デ�
 
 |
 
+.. _pagination_overview_page_display_paginationinfo:
+
+ページネーション情報の表示について
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+| ページネーションに関する情報の表示を行う。
+| Spring Data提供のページ検索機能を使用することで、以下の情報を画面に表示することができる。
+
+* 合計件数
+* 検索対象のページ位置
+* 取得件数
+* ソート条件
+
+| ページ検索については、「:ref:`ページ検索について <pagination_overview_page_search>` 」を参照されたい。
+
+|
+
 ページネーション機能使用時の処理フロー
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Spring Dataより提供されているページネーション機能と、共通ライブラリから提供しているJSPタグライブラリを利用した際の処理フローは、以下の通り。
@@ -800,7 +808,7 @@ Spring Dataのページネーション機能を有効化するための設定
     * - | (5)
       - | ソート条件のソート項目を指定する場合は、 ``@PageableDefault`` のsort属性にソート項目を指定する。
         | 複数の項目でソートする場合は、ソートするプロパティ名を配列で指定する。
-        | 上記例では、 ``ORDER BY publishedDate DESC, articleId DESC`` というソート条件がQueryに追加される。
+        | 上記例では、``ORDER BY publishedDate DESC, articleId DESC`` のようなOrder By句をQueryに追加することになる。
       - | 空の配列
         | (ソート項目なし)
 
@@ -867,7 +875,7 @@ Spring Dataのページネーション機能を有効化するための設定
       - | ``Direction.ASC``
         | (昇順)
 
- 上記例では、 ``ORDER BY publishedDate DESC, articleId ASC`` というソート条件がQueryに追加される。
+ 上記例では、 ``ORDER BY publishedDate DESC, articleId ASC`` のようなOrder By句をQueryに追加することになる。
 
  .. tip:: **ソート項目のデフォルト値のみ指定する場合の指定方法**
 
@@ -892,6 +900,7 @@ Spring Dataのページネーション機能を有効化するための設定
 
 * :ref:`DataAccessMyBatis3HowToUseFindPageUsingMyBatisFunction`
 * :ref:`DataAccessMyBatis3HowToUseFindPageUsingSqlFilter`
+* :ref:`DataAccessMyBatis3HowToUseFindPageUsingSort`
 
 を参照されたい。
 
@@ -945,7 +954,7 @@ JSPの実装(基本編)
 
     <%-- ... --%>
 
-    <%-- (2) --%>
+    <%-- (1) --%>
     <c:when test="${page != null && page.totalPages != 0}">
 
         <table class="maintable">
@@ -959,7 +968,7 @@ JSPの実装(基本編)
                 </tr>
             </thead>
 
-            <%-- (3) --%>
+            <%-- (2) --%>
             <c:forEach var="article" items="${page.content}" varStatus="rowStatus">
                 <tr>
                     <td class="no">
@@ -998,10 +1007,10 @@ JSPの実装(基本編)
 
     * - 項番
       - 説明
-    * - | (2)
+    * - | (1)
       - | 上記例では、条件に一致するデータが存在するかチェックを行い、一致するデータがない場合はヘッダ行も含めて表示していない。
         | 一致するデータがない場合でもヘッダ行は表示させる必要がある場合は、この分岐は不要となる。
-    * - | (3)
+    * - | (2)
       - | JSTLの ``<c:forEach>`` タグを使用して、取得したデータの一覧を表示する。
         | 取得したデータは、 ``Page`` オブジェクトの ``content`` プロパティにリスト形式で格納されている。
 
@@ -1281,7 +1290,7 @@ JSPの実装(基本編)
       - | 表示しているページのページ数を表示する場合は、 ``Page`` オブジェクトの ``number`` プロパティから値を取得し、``+1`` する。
         | ``Page`` オブジェクトの ``number`` プロパティは "``0``" 開始のため、 ページ番号を表示する際は ``+1`` が必要となる。
     * - | (3)
-      - | 検索条件に一致するデータの合計ページ数を表示する場合は、 ``Page`` オブジェクトの ``totalPages`` プロパティから値をする。
+      - | 検索条件に一致するデータの合計ページ数を表示する場合は、 ``Page`` オブジェクトの ``totalPages`` プロパティから値を取得する。
 
 |
 
@@ -1843,7 +1852,7 @@ Appendix
       - | ``Sort`` のコンストラクタの第1引数に、 デフォルト値として使用する ``Order`` オブジェクトのリストを設定する。
     * - | (8)
       - | ``Order`` のインスタンスを生成し、 デフォルト値として使用する ``Order`` オブジェクトのリストに追加する。
-        | 上記例ではリクエストパラメータにソート条件の指定がない場合は ``ORDER BY x.lastModifiedDate DESC, x.id ASC`` というソート条件がQueryに追加される。
+        | 上記例ではリクエストパラメータにソート条件の指定がない場合は ``ORDER BY lastModifiedDate DESC, id ASC`` のようなOrder By句をQueryに追加することになる。
     * - | (9)
       - | ``Order`` のコンストラクタの第1引数に、ソート順(ASC/DESC)を指定する。
     * - | (10)

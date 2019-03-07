@@ -210,14 +210,12 @@ Solutions
 
  .. Warning::
 
-   AjaxとWebサービスでは、リクエスト毎に変更されるトランザクショントークンの受け渡しを行いにくいため、トランザクショントークンチェックを使用しなくてよい。
+   AjaxとWebサービスでは、リクエスト毎に変更されるトランザクショントークンの受け渡しを行いにくいため、二重送信を防止する目的でトランザクショントークンチェックを使用しなくてよい。
    Ajaxの場合は、JavaScriptによるボタンの2度押し防止のみで二重送信防止を行う。
 
- .. todo::
- 
-    **TBD**
+   Ajaxにおいて、不正なリクエストを防止する目的でトランザクショントークンチェックを行う場合、トークン値のチェックのみを行い、チェック後にサーバで管理しているトークン値を破棄しない事で実現できる。
+   Ajaxにおけるトランザクショントークンチェックに関しては、\ :ref:`transaction-token-check-for-ajax`\を参照されたい。
 
-    AjaxとWebサービスでのチェック方法は、今後検討の余地あり。
 
 
 JavaScriptによるボタンの2度押し防止について
@@ -533,12 +531,6 @@ JavaScriptによるボタンの2度押し防止の適用
 
 | クライアントでのボタンの二重クリック防止は、JavaScriptで実現することになる。
 | ボタンをクリックした後は、再描画するまでクリックできないようにする。
-
- .. todo::
- 
-    **TBD**
-    
-    JavaScriptでのチェック方法については、次版以降で詳細化する予定である。
 
 PRG(Post-Redirect-Get)パターンの適用
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -1622,6 +1614,136 @@ How to extend
        | デフォルト値(デフォルトコンストラクタ使用時に設定される値)は、10となっている。
        | 上記例では、 デフォルト値(10)から5に変更している。
 
+
+
+.. _transaction-token-check-for-ajax:
+
+Ajax使用時のトランザクショントークンチェックについて
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Ajax使用時に不正なアクセスを防止する目的で、トランザクショントークンチェックを用いることができる。
+
+Ajaxによる処理では画面遷移を伴わないため、トランザクショントークンチェックを行う場合、ファイルダウンロード時と同様に \ ``@TransactionTokenCheck``\アノテーションのtype属性を\ ``CHECK``\にする必要がある。
+
+本節では、Ajax使用時のCSRFトークンチェックの方式に準え、HTMLのmetaタグとしてトランザクショントークンの情報を出力し、metaタグから取得したトークン値をAjax通信時のリクエストパラメータに設定することで連携する方式を示す。
+Ajax使用時のCSRFトークンチェックについては \ :ref:`csrf_ajax-token-setting`\ を参照されたい。
+
+Ajaxによってユーザデータを取得するユースケースに対して、トランザクショント－クンチェックを適用する際の実装例を以下に示す。
+
+- Controllerの実装例
+
+ .. code-block:: java
+    :emphasize-lines: 10
+
+    @Controller
+    @RequestMapping("user")
+    @TransactionTokenCheck("user")
+    public class UserController {
+
+        // omitted
+
+        @RequestMapping(value = "create", params = "search", method = RequestMethod.GET)
+        @ResponseBody
+        @TransactionTokenCheck(value = "create", type = TransactionTokenType.CHECK) // (1)
+        public User searchUser() {
+            User user;
+            //omitted
+            return user;
+        }
+
+        // omitted
+
+    }
+
+ .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
+ .. list-table::
+   :header-rows: 1
+   :widths: 10 90
+
+
+   * - 項番
+     - 説明
+   * - | (1)
+     - | Ajax使用時の処理では画面遷移を伴わないため\ ``TransactionTokenType``\に\ ``CHECK``\を指定する。
+
+- JSPの実装例
+
+ .. code-block:: jsp
+    :emphasize-lines: 4,5
+
+    <head>
+        <!-- omitted -->
+        <!-- (1) -->
+        <meta name="_TRANSACTION_TOKEN_INFO"
+    content="${requestScope['org.terasoluna.gfw.web.token.transaction.TransactionTokenInterceptor.NEXT_TOKEN'].getTokenString()}" />
+        <!-- omitted -->
+    </head>
+
+ .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
+ .. list-table::
+    :header-rows: 1
+    :widths: 10 90
+
+    * - 項番
+      - 説明
+    * - | (1)
+      - | HTMLの\ ``<head>``\ 要素内に、EL式を用いてmetaタグとしてトランザクショントークンの情報を埋め込む。
+
+上記EL式を用いることで、トランザクショントークンの情報が付加されたmetaタグが出力される。
+
+- HTMLの出力例
+
+ .. code-block:: html
+
+    <head>
+        <!-- omitted -->
+        <meta name="_TRANSACTION_TOKEN_INFO" content="create~07ee4392bdfefa036b730b228adb97b3~0bd3d05ccf231d099edf3c13897ccaa8">
+        <!-- omitted -->
+    </head>
+
+Javascriptではmetaタグからトランザクショントークンの情報を取得し、Ajax通信時のリクエストパラメータにトランザクショントークンの値を設定する。
+(ここではjQueryを使った実装例となっている)
+
+- JavaScriptの実装例
+
+ .. code-block:: javascript
+    :emphasize-lines: 4,10
+
+    function searchUser() {
+
+        var contextPath = $("meta[name='contextPath']").attr("content");
+        var tokenValue = $("meta[name = '_TRANSACTION_TOKEN_INFO']").attr("content"); //(1)
+
+        $.ajax(contextPath + "/user/create?search", {
+            type : "GET",
+            data : {
+                //omitted
+                "_TRANSACTION_TOKEN" : tokenValue //(2)
+            },
+            dataType : "json",
+        }).done(function(data) {
+            //omitted
+        }).fail(
+            function(XMLHttpRequest, textStatus, errorThrown) {
+                //omitted
+        });
+
+        return false;
+    };
+
+ .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
+ .. list-table::
+    :header-rows: 1
+    :widths: 10 90
+
+    * - 項番
+      - 説明
+    * - | (1)
+      - | HTMLヘッダのmetaタグからトランザクショントークンの値を取得する。
+    * - | (2)
+      - | リクエストパラメータにトランザクショントークンの値を設定する。
+        | リクエストパラメータ名は、``_TRANSACTION_TOKEN``\とすること。
+
 Appendix
 --------------------------------------------------------------------------------
 
@@ -1639,7 +1761,7 @@ HTTPレスポンスヘッダの\ ``Cache-Control``\ の設定により、ブラ�
    :width: 60%
 
 この場合でも二重送信自体は防止されているため、問題はない。
-バージョン5.0.0.RELEASE以降の\ :doc:`雛形プロジェクト <../../ImplementationAtEachLayer/CreateWebApplicationProject>`\ では、
+バージョン1.5.0.RELEASE以降の\ :doc:`雛形プロジェクト <../../ImplementationAtEachLayer/CreateWebApplicationProject>`\ では、
 \ :ref:`Spring Securityの機能 <SpringSecurityLinkageWithBrowser>`\ でキャッシュが無効になる設定が行われている。
 
 もしこの画面の表示が出る代わりにトランザクショントークンエラー画面を表示したい場合は、

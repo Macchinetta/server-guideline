@@ -391,7 +391,7 @@ REST APIの実装サンプル
 
     import javax.inject.Inject;
 
-    import org.dozer.Mapper;
+    import com.github.dozermapper.core.Mapper;
     import org.springframework.http.HttpStatus;
     import org.springframework.validation.annotation.Validated;
     import org.springframework.web.bind.annotation.PathVariable;
@@ -831,12 +831,6 @@ HTTPメソッドによるリソースの操作
     
     CSRF対策については、\ :doc:`../../Security/CSRF`\を参照されたい。
 
- .. todo:: **TBD**
-
-    高い可用性が求められる場合は、「CSRF対策用のトークン値をAPサーバのメモリ(HTTPセッション)以外に保存する」アーキテクチャを検討した方がよい。
-    
-    具体的なアーキテクチャについては、現在検討中であり、次版以降に記載する予定である。
-    
 |
 
 .. _RESTOverviewHyperMediaLinksToRelatedResources:
@@ -1096,10 +1090,6 @@ RESTful Web Serviceは、複数のバージョンで稼働が必要になる可�
 
 * ``http://example.com/api/{APIバージョン}/{リソースを識別するためのパス}``\
 * ``http://api.example.com/{APIバージョン}/{リソースを識別するためのパス}``\
-
-.. todo:: **TBD**
- 
-    URIの中にAPIバージョンを含めるべきかは、現在検討中である。
 
 |
 
@@ -1535,7 +1525,7 @@ HTTPステータスコードは、以下の指針に則って応答する。
 認証・認可
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-* OAuth2の仕組みを使って認証・認可を行う仕組みについては、\ :ref:`OAuth <OAuth>`\ を参照されたい。
+* OAuth2の仕組みを使って認証・認可を行う仕組みについては、\ :doc:`../../Security/OAuth`\ を参照されたい。
 
 |
 
@@ -1572,14 +1562,6 @@ HTTPステータスコードは、以下の指針に則って応答する。
 
 |
 
-バージョニング
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-.. todo:: **TBD**
-
-    RESTful Web Service自体のバージョン管理及び複数バージョンの並行稼働をどのように行うかについて、次版以降に記載する予定である。
-    
-|
 
 .. _RESTHowToUse:
 
@@ -1786,7 +1768,7 @@ RESTful Web Serviceで必要となるSpring MVCのコンポーネントを有効
         | 本設定を行うことで、リソースのフォーマットとしてJSONを使用する事ができる。
         | 上記例では、\ ``<mvc:message-converters``>\要素のregister-defaults属性を\ ``false``\にしているので、リソースの形式はJSONに限定される。
         |
-        | リソースのフォーマットとしてXMLを使用する場合は、XXE Injection対策が行われているXML用の\ ``MessageConverter``\を指定すること。指定方法は、「\ :ref:`RESTAppendixEnabledXXEInjectProtection`\」を参照されたい。
+        | リソースのフォーマットとしてXMLを使用する場合は、XXE 対策が行われているXML用の\ ``MessageConverter``\を指定すること。指定方法は、「\ :ref:`RESTAppendixEnabledXXEProtection`\」を参照されたい。
     * - | (4)
       - | ページ検索機能を有効にするための設定を追加する。
         | ページ検索の詳細については、「:doc:`../WebApplicationDetail/Pagination`」を参照されたい。
@@ -1832,7 +1814,7 @@ RESTful Web Serviceで必要となるSpring MVCのコンポーネントを有効
             </property>
         </bean>
 
-    \ ``Jackson2ObjectMapperFactoryBean``\ の詳細については、 `Jackson2ObjectMapperFactoryBeanのJavaDoc <http://docs.spring.io/spring/docs/4.3.14.RELEASE/javadoc-api/org/springframework/http/converter/json/Jackson2ObjectMapperFactoryBean.html>`_\ を参照されたい。
+    \ ``Jackson2ObjectMapperFactoryBean``\ の詳細については、 `Jackson2ObjectMapperFactoryBeanのJavaDoc <https://docs.spring.io/spring/docs/5.0.8.RELEASE/javadoc-api/org/springframework/http/converter/json/Jackson2ObjectMapperFactoryBean.html>`_\ を参照されたい。
 
 
 .. _REST_note_changed_jackson_version:
@@ -2313,6 +2295,20 @@ Resourceクラスの役割は以下の通りである。
           * - | (1)
             - シリアライズ対象から除外するプロパティに対して\ ``@JsonIgnore``\ アノテーションを付与する。
 
+ .. warning::
+
+    電文からJava Beanにデシリアライズする際、プロパティにジェネリクスやインターフェイスを使用しているなどの理由で型を特定できない場合は
+    \ ``@com.fasterxml.jackson.annotation.JsonTypeInfo``\ アノテーションを付与する。
+    \ ``@JsonTypeInfo``\ アノテーションを付与したプロパティをシリアライズするとJSONに型情報が出力され、これを読み取ってデシリアライズが行われる。
+
+    ただし、\ ``@JsonTypeInfo``\ アノテーションのuse属性に\ ``Id.CLASS``\ や\ ``Id.MINIMAL_CLASS``\ を使用すると、
+    JSONに出力されたクラス名を元にデシリアライズが行われるため、これにより不正にリモートコードが実行される危険がある。
+    このため、(信頼できない送信元を含み得る)不特定多数からの電文を受け付ける前提のシステムにおいては、
+    \ ``Id.CLASS``\ や\ ``Id.MINIMAL_CLASS``\ を指定してはならない。
+
+    なお、\ ``ObjectMapper``\ の\ ``defaultTyping``\ を利用すると、上記のようなデシリアライズ時の型判断をアプリケーション全体に適用することが可能である。
+    こちらも合わせて注意されたい。
+
 |
 
 以下にResourceクラスの作成例を示す。
@@ -2539,7 +2535,7 @@ Controllerクラスの作成
 
     \ ``@RestController``\ アノテーションの登場により、Controllerの各メソッドに\ ``@ResponseBody``\ アノテーションを付与する必要がなくなったため、
     REST API用のControllerをよりシンプルに作成出来るようになった。
-    \ ``@RestController``\ アノテーションの詳細については、\ `こちら <http://docs.spring.io/spring/docs/4.3.14.RELEASE/javadoc-api/org/springframework/web/bind/annotation/RestController.html>`_\ を参照されたい。
+    \ ``@RestController``\ アノテーションの詳細については、\ `こちら <https://docs.spring.io/spring/docs/5.0.8.RELEASE/javadoc-api/org/springframework/web/bind/annotation/RestController.html>`_\ を参照されたい。
 
     従来通り\ ``@Controller``\ アノテーションと\ ``@ResponseBody``\ アノテーションを組み合わせてREST API用のControllerを作成する例を以下に示す。
 
@@ -2768,21 +2764,6 @@ URIで指定されたMemberリソースのコレクションをページ検索�
       "first" : false
     }
 
- .. note:: **Spring Data CommonsのAPI仕様の変更に伴う注意点**
-
-    terasoluna-gfw-common 5.0.0.RELEASE以上が依存するspring-data-commons(1.9.1.RELEASE以上)では、
-    ページ検索機能用のインタフェース(\ ``org.springframework.data.domain.Page``\ )とクラス(\ ``org.springframework.data.domain.PageImpl``\ と\ ``org.springframework.data.domain.Sort.Order``\ )のAPI仕様が変更になっている。
-
-    具体的には、
-
-    * \ ``Page``\ インタフェースと\ ``PageImpl``\ クラスでは、\ ``isFirst()``\ と\ ``isLast()``\ メソッドがspring-data-commons 1.8.0.RELEASEで追加、\ ``isFirstPage()``\ と\ ``isLastPage()``\ メソッドがspring-data-commons 1.9.0.RELEASEで削除
-    * \ ``Sort.Order``\ クラスでは、 \ ``nullHandling``\ プロパティがspring-data-commons 1.8.0.RELEASEで追加
-
-    されている。
-
-    REST APIのリソースオブジェクトとして\ ``Page``\ インタフェース(\ ``PageImpl``\ クラス)を使用している場合は、
-    JSONやXMLのフォーマットが変わってしまうため、アプリケーションの修正が必要になるケースがある。
-
 |
 
 * | Beanのマッピング定義の追加
@@ -2795,15 +2776,15 @@ URIで指定されたMemberリソースのコレクションをページ検索�
   
     <!-- (11) -->
     <?xml version="1.0" encoding="UTF-8"?>
-    <mappings xmlns="http://dozer.sourceforge.net" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:schemaLocation="http://dozer.sourceforge.net
-              http://dozer.sourceforge.net/schema/beanmapping.xsd">
+    <mappings xmlns="http://dozermapper.github.io/schema/bean-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://dozermapper.github.io/schema/bean-mapping
+              https://dozermapper.github.io/schema/bean-mapping.xsd">
     
-        <mapping type="one-way">
+        <mapping>
             <class-a>org.terasoluna.examples.rest.domain.model.MemberCredential</class-a>
             <class-b>org.terasoluna.examples.rest.api.member.MemberCredentialResource</class-b>
             <!-- (12) -->
-            <field-exclude>
+            <field-exclude type="one-way">
                 <a>password</a>
                 <b>password</b>
             </field-exclude>
@@ -4641,7 +4622,7 @@ Filterでエラーが発生した場合や\ ``HttpServletResponse#sendError``\�
 認証・認可
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-* OAuth2(Spring Security OAuth2)を使用して認証・認可を実現する方法について、\ :ref:`OAuth <OAuth>`\ を参照されたい。
+* OAuth2(Spring Security OAuth2)を使用して認証・認可を実現する方法について、\ :doc:`../../Security/OAuth`\ を参照されたい。
 
 |
 
@@ -4650,7 +4631,7 @@ Filterでエラーが発生した場合や\ ``HttpServletResponse#sendError``\�
 CSRF対策
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-* RESTful Web Serviceに対してCSRF対策を行う場合の設定方法については、\ :ref:`CSRF対策 <csrf_spring-security-setting>`\ を参照されたい。
+* RESTful Web Serviceに対してCSRF対策を行う場合の設定方法については、\ :doc:`../../Security/CSRF`\ を参照されたい。
 
 * RESTful Web Serviceに対してCSRF対策を行わない場合の設定方法については、:ref:`RESTAppendixDisabledCSRFProtection`\ を参照されたい。
 
@@ -4805,7 +4786,7 @@ How to extend
     
     import javax.inject.Inject;
     
-    import org.dozer.Mapper;
+    import com.github.dozermapper.core.Mapper;
     import org.springframework.http.HttpStatus;
     import org.springframework.web.bind.annotation.PathVariable;
     import org.springframework.web.bind.annotation.RequestBody;
@@ -5413,7 +5394,7 @@ JSONの中に関連リソースへのハイパーメディアリンクを含め�
         | 上記例では、リンク情報に設定するURIを組み立てるため \ ``UriComponentsBuilder``\ クラスのメソッドを呼び出し、自身のリソースにアクセスするためのURIをリソースに追加している。
         |
         | Controllerのメソッドの引数として渡された\ ``ServletUriComponentsBuilder``\ のインスタンスは、web.xmlに記載の\ ``<servlet-mapping>``\要素の情報を元に初期化されており、リソースには依存しない。
-        | そのため、Spring Frameworkから提供される `URI Template Patterns <http://docs.spring.io/spring/docs/4.3.14.RELEASE/spring-framework-reference/html/mvc.html#mvc-ann-requestmapping-uri-templates>`_\ 等を利用し、
+        | そのため、Spring Frameworkから提供される `URI Template Patterns <https://docs.spring.io/spring/docs/5.0.8.RELEASE/spring-framework-reference/web.html#mvc-ann-requestmapping-uri-templates>`_\ 等を利用し、
         | リクエスト情報をベースにURIを組み立てる事により、リソースに依存しない汎用的な組み立て処理を実装することが可能となる。
         | 
         | 例えば、上記例において\ ``http://example.com/api/v1/members/M000000001``\に対してGETした場合、組み立てられるURIは、リクエストされたURIと同じ値\ ``（http://example.com/api/v1/members/M000000001）``\になる。
@@ -5537,7 +5518,7 @@ POST時のLocationヘッダの設定
         | \ ``buildAndExpand``\ メソッドを呼び出して、作成したリソースのIDをバインドすることで、作成したリソースのURIを組み立てている。
         | 
         | Controllerのメソッドの引数として渡された\ ``ServletUriComponentsBuilder``\ のインスタンスは、web.xmlに記載の\ ``<servlet-mapping>``\要素の情報を元に初期化されており、リソースには依存しない。
-        | そのため、Spring Frameworkから提供される `URI\ Template\ Patterns <http://docs.spring.io/spring/docs/4.3.14.RELEASE/spring-framework-reference/html/mvc.html#mvc-ann-requestmapping-uri-templates>`_\ 等を利用し、
+        | そのため、Spring Frameworkから提供される `URI patterns <https://docs.spring.io/spring/docs/5.0.8.RELEASE/spring-framework-reference/web.html#mvc-ann-requestmapping-uri-templates>`_\ 等を利用し、
         | リクエスト情報をベースにURIを組み立てる事により、リソースに依存しない汎用的な組み立て処理を実装することが可能となる。
         | 
         | 例えば、上記例において\ ``http://example.com/api/v1/members``\に対してPOSTした場合、組み立てられるURIは、「リクエストされたURI + "\ ``/``\" + 作成したリソースのID」となる。
@@ -5636,103 +5617,16 @@ RESTful Web Service向けのリクエストに対して、CSRF対策の処理が
 
 |
 
-.. _RESTAppendixEnabledXXEInjectProtection:
+.. _RESTAppendixEnabledXXEProtection:
 
-XXE Injection対策の有効化
+XXE 対策の有効化
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-| RESTful Web ServiceでXML形式のデータを扱う場合は、\ `XXE(XML External Entity) Injection <https://www.owasp.org/index.php/XML_External_Entity_(XXE)_Processing>`_\対策を行う必要がある。
-| terasoluna-gfw-web 1.0.1.RELEASE以上では、XXE Injection 対策が行われているSpring MVC(3.2.10.RELEASE以上)に依存しているため、個別に対策を行う必要はない。
+| RESTful Web ServiceでXML形式のデータを扱う場合は、\ `XXE(XML External Entity) <https://www.owasp.org/index.php/XML_External_Entity_(XXE)_Processing>`_\対策を行う必要がある。
 
- .. warning:: **XXE(XML External Entity) Injection 対策について**
+.. note:: **XXE(XML External Entity) 対策について**
 
-    terasoluna-gfw-web 1.0.0.RELEASEを使用している場合は、XXE Injection対策が行われていないSpring MVC(3.2.4.RELEASE)に依存しているため、Spring-oxmから提供されているクラスを使用すること。
-
-|
-
-Spring-oxmを依存アーティファクトとして追加する。
-
-- :file:`pom.xml`
-
- .. code-block:: xml
-
-    <!-- omitted -->
-
-    <!-- (1) -->
-    <dependency>
-        <groupId>org.springframework</groupId>
-        <artifactId>spring-oxm</artifactId>
-        <version>${org.springframework-version}</version> <!-- (2) -->
-    </dependency>
-
-    <!-- omitted -->
-
- .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
- .. list-table::
-   :header-rows: 1
-   :widths: 10 90
-   :class: longtable
-
-   * - | 項番
-     - | 説明
-   * - | (1)
-     - | Spring-oxm を依存アーティファクトとして追加する。
-   * - | (2)
-     - | Springのバージョンは、terasoluna-gfw-parent の :file:`pom.xml` に定義されているSpringのバージョン番号を管理するためのプレースホルダ(${org.springframework-version})から取得すること。
-
-|
-
-Spring-oxmから提供されているクラスを使用してXMLとオブジェクトの相互変換を行うためのbean定義を行う。
-
-- :file:`spring-mvc-rest.xml`
-
- .. code-block:: xml
-
-    <!-- omitted -->
-
-    <!-- (1) -->
-    <bean id="xmlMarshaller" class="org.springframework.oxm.jaxb.Jaxb2Marshaller">
-        <property name="packagesToScan" value="com.examples.app" /> <!-- (2) -->
-    </bean>
-
-    <!-- omitted -->
-
-    <mvc:annotation-driven>
-
-        <mvc:message-converters>
-            <!-- (3) -->
-            <bean class="org.springframework.http.converter.xml.MarshallingHttpMessageConverter">
-                <property name="marshaller" ref="xmlMarshaller" /> <!-- (4) -->
-                <property name="unmarshaller" ref="xmlMarshaller" /> <!-- (5) -->
-            </bean>
-        </mvc:message-converters>
-
-        <!-- omitted -->
-
-    </mvc:annotation-driven>
-
-    <!-- omitted -->
-
- .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
- .. list-table::
-   :header-rows: 1
-   :widths: 10 90
-
-   * - | 項番
-     - | 説明
-   * - | (1)
-     - | Spring-oxmから提供されている\ ``Jaxb2Marshaller``\のbean定義を行う。
-       | \ ``Jaxb2Marshaller``\はデフォルトの状態で XXE Injection対策が行われている。
-   * - | (2)
-     - | ``packagesToScan`` プロパティに JAXB用のJavaBean( ``javax.xml.bind.annotation.XmlRootElement`` アノテーションなどが付与されているJavaBean)が格納されているパッケージ名を指定する。
-       | 指定したパッケージ配下に格納されているJAXB用のJavaBeanがスキャンされ、marshal、unmarshal対象のJavaBeanとして登録される。
-       | ``<context:component-scan>`` の base-package属性と同じ仕組みでスキャンされる。
-   * - | (3)
-     - | ``<mvc:annotation-driven>`` の子要素である ``<mvc:message-converters>`` 要素に、 ``MarshallingHttpMessageConverter`` のbean定義を追加する。
-   * - | (4)
-     - | ``marshaller`` プロパティに (1)で定義した ``Jaxb2Marshaller`` のbeanを指定する。
-   * - | (5)
-     - | ``unmarshaller`` プロパティに (1)で定義した ``Jaxb2Marshaller`` のbeanを指定する。
+    Macchinetta Server Framework (1.x)では、XXE 対策が行われているSpring MVC(3.2.10.RELEASE以上)に依存しているため、個別に対策を行う必要はない。
 
 |
 
@@ -5752,7 +5646,7 @@ Dozerを使用して、Joda-Timeのクラス(\ ``org.joda.time.DateTime``\、\ `
   
     package org.terasoluna.examples.rest.infra.dozer.converter;
     
-    import org.dozer.DozerConverter;
+    import com.github.dozermapper.core.DozerConverter;
     import org.joda.time.DateTime;
     
     public class JodaDateTimeConverter extends DozerConverter<DateTime, DateTime> {
@@ -5781,7 +5675,7 @@ Dozerを使用して、Joda-Timeのクラス(\ ``org.joda.time.DateTime``\、\ `
 
     package org.terasoluna.examples.rest.infra.dozer.converter;
     
-    import org.dozer.DozerConverter;
+    import com.github.dozermapper.core.DozerConverter;
     import org.joda.time.LocalDate;
     
     public class JodaLocalDateConverter extends
@@ -5812,9 +5706,9 @@ Dozerを使用して、Joda-Timeのクラス(\ ``org.joda.time.DateTime``\、\ `
   
     <!-- (1) -->
     <?xml version="1.0" encoding="UTF-8"?>
-    <mappings xmlns="http://dozer.sourceforge.net" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    <mappings xmlns="http://dozermapper.github.io/schema/bean-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="
-            http://dozer.sourceforge.net http://dozer.sourceforge.net/schema/beanmapping.xsd
+            http://dozermapper.github.io/schema/bean-mapping https://dozermapper.github.io/schema/bean-mapping.xsd
         ">
     
         <configuration>
@@ -5906,7 +5800,7 @@ MemberRestController.java
     import javax.inject.Inject;
     import javax.validation.groups.Default;
     
-    import org.dozer.Mapper;
+    import com.github.dozermapper.core.Mapper;
     import org.springframework.data.domain.Page;
     import org.springframework.data.domain.PageImpl;
     import org.springframework.data.domain.Pageable;
@@ -6697,7 +6591,7 @@ MemberServiceImpl.java
     import java.util.List;
     import javax.inject.Inject;
     import org.apache.ibatis.session.RowBounds;
-    import org.dozer.Mapper;
+    import com.github.dozermapper.core.Mapper;
     import org.joda.time.DateTime;
     import org.springframework.dao.DuplicateKeyException;
     import org.springframework.data.domain.Page;
@@ -6941,9 +6835,9 @@ member-mapping.xml
 .. code-block:: xml
 
     <?xml version="1.0" encoding="UTF-8"?>
-    <mappings xmlns="http://dozer.sourceforge.net" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:schemaLocation="http://dozer.sourceforge.net
-              http://dozer.sourceforge.net/schema/beanmapping.xsd">
+    <mappings xmlns="http://dozermapper.github.io/schema/bean-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://dozermapper.github.io/schema/bean-mapping
+              https://dozermapper.github.io/schema/bean-mapping.xsd">
     
         <mapping map-id="member.update">
             <class-a>org.terasoluna.examples.rest.domain.model.Member</class-a>

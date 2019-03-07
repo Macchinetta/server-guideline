@@ -225,11 +225,7 @@ Spring MVCから提供されている\ ``<form:form>``\ 要素を使うと、以
                 <%-- ... --%>
             </form:form>
 
-    これは、\ `OWASP Top 10 <https://code.google.com/p/owasptop10/>`_\ で説明されている、
-
-        The unique token can also be included in the URL itself, or a URL parameter. However, such placement runs a greater risk that the URL will be exposed to an attacker, thus compromising the secret token.
-
-    に対応している事を意味しており、セキュアなWebアプリケーション構築の手助けとなる。
+    これは、\ `Cross-Site Request Forgery (CSRF) Prevention Cheat Sheet <https://www.owasp.org/index.php/Cross-Site_Request_Forgery_(CSRF)_Prevention_Cheat_Sheet#Disclosure_of_Token_in_URL>`_\ で説明されている内容に対応している事を意味しており、セキュアなWebアプリケーション構築の手助けとなる。
 
 .. _csrf_htmlformtag-use:
 

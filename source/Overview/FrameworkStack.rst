@@ -29,13 +29,13 @@ DIコンテナ
 DIコンテナとしてSpring Frameworkを利用する。
 
 
-* `Spring Framework 4.3 <http://docs.spring.io/spring/docs/4.3.14.RELEASE/spring-framework-reference/html/beans.html>`_
+* `Spring Framework 5.0 <https://docs.spring.io/spring/docs/5.0.8.RELEASE/spring-framework-reference/core.html#beans>`_
 
 MVCフレームワーク
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Web MVCフレームワークとしてSpring MVCを利用する。
 
-* `Spring MVC 4.3 <http://docs.spring.io/spring/docs/4.3.14.RELEASE/spring-framework-reference/html/mvc.html>`_
+* `Spring MVC 5.0 <https://docs.spring.io/spring/docs/5.0.8.RELEASE/spring-framework-reference/web.html#mvc>`_
 
 O/R Mapper
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -64,7 +64,7 @@ Viewのレイアウトを共通化する場合は、
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 認証・認可のフレームワークとしてSpring Securityを利用する。
 
-* `Spring Security 4.1 <http://projects.spring.io/spring-security/>`_
+* `Spring Security 5.0 <http://projects.spring.io/spring-security/>`_
 
 .. tip::
 
@@ -83,9 +83,9 @@ Viewのレイアウトを共通化する場合は、
 
 * 単項目チェックには\ `BeanValidation 1.1 <http://download.oracle.com/otn-pub/jcp/bean_validation-1_1-fr-eval-spec/bean-validation-specification.pdf>`_\ を利用する。
 
-  * 実装は、\ `Hibernate Validator 5.2 <http://docs.jboss.org/hibernate/validator/5.2/reference/en-US/html/>`_\ を利用する。
+  * 実装は、\ `Hibernate Validator 5.4 <http://docs.jboss.org/hibernate/validator/5.4/reference/en-US/html_single/>`_\ を利用する。
 
-* 相関チェックには\ `Bean Validation <http://download.oracle.com/otn-pub/jcp/bean_validation-1_1-fr-eval-spec/bean-validation-specification.pdf>`_\ 、もしくは\ `Spring Validation <http://docs.spring.io/spring/docs/4.3.14.RELEASE/spring-framework-reference/html/validation.html#validator>`_\ を利用する。
+* 相関チェックには\ `Bean Validation <http://download.oracle.com/otn-pub/jcp/bean_validation-1_1-fr-eval-spec/bean-validation-specification.pdf>`_\ 、もしくは\ `Spring Validation <https://docs.spring.io/spring/docs/5.0.8.RELEASE/spring-framework-reference/core.html#validator>`_\ を利用する。
 
   * 使い分けについては\ :doc:`../ArchitectureInDetail/WebApplicationDetail/Validation`\ を参照されたい。
 
@@ -109,7 +109,7 @@ Viewのレイアウトを共通化する場合は、
 利用するOSSのバージョン
 --------------------------------------------------------------------------------
 
-version 1.5.1.RELEASEで利用するOSSの一覧を以下に示す。
+version 1.6.0.RELEASEで利用するOSSの一覧を以下に示す。
 
 .. tip::
 
@@ -125,7 +125,7 @@ version 1.5.1.RELEASEで利用するOSSの一覧を以下に示す。
     への依存関係を解決しており、
     Macchinetta Server Framework (1.x)で使用するOSSのバージョンは、原則として、Spring IO platformの定義に準じている。
 
-    なお、version 1.5.1.RELEASEで指定しているSpring IO platformのバージョンは、`Brussels-SR5 <http://docs.spring.io/platform/docs/Brussels-SR5/reference/htmlsingle/>`_\ である。
+    なお、version 1.6.0.RELEASEで指定しているSpring IO platformのバージョンは、`Cairo-SR3 <https://docs.spring.io/platform/docs/Cairo-SR3/reference/htmlsingle/>`_\ である。
 
 .. tabularcolumns:: |p{0.15\linewidth}|p{0.27\linewidth}|p{0.25\linewidth}|p{0.15\linewidth}|p{0.05\linewidth}|p{0.08\linewidth}|
 .. list-table::
@@ -142,139 +142,139 @@ version 1.5.1.RELEASEで利用するOSSの一覧を以下に示す。
     * - Spring
       - org.springframework
       - spring-aop
-      - 4.3.14.RELEASE
+      - 5.0.8.RELEASE
       -
       -
     * - Spring
       - org.springframework
       - spring-aspects
-      - 4.3.14.RELEASE
+      - 5.0.8.RELEASE
       -
       -
     * - Spring
       - org.springframework
       - spring-beans
-      - 4.3.14.RELEASE
+      - 5.0.8.RELEASE
       -
       -
     * - Spring
       - org.springframework
       - spring-context
-      - 4.3.14.RELEASE
+      - 5.0.8.RELEASE
       -
       -
     * - Spring
       - org.springframework
       - spring-context-support
-      - 4.3.14.RELEASE
+      - 5.0.8.RELEASE
       -
       -
     * - Spring
       - org.springframework
       - spring-core
-      - 4.3.14.RELEASE
+      - 5.0.8.RELEASE
       -
       -
     * - Spring
       - org.springframework
       - spring-expression
-      - 4.3.14.RELEASE
+      - 5.0.8.RELEASE
       -
       -
     * - Spring
       - org.springframework
       - spring-jdbc
-      - 4.3.14.RELEASE
+      - 5.0.8.RELEASE
       -
       -
     * - Spring
       - org.springframework
       - spring-orm
-      - 4.3.14.RELEASE
+      - 5.0.8.RELEASE
       -
       -
     * - Spring
       - org.springframework
       - spring-tx
-      - 4.3.14.RELEASE
+      - 5.0.8.RELEASE
       -
       -
     * - Spring
       - org.springframework
       - spring-web
-      - 4.3.14.RELEASE
+      - 5.0.8.RELEASE
       -
       -
     * - Spring
       - org.springframework
       - spring-webmvc
-      - 4.3.14.RELEASE
+      - 5.0.8.RELEASE
       -
       -
     * - Spring
       - org.springframework
       - spring-jms
-      - 4.3.14.RELEASE
+      - 5.0.8.RELEASE
       -
       -
     * - Spring
       - org.springframework
       - spring-messaging
-      - 4.3.14.RELEASE
+      - 5.0.8.RELEASE
       -
       -
     * - Spring
       - org.springframework.data
       - spring-data-commons
-      - 1.13.7.RELEASE
+      - 2.0.9.RELEASE
       - \*
       -
     * - Spring
       - org.springframework.security
       - spring-security-acl
-      - 4.2.4.RELEASE
+      - 5.0.7.RELEASE
       -
       -
     * - Spring
       - org.springframework.security
       - spring-security-config
-      - 4.2.4.RELEASE
+      - 5.0.7.RELEASE
       -
       -
     * - Spring
       - org.springframework.security
       - spring-security-core
-      - 4.2.4.RELEASE
+      - 5.0.7.RELEASE
       -
       -
     * - Spring
       - org.springframework.security
       - spring-security-taglibs
-      - 4.2.4.RELEASE
+      - 5.0.7.RELEASE
       -
       -
     * - Spring
       - org.springframework.security
       - spring-security-web
-      - 4.2.4.RELEASE
+      - 5.0.7.RELEASE
       -
       -
     * - Spring
       - org.springframework.security.oauth
       - spring-security-oauth2
-      - 2.0.14.RELEASE
+      - 2.2.2.RELEASE
       - \*
       -
     * - MyBatis3
       - org.mybatis
       - mybatis
-      - 3.4.5
+      - 3.4.6
       -
       - \*1
     * - MyBatis3
       - org.mybatis
       - mybatis-spring
-      - 1.3.1
+      - 1.3.2
       -
       - \*1
     * - MyBatis3
@@ -283,6 +283,12 @@ version 1.5.1.RELEASEで利用するOSSの一覧を以下に示す。
       - 1.0.2
       -
       - \*1*5
+    * - MyBatis3
+      - org.javassist
+      - javassist
+      - 3.22.0-GA
+      -
+      - \*1
     * - DI
       - javax.inject
       - javax.inject
@@ -298,25 +304,25 @@ version 1.5.1.RELEASEで利用するOSSの一覧を以下に示す。
     * - AOP
       - org.aspectj
       - aspectjrt
-      - 1.8.10
+      - 1.8.13
       - \*
       -
     * - AOP
       - org.aspectj
       - aspectjweaver
-      - 1.8.10
+      - 1.8.13
       - \*
       -
     * - ログ出力
       - ch.qos.logback
       - logback-classic
-      - 1.1.11
+      - 1.2.3
       - \*
       -
     * - ログ出力
       - ch.qos.logback
       - logback-core
-      - 1.1.11
+      - 1.2.3
       - \*
       - \*3
     * - ログ出力
@@ -340,49 +346,49 @@ version 1.5.1.RELEASEで利用するOSSの一覧を以下に示す。
     * - JSON
       - com.fasterxml.jackson.core
       - jackson-annotations
-      - 2.8.0
+      - 2.9.0
       - \*
       -
     * - JSON
       - com.fasterxml.jackson.core
       - jackson-core
-      - 2.8.10
+      - 2.9.6
       - \*
       -
     * - JSON
       - com.fasterxml.jackson.core
       - jackson-databind
-      - 2.8.10
+      - 2.9.6
       - \*
       -
     * - JSON
       - com.fasterxml.jackson.datatype
       - jackson-datatype-joda
-      - 2.8.10
+      - 2.9.6
       - \*
       -
     * - JSON
       - com.fasterxml.jackson.datatype
       - jackson-datatype-jsr310
-      - 2.8.10
+      - 2.9.6
       - \*
       - \*5
     * - 入力チェック
       - javax.validation
       - validation-api
-      - 1.1.0.Final
+      - 2.0.1.Final
       - \*
       -
     * - 入力チェック
       - org.hibernate
       - hibernate-validator
-      - 5.3.5.Final
+      - 5.4.2.Final
       - \*
       -
     * - 入力チェック
       - org.jboss.logging
       - jboss-logging
-      - 3.3.1.Final
+      - 3.3.2.Final
       - \*
       - \*3
     * - 入力チェック
@@ -398,21 +404,21 @@ version 1.5.1.RELEASEで利用するOSSの一覧を以下に示す。
       - \*
       - \*2
     * - Bean変換
-      - net.sf.dozer
-      - dozer
-      - 5.5.1
+      - com.github.dozermapper
+      - dozer-core
+      - 6.4.1
       -
       - \*2
     * - Bean変換
-      - net.sf.dozer
-      - dozer-spring
-      - 5.5.1
+      - com.github.dozermapper
+      - dozer-spring4
+      - 6.4.1
       -
-      - \*2
+      - \*2 \*6
     * - Bean変換
       - org.apache.commons
       - commons-lang3
-      - 3.5
+      - 3.7
       - \*
       - \*2
     * - 日付操作
@@ -430,13 +436,13 @@ version 1.5.1.RELEASEで利用するOSSの一覧を以下に示す。
     * - コネクションプール
       - org.apache.commons
       - commons-dbcp2
-      - 2.1.1
+      - 2.2.0
       - \*
       - \*2
     * - コネクションプール
       - org.apache.commons
       - commons-pool2
-      - 2.4.2
+      - 2.5.0
       - \*
       - \*2
     * - Tiles
@@ -448,31 +454,31 @@ version 1.5.1.RELEASEで利用するOSSの一覧を以下に示す。
     * - Tiles
       - org.apache.tiles
       - tiles-api
-      - 3.0.7
+      - 3.0.8
       - \*
       - \*2
     * - Tiles
       - org.apache.tiles
       - tiles-core
-      - 3.0.7
+      - 3.0.8
       - \*
       - \*2
     * - Tiles
       - org.apache.tiles
       - tiles-jsp
-      - 3.0.7
+      - 3.0.8
       - \*
       - \*2
     * - Tiles
       - org.apache.tiles
       - tiles-servlet
-      - 3.0.7
+      - 3.0.8
       - \*
       - \*2
     * - Tiles
       - org.apache.tiles
       - tiles-template
-      - 3.0.7
+      - 3.0.8
       - \*
       - \*2 \*3
     * - Tiles
@@ -484,19 +490,19 @@ version 1.5.1.RELEASEで利用するOSSの一覧を以下に示す。
     * - Tiles
       - org.apache.tiles
       - tiles-request-servlet
-      - 1.0.6
+      - 1.0.7
       - \*
       - \*2 \*3
     * - Tiles
       - org.apache.tiles
       - tiles-request-api
-      - 1.0.6
+      - 1.0.7
       - \*
       - \*2
     * - Tiles
       - org.apache.tiles
       - tiles-request-jsp
-      - 1.0.6
+      - 1.0.7
       - \*
       - \*2 \*3
     * - ユーティリティ
@@ -514,7 +520,7 @@ version 1.5.1.RELEASEで利用するOSSの一覧を以下に示す。
     * - ユーティリティ
       - commons-io
       - commons-io
-      - 2.5
+      - 2.6
       - \*
       - \*2
     * - サーブレット
@@ -544,6 +550,7 @@ version 1.5.1.RELEASEで利用するOSSの一覧を以下に示す。
    | (Macchinetta Server Framework (1.x)側でGAのバージョンを明示的に指定しているライブラリ)
 #. | Java SE 8以降のAPIを前提としたライブラリ
    | Java SE 7以下の場合は本ライブラリへの依存関係を明示的に除去する必要がある
+#. | Spring Framework 4.xに依存するが、ガイドラインで記述している内容においては、Spring Framework 5.xで動作する事を確認しているライブラリ
 
 
 .. _frameworkstack_common_library:
@@ -553,7 +560,7 @@ version 1.5.1.RELEASEで利用するOSSの一覧を以下に示す。
 --------------------------------------------------------------------------------
 
 Macchinetta Server Framework (1.x)では、\ `TERASOLUNA Server Framework for Java (5.x) <https://github.com/terasolunaorg>`_\ が提供する\ `共通ライブラリ <https://github.com/terasolunaorg/terasoluna-gfw>`_\ を使用する。（以降「共通ライブラリ」と記載する。）
-共通ライブラリは、Macchinetta Server Framework (1.x)が含むSpring Ecosystem や、その他依存ライブラリでは足りない+αな機能を提供するライブラリである。
+共通ライブラリは、Macchinetta Server Framework (1.x)やTERASOLUNA Server Framework for Java (5.x)が含むSpring Ecosystem や、その他依存ライブラリでは足りない+αな機能を提供するライブラリである。
 基本的には、このライブラリがなくてもMacchinetta Server Framework (1.x)によるアプリケーション開発は可能であるが、"あると便利"な存在である。
 また、提供している2種類の \ `マルチプロジェクト構成のブランクプロジェクト <https://github.com/Macchinetta/macchinetta-web-multi-blank>`_\ および \ `シングルプロジェクト構成のブランクプロジェクト <https://github.com/Macchinetta/macchinetta-web-blank>`_\ の共通ライブラリの標準の組込状況は以下の通りである。
 

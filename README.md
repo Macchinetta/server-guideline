@@ -13,21 +13,21 @@ Source files of this guideline are stored into following directories.
 
 ## Source file format
 
-This guideline is written in the reStructuredText format(`.rst`).
-About the reStructuredText format, refer to the [Sphinx documentation contents](http://sphinx-doc.org/contents.html).
+This guideline is written by the reStructuredText format(`.rst`).
+About the reStructuredText format, refer to the [Sphinx documentation contents](https://www.sphinx-doc.org/en/master/contents.html).
 
 
 ## How to build
 
-We build to HTML and PDF files using the [Sphinx](http://sphinx-doc.org/index.html).
-About the Sphinx, refer to the [Sphinx documentation contents](http://sphinx-doc.org/contents.html).
+We build to HTML and PDF files using the [Sphinx](https://www.sphinx-doc.org/en/master/).
+About the Sphinx, refer to the [Sphinx documentation contents](https://www.sphinx-doc.org/en/master/contents.html).
 
 ### Install the Sphinx
 
 Please install the Python and Sphinx.
 
 * [Python](https://www.python.org/)
-* [Sphinx](http://sphinx-doc.org/index.html)
+* [Sphinx](https://www.sphinx-doc.org/en/master/)
 
 > **Note: Creating PDF file**
 >
@@ -78,4 +78,4 @@ $ ./build-pdf.sh
 
 ## Terms of use
 
-Terms of use refer to [here](https://github.com/Macchinetta/server-guideline/blob/1.5.x/source/Introduction/TermsOfUse.rst).
+Terms of use refer to [here](https://github.com/Macchinetta/server-guideline/blob/master/source/Introduction/TermsOfUse.rst).

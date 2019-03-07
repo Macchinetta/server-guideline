@@ -578,7 +578,7 @@ org.terasoluna.gfw.common.date パッケージの利用方法
                                               .withResolverStyle(ResolverStyle.STRICT);
 
    LocalDate localDate = LocalDate.parse("2015/12/25", formatter1);
-   LocalTime localTime = LocalDate.parse("14:09:20", formatter2);
+   LocalTime localTime = LocalTime.parse("14:09:20", formatter2);
  
 |
 

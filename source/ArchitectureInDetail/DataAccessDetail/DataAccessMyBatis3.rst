@@ -2744,6 +2744,86 @@ MyBatis3標準方式に比べて効率的に取得範囲のEntityを取得する
 
 |
 
+.. _DataAccessMyBatis3HowToUseFindPageUsingSort:
+
+Entityのページネーション検索(検索結果のソート)
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+\ ``Pageable``\オブジェクトの\ ``sort``\プロパティを利用して、SQLで検索結果をソートする実装例を以下に示す。
+
+RepositoryおよびServiceについては、前述の\ :ref:`DataAccessMyBatis3HowToUseFindPageUsingSqlFilter`\ と同様とし、実装例を省略する。
+
+|
+
+* マッピングファイルにSQLを定義する。
+
+  SQLで検索結果に対してソートをかける。
+
+ .. code-block:: xml
+    :emphasize-lines: 22, 25, 31
+
+    <?xml version="1.0" encoding="UTF-8"?>
+    <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    <mapper namespace="com.example.domain.repository.todo.TodoRepository">
+
+        <select id="findPageByCriteria" resultType="Todo">
+            SELECT
+                todo_id,
+                todo_title,
+                finished,
+                created_at,
+                version
+            FROM
+                t_todo
+            WHERE
+                todo_title LIKE #{criteria.title} || '%' ESCAPE '~'
+            AND
+            <![CDATA[
+                created_at < #{criteria.createdAt}
+            ]]>
+            <choose>
+                <!-- (1)  -->
+                <when test="pageable.sort.iterator().hasNext()">
+                    ORDER BY
+                    <!-- (2)  -->
+                    <foreach item="order" collection="pageable.sort" separator=",">
+                        ${order.property}
+                        ${order.direction}
+                    </foreach>
+                </when>
+                <!-- (3)  -->
+                <otherwise>
+                    ORDER BY todo_id
+                </otherwise>
+            </choose>
+            LIMIT
+                #{pageable.pageSize}
+            OFFSET
+                #{pageable.offset}
+        </select>
+
+    </mapper>
+
+ .. tabularcolumns:: |p{0.10\linewidth}|p{0.80\linewidth}|
+ .. list-table::
+    :header-rows: 1
+    :widths: 10 80
+
+    * - 項番
+      - 説明
+    * - (1)
+      - \ ``Pageable``\オブジェクトの\ ``sort``\プロパティが空でない場合、ソート条件を指定する。
+    * - (2)
+      - \ ``sort``\プロパティに格納されているソート条件をマッピングファイルに引き渡す。
+        \ ``order.property``\はソートする列、\ ``order.direction``\はASC,DESCなどのソート順を表す。
+        
+        具体的には\ ``sort=todo_id,DESC&sort=created_at``\が指定された場合、\ ``ORDER BY todo_id DESC, created_at ASC``\が生成される。
+    * - (3)
+      - ソート条件がセットされていない場合はプライマリキー\ ``todo_id``\でソートを行う。
+
+|
+
 .. _DataAccessMyBatis3HowToUseCreate:
 
 Entityの登録処理
