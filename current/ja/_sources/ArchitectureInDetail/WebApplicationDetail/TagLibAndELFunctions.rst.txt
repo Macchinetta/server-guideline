@@ -1,6 +1,12 @@
 共通ライブラリが提供するJSP Tag Library と EL Functions
 ================================================================================
 
+.. only:: html
+
+ .. contents:: 目次
+    :depth: 3
+    :local:
+
 .. _TagLibAndELFunctionsOverview:
 
 Overview
@@ -129,8 +135,8 @@ How to use
 
 ページネーション機能の説明及び本タグの使用方法は、「:doc:`./Pagination`」の以下の節を参照されたい。
 
-* ページネーションリンクについては、「:ref:`pagination_overview_paginationlink`」
-* 本タグのパラメータ値については、「:ref:`pagination_overview_paginationlink_taglibparameters`」
+* ページネーションリンクについては、「:ref:`pagination_overview_page_display_paginationlink`」
+* 本タグのパラメータ値については、「:ref:`pagination_overview_page_display_paginationlink_taglibparameters`」
 * 本タグを使用したJSPの基本的な実装方法については、「:ref:`pagination_how_to_use_make_jsp_basic_paginationlink`」
 * ページネーションリンクのレイアウトの変更方法については、「:ref:`pagination_how_to_use_make_jsp_layout`」
 
@@ -360,6 +366,21 @@ RFC 3986では、クエリ文字列のパート以下のように定義してい
 
 をpct-encoded形式の文字列にエンコーディングする。
 
+.. warning::
+
+    Spring Framework 4までは、クエリ文字列として使用できる文字のうち("\ ``=``\", "\ ``&``\", "\ ``+``\")の3文字をSpring Frameworkがエンコーディングしていたが、
+    Spring Framework 5より、"\ ``+``\"はエンコーディング対象外となった。
+    
+    共通ライブラリの\ ``f:query()``\, \ ``f:u()``\では、内部でSpring Frameworkの機能を利用しているが、
+    独自に"\ ``+``\"をエンコーディングすることで仕様変更の影響を受けないようにしている。
+    
+    ガイドラインでは紹介していないが、Spring Frameworkの \ ``org.springframework.web.util.UriComponentsBuilder``\ を利用して\ ``query``\を含むURIを生成しているアプリケーションでは、
+    "\ ``+``\" がエンコーディング対象外となったことによる影響を受ける可能性がある為、注意すること。
+    なお、\ ``UriComponentsBuilder``\ では、クエリパラメータに含まれる\ ``unreserved``\文字以外をエンコーディングする機能を提供している為、
+    当機能を用いる事でクエリパラメータに含まれる "\ ``+``\" のエンコーディングは可能である。
+    \ ``UriComponentsBuilder``\ を利用してURIをエンコーディングする方法については、`Springの公式リファレンス <https://docs.spring.io/spring/docs/5.1.4.RELEASE/spring-framework-reference/web.html#web-uri-encoding>`_\ を参照されたい。
+
+
 f:query() 関数仕様
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
@@ -395,7 +416,7 @@ f:query() 関数仕様
     指定されたオブジェクトのシンプル型のプロパティ値は、
     \ ``org.springframework.format.support.DefaultFormattingConversionService``\ の \ ``convert``\ メソッドを使用して文字列に変換される。
     \ ``ConversionService``\ については、
-    \ `Spring Framework Reference Documentation(Spring Type Conversion) <http://docs.spring.io/spring/docs/4.3.14.RELEASE/spring-framework-reference/html/validation.html#core-convert>`_\ を参照されたい。
+    \ `Spring Framework Reference Documentation(Spring Type Conversion) <https://docs.spring.io/spring/docs/5.1.4.RELEASE/spring-framework-reference/core.html#core-convert>`_\ を参照されたい。
 
 
 **戻り値**

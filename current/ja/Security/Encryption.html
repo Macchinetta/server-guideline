@@ -3,16 +3,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>9.8. 暗号化 &#8212; Macchinetta Server Framework (1.x) Development Guideline 1.5.1.RELEASE documentation</title>
-    
+    <title>9.8. 暗号化 &#8212; Macchinetta Server Framework (1.x) Development Guideline 1.6.1.RELEASE documentation</title>
     <link rel="stylesheet" href="../_static/solar.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '1.5.1.RELEASE',
+        VERSION:     '1.6.1.RELEASE',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true,
@@ -43,7 +40,7 @@
         <li class="right" >
           <a href="XSS.html" title="9.7. XSS対策"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Macchinetta Server Framework (1.x) Development Guideline 1.5.1.RELEASE documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Macchinetta Server Framework (1.x) Development Guideline 1.6.1.RELEASE documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">9. セキュリティ対策</a> &#187;</li> 
       </ul>
     </div>
@@ -214,7 +211,7 @@
 <li>JCA (Java Cryptography Architecture) を利用した公開鍵暗号化方式の暗号化と復号</li>
 <li>JCAを利用したハイブリッド暗号化方式の暗号化と復号</li>
 </ul>
-<p>Spring Securityの暗号化機能の詳細については、<a class="reference external" href="http://docs.spring.io/spring-security/site/docs/4.2.4.RELEASE/reference/htmlsingle/#crypto">Spring Security Reference -Spring Security Crypto Module-</a>を参照されたい。</p>
+<p>Spring Securityの暗号化機能の詳細については、<a class="reference external" href="https://docs.spring.io/spring-security/site/docs/5.1.3.RELEASE/reference/htmlsingle/#crypto">Spring Security Reference -Spring Security Crypto Module-</a>を参照されたい。</p>
 <div class="section" id="encryptionoverviewencryptionscheme">
 <span id="id3"></span><h3><a class="toc-backref" href="#id26">9.8.1.1. 暗号化方式</a><a class="headerlink" href="#encryptionoverviewencryptionscheme" title="Permalink to this headline">¶</a></h3>
 <p>暗号化方式について説明する。</p>
@@ -381,11 +378,12 @@ spring-security-rsaは現在、Springの公式リポジトリ &lt;<a class="refe
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p><strong>JCE管轄ポリシーファイル</strong></p>
-<p>輸入規制の関係上、一部のJava製品ではデフォルトの暗号化アルゴリズム強度が制限されている。より強力なアルゴリズムを利用する場合は、強度が無制限のJCE管轄ポリシーファイルを入手し、JDK/JREにインストールする必要がある。詳細については、<a class="reference external" href="https://docs.oracle.com/javase/8/docs/technotes/guides/security/SunProviders.html">Java Cryptography Architecture Oracle Providers Documentation</a>を参照されたい。</p>
+<p>輸入規制の関係上、一部のJava製品ではデフォルトの暗号化アルゴリズム強度が制限されている。その為、より強力なアルゴリズムを利用する場合は、強度が無制限のJCE管轄ポリシーファイルを入手し、JDK/JREにインストールする必要があった。</p>
+<p>しかし、JDK/JRE 8u151以降からは、強度が無制限のJCE管轄ポリシーファイルが予め含まれるようになったため、別途入手する必要はなくなった。また、JDK/JRE 8u161以降では、当該ポリシーファイルがデフォルトで適用されているため、インストールも不要となった。</p>
+<p>詳細については、<a class="reference external" href="https://docs.oracle.com/javase/8/docs/technotes/guides/security/SunProviders.html">Java Cryptography Architecture Oracle Providers Documentation</a>を参照されたい。</p>
 <p>JCE管轄ポリシーファイルのダウンロード先</p>
 <ul class="last simple">
 <li><a class="reference external" href="http://www.oracle.com/technetwork/java/javase/downloads/jce8-download-2133166.html">Oracle Java 8 用</a></li>
-<li><a class="reference external" href="http://www.oracle.com/technetwork/java/embedded/embedded-se/downloads/jce-7-download-432124.html">Oracle Java 7 用</a></li>
 </ul>
 </div>
 <div class="section" id="encryptionhowtousecommonkey">
@@ -924,8 +922,8 @@ spring-security-rsaは現在、Springの公式リポジトリ &lt;<a class="refe
 <p class="first admonition-title">Note</p>
 <p><strong>暗号化したデータを文字列として扱いたい場合</strong></p>
 <blockquote>
-<div><p>外部システム連携等、暗号化したデータを文字列でやり取りしたい場合は、1つの手段としてBase64エンコードが挙げられる。Java SE8以降の場合は、Java標準の<code class="docutils literal"><span class="pre">java.util.Base64</span></code>を使用する。それ以前の場合は、Spring Securityの<code class="docutils literal"><span class="pre">org.springframework.security.crypto.codec.Base64</span></code>を使用する。</p>
-<p>Base64エンコードおよびデコードする方法をJava標準の<code class="docutils literal"><span class="pre">java.util.Base64</span></code>を使用して説明する。</p>
+<div><p>外部システム連携等、暗号化したデータを文字列でやり取りしたい場合は、1つの手段としてBase64エンコードが挙げられる。Base64エンコードではJava標準の<code class="docutils literal"><span class="pre">java.util.Base64</span></code>を使用する。</p>
+<p>Base64エンコードおよびデコードする方法を<code class="docutils literal"><span class="pre">java.util.Base64</span></code>を使用して説明する。</p>
 </div></blockquote>
 <ul class="simple">
 <li>Base64エンコード</li>
@@ -1793,58 +1791,48 @@ spring-security-rsaは現在、Springの公式リポジトリ &lt;<a class="refe
         <li class="right" >
           <a href="XSS.html" title="9.7. XSS対策"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Macchinetta Server Framework (1.x) Development Guideline 1.5.1.RELEASE documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Macchinetta Server Framework (1.x) Development Guideline 1.6.1.RELEASE documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="index.html" >9. セキュリティ対策</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2013-2018, NTT Corporation.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.6.2.Theme is <a href="http://github.com/vimalkvn/solar-theme">Solar</a>
+        &copy; Copyright 2013, NTT Corporation.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.6.3.Theme is <a href="http://github.com/vimalkvn/solar-theme">Solar</a>
     </div>
     
     <script>
-     
-     $(function() {
-    	   var $sidebar	= $('.sphinxsidebar'),
-    		     $window		= $(window),
-    		     offset		= $sidebar.offset(),
-    		     topPadding	= 3,
-    		     $scroll		= $('#scroll');
-    	   
-    	   $window.scroll(function() {
-    		     if ($scroll.is(':checked')) {
-				         if ($window.scrollTop() > offset.top) {
-					           $sidebar.stop().animate({
-						             marginTop:$window.scrollTop() - offset.top + topPadding
-					           });
-				         } else {
-					           $sidebar.stop().animate({
-						             marginTop:0
-					           });
-				         }
-			       }
-		     });
-    	   
-    	   var $navList = $('ul:first', $sidebar);
-    	   $('li:first', $navList).addClass('open');
-    	   
-    	   $navList.treeview({
-    		     persist: "location",
-    		     collapsed: true,
-    		     unique: false
-    	   });
-    	   
-	   });
-    </script>
     
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-113850349-2"></script>
-    <script>
-     window.dataLayer = window.dataLayer || [];
-     function gtag(){dataLayer.push(arguments);}
-     gtag('js', new Date());
-
-     gtag('config', 'UA-113850349-2');
+    $(function() {
+    	var $sidebar	= $('.sphinxsidebar'),
+    		$window		= $(window),
+    		offset		= $sidebar.offset(),
+    		topPadding	= 3,
+    		$scroll		= $('#scroll');
+    	
+    	$window.scroll(function() {
+    		if ($scroll.is(':checked')) {
+				if ($window.scrollTop() > offset.top) {
+					$sidebar.stop().animate({
+						marginTop:$window.scrollTop() - offset.top + topPadding
+					});
+				} else {
+					$sidebar.stop().animate({
+						marginTop:0
+					});
+				}
+			}
+		});
+    	
+    	var $navList = $('ul:first', $sidebar);
+    	$('li:first', $navList).addClass('open');
+    	
+    	$navList.treeview({
+    		persist: "location",
+    		collapsed: true,
+    		unique: false
+    	});
+    	
+	});
     </script>
   </body>
 </html>

@@ -3,16 +3,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>4.5. 二重送信防止 &#8212; Macchinetta Server Framework (1.x) Development Guideline 1.5.1.RELEASE documentation</title>
-    
+    <title>4.5. 二重送信防止 &#8212; Macchinetta Server Framework (1.x) Development Guideline 1.6.1.RELEASE documentation</title>
     <link rel="stylesheet" href="../../_static/solar.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '1.5.1.RELEASE',
+        VERSION:     '1.6.1.RELEASE',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true,
@@ -43,7 +40,7 @@
         <li class="right" >
           <a href="Pagination.html" title="4.4. ページネーション"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">Macchinetta Server Framework (1.x) Development Guideline 1.5.1.RELEASE documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Macchinetta Server Framework (1.x) Development Guideline 1.6.1.RELEASE documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">4. Webアプリ開発機能</a> &#187;</li> 
       </ul>
     </div>
@@ -640,11 +637,6 @@
 <p class="first admonition-title">Warning</p>
 <p class="last">AjaxとWebサービスでは、リクエスト毎に変更されるトランザクショントークンの受け渡しを行いにくいため、トランザクショントークンチェックを使用しなくてよい。
 Ajaxの場合は、JavaScriptによるボタンの2度押し防止のみで二重送信防止を行う。</p>
-</div>
-<div class="admonition-todo admonition" id="index-0">
-<p class="first admonition-title">Todo</p>
-<p><strong>TBD</strong></p>
-<p class="last">AjaxとWebサービスでのチェック方法は、今後検討の余地あり。</p>
 </div>
 </div></blockquote>
 <div class="section" id="javascript2">
@@ -1254,13 +1246,6 @@ Ajaxの場合は、JavaScriptによるボタンの2度押し防止のみで二�
 <div class="line">クライアントでのボタンの二重クリック防止は、JavaScriptで実現することになる。</div>
 <div class="line">ボタンをクリックした後は、再描画するまでクリックできないようにする。</div>
 </div>
-<blockquote>
-<div><div class="admonition-todo admonition" id="index-1">
-<p class="first admonition-title">Todo</p>
-<p><strong>TBD</strong></p>
-<p class="last">JavaScriptでのチェック方法については、次版以降で詳細化する予定である。</p>
-</div>
-</div></blockquote>
 </div>
 <div class="section" id="id12">
 <h3><a class="toc-backref" href="#id42">4.5.2.2. PRG(Post-Redirect-Get)パターンの適用</a><a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h3>
@@ -2880,7 +2865,7 @@ TransactionTokenTypeを正しく設定しない場合、通常のオペレーシ
 </div>
 </div></blockquote>
 <p>この場合でも二重送信自体は防止されているため、問題はない。
-バージョン5.0.0.RELEASE以降の<a class="reference internal" href="../../ImplementationAtEachLayer/CreateWebApplicationProject.html"><span class="doc">雛形プロジェクト</span></a>では、
+バージョン1.5.0.RELEASE以降の<a class="reference internal" href="../../ImplementationAtEachLayer/CreateWebApplicationProject.html"><span class="doc">雛形プロジェクト</span></a>では、
 <a class="reference internal" href="../../Security/LinkageWithBrowser.html#springsecuritylinkagewithbrowser"><span class="std std-ref">Spring Securityの機能</span></a>でキャッシュが無効になる設定が行われている。</p>
 <p>もしこの画面の表示が出る代わりにトランザクショントークンエラー画面を表示したい場合は、
 <code class="docutils literal"><span class="pre">&lt;sec:cache-control</span> <span class="pre">/&gt;</span></code>の設定を除外する必要があるが、セキュリティ観点では<code class="docutils literal"><span class="pre">&lt;sec:cache-control</span> <span class="pre">/&gt;</span></code>を設定しておくことを推奨する。</p>
@@ -3588,58 +3573,48 @@ TransactionTokenTypeを正しく設定しない場合、通常のオペレーシ
         <li class="right" >
           <a href="Pagination.html" title="4.4. ページネーション"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">Macchinetta Server Framework (1.x) Development Guideline 1.5.1.RELEASE documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Macchinetta Server Framework (1.x) Development Guideline 1.6.1.RELEASE documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="index.html" >4. Webアプリ開発機能</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2013-2018, NTT Corporation.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.6.2.Theme is <a href="http://github.com/vimalkvn/solar-theme">Solar</a>
+        &copy; Copyright 2013, NTT Corporation.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.6.3.Theme is <a href="http://github.com/vimalkvn/solar-theme">Solar</a>
     </div>
     
     <script>
-     
-     $(function() {
-    	   var $sidebar	= $('.sphinxsidebar'),
-    		     $window		= $(window),
-    		     offset		= $sidebar.offset(),
-    		     topPadding	= 3,
-    		     $scroll		= $('#scroll');
-    	   
-    	   $window.scroll(function() {
-    		     if ($scroll.is(':checked')) {
-				         if ($window.scrollTop() > offset.top) {
-					           $sidebar.stop().animate({
-						             marginTop:$window.scrollTop() - offset.top + topPadding
-					           });
-				         } else {
-					           $sidebar.stop().animate({
-						             marginTop:0
-					           });
-				         }
-			       }
-		     });
-    	   
-    	   var $navList = $('ul:first', $sidebar);
-    	   $('li:first', $navList).addClass('open');
-    	   
-    	   $navList.treeview({
-    		     persist: "location",
-    		     collapsed: true,
-    		     unique: false
-    	   });
-    	   
-	   });
-    </script>
     
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-113850349-2"></script>
-    <script>
-     window.dataLayer = window.dataLayer || [];
-     function gtag(){dataLayer.push(arguments);}
-     gtag('js', new Date());
-
-     gtag('config', 'UA-113850349-2');
+    $(function() {
+    	var $sidebar	= $('.sphinxsidebar'),
+    		$window		= $(window),
+    		offset		= $sidebar.offset(),
+    		topPadding	= 3,
+    		$scroll		= $('#scroll');
+    	
+    	$window.scroll(function() {
+    		if ($scroll.is(':checked')) {
+				if ($window.scrollTop() > offset.top) {
+					$sidebar.stop().animate({
+						marginTop:$window.scrollTop() - offset.top + topPadding
+					});
+				} else {
+					$sidebar.stop().animate({
+						marginTop:0
+					});
+				}
+			}
+		});
+    	
+    	var $navList = $('ul:first', $sidebar);
+    	$('li:first', $navList).addClass('open');
+    	
+    	$navList.treeview({
+    		persist: "location",
+    		collapsed: true,
+    		unique: false
+    	});
+    	
+	});
     </script>
   </body>
 </html>

@@ -3,16 +3,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>1.2. このドキュメントが示すこと &#8212; Macchinetta Server Framework (1.x) Development Guideline 1.5.1.RELEASE documentation</title>
-    
+    <title>1.2. このドキュメントが示すこと &#8212; Macchinetta Server Framework (1.x) Development Guideline 1.6.1.RELEASE documentation</title>
     <link rel="stylesheet" href="../_static/solar.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '1.5.1.RELEASE',
+        VERSION:     '1.6.1.RELEASE',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true,
@@ -43,7 +40,7 @@
         <li class="right" >
           <a href="TermsOfUse.html" title="1.1. 利用規約"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Macchinetta Server Framework (1.x) Development Guideline 1.5.1.RELEASE documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Macchinetta Server Framework (1.x) Development Guideline 1.6.1.RELEASE documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">1. はじめに</a> &#187;</li> 
       </ul>
     </div>
@@ -161,6 +158,11 @@
 </dl>
 </li>
 <li><dl class="first docutils">
+<dt><a class="reference internal" href="../UnitTest/index.html"><span class="doc">単体テスト</span></a></dt>
+<dd>Spring Testを利用した単体テストについて説明する。</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
 <dt><a class="reference internal" href="../Tutorial/index.html"><span class="doc">チュートリアル</span></a></dt>
 <dd>簡単なアプリケーション開発を通して、Macchinetta Server Framework (1.x)によるアプリケーション開発を体験する。</dd>
 </dl>
@@ -207,6 +209,7 @@
 <h1>1.6. このドキュメントの動作検証環境<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h1>
 <p>本ガイドラインで説明している内容の動作検証環境については、
 「<a class="reference external" href="https://github.com/Macchinetta/spring-functionaltest/wiki/Tested-Environment">テスト済み環境</a>」を参照されたい。</p>
+<p>なお、本ガイドライン中に記載のあるJava SE 8とJava SE 11の主要な変更点については、”<a class="reference internal" href="../Appendix/Java11Changes.html"><span class="doc">Java SE 8からJava SE 11までの主要な変更点</span></a>”に概要をまとめてあるので、合わせて参照されたい。</p>
 </div>
 
 
@@ -227,58 +230,48 @@
         <li class="right" >
           <a href="TermsOfUse.html" title="1.1. 利用規約"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Macchinetta Server Framework (1.x) Development Guideline 1.5.1.RELEASE documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Macchinetta Server Framework (1.x) Development Guideline 1.6.1.RELEASE documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="index.html" >1. はじめに</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2013-2018, NTT Corporation.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.6.2.Theme is <a href="http://github.com/vimalkvn/solar-theme">Solar</a>
+        &copy; Copyright 2013, NTT Corporation.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.6.3.Theme is <a href="http://github.com/vimalkvn/solar-theme">Solar</a>
     </div>
     
     <script>
-     
-     $(function() {
-    	   var $sidebar	= $('.sphinxsidebar'),
-    		     $window		= $(window),
-    		     offset		= $sidebar.offset(),
-    		     topPadding	= 3,
-    		     $scroll		= $('#scroll');
-    	   
-    	   $window.scroll(function() {
-    		     if ($scroll.is(':checked')) {
-				         if ($window.scrollTop() > offset.top) {
-					           $sidebar.stop().animate({
-						             marginTop:$window.scrollTop() - offset.top + topPadding
-					           });
-				         } else {
-					           $sidebar.stop().animate({
-						             marginTop:0
-					           });
-				         }
-			       }
-		     });
-    	   
-    	   var $navList = $('ul:first', $sidebar);
-    	   $('li:first', $navList).addClass('open');
-    	   
-    	   $navList.treeview({
-    		     persist: "location",
-    		     collapsed: true,
-    		     unique: false
-    	   });
-    	   
-	   });
-    </script>
     
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-113850349-2"></script>
-    <script>
-     window.dataLayer = window.dataLayer || [];
-     function gtag(){dataLayer.push(arguments);}
-     gtag('js', new Date());
-
-     gtag('config', 'UA-113850349-2');
+    $(function() {
+    	var $sidebar	= $('.sphinxsidebar'),
+    		$window		= $(window),
+    		offset		= $sidebar.offset(),
+    		topPadding	= 3,
+    		$scroll		= $('#scroll');
+    	
+    	$window.scroll(function() {
+    		if ($scroll.is(':checked')) {
+				if ($window.scrollTop() > offset.top) {
+					$sidebar.stop().animate({
+						marginTop:$window.scrollTop() - offset.top + topPadding
+					});
+				} else {
+					$sidebar.stop().animate({
+						marginTop:0
+					});
+				}
+			}
+		});
+    	
+    	var $navList = $('ul:first', $sidebar);
+    	$('li:first', $navList).addClass('open');
+    	
+    	$navList.treeview({
+    		persist: "location",
+    		collapsed: true,
+    		unique: false
+    	});
+    	
+	});
     </script>
   </body>
 </html>

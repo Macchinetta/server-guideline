@@ -3,16 +3,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>4.13. Ajax &#8212; Macchinetta Server Framework (1.x) Development Guideline 1.5.1.RELEASE documentation</title>
-    
+    <title>4.13. Ajax &#8212; Macchinetta Server Framework (1.x) Development Guideline 1.6.1.RELEASE documentation</title>
     <link rel="stylesheet" href="../../_static/solar.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '1.5.1.RELEASE',
+        VERSION:     '1.6.1.RELEASE',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true,
@@ -43,7 +40,7 @@
         <li class="right" >
           <a href="TagLibAndELFunctions.html" title="4.12. 共通ライブラリが提供するJSP Tag Library と EL Functions"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">Macchinetta Server Framework (1.x) Development Guideline 1.5.1.RELEASE documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Macchinetta Server Framework (1.x) Development Guideline 1.6.1.RELEASE documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">4. Webアプリ開発機能</a> &#187;</li> 
       </ul>
     </div>
@@ -151,14 +148,6 @@
 <div class="section" id="overview">
 <h2><a class="toc-backref" href="#id8">4.13.1. Overview</a><a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
 <p>本章では、Ajaxを利用するアプリケーションの実装方法について説明する。</p>
-<blockquote>
-<div><div class="admonition-todo admonition" id="index-0">
-<p class="first admonition-title">Todo</p>
-<p><strong>TBD</strong></p>
-<blockquote class="last">
-<div>クライアント側の実装方法などについては、次版以降で詳細化する予定である。</div></blockquote>
-</div>
-</div></blockquote>
 <p>Ajaxとは、以下の処理を非同期に行うための技術の総称である。</p>
 <ul class="simple">
 <li>ブラウザ上で行われる画面操作</li>
@@ -296,7 +285,8 @@
 </td>
 <td><div class="first last line-block">
 <div class="line">リクエストBody又はレスポンスBodyとしてXMLを扱うための <code class="docutils literal"><span class="pre">HttpMessageConverter</span></code> 。</div>
-<div class="line">JavaSE6からJAXB2.0が標準で同封されているため、デフォルトの状態で使用することができる。</div>
+<div class="line">Java SE 8を利用する場合、JAXB2.0が標準で同封されているため、デフォルトの状態で使用することができる。</div>
+<div class="line">Java SE 11でJAXBを利用するには<a class="reference internal" href="../../Appendix/Java11Changes.html#remove-jaxb-from-java11"><span class="std std-ref">JAXBの削除</span></a>を参照されたい。</div>
 </div>
 </td>
 </tr>
@@ -306,166 +296,11 @@
 <p class="first admonition-title">Note</p>
 <p class="last"><strong>jackson version 1.x.x から jackson version 2.x.xへ変更する場合の注意点</strong> は<a class="reference internal" href="../WebServiceDetail/REST.html#rest-note-changed-jackson-version"><span class="std std-ref">こちら</span></a>を参照されたい。</p>
 </div>
-<div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<p><strong>XXE(XML External Entity) Injection 対策について</strong></p>
-<p>Ajax通信でXML形式のデータを扱う場合は、<a class="reference external" href="https://www.owasp.org/index.php/XML_External_Entity_(XXE)_Processing">XXE(XML External Entity) Injection</a>対策を行う必要がある。
-terasoluna-gfw-web 1.0.1.RELEASE以上では、XXE Injection 対策が行われているSpring MVC(3.2.10.RELEASE以上)に依存しているため、個別に対策を行う必要はない。</p>
-<p>terasoluna-gfw-web 1.0.0.RELEASEを使用している場合は、XXE Injection対策が行われていないSpring MVC(3.2.4.RELEASE)に依存しているため、Spring-oxmから提供されているクラスを使用すること。</p>
-<ul class="simple">
-<li><code class="file docutils literal"><span class="pre">spring-mvc.xml</span></code></li>
-</ul>
-<blockquote>
-<div><div class="highlight-xml"><div class="highlight"><pre><span></span><span class="c">&lt;!-- (1) --&gt;</span>
-<span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">&quot;xmlMarshaller&quot;</span> <span class="na">class=</span><span class="s">&quot;org.springframework.oxm.jaxb.Jaxb2Marshaller&quot;</span><span class="nt">&gt;</span>
-    <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">&quot;packagesToScan&quot;</span> <span class="na">value=</span><span class="s">&quot;com.examples.app&quot;</span> <span class="nt">/&gt;</span> <span class="c">&lt;!-- (2) --&gt;</span>
-<span class="nt">&lt;/bean&gt;</span>
-
-<span class="c">&lt;!-- ... --&gt;</span>
-
-<span class="nt">&lt;mvc:annotation-driven&gt;</span>
-
-    <span class="nt">&lt;mvc:message-converters&gt;</span>
-        <span class="c">&lt;!-- (3) --&gt;</span>
-        <span class="nt">&lt;bean</span> <span class="na">class=</span><span class="s">&quot;org.springframework.http.converter.xml.MarshallingHttpMessageConverter&quot;</span><span class="nt">&gt;</span>
-            <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">&quot;marshaller&quot;</span> <span class="na">ref=</span><span class="s">&quot;xmlMarshaller&quot;</span> <span class="nt">/&gt;</span> <span class="c">&lt;!-- (4) --&gt;</span>
-            <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">&quot;unmarshaller&quot;</span> <span class="na">ref=</span><span class="s">&quot;xmlMarshaller&quot;</span> <span class="nt">/&gt;</span> <span class="c">&lt;!-- (5) --&gt;</span>
-        <span class="nt">&lt;/bean&gt;</span>
-    <span class="nt">&lt;/mvc:message-converters&gt;</span>
-
-    <span class="c">&lt;!-- ... --&gt;</span>
-
-<span class="nt">&lt;/mvc:annotation-driven&gt;</span>
-
-<span class="c">&lt;!-- ... --&gt;</span>
-</pre></div>
-</div>
-<table border="1" class="colwidths-given longtable docutils">
-<colgroup>
-<col width="10%" />
-<col width="90%" />
-</colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head"><div class="first last line-block">
-<div class="line">項番</div>
-</div>
-</th>
-<th class="head"><div class="first last line-block">
-<div class="line">説明</div>
-</div>
-</th>
-</tr>
-</thead>
-<tbody valign="top">
-<tr class="row-even"><td><div class="first last line-block">
-<div class="line">(1)</div>
-</div>
-</td>
-<td><div class="first last line-block">
-<div class="line">Spring-oxmから提供されている<code class="docutils literal"><span class="pre">Jaxb2Marshaller</span></code>のbean定義を行う。</div>
-<div class="line"><code class="docutils literal"><span class="pre">Jaxb2Marshaller</span></code>はデフォルトの状態で XXE Injection対策が行われている。</div>
-</div>
-</td>
-</tr>
-<tr class="row-odd"><td><div class="first last line-block">
-<div class="line">(2)</div>
-</div>
-</td>
-<td><div class="first last line-block">
-<div class="line"><code class="docutils literal"><span class="pre">packagesToScan</span></code> プロパティに JAXB用のJavaBean( <code class="docutils literal"><span class="pre">javax.xml.bind.annotation.XmlRootElement</span></code> アノテーションなどが付与されているJavaBean)が格納されているパッケージ名を指定する。</div>
-<div class="line">指定したパッケージ配下に格納されているJAXB用のJavaBeanがスキャンされ、marshal、unmarshal対象のJavaBeanとして登録される。</div>
-<div class="line"><code class="docutils literal"><span class="pre">&lt;context:component-scan&gt;</span></code> の base-package属性と同じ仕組みでスキャンされる。</div>
-</div>
-</td>
-</tr>
-<tr class="row-even"><td><div class="first last line-block">
-<div class="line">(3)</div>
-</div>
-</td>
-<td><div class="first last line-block">
-<div class="line"><code class="docutils literal"><span class="pre">&lt;mvc:annotation-driven&gt;</span></code> の子要素である <code class="docutils literal"><span class="pre">&lt;mvc:message-converters&gt;</span></code> 要素に、 <code class="docutils literal"><span class="pre">MarshallingHttpMessageConverter</span></code> のbean定義を追加する。</div>
-</div>
-</td>
-</tr>
-<tr class="row-odd"><td><div class="first last line-block">
-<div class="line">(4)</div>
-</div>
-</td>
-<td><div class="first last line-block">
-<div class="line"><code class="docutils literal"><span class="pre">marshaller</span></code> プロパティに (1)で定義した <code class="docutils literal"><span class="pre">Jaxb2Marshaller</span></code> のbeanを指定する。</div>
-</div>
-</td>
-</tr>
-<tr class="row-even"><td><div class="first last line-block">
-<div class="line">(5)</div>
-</div>
-</td>
-<td><div class="first last line-block">
-<div class="line"><code class="docutils literal"><span class="pre">unmarshaller</span></code> プロパティに (1)で定義した <code class="docutils literal"><span class="pre">Jaxb2Marshaller</span></code> のbeanを指定する。</div>
-</div>
-</td>
-</tr>
-</tbody>
-</table>
-</div></blockquote>
-<div class="line-block">
-<div class="line"><br /></div>
-</div>
-<p>Spring-oxmを依存するアーティファクトとして追加する。</p>
-<ul class="simple">
-<li><code class="file docutils literal"><span class="pre">pom.xml</span></code></li>
-</ul>
-<blockquote class="last">
-<div><div class="highlight-xml"><div class="highlight"><pre><span></span><span class="c">&lt;!-- omitted --&gt;</span>
-
-<span class="c">&lt;!-- (1) --&gt;</span>
-<span class="nt">&lt;dependency&gt;</span>
-    <span class="nt">&lt;groupId&gt;</span>org.springframework<span class="nt">&lt;/groupId&gt;</span>
-    <span class="nt">&lt;artifactId&gt;</span>spring-oxm<span class="nt">&lt;/artifactId&gt;</span>
-    <span class="nt">&lt;version&gt;</span>${org.springframework-version}<span class="nt">&lt;/version&gt;</span> <span class="c">&lt;!-- (2) --&gt;</span>
-<span class="nt">&lt;/dependency&gt;</span>
-
-<span class="c">&lt;!-- omitted --&gt;</span>
-</pre></div>
-</div>
-<table border="1" class="colwidths-given longtable docutils">
-<colgroup>
-<col width="10%" />
-<col width="90%" />
-</colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head"><div class="first last line-block">
-<div class="line">項番</div>
-</div>
-</th>
-<th class="head"><div class="first last line-block">
-<div class="line">説明</div>
-</div>
-</th>
-</tr>
-</thead>
-<tbody valign="top">
-<tr class="row-even"><td><div class="first last line-block">
-<div class="line">(1)</div>
-</div>
-</td>
-<td><div class="first last line-block">
-<div class="line">Spring-oxm を依存アーティファクトとして追加する。</div>
-</div>
-</td>
-</tr>
-<tr class="row-odd"><td><div class="first last line-block">
-<div class="line">(2)</div>
-</div>
-</td>
-<td><div class="first last line-block">
-<div class="line">Springのバージョンは、terasoluna-gfw-parent の <code class="file docutils literal"><span class="pre">pom.xml</span></code> に定義されているSpringのバージョン番号を管理するためのプレースホルダ(${org.springframework-version})から取得すること。</div>
-</div>
-</td>
-</tr>
-</tbody>
-</table>
-</div></blockquote>
+<div class="admonition note" id="ajaxwarningxxeprotection">
+<p class="first admonition-title">Note</p>
+<p><strong>XXE(XML External Entity) 対策について</strong></p>
+<p class="last">Ajax通信でXML形式のデータを扱う場合は、<a class="reference external" href="https://www.owasp.org/index.php/XML_External_Entity_(XXE)_Processing">XXE(XML External Entity)</a>対策を行う必要がある。
+Macchinetta Server Framework (1.x)では、XXE 対策が行われているSpring MVC(3.2.10.RELEASE以上)に依存しているため、個別に対策を行う必要はない。</p>
 </div>
 </div></blockquote>
 <div class="line-block">
@@ -1125,6 +960,18 @@ JavaScriptのコードからJSPのコードを排除している。</p>
 </tr>
 </tbody>
 </table>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p>電文からJava Beanにデシリアライズする際、プロパティにジェネリクスやインターフェイスを使用しているなどの理由で型を特定できない場合は
+<code class="docutils literal"><span class="pre">&#64;com.fasterxml.jackson.annotation.JsonTypeInfo</span></code>アノテーションを付与する。
+<code class="docutils literal"><span class="pre">&#64;JsonTypeInfo</span></code>アノテーションを付与したプロパティをシリアライズするとJSONに型情報が出力され、これを読み取ってデシリアライズが行われる。</p>
+<p>ただし、<code class="docutils literal"><span class="pre">&#64;JsonTypeInfo</span></code>アノテーションのuse属性に<code class="docutils literal"><span class="pre">Id.CLASS</span></code>や<code class="docutils literal"><span class="pre">Id.MINIMAL_CLASS</span></code>を使用すると、
+JSONに出力されたクラス名を元にデシリアライズが行われるため、これにより不正にリモートコードが実行される危険がある。
+このため、(信頼できない送信元を含み得る)不特定多数からの電文を受け付ける前提のシステムにおいては、
+<code class="docutils literal"><span class="pre">Id.CLASS</span></code>や<code class="docutils literal"><span class="pre">Id.MINIMAL_CLASS</span></code>を指定してはならない。</p>
+<p class="last">なお、<code class="docutils literal"><span class="pre">ObjectMapper</span></code>の<code class="docutils literal"><span class="pre">defaultTyping</span></code>を利用すると、上記のようなデシリアライズ時の型判断をアプリケーション全体に適用することが可能である。
+こちらも合わせて注意されたい。</p>
+</div>
 </div></blockquote>
 <div class="line-block">
 <div class="line"><br /></div>
@@ -1445,11 +1292,6 @@ JavaScriptのコードからJSPのコードを排除している。</p>
 <div class="admonition warning">
 <p class="first admonition-title">Warning</p>
 <p class="last">上記例では、Ajaxの通信処理、DOM操作処理(描画処理)、エラー処理を同じfunction内で行っているが、これらの処理は分離して実装することを推奨する。</p>
-</div>
-<div class="admonition-todo admonition" id="index-1">
-<p class="first admonition-title">Todo</p>
-<p><strong>TBD</strong></p>
-<p class="last">クライアント側の実装方法については、次版以降で詳細化する予定である。</p>
 </div>
 <div class="admonition tip">
 <p class="first admonition-title">Tip</p>
@@ -2417,58 +2259,48 @@ HTTPステータスコードを処理結果によってわける必要がある�
         <li class="right" >
           <a href="TagLibAndELFunctions.html" title="4.12. 共通ライブラリが提供するJSP Tag Library と EL Functions"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">Macchinetta Server Framework (1.x) Development Guideline 1.5.1.RELEASE documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Macchinetta Server Framework (1.x) Development Guideline 1.6.1.RELEASE documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="index.html" >4. Webアプリ開発機能</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2013-2018, NTT Corporation.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.6.2.Theme is <a href="http://github.com/vimalkvn/solar-theme">Solar</a>
+        &copy; Copyright 2013, NTT Corporation.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.6.3.Theme is <a href="http://github.com/vimalkvn/solar-theme">Solar</a>
     </div>
     
     <script>
-     
-     $(function() {
-    	   var $sidebar	= $('.sphinxsidebar'),
-    		     $window		= $(window),
-    		     offset		= $sidebar.offset(),
-    		     topPadding	= 3,
-    		     $scroll		= $('#scroll');
-    	   
-    	   $window.scroll(function() {
-    		     if ($scroll.is(':checked')) {
-				         if ($window.scrollTop() > offset.top) {
-					           $sidebar.stop().animate({
-						             marginTop:$window.scrollTop() - offset.top + topPadding
-					           });
-				         } else {
-					           $sidebar.stop().animate({
-						             marginTop:0
-					           });
-				         }
-			       }
-		     });
-    	   
-    	   var $navList = $('ul:first', $sidebar);
-    	   $('li:first', $navList).addClass('open');
-    	   
-    	   $navList.treeview({
-    		     persist: "location",
-    		     collapsed: true,
-    		     unique: false
-    	   });
-    	   
-	   });
-    </script>
     
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-113850349-2"></script>
-    <script>
-     window.dataLayer = window.dataLayer || [];
-     function gtag(){dataLayer.push(arguments);}
-     gtag('js', new Date());
-
-     gtag('config', 'UA-113850349-2');
+    $(function() {
+    	var $sidebar	= $('.sphinxsidebar'),
+    		$window		= $(window),
+    		offset		= $sidebar.offset(),
+    		topPadding	= 3,
+    		$scroll		= $('#scroll');
+    	
+    	$window.scroll(function() {
+    		if ($scroll.is(':checked')) {
+				if ($window.scrollTop() > offset.top) {
+					$sidebar.stop().animate({
+						marginTop:$window.scrollTop() - offset.top + topPadding
+					});
+				} else {
+					$sidebar.stop().animate({
+						marginTop:0
+					});
+				}
+			}
+		});
+    	
+    	var $navList = $('ul:first', $sidebar);
+    	$('li:first', $navList).addClass('open');
+    	
+    	$navList.treeview({
+    		persist: "location",
+    		collapsed: true,
+    		unique: false
+    	});
+    	
+	});
     </script>
   </body>
 </html>

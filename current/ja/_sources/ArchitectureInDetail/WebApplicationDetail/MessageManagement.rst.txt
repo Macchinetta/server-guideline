@@ -1423,9 +1423,7 @@ ResultMessagesを使用しない結果メッセージの表示
 | 通常は\ ``<t:messagesPanel>``\ タグは\ ``ResultMessages``\ オブジェクトの出力用に使用するが、
 | フレームワークがリクエストスコープに設定した文字列(エラーメッセージなど)を表示する場合にも使用できる。
 
-| 例えば、Spring Securityは認証エラー時に、"SPRING_SECURITY_LAST_EXCEPTION"という属性名で発生した例外クラスを
-| リクエストスコープに設定する。
-
+| 例えば、Spring Securityのデフォルトの設定で使用される、\ ``org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler``\ では、認証エラー時に発生した例外オブジェクトを\ ``SPRING_SECURITY_LAST_EXCEPTION``\ という属性名で、リダイレクト時はセッション、フォワード時はリクエストスコープに格納する。
 | この例外メッセージを、結果メッセージ同様に\ ``<t:messagesPanel>``\ タグで出力したい場合は、以下のように設定すればよい。
 
 

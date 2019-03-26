@@ -15,13 +15,6 @@ Overview
 | 本ガイドラインでは、``java.util.Date`` , ``java.util.Calendar`` に比べて、
 | 様々な日時計算が提供されている JSR-310 Date and Time API の使用を推奨する。
 
-    .. note::
-
-        JSR-310 Date and Time APIはJava8から導入されたため、
-        Java8未満の環境は、Joda Timeの利用を推奨している。
-        Joda Timeの利用方法は、 :doc:`./JodaTime` を参照されたい。
-
-
 How to use
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -361,9 +354,7 @@ Date and Time APIの各クラスの相互運用性
 java.util.Dateとの相互運用性
 ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 
-``java.time.LocalDate`` 等のクラスを、``java.util.Date`` に直接変換するメソッドは提供されていない。
-
-| ただし、Java8からは ``java.util.Date`` にDate and Time APIが提供する  ``java.time.Instant`` を変換するメソッドが追加されているため、``java.time.Instant`` を経由して変換を行うことが可能である。
+| ``java.time.LocalDate`` 等のクラスは、``java.time.Instant`` に変換したうえで ``java.util.Date`` に変換することが可能である。
 | 以下に例を示す。
 
 1. ``java.time.LocalDateTime`` から、 ``java.util.Date`` への変換。
@@ -560,6 +551,10 @@ org.terasoluna.gfw.common.date パッケージの利用方法
   <p>currentDate =  2015-12-25.</p>
   <p>formattedCurrentDateString =  2015/12/25.</p>
 
+.. note::
+
+    Java SE 11ではJava SE 8と日付の文字列表現が異なる場合がある。
+    Java SE 8と同様に表現するには\ :ref:`change-default-locale--data-from-java9`\ を参照されたい。
 
 文字列からのパース
 ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
@@ -578,7 +573,7 @@ org.terasoluna.gfw.common.date パッケージの利用方法
                                               .withResolverStyle(ResolverStyle.STRICT);
 
    LocalDate localDate = LocalDate.parse("2015/12/25", formatter1);
-   LocalTime localTime = LocalDate.parse("14:09:20", formatter2);
+   LocalTime localTime = LocalTime.parse("14:09:20", formatter2);
  
 |
 
@@ -735,6 +730,7 @@ org.terasoluna.gfw.common.date パッケージの利用方法
    // 32 ( day of year )
    int dayOfYear = localDate.getDayOfYear();
 
+.. _JapaneseDate:
 
 和暦（JapaneseDate）
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""

@@ -3,16 +3,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>1.7. ガイドラインの観点別マッピング &#8212; Macchinetta Server Framework (1.x) Development Guideline 1.5.1.RELEASE documentation</title>
-    
+    <title>1.7. ガイドラインの観点別マッピング &#8212; Macchinetta Server Framework (1.x) Development Guideline 1.6.1.RELEASE documentation</title>
     <link rel="stylesheet" href="../_static/solar.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '1.5.1.RELEASE',
+        VERSION:     '1.6.1.RELEASE',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true,
@@ -43,7 +40,7 @@
         <li class="right" >
           <a href="Introduction.html" title="1.2. このドキュメントが示すこと"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Macchinetta Server Framework (1.x) Development Guideline 1.5.1.RELEASE documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Macchinetta Server Framework (1.x) Development Guideline 1.6.1.RELEASE documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">1. はじめに</a> &#187;</li> 
       </ul>
     </div>
@@ -101,8 +98,8 @@
 <h2>1.7.1. セキュリティ対策に関するマッピング<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="owasp-open-web-application-security-project">
 <h3>1.7.1.1. OWASP(Open Web Application Security Project)による観点<a class="headerlink" href="#owasp-open-web-application-security-project" title="Permalink to this headline">¶</a></h3>
-<p><a class="reference external" href="https://www.owasp.org/index.php/Category:OWASP_Top_Ten_Project">OWASP Top 10 for 2013</a>を軸として、
-セキュリティに関連する機能の説明へのリンクを記載する。</p>
+<p><a class="reference external" href="https://www.owasp.org/index.php/Category:OWASP_Top_Ten_Project">OWASP Top 10 for 2017</a>を軸として、
+セキュリティに関連するガイドライン内の説明へのリンクを記載する。</p>
 <table border="1" class="colwidths-given longtable docutils">
 <colgroup>
 <col width="10%" />
@@ -112,108 +109,111 @@
 <thead valign="bottom">
 <tr class="row-odd"><th class="head">項番</th>
 <th class="head">項目名</th>
-<th class="head">関連するガイドライン</th>
+<th class="head">ガイドライン内の関連箇所</th>
 </tr>
 </thead>
 <tbody valign="top">
-<tr class="row-even"><td>A1</td>
-<td><a class="reference external" href="https://www.owasp.org/index.php/Top_10_2013-A1-Injection">Injection</a> SQL Injection</td>
-<td><ul class="first simple">
-<li><a class="reference internal" href="../ArchitectureInDetail/DataAccessDetail/DataAccessMyBatis3.html"><span class="doc">データベースアクセス（MyBatis3編）</span></a></li>
-</ul>
-<p class="last">(クエリにパラメータを埋め込む場合は、バインド変数を使用する旨を記載)</p>
-</td>
-</tr>
-<tr class="row-odd"><td>A1</td>
-<td><a class="reference external" href="https://www.owasp.org/index.php/Top_10_2013-A1-Injection">Injection</a> XXE(XML External Entity) Injection</td>
+<tr class="row-even"><td>A1:2017</td>
+<td><a class="reference external" href="https://www.owasp.org/index.php/Top_10-2017_A1-Injection">Injection</a> SQL Injection</td>
 <td><ul class="first last simple">
-<li><a class="reference internal" href="../ArchitectureInDetail/WebApplicationDetail/Ajax.html"><span class="doc">Ajax</span></a></li>
+<li><a class="reference internal" href="../ArchitectureInDetail/DataAccessDetail/DataAccessMyBatis3.html#dataaccessmybatis3howtousesqlinjectioncountermeasure"><span class="std std-ref">SQL Injection対策</span></a></li>
 </ul>
 </td>
 </tr>
-<tr class="row-even"><td>A1</td>
-<td><a class="reference external" href="https://www.owasp.org/index.php/Top_10_2013-A1-Injection">Injection</a> OS Command Injection</td>
+<tr class="row-odd"><td>A1:2017</td>
+<td><a class="reference external" href="https://www.owasp.org/index.php/Top_10-2017_A1-Injection">Injection</a> OS Command Injection</td>
 <td><ul class="first last simple">
-<li><a class="reference internal" href="../ArchitectureInDetail/WebApplicationDetail/Validation.html"><span class="doc">入力チェック</span></a></li>
+<li><a class="reference internal" href="../ArchitectureInDetail/WebApplicationDetail/Validation.html#validation-os-command-injection"><span class="std std-ref">OSコマンドインジェクション対策</span></a></li>
 </ul>
 </td>
 </tr>
-<tr class="row-odd"><td>A1</td>
-<td><a class="reference external" href="https://www.owasp.org/index.php/Top_10_2013-A1-Injection">Injection</a> Email Header Injection</td>
+<tr class="row-even"><td>A1:2017</td>
+<td><a class="reference external" href="https://www.owasp.org/index.php/Top_10-2017_A1-Injection">Injection</a> Email Header Injection</td>
 <td><ul class="first last simple">
 <li><a class="reference internal" href="../ArchitectureInDetail/MessagingDetail/Email.html#email-header-injection"><span class="std std-ref">メールヘッダ・インジェクション対策</span></a></li>
 </ul>
 </td>
 </tr>
-<tr class="row-even"><td>A1</td>
-<td><a class="reference external" href="https://www.owasp.org/index.php/Top_10_2013-A1-Injection">Injection</a></td>
-<td><ul class="first simple">
+<tr class="row-odd"><td>A1:2017</td>
+<td><a class="reference external" href="https://www.owasp.org/index.php/Top_10-2017_A1-Injection">Injection</a></td>
+<td><ul class="first last simple">
 <li><a class="reference internal" href="../Security/SecureLoginDemo.html#secure-input-validation"><span class="std std-ref">セキュリティ観点での入力値チェック</span></a></li>
 </ul>
-<p class="last">(外部からの入力全般に対する入力チェック方法を記載)</p>
 </td>
 </tr>
-<tr class="row-odd"><td>A2</td>
-<td><a class="reference external" href="https://www.owasp.org/index.php/Top_10_2013-A2-Broken_Authentication_and_Session_Management">Broken Authentication and Session Management</a></td>
+<tr class="row-even"><td>A2:2017</td>
+<td><a class="reference external" href="https://www.owasp.org/index.php/Top_10-2017_A2-Broken_Authentication">Broken Authentication</a></td>
 <td><ul class="first last simple">
-<li><a class="reference internal" href="../Security/SessionManagement.html"><span class="doc">セッション管理</span></a></li>
-<li><a class="reference internal" href="../Security/Authentication.html"><span class="doc">認証</span></a></li>
+<li><a class="reference internal" href="../Security/SessionManagement.html#sessionmanagementsessionhijackingattacksprotection"><span class="std std-ref">セッションハイジャック攻撃への対策</span></a></li>
+<li><a class="reference internal" href="../Security/SessionManagement.html#sessionmanagementsessionfixationattacksprotection"><span class="std std-ref">セッション固定攻撃への対策</span></a></li>
+<li><a class="reference internal" href="../Security/Authentication.html#springsecurityauthenticationpasswordhashing"><span class="std std-ref">パスワードのハッシュ化</span></a></li>
 </ul>
 </td>
 </tr>
-<tr class="row-even"><td>A3</td>
-<td><a class="reference external" href="https://www.owasp.org/index.php/Top_10_2013-A3-Cross-Site_Scripting_(XSS)">Cross-Site Scripting (XSS)</a></td>
+<tr class="row-odd"><td>A3:2017</td>
+<td><a class="reference external" href="https://www.owasp.org/index.php/Top_10-2017_A3-Sensitive_Data_Exposure">Sensitive Data Exposure</a></td>
 <td><ul class="first last simple">
-<li><a class="reference internal" href="../Security/XSS.html"><span class="doc">XSS対策</span></a></li>
-<li><a class="reference internal" href="../Security/LinkageWithBrowser.html"><span class="doc">ブラウザのセキュリティ対策機能との連携</span></a></li>
-</ul>
-</td>
-</tr>
-<tr class="row-odd"><td>A4</td>
-<td><a class="reference external" href="https://www.owasp.org/index.php/Top_10_2013-A4-Insecure_Direct_Object_References">Insecure Direct Object References</a> Directory Traversal</td>
-<td><ul class="first last simple">
-<li><a class="reference internal" href="../ArchitectureInDetail/WebApplicationDetail/FileUpload.html#file-upload-security-related-warning-points-directory-traversal"><span class="std std-ref">ディレクトリトラバーサル攻撃</span></a></li>
-</ul>
-</td>
-</tr>
-<tr class="row-even"><td>A5</td>
-<td><a class="reference external" href="https://www.owasp.org/index.php/Top_10_2013-A5-Security_Misconfiguration">Security Misconfiguration</a></td>
-<td><ul class="first last simple">
-<li><a class="reference internal" href="../ArchitectureInDetail/GeneralFuncDetail/Logging.html"><span class="doc">ロギング</span></a>(ログのメッセージ内容に言及)</li>
-<li><a class="reference internal" href="../ArchitectureInDetail/WebApplicationDetail/ExceptionHandling.html#exception-handling-how-to-use-codingpoint-jsp-exceptioncode-label"><span class="std std-ref">システム例外の例外コードを、画面表示する方法</span></a>(システム例外時に出力するメッセージ内容に言及)</li>
-</ul>
-</td>
-</tr>
-<tr class="row-odd"><td>A6</td>
-<td><a class="reference external" href="https://www.owasp.org/index.php/Top_10_2013-A6-Sensitive_Data_Exposure">Sensitive Data Exposure</a></td>
-<td><ul class="first last simple">
-<li><a class="reference internal" href="../ArchitectureInDetail/GeneralFuncDetail/PropertyManagement.html"><span class="doc">プロパティ管理</span></a></li>
+<li><a class="reference internal" href="../ArchitectureInDetail/GeneralFuncDetail/PropertyManagement.html#propertymanagementdecryptandusetheencryptedpropertyvalue"><span class="std std-ref">暗号化したプロパティ値を復号して使用する</span></a></li>
 <li><a class="reference internal" href="../Security/Encryption.html"><span class="doc">暗号化</span></a></li>
 <li><a class="reference internal" href="../Security/Authentication.html#springsecurityauthenticationpasswordhashing"><span class="std std-ref">パスワードのハッシュ化</span></a></li>
 </ul>
 </td>
 </tr>
-<tr class="row-even"><td>A7</td>
-<td><a class="reference external" href="https://www.owasp.org/index.php/Top_10_2013-A7-Missing_Function_Level_Access_Control">Missing Function Level Access Control</a></td>
+<tr class="row-even"><td>A4:2017</td>
+<td><a class="reference external" href="https://www.owasp.org/index.php/Top_10-2017_A4-XML_External_Entities_(XXE)">XML External Entities (XXE)</a></td>
 <td><ul class="first last simple">
-<li><a class="reference internal" href="../Security/Authorization.html"><span class="doc">認可</span></a></li>
+<li><a class="reference internal" href="../ArchitectureInDetail/WebApplicationDetail/Ajax.html#ajaxwarningxxeprotection"><span class="std std-ref">XXE(XML External Entity) 対策について</span></a></li>
+<li><a class="reference internal" href="../ArchitectureInDetail/WebServiceDetail/REST.html#restappendixenabledxxeprotection"><span class="std std-ref">XXE 対策の有効化</span></a></li>
 </ul>
 </td>
 </tr>
-<tr class="row-odd"><td>A8</td>
-<td><a class="reference external" href="https://www.owasp.org/index.php/Top_10_2013-A8-Cross-Site_Request_Forgery_(CSRF)">Cross-Site Request Forgery (CSRF)</a></td>
+<tr class="row-odd"><td>A5:2017</td>
+<td><a class="reference external" href="https://www.owasp.org/index.php/Top_10-2017_A5-Broken_Access_Control">Broken Access Control</a></td>
 <td><ul class="first last simple">
-<li><a class="reference internal" href="../Security/CSRF.html"><span class="doc">CSRF対策</span></a></li>
+<li><a class="reference internal" href="../ArchitectureInDetail/WebApplicationDetail/FileUpload.html#file-upload-security-related-warning-points-directory-traversal"><span class="std std-ref">ディレクトリトラバーサル攻撃</span></a></li>
 </ul>
 </td>
 </tr>
-<tr class="row-even"><td>A9</td>
-<td><a class="reference external" href="https://www.owasp.org/index.php/Top_10_2013-A9-Using_Components_with_Known_Vulnerabilities">Using Components with Known Vulnerabilities</a></td>
-<td>特に言及なし</td>
+<tr class="row-even"><td>A6:2017</td>
+<td><a class="reference external" href="https://www.owasp.org/index.php/Top_10-2017_A6-Security_Misconfiguration">Security Misconfiguration</a></td>
+<td><ul class="first last simple">
+<li><a class="reference internal" href="../ArchitectureInDetail/GeneralFuncDetail/Logging.html#logginglogoutputcontents"><span class="std std-ref">ログの出力内容</span></a></li>
+<li><a class="reference internal" href="../ArchitectureInDetail/WebApplicationDetail/ExceptionHandling.html#exception-handling-how-to-use-codingpoint-view-exceptioncode-label"><span class="std std-ref">システム例外の例外コードを、画面表示する方法</span></a></li>
+<li><a class="reference internal" href="../Security/Authorization.html#springsecurityauthorizationonerror"><span class="std std-ref">認可エラー時の遷移先</span></a></li>
+</ul>
+</td>
 </tr>
-<tr class="row-odd"><td>A10</td>
-<td><a class="reference external" href="https://www.owasp.org/index.php/Top_10_2013-A10-Unvalidated_Redirects_and_Forwards">Unvalidated Redirects and Forwards</a></td>
-<td>特に言及なし</td>
+<tr class="row-odd"><td>A7:2017</td>
+<td><a class="reference external" href="https://www.owasp.org/index.php/Top_10-2017_A7-Cross-Site_Scripting_(XSS)">Cross-Site Scripting (XSS)</a></td>
+<td><ul class="first last simple">
+<li><a class="reference internal" href="../Security/XSS.html"><span class="doc">XSS対策</span></a></li>
+<li><a class="reference internal" href="../Security/LinkageWithBrowser.html#linkagewithbrowserxxssprotection"><span class="std std-ref">X-XSS-Protection</span></a></li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td>A8:2017</td>
+<td><a class="reference external" href="https://www.owasp.org/index.php/Top_10-2017_A8-Insecure_Deserialization">Insecure Deserialization</a></td>
+<td><ul class="first last simple">
+<li><a class="reference internal" href="../ArchitectureInDetail/MessagingDetail/JMS.html#jmswarningdeserialization"><span class="std std-ref">デシリアライズ時の注意点</span></a></li>
+<li><a class="reference internal" href="../ArchitectureInDetail/WebApplicationDetail/Ajax.html#ajax-post-formdata"><span class="std std-ref">フォームデータをPOSTする</span></a></li>
+<li><a class="reference internal" href="../ArchitectureInDetail/WebServiceDetail/REST.html#resthowtouseresourceclass"><span class="std std-ref">Resourceクラスの作成</span></a></li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td>A9:2017</td>
+<td><a class="reference external" href="https://www.owasp.org/index.php/Top_10-2017_A9-Using_Components_with_Known_Vulnerabilities">Using Components with Known Vulnerabilities</a></td>
+<td><ul class="first last simple">
+<li>特に言及なし</li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td>A10:2017</td>
+<td><a class="reference external" href="https://www.owasp.org/index.php/Top_10-2017_A10-Insufficient_Logging%26Monitoring">Insufficient Logging &amp; Monitoring</a></td>
+<td><ul class="first last simple">
+<li><a class="reference internal" href="../Security/Authentication.html#springsecurityauthenticationeventlistener"><span class="std std-ref">イベントリスナの作成</span></a></li>
+<li><a class="reference internal" href="../Security/SecureLoginDemo.html#audit-logging"><span class="std std-ref">監査ログ出力</span></a></li>
+</ul>
+</td>
 </tr>
 </tbody>
 </table>
@@ -291,58 +291,48 @@
         <li class="right" >
           <a href="Introduction.html" title="1.2. このドキュメントが示すこと"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Macchinetta Server Framework (1.x) Development Guideline 1.5.1.RELEASE documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Macchinetta Server Framework (1.x) Development Guideline 1.6.1.RELEASE documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="index.html" >1. はじめに</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2013-2018, NTT Corporation.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.6.2.Theme is <a href="http://github.com/vimalkvn/solar-theme">Solar</a>
+        &copy; Copyright 2013, NTT Corporation.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.6.3.Theme is <a href="http://github.com/vimalkvn/solar-theme">Solar</a>
     </div>
     
     <script>
-     
-     $(function() {
-    	   var $sidebar	= $('.sphinxsidebar'),
-    		     $window		= $(window),
-    		     offset		= $sidebar.offset(),
-    		     topPadding	= 3,
-    		     $scroll		= $('#scroll');
-    	   
-    	   $window.scroll(function() {
-    		     if ($scroll.is(':checked')) {
-				         if ($window.scrollTop() > offset.top) {
-					           $sidebar.stop().animate({
-						             marginTop:$window.scrollTop() - offset.top + topPadding
-					           });
-				         } else {
-					           $sidebar.stop().animate({
-						             marginTop:0
-					           });
-				         }
-			       }
-		     });
-    	   
-    	   var $navList = $('ul:first', $sidebar);
-    	   $('li:first', $navList).addClass('open');
-    	   
-    	   $navList.treeview({
-    		     persist: "location",
-    		     collapsed: true,
-    		     unique: false
-    	   });
-    	   
-	   });
-    </script>
     
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-113850349-2"></script>
-    <script>
-     window.dataLayer = window.dataLayer || [];
-     function gtag(){dataLayer.push(arguments);}
-     gtag('js', new Date());
-
-     gtag('config', 'UA-113850349-2');
+    $(function() {
+    	var $sidebar	= $('.sphinxsidebar'),
+    		$window		= $(window),
+    		offset		= $sidebar.offset(),
+    		topPadding	= 3,
+    		$scroll		= $('#scroll');
+    	
+    	$window.scroll(function() {
+    		if ($scroll.is(':checked')) {
+				if ($window.scrollTop() > offset.top) {
+					$sidebar.stop().animate({
+						marginTop:$window.scrollTop() - offset.top + topPadding
+					});
+				} else {
+					$sidebar.stop().animate({
+						marginTop:0
+					});
+				}
+			}
+		});
+    	
+    	var $navList = $('ul:first', $sidebar);
+    	$('li:first', $navList).addClass('open');
+    	
+    	$navList.treeview({
+    		persist: "location",
+    		collapsed: true,
+    		unique: false
+    	});
+    	
+	});
     </script>
   </body>
 </html>

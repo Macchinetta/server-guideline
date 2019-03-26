@@ -3,16 +3,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>5.3. SOAP Web Service（サーバ/クライアント） &#8212; Macchinetta Server Framework (1.x) Development Guideline 1.5.1.RELEASE documentation</title>
-    
+    <title>5.3. SOAP Web Service（サーバ/クライアント） &#8212; Macchinetta Server Framework (1.x) Development Guideline 1.6.1.RELEASE documentation</title>
     <link rel="stylesheet" href="../../_static/solar.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '1.5.1.RELEASE',
+        VERSION:     '1.6.1.RELEASE',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true,
@@ -43,7 +40,7 @@
         <li class="right" >
           <a href="RestClient.html" title="5.2. RESTクライアント（HTTPクライアント）"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">Macchinetta Server Framework (1.x) Development Guideline 1.5.1.RELEASE documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Macchinetta Server Framework (1.x) Development Guideline 1.6.1.RELEASE documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">5. Web Service</a> &#187;</li> 
       </ul>
     </div>
@@ -451,7 +448,7 @@
 </div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">SpringでのJAX-WS実装の詳細は、<a class="reference external" href="http://docs.spring.io/spring/docs/4.3.14.RELEASE/spring-framework-reference/html/remoting.html#remoting-web-services">Spring Framework Reference Documentation -Remoting and web services using Spring(Web services)-</a>を参照されたい。</p>
+<p class="last">SpringでのJAX-WS実装の詳細は、<a class="reference external" href="https://docs.spring.io/spring/docs/5.1.4.RELEASE/spring-framework-reference/integration.html#remoting">Spring Framework Documentation -Remoting and web services using Spring-</a>を参照されたい。</p>
 </div>
 <div class="line-block">
 <div class="line"><br /></div>
@@ -734,8 +731,8 @@
 <p class="first admonition-title">Note</p>
 <p>以下、参考資料として、APサーバのマニュアルを記述しておく。
 必ず、使用するバージョンとあっているか確認してから参照すること。</p>
-<p>Oracle WebLogic Server 12.2.1: <a class="reference external" href="https://docs.oracle.com/middleware/1221/wls/WSOVR/weblogic-web-service-stand.htm#WSOVR137">Oracle(R) Fusion Middleware Understanding WebLogic Web Services for Oracle WebLogic Server  Features and Standards Supported by WebLogic Web Services</a></p>
-<p>JBoss Enterprise Application Platform 7.0: <a class="reference external" href="https://access.redhat.com/documentation/en/red-hat-jboss-enterprise-application-platform/7.0/paged/developing-web-services-applications/chapter-3-developing-jax-ws-web-services">DEVELOPING JAX-WS WEB SERVICES</a></p>
+<p>Oracle WebLogic Server 12.2.1: <a class="reference external" href="https://docs.oracle.com/middleware/12213/wls/WSOVR/weblogic-web-service-stand.htm#WSOVR137">Oracle(R) Fusion Middleware Understanding WebLogic Web Services for Oracle WebLogic Server  Features and Standards Supported by WebLogic Web Services</a></p>
+<p>JBoss Enterprise Application Platform 7.2: <a class="reference external" href="https://access.redhat.com/documentation/en-us/red_hat_jboss_enterprise_application_platform/7.2/html/developing_web_services_applications/developing_jax_ws_web_services">DEVELOPING JAX-WS WEB SERVICES</a></p>
 <p>JBoss Enterprise Application Platform 6.4: <a class="reference external" href="https://access.redhat.com/documentation/en-US/JBoss_Enterprise_Application_Platform/6.4/html/Development_Guide/chap-JAX-WS_Web_Services.html">DEVELOPMENT GUIDE JAX-WS WEB SERVICES</a></p>
 <p class="last">WebSphere Application Server 9.0: <a class="reference external" href="https://www.ibm.com/support/knowledgecenter/SSEQTP_9.0.0/com.ibm.websphere.base.doc/ae/cwbs_wbs2.html">IBM Knowledge Center - Web services</a></p>
 </div>
@@ -1079,7 +1076,7 @@
 <div class="last admonition note">
 <p class="first admonition-title">Note</p>
 <p>使用するAPサーバのJAX-WS実装により、バインディング方式で挙動が異なる場合があるため注意すること。</p>
-<p class="last">たとえば、WebSphere Application Serverの特定のバージョンではSOAP1.2でのバインディングの場合にWSDLが自動生成されない。詳細については<a class="reference external" href="https://www.ibm.com/support/knowledgecenter/SSRTLW_9.0.0/com.ibm.webservice.doc/topics/jaxws/cwsandoc001.html">IBM Knowledge Center - Using annotations to create web services</a>を参照されたい。</p>
+<p class="last">たとえば、WebSphere Application Serverの特定のバージョンではSOAP1.2でのバインディングの場合にWSDLが自動生成されない。詳細については<a class="reference external" href="https://www.ibm.com/support/knowledgecenter/SSRTLW_9.7.0/com.ibm.webservice.doc/topics/jaxws/cwsandoc001.html">IBM Knowledge Center - Using annotations to create web services</a>を参照されたい。</p>
 </div>
 </td>
 </tr>
@@ -1300,10 +1297,7 @@
 
 <span class="c">&lt;!-- (2) --&gt;</span>
 <span class="nt">&lt;sec:authentication-manager&gt;</span>
-   <span class="nt">&lt;sec:authentication-provider</span>
-       <span class="na">user-service-ref=</span><span class="s">&quot;sampleUserDetailsService&quot;</span><span class="nt">&gt;</span>
-       <span class="nt">&lt;sec:password-encoder</span> <span class="na">ref=</span><span class="s">&quot;passwordEncoder&quot;</span> <span class="nt">/&gt;</span>
-   <span class="nt">&lt;/sec:authentication-provider&gt;</span>
+   <span class="nt">&lt;sec:authentication-provider</span> <span class="na">user-service-ref=</span><span class="s">&quot;sampleUserDetailsService&quot;</span> <span class="nt">/&gt;</span>
 <span class="nt">&lt;/sec:authentication-manager&gt;</span>
 </pre></div>
 </div>
@@ -2453,7 +2447,7 @@
 <div class="last admonition note">
 <p class="first admonition-title">Note</p>
 <p><strong>wsdlDocumentResourceへのWSDLファイルのURL以外の指定</strong></p>
-<p class="last">上記の例では、SOAPサーバがWSDLファイルを公開している前提である。<code class="docutils literal"><span class="pre">classpath:</span></code>や<code class="docutils literal"><span class="pre">file:</span></code>プレフィックスを使用して指定することで静的ファイルを指定することもできる。指定できる文字列は、<a class="reference external" href="http://docs.spring.io/spring/docs/4.3.14.RELEASE/spring-framework-reference/html/resources.html#resources-resourceloader">Spring Framework Reference Documentation -Resources(The ResourceLoader)-</a>を参照されたい。</p>
+<p class="last">上記の例では、SOAPサーバがWSDLファイルを公開している前提である。<code class="docutils literal"><span class="pre">classpath:</span></code>や<code class="docutils literal"><span class="pre">file:</span></code>プレフィックスを使用して指定することで静的ファイルを指定することもできる。指定できる文字列は、<a class="reference external" href="https://docs.spring.io/spring/docs/5.1.4.RELEASE/spring-framework-reference/core.html#resources-resourceloader">Spring Framework Documentation -The ResourceLoader-</a>を参照されたい。</p>
 </div>
 </td>
 </tr>
@@ -3060,6 +3054,11 @@ Apache CXFのエラー処理については<a class="reference external" href="h
 <span class="nt">&lt;/project&gt;</span>
 </pre></div>
 </div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">webserviceプロジェクトのコンパイルのためにJAX-WS APIが必要となる。
+Java SE 11環境にてJAX-WS APIを使用するには<a class="reference internal" href="../../Appendix/Java11Changes.html#remove-jax-ws-from-java11"><span class="std std-ref">JAX-WSの削除</span></a>を参照されたい。</p>
+</div>
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
@@ -3159,6 +3158,12 @@ Apache CXFのエラー処理については<a class="reference external" href="h
 <p class="first admonition-title">Note</p>
 <p><strong>依存性の解決について</strong></p>
 <p class="last">[server projectName]-modelの依存関係の定義は不要である。これは[server projectName]-webserviceから[server projectName]-modelへの依存関係が定義されているため、推移的に依存関係が追加されるためである。</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>JAX-WSでは、XML電文のシリアライズにJAXBを利用しており、アプリケーションの実行にはJAXBがクラスパスに登録されている必要がある。
+Java SE 11環境にてJAXBをクラスパスに登録するには<a class="reference internal" href="../../Appendix/Java11Changes.html#remove-jaxb-from-java11"><span class="std std-ref">JAXBの削除</span></a>を参照されたい。</p>
+<p class="last">なお、「<a class="reference internal" href="#soapappendixtomcatwebservice"><span class="std std-ref">Tomcat上でのWebサービス開発</span></a>」で解説するApache CXFを利用する場合は、JAXBが自動的に依存関係に追加されることを確認している。</p>
 </div>
 <div class="line-block">
 <div class="line"><br /></div>
@@ -3767,6 +3772,27 @@ wsimport -keep -p [出力するソースのパッケージ名] -s [出力する�
 </tr>
 </tbody>
 </table>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p><strong>Java SE 11環境にてCXFServletを利用する場合</strong></p>
+<p>Java SE 11でJAX-WSが削除されたことに伴い、関連技術であるSAAJも削除された。
+CXFServletでは内部的にSAAJを使用しているため、SAAJの不足により期待しない挙動となることが確認されている。
+具体的には、SOAP Faultの処理が正常に行なわれず、Webサービスのエラー時にSOAPクライアントに意図しない例外メッセージが返却される。</p>
+<p>このため、CXFServletの実行時にはSAAJがクラスパスに登録されている必要がある。
+Java SE 11では以下のようにsaaj-implを依存関係に追加する必要があるが、APサーバから提供される場合はこの限りではない。
+例として、JBoss 7.2を利用する場合、JBossによりSAAJが提供されることを確認している。</p>
+<div class="highlight-xml"><div class="highlight"><pre><span></span><span class="nt">&lt;dependency&gt;</span>
+    <span class="nt">&lt;groupId&gt;</span>com.sun.xml.messaging.saaj<span class="nt">&lt;/groupId&gt;</span>
+    <span class="nt">&lt;artifactId&gt;</span>saaj-impl<span class="nt">&lt;/artifactId&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+</pre></div>
+</div>
+<p>saaj-impl以外のJava SE 11環境にてJAX-WSを利用する場合に必要となる設定は<a class="reference internal" href="../../Appendix/Java11Changes.html#remove-jax-ws-from-java11"><span class="std std-ref">JAX-WSの削除</span></a>を参照されたい。</p>
+<div class="last admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">saaj-implのバージョンはterasoluna-gfw-parentが依存している<a class="reference external" href="https://docs.spring.io/spring-boot/docs/2.1.2.RELEASE/reference/htmlsingle/#appendix-dependency-versions">Spring Boot</a>で管理されているため、pom.xmlでのバージョンの指定は不要である。</p>
+</div>
+</div>
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
@@ -4022,58 +4048,48 @@ wsimport -keep -p [出力するソースのパッケージ名] -s [出力する�
         <li class="right" >
           <a href="RestClient.html" title="5.2. RESTクライアント（HTTPクライアント）"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">Macchinetta Server Framework (1.x) Development Guideline 1.5.1.RELEASE documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Macchinetta Server Framework (1.x) Development Guideline 1.6.1.RELEASE documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="index.html" >5. Web Service</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2013-2018, NTT Corporation.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.6.2.Theme is <a href="http://github.com/vimalkvn/solar-theme">Solar</a>
+        &copy; Copyright 2013, NTT Corporation.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.6.3.Theme is <a href="http://github.com/vimalkvn/solar-theme">Solar</a>
     </div>
     
     <script>
-     
-     $(function() {
-    	   var $sidebar	= $('.sphinxsidebar'),
-    		     $window		= $(window),
-    		     offset		= $sidebar.offset(),
-    		     topPadding	= 3,
-    		     $scroll		= $('#scroll');
-    	   
-    	   $window.scroll(function() {
-    		     if ($scroll.is(':checked')) {
-				         if ($window.scrollTop() > offset.top) {
-					           $sidebar.stop().animate({
-						             marginTop:$window.scrollTop() - offset.top + topPadding
-					           });
-				         } else {
-					           $sidebar.stop().animate({
-						             marginTop:0
-					           });
-				         }
-			       }
-		     });
-    	   
-    	   var $navList = $('ul:first', $sidebar);
-    	   $('li:first', $navList).addClass('open');
-    	   
-    	   $navList.treeview({
-    		     persist: "location",
-    		     collapsed: true,
-    		     unique: false
-    	   });
-    	   
-	   });
-    </script>
     
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-113850349-2"></script>
-    <script>
-     window.dataLayer = window.dataLayer || [];
-     function gtag(){dataLayer.push(arguments);}
-     gtag('js', new Date());
-
-     gtag('config', 'UA-113850349-2');
+    $(function() {
+    	var $sidebar	= $('.sphinxsidebar'),
+    		$window		= $(window),
+    		offset		= $sidebar.offset(),
+    		topPadding	= 3,
+    		$scroll		= $('#scroll');
+    	
+    	$window.scroll(function() {
+    		if ($scroll.is(':checked')) {
+				if ($window.scrollTop() > offset.top) {
+					$sidebar.stop().animate({
+						marginTop:$window.scrollTop() - offset.top + topPadding
+					});
+				} else {
+					$sidebar.stop().animate({
+						marginTop:0
+					});
+				}
+			}
+		});
+    	
+    	var $navList = $('ul:first', $sidebar);
+    	$('li:first', $navList).addClass('open');
+    	
+    	$navList.treeview({
+    		persist: "location",
+    		collapsed: true,
+    		unique: false
+    	});
+    	
+	});
     </script>
   </body>
 </html>

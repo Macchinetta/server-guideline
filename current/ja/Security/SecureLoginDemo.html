@@ -3,16 +3,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>9.10. 代表的なセキュリティ要件の実装例 &#8212; Macchinetta Server Framework (1.x) Development Guideline 1.5.1.RELEASE documentation</title>
-    
+    <title>9.10. 代表的なセキュリティ要件の実装例 &#8212; Macchinetta Server Framework (1.x) Development Guideline 1.6.1.RELEASE documentation</title>
     <link rel="stylesheet" href="../_static/solar.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '1.5.1.RELEASE',
+        VERSION:     '1.6.1.RELEASE',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true,
@@ -43,7 +40,7 @@
         <li class="right" >
           <a href="OAuth.html" title="9.9. OAuth"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Macchinetta Server Framework (1.x) Development Guideline 1.5.1.RELEASE documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Macchinetta Server Framework (1.x) Development Guideline 1.6.1.RELEASE documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">9. セキュリティ対策</a> &#187;</li> 
       </ul>
     </div>
@@ -1215,8 +1212,8 @@
 <span id="id15"></span><h2><a class="toc-backref" href="#id89">9.10.3. 実装方法とコード解説</a><a class="headerlink" href="#implement-description" title="Permalink to this headline">¶</a></h2>
 <div class="line-block">
 <div class="line">セキュリティ要件の分類ごとに、本アプリケーションにおける実装の方法とコードの説明を行う。</div>
-<div class="line">ここでは分類ごとで要件の実現のために必要最小限なコード片のみを掲載している。コード全体を確認したい場合は <a class="reference external" href="https://github.com/terasolunaorg/tutorial-apps/tree/release/5.4.1.RELEASE/secure-login-demo">GitHub</a> を参照すること。</div>
-<div class="line">本アプリケーションを動作させるための初期データ登録用SQLは <a class="reference external" href="https://github.com/terasolunaorg/tutorial-apps/tree/release/5.4.1.RELEASE/secure-login-demo/secure-login-demo/secure-login-env/src/main/resources/database">ここ</a> に配置されている。</div>
+<div class="line">ここでは分類ごとで要件の実現のために必要最小限なコード片のみを掲載している。コード全体を確認したい場合は <a class="reference external" href="https://github.com/Macchinetta/tutorial-apps/tree/1.6.1.RELEASE/secure-login-demo">GitHub</a> を参照すること。</div>
+<div class="line">本アプリケーションを動作させるための初期データ登録用SQLは <a class="reference external" href="https://github.com/Macchinetta/tutorial-apps/tree/1.6.1.RELEASE/secure-login-demo/src/secure-login-env/src/main/resources/database">ここ</a> に配置されている。</div>
 </div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
@@ -1291,7 +1288,7 @@
 <ul>
 <li><p class="first">Entityの実装</p>
 <p>パスワード変更履歴エンティティの実装は以下の通り。</p>
-<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">org.terasoluna.securelogin.domain.model</span><span class="o">;</span>
+<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">com.example.securelogin.domain.model</span><span class="o">;</span>
 
 <span class="c1">// omitted</span>
 
@@ -1350,7 +1347,7 @@
 </li>
 <li><p class="first">Repositoryの実装</p>
 <p>データベースに対するパスワード変更履歴エンティティの登録、検索を行うためのRepositoryを以下に示す。</p>
-<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">org.terasoluna.securelogin.domain.repository.passwordhistory</span><span class="o">;</span>
+<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">com.example.securelogin.domain.repository.passwordhistory</span><span class="o">;</span>
 
 <span class="c1">// omitted</span>
 
@@ -1413,7 +1410,7 @@
 <span class="cp">&quot;http://mybatis.org/dtd/mybatis-3-mapper.dtd&quot;&gt;</span>
 
 <span class="nt">&lt;mapper</span>
-    <span class="na">namespace=</span><span class="s">&quot;org.terasoluna.securelogin.domain.repository.passwordhistory.PasswordHistoryRepository&quot;</span><span class="nt">&gt;</span>
+    <span class="na">namespace=</span><span class="s">&quot;com.example.securelogin.domain.repository.passwordhistory.PasswordHistoryRepository&quot;</span><span class="nt">&gt;</span>
 
     <span class="nt">&lt;resultMap</span> <span class="na">id=</span><span class="s">&quot;PasswordHistoryResultMap&quot;</span> <span class="na">type=</span><span class="s">&quot;PasswordHistory&quot;</span><span class="nt">&gt;</span>
         <span class="nt">&lt;id</span> <span class="na">property=</span><span class="s">&quot;username&quot;</span> <span class="na">column=</span><span class="s">&quot;username&quot;</span> <span class="nt">/&gt;</span>
@@ -1471,7 +1468,7 @@
 <li><p class="first">Serviceの実装</p>
 <p>パスワード変更履歴エンティティの操作は <a class="reference internal" href="#password-strength"><span class="std std-ref">パスワードの品質チェック</span></a> においても使用する。
 そのため、以下のようにSharedServiceからRepositoryのメソッドを呼び出す。</p>
-<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">org.terasoluna.securelogin.domain.service.passwordhistory</span><span class="o">;</span>
+<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">com.example.securelogin.domain.service.passwordhistory</span><span class="o">;</span>
 
 <span class="c1">// omitted</span>
 
@@ -1504,7 +1501,7 @@
 </pre></div>
 </div>
 <p>パスワード変更時にパスワード変更履歴エンティティをデータベースに保存する処理の実装を以下に示す。</p>
-<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">org.terasoluna.securelogin.domain.service.account</span><span class="o">;</span>
+<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">com.example.securelogin.domain.service.account</span><span class="o">;</span>
 
 <span class="c1">// omitted</span>
 
@@ -1599,7 +1596,7 @@
 </li>
 <li><p class="first">初期パスワード、パスワード有効期限切れの判定</p>
 <p>データベースに登録されたパスワード変更履歴エンティティを用いて、初期パスワードを使用しているかどうかの判定と、パスワードの有効期限が切れているかどうかを判定する処理の実装を以下に示す。</p>
-<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">org.terasoluna.securelogin.domain.service.account</span><span class="o">;</span>
+<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">com.example.securelogin.domain.service.account</span><span class="o">;</span>
 
 <span class="c1">// omitted</span>
 
@@ -1752,7 +1749,7 @@
 <p>isInitialPassword および isCurrentPasswordExpired に付与されている <code class="docutils literal"><span class="pre">&#64;Cacheable</span></code>は Spring の Cache Abstraction 機能を使用するためのアノテーションである。
 <code class="docutils literal"><span class="pre">&#64;Cacheable</span></code> アノテーションを付与することで、メソッドの引数に対する結果をキャッシュすることができる。
 ここでは、キャッシュの使用により初期パスワード判定、パスワード期限切れ判定のたびにデータベースへのアクセスが発生することを防止し、パフォーマンスの低下を防いでいる。
-Cache Abstraction については <a class="reference external" href="http://docs.spring.io/spring/docs/4.3.14.RELEASE/spring-framework-reference/html/cache.html">公式ドキュメント - Cache</a> を参照すること。</p>
+Cache Abstraction については <a class="reference external" href="https://docs.spring.io/spring/docs/5.1.4.RELEASE/spring-framework-reference/integration.html#cache">公式ドキュメント - Cache</a> を参照すること。</p>
 <p>尚、キャッシュを使用する際には、必要なタイミングでキャッシュをクリアする必要があることに注意すること。
 本アプリケーションではパスワード変更時や、ログアウト時には再度初期パスワード判定、パスワード期限切れ判定を行うためにキャッシュをクリアする。</p>
 <p class="last">また、必要に応じてキャッシュのTTL(生存時間)を設定すること。TTLは使用するキャッシュの実装によっては設定不能であることに注意。</p>
@@ -1760,7 +1757,7 @@ Cache Abstraction については <a class="reference external" href="http://doc
 </li>
 <li><p class="first">パスワード変更画面への強制リダイレクト</p>
 <p>パスワードの変更を強制するために、パスワード変更画面へリダイレクトさせる処理の実装を以下に示す。</p>
-<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">org.terasoluna.securelogin.app.common.interceptor</span><span class="o">;</span>
+<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">com.example.securelogin.app.common.interceptor</span><span class="o">;</span>
 
 <span class="c1">// omitted</span>
 
@@ -1896,7 +1893,7 @@ Cache Abstraction については <a class="reference external" href="http://doc
         <span class="nt">&lt;mvc:exclude-mapping</span> <span class="na">path=</span><span class="s">&quot;/resources/**&quot;</span> <span class="nt">/&gt;</span>
         <span class="nt">&lt;mvc:exclude-mapping</span> <span class="na">path=</span><span class="s">&quot;/**/*.html&quot;</span> <span class="nt">/&gt;</span>
         <span class="nt">&lt;bean</span>
-            <span class="na">class=</span><span class="s">&quot;org.terasoluna.securelogin.app.common.interceptor.PasswordExpirationCheckInterceptor&quot;</span> <span class="nt">/&gt;</span> <span class="c">&lt;!-- (4) --&gt;</span>
+            <span class="na">class=</span><span class="s">&quot;com.example.securelogin.app.common.interceptor.PasswordExpirationCheckInterceptor&quot;</span> <span class="nt">/&gt;</span> <span class="c">&lt;!-- (4) --&gt;</span>
     <span class="nt">&lt;/mvc:interceptor&gt;</span>
 
     <span class="c">&lt;!-- omitted --&gt;</span>
@@ -1958,7 +1955,7 @@ Cache Abstraction については <a class="reference external" href="http://doc
 </li>
 <li><p class="first">パスワード変更を促すメッセージの表示</p>
 <p>トップ画面にパスワード変更を促すメッセージを表示するための、Controllerの実装を以下に示す。</p>
-<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">org.terasoluna.securelogin.app.welcome</span><span class="o">;</span>
+<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">com.example.securelogin.app.welcome</span><span class="o">;</span>
 
 <span class="c1">// omitted</span>
 
@@ -2150,7 +2147,7 @@ Cache Abstraction については <a class="reference external" href="http://doc
 <div class="line">しかしながら、Passayが提供するクラスでは、<code class="docutils literal"><span class="pre">org.springframework.security.crypto.password.PasswordEncoder</span></code> でハッシュ化された過去のパスワードと比較する検証規則を定義することができない。</div>
 <div class="line">そのため、Passayが提供するクラスを拡張し、独自の検証規則のクラスを以下のように作成する必要がある。</div>
 </div>
-<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">org.terasoluna.securelogin.app.common.validation.rule</span><span class="o">;</span>
+<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">com.example.securelogin.app.common.validation.rule</span><span class="o">;</span>
 
 <span class="c1">// omitted</span>
 
@@ -2261,7 +2258,7 @@ Cache Abstraction については <a class="reference external" href="http://doc
 <span class="nt">&lt;/bean&gt;</span>
 <span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">&quot;usernameRule&quot;</span> <span class="na">class=</span><span class="s">&quot;org.passay.UsernameRule&quot;</span> <span class="nt">/&gt;</span> <span class="c">&lt;!-- (7) --&gt;</span>
 <span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">&quot;encodedPasswordHistoryRule&quot;</span>
-    <span class="na">class=</span><span class="s">&quot;org.terasoluna.securelogin.app.common.validation.rule.EncodedPasswordHistoryRule&quot;</span><span class="nt">&gt;</span> <span class="c">&lt;!-- (8) --&gt;</span>
+    <span class="na">class=</span><span class="s">&quot;com.example.securelogin.app.common.validation.rule.EncodedPasswordHistoryRule&quot;</span><span class="nt">&gt;</span> <span class="c">&lt;!-- (8) --&gt;</span>
     <span class="nt">&lt;constructor-arg</span> <span class="na">name=</span><span class="s">&quot;passwordEncoder&quot;</span> <span class="na">ref=</span><span class="s">&quot;passwordEncoder&quot;</span> <span class="nt">/&gt;</span>
 <span class="nt">&lt;/bean&gt;</span>
 </pre></div>
@@ -2410,7 +2407,7 @@ Cache Abstraction については <a class="reference external" href="http://doc
 <ul>
 <li><p class="first">パスワード自体の性質を検証するアノテーション</p>
 <p>パスワードが最小文字列長よりも長いこと、指定した文字種別の文字を含むこと、ユーザ名を含まないことという三つの検証規則をチェックするアノテーションの実装を以下に示す。</p>
-<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">org.terasoluna.securelogin.app.common.validation</span><span class="o">;</span>
+<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">com.example.securelogin.app.common.validation</span><span class="o">;</span>
 
 <span class="c1">// omitted</span>
 
@@ -2419,7 +2416,7 @@ Cache Abstraction については <a class="reference external" href="http://doc
 <span class="nd">@Target</span><span class="o">({</span> <span class="n">TYPE</span><span class="o">,</span> <span class="n">ANNOTATION_TYPE</span> <span class="o">})</span>
 <span class="nd">@Retention</span><span class="o">(</span><span class="n">RUNTIME</span><span class="o">)</span>
 <span class="kd">public</span> <span class="nd">@interface</span> <span class="n">StrongPassword</span> <span class="o">{</span>
-    <span class="n">String</span> <span class="nf">message</span><span class="o">()</span> <span class="k">default</span> <span class="s">&quot;{org.terasoluna.securelogin.app.common.validation.StrongPassword.message}&quot;</span><span class="o">;</span>
+    <span class="n">String</span> <span class="nf">message</span><span class="o">()</span> <span class="k">default</span> <span class="s">&quot;{com.example.securelogin.app.common.validation.StrongPassword.message}&quot;</span><span class="o">;</span>
 
     <span class="n">Class</span><span class="o">&lt;?&gt;[]</span> <span class="n">groups</span><span class="o">()</span> <span class="k">default</span> <span class="o">{};</span>
 
@@ -2430,7 +2427,7 @@ Cache Abstraction については <a class="reference external" href="http://doc
     <span class="nd">@Target</span><span class="o">({</span> <span class="n">TYPE</span><span class="o">,</span> <span class="n">ANNOTATION_TYPE</span> <span class="o">})</span>
     <span class="nd">@Retention</span><span class="o">(</span><span class="n">RUNTIME</span><span class="o">)</span>
     <span class="nd">@Documented</span>
-    <span class="kd">public</span> <span class="nd">@interface</span> <span class="n">List</span> <span class="o">{</span>
+    <span class="nd">@interface</span> <span class="n">List</span> <span class="o">{</span>
         <span class="n">StrongPassword</span><span class="o">[]</span> <span class="nf">value</span><span class="o">();</span>
     <span class="o">}</span>
 
@@ -2478,7 +2475,7 @@ Cache Abstraction については <a class="reference external" href="http://doc
 </tr>
 </tbody>
 </table>
-<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">org.terasoluna.securelogin.app.common.validation</span><span class="o">;</span>
+<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">com.example.securelogin.app.common.validation</span><span class="o">;</span>
 
 <span class="c1">// omitted</span>
 
@@ -2585,14 +2582,14 @@ Cache Abstraction については <a class="reference external" href="http://doc
 <p class="last">「いくつ前までのパスワードの再使用を禁止するか」のみの設定では、短時間の間にパスワード変更を繰り返すことでパスワードを再使用することが可能となってしまう。
 これを防ぐために、本アプリケーションでは「いつ以降使用したパスワードの再使用を禁止するか」を設定して検査を行う。</p>
 </div>
-<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">org.terasoluna.securelogin.app.common.validation</span><span class="o">;</span>
+<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">com.example.securelogin.app.common.validation</span><span class="o">;</span>
 
 <span class="nd">@Documented</span>
 <span class="nd">@Constraint</span><span class="o">(</span><span class="n">validatedBy</span> <span class="o">=</span> <span class="o">{</span> <span class="n">NotReusedPasswordValidator</span><span class="o">.</span><span class="na">class</span> <span class="o">})</span> <span class="c1">// (1)</span>
 <span class="nd">@Target</span><span class="o">({</span> <span class="n">TYPE</span><span class="o">,</span> <span class="n">ANNOTATION_TYPE</span> <span class="o">})</span>
 <span class="nd">@Retention</span><span class="o">(</span><span class="n">RUNTIME</span><span class="o">)</span>
 <span class="kd">public</span> <span class="nd">@interface</span> <span class="n">NotReusedPassword</span> <span class="o">{</span>
-    <span class="n">String</span> <span class="nf">message</span><span class="o">()</span> <span class="k">default</span> <span class="s">&quot;{org.terasoluna.securelogin.app.common.validation.NotReusedPassword.message}&quot;</span><span class="o">;</span>
+    <span class="n">String</span> <span class="nf">message</span><span class="o">()</span> <span class="k">default</span> <span class="s">&quot;{com.example.securelogin.app.common.validation.NotReusedPassword.message}&quot;</span><span class="o">;</span>
 
     <span class="n">Class</span><span class="o">&lt;?&gt;[]</span> <span class="n">groups</span><span class="o">()</span> <span class="k">default</span> <span class="o">{};</span>
 
@@ -2603,7 +2600,7 @@ Cache Abstraction については <a class="reference external" href="http://doc
     <span class="nd">@Target</span><span class="o">({</span> <span class="n">TYPE</span><span class="o">,</span> <span class="n">ANNOTATION_TYPE</span> <span class="o">})</span>
     <span class="nd">@Retention</span><span class="o">(</span><span class="n">RUNTIME</span><span class="o">)</span>
     <span class="nd">@Documented</span>
-    <span class="kd">public</span> <span class="nd">@interface</span> <span class="n">List</span> <span class="o">{</span>
+    <span class="nd">@interface</span> <span class="n">List</span> <span class="o">{</span>
         <span class="n">NotReusedPassword</span><span class="o">[]</span> <span class="nf">value</span><span class="o">();</span>
     <span class="o">}</span>
 
@@ -2651,7 +2648,7 @@ Cache Abstraction については <a class="reference external" href="http://doc
 </tr>
 </tbody>
 </table>
-<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">org.terasoluna.securelogin.app.common.validation</span><span class="o">;</span>
+<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">com.example.securelogin.app.common.validation</span><span class="o">;</span>
 
 <span class="c1">// omitted</span>
 
@@ -2878,7 +2875,7 @@ Cache Abstraction については <a class="reference external" href="http://doc
 <li><p class="first">パスワードの入力チェック</p>
 <p>Bean Validationアノテーションを使用してアプリケーション層で、パスワード入力チェックを行う。
 Formクラスに付与されたアノテーションによってNullチェック以外の入力チェックが網羅されていることから、単項目チェックとしては<code class="docutils literal"><span class="pre">&#64;NotNull</span></code> のみを付与している。</p>
-<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">org.terasoluna.securelogin.app.passwordchange</span><span class="o">;</span>
+<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">com.example.securelogin.app.passwordchange</span><span class="o">;</span>
 
 <span class="c1">// omitted</span>
 
@@ -2957,7 +2954,7 @@ Formクラスに付与されたアノテーションによってNullチェック
 </tr>
 </tbody>
 </table>
-<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">org.terasoluna.securelogin.app.passwordchange</span><span class="o">;</span>
+<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">com.example.securelogin.app.passwordchange</span><span class="o">;</span>
 
 <span class="c1">// omitted</span>
 
@@ -3173,7 +3170,7 @@ Viewでは<code class="docutils literal"><span class="pre">Model</span></code> �
 <ul>
 <li><p class="first">Entityの実装</p>
 <p>ユーザ名と認証試行日時を持つ認証失敗イベントエンティティの実装を以下に示す。</p>
-<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">org.terasoluna.securelogin.domain.model</span><span class="o">;</span>
+<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">com.example.securelogin.domain.model</span><span class="o">;</span>
 
 <span class="c1">// omitted</span>
 
@@ -3221,7 +3218,7 @@ Viewでは<code class="docutils literal"><span class="pre">Model</span></code> �
 </li>
 <li><p class="first">Repositoryの実装</p>
 <p>認証失敗イベントエンティティの検索、登録、削除のためのRepositoryを以下に示す。</p>
-<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">org.terasoluna.securelogin.domain.repository.authenticationevent</span><span class="o">;</span>
+<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">com.example.securelogin.domain.repository.authenticationevent</span><span class="o">;</span>
 
 <span class="c1">// omitted</span>
 
@@ -3282,7 +3279,7 @@ Viewでは<code class="docutils literal"><span class="pre">Model</span></code> �
 <span class="cp">&quot;http://mybatis.org/dtd/mybatis-3-mapper.dtd&quot;&gt;</span>
 
 <span class="nt">&lt;mapper</span>
-  <span class="na">namespace=</span><span class="s">&quot;org.terasoluna.securelogin.domain.repository.authenticationevent.FailedAuthenticationRepository&quot;</span><span class="nt">&gt;</span>
+  <span class="na">namespace=</span><span class="s">&quot;com.example.securelogin.domain.repository.authenticationevent.FailedAuthenticationRepository&quot;</span><span class="nt">&gt;</span>
 
   <span class="nt">&lt;resultMap</span> <span class="na">id=</span><span class="s">&quot;failedAuthenticationResultMap&quot;</span>
           <span class="na">type=</span><span class="s">&quot;FailedAuthentication&quot;</span><span class="nt">&gt;</span>
@@ -3330,7 +3327,7 @@ Viewでは<code class="docutils literal"><span class="pre">Model</span></code> �
 </li>
 <li><p class="first">Serviceの実装</p>
 <p>作成したRepositoryのメソッドを呼び出すServiceを以下の通り定義する。</p>
-<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">org.terasoluna.securelogin.domain.service.authenticationevent</span><span class="o">;</span>
+<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">com.example.securelogin.domain.service.authenticationevent</span><span class="o">;</span>
 
 <span class="c1">// omitted</span>
 
@@ -3414,7 +3411,7 @@ Viewでは<code class="docutils literal"><span class="pre">Model</span></code> �
 <li><p class="first">認証失敗イベントエンティティの保存</p>
 <p>認証失敗時に発生するイベントをハンドリングして処理を行うために、<code class="docutils literal"><span class="pre">&#64;EventListener</span></code> アノテーションを使用する。
 <code class="docutils literal"><span class="pre">&#64;EventListener</span></code> アノテーションによるイベントのハンドリングについては <a class="reference internal" href="Authentication.html#springsecurityauthenticationevent"><span class="std std-ref">認証イベントのハンドリング</span></a> を参照すること。</p>
-<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">org.terasoluna.securelogin.domain.service.account</span><span class="o">;</span>
+<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">com.example.securelogin.domain.service.account</span><span class="o">;</span>
 
 <span class="c1">// omitted</span>
 
@@ -3479,7 +3476,7 @@ Viewでは<code class="docutils literal"><span class="pre">Model</span></code> �
 </li>
 <li><p class="first">ロックアウト状態の判定</p>
 <p>認証失敗イベントエンティティを用いてアカウントのロックアウト状態を判定する処理を記述する。</p>
-<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">org.terasoluna.securelogin.domain.service.account</span><span class="o">;</span>
+<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">com.example.securelogin.domain.service.account</span><span class="o">;</span>
 
 <span class="c1">// omitted</span>
 
@@ -3589,7 +3586,7 @@ Viewでは<code class="docutils literal"><span class="pre">Model</span></code> �
 <div class="line"><code class="docutils literal"><span class="pre">UserDetails</span></code> の実装クラスである<code class="docutils literal"><span class="pre">org.springframework.security.core.userdetails.User</span></code> では、コンストラクタにロックアウト状態を渡すことができる。</div>
 <div class="line">本アプリケーションでは以下のように<code class="docutils literal"><span class="pre">User</span></code> を継承したクラスと、<code class="docutils literal"><span class="pre">org.springframework.security.core.userdetails.UserDetailsService</span></code> を実装したクラスを用いる。</div>
 </div>
-<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">org.terasoluna.securelogin.domain.service.userdetails</span><span class="o">;</span>
+<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">com.example.securelogin.domain.service.userdetails</span><span class="o">;</span>
 
 <span class="c1">// omitted</span>
 
@@ -3639,7 +3636,7 @@ Viewでは<code class="docutils literal"><span class="pre">Model</span></code> �
 </tr>
 </tbody>
 </table>
-<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">org.terasoluna.securelogin.domain.service.userdetails</span><span class="o">;</span>
+<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">com.example.securelogin.domain.service.userdetails</span><span class="o">;</span>
 
 <span class="c1">// omitted</span>
 
@@ -3699,10 +3696,7 @@ Viewでは<code class="docutils literal"><span class="pre">Model</span></code> �
 <div class="highlight-xml"><div class="highlight"><pre><span></span><span class="c">&lt;!-- omitted --&gt;</span>
 
 <span class="nt">&lt;sec:authentication-manager&gt;</span>
-    <span class="nt">&lt;sec:authentication-provider</span>
-        <span class="na">user-service-ref=</span><span class="s">&quot;loggedInUserDetailsService&quot;</span><span class="nt">&gt;</span> <span class="c">&lt;!-- (1) --&gt;</span>
-        <span class="nt">&lt;sec:password-encoder</span> <span class="na">ref=</span><span class="s">&quot;passwordEncoder&quot;</span> <span class="nt">/&gt;</span>
-    <span class="nt">&lt;/sec:authentication-provider&gt;</span>
+    <span class="nt">&lt;sec:authentication-provider</span> <span class="na">user-service-ref=</span><span class="s">&quot;loggedInUserDetailsService&quot;</span> <span class="nt">/&gt;</span> <span class="c">&lt;!-- (1) --&gt;</span>
 <span class="nt">&lt;/sec:authentication-manager&gt;</span>
 
 <span class="c">&lt;!-- omitted --&gt;</span>
@@ -3736,7 +3730,7 @@ Viewでは<code class="docutils literal"><span class="pre">Model</span></code> �
 <li><p class="first">認証成功時の認証失敗イベントエンティティの削除</p>
 <p>連続した認証失敗のみをロックアウトの判定に使用するため、認証に成功した際にはアカウントの認証失敗イベントエンティティを削除する。
 共通部分として作成したServiceに、認証成功時に実行するメソッドを作成する。</p>
-<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">org.terasoluna.securelogin.domain.service.authenticationevent</span><span class="o">;</span>
+<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">com.example.securelogin.domain.service.authenticationevent</span><span class="o">;</span>
 
 <span class="c1">// omitted</span>
 
@@ -3784,7 +3778,7 @@ Viewでは<code class="docutils literal"><span class="pre">Model</span></code> �
 </tbody>
 </table>
 <p>認証成功時に発生するイベントをハンドリングして処理を行うために、 <code class="docutils literal"><span class="pre">&#64;EventListener</span></code> アノテーションを使用する。</p>
-<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">org.terasoluna.securelogin.domain.service.account</span><span class="o">;</span>
+<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">com.example.securelogin.domain.service.account</span><span class="o">;</span>
 
 <span class="c1">// omitted</span>
 
@@ -3887,7 +3881,7 @@ Viewでは<code class="docutils literal"><span class="pre">Model</span></code> �
 </table>
 </li>
 <li><p class="first">Serviceの実装</p>
-<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">org.terasoluna.securelogin.domain.service.unlock</span><span class="o">;</span>
+<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">com.example.securelogin.domain.service.unlock</span><span class="o">;</span>
 
 <span class="c1">// omitted</span>
 
@@ -3933,7 +3927,7 @@ Viewでは<code class="docutils literal"><span class="pre">Model</span></code> �
 </table>
 </li>
 <li><p class="first">Formの実装</p>
-<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">org.terasoluna.securelogin.app.unlock</span><span class="o">;</span>
+<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">com.example.securelogin.app.unlock</span><span class="o">;</span>
 
 <span class="nd">@Data</span>
 <span class="kd">public</span> <span class="kd">class</span> <span class="nc">UnlockForm</span> <span class="kd">implements</span> <span class="n">Serializable</span> <span class="o">{</span>
@@ -4035,7 +4029,7 @@ Viewでは<code class="docutils literal"><span class="pre">Model</span></code> �
 </div>
 </li>
 <li><p class="first">Controllerの実装</p>
-<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">org.terasoluna.securelogin.app.unlock</span><span class="o">;</span>
+<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">com.example.securelogin.app.unlock</span><span class="o">;</span>
 
 <span class="c1">// omitted</span>
 
@@ -4155,7 +4149,7 @@ jspに<code class="docutils literal"><span class="pre">UserDetails</span></code>
 <ul>
 <li><p class="first">Entityの実装</p>
 <p>ユーザ名と認証成功日時を持つ認証成功イベントエンティティの実装は以下の通り。</p>
-<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">org.terasoluna.securelogin.domain.model</span><span class="o">;</span>
+<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">com.example.securelogin.domain.model</span><span class="o">;</span>
 
 <span class="c1">// omitted</span>
 
@@ -4205,7 +4199,7 @@ jspに<code class="docutils literal"><span class="pre">UserDetails</span></code>
 </li>
 <li><p class="first">Repositoryの実装</p>
 <p>認証成功イベントエンティティの検索、登録を行うためのRepositoryを以下に示す。</p>
-<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">org.terasoluna.securelogin.domain.repository.authenticationevent</span><span class="o">;</span>
+<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">com.example.securelogin.domain.repository.authenticationevent</span><span class="o">;</span>
 
 <span class="c1">// omitted</span>
 
@@ -4255,7 +4249,7 @@ jspに<code class="docutils literal"><span class="pre">UserDetails</span></code>
 <span class="cp">&quot;http://mybatis.org/dtd/mybatis-3-mapper.dtd&quot;&gt;</span>
 
 <span class="nt">&lt;mapper</span>
-    <span class="na">namespace=</span><span class="s">&quot;org.terasoluna.securelogin.domain.repository.authenticationevent.SuccessfulAuthenticationRepository&quot;</span><span class="nt">&gt;</span>
+    <span class="na">namespace=</span><span class="s">&quot;com.example.securelogin.domain.repository.authenticationevent.SuccessfulAuthenticationRepository&quot;</span><span class="nt">&gt;</span>
 
     <span class="nt">&lt;resultMap</span> <span class="na">id=</span><span class="s">&quot;successfulAuthenticationResultMap&quot;</span>
             <span class="na">type=</span><span class="s">&quot;SuccessfulAuthentication&quot;</span><span class="nt">&gt;</span>
@@ -4294,7 +4288,7 @@ jspに<code class="docutils literal"><span class="pre">UserDetails</span></code>
 </li>
 <li><p class="first">Serviceの実装</p>
 <p>作成したRepositoryのメソッドを呼び出すServiceを以下に示す。</p>
-<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">org.terasoluna.securelogin.domain.service.authenticationevent</span><span class="o">;</span>
+<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">com.example.securelogin.domain.service.authenticationevent</span><span class="o">;</span>
 
 <span class="c1">// omitted</span>
 
@@ -4341,7 +4335,7 @@ jspに<code class="docutils literal"><span class="pre">UserDetails</span></code>
 <ul>
 <li><p class="first">認証成功イベントエンティティの保存</p>
 <p>認証成功時に発生するイベントをハンドリングして処理を行うために、<code class="docutils literal"><span class="pre">&#64;EventListener</span></code> アノテーションを使用する。</p>
-<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">org.terasoluna.securelogin.domain.service.account</span><span class="o">;</span>
+<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">com.example.securelogin.domain.service.account</span><span class="o">;</span>
 
 <span class="c1">// omitted</span>
 
@@ -4407,7 +4401,7 @@ jspに<code class="docutils literal"><span class="pre">UserDetails</span></code>
 <li><p class="first">前回ログイン日時の取得と表示</p>
 <p>認証成功イベントエンティティから前回ログイン日時を取得するためのServiceを以下に示す。</p>
 <blockquote>
-<div><div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">org.terasoluna.securelogin.domain.service.account</span><span class="o">;</span>
+<div><div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">com.example.securelogin.domain.service.account</span><span class="o">;</span>
 
 <span class="c1">// omitted</span>
 
@@ -4480,7 +4474,7 @@ jspに<code class="docutils literal"><span class="pre">UserDetails</span></code>
 </tbody>
 </table>
 <p>ログイン時に前回ログイン日時を取得して<code class="docutils literal"><span class="pre">UserDetails</span></code> に保持させるために、以下のように<code class="docutils literal"><span class="pre">User</span></code> を継承したクラスと、<code class="docutils literal"><span class="pre">UserDetailsService</span></code> を実装したクラスを作成する。</p>
-<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">org.terasoluna.securelogin.domain.service.userdetails</span><span class="o">;</span>
+<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">com.example.securelogin.domain.service.userdetails</span><span class="o">;</span>
 
 <span class="c1">// omitted</span>
 
@@ -4549,7 +4543,7 @@ jspに<code class="docutils literal"><span class="pre">UserDetails</span></code>
 </tr>
 </tbody>
 </table>
-<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">org.terasoluna.securelogin.domain.service.userdetails</span><span class="o">;</span>
+<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">com.example.securelogin.domain.service.userdetails</span><span class="o">;</span>
 
 <span class="c1">// omitted</span>
 
@@ -4605,7 +4599,7 @@ jspに<code class="docutils literal"><span class="pre">UserDetails</span></code>
 </tbody>
 </table>
 <p>トップ画面に前回ログイン日時を表示するためのアプリケーション層の実装を行う。</p>
-<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">org.terasoluna.securelogin.app.welcome</span><span class="o">;</span>
+<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">com.example.securelogin.app.welcome</span><span class="o">;</span>
 
 <span class="c1">// omitted</span>
 
@@ -4782,7 +4776,7 @@ jspに<code class="docutils literal"><span class="pre">UserDetails</span></code>
 <ul>
 <li><p class="first">Entityの作成</p>
 <p>パスワード再発行のための認証情報のEntityを作成する。</p>
-<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">org.terasoluna.securelogin.domain.model</span><span class="o">;</span>
+<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">com.example.securelogin.domain.model</span><span class="o">;</span>
 
 <span class="c1">// omitted</span>
 
@@ -4839,7 +4833,7 @@ jspに<code class="docutils literal"><span class="pre">UserDetails</span></code>
 </td>
 </tr>
 <tr class="row-odd"><td><div class="first last line-block">
-<div class="line">(2)</div>
+<div class="line">(4)</div>
 </div>
 </td>
 <td><div class="first last line-block">
@@ -4852,7 +4846,7 @@ jspに<code class="docutils literal"><span class="pre">UserDetails</span></code>
 </li>
 <li><p class="first">Repositoryの実装</p>
 <p>パスワード再発行のための認証情報の検索、登録、削除を行うためのRepositoryを以下に示す。</p>
-<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">org.terasoluna.securelogin.domain.repository.passwordreissue</span><span class="o">;</span>
+<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">com.example.securelogin.domain.repository.passwordreissue</span><span class="o">;</span>
 
 <span class="c1">// omitted</span>
 
@@ -4918,7 +4912,7 @@ jspに<code class="docutils literal"><span class="pre">UserDetails</span></code>
 <span class="cp">&quot;http://mybatis.org/dtd/mybatis-3-mapper.dtd&quot;&gt;</span>
 
 <span class="nt">&lt;mapper</span>
-    <span class="na">namespace=</span><span class="s">&quot;org.terasoluna.securelogin.domain.repository.passwordreissue.PasswordReissueInfoRepository&quot;</span><span class="nt">&gt;</span>
+    <span class="na">namespace=</span><span class="s">&quot;com.example.securelogin.domain.repository.passwordreissue.PasswordReissueInfoRepository&quot;</span><span class="nt">&gt;</span>
 
     <span class="nt">&lt;resultMap</span> <span class="na">id=</span><span class="s">&quot;PasswordReissueInfoResultMap&quot;</span> <span class="na">type=</span><span class="s">&quot;PasswordReissueInfo&quot;</span><span class="nt">&gt;</span>
         <span class="nt">&lt;id</span> <span class="na">property=</span><span class="s">&quot;username&quot;</span> <span class="na">column=</span><span class="s">&quot;username&quot;</span> <span class="nt">/&gt;</span>
@@ -4981,6 +4975,17 @@ jspに<code class="docutils literal"><span class="pre">UserDetails</span></code>
 <li><p class="first">パスワード生成器の定義</p>
 <p>Passayのパスワード生成機能を使用するための、パスワード生成器と生成規則の定義を以下に示す。
 パスワード生成器や生成規則に関しては <a class="reference internal" href="#password-generation"><span class="std std-ref">パスワード生成</span></a> を参照。</p>
+<p><strong>applicationContext.xml</strong></p>
+<blockquote>
+<div><div class="highlight-xml"><div class="highlight"><pre><span></span><span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">&quot;passwordGenerator&quot;</span> <span class="na">class=</span><span class="s">&quot;org.passay.PasswordGenerator&quot;</span> <span class="nt">/&gt;</span> <span class="c">&lt;!-- (1) --&gt;</span>
+<span class="nt">&lt;util:list</span> <span class="na">id=</span><span class="s">&quot;passwordGenerationRules&quot;</span><span class="nt">&gt;</span> <span class="c">&lt;!-- (2) --&gt;</span>
+    <span class="nt">&lt;ref</span> <span class="na">bean=</span><span class="s">&quot;upperCaseRule&quot;</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;ref</span> <span class="na">bean=</span><span class="s">&quot;lowerCaseRule&quot;</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;ref</span> <span class="na">bean=</span><span class="s">&quot;digitRule&quot;</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;/util:list&gt;</span>
+</pre></div>
+</div>
+</div></blockquote>
 <table border="1" class="colwidths-given docutils">
 <colgroup>
 <col width="10%" />
@@ -5012,19 +5017,10 @@ jspに<code class="docutils literal"><span class="pre">UserDetails</span></code>
 </tr>
 </tbody>
 </table>
-<p><strong>applicationContext.xml</strong></p>
-<div class="highlight-xml"><div class="highlight"><pre><span></span><span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">&quot;passwordGenerator&quot;</span> <span class="na">class=</span><span class="s">&quot;org.passay.PasswordGenerator&quot;</span> <span class="nt">/&gt;</span> <span class="c">&lt;!-- (1) --&gt;</span>
-<span class="nt">&lt;util:list</span> <span class="na">id=</span><span class="s">&quot;passwordGenerationRules&quot;</span><span class="nt">&gt;</span>
-    <span class="nt">&lt;ref</span> <span class="na">bean=</span><span class="s">&quot;upperCaseRule&quot;</span> <span class="nt">/&gt;</span>
-    <span class="nt">&lt;ref</span> <span class="na">bean=</span><span class="s">&quot;lowerCaseRule&quot;</span> <span class="nt">/&gt;</span>
-    <span class="nt">&lt;ref</span> <span class="na">bean=</span><span class="s">&quot;digitRule&quot;</span> <span class="nt">/&gt;</span>
-<span class="nt">&lt;/util:list&gt;</span>
-</pre></div>
-</div>
 </li>
 <li><p class="first">Serviceの実装</p>
 <p>パスワード再発行のための認証情報を作成し、データベースへ保存するための処理の実装を以下に示す。この処理中で生成した認証情報をメール送信する。メール送信については後述するため、ここでは省略する。</p>
-<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">org.terasoluna.securelogin.domain.service.passwordreissue</span><span class="o">;</span>
+<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">com.example.securelogin.domain.service.passwordreissue</span><span class="o">;</span>
 
 <span class="c1">// omitted</span>
 
@@ -5213,7 +5209,7 @@ jspに<code class="docutils literal"><span class="pre">UserDetails</span></code>
 </table>
 </li>
 <li><p class="first">Formの実装</p>
-<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">org.terasoluna.securelogin.app.passwordreissue</span><span class="o">;</span>
+<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">com.example.securelogin.app.passwordreissue</span><span class="o">;</span>
 
 <span class="c1">// omitted</span>
 
@@ -5258,7 +5254,7 @@ jspに<code class="docutils literal"><span class="pre">UserDetails</span></code>
 </div>
 </li>
 <li><p class="first">Controllerの実装</p>
-<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">org.terasoluna.securelogin.app.passwordreissue</span><span class="o">;</span>
+<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">com.example.securelogin.app.passwordreissue</span><span class="o">;</span>
 
 <span class="c1">// omitted</span>
 
@@ -5366,7 +5362,7 @@ jspに<code class="docutils literal"><span class="pre">UserDetails</span></code>
 <ul>
 <li><p class="first">秘密情報の画面表示</p>
 <p>Controllerから秘密情報の生成処理を呼び出し、Viewに表示するための一連の実装を以下に示す。</p>
-<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">org.terasoluna.securelogin.app.passwordreissue</span><span class="o">;</span>
+<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">com.example.securelogin.app.passwordreissue</span><span class="o">;</span>
 
 <span class="c1">// omitted</span>
 
@@ -5484,7 +5480,7 @@ jspに<code class="docutils literal"><span class="pre">UserDetails</span></code>
 <li><p class="first">パスワード再発行画面のURLのメール送付</p>
 <p>パスワード再発行用の認証情報からパスワード再発行画面のURLを作成し、メール送付する処理の実装を以下に示す。
 依存ライブラリの追加方法やメールセッションの取得方法等の詳細については、<a class="reference internal" href="../ArchitectureInDetail/MessagingDetail/Email.html"><span class="doc">E-mail送信(SMTP)</span></a> を参照。</p>
-<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">org.terasoluna.securelogin.domain.service.mail</span><span class="o">;</span>
+<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">com.example.securelogin.domain.service.mail</span><span class="o">;</span>
 
 <span class="c1">// omitted</span>
 
@@ -5553,7 +5549,7 @@ jspに<code class="docutils literal"><span class="pre">UserDetails</span></code>
 </tr>
 </tbody>
 </table>
-<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">org.terasoluna.securelogin.domain.service.passwordreissue</span><span class="o">;</span>
+<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">com.example.securelogin.domain.service.passwordreissue</span><span class="o">;</span>
 
 <span class="c1">// omitted</span>
 
@@ -5720,7 +5716,7 @@ URLに含まれるトークンと秘密情報の組が正しい場合にのみ�
 <p>パスワード再発行用の認証情報への有効期限の設定自体は、 <a class="reference internal" href="#reissue-info-create"><span class="std std-ref">パスワード再発行のための認証情報の生成</span></a> で説明した処理に含まれている。ここでは、関連する実装箇所のみ再掲する。</p>
 <ul>
 <li><p class="first">Serviceの実装</p>
-<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">org.terasoluna.securelogin.domain.service.passwordreissue</span><span class="o">;</span>
+<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">com.example.securelogin.domain.service.passwordreissue</span><span class="o">;</span>
 
 <span class="c1">// omitted</span>
 
@@ -5821,7 +5817,7 @@ URLに含まれるトークンと秘密情報の組が正しい場合にのみ�
 この処理中ではパスワード再発行の失敗上限を超過しているかどうかの検査も行うが、後述するため、ここでは省略する。</p>
 <ul>
 <li><p class="first">Serviceの実装</p>
-<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">org.terasoluna.securelogin.domain.service.passwordreissue</span><span class="o">;</span>
+<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">com.example.securelogin.domain.service.passwordreissue</span><span class="o">;</span>
 
 <span class="c1">// omitted</span>
 
@@ -5896,7 +5892,7 @@ URLに含まれるトークンと秘密情報の組が正しい場合にのみ�
 </table>
 </li>
 <li><p class="first">Controllerの実装</p>
-<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">org.terasoluna.securelogin.app.passwordreissue</span><span class="o">;</span>
+<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">com.example.securelogin.app.passwordreissue</span><span class="o">;</span>
 
 <span class="c1">// omitted</span>
 
@@ -5913,7 +5909,7 @@ URLに含まれるトークンと秘密情報の組が正しい場合にのみ�
     <span class="kd">public</span> <span class="n">String</span> <span class="nf">showPasswordResetForm</span><span class="o">(</span><span class="n">PasswordResetForm</span> <span class="n">form</span><span class="o">,</span> <span class="n">Model</span> <span class="n">model</span><span class="o">,</span>
             <span class="nd">@RequestParam</span><span class="o">(</span><span class="s">&quot;token&quot;</span><span class="o">)</span> <span class="n">String</span> <span class="n">token</span><span class="o">)</span> <span class="o">{</span> <span class="c1">// (1)</span>
 
-        <span class="n">PasswordReissueInfo</span> <span class="n">info</span> <span class="o">=</span> <span class="n">passwordReissueService</span><span class="o">.</span><span class="na">findOne</span><span class="o">(</span><span class="n">token</span><span class="o">);</span> <span class="c1">// (3)</span>
+        <span class="n">PasswordReissueInfo</span> <span class="n">info</span> <span class="o">=</span> <span class="n">passwordReissueService</span><span class="o">.</span><span class="na">findOne</span><span class="o">(</span><span class="n">token</span><span class="o">);</span> <span class="c1">// (2)</span>
 
         <span class="n">form</span><span class="o">.</span><span class="na">setUsername</span><span class="o">(</span><span class="n">info</span><span class="o">.</span><span class="na">getUsername</span><span class="o">());</span>
         <span class="n">form</span><span class="o">.</span><span class="na">setToken</span><span class="o">(</span><span class="n">token</span><span class="o">);</span>
@@ -5965,7 +5961,7 @@ URLに含まれるトークンと秘密情報の組が正しい場合にのみ�
 この確認処理はパスワード再発行固有のロジックであり、かつデータベースの内容によって結果が異なるチェックであることから、Bean ValidationやSpring Validatorを用いず、Serviceに実装している。</p>
 <ul>
 <li><p class="first">Serviceの実装</p>
-<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">org.terasoluna.securelogin.domain.service.passwordreissue</span><span class="o">;</span>
+<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">com.example.securelogin.domain.service.passwordreissue</span><span class="o">;</span>
 
 <span class="c1">// omitted</span>
 
@@ -6003,7 +5999,7 @@ URLに含まれるトークンと秘密情報の組が正しい場合にのみ�
 </tr>
 </tbody>
 </table>
-<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">org.terasoluna.securelogin.domain.service.passwordreissue</span><span class="o">;</span>
+<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">com.example.securelogin.domain.service.passwordreissue</span><span class="o">;</span>
 
 <span class="c1">// omitted</span>
 
@@ -6098,7 +6094,7 @@ URLに含まれるトークンと秘密情報の組が正しい場合にのみ�
 </li>
 <li><p class="first">Formの実装</p>
 <p>クラスに付与されたアノテーションによってNullチェック以外の入力チェックが網羅されていることから、単項目チェックとしては<code class="docutils literal"><span class="pre">&#64;NotNull</span></code> のみを付与している。</p>
-<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">org.terasoluna.securelogin.app.passwordreissue</span><span class="o">;</span>
+<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">com.example.securelogin.app.passwordreissue</span><span class="o">;</span>
 
 <span class="c1">// omitted</span>
 
@@ -6258,7 +6254,7 @@ URLに含まれるトークンと秘密情報の組が正しい場合にのみ�
 </div>
 </li>
 <li><p class="first">Controllerの実装</p>
-<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">org.terasoluna.securelogin.app.passwordreissue</span><span class="o">;</span>
+<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">com.example.securelogin.app.passwordreissue</span><span class="o">;</span>
 
 <span class="c1">// omitted</span>
 
@@ -6373,7 +6369,7 @@ URLに含まれるトークンと秘密情報の組が正しい場合にのみ�
 <ul>
 <li><p class="first">Entityの実装</p>
 <p>パスワード再発行失敗イベントエンティティの実装は以下の通り。</p>
-<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">org.terasoluna.securelogin.domain.model</span><span class="o">;</span>
+<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">com.example.securelogin.domain.model</span><span class="o">;</span>
 
 <span class="c1">// omitted</span>
 
@@ -6421,7 +6417,7 @@ URLに含まれるトークンと秘密情報の組が正しい場合にのみ�
 </li>
 <li><p class="first">Repositoryの実装</p>
 <p>Entityの検索、登録、削除を行うためのRepositoryを以下に示す。</p>
-<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">org.terasoluna.securelogin.domain.repository.passwordreissue</span><span class="o">;</span>
+<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">com.example.securelogin.domain.repository.passwordreissue</span><span class="o">;</span>
 
 <span class="c1">// omitted</span>
 
@@ -6484,7 +6480,7 @@ URLに含まれるトークンと秘密情報の組が正しい場合にのみ�
 <span class="cp">&quot;http://mybatis.org/dtd/mybatis-3-mapper.dtd&quot;&gt;</span>
 
 <span class="nt">&lt;mapper</span>
- <span class="na">namespace=</span><span class="s">&quot;org.terasoluna.securelogin.domain.repository.passwordreissue.FailedPasswordReissueRepository&quot;</span><span class="nt">&gt;</span>
+ <span class="na">namespace=</span><span class="s">&quot;com.example.securelogin.domain.repository.passwordreissue.FailedPasswordReissueRepository&quot;</span><span class="nt">&gt;</span>
 
  <span class="nt">&lt;select</span> <span class="na">id=</span><span class="s">&quot;countByToken&quot;</span> <span class="na">resultType=</span><span class="s">&quot;_int&quot;</span><span class="nt">&gt;</span>
     <span class="cp">&lt;![CDATA[</span>
@@ -6529,7 +6525,7 @@ URLに含まれるトークンと秘密情報の組が正しい場合にのみ�
 <ul>
 <li><p class="first">パスワード再発行失敗イベントエンティティの保存</p>
 <p>パスワード再発行失敗時に行う処理を実装したクラスを以下に示す。</p>
-<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">org.terasoluna.securelogin.domain.service.passwordreissue</span><span class="o">;</span>
+<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">com.example.securelogin.domain.service.passwordreissue</span><span class="o">;</span>
 
 <span class="kd">public</span> <span class="kd">interface</span> <span class="nc">PasswordReissueFailureSharedService</span> <span class="o">{</span>
 
@@ -6538,7 +6534,7 @@ URLに含まれるトークンと秘密情報の組が正しい場合にのみ�
 <span class="o">}</span>
 </pre></div>
 </div>
-<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">org.terasoluna.securelogin.domain.service.passwordreissue</span><span class="o">;</span>
+<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">com.example.securelogin.domain.service.passwordreissue</span><span class="o">;</span>
 
 <span class="c1">// omitted</span>
 
@@ -6609,7 +6605,7 @@ URLに含まれるトークンと秘密情報の組が正しい場合にのみ�
 </tbody>
 </table>
 <p><a class="reference internal" href="#reissue-info-validate"><span class="std std-ref">パスワード再発行実行時の検査</span></a> の「パスワード再発行のための認証情報を用いたユーザの確認」処理の中から、パスワード再発行失敗時の処理を呼び出す。</p>
-<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">org.terasoluna.securelogin.domain.service.passwordreissue</span><span class="o">;</span>
+<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">com.example.securelogin.domain.service.passwordreissue</span><span class="o">;</span>
 
 <span class="c1">// omitted</span>
 
@@ -6702,7 +6698,7 @@ URLに含まれるトークンと秘密情報の組が正しい場合にのみ�
 </li>
 <li><p class="first">パスワード再発行時の例外のスロー</p>
 <p>パスワード再発行の失敗回数の取得と、失敗回数が上限に達した際の処理の実装を以下に示す。</p>
-<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">org.terasoluna.securelogin.domain.service.passwordreissue</span><span class="o">;</span>
+<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">com.example.securelogin.domain.service.passwordreissue</span><span class="o">;</span>
 
 <span class="c1">// omitted</span>
 
@@ -6877,7 +6873,7 @@ URLに含まれるトークンと秘密情報の組が正しい場合にのみ�
 <div class="line-block">
 <div class="line">尚、以下のコードでは <code class="docutils literal"><span class="pre">org.springframework.web.multipart.MultipartRequest</span></code> を使用するため、<code class="docutils literal"><span class="pre">org.springframework.web.multipart.support.MultipartFilter</span></code> の使用を前提としている。<code class="docutils literal"><span class="pre">MultipartFilter</span></code> については <a class="reference internal" href="../ArchitectureInDetail/WebApplicationDetail/FileUpload.html"><span class="doc">ファイルアップロード</span></a>を参照のこと。</div>
 </div>
-<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">org.terasoluna.securelogin.app.common.filter</span><span class="o">;</span>
+<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">com.example.securelogin.app.common.filter</span><span class="o">;</span>
 
 <span class="c1">// omitted</span>
 
@@ -7082,7 +7078,7 @@ URLに含まれるトークンと秘密情報の組が正しい場合にのみ�
 <span class="c">&lt;!-- omitted --&gt;</span>
 
 <span class="nt">&lt;error-page&gt;</span>
-    <span class="nt">&lt;exception-type&gt;</span>org.terasoluna.securelogin.app.common.filter.exception.InvalidCharacterException<span class="nt">&lt;/exception-type&gt;</span>  <span class="c">&lt;!-- (3) --&gt;</span>
+    <span class="nt">&lt;exception-type&gt;</span>com.example.securelogin.app.common.filter.exception.InvalidCharacterException<span class="nt">&lt;/exception-type&gt;</span>  <span class="c">&lt;!-- (3) --&gt;</span>
     <span class="nt">&lt;location&gt;</span>/WEB-INF/views/common/error/invalidCharacterError.jsp<span class="nt">&lt;/location&gt;</span>
 <span class="nt">&lt;/error-page&gt;</span>
 </pre></div>
@@ -7167,7 +7163,7 @@ URLに含まれるトークンと秘密情報の組が正しい場合にのみ�
 </tbody>
 </table>
 <p><strong>applicationContext.xml</strong></p>
-<div class="highlight-xml"><div class="highlight"><pre><span></span><span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">&quot;inputValidationFilter&quot;</span> <span class="na">class=</span><span class="s">&quot;org.terasoluna.securelogin.app.common.filter.InputValidationFilter&quot;</span><span class="nt">&gt;</span>
+<div class="highlight-xml"><div class="highlight"><pre><span></span><span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">&quot;inputValidationFilter&quot;</span> <span class="na">class=</span><span class="s">&quot;com.example.securelogin.app.common.filter.InputValidationFilter&quot;</span><span class="nt">&gt;</span>
     <span class="nt">&lt;constructor-arg</span> <span class="na">index=</span><span class="s">&quot;0&quot;</span> <span class="na">value=</span><span class="s">&quot;${app.security.prohibitedChars}&quot;</span><span class="nt">/&gt;</span>  <span class="c">&lt;!-- (1) --&gt;</span>
     <span class="nt">&lt;constructor-arg</span> <span class="na">index=</span><span class="s">&quot;1&quot;</span> <span class="na">value=</span><span class="s">&quot;${app.security.prohibitedCharsForFileName}&quot;</span><span class="nt">/&gt;</span>  <span class="c">&lt;!-- (2) --&gt;</span>
 <span class="nt">&lt;/bean&gt;</span>
@@ -7253,24 +7249,24 @@ URLに含まれるトークンと秘密情報の組が正しい場合にのみ�
 <div class="line">文章の入力の際には制御文字のうち改行コードのみを許容する場合も多いため、改行コードを許可するアノテーションも別途作成する。</div>
 <div class="line">正規表現を用いたチェックを行うことで制御文字が含まれていないことを検証することができる。</div>
 </div>
-<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">org.terasoluna.securelogin.app.common.validation</span><span class="o">;</span>
+<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">com.example.securelogin.app.common.validation</span><span class="o">;</span>
 
 <span class="c1">// omitted</span>
 <span class="nd">@Documented</span>
 <span class="nd">@Constraint</span><span class="o">(</span><span class="n">validatedBy</span> <span class="o">=</span> <span class="o">{})</span>
-<span class="nd">@Target</span><span class="o">({</span> <span class="n">FIELD</span> <span class="o">})</span>
+<span class="nd">@Target</span><span class="o">(</span><span class="n">FIELD</span><span class="o">)</span>
 <span class="nd">@Retention</span><span class="o">(</span><span class="n">RUNTIME</span><span class="o">)</span>
 <span class="nd">@ReportAsSingleViolation</span>  <span class="c1">// (1)</span>
 <span class="nd">@Pattern</span><span class="o">(</span><span class="n">regexp</span> <span class="o">=</span> <span class="s">&quot;^\\P{Cntrl}*$&quot;</span><span class="o">)</span> <span class="c1">// (2)</span>
 <span class="kd">public</span> <span class="nd">@interface</span> <span class="n">NotContainControlChars</span> <span class="o">{</span>
-    <span class="n">String</span> <span class="nf">message</span><span class="o">()</span> <span class="k">default</span> <span class="s">&quot;{org.terasoluna.securelogin.app.common.validation.NotContainControlChars.message}&quot;</span><span class="o">;</span>
+    <span class="n">String</span> <span class="nf">message</span><span class="o">()</span> <span class="k">default</span> <span class="s">&quot;{com.example.securelogin.app.common.validation.NotContainControlChars.message}&quot;</span><span class="o">;</span>
 
     <span class="n">Class</span><span class="o">&lt;?&gt;[]</span> <span class="n">groups</span><span class="o">()</span> <span class="k">default</span> <span class="o">{};</span>
 
-    <span class="nd">@Target</span><span class="o">({</span> <span class="n">FIELD</span> <span class="o">})</span>
+    <span class="nd">@Target</span><span class="o">(</span><span class="n">FIELD</span><span class="o">)</span>
     <span class="nd">@Retention</span><span class="o">(</span><span class="n">RUNTIME</span><span class="o">)</span>
     <span class="nd">@Documented</span>
-    <span class="kd">public</span> <span class="nd">@interface</span> <span class="n">List</span> <span class="o">{</span>
+    <span class="nd">@interface</span> <span class="n">List</span> <span class="o">{</span>
         <span class="n">NotContainControlChars</span><span class="o">[]</span> <span class="nf">value</span><span class="o">();</span>
     <span class="o">}</span>
 
@@ -7313,24 +7309,24 @@ URLに含まれるトークンと秘密情報の組が正しい場合にのみ�
 <div class="line-block">
 <div class="line">同様に、改行コードを許容する場合のアノテーションの実装例を以下に示す。</div>
 </div>
-<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">org.terasoluna.securelogin.app.common.validation</span><span class="o">;</span>
+<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">com.example.securelogin.app.common.validation</span><span class="o">;</span>
 
 <span class="c1">// omitted</span>
 <span class="nd">@Documented</span>
 <span class="nd">@Constraint</span><span class="o">(</span><span class="n">validatedBy</span> <span class="o">=</span> <span class="o">{})</span>
-<span class="nd">@Target</span><span class="o">({</span> <span class="n">FIELD</span> <span class="o">})</span>
+<span class="nd">@Target</span><span class="o">(</span><span class="n">FIELD</span><span class="o">)</span>
 <span class="nd">@Retention</span><span class="o">(</span><span class="n">RUNTIME</span><span class="o">)</span>
 <span class="nd">@ReportAsSingleViolation</span>
 <span class="nd">@Pattern</span><span class="o">(</span><span class="n">regexp</span> <span class="o">=</span> <span class="s">&quot;^[\\r\\n\\P{Cntrl}]*$&quot;</span><span class="o">)</span> <span class="c1">// (1)</span>
 <span class="kd">public</span> <span class="nd">@interface</span> <span class="n">NotContainControlCharsExceptNewlines</span> <span class="o">{</span>
-    <span class="n">String</span> <span class="nf">message</span><span class="o">()</span> <span class="k">default</span> <span class="s">&quot;{org.terasoluna.securelogin.app.common.validation.NotContainControlCharsExceptNewlines.message}&quot;</span><span class="o">;</span>
+    <span class="n">String</span> <span class="nf">message</span><span class="o">()</span> <span class="k">default</span> <span class="s">&quot;{com.example.securelogin.app.common.validation.NotContainControlCharsExceptNewlines.message}&quot;</span><span class="o">;</span>
 
     <span class="n">Class</span><span class="o">&lt;?&gt;[]</span> <span class="n">groups</span><span class="o">()</span> <span class="k">default</span> <span class="o">{};</span>
 
-    <span class="nd">@Target</span><span class="o">({</span> <span class="n">FIELD</span> <span class="o">})</span>
+    <span class="nd">@Target</span><span class="o">(</span><span class="n">FIELD</span><span class="o">)</span>
     <span class="nd">@Retention</span><span class="o">(</span><span class="n">RUNTIME</span><span class="o">)</span>
     <span class="nd">@Documented</span>
-    <span class="kd">public</span> <span class="nd">@interface</span> <span class="n">List</span> <span class="o">{</span>
+    <span class="nd">@interface</span> <span class="n">List</span> <span class="o">{</span>
         <span class="n">NotContainControlCharsExceptNewlines</span><span class="o">[]</span> <span class="nf">value</span><span class="o">();</span>
     <span class="o">}</span>
 
@@ -7370,16 +7366,16 @@ URLに含まれるトークンと秘密情報の組が正しい場合にのみ�
 <p class="first admonition-title">Warning</p>
 <p class="last">ファイルの拡張子は容易に偽装され得るため、拡張子のチェックを行った場合であっても無条件にファイル形式を信用してはならない。</p>
 </div>
-<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">org.terasoluna.securelogin.app.common.validation</span><span class="o">;</span>
+<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">com.example.securelogin.app.common.validation</span><span class="o">;</span>
 
 <span class="c1">// omitted</span>
 
 <span class="nd">@Documented</span>
 <span class="nd">@Constraint</span><span class="o">(</span><span class="n">validatedBy</span> <span class="o">=</span> <span class="o">{</span> <span class="n">FileExtensionValidator</span><span class="o">.</span><span class="na">class</span> <span class="o">})</span>
-<span class="nd">@Target</span><span class="o">({</span> <span class="n">ElementType</span><span class="o">.</span><span class="na">FIELD</span> <span class="o">})</span>
+<span class="nd">@Target</span><span class="o">(</span><span class="n">FIELD</span><span class="o">)</span>
 <span class="nd">@Retention</span><span class="o">(</span><span class="n">RetentionPolicy</span><span class="o">.</span><span class="na">RUNTIME</span><span class="o">)</span>
 <span class="kd">public</span> <span class="nd">@interface</span> <span class="n">FileExtension</span> <span class="o">{</span>
-    <span class="n">String</span> <span class="nf">message</span><span class="o">()</span> <span class="k">default</span> <span class="s">&quot;{org.terasoluna.securelogin.app.common.validation.FileExtension.message}&quot;</span><span class="o">;</span>
+    <span class="n">String</span> <span class="nf">message</span><span class="o">()</span> <span class="k">default</span> <span class="s">&quot;{com.example.securelogin.app.common.validation.FileExtension.message}&quot;</span><span class="o">;</span>
 
     <span class="n">Class</span><span class="o">&lt;?&gt;[]</span> <span class="n">groups</span><span class="o">()</span> <span class="k">default</span> <span class="o">{};</span>
 
@@ -7389,10 +7385,10 @@ URLに含まれるトークンと秘密情報の組が正しい場合にのみ�
 
     <span class="kt">boolean</span> <span class="nf">ignoreCase</span><span class="o">()</span> <span class="k">default</span> <span class="kc">true</span><span class="o">;</span>  <span class="c1">// (2)</span>
 
-    <span class="nd">@Target</span><span class="o">({</span> <span class="n">ElementType</span><span class="o">.</span><span class="na">FIELD</span> <span class="o">})</span>
+    <span class="nd">@Target</span><span class="o">(</span><span class="n">FIELD</span><span class="o">)</span>
     <span class="nd">@Retention</span><span class="o">(</span><span class="n">RetentionPolicy</span><span class="o">.</span><span class="na">RUNTIME</span><span class="o">)</span>
     <span class="nd">@Documented</span>
-    <span class="kd">public</span> <span class="nd">@interface</span> <span class="n">List</span> <span class="o">{</span>
+    <span class="nd">@interface</span> <span class="n">List</span> <span class="o">{</span>
         <span class="n">FileExtension</span><span class="o">[]</span> <span class="nf">value</span><span class="o">();</span>
     <span class="o">}</span>
 <span class="o">}</span>
@@ -7429,7 +7425,7 @@ URLに含まれるトークンと秘密情報の組が正しい場合にのみ�
 </tr>
 </tbody>
 </table>
-<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">org.terasoluna.securelogin.app.common.validation</span><span class="o">;</span>
+<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">com.example.securelogin.app.common.validation</span><span class="o">;</span>
 
 <span class="c1">// omitted</span>
 
@@ -7525,17 +7521,17 @@ URLに含まれるトークンと秘密情報の組が正しい場合にのみ�
 </li>
 <li><p class="first">アップロードされるファイルのファイル名が許容されているパターンと一致することを検証するアノテーション</p>
 <p>ユーザからのファイルのアップロードを受け付ける際、受け付けるファイル名の形式を制限したい場合がある。そのような場合に、許容するファイル名のパターンを正規表現で設定し、アップロードされたファイルのファイル名がパターンと一致するかをチェックする。</p>
-<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">org.terasoluna.securelogin.app.common.validation</span><span class="o">;</span>
+<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">com.example.securelogin.app.common.validation</span><span class="o">;</span>
 
 <span class="c1">// omitted</span>
 
 <span class="nd">@Documented</span>
 <span class="nd">@Constraint</span><span class="o">(</span><span class="n">validatedBy</span> <span class="o">=</span> <span class="o">{</span> <span class="n">FileNamePatternValidator</span><span class="o">.</span><span class="na">class</span> <span class="o">})</span>
-<span class="nd">@Target</span><span class="o">({</span> <span class="n">ElementType</span><span class="o">.</span><span class="na">FIELD</span> <span class="o">})</span>
+<span class="nd">@Target</span><span class="o">(</span><span class="n">FIELD</span><span class="o">)</span>
 <span class="nd">@Retention</span><span class="o">(</span><span class="n">RetentionPolicy</span><span class="o">.</span><span class="na">RUNTIME</span><span class="o">)</span>
 <span class="kd">public</span> <span class="nd">@interface</span> <span class="n">FileNamePattern</span> <span class="o">{</span>
 
-    <span class="n">String</span> <span class="nf">message</span><span class="o">()</span> <span class="k">default</span> <span class="s">&quot;{org.terasoluna.securelogin.app.common.validation.FileNamePattern.message}&quot;</span><span class="o">;</span>
+    <span class="n">String</span> <span class="nf">message</span><span class="o">()</span> <span class="k">default</span> <span class="s">&quot;{com.example.securelogin.app.common.validation.FileNamePattern.message}&quot;</span><span class="o">;</span>
 
     <span class="n">Class</span><span class="o">&lt;?&gt;[]</span> <span class="n">groups</span><span class="o">()</span> <span class="k">default</span> <span class="o">{};</span>
 
@@ -7543,10 +7539,10 @@ URLに含まれるトークンと秘密情報の組が正しい場合にのみ�
 
     <span class="n">String</span> <span class="nf">pattern</span><span class="o">()</span> <span class="k">default</span> <span class="s">&quot;&quot;</span><span class="o">;</span>  <span class="c1">// (1)</span>
 
-    <span class="nd">@Target</span><span class="o">({</span> <span class="n">ElementType</span><span class="o">.</span><span class="na">FIELD</span> <span class="o">})</span>
+    <span class="nd">@Target</span><span class="o">(</span><span class="n">FIELD</span><span class="o">)</span>
     <span class="nd">@Retention</span><span class="o">(</span><span class="n">RetentionPolicy</span><span class="o">.</span><span class="na">RUNTIME</span><span class="o">)</span>
     <span class="nd">@Documented</span>
-    <span class="kd">public</span> <span class="nd">@interface</span> <span class="n">List</span> <span class="o">{</span>
+    <span class="nd">@interface</span> <span class="n">List</span> <span class="o">{</span>
         <span class="n">FileNamePattern</span><span class="o">[]</span> <span class="nf">value</span><span class="o">();</span>
     <span class="o">}</span>
 
@@ -7575,7 +7571,7 @@ URLに含まれるトークンと秘密情報の組が正しい場合にのみ�
 </tr>
 </tbody>
 </table>
-<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">org.terasoluna.securelogin.app.common.validation</span><span class="o">;</span>
+<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">com.example.securelogin.app.common.validation</span><span class="o">;</span>
 
 <span class="c1">// omitted</span>
 
@@ -7658,27 +7654,27 @@ URLに含まれるトークンと秘密情報の組が正しい場合にのみ�
 <div class="line">ユーザからURLの入力を受け付ける際、許容するドメインを制限したい場合がある。そのような場合に、許容するドメインの一覧を設定し、入力されたURLのドメインが一覧に含まれているドメインかまたはそのサブドメインであるかをチェックする。</div>
 <div class="line">同時にURL形式であることをチェックするため、<code class="docutils literal"><span class="pre">org.hibernate.validator.constraints.URL</span></code> と組み合わせて実装する。</div>
 </div>
-<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">org.terasoluna.securelogin.app.common.validation</span><span class="o">;</span>
+<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">com.example.securelogin.app.common.validation</span><span class="o">;</span>
 
 <span class="c1">// omitted</span>
 
 <span class="nd">@Documented</span>
 <span class="nd">@Constraint</span><span class="o">(</span><span class="n">validatedBy</span> <span class="o">=</span> <span class="o">{</span> <span class="n">DomainRestrictedURLValidator</span><span class="o">.</span><span class="na">class</span> <span class="o">})</span>
-<span class="nd">@Target</span><span class="o">({</span> <span class="n">FIELD</span> <span class="o">})</span>
+<span class="nd">@Target</span><span class="o">(</span><span class="n">FIELD</span><span class="o">)</span>
 <span class="nd">@Retention</span><span class="o">(</span><span class="n">RUNTIME</span><span class="o">)</span>
 <span class="nd">@URL</span>  <span class="c1">// (1)</span>
 <span class="kd">public</span> <span class="nd">@interface</span> <span class="n">DomainRestrictedURL</span> <span class="o">{</span>
 
-    <span class="n">String</span> <span class="nf">message</span><span class="o">()</span> <span class="k">default</span> <span class="s">&quot;{org.terasoluna.securelogin.app.common.validation.DomainRestrictedURL.message}&quot;</span><span class="o">;</span>
+    <span class="n">String</span> <span class="nf">message</span><span class="o">()</span> <span class="k">default</span> <span class="s">&quot;{com.example.securelogin.app.common.validation.DomainRestrictedURL.message}&quot;</span><span class="o">;</span>
 
     <span class="n">Class</span><span class="o">&lt;?&gt;[]</span> <span class="n">groups</span><span class="o">()</span> <span class="k">default</span> <span class="o">{};</span>
 
     <span class="n">String</span><span class="o">[]</span> <span class="nf">allowedDomains</span><span class="o">()</span> <span class="k">default</span> <span class="o">{};</span>  <span class="c1">// (2)</span>
 
-    <span class="nd">@Target</span><span class="o">({</span> <span class="n">FIELD</span> <span class="o">})</span>
+    <span class="nd">@Target</span><span class="o">(</span><span class="n">FIELD</span><span class="o">)</span>
     <span class="nd">@Retention</span><span class="o">(</span><span class="n">RUNTIME</span><span class="o">)</span>
     <span class="nd">@Documented</span>
-    <span class="kd">public</span> <span class="nd">@interface</span> <span class="n">List</span> <span class="o">{</span>
+    <span class="nd">@interface</span> <span class="n">List</span> <span class="o">{</span>
         <span class="n">DomainRestrictedURL</span><span class="o">[]</span> <span class="nf">value</span><span class="o">();</span>
     <span class="o">}</span>
 
@@ -7718,7 +7714,7 @@ URLに含まれるトークンと秘密情報の組が正しい場合にのみ�
 </tr>
 </tbody>
 </table>
-<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">org.terasoluna.securelogin.app.common.validation</span><span class="o">;</span>
+<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">com.example.securelogin.app.common.validation</span><span class="o">;</span>
 
 <span class="c1">// omitted</span>
 
@@ -7813,19 +7809,19 @@ URLに含まれるトークンと秘密情報の組が正しい場合にのみ�
 <li><p class="first">入力されたメールアドレスのドメインが許容されているものであることを検証するアノテーション</p>
 <div class="line-block">
 <div class="line">ユーザからメールアドレスの入力を受け付ける際、許容するドメインを制限したい場合がある。そのような場合に、許容するドメインの一覧を設定し、入力されたメールアドレスのドメインが一覧に含まれているかをチェックする。許容するドメインのサブドメインまで許すか否かを切り替えられる仕様とする。</div>
-<div class="line">同時にメールアドレス形式であることをチェックするため、<code class="docutils literal"><span class="pre">org.hibernate.validator.constraints.Email</span></code> と組み合わせて実装する。</div>
+<div class="line">同時にメールアドレス形式であることをチェックするため、<code class="docutils literal"><span class="pre">javax.validation.constraints.Email</span></code> と組み合わせて実装する。</div>
 </div>
-<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">org.terasoluna.securelogin.app.common.validation</span><span class="o">;</span>
+<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">com.example.securelogin.app.common.validation</span><span class="o">;</span>
 
 <span class="c1">// omitted</span>
 
 <span class="nd">@Documented</span>
 <span class="nd">@Constraint</span><span class="o">(</span><span class="n">validatedBy</span> <span class="o">=</span> <span class="o">{</span> <span class="n">DomainRestrictedEmailValidator</span><span class="o">.</span><span class="na">class</span> <span class="o">})</span>
-<span class="nd">@Target</span><span class="o">({</span> <span class="n">FIELD</span> <span class="o">})</span>
+<span class="nd">@Target</span><span class="o">(</span><span class="n">FIELD</span><span class="o">)</span>
 <span class="nd">@Retention</span><span class="o">(</span><span class="n">RUNTIME</span><span class="o">)</span>
 <span class="nd">@Email</span>  <span class="c1">// (1)</span>
 <span class="kd">public</span> <span class="nd">@interface</span> <span class="n">DomainRestrictedEmail</span> <span class="o">{</span>
-    <span class="n">String</span> <span class="nf">message</span><span class="o">()</span> <span class="k">default</span> <span class="s">&quot;{org.terasoluna.securelogin.app.common.validation.DomainRestrictedEmail.message}&quot;</span><span class="o">;</span>
+    <span class="n">String</span> <span class="nf">message</span><span class="o">()</span> <span class="k">default</span> <span class="s">&quot;{com.example.securelogin.app.common.validation.DomainRestrictedEmail.message}&quot;</span><span class="o">;</span>
 
     <span class="n">Class</span><span class="o">&lt;?&gt;[]</span> <span class="n">groups</span><span class="o">()</span> <span class="k">default</span> <span class="o">{};</span>
 
@@ -7833,10 +7829,10 @@ URLに含まれるトークンと秘密情報の組が正しい場合にのみ�
 
     <span class="kt">boolean</span> <span class="nf">allowSubDomain</span><span class="o">()</span> <span class="k">default</span> <span class="kc">false</span><span class="o">;</span>  <span class="c1">// (3)</span>
 
-    <span class="nd">@Target</span><span class="o">({</span> <span class="n">FIELD</span> <span class="o">})</span>
+    <span class="nd">@Target</span><span class="o">(</span><span class="n">FIELD</span><span class="o">)</span>
     <span class="nd">@Retention</span><span class="o">(</span><span class="n">RUNTIME</span><span class="o">)</span>
     <span class="nd">@Documented</span>
-    <span class="kd">public</span> <span class="nd">@interface</span> <span class="n">List</span> <span class="o">{</span>
+    <span class="nd">@interface</span> <span class="n">List</span> <span class="o">{</span>
         <span class="n">DomainRestrictedEmail</span><span class="o">[]</span> <span class="nf">value</span><span class="o">();</span>
     <span class="o">}</span>
 
@@ -7884,7 +7880,7 @@ URLに含まれるトークンと秘密情報の組が正しい場合にのみ�
 </tr>
 </tbody>
 </table>
-<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">org.terasoluna.securelogin.app.common.validation</span><span class="o">;</span>
+<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">com.example.securelogin.app.common.validation</span><span class="o">;</span>
 
 <span class="c1">// omitted</span>
 
@@ -7976,7 +7972,7 @@ URLに含まれるトークンと秘密情報の組が正しい場合にのみ�
 </li>
 <li><p class="first">Formクラスへのアノテーションの付与</p>
 <p>作成したアノテーションをアカウント新規作成のFormクラスのフィールドに付与する。</p>
-<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">org.terasoluna.securelogin.app.account</span><span class="o">;</span>
+<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">com.example.securelogin.app.account</span><span class="o">;</span>
 
 <span class="c1">// omitted</span>
 
@@ -8214,7 +8210,7 @@ URLに含まれるトークンと秘密情報の組が正しい場合にのみ�
 <p class="first admonition-title">Note</p>
 <p class="last">アドバイスとは、AOPにおいて指定されたタイミングで実行する処理のことを指す。
 また、アドバイスを織り込むことのできる箇所のことをジョインポイントと呼び、どのジョインポイントにアドバイスを織り込むかを定義したものポイントカットと呼ぶ。
-Springが提供するAOP機能に関しては、<a class="reference external" href="http://docs.spring.io/spring/docs/4.3.14.RELEASE/spring-framework-reference/html/aop.html">公式ドキュメント - AOP</a> を参照すること。</p>
+Springが提供するAOP機能に関しては、<a class="reference external" href="https://docs.spring.io/spring/docs/5.1.4.RELEASE/spring-framework-reference/core.html#aop">公式ドキュメント - AOP</a> を参照すること。</p>
 </div>
 </div></blockquote>
 </div>
@@ -8280,7 +8276,7 @@ Springが提供するAOP機能に関しては、<a class="reference external" hr
 <span class="c">&lt;!-- omitted --&gt;</span>
 
 <span class="nt">&lt;logger</span>
-   <span class="na">name=</span><span class="s">&quot;org.terasoluna.securelogin.domain.common.interceptor.ServiceCallLoggingInterceptor&quot;</span>
+   <span class="na">name=</span><span class="s">&quot;com.example.securelogin.domain.common.interceptor.ServiceCallLoggingInterceptor&quot;</span>
    <span class="na">additivity=</span><span class="s">&quot;false&quot;</span><span class="nt">&gt;</span>  <span class="c">&lt;!-- (3) --&gt;</span>
    <span class="nt">&lt;level</span> <span class="na">value=</span><span class="s">&quot;info&quot;</span> <span class="nt">/&gt;</span>
    <span class="nt">&lt;appender-ref</span> <span class="na">ref=</span><span class="s">&quot;AUDIT_LOG_FILE&quot;</span> <span class="nt">/&gt;</span>
@@ -8324,7 +8320,7 @@ Springが提供するAOP機能に関しては、<a class="reference external" hr
 </td>
 <td><div class="first last line-block">
 <div class="line">監査ログ出力用のloggerを定義する</div>
-<div class="line"><code class="docutils literal"><span class="pre">org.terasoluna.securelogin.domain.common.interceptor.ServiceCallLoggingInterceptor</span></code> の実装については以降で説明する</div>
+<div class="line"><code class="docutils literal"><span class="pre">com.example.securelogin.domain.common.interceptor.ServiceCallLoggingInterceptor</span></code> の実装については以降で説明する</div>
 </div>
 </td>
 </tr>
@@ -8333,7 +8329,7 @@ Springが提供するAOP機能に関しては、<a class="reference external" hr
 </li>
 <li><p class="first">メソッド呼び出し時および実行後にログ出力を行うアドバイスを作成する</p>
 <p>操作内容と操作結果をログ出力するための実装および設定を以下に示す。</p>
-<div class="highlight-java"><div class="highlight"><pre><span></span>  <span class="kn">package</span> <span class="nn">org.terasoluna.securelogin.domain.common.interceptor</span><span class="o">;</span>
+<div class="highlight-java"><div class="highlight"><pre><span></span>  <span class="kn">package</span> <span class="nn">com.example.securelogin.domain.common.interceptor</span><span class="o">;</span>
 
   <span class="c1">// omitted</span>
 
@@ -8471,7 +8467,7 @@ Springが提供するAOP機能に関しては、<a class="reference external" hr
 <div class="highlight-xml"><div class="highlight"><pre><span></span><span class="c">&lt;!-- omitted --&gt;</span>
 
 <span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">&quot;serviceCallLoggingInterceptor&quot;</span>
-    <span class="na">class=</span><span class="s">&quot;org.terasoluna.securelogin.domain.common.interceptor.ServiceCallLoggingInterceptor&quot;</span> <span class="nt">/&gt;</span>  <span class="c">&lt;!-- (1) --&gt;</span>
+    <span class="na">class=</span><span class="s">&quot;com.example.securelogin.domain.common.interceptor.ServiceCallLoggingInterceptor&quot;</span> <span class="nt">/&gt;</span>  <span class="c">&lt;!-- (1) --&gt;</span>
 <span class="nt">&lt;aop:config&gt;</span>
     <span class="nt">&lt;aop:advisor</span> <span class="na">advice-ref=</span><span class="s">&quot;serviceCallLoggingInterceptor&quot;</span>
         <span class="na">pointcut=</span><span class="s">&quot;@within(org.springframework.stereotype.Service)&quot;</span> <span class="nt">/&gt;</span>  <span class="c">&lt;!-- (2) --&gt;</span>
@@ -8516,7 +8512,7 @@ Springが提供するAOP機能に関しては、<a class="reference external" hr
 <p class="first admonition-title">Note</p>
 <p class="last">SpringのAOPは、自動的に作成されたプロキシクラスがメソッド呼び出しをハンドリングする、プロキシ方式を採用している。
 プロキシ方式のAOPの制限として、可視性が<code class="docutils literal"><span class="pre">public</span></code> 以外のメソッドの呼び出しや、同一クラス内のメソッド呼び出しの際にはアドバイスが実行されない点に注意する必要がある。
-詳細は <a class="reference external" href="http://docs.spring.io/spring/docs/4.3.14.RELEASE/spring-framework-reference/html/aop.html#aop-understanding-aop-proxies">公式ドキュメント</a> を参照すること。</p>
+詳細は <a class="reference external" href="https://docs.spring.io/spring/docs/5.1.4.RELEASE/spring-framework-reference/core.html#aop-understanding-aop-proxies">公式ドキュメント</a> を参照すること。</p>
 </div>
 <p>ログの出力結果を以下に示す。</p>
 <div class="highlight-console"><div class="highlight"><pre><span></span><span class="go">date:2016-08-18 13:45:42   thread:tomcat-http--7   USER:demo   X-Track:f514cc4159324ba28d8393f2c3062d89    level:INFO  logger:o.t.s.d.c.i.ServiceCallLoggingInterceptor        message:[START SERVICE]AccountSharedService.isInitialPassword</span>
@@ -9058,6 +9054,12 @@ PassayのAPIは以下の三つの主要コンポーネントで構成される�
 <p class="last">Bean定義したコレクションをDIする際には、<code class="docutils literal"><span class="pre">&#64;Inject</span></code> + <code class="docutils literal"><span class="pre">&#64;Named</span></code> では期待した動作をしない。
 そのため、代わりに<code class="docutils literal"><span class="pre">&#64;Resource</span></code> を使用してBean名でDIする。</p>
 </div>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p><strong>Java SE 11で&#64;Resourceを使用する場合</strong></p>
+<p class="last"><code class="docutils literal"><span class="pre">&#64;Resource</span></code> はCommon Annotationsで提供されるアノテーションである。
+Java SE 11環境にてCommon Annotationsを利用するには<a class="reference internal" href="../Appendix/Java11Changes.html#remove-common-annotations-from-java11"><span class="std std-ref">Common Annotationsの削除</span></a>を参照されたい。</p>
+</div>
 </div>
 </div>
 </div>
@@ -9082,58 +9084,48 @@ PassayのAPIは以下の三つの主要コンポーネントで構成される�
         <li class="right" >
           <a href="OAuth.html" title="9.9. OAuth"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Macchinetta Server Framework (1.x) Development Guideline 1.5.1.RELEASE documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Macchinetta Server Framework (1.x) Development Guideline 1.6.1.RELEASE documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="index.html" >9. セキュリティ対策</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2013-2018, NTT Corporation.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.6.2.Theme is <a href="http://github.com/vimalkvn/solar-theme">Solar</a>
+        &copy; Copyright 2013, NTT Corporation.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.6.3.Theme is <a href="http://github.com/vimalkvn/solar-theme">Solar</a>
     </div>
     
     <script>
-     
-     $(function() {
-    	   var $sidebar	= $('.sphinxsidebar'),
-    		     $window		= $(window),
-    		     offset		= $sidebar.offset(),
-    		     topPadding	= 3,
-    		     $scroll		= $('#scroll');
-    	   
-    	   $window.scroll(function() {
-    		     if ($scroll.is(':checked')) {
-				         if ($window.scrollTop() > offset.top) {
-					           $sidebar.stop().animate({
-						             marginTop:$window.scrollTop() - offset.top + topPadding
-					           });
-				         } else {
-					           $sidebar.stop().animate({
-						             marginTop:0
-					           });
-				         }
-			       }
-		     });
-    	   
-    	   var $navList = $('ul:first', $sidebar);
-    	   $('li:first', $navList).addClass('open');
-    	   
-    	   $navList.treeview({
-    		     persist: "location",
-    		     collapsed: true,
-    		     unique: false
-    	   });
-    	   
-	   });
-    </script>
     
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-113850349-2"></script>
-    <script>
-     window.dataLayer = window.dataLayer || [];
-     function gtag(){dataLayer.push(arguments);}
-     gtag('js', new Date());
-
-     gtag('config', 'UA-113850349-2');
+    $(function() {
+    	var $sidebar	= $('.sphinxsidebar'),
+    		$window		= $(window),
+    		offset		= $sidebar.offset(),
+    		topPadding	= 3,
+    		$scroll		= $('#scroll');
+    	
+    	$window.scroll(function() {
+    		if ($scroll.is(':checked')) {
+				if ($window.scrollTop() > offset.top) {
+					$sidebar.stop().animate({
+						marginTop:$window.scrollTop() - offset.top + topPadding
+					});
+				} else {
+					$sidebar.stop().animate({
+						marginTop:0
+					});
+				}
+			}
+		});
+    	
+    	var $navList = $('ul:first', $sidebar);
+    	$('li:first', $navList).addClass('open');
+    	
+    	$navList.treeview({
+    		persist: "location",
+    		collapsed: true,
+    		unique: false
+    	});
+    	
+	});
     </script>
   </body>
 </html>

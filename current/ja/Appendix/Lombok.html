@@ -3,16 +3,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>12.2. ボイラープレートコードの排除(Lombok) &#8212; Macchinetta Server Framework (1.x) Development Guideline 1.5.1.RELEASE documentation</title>
-    
+    <title>12.2. ボイラープレートコードの排除(Lombok) &#8212; Macchinetta Server Framework (1.x) Development Guideline 1.6.1.RELEASE documentation</title>
     <link rel="stylesheet" href="../_static/solar.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '1.5.1.RELEASE',
+        VERSION:     '1.6.1.RELEASE',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true,
@@ -24,7 +21,7 @@
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="12.3. 参考書籍" href="ReferenceBooks.html" />
+    <link rel="next" title="12.3. Java SE 8からJava SE 11までの主要な変更点" href="Java11Changes.html" />
     <link rel="prev" title="12.1. NEXUSによるMavenリポジトリの管理" href="Nexus.html" /><script src="../_static/jquery.treeview.js" type="text/javascript"></script>
 <!-- <link href='http://fonts.googleapis.com/css?family=Source+Code+Pro|Open+Sans:300italic,400italic,700italic,400,300,700' rel='stylesheet' type='text/css'> -->
 <link href="../_static/solarized-dark.css" rel="stylesheet">
@@ -38,12 +35,12 @@
           <a href="../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="ReferenceBooks.html" title="12.3. 参考書籍"
+          <a href="Java11Changes.html" title="12.3. Java SE 8からJava SE 11までの主要な変更点"
              accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="Nexus.html" title="12.1. NEXUSによるMavenリポジトリの管理"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Macchinetta Server Framework (1.x) Development Guideline 1.5.1.RELEASE documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Macchinetta Server Framework (1.x) Development Guideline 1.6.1.RELEASE documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">12. Appendix(Know How)</a> &#187;</li> 
       </ul>
     </div>
@@ -84,8 +81,8 @@
   <p class="topless"><a href="Nexus.html"
                         title="previous chapter">12.1. NEXUSによるMavenリポジトリの管理</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="ReferenceBooks.html"
-                        title="next chapter">12.3. 参考書籍</a></p>
+  <p class="topless"><a href="Java11Changes.html"
+                        title="next chapter">12.3. Java SE 8からJava SE 11までの主要な変更点</a></p>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
@@ -302,7 +299,7 @@ JavaBeanとして必要なメソッドがLombokによって生成される。</p
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">上記設定例は、依存ライブラリのバージョンを親プロジェクトである terasoluna-gfw-parent で管理する前提であるため、pom.xmlでのバージョンの指定は不要である。
-上記の依存ライブラリはterasoluna-gfw-parentが利用している<a class="reference external" href="http://platform.spring.io/platform/">Spring IO Platform</a>で定義済みである。</p>
+上記の依存ライブラリはterasoluna-gfw-parentが依存している<a class="reference external" href="https://docs.spring.io/spring-boot/docs/2.1.2.RELEASE/reference/htmlsingle/#appendix-dependency-versions">Spring Boot</a>で管理されている。</p>
 </div>
 <div class="line-block">
 <div class="line"><br /></div>
@@ -762,6 +759,9 @@ Demo Videoは4分弱で構成されており、最も基本的な使い方が説
 </tr>
 </tbody>
 </table>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
 <div class="admonition tip">
 <p class="first admonition-title">Tip</p>
 <p class="last">上記例で扱っている<code class="docutils literal"><span class="pre">User</span></code>クラスを、JavaBeanではなく、Immutableなクラスにしたい場合は、
@@ -787,7 +787,7 @@ Demo Videoは4分弱で構成されており、最も基本的な使い方が説
 <span class="nd">@Service</span>
 <span class="kd">public</span> <span class="kd">class</span> <span class="nc">AuthenticationService</span> <span class="o">{</span>
 
-    <span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">Logger</span> <span class="n">log</span> <span class="o">=</span> <span class="n">LoggerFactory</span><span class="o">.</span><span class="na">getLogger</span><span class="o">(</span><span class="n">AuthenticationService</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+    <span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">Logger</span> <span class="n">logger</span> <span class="o">=</span> <span class="n">LoggerFactory</span><span class="o">.</span><span class="na">getLogger</span><span class="o">(</span><span class="n">AuthenticationService</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
 
     <span class="kd">public</span> <span class="kt">void</span> <span class="nf">login</span><span class="o">(</span><span class="n">String</span> <span class="n">userId</span><span class="o">,</span> <span class="n">String</span> <span class="n">password</span><span class="o">)</span> <span class="o">{</span>
         <span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">&quot;{} had tried login.&quot;</span><span class="o">,</span> <span class="n">userId</span><span class="o">);</span>
@@ -876,63 +876,53 @@ Demo Videoは4分弱で構成されており、最も基本的な使い方が説
           <a href="../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="ReferenceBooks.html" title="12.3. 参考書籍"
+          <a href="Java11Changes.html" title="12.3. Java SE 8からJava SE 11までの主要な変更点"
              >next</a> |</li>
         <li class="right" >
           <a href="Nexus.html" title="12.1. NEXUSによるMavenリポジトリの管理"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Macchinetta Server Framework (1.x) Development Guideline 1.5.1.RELEASE documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Macchinetta Server Framework (1.x) Development Guideline 1.6.1.RELEASE documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="index.html" >12. Appendix(Know How)</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2013-2018, NTT Corporation.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.6.2.Theme is <a href="http://github.com/vimalkvn/solar-theme">Solar</a>
+        &copy; Copyright 2013, NTT Corporation.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.6.3.Theme is <a href="http://github.com/vimalkvn/solar-theme">Solar</a>
     </div>
     
     <script>
-     
-     $(function() {
-    	   var $sidebar	= $('.sphinxsidebar'),
-    		     $window		= $(window),
-    		     offset		= $sidebar.offset(),
-    		     topPadding	= 3,
-    		     $scroll		= $('#scroll');
-    	   
-    	   $window.scroll(function() {
-    		     if ($scroll.is(':checked')) {
-				         if ($window.scrollTop() > offset.top) {
-					           $sidebar.stop().animate({
-						             marginTop:$window.scrollTop() - offset.top + topPadding
-					           });
-				         } else {
-					           $sidebar.stop().animate({
-						             marginTop:0
-					           });
-				         }
-			       }
-		     });
-    	   
-    	   var $navList = $('ul:first', $sidebar);
-    	   $('li:first', $navList).addClass('open');
-    	   
-    	   $navList.treeview({
-    		     persist: "location",
-    		     collapsed: true,
-    		     unique: false
-    	   });
-    	   
-	   });
-    </script>
     
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-113850349-2"></script>
-    <script>
-     window.dataLayer = window.dataLayer || [];
-     function gtag(){dataLayer.push(arguments);}
-     gtag('js', new Date());
-
-     gtag('config', 'UA-113850349-2');
+    $(function() {
+    	var $sidebar	= $('.sphinxsidebar'),
+    		$window		= $(window),
+    		offset		= $sidebar.offset(),
+    		topPadding	= 3,
+    		$scroll		= $('#scroll');
+    	
+    	$window.scroll(function() {
+    		if ($scroll.is(':checked')) {
+				if ($window.scrollTop() > offset.top) {
+					$sidebar.stop().animate({
+						marginTop:$window.scrollTop() - offset.top + topPadding
+					});
+				} else {
+					$sidebar.stop().animate({
+						marginTop:0
+					});
+				}
+			}
+		});
+    	
+    	var $navList = $('ul:first', $sidebar);
+    	$('li:first', $navList).addClass('open');
+    	
+    	$navList.treeview({
+    		persist: "location",
+    		collapsed: true,
+    		unique: false
+    	});
+    	
+	});
     </script>
   </body>
 </html>

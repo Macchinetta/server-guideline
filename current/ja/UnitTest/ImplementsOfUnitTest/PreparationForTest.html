@@ -3,16 +3,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>10.2.1. テストの事前準備 &#8212; Macchinetta Server Framework (1.x) Development Guideline 1.5.1.RELEASE documentation</title>
-    
+    <title>10.2.1. テストの事前準備 &#8212; Macchinetta Server Framework (1.x) Development Guideline 1.6.1.RELEASE documentation</title>
     <link rel="stylesheet" href="../../_static/solar.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '1.5.1.RELEASE',
+        VERSION:     '1.6.1.RELEASE',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true,
@@ -43,7 +40,7 @@
         <li class="right" >
           <a href="index.html" title="10.2. 単体テストの実装"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">Macchinetta Server Framework (1.x) Development Guideline 1.5.1.RELEASE documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Macchinetta Server Framework (1.x) Development Guideline 1.6.1.RELEASE documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../index.html" >10. 単体テスト</a> &#187;</li>
           <li class="nav-item nav-item-2"><a href="index.html" accesskey="U">10.2. 単体テストの実装</a> &#187;</li> 
       </ul>
@@ -306,7 +303,7 @@ initdbプロジェクトについては、<a class="reference internal" href="..
 <li>SQL解析メタデータ(<code class="docutils literal"><span class="pre">config</span></code>に<code class="docutils literal"><span class="pre">&#64;SqlConfig</span></code>アノテーションを指定)</li>
 </ul>
 <p>また、<code class="docutils literal"><span class="pre">&#64;Sql</span></code>アノテーションはデフォルトで有効になっている<code class="docutils literal"><span class="pre">SqlScriptsTestExecutionListener</span></code>によって
-実行される。詳細は、<a class="reference external" href="https://docs.spring.io/spring/docs/4.3.14.RELEASE/spring-framework-reference/html/integration-testing.html#testcontext-executing-sql-declaratively">Executing SQL scripts declaratively with &#64;Sql</a>を参照されたい。</p>
+実行される。詳細は、<a class="reference external" href="https://docs.spring.io/spring/docs/5.1.4.RELEASE/spring-framework-reference/testing.html#testcontext-executing-sql-declaratively">Executing SQL scripts declaratively with &#64;Sql</a>を参照されたい。</p>
 <p class="last">なお、<code class="docutils literal"><span class="pre">&#64;Sql</span></code>アノテーションと<code class="docutils literal"><span class="pre">&#64;SqlConfig</span></code>アノテーションによる構成は<code class="docutils literal"><span class="pre">&lt;jdbc:initialize-database&gt;</span></code>要素
 による構成の上位セットである。</p>
 </div>
@@ -325,8 +322,8 @@ initdbプロジェクトについては、<a class="reference internal" href="..
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p><strong>&#64;Sqlの複数指定</strong></p>
-<p class="last"><code class="docutils literal"><span class="pre">&#64;Sql</span></code>にはJava SE8から追加された<code class="docutils literal"><span class="pre">&#64;Repeatable</span></code>が付与されているため、Java SE8以降を使う場合は同じ箇所に
-複数指定することができる。なお、Java SE7以前を使用する場合は、<code class="docutils literal"><span class="pre">&#64;org.springframework.test.context.jdbc.SqlGroup</span></code>を使用することで<code class="docutils literal"><span class="pre">&#64;Sql</span></code>を複数指定することができる。</p>
+<p class="last"><code class="docutils literal"><span class="pre">&#64;Sql</span></code>にはJava SE8から追加された<code class="docutils literal"><span class="pre">&#64;Repeatable</span></code>が付与されているため、同じ箇所に複数指定することができる。
+なお、<code class="docutils literal"><span class="pre">&#64;org.springframework.test.context.jdbc.SqlGroup</span></code>を使用して、<code class="docutils literal"><span class="pre">&#64;Sql</span></code>を配列で複数指定することも可能である。</p>
 </div>
 </div>
 <div class="section" id="spring-test-dbunit">
@@ -450,7 +447,10 @@ Flat XML形式のファイルに対応した<code class="docutils literal"><span
 <div><div class="highlight-xml"><div class="highlight"><pre><span></span><span class="c">&lt;!-- (1) --&gt;</span>
 <span class="cp">&lt;?xml version=&#39;1.0&#39; encoding=&#39;UTF-8&#39;?&gt;</span>
 <span class="nt">&lt;dataset&gt;</span>
-    <span class="nt">&lt;MEMBER_LOGIN</span> <span class="na">CUSTOMER_NO=</span><span class="s">&quot;0000000001&quot;</span> <span class="na">PASSWORD=</span><span class="s">&quot;$2a$10$AUvby7NA4i5MpFbks.lYd.pgUCv7Ze32FdnQFE03N4EeEePqVAH0C&quot;</span> <span class="na">LAST_PASSWORD=</span><span class="s">&quot;$2a$10$bJ8HB/5LaMN/ntOQHpgiAu8tfG1Y/rP21MaoK4RBenghxcbhrLW5C&quot;</span> <span class="na">LOGIN_DATE_TIME=</span><span class="s">&quot;2017-09-13 16:47:04.283&quot;</span> <span class="na">LOGIN_FLG=</span><span class="s">&quot;FALSE&quot;</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;MEMBER_LOGIN</span> <span class="na">CUSTOMER_NO=</span><span class="s">&quot;0000000001&quot;</span>
+        <span class="na">PASSWORD=</span><span class="s">&quot;{pbkdf2}1030550073b359714fe2f7537fa1a794a5b0866c7adf62f7f974ff0492681d0db41f95c66be98f94&quot;</span>
+        <span class="na">LAST_PASSWORD=</span><span class="s">&quot;{pbkdf2}8f702ea4c50c58921c8be11b811a535d5c29856fc4f50b8545efe13914ac87e880cb5b7d390e770b&quot;</span>
+        <span class="na">LOGIN_DATE_TIME=</span><span class="s">&quot;2017-09-13 16:47:04.283&quot;</span> <span class="na">LOGIN_FLG=</span><span class="s">&quot;FALSE&quot;</span> <span class="nt">/&gt;</span>
 <span class="nt">&lt;/dataset&gt;</span>
 </pre></div>
 </div>
@@ -520,7 +520,23 @@ Flat XML形式のファイルに対応した<code class="docutils literal"><span
     <span class="nt">&lt;/bean&gt;</span>
 
     <span class="c">&lt;!-- (2) --&gt;</span>
-    <span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">&quot;passwordEncoder&quot;</span> <span class="na">class=</span><span class="s">&quot;org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder&quot;</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">&quot;passwordEncoder&quot;</span> <span class="na">class=</span><span class="s">&quot;org.springframework.security.crypto.password.DelegatingPasswordEncoder&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;constructor-arg</span> <span class="na">name=</span><span class="s">&quot;idForEncode&quot;</span> <span class="na">value=</span><span class="s">&quot;pbkdf2&quot;</span> <span class="nt">/&gt;</span>
+      <span class="nt">&lt;constructor-arg</span> <span class="na">name=</span><span class="s">&quot;idToPasswordEncoder&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;map&gt;</span>
+          <span class="nt">&lt;entry</span> <span class="na">key=</span><span class="s">&quot;pbkdf2&quot;</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;bean</span> <span class="na">class=</span><span class="s">&quot;org.springframework.security.crypto.password.Pbkdf2PasswordEncoder&quot;</span> <span class="nt">/&gt;</span>
+          <span class="nt">&lt;/entry&gt;</span>
+          <span class="nt">&lt;entry</span> <span class="na">key=</span><span class="s">&quot;bcrypt&quot;</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;bean</span> <span class="na">class=</span><span class="s">&quot;org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder&quot;</span> <span class="nt">/&gt;</span>
+          <span class="nt">&lt;/entry&gt;</span>
+          <span class="nt">&lt;entry</span> <span class="na">key=</span><span class="s">&quot;scrypt&quot;</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;bean</span> <span class="na">class=</span><span class="s">&quot;org.springframework.security.crypto.scrypt.SCryptPasswordEncoder&quot;</span> <span class="nt">/&gt;</span>
+          <span class="nt">&lt;/entry&gt;</span>
+        <span class="nt">&lt;/map&gt;</span>
+      <span class="nt">&lt;/constructor-arg&gt;</span>
+    <span class="nt">&lt;/bean&gt;</span>
+
 
 <span class="nt">&lt;/beans&gt;</span>
 </pre></div>
@@ -578,59 +594,49 @@ Flat XML形式のファイルに対応した<code class="docutils literal"><span
         <li class="right" >
           <a href="index.html" title="10.2. 単体テストの実装"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">Macchinetta Server Framework (1.x) Development Guideline 1.5.1.RELEASE documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Macchinetta Server Framework (1.x) Development Guideline 1.6.1.RELEASE documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../index.html" >10. 単体テスト</a> &#187;</li>
           <li class="nav-item nav-item-2"><a href="index.html" >10.2. 単体テストの実装</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2013-2018, NTT Corporation.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.6.2.Theme is <a href="http://github.com/vimalkvn/solar-theme">Solar</a>
+        &copy; Copyright 2013, NTT Corporation.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.6.3.Theme is <a href="http://github.com/vimalkvn/solar-theme">Solar</a>
     </div>
     
     <script>
-     
-     $(function() {
-    	   var $sidebar	= $('.sphinxsidebar'),
-    		     $window		= $(window),
-    		     offset		= $sidebar.offset(),
-    		     topPadding	= 3,
-    		     $scroll		= $('#scroll');
-    	   
-    	   $window.scroll(function() {
-    		     if ($scroll.is(':checked')) {
-				         if ($window.scrollTop() > offset.top) {
-					           $sidebar.stop().animate({
-						             marginTop:$window.scrollTop() - offset.top + topPadding
-					           });
-				         } else {
-					           $sidebar.stop().animate({
-						             marginTop:0
-					           });
-				         }
-			       }
-		     });
-    	   
-    	   var $navList = $('ul:first', $sidebar);
-    	   $('li:first', $navList).addClass('open');
-    	   
-    	   $navList.treeview({
-    		     persist: "location",
-    		     collapsed: true,
-    		     unique: false
-    	   });
-    	   
-	   });
-    </script>
     
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-113850349-2"></script>
-    <script>
-     window.dataLayer = window.dataLayer || [];
-     function gtag(){dataLayer.push(arguments);}
-     gtag('js', new Date());
-
-     gtag('config', 'UA-113850349-2');
+    $(function() {
+    	var $sidebar	= $('.sphinxsidebar'),
+    		$window		= $(window),
+    		offset		= $sidebar.offset(),
+    		topPadding	= 3,
+    		$scroll		= $('#scroll');
+    	
+    	$window.scroll(function() {
+    		if ($scroll.is(':checked')) {
+				if ($window.scrollTop() > offset.top) {
+					$sidebar.stop().animate({
+						marginTop:$window.scrollTop() - offset.top + topPadding
+					});
+				} else {
+					$sidebar.stop().animate({
+						marginTop:0
+					});
+				}
+			}
+		});
+    	
+    	var $navList = $('ul:first', $sidebar);
+    	$('li:first', $navList).addClass('open');
+    	
+    	$navList.treeview({
+    		persist: "location",
+    		collapsed: true,
+    		unique: false
+    	});
+    	
+	});
     </script>
   </body>
 </html>

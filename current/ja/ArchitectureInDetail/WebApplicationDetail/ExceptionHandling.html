@@ -3,16 +3,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>4.2. 例外ハンドリング &#8212; Macchinetta Server Framework (1.x) Development Guideline 1.5.1.RELEASE documentation</title>
-    
+    <title>4.2. 例外ハンドリング &#8212; Macchinetta Server Framework (1.x) Development Guideline 1.6.1.RELEASE documentation</title>
     <link rel="stylesheet" href="../../_static/solar.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '1.5.1.RELEASE',
+        VERSION:     '1.6.1.RELEASE',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true,
@@ -43,7 +40,7 @@
         <li class="right" >
           <a href="Validation.html" title="4.1. 入力チェック"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">Macchinetta Server Framework (1.x) Development Guideline 1.5.1.RELEASE documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Macchinetta Server Framework (1.x) Development Guideline 1.6.1.RELEASE documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">4. Webアプリ開発機能</a> &#187;</li> 
       </ul>
     </div>
@@ -107,7 +104,7 @@
 </li>
 <li><a class="reference internal" href="#exception-handling-how-to-use-codingpoint-jsp-label">4.2.3.4. コーディングポイント（JSP編）</a><ul>
 <li><a class="reference internal" href="#messagespaneltag">4.2.3.4.1. MessagesPanelTagを使用して、メッセージを画面表示する方法</a></li>
-<li><a class="reference internal" href="#exception-handling-how-to-use-codingpoint-jsp-exceptioncode-label">4.2.3.4.2. システム例外の例外コードを、画面表示する方法</a></li>
+<li><a class="reference internal" href="#exception-handling-how-to-use-codingpoint-view-exceptioncode-label">4.2.3.4.2. システム例外の例外コードを、画面表示する方法</a></li>
 </ul>
 </li>
 </ul>
@@ -118,7 +115,7 @@
 <li><a class="reference internal" href="#systemexceptionresolver">4.2.5.2. SystemExceptionResolverの設定項目について</a><ul>
 <li><a class="reference internal" href="#id35">4.2.5.2.1. 結果メッセージの属性名</a></li>
 <li><a class="reference internal" href="#id">4.2.5.2.2. 例外コード(メッセージID)の属性名</a></li>
-<li><a class="reference internal" href="#id36">4.2.5.2.3. 例外コード(メッセージID)のヘッダー名</a></li>
+<li><a class="reference internal" href="#id36">4.2.5.2.3. 例外コード(メッセージID)のヘッダ名</a></li>
 <li><a class="reference internal" href="#id37">4.2.5.2.4. 例外オブジェクトの属性名</a></li>
 <li><a class="reference internal" href="#http">4.2.5.2.5. HTTPレスポンスのキャッシュ制御有無</a></li>
 </ul>
@@ -225,7 +222,7 @@
 </li>
 <li><a class="reference internal" href="#exception-handling-how-to-use-codingpoint-jsp-label" id="id95">コーディングポイント（JSP編）</a><ul>
 <li><a class="reference internal" href="#messagespaneltag" id="id96">MessagesPanelTagを使用して、メッセージを画面表示する方法</a></li>
-<li><a class="reference internal" href="#exception-handling-how-to-use-codingpoint-jsp-exceptioncode-label" id="id97">システム例外の例外コードを、画面表示する方法</a></li>
+<li><a class="reference internal" href="#exception-handling-how-to-use-codingpoint-view-exceptioncode-label" id="id97">システム例外の例外コードを、画面表示する方法</a></li>
 </ul>
 </li>
 </ul>
@@ -236,7 +233,7 @@
 <li><a class="reference internal" href="#systemexceptionresolver" id="id101">SystemExceptionResolverの設定項目について</a><ul>
 <li><a class="reference internal" href="#id35" id="id102">結果メッセージの属性名</a></li>
 <li><a class="reference internal" href="#id" id="id103">例外コード(メッセージID)の属性名</a></li>
-<li><a class="reference internal" href="#id36" id="id104">例外コード(メッセージID)のヘッダー名</a></li>
+<li><a class="reference internal" href="#id36" id="id104">例外コード(メッセージID)のヘッダ名</a></li>
 <li><a class="reference internal" href="#id37" id="id105">例外オブジェクトの属性名</a></li>
 <li><a class="reference internal" href="#http" id="id106">HTTPレスポンスのキャッシュ制御有無</a></li>
 </ul>
@@ -1306,7 +1303,7 @@ ResultMessagesLoggingInterceptorはResultMessagesNotificationExceptionのサブ�
 <div class="last admonition note">
 <p class="first admonition-title">Note</p>
 <p><strong>例外コード(メッセージID)について</strong></p>
-<p class="last">例外コードは、ExceptionLoggerによりログに出力される。（画面での取得も可能である。View(JSP)から例外コードを参照する方法については、<a class="reference internal" href="#exception-handling-how-to-use-codingpoint-jsp-exceptioncode-label"><span class="std std-ref">システム例外の例外コードを、画面表示する方法</span></a>を参照されたい。）
+<p class="last">例外コードは、ExceptionLoggerによりログに出力される。（画面での取得も可能である。View(JSP)から例外コードを参照する方法については、<a class="reference internal" href="#exception-handling-how-to-use-codingpoint-view-exceptioncode-label"><span class="std std-ref">システム例外の例外コードを、画面表示する方法</span></a>を参照されたい。）
 またコード体系については、プロパティに定義している形式でなくともよい。
 例えば、MA7001等</p>
 </div>
@@ -1720,22 +1717,7 @@ Viewの解決を<code class="docutils literal"><span class="pre">web.xml</span><
 <li><code class="docutils literal"><span class="pre">/WEB-INF/views/common/error/transactionTokenError.jsp</span></code></li>
 <li><code class="docutils literal"><span class="pre">/WEB-INF/views/common/error/dataAccessError.jsp</span></code></li>
 </ul>
-<p>が遷移先となる。</p>
-<div class="last admonition tip">
-<p class="first admonition-title">Tip</p>
-<p><code class="docutils literal"><span class="pre">&lt;mvc:view-resolvers&gt;</span></code>要素はSpring Framework 4.1から追加されたXML要素である。
-<code class="docutils literal"><span class="pre">&lt;mvc:view-resolvers&gt;</span></code>要素を使用すると、<code class="docutils literal"><span class="pre">ViewResolver</span></code>をシンプルに定義することが出来る。</p>
-<p>従来通り<code class="docutils literal"><span class="pre">&lt;bean&gt;</span></code>要素を使用した場合の定義例を以下に示す。</p>
-<blockquote class="last">
-<div><div class="highlight-xml"><div class="highlight"><pre><span></span><span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">&quot;viewResolver&quot;</span>
-    <span class="na">class=</span><span class="s">&quot;org.springframework.web.servlet.view.InternalResourceViewResolver&quot;</span><span class="nt">&gt;</span>
-    <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">&quot;prefix&quot;</span> <span class="na">value=</span><span class="s">&quot;/WEB-INF/views/&quot;</span> <span class="nt">/&gt;</span>
-    <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">&quot;suffix&quot;</span> <span class="na">value=</span><span class="s">&quot;.jsp&quot;</span> <span class="nt">/&gt;</span>
-<span class="nt">&lt;/bean&gt;</span>
-</pre></div>
-</div>
-</div></blockquote>
-</div>
+<p class="last">が遷移先となる。</p>
 </td>
 </tr>
 </tbody>
@@ -2742,7 +2724,7 @@ Controllerなどでビジネス例外は、ログを出力しない。プロジ�
 <p>例外ハンドリングを行う際の、JSPでのコーディングポイントを、以下に示す。</p>
 <ol class="arabic simple">
 <li><a class="reference internal" href="#exception-handling-how-to-use-codingpoint-jsp-panel-label"><span class="std std-ref">MessagesPanelTagを使用して、メッセージを画面表示する方法</span></a></li>
-<li><a class="reference internal" href="#exception-handling-how-to-use-codingpoint-jsp-exceptioncode-label"><span class="std std-ref">システム例外の例外コードを、画面表示する方法</span></a></li>
+<li><a class="reference internal" href="#exception-handling-how-to-use-codingpoint-view-exceptioncode-label"><span class="std std-ref">システム例外の例外コードを、画面表示する方法</span></a></li>
 </ol>
 <div class="admonition tip">
 <p class="first admonition-title">Tip</p>
@@ -2778,8 +2760,8 @@ Controllerなどでビジネス例外は、ログを出力しない。プロジ�
 </table>
 </div></blockquote>
 </div>
-<div class="section" id="exception-handling-how-to-use-codingpoint-jsp-exceptioncode-label">
-<span id="id33"></span><h4><a class="toc-backref" href="#id97">4.2.3.4.2. システム例外の例外コードを、画面表示する方法</a><a class="headerlink" href="#exception-handling-how-to-use-codingpoint-jsp-exceptioncode-label" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="exception-handling-how-to-use-codingpoint-view-exceptioncode-label">
+<span id="id33"></span><h4><a class="toc-backref" href="#id97">4.2.3.4.2. システム例外の例外コードを、画面表示する方法</a><a class="headerlink" href="#exception-handling-how-to-use-codingpoint-view-exceptioncode-label" title="Permalink to this headline">¶</a></h4>
 <p>任意の場所に、例外コード(メッセージID)と、固定メッセージを表示する際の実装例を、以下に示す。</p>
 <blockquote>
 <div><div class="highlight-xml"><div class="highlight"><pre><span></span><span class="nt">&lt;p&gt;</span>
@@ -3252,7 +3234,7 @@ Controllerなどでビジネス例外は、ログを出力しない。プロジ�
 </div>
 </td>
 <td><div class="first last line-block">
-<div class="line">例外コード(メッセージID)のヘッダー名</div>
+<div class="line">例外コード(メッセージID)のヘッダ名</div>
 </div>
 </td>
 <td><div class="first last line-block">
@@ -3261,7 +3243,7 @@ Controllerなどでビジネス例外は、ログを出力しない。プロジ�
 </div>
 </td>
 <td><div class="first last line-block">
-<div class="line">例外コード(メッセージID)として、HttpServletResponseのレスポンスヘッダーに設定する際のヘッダー名(String)を指定する。</div>
+<div class="line">例外コード(メッセージID)として、HttpServletResponseのレスポンスヘッダに設定する際のヘッダ名(String)を指定する。</div>
 </div>
 </td>
 <td>X-Exception-Code</td>
@@ -3349,7 +3331,7 @@ Controllerなどでビジネス例外は、ログを出力しない。プロジ�
 </td>
 <td><div class="first last line-block">
 <div class="line">HTTPレスポンス時のキャッシュ制御の有無(true:有 false:無)を指定する。</div>
-<div class="line">true:有を指定すると、キャッシュを無効にするためのHTTPレスポンスヘッダーが追加される。</div>
+<div class="line">true:有を指定すると、キャッシュを無効にするためのHTTPレスポンスヘッダが追加される。</div>
 </div>
 </td>
 <td><div class="first last line-block">
@@ -3497,9 +3479,9 @@ Controllerなどでビジネス例外は、ログを出力しない。プロジ�
 </div></blockquote>
 </div>
 <div class="section" id="id36">
-<h4><a class="toc-backref" href="#id104">4.2.5.2.3. 例外コード(メッセージID)のヘッダー名</a><a class="headerlink" href="#id36" title="Permalink to this headline">¶</a></h4>
+<h4><a class="toc-backref" href="#id104">4.2.5.2.3. 例外コード(メッセージID)のヘッダ名</a><a class="headerlink" href="#id36" title="Permalink to this headline">¶</a></h4>
 <div class="line-block">
-<div class="line">デフォルトのヘッダー名が使用されている場合、重複を避けるために、別の値を設定すること。重複がない場合は、デフォルト値を変更する必要はない。</div>
+<div class="line">デフォルトのヘッダ名が使用されている場合、重複を避けるために、別の値を設定すること。重複がない場合は、デフォルト値を変更する必要はない。</div>
 <div class="line">下記は、デフォルト値から「X-Exception-Code-ForExceptionResolver」に変更する場合の、設定&amp;実装例である。</div>
 </div>
 <ul>
@@ -3533,7 +3515,7 @@ Controllerなどでビジネス例外は、ログを出力しない。プロジ�
 </div>
 </td>
 <td><div class="first last line-block">
-<div class="line">例外コード(メッセージID)のヘッダー名(exceptionCodeHeader)に、”X-Exception-Code-ForExceptionResolver”を指定する。</div>
+<div class="line">例外コード(メッセージID)のヘッダ名(exceptionCodeHeader)に、”X-Exception-Code-ForExceptionResolver”を指定する。</div>
 </div>
 </td>
 </tr>
@@ -3604,7 +3586,7 @@ Controllerなどでビジネス例外は、ログを出力しない。プロジ�
 <div class="section" id="http">
 <span id="exception-handling-http-response-cache"></span><h4><a class="toc-backref" href="#id106">4.2.5.2.5. HTTPレスポンスのキャッシュ制御有無</a><a class="headerlink" href="#http" title="Permalink to this headline">¶</a></h4>
 <div class="line-block">
-<div class="line">HTTPレスポンスに、キャッシュ制御用のヘッダーを追加したい場合は、true:有を指定する。</div>
+<div class="line">HTTPレスポンスに、キャッシュ制御用のヘッダを追加したい場合は、true:有を指定する。</div>
 </div>
 <ul>
 <li><p class="first"><strong>spring-mvc.xml</strong></p>
@@ -3645,15 +3627,21 @@ Controllerなどでビジネス例外は、ログを出力しない。プロジ�
 </table>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p><strong>有を指定した場合のHTTPレスポンスヘッダー</strong></p>
-<p>HTTPレスポンスのキャッシュ制御有無を有にすると、以下のHTTPレスポンスヘッダーが出力される。</p>
+<p><strong>有を指定した場合のHTTPレスポンスヘッダ</strong></p>
+<p>HTTPレスポンスのキャッシュ制御有無を有にすると、以下のHTTPレスポンスヘッダが出力される。</p>
 <blockquote>
 <div><div class="line-block">
 <div class="line">Cache-Control:no-store</div>
 </div>
 </div></blockquote>
-<p class="last"><code class="docutils literal"><span class="pre">SystemExceptionResolver</span></code>によるキャッシュ制御用のヘッダー追加はブラウザキャッシュによる意図しないエラー画面の表示を抑止するためのオプションであるが、Spring Securityの機能を使用してセキュリティの観点からキャッシュ制御用のヘッダーを追加することも可能である。
+<p class="last"><code class="docutils literal"><span class="pre">SystemExceptionResolver</span></code>によるキャッシュ制御用のヘッダ追加はブラウザキャッシュによる意図しないエラー画面の表示を抑止するためのオプションであるが、Spring Securityの機能を使用してセキュリティの観点からキャッシュ制御用のヘッダを追加することも可能である。
 Spring Securityの機能については、<a class="reference internal" href="../../Security/LinkageWithBrowser.html#springsecuritylinkagewithbrowser"><span class="std std-ref">ブラウザのセキュリティ対策機能との連携</span></a>を参照されたい。</p>
+</div>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p><strong>SpringSecurityのCache-Controlヘッダを利用する場合の注意点</strong></p>
+<p class="last"><code class="docutils literal"><span class="pre">SystemExceptionResolver</span></code>のキャッシュ制御とSpring SecurityのCache-Controlヘッダを有効にした場合、<code class="docutils literal"><span class="pre">SystemExceptionResolver</span></code>のキャッシュ制御が優先される。
+これにより、正常時はSpring Securityでは<code class="docutils literal"><span class="pre">no-store</span></code>以外も付与されるが、例外時は<code class="docutils literal"><span class="pre">no-store</span></code>のみ付与されるため、意図したとおりにキャッシュを制御できない恐れがあることに注意されたい。</p>
 </div>
 </div></blockquote>
 </div>
@@ -3823,19 +3811,6 @@ Spring Securityの機能については、<a class="reference internal" href="..
 </div>
 </td>
 <td><div class="first last line-block">
-<div class="line">org.springframework.web.servlet.mvc.multiaction.NoSuchRequestHandlingMethodException</div>
-</div>
-</td>
-<td><div class="first last line-block">
-<div class="line">404</div>
-</div>
-</td>
-</tr>
-<tr class="row-odd"><td><div class="first last line-block">
-<div class="line">(2)</div>
-</div>
-</td>
-<td><div class="first last line-block">
 <div class="line">org.springframework.web.HttpRequestMethodNotSupportedException</div>
 </div>
 </td>
@@ -3844,8 +3819,8 @@ Spring Securityの機能については、<a class="reference internal" href="..
 </div>
 </td>
 </tr>
-<tr class="row-even"><td><div class="first last line-block">
-<div class="line">(3)</div>
+<tr class="row-odd"><td><div class="first last line-block">
+<div class="line">(2)</div>
 </div>
 </td>
 <td><div class="first last line-block">
@@ -3857,8 +3832,8 @@ Spring Securityの機能については、<a class="reference internal" href="..
 </div>
 </td>
 </tr>
-<tr class="row-odd"><td><div class="first last line-block">
-<div class="line">(4)</div>
+<tr class="row-even"><td><div class="first last line-block">
+<div class="line">(3)</div>
 </div>
 </td>
 <td><div class="first last line-block">
@@ -3867,6 +3842,19 @@ Spring Securityの機能については、<a class="reference internal" href="..
 </td>
 <td><div class="first last line-block">
 <div class="line">406</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><div class="first last line-block">
+<div class="line">(4)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">org.springframework.web.bind.MissingPathVariableException</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">500</div>
 </div>
 </td>
 </tr>
@@ -3949,7 +3937,7 @@ Spring Securityの機能については、<a class="reference internal" href="..
 </td>
 </tr>
 <tr class="row-even"><td><div class="first last line-block">
-<div class="line">(11).</div>
+<div class="line">(11)</div>
 </div>
 </td>
 <td><div class="first last line-block">
@@ -4037,58 +4025,48 @@ Spring Securityの機能については、<a class="reference internal" href="..
         <li class="right" >
           <a href="Validation.html" title="4.1. 入力チェック"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">Macchinetta Server Framework (1.x) Development Guideline 1.5.1.RELEASE documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Macchinetta Server Framework (1.x) Development Guideline 1.6.1.RELEASE documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="index.html" >4. Webアプリ開発機能</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2013-2018, NTT Corporation.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.6.2.Theme is <a href="http://github.com/vimalkvn/solar-theme">Solar</a>
+        &copy; Copyright 2013, NTT Corporation.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.6.3.Theme is <a href="http://github.com/vimalkvn/solar-theme">Solar</a>
     </div>
     
     <script>
-     
-     $(function() {
-    	   var $sidebar	= $('.sphinxsidebar'),
-    		     $window		= $(window),
-    		     offset		= $sidebar.offset(),
-    		     topPadding	= 3,
-    		     $scroll		= $('#scroll');
-    	   
-    	   $window.scroll(function() {
-    		     if ($scroll.is(':checked')) {
-				         if ($window.scrollTop() > offset.top) {
-					           $sidebar.stop().animate({
-						             marginTop:$window.scrollTop() - offset.top + topPadding
-					           });
-				         } else {
-					           $sidebar.stop().animate({
-						             marginTop:0
-					           });
-				         }
-			       }
-		     });
-    	   
-    	   var $navList = $('ul:first', $sidebar);
-    	   $('li:first', $navList).addClass('open');
-    	   
-    	   $navList.treeview({
-    		     persist: "location",
-    		     collapsed: true,
-    		     unique: false
-    	   });
-    	   
-	   });
-    </script>
     
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-113850349-2"></script>
-    <script>
-     window.dataLayer = window.dataLayer || [];
-     function gtag(){dataLayer.push(arguments);}
-     gtag('js', new Date());
-
-     gtag('config', 'UA-113850349-2');
+    $(function() {
+    	var $sidebar	= $('.sphinxsidebar'),
+    		$window		= $(window),
+    		offset		= $sidebar.offset(),
+    		topPadding	= 3,
+    		$scroll		= $('#scroll');
+    	
+    	$window.scroll(function() {
+    		if ($scroll.is(':checked')) {
+				if ($window.scrollTop() > offset.top) {
+					$sidebar.stop().animate({
+						marginTop:$window.scrollTop() - offset.top + topPadding
+					});
+				} else {
+					$sidebar.stop().animate({
+						marginTop:0
+					});
+				}
+			}
+		});
+    	
+    	var $navList = $('ul:first', $sidebar);
+    	$('li:first', $navList).addClass('open');
+    	
+    	$navList.treeview({
+    		persist: "location",
+    		collapsed: true,
+    		unique: false
+    	});
+    	
+	});
     </script>
   </body>
 </html>

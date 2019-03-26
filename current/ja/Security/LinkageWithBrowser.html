@@ -3,16 +3,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>9.6. ブラウザのセキュリティ対策機能との連携 &#8212; Macchinetta Server Framework (1.x) Development Guideline 1.5.1.RELEASE documentation</title>
-    
+    <title>9.6. ブラウザのセキュリティ対策機能との連携 &#8212; Macchinetta Server Framework (1.x) Development Guideline 1.6.1.RELEASE documentation</title>
     <link rel="stylesheet" href="../_static/solar.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '1.5.1.RELEASE',
+        VERSION:     '1.6.1.RELEASE',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true,
@@ -43,7 +40,7 @@
         <li class="right" >
           <a href="CSRF.html" title="9.5. CSRF対策"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Macchinetta Server Framework (1.x) Development Guideline 1.5.1.RELEASE documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Macchinetta Server Framework (1.x) Development Guideline 1.6.1.RELEASE documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">9. セキュリティ対策</a> &#187;</li> 
       </ul>
     </div>
@@ -67,11 +64,11 @@
 </ul>
 </li>
 <li><a class="reference internal" href="#how-to-use">9.6.2. How to use</a><ul>
-<li><a class="reference internal" href="#id4">9.6.2.1. セキュリティヘッダ出力機能の適用</a></li>
-<li><a class="reference internal" href="#id5">9.6.2.2. セキュリティヘッダの選択</a></li>
-<li><a class="reference internal" href="#id7">9.6.2.3. セキュリティヘッダのオプション指定</a></li>
-<li><a class="reference internal" href="#id9">9.6.2.4. カスタムヘッダの出力</a></li>
-<li><a class="reference internal" href="#id10">9.6.2.5. リクエストパターン毎のセキュリティヘッダの出力</a></li>
+<li><a class="reference internal" href="#id6">9.6.2.1. セキュリティヘッダ出力機能の適用</a></li>
+<li><a class="reference internal" href="#id7">9.6.2.2. セキュリティヘッダの選択</a></li>
+<li><a class="reference internal" href="#id9">9.6.2.3. セキュリティヘッダのオプション指定</a></li>
+<li><a class="reference internal" href="#id11">9.6.2.4. カスタムヘッダの出力</a></li>
+<li><a class="reference internal" href="#id12">9.6.2.5. リクエストパターン毎のセキュリティヘッダの出力</a></li>
 </ul>
 </li>
 </ul>
@@ -115,31 +112,31 @@
 <div class="contents local topic" id="id2">
 <p class="topic-title first">目次</p>
 <ul class="simple">
-<li><a class="reference internal" href="#overview" id="id11">Overview</a><ul>
-<li><a class="reference internal" href="#id3" id="id12">デフォルトでサポートしているセキュリティヘッダ</a><ul>
-<li><a class="reference internal" href="#cache-control" id="id13">Cache-Control</a></li>
-<li><a class="reference internal" href="#x-frame-options" id="id14">X-Frame-Options</a></li>
-<li><a class="reference internal" href="#x-content-type-options" id="id15">X-Content-Type-Options</a></li>
-<li><a class="reference internal" href="#x-xss-protection" id="id16">X-XSS-Protection</a></li>
-<li><a class="reference internal" href="#strict-transport-security" id="id17">Strict-Transport-Security</a></li>
-<li><a class="reference internal" href="#content-security-policy" id="id18">Content-Security-Policy</a></li>
-<li><a class="reference internal" href="#public-key-pins" id="id19">Public-Key-Pins</a></li>
+<li><a class="reference internal" href="#overview" id="id13">Overview</a><ul>
+<li><a class="reference internal" href="#id3" id="id14">デフォルトでサポートしているセキュリティヘッダ</a><ul>
+<li><a class="reference internal" href="#cache-control" id="id15">Cache-Control</a></li>
+<li><a class="reference internal" href="#x-frame-options" id="id16">X-Frame-Options</a></li>
+<li><a class="reference internal" href="#x-content-type-options" id="id17">X-Content-Type-Options</a></li>
+<li><a class="reference internal" href="#x-xss-protection" id="id18">X-XSS-Protection</a></li>
+<li><a class="reference internal" href="#strict-transport-security" id="id19">Strict-Transport-Security</a></li>
+<li><a class="reference internal" href="#content-security-policy" id="id20">Content-Security-Policy</a></li>
+<li><a class="reference internal" href="#public-key-pins" id="id21">Public-Key-Pins</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a class="reference internal" href="#how-to-use" id="id20">How to use</a><ul>
-<li><a class="reference internal" href="#id4" id="id21">セキュリティヘッダ出力機能の適用</a></li>
-<li><a class="reference internal" href="#id5" id="id22">セキュリティヘッダの選択</a></li>
-<li><a class="reference internal" href="#id7" id="id23">セキュリティヘッダのオプション指定</a></li>
-<li><a class="reference internal" href="#id9" id="id24">カスタムヘッダの出力</a></li>
-<li><a class="reference internal" href="#id10" id="id25">リクエストパターン毎のセキュリティヘッダの出力</a></li>
+<li><a class="reference internal" href="#how-to-use" id="id22">How to use</a><ul>
+<li><a class="reference internal" href="#id6" id="id23">セキュリティヘッダ出力機能の適用</a></li>
+<li><a class="reference internal" href="#id7" id="id24">セキュリティヘッダの選択</a></li>
+<li><a class="reference internal" href="#id9" id="id25">セキュリティヘッダのオプション指定</a></li>
+<li><a class="reference internal" href="#id11" id="id26">カスタムヘッダの出力</a></li>
+<li><a class="reference internal" href="#id12" id="id27">リクエストパターン毎のセキュリティヘッダの出力</a></li>
 </ul>
 </li>
 </ul>
 </div>
 <div class="section" id="overview">
-<h2><a class="toc-backref" href="#id11">9.6.1. Overview</a><a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id13">9.6.1. Overview</a><a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
 <p>本節では、ブラウザが提供しているセキュリティ対策機能との連携方法について説明する。</p>
 <p>主要なWebブラウザは、ブラウザが提供する機能が悪用されないようにするために、いくつかのセキュリティ対策機能を提供している。
 ブラウザが提供するセキュリティ対策機能の一部は、サーバ側でHTTPのレスポンスヘッダを出力することで動作を制御することができる。</p>
@@ -157,8 +154,8 @@
 <p class="last">後述の設定を行ったとしても、アプリケーションにより、HTTPヘッダが上書きされる可能性は存在する。</p>
 </div>
 <div class="section" id="id3">
-<h3><a class="toc-backref" href="#id12">9.6.1.1. デフォルトでサポートしているセキュリティヘッダ</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
-<p>Spring Securityがデフォルトでサポートしているレスポンスヘッダは以下の7つである。</p>
+<h3><a class="toc-backref" href="#id14">9.6.1.1. デフォルトでサポートしているセキュリティヘッダ</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<p>Spring Securityがデフォルトでサポートしているレスポンスヘッダは以下の9つである。</p>
 <ul class="simple">
 <li>Cache-Control (Pragma, Expires)</li>
 <li>X-Frame-Options</li>
@@ -167,6 +164,8 @@
 <li>Strict-Transport-Security</li>
 <li>Content-Security-Policy(Content-Security-Policy-Report-Only)</li>
 <li>Public-Key-Pins(Public-Key-Pins-Report-Only)</li>
+<li>Referrer-Policy</li>
+<li>Feature-Policy</li>
 </ul>
 <div class="admonition tip">
 <p class="first admonition-title">Tip</p>
@@ -178,8 +177,20 @@
 <li><a class="reference external" href="https://www.owasp.org/index.php/OWASP_Secure_Headers_Project#tab=Headers">https://www.owasp.org/index.php/OWASP_Secure_Headers_Project#tab=Headers</a> (X-Content-Type-Options, X-XSS-Protection, Content-Security-Policy, Public-Key-Pins)</li>
 </ul>
 </div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p><strong>Referrer-Policyヘッダ</strong></p>
+<p class="last">Spring Security 4.2より、ブラウザに<a class="reference external" href="https://www.w3.org/TR/referrer-policy/">Referrer Policy</a>を指示するためのヘッダである<a class="reference external" href="https://docs.spring.io/spring-security/site/docs/5.1.3.RELEASE/reference/htmlsingle/#headers-referrer">Referrer-Policyヘッダ</a>がサポートされた。
+詳細については次版以降の開発ガイドラインで記載する予定である。</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p><strong>Feature-Policyヘッダ</strong></p>
+<p class="last">Spring Security 5.1より、ブラウザに<a class="reference external" href="https://w3c.github.io/webappsec-feature-policy/">Feature-Policy</a>を指示するためのヘッダである<a class="reference external" href="https://docs.spring.io/spring-security/site/docs/5.1.3.RELEASE/reference/htmlsingle/#headers-feature">Feature-Policyヘッダ</a>がサポートされた。
+詳細については次版以降の開発ガイドラインで記載する予定である。</p>
+</div>
 <div class="section" id="cache-control">
-<h4><a class="toc-backref" href="#id13">9.6.1.1.1. Cache-Control</a><a class="headerlink" href="#cache-control" title="Permalink to this headline">¶</a></h4>
+<h4><a class="toc-backref" href="#id15">9.6.1.1.1. Cache-Control</a><a class="headerlink" href="#cache-control" title="Permalink to this headline">¶</a></h4>
 <p>Cache-Controlヘッダは、コンテンツのキャッシュ方法を指示するためのヘッダである。
 保護されたコンテンツがブラウザにキャッシュされないようにすることで、権限のないユーザーが保護されたコンテンツを閲覧できてしまうリスクを減らすことができる。</p>
 <p>コンテンツがキャッシュされないようにするためには、以下のようなヘッダを出力する。</p>
@@ -204,7 +215,7 @@ Expires: 0
 </div>
 </div>
 <div class="section" id="x-frame-options">
-<h4><a class="toc-backref" href="#id14">9.6.1.1.2. X-Frame-Options</a><a class="headerlink" href="#x-frame-options" title="Permalink to this headline">¶</a></h4>
+<h4><a class="toc-backref" href="#id16">9.6.1.1.2. X-Frame-Options</a><a class="headerlink" href="#x-frame-options" title="Permalink to this headline">¶</a></h4>
 <p>X-Frame-Optionsヘッダは、フレーム(<code class="docutils literal"><span class="pre">&lt;frame&gt;</span></code>または<code class="docutils literal"><span class="pre">&lt;iframe&gt;</span></code>要素) 内でのコンテンツの表示を許可するか否かを指示するためのヘッダである。
 フレーム内でコンテンツが表示されないようすることで、クリックジャッキングと呼ばれる攻撃手法を使って機密情報を盗みとられるリスクをなくすことができる。</p>
 <p>フレーム内での表示を拒否するためには、以下のようなヘッダを出力する。</p>
@@ -217,7 +228,7 @@ Expires: 0
 <p>なお、X-Frame-Optionsヘッダには、出力例以外のオプションを指定することができる。</p>
 </div>
 <div class="section" id="x-content-type-options">
-<h4><a class="toc-backref" href="#id15">9.6.1.1.3. X-Content-Type-Options</a><a class="headerlink" href="#x-content-type-options" title="Permalink to this headline">¶</a></h4>
+<h4><a class="toc-backref" href="#id17">9.6.1.1.3. X-Content-Type-Options</a><a class="headerlink" href="#x-content-type-options" title="Permalink to this headline">¶</a></h4>
 <p>X-Content-Type-Optionsヘッダは、コンテンツの種類の決定方法を指示するためのヘッダである。
 一部のブラウザでは、Content-Typeヘッダの値を無視してコンテンツの内容をみて決定する。
 コンテンツの種類の決定する際にコンテンツの内容を見ないようにすることで、クロスサイトスクリプティングを使った攻撃を受けるリスクを減らすことができる。</p>
@@ -230,7 +241,7 @@ Expires: 0
 </div>
 </div>
 <div class="section" id="x-xss-protection">
-<h4><a class="toc-backref" href="#id16">9.6.1.1.4. X-XSS-Protection</a><a class="headerlink" href="#x-xss-protection" title="Permalink to this headline">¶</a></h4>
+<span id="linkagewithbrowserxxssprotection"></span><h4><a class="toc-backref" href="#id18">9.6.1.1.4. X-XSS-Protection</a><a class="headerlink" href="#x-xss-protection" title="Permalink to this headline">¶</a></h4>
 <p>X-XSS-Protectionヘッダは、ブラウザのXSSフィルター機能を使って有害スクリプトを検出する方法を指示するためのヘッダである。
 XSSフィルター機能を有効にして有害なスクリプトを検知するとこで、クロスサイトスクリプティングを使った攻撃を受けるリスクを減らすことができる。</p>
 <p>XSSフィルター機能を有効にして有害なスクリプトを検知するためには、以下のようなヘッダを出力する。</p>
@@ -243,7 +254,7 @@ XSSフィルター機能を有効にして有害なスクリプトを検知す�
 <p>なお、X-XSS-Protectionヘッダには、出力例以外のオプションを指定することができる。</p>
 </div>
 <div class="section" id="strict-transport-security">
-<h4><a class="toc-backref" href="#id17">9.6.1.1.5. Strict-Transport-Security</a><a class="headerlink" href="#strict-transport-security" title="Permalink to this headline">¶</a></h4>
+<h4><a class="toc-backref" href="#id19">9.6.1.1.5. Strict-Transport-Security</a><a class="headerlink" href="#strict-transport-security" title="Permalink to this headline">¶</a></h4>
 <p>Strict-Transport-Securityヘッダーは、HTTPSを使ってアクセスした後にHTTPを使ってアクセスしようとした際に、HTTPSに置き換えてからアクセスすることを指示するためヘッダである。
 HTTPSでアクセスした後にHTTPが使われないようにすることで、中間者攻撃と呼ばれる攻撃手法を使って悪意のあるサイトに誘導されるリスクを減らすことができる。</p>
 <p>HTTPSでアクセスした後にHTTPが使われないようにするためには、以下のようなヘッダを出力する。</p>
@@ -261,7 +272,7 @@ HTTPSでアクセスした後にHTTPが使われないようにすることで�
 </div>
 </div>
 <div class="section" id="content-security-policy">
-<h4><a class="toc-backref" href="#id18">9.6.1.1.6. Content-Security-Policy</a><a class="headerlink" href="#content-security-policy" title="Permalink to this headline">¶</a></h4>
+<h4><a class="toc-backref" href="#id20">9.6.1.1.6. Content-Security-Policy</a><a class="headerlink" href="#content-security-policy" title="Permalink to this headline">¶</a></h4>
 <p>Content-Security-Policyヘッダーはブラウザに読み込みを許可するコンテンツを指示するためのヘッダーである。
 ブラウザはContent-Security-Policyヘッダーに指定したホワイトリストのコンテンツのみを読み込むため、悪意のあるコンテンツを読み込むことで実行される攻撃（クロスサイトスクリプティング攻撃など）を受けるリスクを減らすことができる。</p>
 <p>Content-Security-Policyヘッダーを送信しない場合、ブラウザは標準の同一オリジンポリシーを適用する。</p>
@@ -299,7 +310,7 @@ Content-Security-Policy-Report-Onlyヘッダーを使用してレポートを収
 </div>
 </div>
 <div class="section" id="public-key-pins">
-<h4><a class="toc-backref" href="#id19">9.6.1.1.7. Public-Key-Pins</a><a class="headerlink" href="#public-key-pins" title="Permalink to this headline">¶</a></h4>
+<h4><a class="toc-backref" href="#id21">9.6.1.1.7. Public-Key-Pins</a><a class="headerlink" href="#public-key-pins" title="Permalink to this headline">¶</a></h4>
 <p>Public-Key-Pinsヘッダはサイトの証明書の真正性を担保するために、サイトに紐づく証明書の公開鍵をブラウザに提示するヘッダである。
 サイトへの再訪問時に中間者攻撃と呼ばれる攻撃手法を使って悪意のあるサイトに誘導された場合でも、
 ブラウザが保持する真性のサイト証明書の公開鍵と悪意あるサイトが提示する証明書の公開鍵の不一致を検知して、
@@ -327,14 +338,17 @@ Public-Key-Pins-Report-Onlyヘッダで十分に試験を実施した上でPubli
 </div>
 </div>
 <div class="section" id="how-to-use">
-<h2><a class="toc-backref" href="#id20">9.6.2. How to use</a><a class="headerlink" href="#how-to-use" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="id4">
-<h3><a class="toc-backref" href="#id21">9.6.2.1. セキュリティヘッダ出力機能の適用</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<h2><a class="toc-backref" href="#id22">9.6.2. How to use</a><a class="headerlink" href="#how-to-use" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id6">
+<h3><a class="toc-backref" href="#id23">9.6.2.1. セキュリティヘッダ出力機能の適用</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
 <p>前述のセキュリティヘッダ出力機能を適用する方法を説明する。</p>
-<p>セキュリティヘッダ出力機能は、Spring 3.2から追加された機能で以下のセキュリティヘッダ以外はデフォルトで適用されるようになっている。</p>
+<p>セキュリティヘッダ出力機能は、Spring 3.2から追加された機能であり、以下のセキュリティヘッダがデフォルトで適用されるようになっている。</p>
 <ul class="simple">
-<li>Content-Security-Policy</li>
-<li>Public-Key-Pins</li>
+<li>Cache-Control (Pragma, Expires)</li>
+<li>X-Frame-Options</li>
+<li>X-Content-Type-Options</li>
+<li>X-XSS-Protection</li>
+<li>Strict-Transport-Security</li>
 </ul>
 <p>そのため、デフォルトで適用されるセキュリティヘッダ出力機能を有効にするための特別な定義は不要である。
 なお、デフォルトで適用されるセキュリティヘッダ出力機能を適用したくない場合は、明示的に無効化する必要がある。</p>
@@ -350,8 +364,8 @@ Public-Key-Pins-Report-Onlyヘッダで十分に試験を実施した上でPubli
 </pre></div>
 </div>
 </div>
-<div class="section" id="id5">
-<h3><a class="toc-backref" href="#id22">9.6.2.2. セキュリティヘッダの選択</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id7">
+<h3><a class="toc-backref" href="#id24">9.6.2.2. セキュリティヘッダの選択</a><a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
 <p>出力するセキュリティヘッダを選択したい場合は、以下のようなbean定義を行う。
 ここではSpring Securityが提供しているすべてのセキュリティヘッダを出力する例になっているが、実際には必要なものだけ指定すること。</p>
 <ul class="simple">
@@ -478,10 +492,24 @@ Public-Key-Pins-Report-Onlyヘッダで十分に試験を実施した上でPubli
 </pre></div>
 </div>
 <p>上記の例だと、Cache-Control関連のヘッダだけが出力されなくなる。</p>
-<p>セキュリティヘッダの詳細については<a class="reference external" href="http://docs.spring.io/spring-security/site/docs/4.2.4.RELEASE/reference/htmlsingle/#default-security-headers">公式リファレンス</a>を参照されたい。</p>
+<p>セキュリティヘッダの詳細については<a class="reference external" href="https://docs.spring.io/spring-security/site/docs/5.1.3.RELEASE/reference/htmlsingle/#default-security-headers">公式リファレンス</a>を参照されたい。</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p><strong>Spring Securityによるセキュリティヘッダ付与の仕様変更</strong></p>
+<p>Macchinetta Server Framework for Java 1.5.1の依存ライブラリであるSpring Security 4.2.4では、Spring Securityによって先にセキュリティヘッダが付与されることによりController等で任意に付与したヘッダが有効にならないことがあった。
+例えば、Controllerで個別にキャッシュ制御のヘッダを付与した場合でもSpring Securityが先に付与した<code class="docutils literal"><span class="pre">Pragma:</span> <span class="pre">no-cache</span></code>ヘッダが残ることにより意図したキャッシュ制御ができないといった問題があった。</p>
+<p class="last">このため、Spring Security 4.2.5及び5.0.2以降ではレスポンスコミットのタイミングでセキュリティヘッダを付与するように変更(<a class="reference external" href="https://github.com/spring-projects/spring-security/issues/5004">spring-projects/spring-security/issues/#5004</a>)されている。</p>
 </div>
-<div class="section" id="id7">
-<h3><a class="toc-backref" href="#id23">9.6.2.3. セキュリティヘッダのオプション指定</a><a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p><strong>個別に付与したセキュリティヘッダがSpring Securityにより上書き（追加）される問題</strong></p>
+<p class="last"><code class="docutils literal"><span class="pre">DispatcherServlet</span></code>内の処理で付与したセキュリティヘッダがSpring Securityの<code class="docutils literal"><span class="pre">HeaderWriter</span></code>により上書き（追加）される問題(<a class="reference external" href="https://github.com/spring-projects/spring-security/issues/5193">spring-projects/spring-security/issues/#5193</a>)が報告されている。
+Spring Securityでデフォルトのセキュリティヘッダを付与するが、一部のユースケースのみController等で個別にセキュリティヘッダを付与したい場合は、この問題の影響を受けることになる。
+ただし、<a class="reference external" href="https://github.com/spring-projects/spring-security/blob/5.1.3.RELEASE/web/src/main/java/org/springframework/security/web/header/writers/CacheControlHeadersWriter.java#L62-L63">CacheControlHeaderWriter</a>は既に付与されているヘッダを優先する実装となっているため、キャッシュ制御に関するヘッダ（Cache-Control, Pragma, Expires）ではこの問題は発生しない。</p>
+</div>
+</div>
+<div class="section" id="id9">
+<h3><a class="toc-backref" href="#id25">9.6.2.3. セキュリティヘッダのオプション指定</a><a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
 <p>以下のヘッダでは、Spring Securityがデフォルトで出力する内容を変更することができる。</p>
 <ul class="simple">
 <li>X-Frame-Options</li>
@@ -489,8 +517,10 @@ Public-Key-Pins-Report-Onlyヘッダで十分に試験を実施した上でPubli
 <li>Strict-Transport-Security</li>
 <li>Content-Security-Policy(Content-Security-Policy-Report-Only)</li>
 <li>Public-Key-Pins(Public-Key-Pins-Report-Only)</li>
+<li>Referrer-Policy</li>
+<li>Feature-Policy</li>
 </ul>
-<p>Spring Securityのbean定義を変更することで、各要素の属性にオプション<a class="footnote-reference" href="#fspringsecuritylinkagewithbrowser2" id="id8">[1]</a>を指定することができる。</p>
+<p>Spring Securityのbean定義を変更することで、各要素の属性にオプション<a class="footnote-reference" href="#fspringsecuritylinkagewithbrowser2" id="id10">[1]</a>を指定することができる。</p>
 <ul class="simple">
 <li>spring-security.xmlの定義例</li>
 </ul>
@@ -500,12 +530,12 @@ Public-Key-Pins-Report-Onlyヘッダで十分に試験を実施した上でPubli
 <table class="docutils footnote" frame="void" id="fspringsecuritylinkagewithbrowser2" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id8">[1]</a></td><td>各要素で指定できるオプションは <a class="reference external" href="http://docs.spring.io/spring-security/site/docs/4.2.4.RELEASE/reference/htmlsingle/#nsa-headers">http://docs.spring.io/spring-security/site/docs/4.2.4.RELEASE/reference/htmlsingle/#nsa-headers</a> を参照されたい。</td></tr>
+<tr><td class="label"><a class="fn-backref" href="#id10">[1]</a></td><td>各要素で指定できるオプションは <a class="reference external" href="https://docs.spring.io/spring-security/site/docs/5.1.3.RELEASE/reference/htmlsingle/#nsa-headers">https://docs.spring.io/spring-security/site/docs/5.1.3.RELEASE/reference/htmlsingle/#nsa-headers</a> を参照されたい。</td></tr>
 </tbody>
 </table>
 </div>
-<div class="section" id="id9">
-<h3><a class="toc-backref" href="#id24">9.6.2.4. カスタムヘッダの出力</a><a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id11">
+<h3><a class="toc-backref" href="#id26">9.6.2.4. カスタムヘッダの出力</a><a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h3>
 <p>Spring Securityがデフォルトで用意していないヘッダを出力することもできる。</p>
 <p>以下のヘッダを出力するケースの例を説明する。</p>
 <div class="highlight-text"><div class="highlight"><pre><span></span>X-WebKit-CSP: default-src &#39;self&#39;
@@ -543,8 +573,8 @@ Public-Key-Pins-Report-Onlyヘッダで十分に試験を実施した上でPubli
 </tbody>
 </table>
 </div>
-<div class="section" id="id10">
-<h3><a class="toc-backref" href="#id25">9.6.2.5. リクエストパターン毎のセキュリティヘッダの出力</a><a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id12">
+<h3><a class="toc-backref" href="#id27">9.6.2.5. リクエストパターン毎のセキュリティヘッダの出力</a><a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h3>
 <p>Spring Securityは、<code class="docutils literal"><span class="pre">RequestMatcher</span></code>インタフェースの仕組みを利用して、リクエストのパターン毎にセキュリティヘッダの出力を制御することも可能である。</p>
 <p>例えば、保護対象のコンテンツが<code class="docutils literal"><span class="pre">/secure/</span></code>というパスの配下に格納されていて、保護対象のコンテンツへアクセスした時だけCache-Controlヘッダを出力する場合は、以下のようなbean定義を行う。</p>
 <ul class="simple">
@@ -603,6 +633,16 @@ Public-Key-Pins-Report-Onlyヘッダで十分に試験を実施した上でPubli
 </tr>
 </tbody>
 </table>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p><strong>指定したパスが意図した通りに認識されない問題</strong></p>
+<p><code class="docutils literal"><span class="pre">&lt;sec:http&gt;</span></code>と<code class="docutils literal"><span class="pre">DelegatingRequestMatcherHeaderWriter</span></code>がパスマッチングを行うタイミングの違いにより、指定したパスが意図した通りに認識されない場合がある。
+具体的には、<code class="docutils literal"><span class="pre">DelegatingRequestMatcherHeaderWriter</span></code>に指定されたパスはセキュリティヘッダ書き込み時（レスポンスのコミット時およびインクルード時）にリクエストパスとマッチングされる。
+このため、リクエストのフォワードによりリクエストパスが変更された場合、当初リクエストのパスとマッチングが行われないため、意図したパスでセキュリティヘッダが出力されなくなる。</p>
+<p>なお、Spring Security 5.0.10および5.1.2でインクルード時にセキュリティヘッダの書き込みが行われるよう変更された。</p>
+<p>特にTilesを利用している場合は、Tilesの処理によりテンプレートJSPにフォワードされるため、<code class="docutils literal"><span class="pre">DelegatingRequestMatcherHeaderWriter</span></code>との併用ができないことが確認されている。</p>
+<p class="last">詳細は <a class="reference external" href="https://github.com/spring-projects/spring-security/issues/6338">https://github.com/spring-projects/spring-security/issues/6338</a> を参照されたい。</p>
+</div>
 </div>
 </div>
 </div>
@@ -625,58 +665,48 @@ Public-Key-Pins-Report-Onlyヘッダで十分に試験を実施した上でPubli
         <li class="right" >
           <a href="CSRF.html" title="9.5. CSRF対策"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Macchinetta Server Framework (1.x) Development Guideline 1.5.1.RELEASE documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Macchinetta Server Framework (1.x) Development Guideline 1.6.1.RELEASE documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="index.html" >9. セキュリティ対策</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2013-2018, NTT Corporation.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.6.2.Theme is <a href="http://github.com/vimalkvn/solar-theme">Solar</a>
+        &copy; Copyright 2013, NTT Corporation.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.6.3.Theme is <a href="http://github.com/vimalkvn/solar-theme">Solar</a>
     </div>
     
     <script>
-     
-     $(function() {
-    	   var $sidebar	= $('.sphinxsidebar'),
-    		     $window		= $(window),
-    		     offset		= $sidebar.offset(),
-    		     topPadding	= 3,
-    		     $scroll		= $('#scroll');
-    	   
-    	   $window.scroll(function() {
-    		     if ($scroll.is(':checked')) {
-				         if ($window.scrollTop() > offset.top) {
-					           $sidebar.stop().animate({
-						             marginTop:$window.scrollTop() - offset.top + topPadding
-					           });
-				         } else {
-					           $sidebar.stop().animate({
-						             marginTop:0
-					           });
-				         }
-			       }
-		     });
-    	   
-    	   var $navList = $('ul:first', $sidebar);
-    	   $('li:first', $navList).addClass('open');
-    	   
-    	   $navList.treeview({
-    		     persist: "location",
-    		     collapsed: true,
-    		     unique: false
-    	   });
-    	   
-	   });
-    </script>
     
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-113850349-2"></script>
-    <script>
-     window.dataLayer = window.dataLayer || [];
-     function gtag(){dataLayer.push(arguments);}
-     gtag('js', new Date());
-
-     gtag('config', 'UA-113850349-2');
+    $(function() {
+    	var $sidebar	= $('.sphinxsidebar'),
+    		$window		= $(window),
+    		offset		= $sidebar.offset(),
+    		topPadding	= 3,
+    		$scroll		= $('#scroll');
+    	
+    	$window.scroll(function() {
+    		if ($scroll.is(':checked')) {
+				if ($window.scrollTop() > offset.top) {
+					$sidebar.stop().animate({
+						marginTop:$window.scrollTop() - offset.top + topPadding
+					});
+				} else {
+					$sidebar.stop().animate({
+						marginTop:0
+					});
+				}
+			}
+		});
+    	
+    	var $navList = $('ul:first', $sidebar);
+    	$('li:first', $navList).addClass('open');
+    	
+    	$navList.treeview({
+    		persist: "location",
+    		collapsed: true,
+    		unique: false
+    	});
+    	
+	});
     </script>
   </body>
 </html>

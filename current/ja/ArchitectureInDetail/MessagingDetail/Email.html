@@ -3,16 +3,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>8.1. E-mail送信(SMTP) &#8212; Macchinetta Server Framework (1.x) Development Guideline 1.5.1.RELEASE documentation</title>
-    
+    <title>8.1. E-mail送信(SMTP) &#8212; Macchinetta Server Framework (1.x) Development Guideline 1.6.1.RELEASE documentation</title>
     <link rel="stylesheet" href="../../_static/solar.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '1.5.1.RELEASE',
+        VERSION:     '1.6.1.RELEASE',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true,
@@ -43,7 +40,7 @@
         <li class="right" >
           <a href="index.html" title="8. メッセージ連携"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">Macchinetta Server Framework (1.x) Development Guideline 1.5.1.RELEASE documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Macchinetta Server Framework (1.x) Development Guideline 1.6.1.RELEASE documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">8. メッセージ連携</a> &#187;</li> 
       </ul>
     </div>
@@ -203,7 +200,7 @@ JavaMailのAPI仕様については、<a class="reference external" href="http:/
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p><strong>メールセッション</strong></p>
-<p>メールセッション（<a class="reference external" href="http://docs.oracle.com/javaee/7/api/javax/mail/Session.html">Session</a>）は、メールサーバに接続する際に必要となる情報を管理する。</p>
+<p>メールセッション（<a class="reference external" href="https://javaee.github.io/javaee-spec/javadocs/javax/mail/Session.html">Session</a>）は、メールサーバに接続する際に必要となる情報を管理する。</p>
 <p>メールセッションを取得するには以下のような方法がある。</p>
 <ul class="simple">
 <li>典型的なエンタープライズアプリケーションにおいては、Java EEのコンテナで管理されたメールセッションをJNDI経由で取得する。</li>
@@ -324,7 +321,7 @@ JavaMailのAPI仕様については、<a class="reference external" href="http:/
 <dt><code class="docutils literal"><span class="pre">JavaMailSender</span></code></dt>
 <dd><div class="first last line-block">
 <div class="line">JavaMail用のメール送信インターフェース。</div>
-<div class="line">JavaMailの<a class="reference external" href="http://docs.oracle.com/javaee/7/api/javax/mail/internet/MimeMessage.html">MimeMessage</a>とSpringの<code class="docutils literal"><span class="pre">SimpleMailMessage</span></code>の両方に対応している。</div>
+<div class="line">JavaMailの<a class="reference external" href="https://javaee.github.io/javaee-spec/javadocs/javax/mail/internet/MimeMessage.html">MimeMessage</a>とSpringの<code class="docutils literal"><span class="pre">SimpleMailMessage</span></code>の両方に対応している。</div>
 <div class="line">また、JavaMailの<code class="docutils literal"><span class="pre">Session</span></code>の管理は<code class="docutils literal"><span class="pre">JavaMailSender</span></code>の実装クラスによって行われるため、メール送信処理をコーディングする際に<code class="docutils literal"><span class="pre">Session</span></code>を直接扱う必要がない。</div>
 </div>
 </dd>
@@ -420,7 +417,7 @@ JavaMailのAPI仕様については、<a class="reference external" href="http:/
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">上記設定例は、依存ライブラリのバージョンを親プロジェクトである terasoluna-gfw-parent で管理する前提であるため、pom.xmlでのバージョンの指定は不要である。
-上記の依存ライブラリはterasoluna-gfw-parentが利用している<a class="reference external" href="http://platform.spring.io/platform/">Spring IO Platform</a>で定義済みである。</p>
+上記の依存ライブラリはterasoluna-gfw-parentが依存している<a class="reference external" href="https://docs.spring.io/spring-boot/docs/2.1.2.RELEASE/reference/htmlsingle/#appendix-dependency-versions">Spring Boot</a>で管理されている。</p>
 </div>
 <div class="line-block">
 <div class="line"><br /></div>
@@ -456,9 +453,9 @@ JavaMailのAPI仕様については、<a class="reference external" href="http:/
 <li></li>
 </ol>
 </td>
-<td>Apache Tomcat 8.5</td>
+<td>Apache Tomcat 9.0</td>
 <td><div class="first last line-block">
-<div class="line"><a class="reference external" href="http://tomcat.apache.org/tomcat-8.5-doc/jndi-resources-howto.html#JavaMail_Sessions">Apache Tomcat 8.5 User Guide(JNDI Resources HOW-TO)</a>(JavaMail Sessions)を参照されたい。</div>
+<div class="line"><a class="reference external" href="http://tomcat.apache.org/tomcat-9.0-doc/jndi-resources-howto.html#JavaMail_Sessions">Apache Tomcat 9.0 User Guide(JNDI Resources HOW-TO)</a>(JavaMail Sessions)を参照されたい。</div>
 </div>
 </td>
 </tr>
@@ -466,9 +463,9 @@ JavaMailのAPI仕様については、<a class="reference external" href="http:/
 <li></li>
 </ol>
 </td>
-<td>Apache Tomcat 8.0</td>
+<td>Apache Tomcat 8.5</td>
 <td><div class="first last line-block">
-<div class="line"><a class="reference external" href="http://tomcat.apache.org/tomcat-8.0-doc/jndi-resources-howto.html#JavaMail_Sessions">Apache Tomcat 8.0 User Guide(JNDI Resources HOW-TO)</a>(JavaMail Sessions)を参照されたい。</div>
+<div class="line"><a class="reference external" href="http://tomcat.apache.org/tomcat-8.5-doc/jndi-resources-howto.html#JavaMail_Sessions">Apache Tomcat 8.5 User Guide(JNDI Resources HOW-TO)</a>(JavaMail Sessions)を参照されたい。</div>
 </div>
 </td>
 </tr>
@@ -477,7 +474,7 @@ JavaMailのAPI仕様については、<a class="reference external" href="http:/
 </ol>
 </td>
 <td>Oracle WebLogic Server 12c</td>
-<td><a class="reference external" href="http://docs.oracle.com/middleware/1221/wls/WLACH/taskhelp/mail/CreateMailSessions.html">Oracle WebLogic Server 12.2.1.0 Documentation</a>を参照されたい。</td>
+<td><a class="reference external" href="https://docs.oracle.com/middleware/12213/wls/WLACH/taskhelp/mail/CreateMailSessions.html">Oracle WebLogic Server 12.2.1.3 Documentation</a>を参照されたい。</td>
 </tr>
 <tr class="row-odd"><td><ol class="first last arabic simple" start="4">
 <li></li>
@@ -490,8 +487,8 @@ JavaMailのAPI仕様については、<a class="reference external" href="http:/
 <li></li>
 </ol>
 </td>
-<td>Red Hat JBoss Enterprise Application Platform Version 7.0</td>
-<td><a class="reference external" href="https://access.redhat.com/documentation/en/red-hat-jboss-enterprise-application-platform/7.0/paged/configuration-guide/chapter-10-mail-subsystem">JBoss Enterprise Application Platform 7.0 Product Documentation</a>を参照されたい。</td>
+<td>Red Hat JBoss Enterprise Application Platform Version 7.2</td>
+<td><a class="reference external" href="https://access.redhat.com/documentation/en-us/red_hat_jboss_enterprise_application_platform/7.2/html/configuration_guide/mail_subsystem">JBoss Enterprise Application Platform 7.2 Product Documentation</a>を参照されたい。</td>
 </tr>
 <tr class="row-odd"><td><ol class="first last arabic simple" start="6">
 <li></li>
@@ -1487,7 +1484,7 @@ JavaMailのAPI仕様については、<a class="reference external" href="http:/
 <li></li>
 </ol>
 </td>
-<td><a class="reference external" href="http://docs.spring.io/spring/docs/4.3.14.RELEASE/javadoc-api/org/springframework/mail/MailAuthenticationException.html">MailAuthenticationException</a></td>
+<td><a class="reference external" href="https://docs.spring.io/spring/docs/5.1.4.RELEASE/javadoc-api/org/springframework/mail/MailAuthenticationException.html">MailAuthenticationException</a></td>
 <td><div class="first last line-block">
 <div class="line">認証失敗時に発生する。</div>
 </div>
@@ -1497,7 +1494,7 @@ JavaMailのAPI仕様については、<a class="reference external" href="http:/
 <li></li>
 </ol>
 </td>
-<td><a class="reference external" href="http://docs.spring.io/spring/docs/4.3.14.RELEASE/javadoc-api/org/springframework/mail/MailParseException.html">MailParseException</a></td>
+<td><a class="reference external" href="https://docs.spring.io/spring/docs/5.1.4.RELEASE/javadoc-api/org/springframework/mail/MailParseException.html">MailParseException</a></td>
 <td><div class="first last line-block">
 <div class="line">メールメッセージのプロパティに不正な値が設定されている場合に発生する。</div>
 </div>
@@ -1507,7 +1504,7 @@ JavaMailのAPI仕様については、<a class="reference external" href="http:/
 <li></li>
 </ol>
 </td>
-<td><a class="reference external" href="http://docs.spring.io/spring/docs/4.3.14.RELEASE/javadoc-api/org/springframework/mail/MailPreparationException.html">MailPreparationException</a></td>
+<td><a class="reference external" href="https://docs.spring.io/spring/docs/5.1.4.RELEASE/javadoc-api/org/springframework/mail/MailPreparationException.html">MailPreparationException</a></td>
 <td><div class="first last line-block">
 <div class="line">メールメッセージを作成中に想定外のエラーが起きた場合に発生する。
 想定外のエラーとしては、例えばテンプレートライブラリで発生するエラーといったものがある。</div>
@@ -1519,7 +1516,7 @@ JavaMailのAPI仕様については、<a class="reference external" href="http:/
 <li></li>
 </ol>
 </td>
-<td><a class="reference external" href="http://docs.spring.io/spring/docs/4.3.14.RELEASE/javadoc-api/org/springframework/mail/MailSendException.html">MailSendException</a></td>
+<td><a class="reference external" href="https://docs.spring.io/spring/docs/5.1.4.RELEASE/javadoc-api/org/springframework/mail/MailSendException.html">MailSendException</a></td>
 <td><div class="first last line-block">
 <div class="line">メールの送信エラーが起きた場合に発生する。</div>
 </div>
@@ -1592,7 +1589,7 @@ JavaMailのAPI仕様については、<a class="reference external" href="http:/
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">上記設定例は、依存ライブラリのバージョンを親プロジェクトである terasoluna-gfw-parent で管理する前提であるため、pom.xmlでのバージョンの指定は不要である。
-上記の依存ライブラリはterasoluna-gfw-parentが利用している<a class="reference external" href="http://platform.spring.io/platform/">Spring IO Platform</a>で定義済みである。</p>
+上記の依存ライブラリはterasoluna-gfw-parentが依存している<a class="reference external" href="https://docs.spring.io/spring-boot/docs/2.1.2.RELEASE/reference/htmlsingle/#appendix-dependency-versions">Spring Boot</a>で管理されている。</p>
 </div>
 </div></blockquote>
 </li>
@@ -1651,7 +1648,7 @@ JavaMailのAPI仕様については、<a class="reference external" href="http:/
 </table>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">上記以外の設定については、<a class="reference external" href="http://docs.spring.io/spring/docs/4.3.14.RELEASE/javadoc-api/org/springframework/ui/freemarker/FreeMarkerConfigurationFactoryBean.html">FreeMarkerConfigurationFactoryBeanのJavaDoc</a>を参照されたい。
+<p class="last">上記以外の設定については、<a class="reference external" href="https://docs.spring.io/spring/docs/5.1.4.RELEASE/javadoc-api/org/springframework/ui/freemarker/FreeMarkerConfigurationFactoryBean.html">FreeMarkerConfigurationFactoryBeanのJavaDoc</a>を参照されたい。
 また、FreeMarker自体の設定については、<a class="reference external" href="http://freemarker.org/docs/pgui_config.html">FreeMarker Manual (Programmer’s Guide / The Configuration)</a>を参照されたい。</p>
 </div>
 </div></blockquote>
@@ -2304,58 +2301,48 @@ GreenMailはライブラリとして利用する以外に、warファイルを�
         <li class="right" >
           <a href="index.html" title="8. メッセージ連携"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">Macchinetta Server Framework (1.x) Development Guideline 1.5.1.RELEASE documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Macchinetta Server Framework (1.x) Development Guideline 1.6.1.RELEASE documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="index.html" >8. メッセージ連携</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2013-2018, NTT Corporation.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.6.2.Theme is <a href="http://github.com/vimalkvn/solar-theme">Solar</a>
+        &copy; Copyright 2013, NTT Corporation.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.6.3.Theme is <a href="http://github.com/vimalkvn/solar-theme">Solar</a>
     </div>
     
     <script>
-     
-     $(function() {
-    	   var $sidebar	= $('.sphinxsidebar'),
-    		     $window		= $(window),
-    		     offset		= $sidebar.offset(),
-    		     topPadding	= 3,
-    		     $scroll		= $('#scroll');
-    	   
-    	   $window.scroll(function() {
-    		     if ($scroll.is(':checked')) {
-				         if ($window.scrollTop() > offset.top) {
-					           $sidebar.stop().animate({
-						             marginTop:$window.scrollTop() - offset.top + topPadding
-					           });
-				         } else {
-					           $sidebar.stop().animate({
-						             marginTop:0
-					           });
-				         }
-			       }
-		     });
-    	   
-    	   var $navList = $('ul:first', $sidebar);
-    	   $('li:first', $navList).addClass('open');
-    	   
-    	   $navList.treeview({
-    		     persist: "location",
-    		     collapsed: true,
-    		     unique: false
-    	   });
-    	   
-	   });
-    </script>
     
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-113850349-2"></script>
-    <script>
-     window.dataLayer = window.dataLayer || [];
-     function gtag(){dataLayer.push(arguments);}
-     gtag('js', new Date());
-
-     gtag('config', 'UA-113850349-2');
+    $(function() {
+    	var $sidebar	= $('.sphinxsidebar'),
+    		$window		= $(window),
+    		offset		= $sidebar.offset(),
+    		topPadding	= 3,
+    		$scroll		= $('#scroll');
+    	
+    	$window.scroll(function() {
+    		if ($scroll.is(':checked')) {
+				if ($window.scrollTop() > offset.top) {
+					$sidebar.stop().animate({
+						marginTop:$window.scrollTop() - offset.top + topPadding
+					});
+				} else {
+					$sidebar.stop().animate({
+						marginTop:0
+					});
+				}
+			}
+		});
+    	
+    	var $navList = $('ul:first', $sidebar);
+    	$('li:first', $navList).addClass('open');
+    	
+    	$navList.treeview({
+    		persist: "location",
+    		collapsed: true,
+    		unique: false
+    	});
+    	
+	});
     </script>
   </body>
 </html>

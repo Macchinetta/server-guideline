@@ -261,6 +261,11 @@ java.util.Dateとの相互運用性
      - | "yyyy-MM-dd HH:mm:ss" 形式で変換された、文字列が取得される。
        | toStringの引数として指定可能な値については、 `Input and Output <http://www.joda.org/joda-time/userguide.html#Input_and_Output>`_ を参照されたい。
 
+.. note::
+
+    Java SE 11ではJava SE 8と日付の文字列表現が異なる場合がある。
+    Java SE 8と同様に表現するには\ :ref:`change-default-locale--data-from-java9`\ を参照されたい。
+
 |
 
 文字列からのパース
@@ -597,6 +602,11 @@ Joda-Timeのほかのタグは、 `Joda Time JSP tags User guide <http://joda-ti
         style属性を指定して日付と時刻部分を表示する場合、ブラウザのlocaleによって表示内容が異なる。
         上記style属性で表示した形式のlocaleは"en"である。
 
+    .. note::
+
+        Java SE 11ではJava SE 8と日付の文字列表現が異なる場合がある。
+        Java SE 8と同様に表現するには\ :ref:`change-default-locale--data-from-java9`\ を参照されたい。
+
 |
 
 応用例(カレンダーの表示)
@@ -775,17 +785,19 @@ JSP(calendar.jsp)で、次のように出力する。
 Appendix
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Java8未満の和暦操作
+和暦操作
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-| Java8では ``java.time.chrono.JapaneseDate`` という和暦操作クラスが提供されているが、Java8未満の環境では ``java.util.Calendar`` クラスで和暦を扱うことが出来る。
-| 具体的には、 ``java.util.Calendar`` クラス、 ``java.text.DateFormat`` クラスに以下の ``java.util.Locale`` を指定する必要がある。
+| JSR-310 Date and Time APIとは異なり、Joda Timeでは和暦を扱うクラスが提供されていない。
+| そのため、和暦を扱うには\ ``java.time.chrono.JapaneseDate``\ もしくは\ ``java.util.Calendar``\ を使用する。
+| \ ``java.time.chrono.JapaneseDate``\ については、\ :doc:`../GeneralFuncDetail/DateAndTime`\ の\ :ref:`JapaneseDate`\ を参照されたい。
+| \ ``java.util.Calendar``\ で和暦操作するには、\ ``java.util.Calendar``\ クラス、\ ``java.text.DateFormat``\ クラスに以下の\ ``java.util.Locale``\ を指定する必要がある。
 
 .. code-block:: java
 
    Locale locale = new Locale("ja", "JP", "JP");
 
-| 以下に、``Calendar`` クラスを利用した和暦表示の例を示す。
+| 以下に、\ ``Calendar``\ クラスを利用した和暦表示の例を示す。
 
 .. code-block:: java
 
@@ -821,5 +833,5 @@ Java8未満の和暦操作
 
     .. note::
 
-        | ``new Locale("ja", "JP", "JP")`` を ``getInstance`` メソッドに指定することで、 和暦に対応した ``java.util.JapaneseImperialCalendar`` オブジェクトが作成される。
-        | その他を指定すると ``java.util.GregorianCalendar`` オブジェクトが作成されるため、留意されたい。
+        | \ ``new Locale("ja", "JP", "JP")``\ を\ ``getInstance``\ メソッドに指定することで、 和暦に対応した\ ``java.util.JapaneseImperialCalendar``\ オブジェクトが作成される。
+        | その他を指定すると\ ``java.util.GregorianCalendar``\ オブジェクトが作成されるため、留意されたい。

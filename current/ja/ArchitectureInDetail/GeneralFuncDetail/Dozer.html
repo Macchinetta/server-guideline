@@ -3,16 +3,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>7.7. Beanマッピング(Dozer) &#8212; Macchinetta Server Framework (1.x) Development Guideline 1.5.1.RELEASE documentation</title>
-    
+    <title>7.7. Beanマッピング(Dozer) &#8212; Macchinetta Server Framework (1.x) Development Guideline 1.6.1.RELEASE documentation</title>
     <link rel="stylesheet" href="../../_static/solar.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '1.5.1.RELEASE',
+        VERSION:     '1.6.1.RELEASE',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true,
@@ -43,7 +40,7 @@
         <li class="right" >
           <a href="StringProcessing.html" title="7.6. 文字列処理"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">Macchinetta Server Framework (1.x) Development Guideline 1.5.1.RELEASE documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Macchinetta Server Framework (1.x) Development Guideline 1.6.1.RELEASE documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">7. アプリケーション形態に依存しない汎用機能</a> &#187;</li> 
       </ul>
     </div>
@@ -65,7 +62,7 @@
 </ul>
 </li>
 <li><a class="reference internal" href="#how-to-extend">7.7.3. How to extend</a><ul>
-<li><a class="reference internal" href="#id7">7.7.3.1. カスタムコンバーターの作成</a></li>
+<li><a class="reference internal" href="#how-to-make-customconverter-label">7.7.3.1. カスタムコンバーターの作成</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#appendix">7.7.4. Appendix</a><ul>
@@ -73,7 +70,7 @@
 <li><a class="reference internal" href="#map-id">7.7.4.2. マッピングの特定化 (map-id)</a></li>
 <li><a class="reference internal" href="#null-map-null-map-empty">7.7.4.3. コピー元のnull・空フィールドを除外する設定 (map-null, map-empty)</a></li>
 <li><a class="reference internal" href="#beanconverter-string-and-datetime">7.7.4.4. 文字列から日付・時刻オブジェクトへのマッピング</a></li>
-<li><a class="reference internal" href="#id9">7.7.4.5. マッピングのエラー</a></li>
+<li><a class="reference internal" href="#beanconverter-mapping-error">7.7.4.5. マッピングのエラー</a></li>
 </ul>
 </li>
 </ul>
@@ -129,7 +126,7 @@
 </ul>
 </li>
 <li><a class="reference internal" href="#how-to-extend" id="id19">How to extend</a><ul>
-<li><a class="reference internal" href="#id7" id="id20">カスタムコンバーターの作成</a></li>
+<li><a class="reference internal" href="#how-to-make-customconverter-label" id="id20">カスタムコンバーターの作成</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#appendix" id="id21">Appendix</a><ul>
@@ -137,7 +134,7 @@
 <li><a class="reference internal" href="#map-id" id="id23">マッピングの特定化 (map-id)</a></li>
 <li><a class="reference internal" href="#null-map-null-map-empty" id="id24">コピー元のnull・空フィールドを除外する設定 (map-null, map-empty)</a></li>
 <li><a class="reference internal" href="#beanconverter-string-and-datetime" id="id25">文字列から日付・時刻オブジェクトへのマッピング</a></li>
-<li><a class="reference internal" href="#id9" id="id26">マッピングのエラー</a></li>
+<li><a class="reference internal" href="#beanconverter-mapping-error" id="id26">マッピングのエラー</a></li>
 </ul>
 </li>
 </ul>
@@ -162,7 +159,7 @@
 </div>
 <div class="line-block">
 <div class="line">このオブジェクト間のマッピングは、Beanのgetter/setterを呼び出して、データの受け渡しを行うことで実現できる。</div>
-<div class="line">しかしながら、処理が煩雑になり、プログラムの見通しが悪くなるため、本ガイドラインでは、BeanマッピングライブラリであるOSSで利用可能な <a class="reference external" href="http://dozer.sourceforge.net">Dozer</a> を使用することを推奨する。</div>
+<div class="line">しかしながら、処理が煩雑になり、プログラムの見通しが悪くなるため、本ガイドラインでは、BeanマッピングライブラリであるOSSで利用可能な <a class="reference external" href="https://dozermapper.github.io/gitbook/">Dozer</a> を使用することを推奨する。</div>
 </div>
 <div class="line-block">
 <div class="line">Dozerを使用することで下図のように、コピー元クラスとコピー先クラスで型が異なるコピーや、ネストしたBean同士のコピーも容易に行うことができる。</div>
@@ -201,9 +198,25 @@
 </ul>
 <p>以降は、Dozerの利用方法について説明する。</p>
 <blockquote>
-<div><div class="admonition warning">
+<div><div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>Dozer 6.4.0より、JSR-310 Date and Time APIが提供する以下のクラスのマッピングがサポートされた。</p>
+<p>対象クラス :</p>
+<ul class="last simple">
+<li><code class="docutils literal"><span class="pre">java.time.LocalDate</span></code></li>
+<li><code class="docutils literal"><span class="pre">java.time.LocalTime</span></code></li>
+<li><code class="docutils literal"><span class="pre">java.time.LocalDateTime</span></code></li>
+<li><code class="docutils literal"><span class="pre">java.time.OffsetTime</span></code></li>
+<li><code class="docutils literal"><span class="pre">java.time.OffsetDateTime</span></code></li>
+<li><code class="docutils literal"><span class="pre">java.time.ZonedDateTime</span></code></li>
+</ul>
+</div>
+<div class="admonition warning">
 <p class="first admonition-title">Warning</p>
-<p class="last">JSR-310 Date and Time APIで追加されたクラス群はデフォルトのままでは例外が発生するため使用できず、カスタムコンバーターを作成する必要がある。</p>
+<p><strong>Java SE 11環境にてDozerを利用する場合</strong></p>
+<p class="last">Dozer 6.3.0より、マッピング定義XMLファイルの解析にデフォルトでJAXBが利用されるようになった。
+Java SE 11環境にてDozerのマッピング定義XMLファイルを利用する場合、<a class="reference internal" href="../../Appendix/Java11Changes.html#remove-jaxb-from-java11"><span class="std std-ref">JAXBの削除</span></a>を参照されたい。
+ただし、開発の途中からマッピング定義XMLファイルを利用することも想定されるため、Java SE 11環境にてDozerを利用する場合は必ず設定を行なうことを推奨する。</p>
 </div>
 </div></blockquote>
 <div class="line-block">
@@ -216,14 +229,14 @@
 変換元のBeanから変換先のBeanに、再帰的（ネストした構造）に、値をコピーする。</p>
 <div class="section" id="dozerbean">
 <span id="bean-mapper-definition"></span><h3><a class="toc-backref" href="#id12">7.7.2.1. Dozerを使用するためのBean定義</a><a class="headerlink" href="#dozerbean" title="Permalink to this headline">¶</a></h3>
-<p>Dozerは、単独で使用するとき、以下のように、 <code class="docutils literal"><span class="pre">org.dozer.Mapper</span></code> のインスタンスを作成する。</p>
-<div class="highlight-java"><div class="highlight"><pre><span></span><span class="n">Mapper</span> <span class="n">mapper</span> <span class="o">=</span> <span class="k">new</span> <span class="n">DozerBeanMapper</span><span class="o">();</span>
+<p>Dozerは、単独で使用するとき、以下のように、<code class="docutils literal"><span class="pre">com.github.dozermapper.core.DozerBeanMapperBuilder</span></code>を利用してMapper のインスタンスを作成する。</p>
+<div class="highlight-java"><div class="highlight"><pre><span></span><span class="n">Mapper</span> <span class="n">mapper</span> <span class="o">=</span> <span class="n">DozerBeanMapperBuilder</span><span class="o">.</span><span class="na">buildDefault</span><span class="o">();</span>
 </pre></div>
 </div>
 <p>Mapper のインスタンスを毎回作成するのは、効率が悪いため、
-Dozerが提供している <code class="docutils literal"><span class="pre">org.dozer.spring.DozerBeanMapperFactoryBean</span></code> を使用すること。</p>
-<p>Bean定義ファイル(applicationContext.xml)に、Mapperを作成するFactoryクラスである<code class="docutils literal"><span class="pre">org.dozer.spring.DozerBeanMapperFactoryBean</span></code>を定義する</p>
-<div class="highlight-xml"><div class="highlight"><pre><span></span><span class="nt">&lt;bean</span> <span class="na">class=</span><span class="s">&quot;org.dozer.spring.DozerBeanMapperFactoryBean&quot;</span><span class="nt">&gt;</span>
+Dozerが提供している<code class="docutils literal"><span class="pre">com.github.dozermapper.spring.DozerBeanMapperFactoryBean</span></code>を使用すること。</p>
+<p>Bean定義ファイル(applicationContext.xml)に、Mapperを作成するFactoryクラスである<code class="docutils literal"><span class="pre">com.github.dozermapper.spring.DozerBeanMapperFactoryBean</span></code>を定義する</p>
+<div class="highlight-xml"><div class="highlight"><pre><span></span><span class="nt">&lt;bean</span> <span class="na">class=</span><span class="s">&quot;com.github.dozermapper.spring.DozerBeanMapperFactoryBean&quot;</span><span class="nt">&gt;</span>
     <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">&quot;mappingFiles&quot;</span>
         <span class="na">value=</span><span class="s">&quot;classpath*:/META-INF/dozer/**/*-mapping.xml&quot;</span> <span class="nt">/&gt;</span><span class="c">&lt;!-- (1) --&gt;</span>
 <span class="nt">&lt;/bean&gt;</span>
@@ -246,7 +259,7 @@ Dozerが提供している <code class="docutils literal"><span class="pre">org.
 </td>
 <td><div class="first last line-block">
 <div class="line">mappingFilesに、マッピング定義XMLファイルを指定する。</div>
-<div class="line"><code class="docutils literal"><span class="pre">org.dozer.spring.DozerBeanMapperFactoryBean</span></code> は、 interfaceとして <code class="docutils literal"><span class="pre">org.dozer.Mapper</span></code> を保持している。そのため、 <code class="docutils literal"><span class="pre">&#64;Inject</span></code> 時は <code class="docutils literal"><span class="pre">Mapper</span></code> を指定する。</div>
+<div class="line"><code class="docutils literal"><span class="pre">com.github.dozermapper.spring.DozerBeanMapperFactoryBean</span></code>は、 interfaceとして <code class="docutils literal"><span class="pre">com.github.dozermapper.core.Mapper</span></code>を保持している。そのため、 <code class="docutils literal"><span class="pre">&#64;Inject</span></code>時は <code class="docutils literal"><span class="pre">Mapper</span></code>を指定する。</div>
 <div class="line">この例では、クラスパス直下の、/META-INF/dozerの任意フォルダ内の</div>
 <div class="line">(任意の値)-mapping.xmlを、すべて読み込む。このXMLファイルの内容については、以降で説明する。</div>
 </div>
@@ -257,7 +270,7 @@ Dozerが提供している <code class="docutils literal"><span class="pre">org.
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
-<p>Beanマッピングを行いたいクラスに、 <code class="docutils literal"><span class="pre">Mapper</span></code> をインジェクトすればよい。</p>
+<p>Beanマッピングを行いたいクラスに、<code class="docutils literal"><span class="pre">Mapper</span></code>をインジェクトすればよい。</p>
 <div class="highlight-java"><div class="highlight"><pre><span></span><span class="nd">@Inject</span>
 <span class="n">Mapper</span> <span class="n">beanMapper</span><span class="o">;</span>
 </pre></div>
@@ -282,7 +295,7 @@ Dozerが提供している <code class="docutils literal"><span class="pre">org.
 <span class="o">}</span>
 </pre></div>
 </div>
-<p>以下のように、 <code class="docutils literal"><span class="pre">Mapper</span></code> の <code class="docutils literal"><span class="pre">map</span></code> メソッドを使ってBeanマッピングを行う。
+<p>以下のように、<code class="docutils literal"><span class="pre">Mapper</span></code>の <code class="docutils literal"><span class="pre">map</span></code>メソッドを使ってBeanマッピングを行う。
 下記メソッドを実行した後、Destinationオブジェクトが新たに作成され、sourceの各フィールドの値が作成されたDestinationオブジェクトにコピーされる。</p>
 <div class="highlight-java"><div class="highlight"><pre><span></span><span class="n">Source</span> <span class="n">source</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Source</span><span class="o">();</span>
 <span class="n">source</span><span class="o">.</span><span class="na">setId</span><span class="o">(</span><span class="mi">1</span><span class="o">);</span>
@@ -440,7 +453,7 @@ Dozerが提供している <code class="docutils literal"><span class="pre">org.
 <div class="highlight-console"><div class="highlight"><pre><span></span><span class="go">123.45</span>
 </pre></div>
 </div>
-<p>サポートされている型変換については、 <a class="reference external" href="http://dozer.sourceforge.net/documentation/simpleproperty.html">マニュアル</a> を参照されたい。</p>
+<p>サポートされている型変換については、 <a class="reference external" href="https://dozermapper.github.io/gitbook/documentation/simpleproperty.html#_Data_type_conversion">マニュアル</a> を参照されたい。</p>
 </div>
 <div class="section" id="beanconverter-difference-item-xml-mapping-label">
 <span id="id4"></span><h3><a class="toc-backref" href="#id15">7.7.2.4. Bean間のフィールド名が異なる場合のマッピング</a><a class="headerlink" href="#beanconverter-difference-item-xml-mapping-label" title="Permalink to this headline">¶</a></h3>
@@ -465,9 +478,9 @@ Beanマッピングするフィールドを定義することで変換できる�
 <p><a class="reference internal" href="#bean-mapper-definition"><span class="std std-ref">Dozerを使用するためのBean定義</span></a>の定義がある場合、
 src/main/resources/META-INF/dozerフォルダ内に、(任意の値)-mapping.xmlという、マッピング定義XMLファイルを作成する。</p>
 <div class="highlight-xml"><div class="highlight"><pre><span></span><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
-<span class="nt">&lt;mappings</span> <span class="na">xmlns=</span><span class="s">&quot;http://dozer.sourceforge.net&quot;</span> <span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span>
-    <span class="na">xsi:schemaLocation=</span><span class="s">&quot;http://dozer.sourceforge.net</span>
-<span class="s">          http://dozer.sourceforge.net/schema/beanmapping.xsd&quot;</span><span class="nt">&gt;</span>
+<span class="nt">&lt;mappings</span> <span class="na">xmlns=</span><span class="s">&quot;http://dozermapper.github.io/schema/bean-mapping&quot;</span> <span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span>
+    <span class="na">xsi:schemaLocation=</span><span class="s">&quot;http://dozermapper.github.io/schema/bean-mapping</span>
+<span class="s">          https://dozermapper.github.io/schema/bean-mapping.xsd&quot;</span><span class="nt">&gt;</span>
 
     <span class="nt">&lt;mapping&gt;</span>
       <span class="nt">&lt;class-a&gt;</span>com.xx.xx.Source<span class="nt">&lt;/class-a&gt;</span><span class="c">&lt;!-- (1) --&gt;</span>
@@ -589,9 +602,9 @@ src/main/resources/META-INF/dozerフォルダ内に、(任意の値)-mapping.xml
 <code class="docutils literal"><span class="pre">Destination</span></code>オブジェクトから<code class="docutils literal"><span class="pre">Source</span></code>オブジェクトのマッピングも可能である。</p>
 <p>単方向のみを指定したい場合は、マッピング・フィールド定義に、<code class="docutils literal"><span class="pre">&lt;mapping&gt;</span></code>タグの<code class="docutils literal"><span class="pre">type</span></code>属性に<code class="docutils literal"><span class="pre">one-way</span></code>を設定する。</p>
 <div class="highlight-xml"><div class="highlight"><pre><span></span><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
-<span class="nt">&lt;mappings</span> <span class="na">xmlns=</span><span class="s">&quot;http://dozer.sourceforge.net&quot;</span> <span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span>
-    <span class="na">xsi:schemaLocation=</span><span class="s">&quot;http://dozer.sourceforge.net</span>
-<span class="s">          http://dozer.sourceforge.net/schema/beanmapping.xsd&quot;</span><span class="nt">&gt;</span>
+<span class="nt">&lt;mappings</span> <span class="na">xmlns=</span><span class="s">&quot;http://dozermapper.github.io/schema/bean-mapping&quot;</span> <span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span>
+    <span class="na">xsi:schemaLocation=</span><span class="s">&quot;http://dozermapper.github.io/schema/bean-mapping</span>
+<span class="s">          https://dozermapper.github.io/schema/bean-mapping.xsd&quot;</span><span class="nt">&gt;</span>
         <span class="c">&lt;!-- omitted --&gt;</span>
         <span class="nt">&lt;mapping</span> <span class="na">type=</span><span class="s">&quot;one-way&quot;</span><span class="nt">&gt;</span>
               <span class="nt">&lt;class-a&gt;</span>com.xx.xx.Source<span class="nt">&lt;/class-a&gt;</span>
@@ -660,11 +673,63 @@ src/main/resources/META-INF/dozerフォルダ内に、(任意の値)-mapping.xml
 <span class="go">SourceName</span>
 </pre></div>
 </div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p><strong>Dozer 6.1.0以前のバージョンに存在する単方向マッピングのバグについて</strong></p>
+<p>Dozer 6.1.0以前では、同名フィールドは<code class="docutils literal"><span class="pre">&lt;mapping&gt;</span></code>タグの<code class="docutils literal"><span class="pre">type</span></code>属性に<code class="docutils literal"><span class="pre">one-way</span></code>を付与しても正常に単方向マッピングとならず、逆方向でもマッピングされるバグが存在する。
+Macchinetta Server Framework for Java 1.5.X以前はDozer 6.1.0以前のバージョンを使用しているため、バグの影響を受けていた。</p>
+<p>具体的には、<code class="docutils literal"><span class="pre">&lt;mapping&gt;</span></code>タグの<code class="docutils literal"><span class="pre">type</span></code>属性に<code class="docutils literal"><span class="pre">one-way</span></code>を付与した場合、フィールドが別名であれば正常に単方向マッピングとなる。
+それ以外の項目は双方向マッピングされてしまう。</p>
+<p>具体例を以下に示す。</p>
+<p>変換元のBean定義</p>
+<blockquote>
+<div><div class="highlight-java"><div class="highlight"><pre><span></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Source</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="kt">int</span> <span class="n">id</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="n">String</span> <span class="n">sameNameField1</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="n">String</span> <span class="n">sameNameField2</span><span class="o">;</span>
+    <span class="c1">// omitted setter/getter</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>変換先のBean定義</p>
+<blockquote>
+<div><div class="highlight-java"><div class="highlight"><pre><span></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Destination</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="kt">int</span> <span class="n">destinationId</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="n">String</span> <span class="n">sameNameField1</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="n">String</span> <span class="n">sameNameField2</span><span class="o">;</span>
+    <span class="c1">// omitted setter/getter</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>マッピング定義</p>
+<blockquote>
+<div><div class="highlight-xml"><div class="highlight"><pre><span></span><span class="nt">&lt;mapping</span> <span class="na">type=</span><span class="s">&quot;one-way&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;class-a&gt;</span>xxx.Source<span class="nt">&lt;/class-a&gt;</span>
+    <span class="nt">&lt;class-b&gt;</span>xxx.Destination<span class="nt">&lt;/class-b&gt;</span>
+    <span class="c">&lt;!-- fieldタグを利用してマッピング定義した異名フィールドは、正常に単方向マッピングとなる。 --&gt;</span>
+    <span class="nt">&lt;field&gt;</span>
+        <span class="nt">&lt;a&gt;</span>id<span class="nt">&lt;/a&gt;</span>
+        <span class="nt">&lt;b&gt;</span>destinationId<span class="nt">&lt;/b&gt;</span>
+    <span class="nt">&lt;/field&gt;</span>
+    <span class="c">&lt;!-- fieldタグを利用してマッピング定義した同名フィールドは、双方向マッピングとなってしまう。 --&gt;</span>
+    <span class="nt">&lt;field&gt;</span>
+        <span class="nt">&lt;a&gt;</span>sameNameField1<span class="nt">&lt;/a&gt;</span>
+        <span class="nt">&lt;b&gt;</span>sameNameField1<span class="nt">&lt;/b&gt;</span>
+    <span class="nt">&lt;/field&gt;</span>
+    <span class="c">&lt;!-- 自動でマッピングされた同名フィールド（sameNameField2）も、双方向マッピングとなってしまう。 --&gt;</span>
+<span class="nt">&lt;/mapping&gt;</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p class="last">上記のようにマッピング定義した場合、<code class="docutils literal"><span class="pre">sameNameField1</span></code>、<code class="docutils literal"><span class="pre">sameNameField2</span></code>は逆方向にもマッピングされてしまっていた。</p>
+</div>
 </div>
 <div class="section" id="nest">
 <span id="beanconverter-custom-converter-label"></span><h3><a class="toc-backref" href="#id17">7.7.2.6. Nestしたフィールドのマッピング</a><a class="headerlink" href="#nest" title="Permalink to this headline">¶</a></h3>
 <p>コピー元Beanが持つフィールドを、コピー先Beanが持つNestしたBeanのフィールドにも、マッピングできることである。
-(Dozerの用語で、 <a class="reference external" href="http://dozer.sourceforge.net/documentation/deepmapping.html">Deep Mapping</a> と呼ばれる。)</p>
+(Dozerの用語で、 <a class="reference external" href="https://dozermapper.github.io/gitbook/documentation/deepmapping.html">Deep Mapping</a> と呼ばれる。)</p>
 <p>変換元のBean定義</p>
 <div class="highlight-java"><div class="highlight"><pre><span></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">EmployeeForm</span> <span class="o">{</span>
     <span class="kd">private</span> <span class="kt">int</span> <span class="n">id</span><span class="o">;</span>
@@ -692,9 +757,9 @@ src/main/resources/META-INF/dozerフォルダ内に、(任意の値)-mapping.xml
 <p>例 : <code class="docutils literal"><span class="pre">EmployeeForm</span></code>オブジェクトが持つ<code class="docutils literal"><span class="pre">deptId</span></code>を、<code class="docutils literal"><span class="pre">Employee</span></code>オブジェクトが持つ<code class="docutils literal"><span class="pre">Department</span></code>の<code class="docutils literal"><span class="pre">deptId</span></code>にマップしたい場合、
 以下のように定義する。</p>
 <div class="highlight-xml"><div class="highlight"><pre><span></span><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
-<span class="nt">&lt;mappings</span> <span class="na">xmlns=</span><span class="s">&quot;http://dozer.sourceforge.net&quot;</span> <span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span>
-    <span class="na">xsi:schemaLocation=</span><span class="s">&quot;http://dozer.sourceforge.net</span>
-<span class="s">          http://dozer.sourceforge.net/schema/beanmapping.xsd&quot;</span><span class="nt">&gt;</span>
+<span class="nt">&lt;mappings</span> <span class="na">xmlns=</span><span class="s">&quot;http://dozermapper.github.io/schema/bean-mapping&quot;</span> <span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span>
+    <span class="na">xsi:schemaLocation=</span><span class="s">&quot;http://dozermapper.github.io/schema/bean-mapping</span>
+<span class="s">          https://dozermapper.github.io/schema/bean-mapping.xsd&quot;</span><span class="nt">&gt;</span>
     <span class="c">&lt;!-- omitted --&gt;</span>
     <span class="nt">&lt;mapping</span> <span class="na">map-empty-string=</span><span class="s">&quot;false&quot;</span> <span class="na">map-null=</span><span class="s">&quot;false&quot;</span><span class="nt">&gt;</span>
         <span class="nt">&lt;class-a&gt;</span>com.xx.aa.EmployeeForm<span class="nt">&lt;/class-a&gt;</span>
@@ -782,12 +847,12 @@ src/main/resources/META-INF/dozerフォルダ内に、(任意の値)-mapping.xml
 <p>Dozerは、以下のCollectionタイプの双方向自動マッピングをサポートしている。
 フィールド名が同じである場合、マッピング定義XMLファイルが不要である。</p>
 <ul class="simple">
-<li><code class="docutils literal"><span class="pre">java.util.List</span></code> &lt;=&gt; <code class="docutils literal"><span class="pre">java.util.List</span></code></li>
-<li><code class="docutils literal"><span class="pre">java.util.List</span></code> &lt;=&gt; Array</li>
+<li><code class="docutils literal"><span class="pre">java.util.List</span></code>&lt;=&gt; <code class="docutils literal"><span class="pre">java.util.List</span></code></li>
+<li><code class="docutils literal"><span class="pre">java.util.List</span></code>&lt;=&gt; Array</li>
 <li>Array &lt;=&gt; Array</li>
-<li><code class="docutils literal"><span class="pre">java.util.Set</span></code> &lt;=&gt; <code class="docutils literal"><span class="pre">java.util.Set</span></code></li>
-<li><code class="docutils literal"><span class="pre">java.util.Set</span></code> &lt;=&gt; Array</li>
-<li><code class="docutils literal"><span class="pre">java.util.Set</span></code> &lt;=&gt; <code class="docutils literal"><span class="pre">java.util.List</span></code></li>
+<li><code class="docutils literal"><span class="pre">java.util.Set</span></code>&lt;=&gt; <code class="docutils literal"><span class="pre">java.util.Set</span></code></li>
+<li><code class="docutils literal"><span class="pre">java.util.Set</span></code>&lt;=&gt; Array</li>
+<li><code class="docutils literal"><span class="pre">java.util.Set</span></code>&lt;=&gt; <code class="docutils literal"><span class="pre">java.util.List</span></code></li>
 </ul>
 <p>次のクラスのコレクションをもつBeanのマッピングについて考える。</p>
 <div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">com.example.dozer</span><span class="o">;</span>
@@ -935,9 +1000,9 @@ src/main/resources/META-INF/dozerフォルダ内に、(任意の値)-mapping.xml
 <p>上記の振る舞いは、Dozerの用語では<strong>cumulative</strong>と呼ばれ、Collectionをマッピングする際のデフォルトの挙動となっている。</p>
 <p>この挙動はマッピング定義XMLファイルにおいて変更することができる。</p>
 <div class="highlight-xml"><div class="highlight"><pre><span></span><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
-<span class="nt">&lt;mappings</span> <span class="na">xmlns=</span><span class="s">&quot;http://dozer.sourceforge.net&quot;</span> <span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span>
-    <span class="na">xsi:schemaLocation=</span><span class="s">&quot;http://dozer.sourceforge.net</span>
-<span class="s">          http://dozer.sourceforge.net/schema/beanmapping.xsd&quot;</span><span class="nt">&gt;</span>
+<span class="nt">&lt;mappings</span> <span class="na">xmlns=</span><span class="s">&quot;http://dozermapper.github.io/schema/bean-mapping&quot;</span> <span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span>
+    <span class="na">xsi:schemaLocation=</span><span class="s">&quot;http://dozermapper.github.io/schema/bean-mapping</span>
+<span class="s">          https://dozermapper.github.io/schema/bean-mapping.xsd&quot;</span><span class="nt">&gt;</span>
     <span class="c">&lt;!-- omitted --&gt;</span>
     <span class="nt">&lt;mapping&gt;</span>
         <span class="nt">&lt;class-a&gt;</span>com.example.dozer.AccountForm<span class="nt">&lt;/class-a&gt;</span>
@@ -992,9 +1057,9 @@ src/main/resources/META-INF/dozerフォルダ内に、(任意の値)-mapping.xml
 </div>
 <p>コピー先のコレクションにのみに存在する項目は除外したい場合も、マッピング定義XMLファイルの設定で実現することができる。</p>
 <div class="highlight-xml"><div class="highlight"><pre><span></span><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
-<span class="nt">&lt;mappings</span> <span class="na">xmlns=</span><span class="s">&quot;http://dozer.sourceforge.net&quot;</span> <span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span>
-    <span class="na">xsi:schemaLocation=</span><span class="s">&quot;http://dozer.sourceforge.net</span>
-<span class="s">          http://dozer.sourceforge.net/schema/beanmapping.xsd&quot;</span><span class="nt">&gt;</span>
+<span class="nt">&lt;mappings</span> <span class="na">xmlns=</span><span class="s">&quot;http://dozermapper.github.io/schema/bean-mapping&quot;</span> <span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span>
+    <span class="na">xsi:schemaLocation=</span><span class="s">&quot;http://dozermapper.github.io/schema/bean-mapping</span>
+<span class="s">          https://dozermapper.github.io/schema/bean-mapping.xsd&quot;</span><span class="nt">&gt;</span>
     <span class="c">&lt;!-- omitted --&gt;</span>
     <span class="nt">&lt;mapping&gt;</span>
         <span class="nt">&lt;class-a&gt;</span>com.example.dozer.AccountForm<span class="nt">&lt;/class-a&gt;</span>
@@ -1037,9 +1102,9 @@ src/main/resources/META-INF/dozerフォルダ内に、(任意の値)-mapping.xml
 <p>コピー元にあるオブジェクトだけがコピー先のコレクション内に残っていることが分かる。</p>
 <p>いかのように設定しても同じ結果が得られる。</p>
 <div class="highlight-xml"><div class="highlight"><pre><span></span><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
-<span class="nt">&lt;mappings</span> <span class="na">xmlns=</span><span class="s">&quot;http://dozer.sourceforge.net&quot;</span> <span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span>
-    <span class="na">xsi:schemaLocation=</span><span class="s">&quot;http://dozer.sourceforge.net</span>
-<span class="s">          http://dozer.sourceforge.net/schema/beanmapping.xsd&quot;</span><span class="nt">&gt;</span>
+<span class="nt">&lt;mappings</span> <span class="na">xmlns=</span><span class="s">&quot;http://dozermapper.github.io/schema/bean-mapping&quot;</span> <span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span>
+    <span class="na">xsi:schemaLocation=</span><span class="s">&quot;http://dozermapper.github.io/schema/bean-mapping</span>
+<span class="s">          https://dozermapper.github.io/schema/bean-mapping.xsd&quot;</span><span class="nt">&gt;</span>
     <span class="c">&lt;!-- omitted --&gt;</span>
     <span class="nt">&lt;mapping&gt;</span>
         <span class="nt">&lt;class-a&gt;</span>com.example.dozer.AccountForm<span class="nt">&lt;/class-a&gt;</span>
@@ -1169,43 +1234,22 @@ src/main/resources/META-INF/dozerフォルダ内に、(任意の値)-mapping.xml
 <div class="admonition tip">
 <p class="first admonition-title">Tip</p>
 <p class="last">Dozerでは、Genericsを使用しないリスト間でもマッピングできる。このとき、変換元と変換先に含まれているオブジェクトのデータ型をHINTとして指定できる。
-詳細は、 <a class="reference external" href="http://dozer.sourceforge.net/documentation/collectionandarraymapping.html#Using_Hints_for_Collection_Mapping">Dozerの公式マニュアル -Collection and Array Mapping(Using Hints for Collection Mapping)-</a> を参照されたい。</p>
-</div>
-<div class="admonition-todo admonition" id="index-0">
-<p class="first admonition-title">Todo</p>
-<p>Collection&lt;T&gt;を使用したBean間のマッピングは失敗することが確認されている。</p>
-<p>例 :</p>
-<blockquote class="last">
-<div><blockquote>
-<div><div class="highlight-java"><div class="highlight"><pre><span></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">ListNestedBean</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="o">{</span>
-   <span class="kd">private</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">nest</span><span class="o">;</span>
-   <span class="c1">// omitted other declarations</span>
-<span class="o">}</span>
-</pre></div>
-</div>
-</div></blockquote>
-<p>実行結果 :</p>
-<blockquote>
-<div><div class="highlight-console"><div class="highlight"><pre><span></span><span class="go">java.lang.ClassCastException: sun.reflect.generics.reflectiveObjects.TypeVariableImpl cannot be cast to java.lang.Class</span>
-</pre></div>
-</div>
-</div></blockquote>
-</div></blockquote>
+詳細は、 <a class="reference external" href="https://dozermapper.github.io/gitbook/documentation/collectionandarraymapping.html#_Using_Hints_for_Collection_Mapping">Dozerの公式マニュアル -Collection and Array Mapping(Using Hints for Collection Mapping)-</a> を参照されたい。</p>
 </div>
 </div>
 </div>
 <div class="section" id="how-to-extend">
 <h2><a class="toc-backref" href="#id19">7.7.3. How to extend</a><a class="headerlink" href="#how-to-extend" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="id7">
-<h3><a class="toc-backref" href="#id20">7.7.3.1. カスタムコンバーターの作成</a><a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="how-to-make-customconverter-label">
+<span id="id7"></span><h3><a class="toc-backref" href="#id20">7.7.3.1. カスタムコンバーターの作成</a><a class="headerlink" href="#how-to-make-customconverter-label" title="Permalink to this headline">¶</a></h3>
 <div class="line-block">
-<div class="line">Dozerがサポートしていないデータ型のマッピングの場合、カスタムコンバーター経由でマッピングできる。</div>
+<div class="line">Dozerがサポートしていないデータ型のマッピングでは、同じ型同士の場合も異なる型の場合も、カスタムコンバーター経由でマッピングできる。</div>
 </div>
 <ul class="simple">
-<li>例 : <code class="docutils literal"><span class="pre">java.lang.String</span></code> &lt;=&gt; <code class="docutils literal"><span class="pre">org.joda.time.DateTime</span></code></li>
+<li>例 : <code class="docutils literal"><span class="pre">java.lang.String</span></code>&lt;=&gt; <code class="docutils literal"><span class="pre">org.joda.time.DateTime</span></code></li>
 </ul>
 <div class="line-block">
-<div class="line">カスタムコンバーターは、Dozerが提供している <code class="docutils literal"><span class="pre">org.dozer.CustomConverter</span></code> を実装したクラスである。</div>
+<div class="line">カスタムコンバーターは、Dozerが提供している<code class="docutils literal"><span class="pre">com.github.dozermapper.core.CustomConverter</span></code>を実装したクラスである。</div>
 <div class="line">カスタムコンバーターの指定は、以下3パターンで行える。</div>
 </div>
 <ul class="simple">
@@ -1214,10 +1258,10 @@ src/main/resources/META-INF/dozerフォルダ内に、(任意の値)-mapping.xml
 <li>フィールドレベル</li>
 </ul>
 <p>アプリケーション全体で、同様のロジックにより変換を行いたい場合は、Global Configurationを推奨する。</p>
-<p>カスタムコンバーターを実装する場合は<code class="docutils literal"><span class="pre">org.dozer.DozerConverter</span></code>を継承するのが便利である。</p>
+<p>カスタムコンバーターを実装する場合は<code class="docutils literal"><span class="pre">com.github.dozermapper.core.DozerConverter</span></code>を継承するのが便利である。</p>
 <div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">com.example.yourproject.common.bean.converter</span><span class="o">;</span>
 
-<span class="kn">import</span> <span class="nn">org.dozer.DozerConverter</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">com.github.dozermapper.core.DozerConverter</span><span class="o">;</span>
 <span class="kn">import</span> <span class="nn">org.joda.time.DateTime</span><span class="o">;</span>
 <span class="kn">import</span> <span class="nn">org.joda.time.format.DateTimeFormat</span><span class="o">;</span>
 <span class="kn">import</span> <span class="nn">org.joda.time.format.DateTimeFormatter</span><span class="o">;</span>
@@ -1267,7 +1311,7 @@ src/main/resources/META-INF/dozerフォルダ内に、(任意の値)-mapping.xml
 </div>
 </td>
 <td><div class="first last line-block">
-<div class="line"><code class="docutils literal"><span class="pre">org.dozer.DozerConverter</span></code>を継承する。</div>
+<div class="line"><code class="docutils literal"><span class="pre">com.github.dozermapper.core.DozerConverter</span></code>を継承する。</div>
 </div>
 </td>
 </tr>
@@ -1303,9 +1347,9 @@ src/main/resources/META-INF/dozerフォルダ内に、(任意の値)-mapping.xml
 <p>作成したカスタムコンバーターを、マッピングに利用するために定義する必要がある。</p>
 <p>dozer-configration-mapping.xml</p>
 <div class="highlight-xml"><div class="highlight"><pre><span></span><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
-<span class="nt">&lt;mappings</span> <span class="na">xmlns=</span><span class="s">&quot;http://dozer.sourceforge.net&quot;</span> <span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span>
-    <span class="na">xsi:schemaLocation=</span><span class="s">&quot;http://dozer.sourceforge.net</span>
-<span class="s">          http://dozer.sourceforge.net/schema/beanmapping.xsd&quot;</span><span class="nt">&gt;</span>
+<span class="nt">&lt;mappings</span> <span class="na">xmlns=</span><span class="s">&quot;http://dozermapper.github.io/schema/bean-mapping&quot;</span> <span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span>
+    <span class="na">xsi:schemaLocation=</span><span class="s">&quot;http://dozermapper.github.io/schema/bean-mapping</span>
+<span class="s">          https://dozermapper.github.io/schema/bean-mapping.xsd&quot;</span><span class="nt">&gt;</span>
 
     <span class="nt">&lt;configuration&gt;</span>
         <span class="nt">&lt;custom-converters&gt;</span><span class="c">&lt;!-- (1) --&gt;</span>
@@ -1370,7 +1414,7 @@ src/main/resources/META-INF/dozerフォルダ内に、(任意の値)-mapping.xml
 </tr>
 </tbody>
 </table>
-<p>上記のマッピングを行ったことで、アプリケーション全体で、<code class="docutils literal"><span class="pre">java.lang.String</span></code> &lt;=&gt; <code class="docutils literal"><span class="pre">org.joda.time.DateTime</span></code>の変換が必要な場合、標準のマッピングではなく、カスタムコンバーター呼び出しでマッピングが行われる。</p>
+<p>上記のマッピングを行ったことで、アプリケーション全体で、<code class="docutils literal"><span class="pre">java.lang.String</span></code>&lt;=&gt; <code class="docutils literal"><span class="pre">org.joda.time.DateTime</span></code>の変換が必要な場合、標準のマッピングではなく、カスタムコンバーター呼び出しでマッピングが行われる。</p>
 <p>例 :</p>
 <p>変換元のBean定義</p>
 <div class="highlight-java"><div class="highlight"><pre><span></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Source</span> <span class="o">{</span>
@@ -1408,7 +1452,7 @@ src/main/resources/META-INF/dozerフォルダ内に、(任意の値)-mapping.xml
 <span class="n">assertThat</span><span class="o">(</span><span class="n">source</span><span class="o">.</span><span class="na">getDate</span><span class="o">(),</span><span class="n">is</span><span class="o">(</span><span class="s">&quot;2012-08-10 23:12:12&quot;</span><span class="o">));</span>
 </pre></div>
 </div>
-<p>カスタムコンバーターに関する詳細は、 <a class="reference external" href="http://dozer.sourceforge.net/documentation/customconverter.html">Dozerの公式マニュアル -Custom Converters-</a> を参照されたい。</p>
+<p>カスタムコンバーターに関する詳細は、 <a class="reference external" href="https://dozermapper.github.io/gitbook/documentation/customconverter.html">Dozerの公式マニュアル -Custom Converters-</a> を参照されたい。</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last"><code class="docutils literal"><span class="pre">String</span></code>から<code class="docutils literal"><span class="pre">java.utl.Date</span></code>など標準の日付・時刻オブジェクトへの変換については”<a class="reference internal" href="#beanconverter-string-and-datetime"><span class="std std-ref">文字列から日付・時刻オブジェクトへのマッピング</span></a>”で述べる。</p>
@@ -1418,7 +1462,7 @@ src/main/resources/META-INF/dozerフォルダ内に、(任意の値)-mapping.xml
 <div class="section" id="appendix">
 <h2><a class="toc-backref" href="#id21">7.7.4. Appendix</a><a class="headerlink" href="#appendix" title="Permalink to this headline">¶</a></h2>
 <p>マッピング定義XMLファイルで指定できるオプションを説明する。</p>
-<p>すべてのオプションは、 <a class="reference external" href="http://dozer.sourceforge.net/documentation/mappings.html">Dozerの公式マニュアル -Custom Mappings Via Dozer XML Files-</a> で確認できる。</p>
+<p>すべてのオプションは、 <a class="reference external" href="https://dozermapper.github.io/gitbook/documentation/mappings.html">Dozerの公式マニュアル -Custom Mappings Via Dozer XML Files-</a> で確認できる。</p>
 <div class="section" id="field-exclude">
 <span id="fieldexclude"></span><h3><a class="toc-backref" href="#id22">7.7.4.1. フィールド除外設定 (field-exclude)</a><a class="headerlink" href="#field-exclude" title="Permalink to this headline">¶</a></h3>
 <p>Beanを変換する際に、コピーしてほしくないフィールドを除外することができる。</p>
@@ -1444,9 +1488,9 @@ src/main/resources/META-INF/dozerフォルダ内に、(任意の値)-mapping.xml
 <p>コピー元のBeanから任意のフィールドをマッピングから除外したい場合は以下のように定義する。</p>
 <p>フィールド除外の設定は、マッピング定義XMLファイルで、以下のように行う。</p>
 <div class="highlight-xml"><div class="highlight"><pre><span></span><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
-<span class="nt">&lt;mappings</span> <span class="na">xmlns=</span><span class="s">&quot;http://dozer.sourceforge.net&quot;</span> <span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span>
-    <span class="na">xsi:schemaLocation=</span><span class="s">&quot;http://dozer.sourceforge.net</span>
-<span class="s">          http://dozer.sourceforge.net/schema/beanmapping.xsd&quot;</span><span class="nt">&gt;</span>
+<span class="nt">&lt;mappings</span> <span class="na">xmlns=</span><span class="s">&quot;http://dozermapper.github.io/schema/bean-mapping&quot;</span> <span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span>
+    <span class="na">xsi:schemaLocation=</span><span class="s">&quot;http://dozermapper.github.io/schema/bean-mapping</span>
+<span class="s">          https://dozermapper.github.io/schema/bean-mapping.xsd&quot;</span><span class="nt">&gt;</span>
     <span class="c">&lt;!-- omitted --&gt;</span>
     <span class="nt">&lt;mapping&gt;</span>
         <span class="nt">&lt;class-a&gt;</span>com.xx.xx.Source<span class="nt">&lt;/class-a&gt;</span>
@@ -1513,9 +1557,9 @@ src/main/resources/META-INF/dozerフォルダ内に、(任意の値)-mapping.xml
 <p><a class="reference internal" href="#fieldexclude"><span class="std std-ref">フィールド除外設定 (field-exclude)</span></a>で示したマッピングは、アプリケーション全体でBean変換する際に適用される。
 マッピングの適用範囲を制限(特定化)したい場合は、以下のように、map-idを指定して定義する。</p>
 <div class="highlight-xml"><div class="highlight"><pre><span></span><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
-<span class="nt">&lt;mappings</span> <span class="na">xmlns=</span><span class="s">&quot;http://dozer.sourceforge.net&quot;</span> <span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span>
-    <span class="na">xsi:schemaLocation=</span><span class="s">&quot;http://dozer.sourceforge.net</span>
-<span class="s">          http://dozer.sourceforge.net/schema/beanmapping.xsd&quot;</span><span class="nt">&gt;</span>
+<span class="nt">&lt;mappings</span> <span class="na">xmlns=</span><span class="s">&quot;http://dozermapper.github.io/schema/bean-mapping&quot;</span> <span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span>
+    <span class="na">xsi:schemaLocation=</span><span class="s">&quot;http://dozermapper.github.io/schema/bean-mapping</span>
+<span class="s">          https://dozermapper.github.io/schema/bean-mapping.xsd&quot;</span><span class="nt">&gt;</span>
     <span class="c">&lt;!-- omitted --&gt;</span>
     <span class="nt">&lt;mapping</span> <span class="na">map-id=</span><span class="s">&quot;mapidTitleFieldExclude&quot;</span><span class="nt">&gt;</span>
         <span class="nt">&lt;class-a&gt;</span>com.xx.xx.Source<span class="nt">&lt;/class-a&gt;</span>
@@ -1531,7 +1575,7 @@ src/main/resources/META-INF/dozerフォルダ内に、(任意の値)-mapping.xml
 </div>
 <p>上記の設定を行うと、<code class="docutils literal"><span class="pre">map</span></code>メソッドにmap-id(mapidTitleFieldExclude)を渡すことでtitleのコピーを除外できる。
 map-idを指定しない場合はこの設定は適用されず、全フィールドがコピーされる。</p>
-<p><code class="docutils literal"><span class="pre">map</span></code> メソッドにmap-idを渡す例を、以下に示す。</p>
+<p><code class="docutils literal"><span class="pre">map</span></code>メソッドにmap-idを渡す例を、以下に示す。</p>
 <div class="highlight-java"><div class="highlight"><pre><span></span><span class="n">Source</span> <span class="n">source</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Source</span><span class="o">();</span>
 <span class="n">source</span><span class="o">.</span><span class="na">setId</span><span class="o">(</span><span class="mi">1</span><span class="o">);</span>
 <span class="n">source</span><span class="o">.</span><span class="na">setName</span><span class="o">(</span><span class="s">&quot;SourceName&quot;</span><span class="o">);</span>
@@ -1603,7 +1647,7 @@ map-idを指定しない場合はこの設定は適用されず、全フィー�
 <div class="admonition tip">
 <p class="first admonition-title">Tip</p>
 <p class="last">map-idの指定は、mapping項目だけでなく、フィールドの定義でも行える。
-詳細は、 <a class="reference external" href="http://dozer.sourceforge.net/documentation/contextmapping.html">Dozerの公式マニュアル -Context Based Mapping-</a> を参照されたい。</p>
+詳細は、 <a class="reference external" href="https://dozermapper.github.io/gitbook/documentation/contextmapping.html">Dozerの公式マニュアル -Context Based Mapping-</a> を参照されたい。</p>
 </div>
 <div class="line-block">
 <div class="line"><br /></div>
@@ -1629,9 +1673,9 @@ map-idを指定しない場合はこの設定は適用されず、全フィー�
 <p>コピー元のBeanのフィールドが、<code class="docutils literal"><span class="pre">null</span></code>の場合、あるいは空の場合に、マッピングから除外することができる。
 以下のように、マッピング定義XMLファイルに設定する。</p>
 <div class="highlight-xml"><div class="highlight"><pre><span></span><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
-<span class="nt">&lt;mappings</span> <span class="na">xmlns=</span><span class="s">&quot;http://dozer.sourceforge.net&quot;</span> <span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span>
-    <span class="na">xsi:schemaLocation=</span><span class="s">&quot;http://dozer.sourceforge.net</span>
-<span class="s">          http://dozer.sourceforge.net/schema/beanmapping.xsd&quot;</span><span class="nt">&gt;</span>
+<span class="nt">&lt;mappings</span> <span class="na">xmlns=</span><span class="s">&quot;http://dozermapper.github.io/schema/bean-mapping&quot;</span> <span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span>
+    <span class="na">xsi:schemaLocation=</span><span class="s">&quot;http://dozermapper.github.io/schema/bean-mapping</span>
+<span class="s">          https://dozermapper.github.io/schema/bean-mapping.xsd&quot;</span><span class="nt">&gt;</span>
     <span class="c">&lt;!-- omitted --&gt;</span>
     <span class="nt">&lt;mapping</span> <span class="na">map-null=</span><span class="s">&quot;false&quot;</span> <span class="na">map-empty-string=</span><span class="s">&quot;false&quot;</span><span class="nt">&gt;</span><span class="c">&lt;!-- (1) --&gt;</span>
         <span class="nt">&lt;class-a&gt;</span>com.xx.xx.Source<span class="nt">&lt;/class-a&gt;</span>
@@ -1709,37 +1753,42 @@ map-idを指定しない場合はこの設定は適用されず、全フィー�
 <div class="section" id="beanconverter-string-and-datetime">
 <span id="id8"></span><h3><a class="toc-backref" href="#id25">7.7.4.4. 文字列から日付・時刻オブジェクトへのマッピング</a><a class="headerlink" href="#beanconverter-string-and-datetime" title="Permalink to this headline">¶</a></h3>
 <p>コピー元の文字列型のフィールドを、コピー先の日付・時刻系のフィールドにマッピングできる。</p>
-<p>以下6種類の変換をサポートしている。</p>
+<p>以下の変換をサポートしている。</p>
 <p>日付・時刻系</p>
 <ul class="simple">
-<li><code class="docutils literal"><span class="pre">java.lang.String</span></code> &lt;=&gt; <code class="docutils literal"><span class="pre">java.util.Date</span></code></li>
-<li><code class="docutils literal"><span class="pre">java.lang.String</span></code> &lt;=&gt; <code class="docutils literal"><span class="pre">java.util.Calendar</span></code></li>
-<li><code class="docutils literal"><span class="pre">java.lang.String</span></code> &lt;=&gt; <code class="docutils literal"><span class="pre">java.util.GregorianCalendar</span></code></li>
-<li><code class="docutils literal"><span class="pre">java.lang.String</span></code> &lt;=&gt; <code class="docutils literal"><span class="pre">java.sql.Timestamp</span></code></li>
+<li><code class="docutils literal"><span class="pre">java.lang.String</span></code>&lt;=&gt; <code class="docutils literal"><span class="pre">java.util.Date</span></code></li>
+<li><code class="docutils literal"><span class="pre">java.lang.String</span></code>&lt;=&gt; <code class="docutils literal"><span class="pre">java.util.Calendar</span></code></li>
+<li><code class="docutils literal"><span class="pre">java.lang.String</span></code>&lt;=&gt; <code class="docutils literal"><span class="pre">java.util.GregorianCalendar</span></code></li>
+<li><code class="docutils literal"><span class="pre">java.lang.String</span></code>&lt;=&gt; <code class="docutils literal"><span class="pre">java.sql.Timestamp</span></code></li>
+<li><code class="docutils literal"><span class="pre">java.lang.String</span></code>&lt;=&gt; <code class="docutils literal"><span class="pre">java.time.LocalDateTime</span></code></li>
+<li><code class="docutils literal"><span class="pre">java.lang.String</span></code>&lt;=&gt; <code class="docutils literal"><span class="pre">java.time.OffsetDateTime</span></code></li>
+<li><code class="docutils literal"><span class="pre">java.lang.String</span></code>&lt;=&gt; <code class="docutils literal"><span class="pre">java.time.ZonedDateTime</span></code></li>
 </ul>
 <p>日付のみ</p>
 <ul class="simple">
-<li><code class="docutils literal"><span class="pre">java.lang.String</span></code> &lt;=&gt; <code class="docutils literal"><span class="pre">java.sql.Date</span></code></li>
+<li><code class="docutils literal"><span class="pre">java.lang.String</span></code>&lt;=&gt; <code class="docutils literal"><span class="pre">java.sql.Date</span></code></li>
+<li><code class="docutils literal"><span class="pre">java.lang.String</span></code>&lt;=&gt; <code class="docutils literal"><span class="pre">java.time.LocalDate</span></code></li>
 </ul>
 <p>時刻のみ</p>
 <ul class="simple">
-<li><code class="docutils literal"><span class="pre">java.lang.String</span></code> &lt;=&gt; <code class="docutils literal"><span class="pre">java.sql.Time</span></code></li>
+<li><code class="docutils literal"><span class="pre">java.lang.String</span></code>&lt;=&gt; <code class="docutils literal"><span class="pre">java.sql.Time</span></code></li>
+<li><code class="docutils literal"><span class="pre">java.lang.String</span></code>&lt;=&gt; <code class="docutils literal"><span class="pre">java.time.LocalTime</span></code></li>
+<li><code class="docutils literal"><span class="pre">java.lang.String</span></code>&lt;=&gt; <code class="docutils literal"><span class="pre">java.time.OffsetTime</span></code></li>
 </ul>
 <div class="line-block">
 <div class="line">日付・時刻系の変換は、以下のように行う。</div>
-<div class="line">例として、<code class="docutils literal"><span class="pre">java.util.Date</span></code>への変換を説明する。</div>
-<div class="line"><code class="docutils literal"><span class="pre">java.util.Calendar</span></code>,<code class="docutils literal"><span class="pre">java.util.GregorianCalendar</span></code>,<code class="docutils literal"><span class="pre">java.sql.Timestamp</span></code>も同じ方法で行える。</div>
+<div class="line">例として、<code class="docutils literal"><span class="pre">java.time.LocalDateTime</span></code>への変換を説明する。</div>
 </div>
 <div class="highlight-xml"><div class="highlight"><pre><span></span><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
-<span class="nt">&lt;mappings</span> <span class="na">xmlns=</span><span class="s">&quot;http://dozer.sourceforge.net&quot;</span> <span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span>
-    <span class="na">xsi:schemaLocation=</span><span class="s">&quot;http://dozer.sourceforge.net</span>
-<span class="s">          http://dozer.sourceforge.net/schema/beanmapping.xsd&quot;</span><span class="nt">&gt;</span>
+<span class="nt">&lt;mappings</span> <span class="na">xmlns=</span><span class="s">&quot;http://dozermapper.github.io/schema/bean-mapping&quot;</span> <span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span>
+    <span class="na">xsi:schemaLocation=</span><span class="s">&quot;http://dozermapper.github.io/schema/bean-mapping</span>
+<span class="s">          https://dozermapper.github.io/schema/bean-mapping.xsd&quot;</span><span class="nt">&gt;</span>
     <span class="c">&lt;!-- omitted --&gt;</span>
     <span class="nt">&lt;mapping&gt;</span>
         <span class="nt">&lt;class-a&gt;</span>com.xx.xx.Source<span class="nt">&lt;/class-a&gt;</span>
         <span class="nt">&lt;class-b&gt;</span>com.xx.xx.Destination<span class="nt">&lt;/class-b&gt;</span>
         <span class="nt">&lt;field&gt;</span>
-            <span class="nt">&lt;a</span> <span class="na">date-format=</span><span class="s">&quot;yyyy-MM-dd HH:mm:ss:SS&quot;</span><span class="nt">&gt;</span>date<span class="nt">&lt;/a&gt;</span><span class="c">&lt;!-- (1) --&gt;</span>
+            <span class="nt">&lt;a</span> <span class="na">date-format=</span><span class="s">&quot;uuuu-MM-dd HH:mm:ss.SSS&quot;</span><span class="nt">&gt;</span>date<span class="nt">&lt;/a&gt;</span><span class="c">&lt;!-- (1) --&gt;</span>
             <span class="nt">&lt;b&gt;</span>date<span class="nt">&lt;/b&gt;</span>
         <span class="nt">&lt;/field&gt;</span>
     <span class="nt">&lt;/mapping&gt;</span>
@@ -1778,7 +1827,7 @@ map-idを指定しない場合はこの設定は適用されず、全フィー�
 </div>
 <p>変換先のBean定義</p>
 <div class="highlight-java"><div class="highlight"><pre><span></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Destination</span> <span class="o">{</span>
-    <span class="kd">private</span> <span class="n">Date</span> <span class="n">date</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="n">LocalDateTime</span> <span class="n">date</span><span class="o">;</span>
     <span class="c1">// omitted setter/getter</span>
 <span class="o">}</span>
 </pre></div>
@@ -1787,7 +1836,7 @@ map-idを指定しない場合はこの設定は適用されず、全フィー�
 <div class="highlight-java"><div class="highlight"><pre><span></span><span class="n">Source</span> <span class="n">source</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Source</span><span class="o">();</span>
 <span class="n">source</span><span class="o">.</span><span class="na">setDate</span><span class="o">(</span><span class="s">&quot;2013-10-10 11:11:11.111&quot;</span><span class="o">);</span>
 <span class="n">Destination</span> <span class="n">destination</span> <span class="o">=</span> <span class="n">beanMapper</span><span class="o">.</span><span class="na">map</span><span class="o">(</span><span class="n">source</span><span class="o">,</span> <span class="n">Destination</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
-<span class="k">assert</span><span class="o">(</span><span class="n">destination</span><span class="o">.</span><span class="na">getDate</span><span class="o">().</span><span class="na">equals</span><span class="o">(</span><span class="k">new</span> <span class="n">SimpleDateFormat</span><span class="o">(</span><span class="s">&quot;yyyy-MM-dd HH:mm:ss.SSS&quot;</span><span class="o">).</span><span class="na">parse</span><span class="o">(</span><span class="s">&quot;2013-10-10 11:11:11.111&quot;</span><span class="o">)));</span>
+<span class="k">assert</span><span class="o">(</span><span class="n">destination</span><span class="o">.</span><span class="na">getDate</span><span class="o">().</span><span class="na">equals</span><span class="o">(</span><span class="n">LocalDateTime</span><span class="o">.</span><span class="na">parse</span><span class="o">(</span><span class="s">&quot;2013-10-10 11:11:11.111&quot;</span><span class="o">,</span> <span class="n">DateTimeFormatter</span><span class="o">.</span><span class="na">ofPattern</span><span class="o">(</span><span class="s">&quot;uuuu-MM-dd HH:mm:ss.SSS&quot;</span><span class="o">))));</span>
 </pre></div>
 </div>
 <div class="line-block">
@@ -1796,12 +1845,12 @@ map-idを指定しない場合はこの設定は適用されず、全フィー�
 <div class="line">その場合、アプリケーション全体のマッピングで設定された日付形式が、適用される。</div>
 </div>
 <div class="highlight-xml"><div class="highlight"><pre><span></span><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
-<span class="nt">&lt;mappings</span> <span class="na">xmlns=</span><span class="s">&quot;http://dozer.sourceforge.net&quot;</span> <span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span>
-    <span class="na">xsi:schemaLocation=</span><span class="s">&quot;http://dozer.sourceforge.net</span>
-<span class="s">          http://dozer.sourceforge.net/schema/beanmapping.xsd&quot;</span><span class="nt">&gt;</span>
+<span class="nt">&lt;mappings</span> <span class="na">xmlns=</span><span class="s">&quot;http://dozermapper.github.io/schema/bean-mapping&quot;</span> <span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span>
+    <span class="na">xsi:schemaLocation=</span><span class="s">&quot;http://dozermapper.github.io/schema/bean-mapping</span>
+<span class="s">          https://dozermapper.github.io/schema/bean-mapping.xsd&quot;</span><span class="nt">&gt;</span>
     <span class="c">&lt;!-- omitted --&gt;</span>
     <span class="nt">&lt;configuration&gt;</span>
-        <span class="nt">&lt;date-format&gt;</span>yyyy-MM-dd HH:mm:ss.SSS<span class="nt">&lt;/date-format&gt;</span>
+        <span class="nt">&lt;date-format&gt;</span>uuuu-MM-dd HH:mm:ss.SSS<span class="nt">&lt;/date-format&gt;</span>
         <span class="c">&lt;!-- omitted other configuration --&gt;</span>
     <span class="nt">&lt;/configuration&gt;</span>
     <span class="c">&lt;!-- omitted --&gt;</span>
@@ -1812,11 +1861,26 @@ map-idを指定しない場合はこの設定は適用されず、全フィー�
 <div class="line">ファイル名には制限はないが、src/main/resources/META-INF/dozer/dozer-configration-mapping.xmlを推奨する。</div>
 <div class="line">dozer-configration-mapping.xml内の設定の範囲は、この設定ファイル内でアプリケーション全体に影響を与える、Global Configurationを行えばよい。</div>
 </div>
-<p>設定可能な項目の詳細について、 <a class="reference external" href="http://dozer.sourceforge.net/documentation/globalConfiguration.html">Dozerの公式マニュアル -Global Configuration-</a> を参照されたい。</p>
+<p>設定可能な項目の詳細について、 <a class="reference external" href="https://dozermapper.github.io/gitbook/documentation/xmlConfiguration.html">Dozerの公式マニュアル -Global Configuration-</a> を参照されたい。</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last"><code class="docutils literal"><span class="pre">java.util.Date</span></code>と<code class="docutils literal"><span class="pre">java.time.LocalDate</span></code>を併用するようなアプリケーションのとき、年形式に<code class="docutils literal"><span class="pre">uuuu</span></code>と<code class="docutils literal"><span class="pre">yyyy</span></code>を使い分ける必要があるため、アプリケーション全体で設定すると困るケースがある。このような場合では、アプリケーション全体の設定に加えて個別のマッピング定義で日付形式を設定すれば対応可能である。</p>
 </div>
-<div class="section" id="id9">
-<h3><a class="toc-backref" href="#id26">7.7.4.5. マッピングのエラー</a><a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
-<p>マッピング中にマッピング処理が失敗したら、<code class="docutils literal"><span class="pre">org.dozer.MappingException</span></code>(実行時例外)がスローされる。</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p>JSR-310の日付・時刻オブジェクトから文字列への変換において、マッピング定義XMLファイルの<code class="docutils literal"><span class="pre">date-format</span></code>で指定したフォーマットの妥当性チェックに、本来は<code class="docutils literal"><span class="pre">java.time.format.DateTimeFormatter</span></code>が使用されるはずが<code class="docutils literal"><span class="pre">java.text.SimpleDateFormat</span></code>が使用されているため、<a class="reference external" href="https://github.com/DozerMapper/dozer/issues/747">JSR-310で使用できるはずのパターン文字が使用できない不具合</a> が確認されている。
+使用可能なパターン文字の詳細は、<a class="reference external" href="http://docs.oracle.com/javase/8/docs/api/java/text/SimpleDateFormat.html">SimpleDateFormatのJavadoc</a> を参照されたい。</p>
+<p class="last">なお、この不具合によって返却される実行時例外は、<a class="reference internal" href="#beanconverter-mapping-error"><span class="std std-ref">マッピングのエラー</span></a>で述べる<code class="docutils literal"><span class="pre">MappingException</span></code>ではなく、<code class="docutils literal"><span class="pre">IllegalArgumentException</span></code>であるため、注意されたい。</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Java SE 11ではJava SE 8と日付の文字列表現が異なる場合がある。
+Java SE 8と同様に表現するには<a class="reference internal" href="../../Appendix/Java11Changes.html#change-default-locale-data-from-java9"><span class="std std-ref">デフォルトで使用されるロケール・データの変更</span></a>を参照されたい。</p>
+</div>
+</div>
+<div class="section" id="beanconverter-mapping-error">
+<span id="id9"></span><h3><a class="toc-backref" href="#id26">7.7.4.5. マッピングのエラー</a><a class="headerlink" href="#beanconverter-mapping-error" title="Permalink to this headline">¶</a></h3>
+<p>マッピング中にマッピング処理が失敗したら、<code class="docutils literal"><span class="pre">com.github.dozermapper.core.MappingException</span></code>(実行時例外)がスローされる。</p>
 <p><code class="docutils literal"><span class="pre">MappingException</span></code> がスローされる代表的な例を、以下に挙げる。</p>
 <ul class="simple">
 <li><code class="docutils literal"><span class="pre">map</span></code>メソッドに存在しないmap-idが渡されている。</li>
@@ -1824,6 +1888,12 @@ map-idを指定しない場合はこの設定は適用されず、全フィー�
 <li>Dozerがサポートしていない変換の場合、かつ、その変換用のカスタムコンバーターも存在しない場合。</li>
 </ul>
 <p>これらは通常プログラムバグであるので、<code class="docutils literal"><span class="pre">map</span></code>メソッドの呼び出しの部分を正しく修正する必要がある。</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p>Dozer 6.3.0から、マッピング定義XMLファイルの解析にデフォルトでJAXBが利用されるようになった。
+これにより、Dozer 6.2.0以前では無視されていたマッピング定義XMLファイルのコンテンツ部の両端に存在する改行コードは、Dozer 6.3.0以降では値として読み取られるようになった。</p>
+<p class="last">マッピング定義XMLファイルのコンテンツ部の両端に改行コードが存在する場合、指定されたフィールド名が正しく認識されない等の不具合が生じる可能性があるため、注意されたい。</p>
+</div>
 </div>
 </div>
 </div>
@@ -1846,58 +1916,48 @@ map-idを指定しない場合はこの設定は適用されず、全フィー�
         <li class="right" >
           <a href="StringProcessing.html" title="7.6. 文字列処理"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">Macchinetta Server Framework (1.x) Development Guideline 1.5.1.RELEASE documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Macchinetta Server Framework (1.x) Development Guideline 1.6.1.RELEASE documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="index.html" >7. アプリケーション形態に依存しない汎用機能</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2013-2018, NTT Corporation.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.6.2.Theme is <a href="http://github.com/vimalkvn/solar-theme">Solar</a>
+        &copy; Copyright 2013, NTT Corporation.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.6.3.Theme is <a href="http://github.com/vimalkvn/solar-theme">Solar</a>
     </div>
     
     <script>
-     
-     $(function() {
-    	   var $sidebar	= $('.sphinxsidebar'),
-    		     $window		= $(window),
-    		     offset		= $sidebar.offset(),
-    		     topPadding	= 3,
-    		     $scroll		= $('#scroll');
-    	   
-    	   $window.scroll(function() {
-    		     if ($scroll.is(':checked')) {
-				         if ($window.scrollTop() > offset.top) {
-					           $sidebar.stop().animate({
-						             marginTop:$window.scrollTop() - offset.top + topPadding
-					           });
-				         } else {
-					           $sidebar.stop().animate({
-						             marginTop:0
-					           });
-				         }
-			       }
-		     });
-    	   
-    	   var $navList = $('ul:first', $sidebar);
-    	   $('li:first', $navList).addClass('open');
-    	   
-    	   $navList.treeview({
-    		     persist: "location",
-    		     collapsed: true,
-    		     unique: false
-    	   });
-    	   
-	   });
-    </script>
     
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-113850349-2"></script>
-    <script>
-     window.dataLayer = window.dataLayer || [];
-     function gtag(){dataLayer.push(arguments);}
-     gtag('js', new Date());
-
-     gtag('config', 'UA-113850349-2');
+    $(function() {
+    	var $sidebar	= $('.sphinxsidebar'),
+    		$window		= $(window),
+    		offset		= $sidebar.offset(),
+    		topPadding	= 3,
+    		$scroll		= $('#scroll');
+    	
+    	$window.scroll(function() {
+    		if ($scroll.is(':checked')) {
+				if ($window.scrollTop() > offset.top) {
+					$sidebar.stop().animate({
+						marginTop:$window.scrollTop() - offset.top + topPadding
+					});
+				} else {
+					$sidebar.stop().animate({
+						marginTop:0
+					});
+				}
+			}
+		});
+    	
+    	var $navList = $('ul:first', $sidebar);
+    	$('li:first', $navList).addClass('open');
+    	
+    	$navList.treeview({
+    		persist: "location",
+    		collapsed: true,
+    		unique: false
+    	});
+    	
+	});
     </script>
   </body>
 </html>

@@ -3,16 +3,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>5.1. RESTful Web Service &#8212; Macchinetta Server Framework (1.x) Development Guideline 1.5.1.RELEASE documentation</title>
-    
+    <title>5.1. RESTful Web Service &#8212; Macchinetta Server Framework (1.x) Development Guideline 1.6.1.RELEASE documentation</title>
     <link rel="stylesheet" href="../../_static/solar.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '1.5.1.RELEASE',
+        VERSION:     '1.6.1.RELEASE',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true,
@@ -43,7 +40,7 @@
         <li class="right" >
           <a href="index.html" title="5. Web Service"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">Macchinetta Server Framework (1.x) Development Guideline 1.5.1.RELEASE documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Macchinetta Server Framework (1.x) Development Guideline 1.6.1.RELEASE documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">5. Web Service</a> &#187;</li> 
       </ul>
     </div>
@@ -103,7 +100,6 @@
 <li><a class="reference internal" href="#id24">5.1.3.7. リソースの条件付き更新の制御</a></li>
 <li><a class="reference internal" href="#id25">5.1.3.8. リソースの条件付き取得の制御</a></li>
 <li><a class="reference internal" href="#id26">5.1.3.9. リソースのキャッシュ制御</a></li>
-<li><a class="reference internal" href="#id27">5.1.3.10. バージョニング</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#how-to-use">5.1.4. How to use</a><ul>
@@ -136,9 +132,9 @@
 </ul>
 </li>
 <li><a class="reference internal" href="#resthowtouseexceptionhandlingforservletcontainer">5.1.4.6. サーブレットコンテナに通知されたエラーのハンドリング実装</a><ul>
-<li><a class="reference internal" href="#id45">5.1.4.6.1. エラー応答を行うためのControllerの実装</a></li>
-<li><a class="reference internal" href="#id46">5.1.4.6.2. 致命的なエラーが発生した際に応答する静的なJSONファイルの作成</a></li>
-<li><a class="reference internal" href="#id47">5.1.4.6.3. サーブレットコンテナに通知されたエラーをハンドリングするための設定</a></li>
+<li><a class="reference internal" href="#id44">5.1.4.6.1. エラー応答を行うためのControllerの実装</a></li>
+<li><a class="reference internal" href="#id45">5.1.4.6.2. 致命的なエラーが発生した際に応答する静的なJSONファイルの作成</a></li>
+<li><a class="reference internal" href="#id46">5.1.4.6.3. サーブレットコンテナに通知されたエラーをハンドリングするための設定</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#resthowtousesecurity">5.1.4.7. セキュリティ対策</a><ul>
@@ -161,36 +157,35 @@
 </ul>
 </li>
 <li><a class="reference internal" href="#restappendixhypermedialink">5.1.6.3. ハイパーメディアリンクの実装</a><ul>
-<li><a class="reference internal" href="#id53">5.1.6.3.1. 共通部品の実装</a></li>
-<li><a class="reference internal" href="#id54">5.1.6.3.2. リソース毎の実装</a></li>
+<li><a class="reference internal" href="#id52">5.1.6.3.1. 共通部品の実装</a></li>
+<li><a class="reference internal" href="#id53">5.1.6.3.2. リソース毎の実装</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#httprestful-web-service">5.1.6.4. HTTPの仕様に準拠したRESTful Web Serviceの作成</a><ul>
 <li><a class="reference internal" href="#postlocation">5.1.6.4.1. POST時のLocationヘッダの設定</a></li>
-<li><a class="reference internal" href="#id55">5.1.6.4.2. リソース毎の実装</a></li>
+<li><a class="reference internal" href="#id54">5.1.6.4.2. リソース毎の実装</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#restappendixdisabledcsrfprotection">5.1.6.5. CSRF対策の無効化</a></li>
-<li><a class="reference internal" href="#xxe-injection">5.1.6.6. XXE Injection対策の有効化</a></li>
-<li><a class="reference internal" href="#dozerjoda-time">5.1.6.7. Dozerを使ってJoda-Timeのクラスをコピーする方法</a></li>
-<li><a class="reference internal" href="#restappendixsorucecodesofapplicationlayer">5.1.6.8. アプリケーション層のソースコード</a><ul>
-<li><a class="reference internal" href="#memberrestcontroller-java">5.1.6.8.1. MemberRestController.java</a></li>
-<li><a class="reference internal" href="#apierrorcreator-java">5.1.6.8.2. ApiErrorCreator.java</a></li>
-<li><a class="reference internal" href="#apiglobalexceptionhandler-java">5.1.6.8.3. ApiGlobalExceptionHandler.java</a></li>
+<li><a class="reference internal" href="#xxe">5.1.6.6. XXE 対策の有効化</a></li>
+<li><a class="reference internal" href="#restappendixsorucecodesofapplicationlayer">5.1.6.7. アプリケーション層のソースコード</a><ul>
+<li><a class="reference internal" href="#memberrestcontroller-java">5.1.6.7.1. MemberRestController.java</a></li>
+<li><a class="reference internal" href="#apierrorcreator-java">5.1.6.7.2. ApiErrorCreator.java</a></li>
+<li><a class="reference internal" href="#apiglobalexceptionhandler-java">5.1.6.7.3. ApiGlobalExceptionHandler.java</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#restappendixsorucecodesofdomainlayer">5.1.6.9. REST API実装時に作成したドメイン層のクラスのソースコード</a><ul>
-<li><a class="reference internal" href="#member-java">5.1.6.9.1. Member.java</a></li>
-<li><a class="reference internal" href="#membercredentia-java">5.1.6.9.2. MemberCredentia.java</a></li>
-<li><a class="reference internal" href="#gender-java">5.1.6.9.3. Gender.java</a></li>
-<li><a class="reference internal" href="#memberrepository-java">5.1.6.9.4. MemberRepository.java</a></li>
-<li><a class="reference internal" href="#memberservice-java">5.1.6.9.5. MemberService.java</a></li>
-<li><a class="reference internal" href="#memberserviceimpl-java">5.1.6.9.6. MemberServiceImpl.java</a></li>
-<li><a class="reference internal" href="#domainmessagecodes-java">5.1.6.9.7. DomainMessageCodes.java</a></li>
-<li><a class="reference internal" href="#gendertypehandler-java">5.1.6.9.8. GenderTypeHandler.java</a></li>
-<li><a class="reference internal" href="#member-mapping-xml">5.1.6.9.9. member-mapping.xml</a></li>
-<li><a class="reference internal" href="#mybatis-config-xml">5.1.6.9.10. mybatis-config.xml</a></li>
-<li><a class="reference internal" href="#memberrepository-xml">5.1.6.9.11. MemberRepository.xml</a></li>
+<li><a class="reference internal" href="#restappendixsorucecodesofdomainlayer">5.1.6.8. REST API実装時に作成したドメイン層のクラスのソースコード</a><ul>
+<li><a class="reference internal" href="#member-java">5.1.6.8.1. Member.java</a></li>
+<li><a class="reference internal" href="#membercredentia-java">5.1.6.8.2. MemberCredentia.java</a></li>
+<li><a class="reference internal" href="#gender-java">5.1.6.8.3. Gender.java</a></li>
+<li><a class="reference internal" href="#memberrepository-java">5.1.6.8.4. MemberRepository.java</a></li>
+<li><a class="reference internal" href="#memberservice-java">5.1.6.8.5. MemberService.java</a></li>
+<li><a class="reference internal" href="#memberserviceimpl-java">5.1.6.8.6. MemberServiceImpl.java</a></li>
+<li><a class="reference internal" href="#domainmessagecodes-java">5.1.6.8.7. DomainMessageCodes.java</a></li>
+<li><a class="reference internal" href="#gendertypehandler-java">5.1.6.8.8. GenderTypeHandler.java</a></li>
+<li><a class="reference internal" href="#member-mapping-xml">5.1.6.8.9. member-mapping.xml</a></li>
+<li><a class="reference internal" href="#mybatis-config-xml">5.1.6.8.10. mybatis-config.xml</a></li>
+<li><a class="reference internal" href="#memberrepository-xml">5.1.6.8.11. MemberRepository.xml</a></li>
 </ul>
 </li>
 </ul>
@@ -286,94 +281,92 @@
 <li><a class="reference internal" href="#id24" id="id92">リソースの条件付き更新の制御</a></li>
 <li><a class="reference internal" href="#id25" id="id93">リソースの条件付き取得の制御</a></li>
 <li><a class="reference internal" href="#id26" id="id94">リソースのキャッシュ制御</a></li>
-<li><a class="reference internal" href="#id27" id="id95">バージョニング</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#how-to-use" id="id96">How to use</a><ul>
-<li><a class="reference internal" href="#resthowtousewebapplicationconstruction" id="id97">Webアプリケーションの構成</a></li>
-<li><a class="reference internal" href="#pom-xml" id="id98">pom.xmlの設定</a></li>
-<li><a class="reference internal" href="#resthowtouseapplicationsettings" id="id99">アプリケーションの設定</a><ul>
-<li><a class="reference internal" href="#restful-web-servicespring-mvc" id="id100">RESTful Web Serviceで必要となるSpring MVCのコンポーネントを有効化するための設定</a></li>
-<li><a class="reference internal" href="#resthowtouseapplicationsettingsofdispatcherservlet" id="id101">RESTful Web Service用のサーブレットの設定</a></li>
+<li><a class="reference internal" href="#how-to-use" id="id95">How to use</a><ul>
+<li><a class="reference internal" href="#resthowtousewebapplicationconstruction" id="id96">Webアプリケーションの構成</a></li>
+<li><a class="reference internal" href="#pom-xml" id="id97">pom.xmlの設定</a></li>
+<li><a class="reference internal" href="#resthowtouseapplicationsettings" id="id98">アプリケーションの設定</a><ul>
+<li><a class="reference internal" href="#restful-web-servicespring-mvc" id="id99">RESTful Web Serviceで必要となるSpring MVCのコンポーネントを有効化するための設定</a></li>
+<li><a class="reference internal" href="#resthowtouseapplicationsettingsofdispatcherservlet" id="id100">RESTful Web Service用のサーブレットの設定</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#resthowtouseapiimplementation" id="id102">REST APIの実装</a><ul>
-<li><a class="reference internal" href="#resthowtousepackage" id="id103">REST API用パッケージの作成</a></li>
-<li><a class="reference internal" href="#resource" id="id104">Resourceクラスの作成</a></li>
-<li><a class="reference internal" href="#controller" id="id105">Controllerクラスの作成</a></li>
-<li><a class="reference internal" href="#resthowtouseapiimplementationofgetcollection" id="id106">リソースのコレクションを取得するREST APIの実装</a></li>
-<li><a class="reference internal" href="#api-rest" id="id107">リソースをコレクションに追加するAPI RESTの実装</a></li>
-<li><a class="reference internal" href="#resthowtouseapiimplementationofgetspecifiedresource" id="id108">指定されたリソースを取得するREST APIの実装</a></li>
-<li><a class="reference internal" href="#resthowtouseapiimplementationofputspecifiedresource" id="id109">指定されたリソースを更新するREST APIの実装</a></li>
-<li><a class="reference internal" href="#resthowtouseapiimplementationofdeletespecifiedresource" id="id110">指定されたリソースを削除するREST APIの実装</a></li>
+<li><a class="reference internal" href="#resthowtouseapiimplementation" id="id101">REST APIの実装</a><ul>
+<li><a class="reference internal" href="#resthowtousepackage" id="id102">REST API用パッケージの作成</a></li>
+<li><a class="reference internal" href="#resource" id="id103">Resourceクラスの作成</a></li>
+<li><a class="reference internal" href="#controller" id="id104">Controllerクラスの作成</a></li>
+<li><a class="reference internal" href="#resthowtouseapiimplementationofgetcollection" id="id105">リソースのコレクションを取得するREST APIの実装</a></li>
+<li><a class="reference internal" href="#api-rest" id="id106">リソースをコレクションに追加するAPI RESTの実装</a></li>
+<li><a class="reference internal" href="#resthowtouseapiimplementationofgetspecifiedresource" id="id107">指定されたリソースを取得するREST APIの実装</a></li>
+<li><a class="reference internal" href="#resthowtouseapiimplementationofputspecifiedresource" id="id108">指定されたリソースを更新するREST APIの実装</a></li>
+<li><a class="reference internal" href="#resthowtouseapiimplementationofdeletespecifiedresource" id="id109">指定されたリソースを削除するREST APIの実装</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#resthowtouseexceptionhandling" id="id111">例外のハンドリングの実装</a><ul>
-<li><a class="reference internal" href="#body" id="id112">レスポンスBodyにエラー情報を出力するための実装</a></li>
-<li><a class="reference internal" href="#resthowtouseexceptionhandlingforvalidationerror" id="id113">入力エラー例外のハンドリング実装</a></li>
-<li><a class="reference internal" href="#resthowtouseexceptionhandlingfornotfound" id="id114">リソース未検出エラー例外のハンドリング実装</a></li>
-<li><a class="reference internal" href="#resthowtouseexceptionhandlingforbusinesserror" id="id115">業務エラー例外のハンドリング実装</a></li>
-<li><a class="reference internal" href="#resthowtouseexceptionhandlingforexcusionerror" id="id116">排他エラー例外のハンドリング実装</a></li>
-<li><a class="reference internal" href="#resthowtouseexceptionhandlingforsystemerror" id="id117">システムエラー例外のハンドリング実装</a></li>
-<li><a class="reference internal" href="#exceptioncoderesolver" id="id118">ExceptionCodeResolverを使ったエラーコードとメッセージの解決</a></li>
+<li><a class="reference internal" href="#resthowtouseexceptionhandling" id="id110">例外のハンドリングの実装</a><ul>
+<li><a class="reference internal" href="#body" id="id111">レスポンスBodyにエラー情報を出力するための実装</a></li>
+<li><a class="reference internal" href="#resthowtouseexceptionhandlingforvalidationerror" id="id112">入力エラー例外のハンドリング実装</a></li>
+<li><a class="reference internal" href="#resthowtouseexceptionhandlingfornotfound" id="id113">リソース未検出エラー例外のハンドリング実装</a></li>
+<li><a class="reference internal" href="#resthowtouseexceptionhandlingforbusinesserror" id="id114">業務エラー例外のハンドリング実装</a></li>
+<li><a class="reference internal" href="#resthowtouseexceptionhandlingforexcusionerror" id="id115">排他エラー例外のハンドリング実装</a></li>
+<li><a class="reference internal" href="#resthowtouseexceptionhandlingforsystemerror" id="id116">システムエラー例外のハンドリング実装</a></li>
+<li><a class="reference internal" href="#exceptioncoderesolver" id="id117">ExceptionCodeResolverを使ったエラーコードとメッセージの解決</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#resthowtouseexceptionhandlingforservletcontainer" id="id119">サーブレットコンテナに通知されたエラーのハンドリング実装</a><ul>
-<li><a class="reference internal" href="#id45" id="id120">エラー応答を行うためのControllerの実装</a></li>
-<li><a class="reference internal" href="#id46" id="id121">致命的なエラーが発生した際に応答する静的なJSONファイルの作成</a></li>
-<li><a class="reference internal" href="#id47" id="id122">サーブレットコンテナに通知されたエラーをハンドリングするための設定</a></li>
+<li><a class="reference internal" href="#resthowtouseexceptionhandlingforservletcontainer" id="id118">サーブレットコンテナに通知されたエラーのハンドリング実装</a><ul>
+<li><a class="reference internal" href="#id44" id="id119">エラー応答を行うためのControllerの実装</a></li>
+<li><a class="reference internal" href="#id45" id="id120">致命的なエラーが発生した際に応答する静的なJSONファイルの作成</a></li>
+<li><a class="reference internal" href="#id46" id="id121">サーブレットコンテナに通知されたエラーをハンドリングするための設定</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#resthowtousesecurity" id="id123">セキュリティ対策</a><ul>
-<li><a class="reference internal" href="#resthowtousesecurityauth" id="id124">認証・認可</a></li>
-<li><a class="reference internal" href="#csrf" id="id125">CSRF対策</a></li>
+<li><a class="reference internal" href="#resthowtousesecurity" id="id122">セキュリティ対策</a><ul>
+<li><a class="reference internal" href="#resthowtousesecurityauth" id="id123">認証・認可</a></li>
+<li><a class="reference internal" href="#csrf" id="id124">CSRF対策</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#resthowtouseconditionaloperations" id="id126">リソースの条件付き操作</a></li>
-<li><a class="reference internal" href="#resthowtousecachecontrol" id="id127">リソースのキャッシュ制御</a></li>
+<li><a class="reference internal" href="#resthowtouseconditionaloperations" id="id125">リソースの条件付き操作</a></li>
+<li><a class="reference internal" href="#resthowtousecachecontrol" id="id126">リソースのキャッシュ制御</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#how-to-extend" id="id128">How to extend</a><ul>
-<li><a class="reference internal" href="#jsonview" id="id129">&#64;JsonViewを使用したレスポンスの出力制御</a></li>
+<li><a class="reference internal" href="#how-to-extend" id="id127">How to extend</a><ul>
+<li><a class="reference internal" href="#jsonview" id="id128">&#64;JsonViewを使用したレスポンスの出力制御</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#appendix" id="id130">Appendix</a><ul>
-<li><a class="reference internal" href="#jsr-310-date-and-time-api-joda-time" id="id131">JSR-310 Date and Time API / Joda Timeを使う場合の設定</a></li>
-<li><a class="reference internal" href="#restful-web-serviceweb" id="id132">RESTful Web Serviceとクライアントアプリケーションを同じWebアプリケーションとして動かす際の設定</a><ul>
-<li><a class="reference internal" href="#restful-web-servicedispatcherservlet" id="id133">RESTful Web Service用の<code class="docutils literal"><span class="pre">DispatcherServlet</span></code>を設ける方法</a></li>
+<li><a class="reference internal" href="#appendix" id="id129">Appendix</a><ul>
+<li><a class="reference internal" href="#jsr-310-date-and-time-api-joda-time" id="id130">JSR-310 Date and Time API / Joda Timeを使う場合の設定</a></li>
+<li><a class="reference internal" href="#restful-web-serviceweb" id="id131">RESTful Web Serviceとクライアントアプリケーションを同じWebアプリケーションとして動かす際の設定</a><ul>
+<li><a class="reference internal" href="#restful-web-servicedispatcherservlet" id="id132">RESTful Web Service用の<code class="docutils literal"><span class="pre">DispatcherServlet</span></code>を設ける方法</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#restappendixhypermedialink" id="id134">ハイパーメディアリンクの実装</a><ul>
-<li><a class="reference internal" href="#id53" id="id135">共通部品の実装</a></li>
-<li><a class="reference internal" href="#id54" id="id136">リソース毎の実装</a></li>
+<li><a class="reference internal" href="#restappendixhypermedialink" id="id133">ハイパーメディアリンクの実装</a><ul>
+<li><a class="reference internal" href="#id52" id="id134">共通部品の実装</a></li>
+<li><a class="reference internal" href="#id53" id="id135">リソース毎の実装</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#httprestful-web-service" id="id137">HTTPの仕様に準拠したRESTful Web Serviceの作成</a><ul>
-<li><a class="reference internal" href="#postlocation" id="id138">POST時のLocationヘッダの設定</a></li>
-<li><a class="reference internal" href="#id55" id="id139">リソース毎の実装</a></li>
+<li><a class="reference internal" href="#httprestful-web-service" id="id136">HTTPの仕様に準拠したRESTful Web Serviceの作成</a><ul>
+<li><a class="reference internal" href="#postlocation" id="id137">POST時のLocationヘッダの設定</a></li>
+<li><a class="reference internal" href="#id54" id="id138">リソース毎の実装</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#restappendixdisabledcsrfprotection" id="id140">CSRF対策の無効化</a></li>
-<li><a class="reference internal" href="#xxe-injection" id="id141">XXE Injection対策の有効化</a></li>
-<li><a class="reference internal" href="#dozerjoda-time" id="id142">Dozerを使ってJoda-Timeのクラスをコピーする方法</a></li>
-<li><a class="reference internal" href="#restappendixsorucecodesofapplicationlayer" id="id143">アプリケーション層のソースコード</a><ul>
-<li><a class="reference internal" href="#memberrestcontroller-java" id="id144">MemberRestController.java</a></li>
-<li><a class="reference internal" href="#apierrorcreator-java" id="id145">ApiErrorCreator.java</a></li>
-<li><a class="reference internal" href="#apiglobalexceptionhandler-java" id="id146">ApiGlobalExceptionHandler.java</a></li>
+<li><a class="reference internal" href="#restappendixdisabledcsrfprotection" id="id139">CSRF対策の無効化</a></li>
+<li><a class="reference internal" href="#xxe" id="id140">XXE 対策の有効化</a></li>
+<li><a class="reference internal" href="#restappendixsorucecodesofapplicationlayer" id="id141">アプリケーション層のソースコード</a><ul>
+<li><a class="reference internal" href="#memberrestcontroller-java" id="id142">MemberRestController.java</a></li>
+<li><a class="reference internal" href="#apierrorcreator-java" id="id143">ApiErrorCreator.java</a></li>
+<li><a class="reference internal" href="#apiglobalexceptionhandler-java" id="id144">ApiGlobalExceptionHandler.java</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#restappendixsorucecodesofdomainlayer" id="id147">REST API実装時に作成したドメイン層のクラスのソースコード</a><ul>
-<li><a class="reference internal" href="#member-java" id="id148">Member.java</a></li>
-<li><a class="reference internal" href="#membercredentia-java" id="id149">MemberCredentia.java</a></li>
-<li><a class="reference internal" href="#gender-java" id="id150">Gender.java</a></li>
-<li><a class="reference internal" href="#memberrepository-java" id="id151">MemberRepository.java</a></li>
-<li><a class="reference internal" href="#memberservice-java" id="id152">MemberService.java</a></li>
-<li><a class="reference internal" href="#memberserviceimpl-java" id="id153">MemberServiceImpl.java</a></li>
-<li><a class="reference internal" href="#domainmessagecodes-java" id="id154">DomainMessageCodes.java</a></li>
-<li><a class="reference internal" href="#gendertypehandler-java" id="id155">GenderTypeHandler.java</a></li>
-<li><a class="reference internal" href="#member-mapping-xml" id="id156">member-mapping.xml</a></li>
-<li><a class="reference internal" href="#mybatis-config-xml" id="id157">mybatis-config.xml</a></li>
-<li><a class="reference internal" href="#memberrepository-xml" id="id158">MemberRepository.xml</a></li>
+<li><a class="reference internal" href="#restappendixsorucecodesofdomainlayer" id="id145">REST API実装時に作成したドメイン層のクラスのソースコード</a><ul>
+<li><a class="reference internal" href="#member-java" id="id146">Member.java</a></li>
+<li><a class="reference internal" href="#membercredentia-java" id="id147">MemberCredentia.java</a></li>
+<li><a class="reference internal" href="#gender-java" id="id148">Gender.java</a></li>
+<li><a class="reference internal" href="#memberrepository-java" id="id149">MemberRepository.java</a></li>
+<li><a class="reference internal" href="#memberservice-java" id="id150">MemberService.java</a></li>
+<li><a class="reference internal" href="#memberserviceimpl-java" id="id151">MemberServiceImpl.java</a></li>
+<li><a class="reference internal" href="#domainmessagecodes-java" id="id152">DomainMessageCodes.java</a></li>
+<li><a class="reference internal" href="#gendertypehandler-java" id="id153">GenderTypeHandler.java</a></li>
+<li><a class="reference internal" href="#member-mapping-xml" id="id154">member-mapping.xml</a></li>
+<li><a class="reference internal" href="#mybatis-config-xml" id="id155">mybatis-config.xml</a></li>
+<li><a class="reference internal" href="#memberrepository-xml" id="id156">MemberRepository.xml</a></li>
 </ul>
 </li>
 </ul>
@@ -1111,7 +1104,7 @@ RESTful Web Serviceの開発を体感した後に、詳細な説明を読むこ�
 
 <span class="kn">import</span> <span class="nn">javax.inject.Inject</span><span class="o">;</span>
 
-<span class="kn">import</span> <span class="nn">org.dozer.Mapper</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">com.github.dozermapper.core.Mapper</span><span class="o">;</span>
 <span class="kn">import</span> <span class="nn">org.springframework.http.HttpStatus</span><span class="o">;</span>
 <span class="kn">import</span> <span class="nn">org.springframework.validation.annotation.Validated</span><span class="o">;</span>
 <span class="kn">import</span> <span class="nn">org.springframework.web.bind.annotation.PathVariable</span><span class="o">;</span>
@@ -1881,12 +1874,6 @@ RESTful Web Serviceの開発を体感した後に、詳細な説明を読むこ�
 ただし、上記対策は性能への影響があるため、性能要件も考慮する必要がある。</p>
 <p class="last">CSRF対策については、<a class="reference internal" href="../../Security/CSRF.html"><span class="doc">CSRF対策</span></a>を参照されたい。</p>
 </div>
-<div class="admonition-todo admonition" id="index-0">
-<p class="first admonition-title">Todo</p>
-<p><strong>TBD</strong></p>
-<p>高い可用性が求められる場合は、「CSRF対策用のトークン値をAPサーバのメモリ(HTTPセッション)以外に保存する」アーキテクチャを検討した方がよい。</p>
-<p class="last">具体的なアーキテクチャについては、現在検討中であり、次版以降に記載する予定である。</p>
-</div>
 </div></blockquote>
 <div class="line-block">
 <div class="line"><br /></div>
@@ -2211,11 +2198,6 @@ RESTful Web Serviceの開発を体感した後に、詳細な説明を読むこ�
 <li><code class="docutils literal"><span class="pre">http://example.com/api/{APIバージョン}/{リソースを識別するためのパス}</span></code></li>
 <li><code class="docutils literal"><span class="pre">http://api.example.com/{APIバージョン}/{リソースを識別するためのパス}</span></code></li>
 </ul>
-<div class="admonition-todo admonition" id="index-1">
-<p class="first admonition-title">Todo</p>
-<p><strong>TBD</strong></p>
-<p class="last">URIの中にAPIバージョンを含めるべきかは、現在検討中である。</p>
-</div>
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
@@ -3136,7 +3118,7 @@ RESTful Web Serviceの開発を体感した後に、詳細な説明を読むこ�
 <div class="section" id="id23">
 <h3><a class="toc-backref" href="#id91">5.1.3.6. 認証・認可</a><a class="headerlink" href="#id23" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
-<li>OAuth2の仕組みを使って認証・認可を行う仕組みについては、<a class="reference internal" href="../../Security/OAuth.html#oauth"><span class="std std-ref">OAuth</span></a>を参照されたい。</li>
+<li>OAuth2の仕組みを使って認証・認可を行う仕組みについては、<a class="reference internal" href="../../Security/OAuth.html"><span class="doc">OAuth</span></a>を参照されたい。</li>
 </ul>
 <div class="line-block">
 <div class="line"><br /></div>
@@ -3144,11 +3126,11 @@ RESTful Web Serviceの開発を体感した後に、詳細な説明を読むこ�
 </div>
 <div class="section" id="id24">
 <h3><a class="toc-backref" href="#id92">5.1.3.7. リソースの条件付き更新の制御</a><a class="headerlink" href="#id24" title="Permalink to this headline">¶</a></h3>
-<div class="admonition-todo admonition" id="index-2">
+<div class="admonition-todo admonition" id="index-0">
 <p class="first admonition-title">Todo</p>
 <p><strong>TBD</strong></p>
 <p>HTTPヘッダを使ったリソースの条件付き更新(排他制御)をどのように行うか記載する。</p>
-<p class="last">Etag/Last-Modified-Sinceなどのヘッダを使って条件付き更新の仕組みについて、次版以降に記載する予定である。</p>
+<p class="last">Etag/Last-Modifiedなどのヘッダを使って条件付き更新の仕組みについて、次版以降に記載する予定である。</p>
 </div>
 <div class="line-block">
 <div class="line"><br /></div>
@@ -3156,7 +3138,7 @@ RESTful Web Serviceの開発を体感した後に、詳細な説明を読むこ�
 </div>
 <div class="section" id="id25">
 <h3><a class="toc-backref" href="#id93">5.1.3.8. リソースの条件付き取得の制御</a><a class="headerlink" href="#id25" title="Permalink to this headline">¶</a></h3>
-<div class="admonition-todo admonition" id="index-3">
+<div class="admonition-todo admonition" id="index-1">
 <p class="first admonition-title">Todo</p>
 <p><strong>TBD</strong></p>
 <p>HTTPヘッダを使ったリソースの条件付き取得(304 Not Modified制御)をどのように行うか記載する。</p>
@@ -3168,7 +3150,7 @@ RESTful Web Serviceの開発を体感した後に、詳細な説明を読むこ�
 </div>
 <div class="section" id="id26">
 <h3><a class="toc-backref" href="#id94">5.1.3.9. リソースのキャッシュ制御</a><a class="headerlink" href="#id26" title="Permalink to this headline">¶</a></h3>
-<div class="admonition-todo admonition" id="index-4">
+<div class="admonition-todo admonition" id="index-2">
 <p class="first admonition-title">Todo</p>
 <p><strong>TBD</strong></p>
 <p>HTTPヘッダを使ったリソースのキャッシュ制御をどのように行うか記載する。</p>
@@ -3178,23 +3160,12 @@ RESTful Web Serviceの開発を体感した後に、詳細な説明を読むこ�
 <div class="line"><br /></div>
 </div>
 </div>
-<div class="section" id="id27">
-<h3><a class="toc-backref" href="#id95">5.1.3.10. バージョニング</a><a class="headerlink" href="#id27" title="Permalink to this headline">¶</a></h3>
-<div class="admonition-todo admonition" id="index-5">
-<p class="first admonition-title">Todo</p>
-<p><strong>TBD</strong></p>
-<p class="last">RESTful Web Service自体のバージョン管理及び複数バージョンの並行稼働をどのように行うかについて、次版以降に記載する予定である。</p>
-</div>
-<div class="line-block">
-<div class="line"><br /></div>
-</div>
-</div>
 </div>
 <div class="section" id="how-to-use">
-<span id="resthowtouse"></span><h2><a class="toc-backref" href="#id96">5.1.4. How to use</a><a class="headerlink" href="#how-to-use" title="Permalink to this headline">¶</a></h2>
+<span id="resthowtouse"></span><h2><a class="toc-backref" href="#id95">5.1.4. How to use</a><a class="headerlink" href="#how-to-use" title="Permalink to this headline">¶</a></h2>
 <p>本節では、RESTful Web Serviceの具体的な作成方法について説明する。</p>
 <div class="section" id="resthowtousewebapplicationconstruction">
-<span id="id28"></span><h3><a class="toc-backref" href="#id97">5.1.4.1. Webアプリケーションの構成</a><a class="headerlink" href="#resthowtousewebapplicationconstruction" title="Permalink to this headline">¶</a></h3>
+<span id="id27"></span><h3><a class="toc-backref" href="#id96">5.1.4.1. Webアプリケーションの構成</a><a class="headerlink" href="#resthowtousewebapplicationconstruction" title="Permalink to this headline">¶</a></h3>
 <div class="line-block">
 <div class="line">RESTful Web Serviceを構築する場合は、以下のいずれかの構成でWebアプリケーション(war)を構築する。</div>
 <div class="line"><strong>特に理由がない場合は、RESTful Web Service専用のWebアプリケーションとして構築する事を推奨する。</strong></div>
@@ -3282,31 +3253,11 @@ JSPなどのテンプレートエンジンによって生成されるHTMLも対�
 </div>
 </div>
 <div class="section" id="pom-xml">
-<h3><a class="toc-backref" href="#id98">5.1.4.2. pom.xmlの設定</a><a class="headerlink" href="#pom-xml" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id97">5.1.4.2. pom.xmlの設定</a><a class="headerlink" href="#pom-xml" title="Permalink to this headline">¶</a></h3>
 <p>terasoluna-gfw-common-dependenciesを使用していれば、依存関係の設定は不要である。</p>
-<div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<p><strong>Java SE 7環境にて使用する場合の設定</strong></p>
-<p>terasoluna-gfw-common-dependenciesはJava SE 8を前提とした依存関係を設定している。Java SE 7環境にて使用する場合は下記のようにJava SE 8依存ライブラリをexclusionすること。
-java SE 8依存ライブラリについてはアーキテクチャ概要の「<a class="reference internal" href="../../Overview/FrameworkStack.html#frameworkstack-using-oss-version"><span class="std std-ref">利用するOSSのバージョン</span></a> 」を参照</p>
-<blockquote class="last">
-<div><div class="highlight-xml"><div class="highlight"><pre><span></span><span class="nt">&lt;dependency&gt;</span>
-    <span class="nt">&lt;groupId&gt;</span>org.terasoluna.gfw<span class="nt">&lt;/groupId&gt;</span>
-    <span class="nt">&lt;artifactId&gt;</span>terasoluna-gfw-common-dependencies<span class="nt">&lt;/artifactId&gt;</span>
-    <span class="nt">&lt;exclusions&gt;</span>
-        <span class="nt">&lt;exclusion&gt;</span>
-            <span class="nt">&lt;groupId&gt;</span>com.fasterxml.jackson.datatype<span class="nt">&lt;/groupId&gt;</span>
-            <span class="nt">&lt;artifactId&gt;</span>jackson-datatype-jsr310<span class="nt">&lt;/artifactId&gt;</span>
-        <span class="nt">&lt;/exclusion&gt;</span>
-    <span class="nt">&lt;/exclusions&gt;</span>
-<span class="nt">&lt;/dependency&gt;</span>
-</pre></div>
-</div>
-</div></blockquote>
-</div>
 </div>
 <div class="section" id="resthowtouseapplicationsettings">
-<span id="id29"></span><h3><a class="toc-backref" href="#id99">5.1.4.3. アプリケーションの設定</a><a class="headerlink" href="#resthowtouseapplicationsettings" title="Permalink to this headline">¶</a></h3>
+<span id="id28"></span><h3><a class="toc-backref" href="#id98">5.1.4.3. アプリケーションの設定</a><a class="headerlink" href="#resthowtouseapplicationsettings" title="Permalink to this headline">¶</a></h3>
 <p>RESTful Web Service向けのアプリケーションの設定について説明する。</p>
 <div class="admonition warning">
 <p class="first admonition-title">Warning</p>
@@ -3315,7 +3266,7 @@ java SE 8依存ライブラリについてはアーキテクチャ概要の「<a
 詳細は、<a class="reference external" href="http://pivotal.io/security/cve-2015-3192">CVE-2015-3192 - DoS Attack with XML Input</a>を参照されたい。</p>
 </div>
 <div class="section" id="restful-web-servicespring-mvc">
-<span id="resthowtouseapplicationsettingsofspringmvc"></span><h4><a class="toc-backref" href="#id100">5.1.4.3.1. RESTful Web Serviceで必要となるSpring MVCのコンポーネントを有効化するための設定</a><a class="headerlink" href="#restful-web-servicespring-mvc" title="Permalink to this headline">¶</a></h4>
+<span id="resthowtouseapplicationsettingsofspringmvc"></span><h4><a class="toc-backref" href="#id99">5.1.4.3.1. RESTful Web Serviceで必要となるSpring MVCのコンポーネントを有効化するための設定</a><a class="headerlink" href="#restful-web-servicespring-mvc" title="Permalink to this headline">¶</a></h4>
 <div class="line-block">
 <div class="line">RESTful Web Service用のbean定義ファイルを作成する。</div>
 <div class="line">以降の説明で示すサンプルを動かす際に必要となる定義を、以下に示す。</div>
@@ -3441,7 +3392,7 @@ java SE 8依存ライブラリについてはアーキテクチャ概要の「<a
 <div class="line">本設定を行うことで、リソースのフォーマットとしてJSONを使用する事ができる。</div>
 <div class="line">上記例では、<code class="docutils literal"><span class="pre">&lt;mvc:message-converters</span></code>&gt;要素のregister-defaults属性を<code class="docutils literal"><span class="pre">false</span></code>にしているので、リソースの形式はJSONに限定される。</div>
 <div class="line"><br /></div>
-<div class="line">リソースのフォーマットとしてXMLを使用する場合は、XXE Injection対策が行われているXML用の<code class="docutils literal"><span class="pre">MessageConverter</span></code>を指定すること。指定方法は、「<a class="reference internal" href="#restappendixenabledxxeinjectprotection"><span class="std std-ref">XXE Injection対策の有効化</span></a>」を参照されたい。</div>
+<div class="line">リソースのフォーマットとしてXMLを使用する場合は、XXE 対策が行われているXML用の<code class="docutils literal"><span class="pre">MessageConverter</span></code>を指定すること。指定方法は、「<a class="reference internal" href="#restappendixenabledxxeprotection"><span class="std std-ref">XXE 対策の有効化</span></a>」を参照されたい。</div>
 </div>
 </td>
 </tr>
@@ -3499,8 +3450,8 @@ Springが提供している<code class="docutils literal"><span class="pre">Jack
 <p>なお、<code class="docutils literal"><span class="pre">ObjectMapper</span></code>を直接Bean定義するスタイルから<code class="docutils literal"><span class="pre">Jackson2ObjectMapperFactoryBean</span></code>を使用するスタイルに変更する場合は、
 以下のコンフィギュレーションに対するデフォルト値がJacksonのデフォルト値と異なる(無効化されている)点に注意すること。</p>
 <ul class="simple">
-<li><a class="reference external" href="http://fasterxml.github.io/jackson-databind/javadoc/2.8/com/fasterxml/jackson/databind/MapperFeature.html?is-external=true#DEFAULT_VIEW_INCLUSION">MapperFeature#DEFAULT_VIEW_INCLUSION</a></li>
-<li><a class="reference external" href="http://fasterxml.github.io/jackson-databind/javadoc/2.8/com/fasterxml/jackson/databind/DeserializationFeature.html?is-external=true#FAIL_ON_UNKNOWN_PROPERTIES">DeserializationFeature#FAIL_ON_UNKNOWN_PROPERTIES</a></li>
+<li><a class="reference external" href="http://fasterxml.github.io/jackson-databind/javadoc/2.9/com/fasterxml/jackson/databind/MapperFeature.html?is-external=true#DEFAULT_VIEW_INCLUSION">MapperFeature#DEFAULT_VIEW_INCLUSION</a></li>
+<li><a class="reference external" href="http://fasterxml.github.io/jackson-databind/javadoc/2.9/com/fasterxml/jackson/databind/DeserializationFeature.html?is-external=true#FAIL_ON_UNKNOWN_PROPERTIES">DeserializationFeature#FAIL_ON_UNKNOWN_PROPERTIES</a></li>
 </ul>
 <p><code class="docutils literal"><span class="pre">ObjectMapper</span></code>の動作をJacksonのデフォルト動作にあわせたい場合は、<code class="docutils literal"><span class="pre">featuresToEnable</span></code>プロパティを使用して上記のコンフィギュレーションを有効化する。</p>
 <blockquote>
@@ -3516,7 +3467,7 @@ Springが提供している<code class="docutils literal"><span class="pre">Jack
 </pre></div>
 </div>
 </div></blockquote>
-<p class="last"><code class="docutils literal"><span class="pre">Jackson2ObjectMapperFactoryBean</span></code>の詳細については、 <a class="reference external" href="http://docs.spring.io/spring/docs/4.3.14.RELEASE/javadoc-api/org/springframework/http/converter/json/Jackson2ObjectMapperFactoryBean.html">Jackson2ObjectMapperFactoryBeanのJavaDoc</a>を参照されたい。</p>
+<p class="last"><code class="docutils literal"><span class="pre">Jackson2ObjectMapperFactoryBean</span></code>の詳細については、 <a class="reference external" href="https://docs.spring.io/spring/docs/5.1.4.RELEASE/javadoc-api/org/springframework/http/converter/json/Jackson2ObjectMapperFactoryBean.html">Jackson2ObjectMapperFactoryBeanのJavaDoc</a>を参照されたい。</p>
 </div>
 <div class="admonition note" id="rest-note-changed-jackson-version">
 <p class="first admonition-title">Note</p>
@@ -3565,9 +3516,9 @@ Springが提供している<code class="docutils literal"><span class="pre">Jack
 </ul>
 <blockquote class="last">
 <div><ul class="simple">
-<li><a class="reference external" href="http://fasterxml.github.io/jackson-core/javadoc/2.8/deprecated-list.html">http://fasterxml.github.io/jackson-core/javadoc/2.8/deprecated-list.html</a></li>
-<li><a class="reference external" href="http://fasterxml.github.io/jackson-databind/javadoc/2.8/deprecated-list.html">http://fasterxml.github.io/jackson-databind/javadoc/2.8/deprecated-list.html</a></li>
-<li><a class="reference external" href="http://fasterxml.github.io/jackson-annotations/javadoc/2.8/deprecated-list.html">http://fasterxml.github.io/jackson-annotations/javadoc/2.8/deprecated-list.html</a></li>
+<li><a class="reference external" href="http://fasterxml.github.io/jackson-core/javadoc/2.9/deprecated-list.html">http://fasterxml.github.io/jackson-core/javadoc/2.9/deprecated-list.html</a></li>
+<li><a class="reference external" href="http://fasterxml.github.io/jackson-databind/javadoc/2.9/deprecated-list.html">http://fasterxml.github.io/jackson-databind/javadoc/2.9/deprecated-list.html</a></li>
+<li><a class="reference external" href="http://fasterxml.github.io/jackson-annotations/javadoc/2.9/deprecated-list.html">http://fasterxml.github.io/jackson-annotations/javadoc/2.9/deprecated-list.html</a></li>
 </ul>
 </div></blockquote>
 </div>
@@ -3576,7 +3527,7 @@ Springが提供している<code class="docutils literal"><span class="pre">Jack
 </div>
 </div>
 <div class="section" id="resthowtouseapplicationsettingsofdispatcherservlet">
-<span id="id30"></span><h4><a class="toc-backref" href="#id101">5.1.4.3.2. RESTful Web Service用のサーブレットの設定</a><a class="headerlink" href="#resthowtouseapplicationsettingsofdispatcherservlet" title="Permalink to this headline">¶</a></h4>
+<span id="id29"></span><h4><a class="toc-backref" href="#id100">5.1.4.3.2. RESTful Web Service用のサーブレットの設定</a><a class="headerlink" href="#resthowtouseapplicationsettingsofdispatcherservlet" title="Permalink to this headline">¶</a></h4>
 <div class="line-block">
 <div class="line">下記の設定は、RESTful Web Serviceとクライアントアプリケーションを別のWebアプリケーションとして構築する場合の設定例となっている。</div>
 <div class="line">RESTful Web Serviceとクライアントアプリケーションを同じWebアプリケーションとして構築する場合は、 「<a class="reference internal" href="#restappendixsettingsofdeployinsamewarfilerestandclientapplication"><span class="std std-ref">RESTful Web Serviceとクライアントアプリケーションを同じWebアプリケーションとして動かす際の設定</span></a>」を行う必要がある。</div>
@@ -3672,7 +3623,7 @@ Springが提供している<code class="docutils literal"><span class="pre">Jack
 </div>
 </div>
 <div class="section" id="resthowtouseapiimplementation">
-<span id="id31"></span><h3><a class="toc-backref" href="#id102">5.1.4.4. REST APIの実装</a><a class="headerlink" href="#resthowtouseapiimplementation" title="Permalink to this headline">¶</a></h3>
+<span id="id30"></span><h3><a class="toc-backref" href="#id101">5.1.4.4. REST APIの実装</a><a class="headerlink" href="#resthowtouseapiimplementation" title="Permalink to this headline">¶</a></h3>
 <div class="line-block">
 <div class="line">REST APIの実装方法について説明する。</div>
 <div class="line">以降の説明では、ショッピングサイトの会員情報(Memberリソース)に対するREST APIの実装例を使用して、説明を行う。</div>
@@ -4115,7 +4066,7 @@ Macchinetta Server Framework 1.3.xまでの開発ガイドラインで紹介し�
 <div class="line"><br /></div>
 </div>
 <div class="section" id="resthowtousepackage">
-<span id="id32"></span><h4><a class="toc-backref" href="#id103">5.1.4.4.1. REST API用パッケージの作成</a><a class="headerlink" href="#resthowtousepackage" title="Permalink to this headline">¶</a></h4>
+<span id="id31"></span><h4><a class="toc-backref" href="#id102">5.1.4.4.1. REST API用パッケージの作成</a><a class="headerlink" href="#resthowtousepackage" title="Permalink to this headline">¶</a></h4>
 <p>REST API用のクラスを格納するパッケージを作成する。</p>
 <div class="line-block">
 <div class="line">REST API用のクラスを格納するルートパッケージのパッケージ名は<code class="docutils literal"><span class="pre">api</span></code>として、配下にリソース毎のパッケージ(リソース名の小文字)を作成する事を推奨する。</div>
@@ -4166,7 +4117,7 @@ Macchinetta Server Framework 1.3.xまでの開発ガイドラインで紹介し�
 </div>
 </div>
 <div class="section" id="resource">
-<span id="resthowtouseresourceclass"></span><h4><a class="toc-backref" href="#id104">5.1.4.4.2. Resourceクラスの作成</a><a class="headerlink" href="#resource" title="Permalink to this headline">¶</a></h4>
+<span id="resthowtouseresourceclass"></span><h4><a class="toc-backref" href="#id103">5.1.4.4.2. Resourceクラスの作成</a><a class="headerlink" href="#resource" title="Permalink to this headline">¶</a></h4>
 <div class="line-block">
 <div class="line">本ガイドラインでは、Web上に公開するリソースを表現(JSONやXMLを表現)するクラスとして、Resourceクラスを設けることを推奨する。</div>
 </div>
@@ -4220,9 +4171,13 @@ DomainObjectとResourceクラスは別々に作成し、Dozer等のBeanMapperを
 <div class="line">フォーマットに関する定義を行う。</div>
 </div>
 </td>
-<td><div class="first last line-block">
+<td><div class="first line-block">
 <div class="line">リソースのフォーマットに関する定義を、アノテーションを使って指定する。</div>
 <div class="line">使用するアノテーションは、リソースの形式(JSON/XMLなど)よって異なり、JSON形式の場合はJacksonのアノテーション、XML形式の場合はJAXBのアノテーションを使用する事になる。</div>
+</div>
+<div class="last admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Java SE 11環境にてJAXBを使用するには<a class="reference internal" href="../../Appendix/Java11Changes.html#remove-jaxb-from-java11"><span class="std std-ref">JAXBの削除</span></a>を参照されたい。</p>
 </div>
 </td>
 </tr>
@@ -4292,6 +4247,18 @@ DomainObjectとResourceクラスは別々に作成し、Dozer等のBeanMapperを
 </table>
 </div></blockquote>
 </div>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p>電文からJava Beanにデシリアライズする際、プロパティにジェネリクスやインターフェイスを使用しているなどの理由で型を特定できない場合は
+<code class="docutils literal"><span class="pre">&#64;com.fasterxml.jackson.annotation.JsonTypeInfo</span></code>アノテーションを付与する。
+<code class="docutils literal"><span class="pre">&#64;JsonTypeInfo</span></code>アノテーションを付与したプロパティをシリアライズするとJSONに型情報が出力され、これを読み取ってデシリアライズが行われる。</p>
+<p>ただし、<code class="docutils literal"><span class="pre">&#64;JsonTypeInfo</span></code>アノテーションのuse属性に<code class="docutils literal"><span class="pre">Id.CLASS</span></code>や<code class="docutils literal"><span class="pre">Id.MINIMAL_CLASS</span></code>を使用すると、
+JSONに出力されたクラス名を元にデシリアライズが行われるため、これにより不正にリモートコードが実行される危険がある。
+このため、(信頼できない送信元を含み得る)不特定多数からの電文を受け付ける前提のシステムにおいては、
+<code class="docutils literal"><span class="pre">Id.CLASS</span></code>や<code class="docutils literal"><span class="pre">Id.MINIMAL_CLASS</span></code>を指定してはならない。</p>
+<p class="last">なお、<code class="docutils literal"><span class="pre">ObjectMapper</span></code>の<code class="docutils literal"><span class="pre">defaultTyping</span></code>を利用すると、上記のようなデシリアライズ時の型判断をアプリケーション全体に適用することが可能である。
+こちらも合わせて注意されたい。</p>
+</div>
 </div></blockquote>
 <div class="line-block">
 <div class="line"><br /></div>
@@ -4306,13 +4273,13 @@ DomainObjectとResourceクラスは別々に作成し、Dozer等のBeanMapperを
 <span class="kn">import</span> <span class="nn">java.io.Serializable</span><span class="o">;</span>
 
 <span class="kn">import</span> <span class="nn">javax.validation.Valid</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">javax.validation.constraints.Email</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">javax.validation.constraints.NotEmpty</span><span class="o">;</span>
 <span class="kn">import</span> <span class="nn">javax.validation.constraints.NotNull</span><span class="o">;</span>
 <span class="kn">import</span> <span class="nn">javax.validation.constraints.Null</span><span class="o">;</span>
 <span class="kn">import</span> <span class="nn">javax.validation.constraints.Past</span><span class="o">;</span>
 <span class="kn">import</span> <span class="nn">javax.validation.constraints.Size</span><span class="o">;</span>
 
-<span class="kn">import</span> <span class="nn">org.hibernate.validator.constraints.Email</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">org.hibernate.validator.constraints.NotEmpty</span><span class="o">;</span>
 <span class="kn">import</span> <span class="nn">org.joda.time.DateTime</span><span class="o">;</span>
 <span class="kn">import</span> <span class="nn">org.joda.time.LocalDate</span><span class="o">;</span>
 <span class="kn">import</span> <span class="nn">org.springframework.format.annotation.DateTimeFormat</span><span class="o">;</span>
@@ -4436,12 +4403,12 @@ DomainObjectとResourceクラスは別々に作成し、Dozer等のBeanMapperを
 
 <span class="kn">import</span> <span class="nn">java.io.Serializable</span><span class="o">;</span>
 
+<span class="kn">import</span> <span class="nn">javax.validation.constraints.Email</span><span class="o">;</span>
 <span class="kn">import</span> <span class="nn">javax.validation.constraints.NotNull</span><span class="o">;</span>
 <span class="kn">import</span> <span class="nn">javax.validation.constraints.Null</span><span class="o">;</span>
 <span class="kn">import</span> <span class="nn">javax.validation.constraints.Size</span><span class="o">;</span>
 
 <span class="kn">import</span> <span class="nn">com.fasterxml.jackson.annotation.JsonInclude</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">org.hibernate.validator.constraints.Email</span><span class="o">;</span>
 <span class="kn">import</span> <span class="nn">org.joda.time.DateTime</span><span class="o">;</span>
 
 <span class="hll"><span class="c1">// (4)</span>
@@ -4510,9 +4477,8 @@ DomainObjectとResourceクラスは別々に作成し、Dozer等のBeanMapperを
 <ul>
 <li><div class="first line-block">
 <div class="line">Beanのマッピング定義の追加</div>
-<div class="line">これから説明する実装例では、EntityクラスとResourceクラスのコピーは、「<a class="reference internal" href="../GeneralFuncDetail/Dozer.html"><span class="doc">Beanマッピング(Dozer)</span></a>」を使って行う。</div>
-<div class="line">上記に示したJavaBeanには、Joda-Timeのクラスである<code class="docutils literal"><span class="pre">org.joda.time.DateTime</span></code>と<code class="docutils literal"><span class="pre">org.joda.time.LocalDate</span></code>が含まれているが、「<a class="reference internal" href="../GeneralFuncDetail/Dozer.html"><span class="doc">Beanマッピング(Dozer)</span></a>」を使ってコピーするとJoda-Timeのオブジェクトは正しくコピーされない。</div>
-<div class="line">そのため、正しくコピーされるようにするためには、「<a class="reference internal" href="#restappendixcopyjodaobjectbybeanconvert"><span class="std std-ref">Dozerを使ってJoda-Timeのクラスをコピーする方法</span></a>」を適用する必要がある。</div>
+<div class="line">これから説明する実装例において、EntityクラスとResourceクラスのコピーは「<a class="reference internal" href="../GeneralFuncDetail/Dozer.html"><span class="doc">Beanマッピング(Dozer)</span></a>」を使用する。</div>
+<div class="line">上記に示したJavaBeanには、Joda-Timeのクラスである<code class="docutils literal"><span class="pre">org.joda.time.DateTime</span></code>と<code class="docutils literal"><span class="pre">org.joda.time.LocalDate</span></code>が含まれているが、Joda TimeオブジェクトはDozerでサポートされていないため、「<a class="reference internal" href="../GeneralFuncDetail/Dozer.html#how-to-make-customconverter-label"><span class="std std-ref">カスタムコンバーターの作成</span></a>」が必要となる。</div>
 </div>
 </li>
 </ul>
@@ -4521,7 +4487,7 @@ DomainObjectとResourceクラスは別々に作成し、Dozer等のBeanMapperを
 </div>
 </div>
 <div class="section" id="controller">
-<span id="resthowtousecontrollerclass"></span><h4><a class="toc-backref" href="#id105">5.1.4.4.3. Controllerクラスの作成</a><a class="headerlink" href="#controller" title="Permalink to this headline">¶</a></h4>
+<span id="resthowtousecontrollerclass"></span><h4><a class="toc-backref" href="#id104">5.1.4.4.3. Controllerクラスの作成</a><a class="headerlink" href="#controller" title="Permalink to this headline">¶</a></h4>
 <div class="line-block">
 <div class="line">Controllerクラスはリソース毎に作成する。</div>
 <div class="line">全てのAPIの実装が完了した際のソースコードについては、<a class="reference internal" href="#restappendixsorucecodesofmemberrestcontroller"><span class="std std-ref">Appendix</span></a>を参照されたい。</div>
@@ -4585,7 +4551,7 @@ DomainObjectとResourceクラスは別々に作成し、Dozer等のBeanMapperを
 <p><code class="docutils literal"><span class="pre">&#64;RestController</span></code>アノテーションは、Spring Framework 4.0 から追加されたアノテーションである。</p>
 <p><code class="docutils literal"><span class="pre">&#64;RestController</span></code>アノテーションの登場により、Controllerの各メソッドに<code class="docutils literal"><span class="pre">&#64;ResponseBody</span></code>アノテーションを付与する必要がなくなったため、
 REST API用のControllerをよりシンプルに作成出来るようになった。
-<code class="docutils literal"><span class="pre">&#64;RestController</span></code>アノテーションの詳細については、<a class="reference external" href="http://docs.spring.io/spring/docs/4.3.14.RELEASE/javadoc-api/org/springframework/web/bind/annotation/RestController.html">こちら</a>を参照されたい。</p>
+<code class="docutils literal"><span class="pre">&#64;RestController</span></code>アノテーションの詳細については、<a class="reference external" href="https://docs.spring.io/spring/docs/5.1.4.RELEASE/javadoc-api/org/springframework/web/bind/annotation/RestController.html">こちら</a>を参照されたい。</p>
 <p>従来通り<code class="docutils literal"><span class="pre">&#64;Controller</span></code>アノテーションと<code class="docutils literal"><span class="pre">&#64;ResponseBody</span></code>アノテーションを組み合わせてREST API用のControllerを作成する例を以下に示す。</p>
 <blockquote class="last">
 <div><div class="highlight-java"><div class="highlight"><pre><span></span><span class="nd">@RequestMapping</span><span class="o">(</span><span class="s">&quot;members&quot;</span><span class="o">)</span>
@@ -4612,7 +4578,7 @@ REST API用のControllerをよりシンプルに作成出来るようになっ�
 </div>
 </div>
 <div class="section" id="resthowtouseapiimplementationofgetcollection">
-<span id="id34"></span><h4><a class="toc-backref" href="#id106">5.1.4.4.4. リソースのコレクションを取得するREST APIの実装</a><a class="headerlink" href="#resthowtouseapiimplementationofgetcollection" title="Permalink to this headline">¶</a></h4>
+<span id="id33"></span><h4><a class="toc-backref" href="#id105">5.1.4.4.4. リソースのコレクションを取得するREST APIの実装</a><a class="headerlink" href="#resthowtouseapiimplementationofgetcollection" title="Permalink to this headline">¶</a></h4>
 <p>URIで指定されたMemberリソースのコレクションをページ検索するREST APIの実装例を、以下に示す。</p>
 <ul>
 <li><div class="first line-block">
@@ -4743,9 +4709,34 @@ REST API用のControllerをよりシンプルに作成出来るようになっ�
 <div class="line">(3)</div>
 </div>
 </td>
-<td><div class="first last line-block">
+<td><div class="first line-block">
 <div class="line"><code class="docutils literal"><span class="pre">&#64;RequestMapping</span></code>アノテーションのmethod属性に、<code class="docutils literal"><span class="pre">RequestMethod.GET</span></code>を指定する。</div>
 </div>
+<blockquote class="last">
+<div><div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p><strong>HTTPメソッドごとの&#64;RequestMappingアノテーション</strong></p>
+<p>Spring Framework 4.3から、HTTPメソッドごとの <code class="docutils literal"><span class="pre">&#64;RequestMapping</span></code>合成アノテーションが追加された。
+よりシンプルにマッピングを定義することができ、意図しないHTTPメソッドのマッピング防止とソースコードの可読性向上が期待できる。</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">&#64;GetMapping</span></code></li>
+<li><code class="docutils literal"><span class="pre">&#64;PostMapping</span></code></li>
+<li><code class="docutils literal"><span class="pre">&#64;PutMapping</span></code></li>
+<li><code class="docutils literal"><span class="pre">&#64;DeleteMapping</span></code></li>
+<li><code class="docutils literal"><span class="pre">&#64;PatchMapping</span></code></li>
+</ul>
+<p>以下の定義は、 <code class="docutils literal"><span class="pre">&#64;RequestMapping(value</span> <span class="pre">=</span> <span class="pre">&quot;hello&quot;,</span> <span class="pre">method</span> <span class="pre">=</span> <span class="pre">RequestMethod.GET)</span></code>と定義しているのと同様である。</p>
+<blockquote>
+<div><div class="highlight-java"><div class="highlight"><pre><span></span><span class="nd">@GetMapping</span><span class="o">(</span><span class="n">value</span> <span class="o">=</span> <span class="s">&quot;hello&quot;</span><span class="o">)</span>
+<span class="kd">public</span> <span class="n">String</span> <span class="nf">hello</span><span class="o">()</span> <span class="o">{</span>
+    <span class="c1">// ...</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p class="last">詳細は、<a class="reference external" href="https://docs.spring.io/spring/docs/5.1.4.RELEASE/spring-framework-reference/web.html#mvc-ann-requestmapping">Spring Framework Documentation - Request Mapping</a> を参照されたい。</p>
+</div>
+</div></blockquote>
 </td>
 </tr>
 <tr class="row-odd"><td><div class="first last line-block">
@@ -4888,20 +4879,6 @@ REST API用のControllerをよりシンプルに作成出来るようになっ�
 </span><span class="p">}</span>
 </pre></div>
 </div>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p><strong>Spring Data CommonsのAPI仕様の変更に伴う注意点</strong></p>
-<p>terasoluna-gfw-common 5.0.0.RELEASE以上が依存するspring-data-commons(1.9.1.RELEASE以上)では、
-ページ検索機能用のインタフェース(<code class="docutils literal"><span class="pre">org.springframework.data.domain.Page</span></code>)とクラス(<code class="docutils literal"><span class="pre">org.springframework.data.domain.PageImpl</span></code>と<code class="docutils literal"><span class="pre">org.springframework.data.domain.Sort.Order</span></code>)のAPI仕様が変更になっている。</p>
-<p>具体的には、</p>
-<ul class="simple">
-<li><code class="docutils literal"><span class="pre">Page</span></code>インタフェースと<code class="docutils literal"><span class="pre">PageImpl</span></code>クラスでは、<code class="docutils literal"><span class="pre">isFirst()</span></code>と<code class="docutils literal"><span class="pre">isLast()</span></code>メソッドがspring-data-commons 1.8.0.RELEASEで追加、<code class="docutils literal"><span class="pre">isFirstPage()</span></code>と<code class="docutils literal"><span class="pre">isLastPage()</span></code>メソッドがspring-data-commons 1.9.0.RELEASEで削除</li>
-<li><code class="docutils literal"><span class="pre">Sort.Order</span></code>クラスでは、 <code class="docutils literal"><span class="pre">nullHandling</span></code>プロパティがspring-data-commons 1.8.0.RELEASEで追加</li>
-</ul>
-<p>されている。</p>
-<p class="last">REST APIのリソースオブジェクトとして<code class="docutils literal"><span class="pre">Page</span></code>インタフェース(<code class="docutils literal"><span class="pre">PageImpl</span></code>クラス)を使用している場合は、
-JSONやXMLのフォーマットが変わってしまうため、アプリケーションの修正が必要になるケースがある。</p>
-</div>
 </div></blockquote>
 <div class="line-block">
 <div class="line"><br /></div>
@@ -4918,15 +4895,15 @@ JSONやXMLのフォーマットが変わってしまうため、アプリケー�
 <blockquote>
 <div><div class="highlight-xml"><div class="highlight"><pre><span></span><span class="hll"><span class="c">&lt;!-- (11) --&gt;</span>
 </span><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
-<span class="nt">&lt;mappings</span> <span class="na">xmlns=</span><span class="s">&quot;http://dozer.sourceforge.net&quot;</span> <span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span>
-    <span class="na">xsi:schemaLocation=</span><span class="s">&quot;http://dozer.sourceforge.net</span>
-<span class="s">          http://dozer.sourceforge.net/schema/beanmapping.xsd&quot;</span><span class="nt">&gt;</span>
+<span class="nt">&lt;mappings</span> <span class="na">xmlns=</span><span class="s">&quot;http://dozermapper.github.io/schema/bean-mapping&quot;</span> <span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span>
+    <span class="na">xsi:schemaLocation=</span><span class="s">&quot;http://dozermapper.github.io/schema/bean-mapping</span>
+<span class="s">          https://dozermapper.github.io/schema/bean-mapping.xsd&quot;</span><span class="nt">&gt;</span>
 
-    <span class="nt">&lt;mapping</span> <span class="na">type=</span><span class="s">&quot;one-way&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;mapping&gt;</span>
         <span class="nt">&lt;class-a&gt;</span>org.terasoluna.examples.rest.domain.model.MemberCredential<span class="nt">&lt;/class-a&gt;</span>
         <span class="nt">&lt;class-b&gt;</span>org.terasoluna.examples.rest.api.member.MemberCredentialResource<span class="nt">&lt;/class-b&gt;</span>
 <span class="hll">        <span class="c">&lt;!-- (12) --&gt;</span>
-</span><span class="hll">        <span class="nt">&lt;field-exclude&gt;</span>
+</span><span class="hll">        <span class="nt">&lt;field-exclude</span> <span class="na">type=</span><span class="s">&quot;one-way&quot;</span><span class="nt">&gt;</span>
 </span><span class="hll">            <span class="nt">&lt;a&gt;</span>password<span class="nt">&lt;/a&gt;</span>
 </span><span class="hll">            <span class="nt">&lt;b&gt;</span>password<span class="nt">&lt;/b&gt;</span>
 </span><span class="hll">        <span class="nt">&lt;/field-exclude&gt;</span>
@@ -5069,7 +5046,7 @@ JSONやXMLのフォーマットが変わってしまうため、アプリケー�
 </div>
 </div>
 <div class="section" id="api-rest">
-<span id="resthowtouseapiimplementationofpostcollection"></span><h4><a class="toc-backref" href="#id107">5.1.4.4.5. リソースをコレクションに追加するAPI RESTの実装</a><a class="headerlink" href="#api-rest" title="Permalink to this headline">¶</a></h4>
+<span id="resthowtouseapiimplementationofpostcollection"></span><h4><a class="toc-backref" href="#id106">5.1.4.4.5. リソースをコレクションに追加するAPI RESTの実装</a><a class="headerlink" href="#api-rest" title="Permalink to this headline">¶</a></h4>
 <p>指定されたMemberリソースを作成し、Memberリソースをコレクションに追加するREST APIの実装例を、以下に示す。</p>
 <ul>
 <li><div class="first line-block">
@@ -5207,7 +5184,7 @@ JSONやXMLのフォーマットが変わってしまうため、アプリケー�
 </div>
 </div>
 <div class="section" id="resthowtouseapiimplementationofgetspecifiedresource">
-<span id="id35"></span><h4><a class="toc-backref" href="#id108">5.1.4.4.6. 指定されたリソースを取得するREST APIの実装</a><a class="headerlink" href="#resthowtouseapiimplementationofgetspecifiedresource" title="Permalink to this headline">¶</a></h4>
+<span id="id34"></span><h4><a class="toc-backref" href="#id107">5.1.4.4.6. 指定されたリソースを取得するREST APIの実装</a><a class="headerlink" href="#resthowtouseapiimplementationofgetspecifiedresource" title="Permalink to this headline">¶</a></h4>
 <p>URIで指定されたMemberリソースを取得するREST APIの実装例を、以下に示す。</p>
 <ul>
 <li><div class="first line-block">
@@ -5339,7 +5316,7 @@ JSONやXMLのフォーマットが変わってしまうため、アプリケー�
 </div>
 </div>
 <div class="section" id="resthowtouseapiimplementationofputspecifiedresource">
-<span id="id36"></span><h4><a class="toc-backref" href="#id109">5.1.4.4.7. 指定されたリソースを更新するREST APIの実装</a><a class="headerlink" href="#resthowtouseapiimplementationofputspecifiedresource" title="Permalink to this headline">¶</a></h4>
+<span id="id35"></span><h4><a class="toc-backref" href="#id108">5.1.4.4.7. 指定されたリソースを更新するREST APIの実装</a><a class="headerlink" href="#resthowtouseapiimplementationofputspecifiedresource" title="Permalink to this headline">¶</a></h4>
 <p>URIで指定されたMemberリソースを更新するREST APIの実装例を、以下に示す。</p>
 <ul>
 <li><div class="first line-block">
@@ -5484,7 +5461,7 @@ JSONやXMLのフォーマットが変わってしまうため、アプリケー�
 </div>
 </div>
 <div class="section" id="resthowtouseapiimplementationofdeletespecifiedresource">
-<span id="id37"></span><h4><a class="toc-backref" href="#id110">5.1.4.4.8. 指定されたリソースを削除するREST APIの実装</a><a class="headerlink" href="#resthowtouseapiimplementationofdeletespecifiedresource" title="Permalink to this headline">¶</a></h4>
+<span id="id36"></span><h4><a class="toc-backref" href="#id109">5.1.4.4.8. 指定されたリソースを削除するREST APIの実装</a><a class="headerlink" href="#resthowtouseapiimplementationofdeletespecifiedresource" title="Permalink to this headline">¶</a></h4>
 <p>URIで指定されたMemberリソースを削除するREST APIの実装例を、以下に示す。</p>
 <ul>
 <li><div class="first line-block">
@@ -5599,7 +5576,7 @@ JSONやXMLのフォーマットが変わってしまうため、アプリケー�
 </div>
 </div>
 <div class="section" id="resthowtouseexceptionhandling">
-<span id="id38"></span><h3><a class="toc-backref" href="#id111">5.1.4.5. 例外のハンドリングの実装</a><a class="headerlink" href="#resthowtouseexceptionhandling" title="Permalink to this headline">¶</a></h3>
+<span id="id37"></span><h3><a class="toc-backref" href="#id110">5.1.4.5. 例外のハンドリングの実装</a><a class="headerlink" href="#resthowtouseexceptionhandling" title="Permalink to this headline">¶</a></h3>
 <p>RESTful Web Serviceで発生した例外のハンドリング方法について説明する。</p>
 <div class="line-block">
 <div class="line">Spring MVCでは、RESTful Web Service向けの汎用的な例外ハンドリングの仕組みは用意されていない。</div>
@@ -5730,7 +5707,7 @@ JSONやXMLのフォーマットが変わってしまうため、アプリケー�
 <div class="line"><br /></div>
 </div>
 <div class="section" id="body">
-<span id="resthowtouseexceptionhandlingforerrorcontentinresponsebody"></span><h4><a class="toc-backref" href="#id112">5.1.4.5.1. レスポンスBodyにエラー情報を出力するための実装</a><a class="headerlink" href="#body" title="Permalink to this headline">¶</a></h4>
+<span id="resthowtouseexceptionhandlingforerrorcontentinresponsebody"></span><h4><a class="toc-backref" href="#id111">5.1.4.5.1. レスポンスBodyにエラー情報を出力するための実装</a><a class="headerlink" href="#body" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
 <li>エラー情報は以下のJSON形式とする。</li>
 </ul>
@@ -6069,7 +6046,7 @@ JSONやXMLのフォーマットが変わってしまうため、アプリケー�
 </div>
 </div>
 <div class="section" id="resthowtouseexceptionhandlingforvalidationerror">
-<span id="id39"></span><h4><a class="toc-backref" href="#id113">5.1.4.5.2. 入力エラー例外のハンドリング実装</a><a class="headerlink" href="#resthowtouseexceptionhandlingforvalidationerror" title="Permalink to this headline">¶</a></h4>
+<span id="id38"></span><h4><a class="toc-backref" href="#id112">5.1.4.5.2. 入力エラー例外のハンドリング実装</a><a class="headerlink" href="#resthowtouseexceptionhandlingforvalidationerror" title="Permalink to this headline">¶</a></h4>
 <p>入力エラー（電文不正、単項目チェックエラー、相関項目チェックエラー）を応答するための実装例について説明する。</p>
 <p>入力エラーを応答するためには、以下の３つの例外をハンドリングする必要がある。</p>
 <blockquote>
@@ -6464,7 +6441,7 @@ JSONやXMLのフォーマットが変わってしまうため、アプリケー�
 </div>
 </div>
 <div class="section" id="resthowtouseexceptionhandlingfornotfound">
-<span id="id40"></span><h4><a class="toc-backref" href="#id114">5.1.4.5.3. リソース未検出エラー例外のハンドリング実装</a><a class="headerlink" href="#resthowtouseexceptionhandlingfornotfound" title="Permalink to this headline">¶</a></h4>
+<span id="id39"></span><h4><a class="toc-backref" href="#id113">5.1.4.5.3. リソース未検出エラー例外のハンドリング実装</a><a class="headerlink" href="#resthowtouseexceptionhandlingfornotfound" title="Permalink to this headline">¶</a></h4>
 <p>リソースが存在しない場合に、リソース未検出エラーを応答するための実装例について説明する。</p>
 <div class="line-block">
 <div class="line">パス変数から取得したIDに一致するリソースが見つからない場合は、リソースが見つからない事を通知する例外を発生させる。</div>
@@ -6665,7 +6642,7 @@ JSONやXMLのフォーマットが変わってしまうため、アプリケー�
 </div>
 </div>
 <div class="section" id="resthowtouseexceptionhandlingforbusinesserror">
-<span id="id41"></span><h4><a class="toc-backref" href="#id115">5.1.4.5.4. 業務エラー例外のハンドリング実装</a><a class="headerlink" href="#resthowtouseexceptionhandlingforbusinesserror" title="Permalink to this headline">¶</a></h4>
+<span id="id40"></span><h4><a class="toc-backref" href="#id114">5.1.4.5.4. 業務エラー例外のハンドリング実装</a><a class="headerlink" href="#resthowtouseexceptionhandlingforbusinesserror" title="Permalink to this headline">¶</a></h4>
 <p>ビジネスルールの違反を検知した場合に、業務エラーを応答するための実装例について説明する。</p>
 <p>ビジネスルールのチェックはServiceの処理として行い、ビジネスルールの違反を検知した場合は、業務例外を発生させる。
 業務エラーの検知方法については、「<a class="reference internal" href="../../ImplementationAtEachLayer/DomainLayer.html#service-return-businesserrormessage-label"><span class="std std-ref">業務エラーを通知する</span></a>」を参照されたい。</p>
@@ -6741,7 +6718,7 @@ JSONやXMLのフォーマットが変わってしまうため、アプリケー�
 </div>
 </div>
 <div class="section" id="resthowtouseexceptionhandlingforexcusionerror">
-<span id="id42"></span><h4><a class="toc-backref" href="#id116">5.1.4.5.5. 排他エラー例外のハンドリング実装</a><a class="headerlink" href="#resthowtouseexceptionhandlingforexcusionerror" title="Permalink to this headline">¶</a></h4>
+<span id="id41"></span><h4><a class="toc-backref" href="#id115">5.1.4.5.5. 排他エラー例外のハンドリング実装</a><a class="headerlink" href="#resthowtouseexceptionhandlingforexcusionerror" title="Permalink to this headline">¶</a></h4>
 <div class="line-block">
 <div class="line">排他エラーが発生した場合に、排他エラーを応答するための実装例について説明する。</div>
 <div class="line">排他制御を行う場合は、排他エラーのハンドリングが必要となる。</div>
@@ -6819,7 +6796,7 @@ JSONやXMLのフォーマットが変わってしまうため、アプリケー�
 </div>
 </div>
 <div class="section" id="resthowtouseexceptionhandlingforsystemerror">
-<span id="id43"></span><h4><a class="toc-backref" href="#id117">5.1.4.5.6. システムエラー例外のハンドリング実装</a><a class="headerlink" href="#resthowtouseexceptionhandlingforsystemerror" title="Permalink to this headline">¶</a></h4>
+<span id="id42"></span><h4><a class="toc-backref" href="#id116">5.1.4.5.6. システムエラー例外のハンドリング実装</a><a class="headerlink" href="#resthowtouseexceptionhandlingforsystemerror" title="Permalink to this headline">¶</a></h4>
 <p>システム異常を検知した場合に、システムエラーを応答するための実装例について説明する。</p>
 <p>システム異常の検知した場合は、システム例外を発生させる。
 システムエラーの検知方法については、「<a class="reference internal" href="../../ImplementationAtEachLayer/DomainLayer.html#service-return-systemerrormessage-label"><span class="std std-ref">システムエラーを通知する</span></a>」を参照されたい。</p>
@@ -6904,7 +6881,7 @@ Blankプロジェクトのデフォルトの設定では、共通ライブラリ
 </div>
 </div>
 <div class="section" id="exceptioncoderesolver">
-<span id="resthowtouseexceptionhandlingsettingsofexceptioncoderesolver"></span><h4><a class="toc-backref" href="#id118">5.1.4.5.7. ExceptionCodeResolverを使ったエラーコードとメッセージの解決</a><a class="headerlink" href="#exceptioncoderesolver" title="Permalink to this headline">¶</a></h4>
+<span id="resthowtouseexceptionhandlingsettingsofexceptioncoderesolver"></span><h4><a class="toc-backref" href="#id117">5.1.4.5.7. ExceptionCodeResolverを使ったエラーコードとメッセージの解決</a><a class="headerlink" href="#exceptioncoderesolver" title="Permalink to this headline">¶</a></h4>
 <div class="line-block">
 <div class="line">共通ライブラリより提供している<code class="docutils literal"><span class="pre">ExceptionCodeResolver</span></code>を使用すると、例外クラスからエラーコードを解決する事ができる。</div>
 <div class="line">特に、エラー原因がクライアント側にある場合は、エラー原因に応じたエラーメッセージを設定する事が求められるケースがあるため、そのような場合に便利な機能である。</div>
@@ -6994,6 +6971,8 @@ Blankプロジェクトのデフォルトの設定では、共通ライブラリ
 <li><div class="first line-block">
 <div class="line"><code class="file docutils literal"><span class="pre">xxx-web/src/main/resources/ValidationMessages.properties</span></code></div>
 <div class="line">Bean Validationを使った入力チェックで発生するエラーに対して、エラーコードに対応するメッセージの設定を行う。</div>
+<div class="line">ここでは、Hibernate Validatorが用意するデフォルトメッセージを利用する。</div>
+<div class="line">デフォルトメッセージは、メッセージの中に項目名が含まれないため、<code class="docutils literal"><span class="pre">{0}</span></code>（フィールド名）を追加している。</div>
 </div>
 </li>
 </ul>
@@ -7003,40 +6982,60 @@ Blankプロジェクトのデフォルトの設定では、共通ライブラリ
 <span class="c"># ---</span>
 
 <span class="c"># for bean validation of standard</span>
-<span class="na">javax.validation.constraints.AssertFalse.message</span> <span class="o">=</span> <span class="s">&quot;{0}&quot; must be false.</span>
-<span class="na">javax.validation.constraints.AssertTrue.message</span>  <span class="o">=</span> <span class="s">&quot;{0}&quot; must be true.</span>
-<span class="na">javax.validation.constraints.DecimalMax.message</span>  <span class="o">=</span> <span class="s">&quot;{0}&quot; must be less than ${inclusive == true ? &#39;or equal to &#39; : &#39;&#39;}{value}.</span>
-<span class="na">javax.validation.constraints.DecimalMin.message</span>  <span class="o">=</span> <span class="s">&quot;{0}&quot; must be greater than ${inclusive == true ? &#39;or equal to &#39; : &#39;&#39;}{value}.</span>
-<span class="na">javax.validation.constraints.Digits.message</span>      <span class="o">=</span> <span class="s">&quot;{0}&quot; numeric value out of bounds (&lt;{integer} digits&gt;.&lt;{fraction} digits&gt; expected).</span>
-<span class="na">javax.validation.constraints.Future.message</span>      <span class="o">=</span> <span class="s">&quot;{0}&quot; must be in the future.</span>
-<span class="na">javax.validation.constraints.Max.message</span>         <span class="o">=</span> <span class="s">&quot;{0}&quot; must be less than or equal to {value}.</span>
-<span class="na">javax.validation.constraints.Min.message</span>         <span class="o">=</span> <span class="s">&quot;{0}&quot; must be greater than or equal to {value}.</span>
-<span class="na">javax.validation.constraints.NotNull.message</span>     <span class="o">=</span> <span class="s">&quot;{0}&quot; may not be null.</span>
-<span class="na">javax.validation.constraints.Null.message</span>        <span class="o">=</span> <span class="s">&quot;{0}&quot; must be null.</span>
-<span class="na">javax.validation.constraints.Past.message</span>        <span class="o">=</span> <span class="s">&quot;{0}&quot; must be in the past.</span>
-<span class="na">javax.validation.constraints.Pattern.message</span>     <span class="o">=</span> <span class="s">&quot;{0}&quot; must match &quot;{regexp}&quot;.</span>
-<span class="na">javax.validation.constraints.Size.message</span>        <span class="o">=</span> <span class="s">&quot;{0}&quot; size must be between {min} and {max}.</span>
+<span class="na">javax.validation.constraints.AssertFalse.message</span>     <span class="o">=</span> <span class="s">&quot;{0}&quot; must be false.</span>
+<span class="na">javax.validation.constraints.AssertTrue.message</span>      <span class="o">=</span> <span class="s">&quot;{0}&quot; must be true.</span>
+<span class="na">javax.validation.constraints.DecimalMax.message</span>      <span class="o">=</span> <span class="s">&quot;{0}&quot; must be less than ${inclusive == true ? &#39;or equal to &#39; : &#39;&#39;}{value}.</span>
+<span class="na">javax.validation.constraints.DecimalMin.message</span>      <span class="o">=</span> <span class="s">&quot;{0}&quot; must be greater than ${inclusive == true ? &#39;or equal to &#39; : &#39;&#39;}{value}.</span>
+<span class="na">javax.validation.constraints.Digits.message</span>          <span class="o">=</span> <span class="s">&quot;{0}&quot; numeric value out of bounds (&lt;{integer} digits&gt;.&lt;{fraction} digits&gt; expected).</span>
+<span class="na">javax.validation.constraints.Email.message</span>           <span class="o">=</span> <span class="s">&quot;{0}&quot; must be a well-formed email address.</span>
+<span class="na">javax.validation.constraints.Future.message</span>          <span class="o">=</span> <span class="s">&quot;{0}&quot; must be a future date.</span>
+<span class="na">javax.validation.constraints.FutureOrPresent.message</span> <span class="o">=</span> <span class="s">&quot;{0}&quot; must be a date in the present or in the future.</span>
+<span class="na">javax.validation.constraints.Max.message</span>             <span class="o">=</span> <span class="s">&quot;{0}&quot; must be less than or equal to {value}.</span>
+<span class="na">javax.validation.constraints.Min.message</span>             <span class="o">=</span> <span class="s">&quot;{0}&quot; must be greater than or equal to {value}.</span>
+<span class="na">javax.validation.constraints.Negative.message</span>        <span class="o">=</span> <span class="s">&quot;{0}&quot; must be less than 0.</span>
+<span class="na">javax.validation.constraints.NegativeOrZero.message</span>  <span class="o">=</span> <span class="s">&quot;{0}&quot; must be less than or equal to 0.</span>
+<span class="na">javax.validation.constraints.NotBlank.message</span>        <span class="o">=</span> <span class="s">&quot;{0}&quot; must not be blank.</span>
+<span class="na">javax.validation.constraints.NotEmpty.message</span>        <span class="o">=</span> <span class="s">&quot;{0}&quot; must not be empty.</span>
+<span class="na">javax.validation.constraints.NotNull.message</span>         <span class="o">=</span> <span class="s">&quot;{0}&quot; must not be null.</span>
+<span class="na">javax.validation.constraints.Null.message</span>            <span class="o">=</span> <span class="s">&quot;{0}&quot; must be null.</span>
+<span class="na">javax.validation.constraints.Past.message</span>            <span class="o">=</span> <span class="s">&quot;{0}&quot; must be a past date.</span>
+<span class="na">javax.validation.constraints.PastOrPresent.message</span>   <span class="o">=</span> <span class="s">&quot;{0}&quot; must be a date in the past or in the present.</span>
+<span class="na">javax.validation.constraints.Pattern.message</span>         <span class="o">=</span> <span class="s">&quot;{0}&quot; must match &quot;{regexp}&quot;.</span>
+<span class="na">javax.validation.constraints.Positive.message</span>        <span class="o">=</span> <span class="s">&quot;{0}&quot; must be greater than 0.</span>
+<span class="na">javax.validation.constraints.PositiveOrZero.message</span>  <span class="o">=</span> <span class="s">&quot;{0}&quot; must be greater than or equal to 0.</span>
+<span class="na">javax.validation.constraints.Size.message</span>            <span class="o">=</span> <span class="s">&quot;{0}&quot; size must be between {min} and {max}.</span>
 
 <span class="c"># for bean validation of hibernate</span>
 <span class="na">org.hibernate.validator.constraints.CreditCardNumber.message</span>        <span class="o">=</span> <span class="s">&quot;{0}&quot; invalid credit card number.</span>
+<span class="na">org.hibernate.validator.constraints.Currency.message</span>                <span class="o">=</span> <span class="s">&quot;{0}&quot; invalid currency (must be one of {value}).</span>
 <span class="na">org.hibernate.validator.constraints.EAN.message</span>                     <span class="o">=</span> <span class="s">&quot;{0}&quot; invalid {type} barcode.</span>
 <span class="na">org.hibernate.validator.constraints.Email.message</span>                   <span class="o">=</span> <span class="s">&quot;{0}&quot; not a well-formed email address.</span>
+<span class="na">org.hibernate.validator.constraints.ISBN.message</span>                    <span class="o">=</span> <span class="s">&quot;{0}&quot; invalid ISBN.</span>
 <span class="na">org.hibernate.validator.constraints.Length.message</span>                  <span class="o">=</span> <span class="s">&quot;{0}&quot; length must be between {min} and {max}.</span>
-<span class="na">org.hibernate.validator.constraints.LuhnCheck.message</span>               <span class="o">=</span> <span class="s">&quot;{0}&quot; The check digit for ${validatedValue} is invalid, Luhn Modulo 10 checksum failed.</span>
-<span class="na">org.hibernate.validator.constraints.Mod10Check.message</span>              <span class="o">=</span> <span class="s">&quot;{0}&quot; The check digit for ${validatedValue} is invalid, Modulo 10 checksum failed.</span>
-<span class="na">org.hibernate.validator.constraints.Mod11Check.message</span>              <span class="o">=</span> <span class="s">&quot;{0}&quot; The check digit for ${validatedValue} is invalid, Modulo 11 checksum failed.</span>
-<span class="na">org.hibernate.validator.constraints.ModCheck.message</span>                <span class="o">=</span> <span class="s">&quot;{0}&quot; The check digit for ${validatedValue} is invalid, ${modType} checksum failed.</span>
+<span class="na">org.hibernate.validator.constraints.CodePointLength.message</span>         <span class="o">=</span> <span class="s">&quot;{0}&quot; length must be between {min} and {max}.</span>
+<span class="na">org.hibernate.validator.constraints.LuhnCheck.message</span>               <span class="o">=</span> <span class="s">&quot;{0}&quot; the check digit for ${validatedValue} is invalid, Luhn Modulo 10 checksum failed.</span>
+<span class="na">org.hibernate.validator.constraints.Mod10Check.message</span>              <span class="o">=</span> <span class="s">&quot;{0}&quot; the check digit for ${validatedValue} is invalid, Modulo 10 checksum failed.</span>
+<span class="na">org.hibernate.validator.constraints.Mod11Check.message</span>              <span class="o">=</span> <span class="s">&quot;{0}&quot; the check digit for ${validatedValue} is invalid, Modulo 11 checksum failed.</span>
+<span class="na">org.hibernate.validator.constraints.ModCheck.message</span>                <span class="o">=</span> <span class="s">&quot;{0}&quot; the check digit for ${validatedValue} is invalid, ${modType} checksum failed.</span>
 <span class="na">org.hibernate.validator.constraints.NotBlank.message</span>                <span class="o">=</span> <span class="s">&quot;{0}&quot; may not be empty.</span>
 <span class="na">org.hibernate.validator.constraints.NotEmpty.message</span>                <span class="o">=</span> <span class="s">&quot;{0}&quot; may not be empty.</span>
 <span class="na">org.hibernate.validator.constraints.ParametersScriptAssert.message</span>  <span class="o">=</span> <span class="s">&quot;{0}&quot; script expression &quot;{script}&quot; didn&#39;t evaluate to true.</span>
 <span class="na">org.hibernate.validator.constraints.Range.message</span>                   <span class="o">=</span> <span class="s">&quot;{0}&quot; must be between {min} and {max}.</span>
 <span class="na">org.hibernate.validator.constraints.SafeHtml.message</span>                <span class="o">=</span> <span class="s">&quot;{0}&quot; may have unsafe html content.</span>
 <span class="na">org.hibernate.validator.constraints.ScriptAssert.message</span>            <span class="o">=</span> <span class="s">&quot;{0}&quot; script expression &quot;{script}&quot; didn&#39;t evaluate to true.</span>
+<span class="na">org.hibernate.validator.constraints.UniqueElements.message</span>          <span class="o">=</span> <span class="s">&quot;{0}&quot; must only contain unique elements.</span>
 <span class="na">org.hibernate.validator.constraints.URL.message</span>                     <span class="o">=</span> <span class="s">&quot;{0}&quot; must be a valid URL.</span>
 
 <span class="na">org.hibernate.validator.constraints.br.CNPJ.message</span>                 <span class="o">=</span> <span class="s">&quot;{0}&quot; invalid Brazilian corporate taxpayer registry number (CNPJ).</span>
 <span class="na">org.hibernate.validator.constraints.br.CPF.message</span>                  <span class="o">=</span> <span class="s">&quot;{0}&quot; invalid Brazilian individual taxpayer registry number (CPF).</span>
 <span class="na">org.hibernate.validator.constraints.br.TituloEleitoral.message</span>      <span class="o">=</span> <span class="s">&quot;{0}&quot; invalid Brazilian Voter ID card number.</span>
+
+<span class="na">org.hibernate.validator.constraints.pl.REGON.message</span>                <span class="o">=</span> <span class="s">&quot;{0}&quot; invalid Polish Taxpayer Identification Number (REGON).</span>
+<span class="na">org.hibernate.validator.constraints.pl.NIP.message</span>                  <span class="o">=</span> <span class="s">&quot;{0}&quot; invalid VAT Identification Number (NIP).</span>
+<span class="na">org.hibernate.validator.constraints.pl.PESEL.message</span>                <span class="o">=</span> <span class="s">&quot;{0}&quot; invalid Polish National Identification Number (PESEL).</span>
+
+<span class="na">org.hibernate.validator.constraints.time.DurationMax.message</span>        <span class="o">=</span> <span class="s">&quot;{0}&quot; must be shorter than${inclusive == true ? &#39; or equal to&#39; : &#39;&#39;}${days == 0 ? &#39;&#39; : days == 1 ? &#39; 1 day&#39; : &#39; &#39; += days += &#39; days&#39;}${hours == 0 ? &#39;&#39; : hours == 1 ? &#39; 1 hour&#39; : &#39; &#39; += hours += &#39; hours&#39;}${minutes == 0 ? &#39;&#39; : minutes == 1 ? &#39; 1 minute&#39; : &#39; &#39; += minutes += &#39; minutes&#39;}${seconds == 0 ? &#39;&#39; : seconds == 1 ? &#39; 1 second&#39; : &#39; &#39; += seconds += &#39; seconds&#39;}${millis == 0 ? &#39;&#39; : millis == 1 ? &#39; 1 milli&#39; : &#39; &#39; += millis += &#39; millis&#39;}${nanos == 0 ? &#39;&#39; : nanos == 1 ? &#39; 1 nano&#39; : &#39; &#39; += nanos += &#39; nanos&#39;}.</span>
+<span class="na">org.hibernate.validator.constraints.time.DurationMin.message</span>        <span class="o">=</span> <span class="s">&quot;{0}&quot; must be longer than${inclusive == true ? &#39; or equal to&#39; : &#39;&#39;}${days == 0 ? &#39;&#39; : days == 1 ? &#39; 1 day&#39; : &#39; &#39; += days += &#39; days&#39;}${hours == 0 ? &#39;&#39; : hours == 1 ? &#39; 1 hour&#39; : &#39; &#39; += hours += &#39; hours&#39;}${minutes == 0 ? &#39;&#39; : minutes == 1 ? &#39; 1 minute&#39; : &#39; &#39; += minutes += &#39; minutes&#39;}${seconds == 0 ? &#39;&#39; : seconds == 1 ? &#39; 1 second&#39; : &#39; &#39; += seconds += &#39; seconds&#39;}${millis == 0 ? &#39;&#39; : millis == 1 ? &#39; 1 milli&#39; : &#39; &#39; += millis += &#39; millis&#39;}${nanos == 0 ? &#39;&#39; : nanos == 1 ? &#39; 1 nano&#39; : &#39; &#39; += nanos += &#39; nanos&#39;}.</span>
 
 <span class="c"># for common library</span>
 <span class="na">org.terasoluna.gfw.common.codelist.ExistInCodeList.message</span>   <span class="o">=</span> <span class="s">&quot;{0}&quot; must exist in code list of {codeListId}.</span>
@@ -7066,7 +7065,7 @@ Blankプロジェクトのデフォルトの設定では、共通ライブラリ
 </div>
 </div>
 <div class="section" id="resthowtouseexceptionhandlingforservletcontainer">
-<span id="id44"></span><h3><a class="toc-backref" href="#id119">5.1.4.6. サーブレットコンテナに通知されたエラーのハンドリング実装</a><a class="headerlink" href="#resthowtouseexceptionhandlingforservletcontainer" title="Permalink to this headline">¶</a></h3>
+<span id="id43"></span><h3><a class="toc-backref" href="#id118">5.1.4.6. サーブレットコンテナに通知されたエラーのハンドリング実装</a><a class="headerlink" href="#resthowtouseexceptionhandlingforservletcontainer" title="Permalink to this headline">¶</a></h3>
 <p>Filterでエラーが発生した場合や<code class="docutils literal"><span class="pre">HttpServletResponse#sendError</span></code>を使ってエラーレスポンスが行われた場合は、Spring MVCの例外ハンドリングの仕組みを使ってハンドリングできないため、
 これらのエラーはサーブレットコンテナに通知される。</p>
 <p>本節では、サーブレットコンテナに通知されたエラーをハンドリングする方法について説明する。</p>
@@ -7190,8 +7189,8 @@ Blankプロジェクトのデフォルトの設定では、共通ライブラリ
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
-<div class="section" id="id45">
-<h4><a class="toc-backref" href="#id120">5.1.4.6.1. エラー応答を行うためのControllerの実装</a><a class="headerlink" href="#id45" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="id44">
+<h4><a class="toc-backref" href="#id119">5.1.4.6.1. エラー応答を行うためのControllerの実装</a><a class="headerlink" href="#id44" title="Permalink to this headline">¶</a></h4>
 <p>サーブレットコンテナに通知されたエラーのエラー応答を行うControllerを作成する。</p>
 <blockquote>
 <div><div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">org.terasoluna.examples.rest.api.common.error</span><span class="o">;</span>
@@ -7347,8 +7346,8 @@ Blankプロジェクトのデフォルトの設定では、共通ライブラリ
 <div class="line"><br /></div>
 </div>
 </div>
-<div class="section" id="id46">
-<h4><a class="toc-backref" href="#id121">5.1.4.6.2. 致命的なエラーが発生した際に応答する静的なJSONファイルの作成</a><a class="headerlink" href="#id46" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="id45">
+<h4><a class="toc-backref" href="#id120">5.1.4.6.2. 致命的なエラーが発生した際に応答する静的なJSONファイルの作成</a><a class="headerlink" href="#id45" title="Permalink to this headline">¶</a></h4>
 <p>致命的なエラーが発生した際に応答する静的なJSONファイルを作成する。</p>
 <ul class="simple">
 <li><code class="file docutils literal"><span class="pre">unhandledSystemError.json</span></code></li>
@@ -7362,8 +7361,8 @@ Blankプロジェクトのデフォルトの設定では、共通ライブラリ
 <div class="line"><br /></div>
 </div>
 </div>
-<div class="section" id="id47">
-<h4><a class="toc-backref" href="#id122">5.1.4.6.3. サーブレットコンテナに通知されたエラーをハンドリングするための設定</a><a class="headerlink" href="#id47" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="id46">
+<h4><a class="toc-backref" href="#id121">5.1.4.6.3. サーブレットコンテナに通知されたエラーをハンドリングするための設定</a><a class="headerlink" href="#id46" title="Permalink to this headline">¶</a></h4>
 <p>ここでは、サーブレットコンテナに通知されたエラーをハンドリングするための設定について説明する。</p>
 <ul class="simple">
 <li><code class="file docutils literal"><span class="pre">web.xml</span></code></li>
@@ -7486,24 +7485,24 @@ Blankプロジェクトのデフォルトの設定では、共通ライブラリ
 </div>
 </div>
 <div class="section" id="resthowtousesecurity">
-<span id="id48"></span><h3><a class="toc-backref" href="#id123">5.1.4.7. セキュリティ対策</a><a class="headerlink" href="#resthowtousesecurity" title="Permalink to this headline">¶</a></h3>
+<span id="id47"></span><h3><a class="toc-backref" href="#id122">5.1.4.7. セキュリティ対策</a><a class="headerlink" href="#resthowtousesecurity" title="Permalink to this headline">¶</a></h3>
 <div class="line-block">
 <div class="line">RESTful Web Serviceに対するセキュリティ対策の実現方法について説明する。</div>
 <div class="line">本ガイドラインでは、セキュリティ対策の実現方法として、Spring Securityを使用する事を推奨している。</div>
 </div>
 <div class="section" id="resthowtousesecurityauth">
-<span id="id49"></span><h4><a class="toc-backref" href="#id124">5.1.4.7.1. 認証・認可</a><a class="headerlink" href="#resthowtousesecurityauth" title="Permalink to this headline">¶</a></h4>
+<span id="id48"></span><h4><a class="toc-backref" href="#id123">5.1.4.7.1. 認証・認可</a><a class="headerlink" href="#resthowtousesecurityauth" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
-<li>OAuth2(Spring Security OAuth2)を使用して認証・認可を実現する方法について、<a class="reference internal" href="../../Security/OAuth.html#oauth"><span class="std std-ref">OAuth</span></a>を参照されたい。</li>
+<li>OAuth2(Spring Security OAuth2)を使用して認証・認可を実現する方法について、<a class="reference internal" href="../../Security/OAuth.html"><span class="doc">OAuth</span></a>を参照されたい。</li>
 </ul>
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
 </div>
 <div class="section" id="csrf">
-<span id="resthowtousesecuritycsrf"></span><h4><a class="toc-backref" href="#id125">5.1.4.7.2. CSRF対策</a><a class="headerlink" href="#csrf" title="Permalink to this headline">¶</a></h4>
+<span id="resthowtousesecuritycsrf"></span><h4><a class="toc-backref" href="#id124">5.1.4.7.2. CSRF対策</a><a class="headerlink" href="#csrf" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
-<li>RESTful Web Serviceに対してCSRF対策を行う場合の設定方法については、<a class="reference internal" href="../../Security/CSRF.html#csrf-spring-security-setting"><span class="std std-ref">CSRF対策</span></a>を参照されたい。</li>
+<li>RESTful Web Serviceに対してCSRF対策を行う場合の設定方法については、<a class="reference internal" href="../../Security/CSRF.html"><span class="doc">CSRF対策</span></a>を参照されたい。</li>
 <li>RESTful Web Serviceに対してCSRF対策を行わない場合の設定方法については、<a class="reference internal" href="#restappendixdisabledcsrfprotection"><span class="std std-ref">CSRF対策の無効化</span></a>を参照されたい。</li>
 </ul>
 <div class="line-block">
@@ -7512,8 +7511,8 @@ Blankプロジェクトのデフォルトの設定では、共通ライブラリ
 </div>
 </div>
 <div class="section" id="resthowtouseconditionaloperations">
-<span id="id50"></span><h3><a class="toc-backref" href="#id126">5.1.4.8. リソースの条件付き操作</a><a class="headerlink" href="#resthowtouseconditionaloperations" title="Permalink to this headline">¶</a></h3>
-<div class="admonition-todo admonition" id="index-6">
+<span id="id49"></span><h3><a class="toc-backref" href="#id125">5.1.4.8. リソースの条件付き操作</a><a class="headerlink" href="#resthowtouseconditionaloperations" title="Permalink to this headline">¶</a></h3>
+<div class="admonition-todo admonition" id="index-3">
 <p class="first admonition-title">Todo</p>
 <p><strong>TBD</strong></p>
 <p class="last">Etagなどのヘッダを使った条件付き処理の制御の実現方法について、次版以降に記載する予定である。</p>
@@ -7523,8 +7522,8 @@ Blankプロジェクトのデフォルトの設定では、共通ライブラリ
 </div>
 </div>
 <div class="section" id="resthowtousecachecontrol">
-<span id="id51"></span><h3><a class="toc-backref" href="#id127">5.1.4.9. リソースのキャッシュ制御</a><a class="headerlink" href="#resthowtousecachecontrol" title="Permalink to this headline">¶</a></h3>
-<div class="admonition-todo admonition" id="index-7">
+<span id="id50"></span><h3><a class="toc-backref" href="#id126">5.1.4.9. リソースのキャッシュ制御</a><a class="headerlink" href="#resthowtousecachecontrol" title="Permalink to this headline">¶</a></h3>
+<div class="admonition-todo admonition" id="index-4">
 <p class="first admonition-title">Todo</p>
 <p><strong>TBD</strong></p>
 <p class="last">Cache-Control/Expires/Pragmaなどのヘッダを使ったキャッシュ制御の実現方法について、次版以降に記載する予定である。</p>
@@ -7535,9 +7534,9 @@ Blankプロジェクトのデフォルトの設定では、共通ライブラリ
 </div>
 </div>
 <div class="section" id="how-to-extend">
-<span id="resthowtoextend"></span><h2><a class="toc-backref" href="#id128">5.1.5. How to extend</a><a class="headerlink" href="#how-to-extend" title="Permalink to this headline">¶</a></h2>
+<span id="resthowtoextend"></span><h2><a class="toc-backref" href="#id127">5.1.5. How to extend</a><a class="headerlink" href="#how-to-extend" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="jsonview">
-<span id="restappendixjsonview"></span><h3><a class="toc-backref" href="#id129">5.1.5.1. &#64;JsonViewを使用したレスポンスの出力制御</a><a class="headerlink" href="#jsonview" title="Permalink to this headline">¶</a></h3>
+<span id="restappendixjsonview"></span><h3><a class="toc-backref" href="#id128">5.1.5.1. &#64;JsonViewを使用したレスポンスの出力制御</a><a class="headerlink" href="#jsonview" title="Permalink to this headline">¶</a></h3>
 <div class="line-block">
 <div class="line"><code class="docutils literal"><span class="pre">&#64;JsonView</span></code>を使用することによって、Resourceオブジェクト内のプロパティーをグループ分けすることができる。</div>
 <div class="line">この機能はSpring FrameworkがJacksonの機能をサポートすることにより実現している。</div>
@@ -7695,7 +7694,7 @@ Blankプロジェクトのデフォルトの設定では、共通ライブラリ
 
 <span class="kn">import</span> <span class="nn">javax.inject.Inject</span><span class="o">;</span>
 
-<span class="kn">import</span> <span class="nn">org.dozer.Mapper</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">com.github.dozermapper.core.Mapper</span><span class="o">;</span>
 <span class="kn">import</span> <span class="nn">org.springframework.http.HttpStatus</span><span class="o">;</span>
 <span class="kn">import</span> <span class="nn">org.springframework.web.bind.annotation.PathVariable</span><span class="o">;</span>
 <span class="kn">import</span> <span class="nn">org.springframework.web.bind.annotation.RequestBody</span><span class="o">;</span>
@@ -8091,9 +8090,9 @@ Blankプロジェクトのデフォルトの設定では、共通ライブラリ
 </div>
 </div>
 <div class="section" id="appendix">
-<span id="restappendix"></span><h2><a class="toc-backref" href="#id130">5.1.6. Appendix</a><a class="headerlink" href="#appendix" title="Permalink to this headline">¶</a></h2>
+<span id="restappendix"></span><h2><a class="toc-backref" href="#id129">5.1.6. Appendix</a><a class="headerlink" href="#appendix" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="jsr-310-date-and-time-api-joda-time">
-<span id="restappendixusingjsr310-jodatime"></span><h3><a class="toc-backref" href="#id131">5.1.6.1. JSR-310 Date and Time API / Joda Timeを使う場合の設定</a><a class="headerlink" href="#jsr-310-date-and-time-api-joda-time" title="Permalink to this headline">¶</a></h3>
+<span id="restappendixusingjsr310-jodatime"></span><h3><a class="toc-backref" href="#id130">5.1.6.1. JSR-310 Date and Time API / Joda Timeを使う場合の設定</a><a class="headerlink" href="#jsr-310-date-and-time-api-joda-time" title="Permalink to this headline">¶</a></h3>
 <p>リソースを表現するJavaBean(Resourceクラス)のプロパティとしてJSR-310 Date and Time APIを使用する場合は、
 terasoluna-gfw-common-dependenciesにて依存関係が定義されているため依存関係の追加は不要である。
 一方、Joda Timeのクラスを使用する場合は、
@@ -8116,7 +8115,7 @@ terasoluna-gfw-common-dependenciesにて依存関係が定義されているた�
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p>上記設定例は、依存ライブラリのバージョンを親プロジェクトである terasoluna-gfw-parent で管理する前提であるため、pom.xmlでのバージョンの指定は不要である。
-上記のjackson-datatype-jodaはterasoluna-gfw-parentが利用している<a class="reference external" href="http://platform.spring.io/platform/">Spring IO Platform</a>で定義済みである。</p>
+上記のjackson-datatype-jodaはterasoluna-gfw-parentが依存している<a class="reference external" href="https://docs.spring.io/spring-boot/docs/2.1.2.RELEASE/reference/htmlsingle/#appendix-dependency-versions">Spring Boot</a>で管理されている。</p>
 <p>上記以外にも、</p>
 <ul class="simple">
 <li>Java SE 7から追加された<code class="docutils literal"><span class="pre">java.nio.file.Path</span></code></li>
@@ -8130,9 +8129,9 @@ terasoluna-gfw-common-dependenciesにて依存関係が定義されているた�
 </div>
 </div>
 <div class="section" id="restful-web-serviceweb">
-<span id="restappendixsettingsofdeployinsamewarfilerestandclientapplication"></span><h3><a class="toc-backref" href="#id132">5.1.6.2. RESTful Web Serviceとクライアントアプリケーションを同じWebアプリケーションとして動かす際の設定</a><a class="headerlink" href="#restful-web-serviceweb" title="Permalink to this headline">¶</a></h3>
+<span id="restappendixsettingsofdeployinsamewarfilerestandclientapplication"></span><h3><a class="toc-backref" href="#id131">5.1.6.2. RESTful Web Serviceとクライアントアプリケーションを同じWebアプリケーションとして動かす際の設定</a><a class="headerlink" href="#restful-web-serviceweb" title="Permalink to this headline">¶</a></h3>
 <div class="section" id="restful-web-servicedispatcherservlet">
-<span id="restappendixdividedispatcherservlet"></span><h4><a class="toc-backref" href="#id133">5.1.6.2.1. RESTful Web Service用の<code class="docutils literal"><span class="pre">DispatcherServlet</span></code>を設ける方法</a><a class="headerlink" href="#restful-web-servicedispatcherservlet" title="Permalink to this headline">¶</a></h4>
+<span id="restappendixdividedispatcherservlet"></span><h4><a class="toc-backref" href="#id132">5.1.6.2.1. RESTful Web Service用の<code class="docutils literal"><span class="pre">DispatcherServlet</span></code>を設ける方法</a><a class="headerlink" href="#restful-web-servicedispatcherservlet" title="Permalink to this headline">¶</a></h4>
 <div class="line-block">
 <div class="line">RESTful Web Serviceとクライアントアプリケーションを同じWebアプリケーションとして構築する場合、RESTful Web Service用のリクエストを受ける<code class="docutils literal"><span class="pre">DispatcherServlet</span></code>と、クライアントアプリケーション用のリクエストを受け取る<code class="docutils literal"><span class="pre">DispatcherServlet</span></code>を分割する事を推奨する。</div>
 <div class="line"><code class="docutils literal"><span class="pre">DispatcherServlet</span></code>を分割する方法について、以下に説明する。</div>
@@ -8253,10 +8252,10 @@ terasoluna-gfw-common-dependenciesにて依存関係が定義されているた�
 </div>
 </div>
 <div class="section" id="restappendixhypermedialink">
-<span id="id52"></span><h3><a class="toc-backref" href="#id134">5.1.6.3. ハイパーメディアリンクの実装</a><a class="headerlink" href="#restappendixhypermedialink" title="Permalink to this headline">¶</a></h3>
+<span id="id51"></span><h3><a class="toc-backref" href="#id133">5.1.6.3. ハイパーメディアリンクの実装</a><a class="headerlink" href="#restappendixhypermedialink" title="Permalink to this headline">¶</a></h3>
 <p>JSONの中に関連リソースへのハイパーメディアリンクを含める場合の実装について説明する。</p>
-<div class="section" id="id53">
-<h4><a class="toc-backref" href="#id135">5.1.6.3.1. 共通部品の実装</a><a class="headerlink" href="#id53" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="id52">
+<h4><a class="toc-backref" href="#id134">5.1.6.3.1. 共通部品の実装</a><a class="headerlink" href="#id52" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
 <li>リンク情報を保持するJavaBeanを作成する。</li>
 </ul>
@@ -8415,8 +8414,8 @@ terasoluna-gfw-common-dependenciesにて依存関係が定義されているた�
 <div class="line"><br /></div>
 </div>
 </div>
-<div class="section" id="id54">
-<h4><a class="toc-backref" href="#id136">5.1.6.3.2. リソース毎の実装</a><a class="headerlink" href="#id54" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="id53">
+<h4><a class="toc-backref" href="#id135">5.1.6.3.2. リソース毎の実装</a><a class="headerlink" href="#id53" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
 <li>Resourceクラスにて、リンク情報のコレクションを保持するResourceの抽象クラスを継承する。</li>
 </ul>
@@ -8521,7 +8520,7 @@ terasoluna-gfw-common-dependenciesにて依存関係が定義されているた�
 <div class="line">上記例では、リンク情報に設定するURIを組み立てるため <code class="docutils literal"><span class="pre">UriComponentsBuilder</span></code>クラスのメソッドを呼び出し、自身のリソースにアクセスするためのURIをリソースに追加している。</div>
 <div class="line"><br /></div>
 <div class="line">Controllerのメソッドの引数として渡された<code class="docutils literal"><span class="pre">ServletUriComponentsBuilder</span></code>のインスタンスは、web.xmlに記載の<code class="docutils literal"><span class="pre">&lt;servlet-mapping&gt;</span></code>要素の情報を元に初期化されており、リソースには依存しない。</div>
-<div class="line">そのため、Spring Frameworkから提供される <a class="reference external" href="http://docs.spring.io/spring/docs/4.3.14.RELEASE/spring-framework-reference/html/mvc.html#mvc-ann-requestmapping-uri-templates">URI Template Patterns</a>等を利用し、</div>
+<div class="line">そのため、Spring Frameworkから提供される <a class="reference external" href="https://docs.spring.io/spring/docs/5.1.4.RELEASE/spring-framework-reference/web.html#mvc-ann-requestmapping-uri-templates">URI patterns</a>等を利用し、</div>
 <div class="line">リクエスト情報をベースにURIを組み立てる事により、リソースに依存しない汎用的な組み立て処理を実装することが可能となる。</div>
 <div class="line"><br /></div>
 <div class="line">例えば、上記例において<code class="docutils literal"><span class="pre">http://example.com/api/v1/members/M000000001</span></code>に対してGETした場合、組み立てられるURIは、リクエストされたURIと同じ値<code class="docutils literal"><span class="pre">（http://example.com/api/v1/members/M000000001）</span></code>になる。</div>
@@ -8584,20 +8583,20 @@ terasoluna-gfw-common-dependenciesにて依存関係が定義されているた�
 </div>
 </div>
 <div class="section" id="httprestful-web-service">
-<span id="restappendixrestapiofhttpcompliance"></span><h3><a class="toc-backref" href="#id137">5.1.6.4. HTTPの仕様に準拠したRESTful Web Serviceの作成</a><a class="headerlink" href="#httprestful-web-service" title="Permalink to this headline">¶</a></h3>
+<span id="restappendixrestapiofhttpcompliance"></span><h3><a class="toc-backref" href="#id136">5.1.6.4. HTTPの仕様に準拠したRESTful Web Serviceの作成</a><a class="headerlink" href="#httprestful-web-service" title="Permalink to this headline">¶</a></h3>
 <div class="line-block">
 <div class="line">本編で説明したREST APIの実装では、HTTPの仕様に準拠していない箇所がある。</div>
 <div class="line">本節では、HTTPの仕様に準拠したRESTful Web Serviceにするための実装例について説明する。</div>
 </div>
 <div class="section" id="postlocation">
-<h4><a class="toc-backref" href="#id138">5.1.6.4.1. POST時のLocationヘッダの設定</a><a class="headerlink" href="#postlocation" title="Permalink to this headline">¶</a></h4>
+<h4><a class="toc-backref" href="#id137">5.1.6.4.1. POST時のLocationヘッダの設定</a><a class="headerlink" href="#postlocation" title="Permalink to this headline">¶</a></h4>
 <div class="line-block">
 <div class="line">HTTPの仕様に準拠する場合、POST時のレスポンスヘッダー(「Locationヘッダ」)には、作成したリソースのURIを設定する必要がある。</div>
 <div class="line">POST時のレスポンスヘッダ(「Locationヘッダ」)に、作成したリソースのURIを設定するための実装方法について説明する。</div>
 </div>
 </div>
-<div class="section" id="id55">
-<h4><a class="toc-backref" href="#id139">5.1.6.4.2. リソース毎の実装</a><a class="headerlink" href="#id55" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="id54">
+<h4><a class="toc-backref" href="#id138">5.1.6.4.2. リソース毎の実装</a><a class="headerlink" href="#id54" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
 <li>REST APIの処理で、作成したリソースのURIをLocationヘッダに設定する。</li>
 </ul>
@@ -8667,7 +8666,7 @@ terasoluna-gfw-common-dependenciesにて依存関係が定義されているた�
 <div class="line"><code class="docutils literal"><span class="pre">buildAndExpand</span></code>メソッドを呼び出して、作成したリソースのIDをバインドすることで、作成したリソースのURIを組み立てている。</div>
 <div class="line"><br /></div>
 <div class="line">Controllerのメソッドの引数として渡された<code class="docutils literal"><span class="pre">ServletUriComponentsBuilder</span></code>のインスタンスは、web.xmlに記載の<code class="docutils literal"><span class="pre">&lt;servlet-mapping&gt;</span></code>要素の情報を元に初期化されており、リソースには依存しない。</div>
-<div class="line">そのため、Spring Frameworkから提供される <a class="reference external" href="http://docs.spring.io/spring/docs/4.3.14.RELEASE/spring-framework-reference/html/mvc.html#mvc-ann-requestmapping-uri-templates">URITemplatePatterns</a>等を利用し、</div>
+<div class="line">そのため、Spring Frameworkから提供される <a class="reference external" href="https://docs.spring.io/spring/docs/5.1.4.RELEASE/spring-framework-reference/web.html#mvc-ann-requestmapping-uri-templates">URI patterns</a>等を利用し、</div>
 <div class="line">リクエスト情報をベースにURIを組み立てる事により、リソースに依存しない汎用的な組み立て処理を実装することが可能となる。</div>
 <div class="line"><br /></div>
 <div class="line">例えば、上記例において<code class="docutils literal"><span class="pre">http://example.com/api/v1/members</span></code>に対してPOSTした場合、組み立てられるURIは、「リクエストされたURI + “<code class="docutils literal"><span class="pre">/</span></code>” + 作成したリソースのID」となる。</div>
@@ -8723,7 +8722,7 @@ terasoluna-gfw-common-dependenciesにて依存関係が定義されているた�
 </div>
 </div>
 <div class="section" id="restappendixdisabledcsrfprotection">
-<span id="id56"></span><h3><a class="toc-backref" href="#id140">5.1.6.5. CSRF対策の無効化</a><a class="headerlink" href="#restappendixdisabledcsrfprotection" title="Permalink to this headline">¶</a></h3>
+<span id="id56"></span><h3><a class="toc-backref" href="#id139">5.1.6.5. CSRF対策の無効化</a><a class="headerlink" href="#restappendixdisabledcsrfprotection" title="Permalink to this headline">¶</a></h3>
 <p>RESTful Web Service向けのリクエストに対して、CSRF対策を行わないようにするための設定方法について説明する。</p>
 <blockquote>
 <div><div class="admonition tip">
@@ -8794,325 +8793,22 @@ RESTful Web Service向けのリクエストに対して、CSRF対策の処理が
 <div class="line"><br /></div>
 </div>
 </div>
-<div class="section" id="xxe-injection">
-<span id="restappendixenabledxxeinjectprotection"></span><h3><a class="toc-backref" href="#id141">5.1.6.6. XXE Injection対策の有効化</a><a class="headerlink" href="#xxe-injection" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="xxe">
+<span id="restappendixenabledxxeprotection"></span><h3><a class="toc-backref" href="#id140">5.1.6.6. XXE 対策の有効化</a><a class="headerlink" href="#xxe" title="Permalink to this headline">¶</a></h3>
 <div class="line-block">
-<div class="line">RESTful Web ServiceでXML形式のデータを扱う場合は、<a class="reference external" href="https://www.owasp.org/index.php/XML_External_Entity_(XXE)_Processing">XXE(XML External Entity) Injection</a>対策を行う必要がある。</div>
-<div class="line">terasoluna-gfw-web 1.0.1.RELEASE以上では、XXE Injection 対策が行われているSpring MVC(3.2.10.RELEASE以上)に依存しているため、個別に対策を行う必要はない。</div>
+<div class="line">RESTful Web ServiceでXML形式のデータを扱う場合は、<a class="reference external" href="https://www.owasp.org/index.php/XML_External_Entity_(XXE)_Processing">XXE(XML External Entity)</a>対策を行う必要がある。</div>
 </div>
-<blockquote>
-<div><div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<p><strong>XXE(XML External Entity) Injection 対策について</strong></p>
-<p class="last">terasoluna-gfw-web 1.0.0.RELEASEを使用している場合は、XXE Injection対策が行われていないSpring MVC(3.2.4.RELEASE)に依存しているため、Spring-oxmから提供されているクラスを使用すること。</p>
-</div>
-</div></blockquote>
-<div class="line-block">
-<div class="line"><br /></div>
-</div>
-<p>Spring-oxmを依存アーティファクトとして追加する。</p>
-<ul class="simple">
-<li><code class="file docutils literal"><span class="pre">pom.xml</span></code></li>
-</ul>
-<blockquote>
-<div><div class="highlight-xml"><div class="highlight"><pre><span></span><span class="c">&lt;!-- omitted --&gt;</span>
-
-<span class="c">&lt;!-- (1) --&gt;</span>
-<span class="nt">&lt;dependency&gt;</span>
-    <span class="nt">&lt;groupId&gt;</span>org.springframework<span class="nt">&lt;/groupId&gt;</span>
-    <span class="nt">&lt;artifactId&gt;</span>spring-oxm<span class="nt">&lt;/artifactId&gt;</span>
-    <span class="nt">&lt;version&gt;</span>${org.springframework-version}<span class="nt">&lt;/version&gt;</span> <span class="c">&lt;!-- (2) --&gt;</span>
-<span class="nt">&lt;/dependency&gt;</span>
-
-<span class="c">&lt;!-- omitted --&gt;</span>
-</pre></div>
-</div>
-<table border="1" class="colwidths-given longtable docutils">
-<colgroup>
-<col width="10%" />
-<col width="90%" />
-</colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head"><div class="first last line-block">
-<div class="line">項番</div>
-</div>
-</th>
-<th class="head"><div class="first last line-block">
-<div class="line">説明</div>
-</div>
-</th>
-</tr>
-</thead>
-<tbody valign="top">
-<tr class="row-even"><td><div class="first last line-block">
-<div class="line">(1)</div>
-</div>
-</td>
-<td><div class="first last line-block">
-<div class="line">Spring-oxm を依存アーティファクトとして追加する。</div>
-</div>
-</td>
-</tr>
-<tr class="row-odd"><td><div class="first last line-block">
-<div class="line">(2)</div>
-</div>
-</td>
-<td><div class="first last line-block">
-<div class="line">Springのバージョンは、terasoluna-gfw-parent の <code class="file docutils literal"><span class="pre">pom.xml</span></code> に定義されているSpringのバージョン番号を管理するためのプレースホルダ(${org.springframework-version})から取得すること。</div>
-</div>
-</td>
-</tr>
-</tbody>
-</table>
-</div></blockquote>
-<div class="line-block">
-<div class="line"><br /></div>
-</div>
-<p>Spring-oxmから提供されているクラスを使用してXMLとオブジェクトの相互変換を行うためのbean定義を行う。</p>
-<ul class="simple">
-<li><code class="file docutils literal"><span class="pre">spring-mvc-rest.xml</span></code></li>
-</ul>
-<blockquote>
-<div><div class="highlight-xml"><div class="highlight"><pre><span></span><span class="c">&lt;!-- omitted --&gt;</span>
-
-<span class="c">&lt;!-- (1) --&gt;</span>
-<span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">&quot;xmlMarshaller&quot;</span> <span class="na">class=</span><span class="s">&quot;org.springframework.oxm.jaxb.Jaxb2Marshaller&quot;</span><span class="nt">&gt;</span>
-    <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">&quot;packagesToScan&quot;</span> <span class="na">value=</span><span class="s">&quot;com.examples.app&quot;</span> <span class="nt">/&gt;</span> <span class="c">&lt;!-- (2) --&gt;</span>
-<span class="nt">&lt;/bean&gt;</span>
-
-<span class="c">&lt;!-- omitted --&gt;</span>
-
-<span class="nt">&lt;mvc:annotation-driven&gt;</span>
-
-    <span class="nt">&lt;mvc:message-converters&gt;</span>
-        <span class="c">&lt;!-- (3) --&gt;</span>
-        <span class="nt">&lt;bean</span> <span class="na">class=</span><span class="s">&quot;org.springframework.http.converter.xml.MarshallingHttpMessageConverter&quot;</span><span class="nt">&gt;</span>
-            <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">&quot;marshaller&quot;</span> <span class="na">ref=</span><span class="s">&quot;xmlMarshaller&quot;</span> <span class="nt">/&gt;</span> <span class="c">&lt;!-- (4) --&gt;</span>
-            <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">&quot;unmarshaller&quot;</span> <span class="na">ref=</span><span class="s">&quot;xmlMarshaller&quot;</span> <span class="nt">/&gt;</span> <span class="c">&lt;!-- (5) --&gt;</span>
-        <span class="nt">&lt;/bean&gt;</span>
-    <span class="nt">&lt;/mvc:message-converters&gt;</span>
-
-    <span class="c">&lt;!-- omitted --&gt;</span>
-
-<span class="nt">&lt;/mvc:annotation-driven&gt;</span>
-
-<span class="c">&lt;!-- omitted --&gt;</span>
-</pre></div>
-</div>
-<table border="1" class="colwidths-given docutils">
-<colgroup>
-<col width="10%" />
-<col width="90%" />
-</colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head"><div class="first last line-block">
-<div class="line">項番</div>
-</div>
-</th>
-<th class="head"><div class="first last line-block">
-<div class="line">説明</div>
-</div>
-</th>
-</tr>
-</thead>
-<tbody valign="top">
-<tr class="row-even"><td><div class="first last line-block">
-<div class="line">(1)</div>
-</div>
-</td>
-<td><div class="first last line-block">
-<div class="line">Spring-oxmから提供されている<code class="docutils literal"><span class="pre">Jaxb2Marshaller</span></code>のbean定義を行う。</div>
-<div class="line"><code class="docutils literal"><span class="pre">Jaxb2Marshaller</span></code>はデフォルトの状態で XXE Injection対策が行われている。</div>
-</div>
-</td>
-</tr>
-<tr class="row-odd"><td><div class="first last line-block">
-<div class="line">(2)</div>
-</div>
-</td>
-<td><div class="first last line-block">
-<div class="line"><code class="docutils literal"><span class="pre">packagesToScan</span></code> プロパティに JAXB用のJavaBean( <code class="docutils literal"><span class="pre">javax.xml.bind.annotation.XmlRootElement</span></code> アノテーションなどが付与されているJavaBean)が格納されているパッケージ名を指定する。</div>
-<div class="line">指定したパッケージ配下に格納されているJAXB用のJavaBeanがスキャンされ、marshal、unmarshal対象のJavaBeanとして登録される。</div>
-<div class="line"><code class="docutils literal"><span class="pre">&lt;context:component-scan&gt;</span></code> の base-package属性と同じ仕組みでスキャンされる。</div>
-</div>
-</td>
-</tr>
-<tr class="row-even"><td><div class="first last line-block">
-<div class="line">(3)</div>
-</div>
-</td>
-<td><div class="first last line-block">
-<div class="line"><code class="docutils literal"><span class="pre">&lt;mvc:annotation-driven&gt;</span></code> の子要素である <code class="docutils literal"><span class="pre">&lt;mvc:message-converters&gt;</span></code> 要素に、 <code class="docutils literal"><span class="pre">MarshallingHttpMessageConverter</span></code> のbean定義を追加する。</div>
-</div>
-</td>
-</tr>
-<tr class="row-odd"><td><div class="first last line-block">
-<div class="line">(4)</div>
-</div>
-</td>
-<td><div class="first last line-block">
-<div class="line"><code class="docutils literal"><span class="pre">marshaller</span></code> プロパティに (1)で定義した <code class="docutils literal"><span class="pre">Jaxb2Marshaller</span></code> のbeanを指定する。</div>
-</div>
-</td>
-</tr>
-<tr class="row-even"><td><div class="first last line-block">
-<div class="line">(5)</div>
-</div>
-</td>
-<td><div class="first last line-block">
-<div class="line"><code class="docutils literal"><span class="pre">unmarshaller</span></code> プロパティに (1)で定義した <code class="docutils literal"><span class="pre">Jaxb2Marshaller</span></code> のbeanを指定する。</div>
-</div>
-</td>
-</tr>
-</tbody>
-</table>
-</div></blockquote>
-<div class="line-block">
-<div class="line"><br /></div>
-</div>
-</div>
-<div class="section" id="dozerjoda-time">
-<span id="restappendixcopyjodaobjectbybeanconvert"></span><h3><a class="toc-backref" href="#id142">5.1.6.7. Dozerを使ってJoda-Timeのクラスをコピーする方法</a><a class="headerlink" href="#dozerjoda-time" title="Permalink to this headline">¶</a></h3>
-<p>Dozerを使用して、Joda-Timeのクラス(<code class="docutils literal"><span class="pre">org.joda.time.DateTime</span></code>、<code class="docutils literal"><span class="pre">org.joda.time.LocalDate</span></code>など)をコピーする方法について説明する。</p>
-<div class="line-block">
-<div class="line">Joda-Timeのクラスを変換するためのカスタムコンバータを作成する。</div>
-<div class="line">カスタムコンバータの詳細については、「<a class="reference internal" href="../GeneralFuncDetail/Dozer.html"><span class="doc">Beanマッピング(Dozer)</span></a>」を参照されたい。</div>
-</div>
-<ul class="simple">
-<li><code class="file docutils literal"><span class="pre">JodaDateTimeConverter.java</span></code></li>
-</ul>
-<blockquote>
-<div><div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">org.terasoluna.examples.rest.infra.dozer.converter</span><span class="o">;</span>
-
-<span class="kn">import</span> <span class="nn">org.dozer.DozerConverter</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">org.joda.time.DateTime</span><span class="o">;</span>
-
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">JodaDateTimeConverter</span> <span class="kd">extends</span> <span class="n">DozerConverter</span><span class="o">&lt;</span><span class="n">DateTime</span><span class="o">,</span> <span class="n">DateTime</span><span class="o">&gt;</span> <span class="o">{</span>
-
-    <span class="kd">public</span> <span class="nf">JodaDateTimeConverter</span><span class="o">()</span> <span class="o">{</span>
-        <span class="kd">super</span><span class="o">(</span><span class="n">DateTime</span><span class="o">.</span><span class="na">class</span><span class="o">,</span> <span class="n">DateTime</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
-    <span class="o">}</span>
-
-    <span class="nd">@Override</span>
-    <span class="kd">public</span> <span class="n">DateTime</span> <span class="nf">convertTo</span><span class="o">(</span><span class="n">DateTime</span> <span class="n">source</span><span class="o">,</span> <span class="n">DateTime</span> <span class="n">destination</span><span class="o">)</span> <span class="o">{</span>
-        <span class="c1">// This method not called, because type of from/to is same.</span>
-        <span class="k">return</span> <span class="n">convertFrom</span><span class="o">(</span><span class="n">source</span><span class="o">,</span> <span class="n">destination</span><span class="o">);</span>
-    <span class="o">}</span>
-
-    <span class="nd">@Override</span>
-    <span class="kd">public</span> <span class="n">DateTime</span> <span class="nf">convertFrom</span><span class="o">(</span><span class="n">DateTime</span> <span class="n">source</span><span class="o">,</span> <span class="n">DateTime</span> <span class="n">destination</span><span class="o">)</span> <span class="o">{</span>
-        <span class="k">return</span> <span class="n">source</span><span class="o">;</span>
-    <span class="o">}</span>
-
-<span class="o">}</span>
-</pre></div>
-</div>
-</div></blockquote>
-<ul class="simple">
-<li><code class="file docutils literal"><span class="pre">JodaLocalDateConverter.java</span></code></li>
-</ul>
-<blockquote>
-<div><div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">org.terasoluna.examples.rest.infra.dozer.converter</span><span class="o">;</span>
-
-<span class="kn">import</span> <span class="nn">org.dozer.DozerConverter</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">org.joda.time.LocalDate</span><span class="o">;</span>
-
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">JodaLocalDateConverter</span> <span class="kd">extends</span>
-                                   <span class="n">DozerConverter</span><span class="o">&lt;</span><span class="n">LocalDate</span><span class="o">,</span> <span class="n">LocalDate</span><span class="o">&gt;</span> <span class="o">{</span>
-
-    <span class="kd">public</span> <span class="nf">JodaLocalDateConverter</span><span class="o">()</span> <span class="o">{</span>
-        <span class="kd">super</span><span class="o">(</span><span class="n">LocalDate</span><span class="o">.</span><span class="na">class</span><span class="o">,</span> <span class="n">LocalDate</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
-    <span class="o">}</span>
-
-    <span class="nd">@Override</span>
-    <span class="kd">public</span> <span class="n">LocalDate</span> <span class="nf">convertTo</span><span class="o">(</span><span class="n">LocalDate</span> <span class="n">source</span><span class="o">,</span> <span class="n">LocalDate</span> <span class="n">destination</span><span class="o">)</span> <span class="o">{</span>
-        <span class="c1">// This method not called, because type of from/to is same.</span>
-        <span class="k">return</span> <span class="n">convertFrom</span><span class="o">(</span><span class="n">source</span><span class="o">,</span> <span class="n">destination</span><span class="o">);</span>
-    <span class="o">}</span>
-
-    <span class="nd">@Override</span>
-    <span class="kd">public</span> <span class="n">LocalDate</span> <span class="nf">convertFrom</span><span class="o">(</span><span class="n">LocalDate</span> <span class="n">source</span><span class="o">,</span> <span class="n">LocalDate</span> <span class="n">destination</span><span class="o">)</span> <span class="o">{</span>
-        <span class="k">return</span> <span class="n">source</span><span class="o">;</span>
-    <span class="o">}</span>
-
-<span class="o">}</span>
-</pre></div>
-</div>
-</div></blockquote>
-<div class="line-block">
-<div class="line">作成したカスタムコンバータをDozerに適用する。</div>
-<div class="line">カスタムコンバータの詳細については、「<a class="reference internal" href="../GeneralFuncDetail/Dozer.html"><span class="doc">Beanマッピング(Dozer)</span></a>」を参照されたい。</div>
-</div>
-<blockquote>
-<div><div class="highlight-xml"><div class="highlight"><pre><span></span><span class="hll"><span class="c">&lt;!-- (1) --&gt;</span>
-</span><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
-<span class="nt">&lt;mappings</span> <span class="na">xmlns=</span><span class="s">&quot;http://dozer.sourceforge.net&quot;</span> <span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span>
-    <span class="na">xsi:schemaLocation=</span><span class="s">&quot;</span>
-<span class="s">        http://dozer.sourceforge.net http://dozer.sourceforge.net/schema/beanmapping.xsd</span>
-<span class="s">    &quot;</span><span class="nt">&gt;</span>
-
-    <span class="nt">&lt;configuration&gt;</span>
-        <span class="nt">&lt;custom-converters&gt;</span>
-<span class="hll">            <span class="c">&lt;!-- (2) --&gt;</span>
-</span><span class="hll">            <span class="nt">&lt;converter</span> <span class="na">type=</span><span class="s">&quot;org.terasoluna.examples.rest.infra.dozer.converter.JodaDateTimeConverter&quot;</span><span class="nt">&gt;</span>
-</span><span class="hll">                <span class="nt">&lt;class-a&gt;</span>org.joda.time.DateTime<span class="nt">&lt;/class-a&gt;</span>
-</span><span class="hll">                <span class="nt">&lt;class-b&gt;</span>org.joda.time.DateTime<span class="nt">&lt;/class-b&gt;</span>
-</span><span class="hll">            <span class="nt">&lt;/converter&gt;</span>
-</span><span class="hll">            <span class="nt">&lt;converter</span> <span class="na">type=</span><span class="s">&quot;org.terasoluna.examples.rest.infra.dozer.converter.JodaLocalDateConverter&quot;</span><span class="nt">&gt;</span>
-</span><span class="hll">                <span class="nt">&lt;class-a&gt;</span>org.joda.time.LocalDate<span class="nt">&lt;/class-a&gt;</span>
-</span><span class="hll">                <span class="nt">&lt;class-b&gt;</span>org.joda.time.LocalDate<span class="nt">&lt;/class-b&gt;</span>
-</span><span class="hll">            <span class="nt">&lt;/converter&gt;</span>
-</span>        <span class="nt">&lt;/custom-converters&gt;</span>
-    <span class="nt">&lt;/configuration&gt;</span>
-
-<span class="nt">&lt;/mappings&gt;</span>
-</pre></div>
-</div>
-<table border="1" class="colwidths-given docutils">
-<colgroup>
-<col width="10%" />
-<col width="90%" />
-</colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">項番</th>
-<th class="head">説明</th>
-</tr>
-</thead>
-<tbody valign="top">
-<tr class="row-even"><td><div class="first last line-block">
-<div class="line">(1)</div>
-</div>
-</td>
-<td><div class="first last line-block">
-<div class="line">Dozerの動作設定を定義するファイルを作成する。</div>
-<div class="line"><br /></div>
-<div class="line">今回の実装例では、<code class="file docutils literal"><span class="pre">/xxx-domain/src/main/resources/META-INF/dozer/dozer-configration-mapping.xml</span></code>に格納する。</div>
-</div>
-</td>
-</tr>
-<tr class="row-odd"><td><div class="first last line-block">
-<div class="line">(2)</div>
-</div>
-</td>
-<td><div class="first last line-block">
-<div class="line">上記例では、Joda-Timeのクラス(<code class="docutils literal"><span class="pre">org.joda.time.DateTime</span></code>と<code class="docutils literal"><span class="pre">org.joda.time.LocalDate</span></code>)に対するカスタムコンバータの定義を追加している。</div>
-</div>
-</td>
-</tr>
-</tbody>
-</table>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p>ドメイン層でもDozerを使用する場合は、Dozerの動作設定を定義するファイルは、ドメイン層用のプロジェクト(<code class="docutils literal"><span class="pre">xxx-domain</span></code>)に格納する事を推奨する。</p>
-<p class="last">アプリケーション層のみでDozerを使う場合は、アプリケーション層用のプロジェクト(<code class="docutils literal"><span class="pre">xxx-web</span></code>)に格納してもよい。</p>
+<p><strong>XXE(XML External Entity) 対策について</strong></p>
+<p class="last">Macchinetta Server Framework (1.x)では、XXE 対策が行われているSpring MVC(3.2.10.RELEASE以上)に依存しているため、個別に対策を行う必要はない。</p>
 </div>
-</div></blockquote>
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
 </div>
 <div class="section" id="restappendixsorucecodesofapplicationlayer">
-<span id="id57"></span><h3><a class="toc-backref" href="#id143">5.1.6.8. アプリケーション層のソースコード</a><a class="headerlink" href="#restappendixsorucecodesofapplicationlayer" title="Permalink to this headline">¶</a></h3>
+<span id="id57"></span><h3><a class="toc-backref" href="#id141">5.1.6.7. アプリケーション層のソースコード</a><a class="headerlink" href="#restappendixsorucecodesofapplicationlayer" title="Permalink to this headline">¶</a></h3>
 <div class="line-block">
 <div class="line"><a class="reference internal" href="#resthowtouse"><span class="std std-ref">How to use</span></a>の説明で使用したアプリケーション層のソースコードのうち、断片的に貼りつけていたソースコードの完全版を添付しておく。</div>
 </div>
@@ -9190,7 +8886,7 @@ RESTful Web Service向けのリクエストに対して、CSRF対策の処理が
 <div class="line"><br /></div>
 </div>
 <div class="section" id="memberrestcontroller-java">
-<span id="restappendixsorucecodesofmemberrestcontroller"></span><h4><a class="toc-backref" href="#id144">5.1.6.8.1. MemberRestController.java</a><a class="headerlink" href="#memberrestcontroller-java" title="Permalink to this headline">¶</a></h4>
+<span id="restappendixsorucecodesofmemberrestcontroller"></span><h4><a class="toc-backref" href="#id142">5.1.6.7.1. MemberRestController.java</a><a class="headerlink" href="#memberrestcontroller-java" title="Permalink to this headline">¶</a></h4>
 <p><code class="file docutils literal"><span class="pre">java/org/terasoluna/examples/rest/api/member/MemberRestController.java</span></code></p>
 <div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">org.terasoluna.examples.rest.api.member</span><span class="o">;</span>
 
@@ -9200,7 +8896,7 @@ RESTful Web Service向けのリクエストに対して、CSRF対策の処理が
 <span class="kn">import</span> <span class="nn">javax.inject.Inject</span><span class="o">;</span>
 <span class="kn">import</span> <span class="nn">javax.validation.groups.Default</span><span class="o">;</span>
 
-<span class="kn">import</span> <span class="nn">org.dozer.Mapper</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">com.github.dozermapper.core.Mapper</span><span class="o">;</span>
 <span class="kn">import</span> <span class="nn">org.springframework.data.domain.Page</span><span class="o">;</span>
 <span class="kn">import</span> <span class="nn">org.springframework.data.domain.PageImpl</span><span class="o">;</span>
 <span class="kn">import</span> <span class="nn">org.springframework.data.domain.Pageable</span><span class="o">;</span>
@@ -9317,7 +9013,7 @@ RESTful Web Service向けのリクエストに対して、CSRF対策の処理が
 </div>
 </div>
 <div class="section" id="apierrorcreator-java">
-<span id="restappendixsorucecodesofapierrorcreator"></span><h4><a class="toc-backref" href="#id145">5.1.6.8.2. ApiErrorCreator.java</a><a class="headerlink" href="#apierrorcreator-java" title="Permalink to this headline">¶</a></h4>
+<span id="restappendixsorucecodesofapierrorcreator"></span><h4><a class="toc-backref" href="#id143">5.1.6.7.2. ApiErrorCreator.java</a><a class="headerlink" href="#apierrorcreator-java" title="Permalink to this headline">¶</a></h4>
 <p><code class="file docutils literal"><span class="pre">java/org/terasoluna/examples/rest/api/common/error/ApiErrorCreator.java</span></code></p>
 <div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">org.terasoluna.examples.rest.api.common.error</span><span class="o">;</span>
 
@@ -9402,7 +9098,7 @@ RESTful Web Service向けのリクエストに対して、CSRF対策の処理が
 </div>
 </div>
 <div class="section" id="apiglobalexceptionhandler-java">
-<span id="restappendixsorucecodesofapiglobalexceptionhandler"></span><h4><a class="toc-backref" href="#id146">5.1.6.8.3. ApiGlobalExceptionHandler.java</a><a class="headerlink" href="#apiglobalexceptionhandler-java" title="Permalink to this headline">¶</a></h4>
+<span id="restappendixsorucecodesofapiglobalexceptionhandler"></span><h4><a class="toc-backref" href="#id144">5.1.6.7.3. ApiGlobalExceptionHandler.java</a><a class="headerlink" href="#apiglobalexceptionhandler-java" title="Permalink to this headline">¶</a></h4>
 <p><code class="file docutils literal"><span class="pre">java/org/terasoluna/examples/rest/api/common/error/ApiGlobalExceptionHandler.java</span></code></p>
 <div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">org.terasoluna.examples.rest.api.common.error</span><span class="o">;</span>
 
@@ -9533,7 +9229,7 @@ RESTful Web Service向けのリクエストに対して、CSRF対策の処理が
 </div>
 </div>
 <div class="section" id="restappendixsorucecodesofdomainlayer">
-<span id="id58"></span><h3><a class="toc-backref" href="#id147">5.1.6.9. REST API実装時に作成したドメイン層のクラスのソースコード</a><a class="headerlink" href="#restappendixsorucecodesofdomainlayer" title="Permalink to this headline">¶</a></h3>
+<span id="id58"></span><h3><a class="toc-backref" href="#id145">5.1.6.8. REST API実装時に作成したドメイン層のクラスのソースコード</a><a class="headerlink" href="#restappendixsorucecodesofdomainlayer" title="Permalink to this headline">¶</a></h3>
 <div class="line-block">
 <div class="line"><a class="reference internal" href="#resthowtouse"><span class="std std-ref">How to use</span></a>で説明したREST APIから呼び出しているドメイン層のクラスのソースコードを添付しておく。</div>
 <div class="line">なお、インフラストラクチャ層は、MyBatis3を使って実装している。</div>
@@ -9716,7 +9412,7 @@ RESTful Web Service向けのリクエストに対して、CSRF対策の処理が
 <div class="line"><br /></div>
 </div>
 <div class="section" id="member-java">
-<span id="restappendixsorucecodesofmember"></span><h4><a class="toc-backref" href="#id148">5.1.6.9.1. Member.java</a><a class="headerlink" href="#member-java" title="Permalink to this headline">¶</a></h4>
+<span id="restappendixsorucecodesofmember"></span><h4><a class="toc-backref" href="#id146">5.1.6.8.1. Member.java</a><a class="headerlink" href="#member-java" title="Permalink to this headline">¶</a></h4>
 <p><code class="file docutils literal"><span class="pre">java/org/terasoluna/examples/rest/domain/model/Member.java</span></code></p>
 <div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">org.terasoluna.examples.rest.domain.model</span><span class="o">;</span>
 
@@ -9878,7 +9574,7 @@ RESTful Web Service向けのリクエストに対して、CSRF対策の処理が
 </div>
 </div>
 <div class="section" id="membercredentia-java">
-<span id="restappendixsorucecodesofmembercredentia"></span><h4><a class="toc-backref" href="#id149">5.1.6.9.2. MemberCredentia.java</a><a class="headerlink" href="#membercredentia-java" title="Permalink to this headline">¶</a></h4>
+<span id="restappendixsorucecodesofmembercredentia"></span><h4><a class="toc-backref" href="#id147">5.1.6.8.2. MemberCredentia.java</a><a class="headerlink" href="#membercredentia-java" title="Permalink to this headline">¶</a></h4>
 <p><code class="file docutils literal"><span class="pre">java/org/terasoluna/examples/rest/domain/model/MemberCredential.java</span></code></p>
 <div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">org.terasoluna.examples.rest.domain.model</span><span class="o">;</span>
 
@@ -9967,7 +9663,7 @@ RESTful Web Service向けのリクエストに対して、CSRF対策の処理が
 </div>
 </div>
 <div class="section" id="gender-java">
-<span id="restappendixsorucecodesofgender"></span><h4><a class="toc-backref" href="#id150">5.1.6.9.3. Gender.java</a><a class="headerlink" href="#gender-java" title="Permalink to this headline">¶</a></h4>
+<span id="restappendixsorucecodesofgender"></span><h4><a class="toc-backref" href="#id148">5.1.6.8.3. Gender.java</a><a class="headerlink" href="#gender-java" title="Permalink to this headline">¶</a></h4>
 <p><code class="file docutils literal"><span class="pre">java/org/terasoluna/examples/rest/domain/model/Gender.java</span></code></p>
 <div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">org.terasoluna.examples.rest.domain.model</span><span class="o">;</span>
 
@@ -10015,7 +9711,7 @@ RESTful Web Service向けのリクエストに対して、CSRF対策の処理が
 </div>
 </div>
 <div class="section" id="memberrepository-java">
-<span id="restappendixsorucecodesofmemberrepository"></span><h4><a class="toc-backref" href="#id151">5.1.6.9.4. MemberRepository.java</a><a class="headerlink" href="#memberrepository-java" title="Permalink to this headline">¶</a></h4>
+<span id="restappendixsorucecodesofmemberrepository"></span><h4><a class="toc-backref" href="#id149">5.1.6.8.4. MemberRepository.java</a><a class="headerlink" href="#memberrepository-java" title="Permalink to this headline">¶</a></h4>
 <p><code class="file docutils literal"><span class="pre">java/org/terasoluna/examples/rest/domain/repository/member/MemberRepository.java</span></code></p>
 <div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">org.terasoluna.examples.rest.domain.repository.member</span><span class="o">;</span>
 
@@ -10049,7 +9745,7 @@ RESTful Web Service向けのリクエストに対して、CSRF対策の処理が
 </div>
 </div>
 <div class="section" id="memberservice-java">
-<span id="restappendixsorucecodesofmemberservice"></span><h4><a class="toc-backref" href="#id152">5.1.6.9.5. MemberService.java</a><a class="headerlink" href="#memberservice-java" title="Permalink to this headline">¶</a></h4>
+<span id="restappendixsorucecodesofmemberservice"></span><h4><a class="toc-backref" href="#id150">5.1.6.8.5. MemberService.java</a><a class="headerlink" href="#memberservice-java" title="Permalink to this headline">¶</a></h4>
 <p><code class="file docutils literal"><span class="pre">java/org/terasoluna/examples/rest/domain/service/member/MemberService.java</span></code></p>
 <div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">org.terasoluna.examples.rest.domain.service.member</span><span class="o">;</span>
 
@@ -10080,7 +9776,7 @@ RESTful Web Service向けのリクエストに対して、CSRF対策の処理が
 </div>
 </div>
 <div class="section" id="memberserviceimpl-java">
-<span id="restappendixsorucecodesofmemberserviceimpl"></span><h4><a class="toc-backref" href="#id153">5.1.6.9.6. MemberServiceImpl.java</a><a class="headerlink" href="#memberserviceimpl-java" title="Permalink to this headline">¶</a></h4>
+<span id="restappendixsorucecodesofmemberserviceimpl"></span><h4><a class="toc-backref" href="#id151">5.1.6.8.6. MemberServiceImpl.java</a><a class="headerlink" href="#memberserviceimpl-java" title="Permalink to this headline">¶</a></h4>
 <p><code class="file docutils literal"><span class="pre">java/org/terasoluna/examples/rest/domain/service/member/MemberServiceImpl.java</span></code></p>
 <div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">org.terasoluna.examples.rest.domain.service.member</span><span class="o">;</span>
 
@@ -10088,7 +9784,7 @@ RESTful Web Service向けのリクエストに対して、CSRF対策の処理が
 <span class="kn">import</span> <span class="nn">java.util.List</span><span class="o">;</span>
 <span class="kn">import</span> <span class="nn">javax.inject.Inject</span><span class="o">;</span>
 <span class="kn">import</span> <span class="nn">org.apache.ibatis.session.RowBounds</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">org.dozer.Mapper</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">com.github.dozermapper.core.Mapper</span><span class="o">;</span>
 <span class="kn">import</span> <span class="nn">org.joda.time.DateTime</span><span class="o">;</span>
 <span class="kn">import</span> <span class="nn">org.springframework.dao.DuplicateKeyException</span><span class="o">;</span>
 <span class="kn">import</span> <span class="nn">org.springframework.data.domain.Page</span><span class="o">;</span>
@@ -10236,7 +9932,7 @@ RESTful Web Service向けのリクエストに対して、CSRF対策の処理が
 </div>
 </div>
 <div class="section" id="domainmessagecodes-java">
-<span id="restappendixsorucecodesofdomainmessagecodes"></span><h4><a class="toc-backref" href="#id154">5.1.6.9.7. DomainMessageCodes.java</a><a class="headerlink" href="#domainmessagecodes-java" title="Permalink to this headline">¶</a></h4>
+<span id="restappendixsorucecodesofdomainmessagecodes"></span><h4><a class="toc-backref" href="#id152">5.1.6.8.7. DomainMessageCodes.java</a><a class="headerlink" href="#domainmessagecodes-java" title="Permalink to this headline">¶</a></h4>
 <p><code class="file docutils literal"><span class="pre">java/org/terasoluna/examples/rest/domain/message/DomainMessageCodes.java</span></code></p>
 <div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">org.terasoluna.examples.rest.domain.message</span><span class="o">;</span>
 
@@ -10263,7 +9959,7 @@ RESTful Web Service向けのリクエストに対して、CSRF対策の処理が
 </div>
 </div>
 <div class="section" id="gendertypehandler-java">
-<span id="restappendixsorucecodesofgendertypehandler"></span><h4><a class="toc-backref" href="#id155">5.1.6.9.8. GenderTypeHandler.java</a><a class="headerlink" href="#gendertypehandler-java" title="Permalink to this headline">¶</a></h4>
+<span id="restappendixsorucecodesofgendertypehandler"></span><h4><a class="toc-backref" href="#id153">5.1.6.8.8. GenderTypeHandler.java</a><a class="headerlink" href="#gendertypehandler-java" title="Permalink to this headline">¶</a></h4>
 <div class="line-block">
 <div class="line">Enum型のコード値をマッピングするためのタイプハンドラー。</div>
 </div>
@@ -10317,7 +10013,7 @@ RESTful Web Service向けのリクエストに対して、CSRF対策の処理が
 </div>
 </div>
 <div class="section" id="member-mapping-xml">
-<span id="restappendixsorucecodesofmembermappingxml"></span><h4><a class="toc-backref" href="#id156">5.1.6.9.9. member-mapping.xml</a><a class="headerlink" href="#member-mapping-xml" title="Permalink to this headline">¶</a></h4>
+<span id="restappendixsorucecodesofmembermappingxml"></span><h4><a class="toc-backref" href="#id154">5.1.6.8.9. member-mapping.xml</a><a class="headerlink" href="#member-mapping-xml" title="Permalink to this headline">¶</a></h4>
 <div class="line-block">
 <div class="line">実装したServiceクラスでは、クライアントから指定された値を<code class="docutils literal"><span class="pre">Member</span></code>オブジェクトにコピーする際に、「<a class="reference internal" href="../GeneralFuncDetail/Dozer.html"><span class="doc">Beanマッピング(Dozer)</span></a>」を使って行っている。</div>
 <div class="line">単純なフィールド値のコピーのみでよい場合は、Beanのマッピング定義の追加は不要だが、実装例では、更新対象外の項目(<code class="docutils literal"><span class="pre">memberId</span></code>、<code class="docutils literal"><span class="pre">credential</span></code>、<code class="docutils literal"><span class="pre">createdAt</span></code>、<code class="docutils literal"><span class="pre">version</span></code>)をコピー対象外にする必要がある。</div>
@@ -10325,9 +10021,9 @@ RESTful Web Service向けのリクエストに対して、CSRF対策の処理が
 </div>
 <p><code class="file docutils literal"><span class="pre">resources/META-INF/dozer/member-mapping.xml</span></code></p>
 <div class="highlight-xml"><div class="highlight"><pre><span></span><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
-<span class="nt">&lt;mappings</span> <span class="na">xmlns=</span><span class="s">&quot;http://dozer.sourceforge.net&quot;</span> <span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span>
-    <span class="na">xsi:schemaLocation=</span><span class="s">&quot;http://dozer.sourceforge.net</span>
-<span class="s">          http://dozer.sourceforge.net/schema/beanmapping.xsd&quot;</span><span class="nt">&gt;</span>
+<span class="nt">&lt;mappings</span> <span class="na">xmlns=</span><span class="s">&quot;http://dozermapper.github.io/schema/bean-mapping&quot;</span> <span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span>
+    <span class="na">xsi:schemaLocation=</span><span class="s">&quot;http://dozermapper.github.io/schema/bean-mapping</span>
+<span class="s">          https://dozermapper.github.io/schema/bean-mapping.xsd&quot;</span><span class="nt">&gt;</span>
 
     <span class="nt">&lt;mapping</span> <span class="na">map-id=</span><span class="s">&quot;member.update&quot;</span><span class="nt">&gt;</span>
         <span class="nt">&lt;class-a&gt;</span>org.terasoluna.examples.rest.domain.model.Member<span class="nt">&lt;/class-a&gt;</span>
@@ -10362,7 +10058,7 @@ RESTful Web Service向けのリクエストに対して、CSRF対策の処理が
 </div>
 </div>
 <div class="section" id="mybatis-config-xml">
-<span id="restappendixsorucecodesofmybatisconfig"></span><h4><a class="toc-backref" href="#id157">5.1.6.9.10. mybatis-config.xml</a><a class="headerlink" href="#mybatis-config-xml" title="Permalink to this headline">¶</a></h4>
+<span id="restappendixsorucecodesofmybatisconfig"></span><h4><a class="toc-backref" href="#id155">5.1.6.8.10. mybatis-config.xml</a><a class="headerlink" href="#mybatis-config-xml" title="Permalink to this headline">¶</a></h4>
 <div class="line-block">
 <div class="line">MyBatis3の動作をカスタマイズする場合は、MyBatis設定ファイルに設定値を追加する。MyBatis3では、Joda-Timeのクラス(org.joda.time.DateTime、org.joda.time.LocalDateTime、org.joda.time.LocalDateなど)はサポートされていない。</div>
 <div class="line">そのため、EntityクラスのフィールドにJoda-Timeのクラスを使用する場合は、Joda-Time用の<code class="docutils literal"><span class="pre">TypeHandler</span></code> を用意する必要がある。</div>
@@ -10395,7 +10091,7 @@ RESTful Web Service向けのリクエストに対して、CSRF対策の処理が
 </div>
 </div>
 <div class="section" id="memberrepository-xml">
-<span id="restappendixsorucecodesofmemberrepositoryxml"></span><h4><a class="toc-backref" href="#id158">5.1.6.9.11. MemberRepository.xml</a><a class="headerlink" href="#memberrepository-xml" title="Permalink to this headline">¶</a></h4>
+<span id="restappendixsorucecodesofmemberrepositoryxml"></span><h4><a class="toc-backref" href="#id156">5.1.6.8.11. MemberRepository.xml</a><a class="headerlink" href="#memberrepository-xml" title="Permalink to this headline">¶</a></h4>
 <p><code class="file docutils literal"><span class="pre">resources/org/terasoluna/examples/rest/domain/repository/member/MemberRepository.xml</span></code></p>
 <div class="highlight-xml"><div class="highlight"><pre><span></span><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
 <span class="cp">&lt;!DOCTYPE mapper PUBLIC &quot;-//mybatis.org//DTD Mapper 3.0//EN&quot;</span>
@@ -10605,58 +10301,48 @@ RESTful Web Service向けのリクエストに対して、CSRF対策の処理が
         <li class="right" >
           <a href="index.html" title="5. Web Service"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">Macchinetta Server Framework (1.x) Development Guideline 1.5.1.RELEASE documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Macchinetta Server Framework (1.x) Development Guideline 1.6.1.RELEASE documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="index.html" >5. Web Service</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2013-2018, NTT Corporation.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.6.2.Theme is <a href="http://github.com/vimalkvn/solar-theme">Solar</a>
+        &copy; Copyright 2013, NTT Corporation.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.6.3.Theme is <a href="http://github.com/vimalkvn/solar-theme">Solar</a>
     </div>
     
     <script>
-     
-     $(function() {
-    	   var $sidebar	= $('.sphinxsidebar'),
-    		     $window		= $(window),
-    		     offset		= $sidebar.offset(),
-    		     topPadding	= 3,
-    		     $scroll		= $('#scroll');
-    	   
-    	   $window.scroll(function() {
-    		     if ($scroll.is(':checked')) {
-				         if ($window.scrollTop() > offset.top) {
-					           $sidebar.stop().animate({
-						             marginTop:$window.scrollTop() - offset.top + topPadding
-					           });
-				         } else {
-					           $sidebar.stop().animate({
-						             marginTop:0
-					           });
-				         }
-			       }
-		     });
-    	   
-    	   var $navList = $('ul:first', $sidebar);
-    	   $('li:first', $navList).addClass('open');
-    	   
-    	   $navList.treeview({
-    		     persist: "location",
-    		     collapsed: true,
-    		     unique: false
-    	   });
-    	   
-	   });
-    </script>
     
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-113850349-2"></script>
-    <script>
-     window.dataLayer = window.dataLayer || [];
-     function gtag(){dataLayer.push(arguments);}
-     gtag('js', new Date());
-
-     gtag('config', 'UA-113850349-2');
+    $(function() {
+    	var $sidebar	= $('.sphinxsidebar'),
+    		$window		= $(window),
+    		offset		= $sidebar.offset(),
+    		topPadding	= 3,
+    		$scroll		= $('#scroll');
+    	
+    	$window.scroll(function() {
+    		if ($scroll.is(':checked')) {
+				if ($window.scrollTop() > offset.top) {
+					$sidebar.stop().animate({
+						marginTop:$window.scrollTop() - offset.top + topPadding
+					});
+				} else {
+					$sidebar.stop().animate({
+						marginTop:0
+					});
+				}
+			}
+		});
+    	
+    	var $navList = $('ul:first', $sidebar);
+    	$('li:first', $navList).addClass('open');
+    	
+    	$navList.treeview({
+    		persist: "location",
+    		collapsed: true,
+    		unique: false
+    	});
+    	
+	});
     </script>
   </body>
 </html>

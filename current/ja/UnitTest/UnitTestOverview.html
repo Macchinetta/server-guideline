@@ -3,16 +3,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>10.1. 単体テスト概要 &#8212; Macchinetta Server Framework (1.x) Development Guideline 1.5.1.RELEASE documentation</title>
-    
+    <title>10.1. 単体テスト概要 &#8212; Macchinetta Server Framework (1.x) Development Guideline 1.6.1.RELEASE documentation</title>
     <link rel="stylesheet" href="../_static/solar.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '1.5.1.RELEASE',
+        VERSION:     '1.6.1.RELEASE',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true,
@@ -43,7 +40,7 @@
         <li class="right" >
           <a href="index.html" title="10. 単体テスト"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Macchinetta Server Framework (1.x) Development Guideline 1.5.1.RELEASE documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Macchinetta Server Framework (1.x) Development Guideline 1.6.1.RELEASE documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">10. 単体テスト</a> &#187;</li> 
       </ul>
     </div>
@@ -160,23 +157,23 @@ JUnit4が標準でサポートしているアサーションライブラリで�
 <div class="section" id="di">
 <h4><a class="toc-backref" href="#id21">10.1.2.1.4. DIコンテナ</a><a class="headerlink" href="#di" title="Permalink to this headline">¶</a></h4>
 <p>テスト用のDIコンテナとして
-<a class="reference external" href="https://docs.spring.io/spring/docs/4.3.14.RELEASE/spring-framework-reference/html/integration-testing.html#testing-fixture-di">Spring TestのDI機能</a>を使用する。</p>
+<a class="reference external" href="https://docs.spring.io/spring/docs/5.1.4.RELEASE/spring-framework-reference/testing.html#testing-fixture-di">Spring TestのDI機能</a>を使用する。</p>
 </div>
 <div class="section" id="mvc">
 <h4><a class="toc-backref" href="#id22">10.1.2.1.5. MVCフレームワーク</a><a class="headerlink" href="#mvc" title="Permalink to this headline">¶</a></h4>
 <p>テスト用のMVCフレームワークとして
-<a class="reference external" href="https://docs.spring.io/spring/docs/4.3.14.RELEASE/spring-framework-reference/html/integration-testing.html#spring-mvc-test-framework">Spring MVC Test Framework</a>を使用する。</p>
+<a class="reference external" href="https://docs.spring.io/spring/docs/5.1.4.RELEASE/spring-framework-reference/testing.html#spring-mvc-test-framework">Spring MVC Test Framework</a>を使用する。</p>
 </div>
 <div class="section" id="id8">
 <h4><a class="toc-backref" href="#id23">10.1.2.1.6. トランザクション管理</a><a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h4>
 <p>テスト用のトランザクション管理として
-<a class="reference external" href="https://docs.spring.io/spring/docs/4.3.14.RELEASE/spring-framework-reference/html/integration-testing.html#testing-tx">Spring Testのトランザクション管理機能</a>を使用する。</p>
+<a class="reference external" href="https://docs.spring.io/spring/docs/5.1.4.RELEASE/spring-framework-reference/testing.html#testing-tx">Spring Testのトランザクション管理機能</a>を使用する。</p>
 </div>
 <div class="section" id="id9">
 <h4><a class="toc-backref" href="#id24">10.1.2.1.7. データアクセス</a><a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h4>
 <p>テスト用のデータアクセスとして、Spring TestまたはDBUnitとSpring Test DBUnitを使用することを想定している。</p>
 <ul class="simple">
-<li><a class="reference external" href="https://docs.spring.io/spring/docs/4.3.14.RELEASE/spring-framework-reference/html/testing-introduction.html">Spring Test</a><ul>
+<li><a class="reference external" href="https://docs.spring.io/spring/docs/5.1.4.RELEASE/spring-framework-reference/testing.html#testing-introduction">Spring Test</a><ul>
 <li>Spring Testは<code class="docutils literal"><span class="pre">&#64;Sql</span></code>アノテーションや<code class="docutils literal"><span class="pre">JdbcTemplate</span></code>などを使用してSQLを発行する機能を提供している。</li>
 </ul>
 </li>
@@ -194,24 +191,6 @@ DBUnitの提供するデータベースのセットアップ、状態の検証�
 <p>なお、以下のOSSライブラリはあくまで一例であり、実際は業務要件に合わせたライブラリを検討いただきたい。
 また、本章内のアプリケーション自体を動作させるために利用するOSSライブラリ一覧については、
 <a class="reference internal" href="../Overview/FrameworkStack.html#frameworkstack-using-oss-version"><span class="std std-ref">利用するOSSのバージョン</span></a>を参照されたい。</p>
-<div class="admonition tip">
-<p class="first admonition-title">Tip</p>
-<p>version 1.1.0.RELEASEより、<a class="reference external" href="http://platform.spring.io/platform/">Spring IO platform</a>の
-<code class="docutils literal"><span class="pre">&lt;dependencyManagement&gt;</span></code>をインポートする構成を採用している。</p>
-<p>Spring IO platformの<code class="docutils literal"><span class="pre">&lt;dependencyManagement&gt;</span></code>をインポートすることで、</p>
-<ul class="simple">
-<li>Spring Frameworkが提供しているライブラリ</li>
-<li>Spring Frameworkが依存しているOSSライブラリ</li>
-<li>Spring Frameworkと相性のよいOSSライブラリ</li>
-</ul>
-<p>への依存関係を解決しており、Macchinetta Server Framework (1.x)で使用するOSSのバージョンは、原則として、
-Spring IO platformの定義に準じている。</p>
-<p class="last">なお、version 1.5.1.RELEASEで指定しているSpring IO platformのバージョンは、
-<a class="reference external" href="https://docs.spring.io/platform/docs/Brussels-SR5/reference/htmlsingle/">Brussels-SR5</a>である。</p>
-</div>
-<div class="line-block">
-<div class="line"><br /></div>
-</div>
 <p>以下のOSSライブラリの中で、特にSpring Test（MockMvc）、Mockitoの使い方については、<a class="reference internal" href="ImplementsOfUnitTest/UsageOfLibraryForTest.html#usageoflibraryfortest"><span class="std std-ref">単体テストで利用するOSSライブラリの使い方</span></a>で詳細を説明する。</p>
 <table border="1" class="colwidths-given docutils">
 <colgroup>
@@ -226,7 +205,7 @@ Spring IO platformの定義に準じている。</p>
 <th class="head">GroupId</th>
 <th class="head">ArtifactId</th>
 <th class="head">Version</th>
-<th class="head">Spring IO platform</th>
+<th class="head">Spring Boot</th>
 </tr>
 </thead>
 <tbody valign="top">
@@ -251,13 +230,13 @@ Spring IO platformの定義に準じている。</p>
 <tr class="row-odd"><td>Mockito</td>
 <td>org.mockito</td>
 <td>mockito-core</td>
-<td>1.10.19</td>
+<td>2.23.4</td>
 <td>*</td>
 </tr>
 <tr class="row-even"><td>Spring Test</td>
 <td>org.springframework</td>
 <td>spring-test</td>
-<td>4.3.14.RELEASE</td>
+<td>5.1.4.RELEASE</td>
 <td>*</td>
 </tr>
 <tr class="row-odd"><td>DBUnit</td>
@@ -351,58 +330,48 @@ Spring IO platformの定義に準じている。</p>
         <li class="right" >
           <a href="index.html" title="10. 単体テスト"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Macchinetta Server Framework (1.x) Development Guideline 1.5.1.RELEASE documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Macchinetta Server Framework (1.x) Development Guideline 1.6.1.RELEASE documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="index.html" >10. 単体テスト</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2013-2018, NTT Corporation.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.6.2.Theme is <a href="http://github.com/vimalkvn/solar-theme">Solar</a>
+        &copy; Copyright 2013, NTT Corporation.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.6.3.Theme is <a href="http://github.com/vimalkvn/solar-theme">Solar</a>
     </div>
     
     <script>
-     
-     $(function() {
-    	   var $sidebar	= $('.sphinxsidebar'),
-    		     $window		= $(window),
-    		     offset		= $sidebar.offset(),
-    		     topPadding	= 3,
-    		     $scroll		= $('#scroll');
-    	   
-    	   $window.scroll(function() {
-    		     if ($scroll.is(':checked')) {
-				         if ($window.scrollTop() > offset.top) {
-					           $sidebar.stop().animate({
-						             marginTop:$window.scrollTop() - offset.top + topPadding
-					           });
-				         } else {
-					           $sidebar.stop().animate({
-						             marginTop:0
-					           });
-				         }
-			       }
-		     });
-    	   
-    	   var $navList = $('ul:first', $sidebar);
-    	   $('li:first', $navList).addClass('open');
-    	   
-    	   $navList.treeview({
-    		     persist: "location",
-    		     collapsed: true,
-    		     unique: false
-    	   });
-    	   
-	   });
-    </script>
     
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-113850349-2"></script>
-    <script>
-     window.dataLayer = window.dataLayer || [];
-     function gtag(){dataLayer.push(arguments);}
-     gtag('js', new Date());
-
-     gtag('config', 'UA-113850349-2');
+    $(function() {
+    	var $sidebar	= $('.sphinxsidebar'),
+    		$window		= $(window),
+    		offset		= $sidebar.offset(),
+    		topPadding	= 3,
+    		$scroll		= $('#scroll');
+    	
+    	$window.scroll(function() {
+    		if ($scroll.is(':checked')) {
+				if ($window.scrollTop() > offset.top) {
+					$sidebar.stop().animate({
+						marginTop:$window.scrollTop() - offset.top + topPadding
+					});
+				} else {
+					$sidebar.stop().animate({
+						marginTop:0
+					});
+				}
+			}
+		});
+    	
+    	var $navList = $('ul:first', $sidebar);
+    	$('li:first', $navList).addClass('open');
+    	
+    	$navList.treeview({
+    		persist: "location",
+    		collapsed: true,
+    		unique: false
+    	});
+    	
+	});
     </script>
   </body>
 </html>

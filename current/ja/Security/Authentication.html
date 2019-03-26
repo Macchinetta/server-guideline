@@ -3,16 +3,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>9.2. 認証 &#8212; Macchinetta Server Framework (1.x) Development Guideline 1.5.1.RELEASE documentation</title>
-    
+    <title>9.2. 認証 &#8212; Macchinetta Server Framework (1.x) Development Guideline 1.6.1.RELEASE documentation</title>
     <link rel="stylesheet" href="../_static/solar.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '1.5.1.RELEASE',
+        VERSION:     '1.6.1.RELEASE',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true,
@@ -43,7 +40,7 @@
         <li class="right" >
           <a href="SpringSecurity.html" title="9.1. Spring Security概要"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Macchinetta Server Framework (1.x) Development Guideline 1.5.1.RELEASE documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Macchinetta Server Framework (1.x) Development Guideline 1.6.1.RELEASE documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">9. セキュリティ対策</a> &#187;</li> 
       </ul>
     </div>
@@ -84,13 +81,13 @@
 </ul>
 </li>
 <li><a class="reference internal" href="#springsecurityauthenticationpasswordhashing">9.2.2.5. パスワードのハッシュ化</a><ul>
-<li><a class="reference internal" href="#bcryptpasswordencoder">9.2.2.5.1. BCryptPasswordEncoder</a></li>
+<li><a class="reference internal" href="#delegatingpasswordencoder">9.2.2.5.1. DelegatingPasswordEncoder</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#springsecurityauthenticationevent">9.2.2.6. 認証イベントのハンドリング</a><ul>
 <li><a class="reference internal" href="#id15">9.2.2.6.1. 認証成功イベント</a></li>
 <li><a class="reference internal" href="#id16">9.2.2.6.2. 認証失敗イベント</a></li>
-<li><a class="reference internal" href="#id17">9.2.2.6.3. イベントリスナの作成</a></li>
+<li><a class="reference internal" href="#springsecurityauthenticationeventlistener">9.2.2.6.3. イベントリスナの作成</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#springsecurityauthenticationlogout">9.2.2.7. ログアウト</a><ul>
@@ -148,15 +145,19 @@
 </ul>
 </li>
 <li><a class="reference internal" href="#id41">9.2.3.8. 認証処理の拡張</a><ul>
-<li><a class="reference internal" href="#authentication">9.2.3.8.1. Authenticationインターフェースの実装クラスの作成</a></li>
-<li><a class="reference internal" href="#id43">9.2.3.8.2. AuthenticationProviderインターフェースの実装クラスの作成</a></li>
+<li><a class="reference internal" href="#authentication">9.2.3.8.1. Authenticationインタフェースの実装クラスの作成</a></li>
+<li><a class="reference internal" href="#id43">9.2.3.8.2. AuthenticationProviderインタフェースの実装クラスの作成</a></li>
 <li><a class="reference internal" href="#authentication-custom-usernamepasswordauthenticationfilter">9.2.3.8.3. Authentication Filterの作成</a></li>
 <li><a class="reference internal" href="#id45">9.2.3.8.4. ログインフォームの修正</a></li>
 <li><a class="reference internal" href="#id46">9.2.3.8.5. 拡張した認証処理の適用</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#passwordencoder">9.2.3.9. 非推奨パッケージのPasswordEncoderの利用</a><ul>
-<li><a class="reference internal" href="#shapasswordencoder">9.2.3.9.1. ShaPasswordEncoderの利用</a></li>
+<li><a class="reference internal" href="#passwordencoder">9.2.3.9. PasswordEncoderのカスタマイズ</a><ul>
+<li><a class="reference internal" href="#pbkdf2passwordencoder">9.2.3.9.1. Pbkdf2PasswordEncoderのカスタマイズ</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#authenticationhowtoextendusingdeprecatedpasswordencoder">9.2.3.10. 非推奨アルゴリズムのPasswordEncoderの利用</a><ul>
+<li><a class="reference internal" href="#messagedigestpasswordencoder">9.2.3.10.1. MessageDigestPasswordEncoderの利用</a></li>
 </ul>
 </li>
 </ul>
@@ -207,123 +208,127 @@
 <div class="contents local topic" id="id2">
 <p class="topic-title first">目次</p>
 <ul class="simple">
-<li><a class="reference internal" href="#overview" id="id64">Overview</a><ul>
-<li><a class="reference internal" href="#id3" id="id65">認証処理のアーキテクチャ</a><ul>
-<li><a class="reference internal" href="#authentication-filter" id="id66">Authentication Filter</a></li>
-<li><a class="reference internal" href="#authenticationmanager" id="id67">AuthenticationManager</a></li>
-<li><a class="reference internal" href="#authenticationprovider" id="id68">AuthenticationProvider</a></li>
+<li><a class="reference internal" href="#overview" id="id67">Overview</a><ul>
+<li><a class="reference internal" href="#id3" id="id68">認証処理のアーキテクチャ</a><ul>
+<li><a class="reference internal" href="#authentication-filter" id="id69">Authentication Filter</a></li>
+<li><a class="reference internal" href="#authenticationmanager" id="id70">AuthenticationManager</a></li>
+<li><a class="reference internal" href="#authenticationprovider" id="id71">AuthenticationProvider</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a class="reference internal" href="#how-to-use" id="id69">How to use</a><ul>
-<li><a class="reference internal" href="#form-login" id="id70">フォーム認証</a><ul>
-<li><a class="reference internal" href="#form-login-usage" id="id71">フォーム認証の適用</a></li>
-<li><a class="reference internal" href="#form-login-default-operation" id="id72">デフォルトの動作</a></li>
-<li><a class="reference internal" href="#springsecurityauthenticationloginform" id="id73">ログインフォームの作成</a></li>
+<li><a class="reference internal" href="#how-to-use" id="id72">How to use</a><ul>
+<li><a class="reference internal" href="#form-login" id="id73">フォーム認証</a><ul>
+<li><a class="reference internal" href="#form-login-usage" id="id74">フォーム認証の適用</a></li>
+<li><a class="reference internal" href="#form-login-default-operation" id="id75">デフォルトの動作</a></li>
+<li><a class="reference internal" href="#springsecurityauthenticationloginform" id="id76">ログインフォームの作成</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#springsecurityauthenticationscreenflowonsuccess" id="id74">認証成功時のレスポンス</a><ul>
-<li><a class="reference internal" href="#id9" id="id75">デフォルトの動作</a></li>
+<li><a class="reference internal" href="#springsecurityauthenticationscreenflowonsuccess" id="id77">認証成功時のレスポンス</a><ul>
+<li><a class="reference internal" href="#id9" id="id78">デフォルトの動作</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#springsecurityauthenticationscreenflowonfailure" id="id76">認証失敗時のレスポンス</a><ul>
-<li><a class="reference internal" href="#id11" id="id77">デフォルトの動作</a></li>
+<li><a class="reference internal" href="#springsecurityauthenticationscreenflowonfailure" id="id79">認証失敗時のレスポンス</a><ul>
+<li><a class="reference internal" href="#id11" id="id80">デフォルトの動作</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#db" id="id78">DB認証</a><ul>
-<li><a class="reference internal" href="#userdetails" id="id79">UserDetailsの作成</a></li>
-<li><a class="reference internal" href="#userdetailsservice" id="id80">UserDetailsServiceの作成</a></li>
-<li><a class="reference internal" href="#authenticationproviderconfiguration" id="id81">DB認証の適用</a></li>
+<li><a class="reference internal" href="#db" id="id81">DB認証</a><ul>
+<li><a class="reference internal" href="#userdetails" id="id82">UserDetailsの作成</a></li>
+<li><a class="reference internal" href="#userdetailsservice" id="id83">UserDetailsServiceの作成</a></li>
+<li><a class="reference internal" href="#authenticationproviderconfiguration" id="id84">DB認証の適用</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#springsecurityauthenticationpasswordhashing" id="id82">パスワードのハッシュ化</a><ul>
-<li><a class="reference internal" href="#bcryptpasswordencoder" id="id83">BCryptPasswordEncoder</a></li>
+<li><a class="reference internal" href="#springsecurityauthenticationpasswordhashing" id="id85">パスワードのハッシュ化</a><ul>
+<li><a class="reference internal" href="#delegatingpasswordencoder" id="id86">DelegatingPasswordEncoder</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#springsecurityauthenticationevent" id="id84">認証イベントのハンドリング</a><ul>
-<li><a class="reference internal" href="#id15" id="id85">認証成功イベント</a></li>
-<li><a class="reference internal" href="#id16" id="id86">認証失敗イベント</a></li>
-<li><a class="reference internal" href="#id17" id="id87">イベントリスナの作成</a></li>
+<li><a class="reference internal" href="#springsecurityauthenticationevent" id="id87">認証イベントのハンドリング</a><ul>
+<li><a class="reference internal" href="#id15" id="id88">認証成功イベント</a></li>
+<li><a class="reference internal" href="#id16" id="id89">認証失敗イベント</a></li>
+<li><a class="reference internal" href="#springsecurityauthenticationeventlistener" id="id90">イベントリスナの作成</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#springsecurityauthenticationlogout" id="id88">ログアウト</a><ul>
-<li><a class="reference internal" href="#id19" id="id89">ログアウト処理の適用</a></li>
-<li><a class="reference internal" href="#id20" id="id90">デフォルトの動作</a></li>
+<li><a class="reference internal" href="#springsecurityauthenticationlogout" id="id91">ログアウト</a><ul>
+<li><a class="reference internal" href="#id19" id="id92">ログアウト処理の適用</a></li>
+<li><a class="reference internal" href="#id20" id="id93">デフォルトの動作</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#id21" id="id91">ログアウト成功時のレスポンス</a><ul>
-<li><a class="reference internal" href="#id22" id="id92">デフォルトの動作</a></li>
+<li><a class="reference internal" href="#id21" id="id94">ログアウト成功時のレスポンス</a><ul>
+<li><a class="reference internal" href="#id22" id="id95">デフォルトの動作</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#springsecurityauthenticationaccess" id="id93">認証情報へのアクセス</a><ul>
-<li><a class="reference internal" href="#java" id="id94">Javaからのアクセス</a></li>
-<li><a class="reference internal" href="#jsp" id="id95">JSPからのアクセス</a></li>
+<li><a class="reference internal" href="#springsecurityauthenticationaccess" id="id96">認証情報へのアクセス</a><ul>
+<li><a class="reference internal" href="#java" id="id97">Javaからのアクセス</a></li>
+<li><a class="reference internal" href="#jsp" id="id98">JSPからのアクセス</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#spring-mvc" id="id96">認証処理とSpring MVCの連携</a><ul>
-<li><a class="reference internal" href="#id24" id="id97">認証情報へのアクセス</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a class="reference internal" href="#how-to-extend" id="id98">How to extend</a><ul>
-<li><a class="reference internal" href="#springsecurityauthenticationcustomizingform" id="id99">フォーム認証のカスタマイズ</a><ul>
-<li><a class="reference internal" href="#id27" id="id100">認証パスの変更</a></li>
-<li><a class="reference internal" href="#id28" id="id101">資格情報を送るリクエストパラメータ名の変更</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#id29" id="id102">認証成功時のレスポンスのカスタマイズ</a><ul>
-<li><a class="reference internal" href="#id30" id="id103">デフォルト遷移先の変更</a></li>
-<li><a class="reference internal" href="#id31" id="id104">遷移先の固定化</a></li>
-<li><a class="reference internal" href="#authenticationsuccesshandler" id="id105">AuthenticationSuccessHandlerの適用</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#springsecurityauthenticationcustomizingscreenflowonfailure" id="id106">認証失敗時のレスポンスのカスタマイズ</a><ul>
-<li><a class="reference internal" href="#id33" id="id107">遷移先の変更</a></li>
-<li><a class="reference internal" href="#authenticationfailurehandler" id="id108">AuthenticationFailureHandlerの適用</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#id34" id="id109">ログアウト処理のカスタマイズ</a><ul>
-<li><a class="reference internal" href="#id35" id="id110">ログアウトパスの変更</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#springsecuritylogoutcustomizingscreenflowonsuccess" id="id111">ログアウト成功時のレスポンスのカスタマイズ</a><ul>
-<li><a class="reference internal" href="#id37" id="id112">遷移先の変更</a></li>
-<li><a class="reference internal" href="#logoutsuccesshandler" id="id113">LogoutSuccessHandlerの適用</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#springsecurityauthenticationcustomizingmessage" id="id114">エラーメッセージのカスタマイズ</a><ul>
-<li><a class="reference internal" href="#id39" id="id115">システムエラー時のメッセージ</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#springsecurityauthenticationbeanvalidation" id="id116">認証時の入力チェック</a><ul>
-<li><a class="reference internal" href="#bean-validation" id="id117">Bean Validationによる入力チェック</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#id41" id="id118">認証処理の拡張</a><ul>
-<li><a class="reference internal" href="#authentication" id="id119">Authenticationインターフェースの実装クラスの作成</a></li>
-<li><a class="reference internal" href="#id43" id="id120">AuthenticationProviderインターフェースの実装クラスの作成</a></li>
-<li><a class="reference internal" href="#authentication-custom-usernamepasswordauthenticationfilter" id="id121">Authentication Filterの作成</a></li>
-<li><a class="reference internal" href="#id45" id="id122">ログインフォームの修正</a></li>
-<li><a class="reference internal" href="#id46" id="id123">拡張した認証処理の適用</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#passwordencoder" id="id124">非推奨パッケージのPasswordEncoderの利用</a><ul>
-<li><a class="reference internal" href="#shapasswordencoder" id="id125">ShaPasswordEncoderの利用</a></li>
+<li><a class="reference internal" href="#spring-mvc" id="id99">認証処理とSpring MVCの連携</a><ul>
+<li><a class="reference internal" href="#id24" id="id100">認証情報へのアクセス</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a class="reference internal" href="#appendix" id="id126">Appendix</a><ul>
-<li><a class="reference internal" href="#spring-security-authentication-mvc" id="id127">Spring MVCでリクエストを受けてログインフォームを表示する</a></li>
-<li><a class="reference internal" href="#remember-me" id="id128">Remember Me認証の利用</a></li>
+<li><a class="reference internal" href="#how-to-extend" id="id101">How to extend</a><ul>
+<li><a class="reference internal" href="#springsecurityauthenticationcustomizingform" id="id102">フォーム認証のカスタマイズ</a><ul>
+<li><a class="reference internal" href="#id27" id="id103">認証パスの変更</a></li>
+<li><a class="reference internal" href="#id28" id="id104">資格情報を送るリクエストパラメータ名の変更</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id29" id="id105">認証成功時のレスポンスのカスタマイズ</a><ul>
+<li><a class="reference internal" href="#id30" id="id106">デフォルト遷移先の変更</a></li>
+<li><a class="reference internal" href="#id31" id="id107">遷移先の固定化</a></li>
+<li><a class="reference internal" href="#authenticationsuccesshandler" id="id108">AuthenticationSuccessHandlerの適用</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#springsecurityauthenticationcustomizingscreenflowonfailure" id="id109">認証失敗時のレスポンスのカスタマイズ</a><ul>
+<li><a class="reference internal" href="#id33" id="id110">遷移先の変更</a></li>
+<li><a class="reference internal" href="#authenticationfailurehandler" id="id111">AuthenticationFailureHandlerの適用</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id34" id="id112">ログアウト処理のカスタマイズ</a><ul>
+<li><a class="reference internal" href="#id35" id="id113">ログアウトパスの変更</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#springsecuritylogoutcustomizingscreenflowonsuccess" id="id114">ログアウト成功時のレスポンスのカスタマイズ</a><ul>
+<li><a class="reference internal" href="#id37" id="id115">遷移先の変更</a></li>
+<li><a class="reference internal" href="#logoutsuccesshandler" id="id116">LogoutSuccessHandlerの適用</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#springsecurityauthenticationcustomizingmessage" id="id117">エラーメッセージのカスタマイズ</a><ul>
+<li><a class="reference internal" href="#id39" id="id118">システムエラー時のメッセージ</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#springsecurityauthenticationbeanvalidation" id="id119">認証時の入力チェック</a><ul>
+<li><a class="reference internal" href="#bean-validation" id="id120">Bean Validationによる入力チェック</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id41" id="id121">認証処理の拡張</a><ul>
+<li><a class="reference internal" href="#authentication" id="id122">Authenticationインタフェースの実装クラスの作成</a></li>
+<li><a class="reference internal" href="#id43" id="id123">AuthenticationProviderインタフェースの実装クラスの作成</a></li>
+<li><a class="reference internal" href="#authentication-custom-usernamepasswordauthenticationfilter" id="id124">Authentication Filterの作成</a></li>
+<li><a class="reference internal" href="#id45" id="id125">ログインフォームの修正</a></li>
+<li><a class="reference internal" href="#id46" id="id126">拡張した認証処理の適用</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#passwordencoder" id="id127">PasswordEncoderのカスタマイズ</a><ul>
+<li><a class="reference internal" href="#pbkdf2passwordencoder" id="id128">Pbkdf2PasswordEncoderのカスタマイズ</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#authenticationhowtoextendusingdeprecatedpasswordencoder" id="id129">非推奨アルゴリズムのPasswordEncoderの利用</a><ul>
+<li><a class="reference internal" href="#messagedigestpasswordencoder" id="id130">MessageDigestPasswordEncoderの利用</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#appendix" id="id131">Appendix</a><ul>
+<li><a class="reference internal" href="#spring-security-authentication-mvc" id="id132">Spring MVCでリクエストを受けてログインフォームを表示する</a></li>
+<li><a class="reference internal" href="#remember-me" id="id133">Remember Me認証の利用</a></li>
 </ul>
 </li>
 </ul>
 </div>
 <div class="section" id="overview">
-<span id="springsecurityauthenticationoverview"></span><h2><a class="toc-backref" href="#id64">9.2.1. Overview</a><a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<span id="springsecurityauthenticationoverview"></span><h2><a class="toc-backref" href="#id67">9.2.1. Overview</a><a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
 <p>本節では、Spring Securityが提供している認証機能について説明する。</p>
 <p>認証処理は、アプリケーションを利用するユーザーの正当性を確認するための処理である。</p>
 <p>ユーザーの正当性を確認するためのもっとも標準的な方法は、アプリケーションを使用できるユーザーをデータストアに登録しておき、
@@ -338,9 +343,9 @@ Spring Securityの認証機能の使い方を説明する。</p>
 <div class="line"><br /></div>
 </div>
 <div class="section" id="id3">
-<h3><a class="toc-backref" href="#id65">9.2.1.1. 認証処理のアーキテクチャ</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id68">9.2.1.1. 認証処理のアーキテクチャ</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
 <p>Spring Securityは、以下のような流れで認証処理を行う。</p>
-<div class="figure" id="id49">
+<div class="figure" id="id51">
 <a class="reference internal image-reference" href="../_images/AuthenticationArchitecture.png"><img alt="../_images/AuthenticationArchitecture.png" src="../_images/AuthenticationArchitecture.png" style="width: 100%;" /></a>
 <p class="caption"><span class="caption-text"><strong>認証処理のアーキテクチャ</strong></span></p>
 </div>
@@ -388,11 +393,11 @@ Spring Securityの認証機能の使い方を説明する。</p>
 <div class="line"><br /></div>
 </div>
 <div class="section" id="authentication-filter">
-<span id="springsecurityauthenticationfilter"></span><h4><a class="toc-backref" href="#id66">9.2.1.1.1. Authentication Filter</a><a class="headerlink" href="#authentication-filter" title="Permalink to this headline">¶</a></h4>
+<span id="springsecurityauthenticationfilter"></span><h4><a class="toc-backref" href="#id69">9.2.1.1.1. Authentication Filter</a><a class="headerlink" href="#authentication-filter" title="Permalink to this headline">¶</a></h4>
 <p>Authentication Filterは、認証方式に対する実装を提供するサーブレットフィルタである。
 Spring Securityがサポートしている主な認証方式は以下の通り。</p>
-<table border="1" class="colwidths-given docutils" id="id50">
-<caption><span class="caption-text"><strong>Spring Securityが提供している主なAuthentication Filter</strong></span><a class="headerlink" href="#id50" title="Permalink to this table">¶</a></caption>
+<table border="1" class="colwidths-given docutils" id="id52">
+<caption><span class="caption-text"><strong>Spring Securityが提供している主なAuthentication Filter</strong></span><a class="headerlink" href="#id52" title="Permalink to this table">¶</a></caption>
 <colgroup>
 <col width="25%" />
 <col width="75%" />
@@ -453,7 +458,7 @@ Spring Securityがサポートしている主な認証方式は以下の通り�
 </div>
 </div>
 <div class="section" id="authenticationmanager">
-<h4><a class="toc-backref" href="#id67">9.2.1.1.2. AuthenticationManager</a><a class="headerlink" href="#authenticationmanager" title="Permalink to this headline">¶</a></h4>
+<h4><a class="toc-backref" href="#id70">9.2.1.1.2. AuthenticationManager</a><a class="headerlink" href="#authenticationmanager" title="Permalink to this headline">¶</a></h4>
 <p><code class="docutils literal"><span class="pre">AuthenticationManager</span></code>は、認証処理を実行するためのインタフェースである。
 Spring Securityが提供するデフォルト実装(<code class="docutils literal"><span class="pre">ProviderManager</span></code>)では、
 実際の認証処理は<code class="docutils literal"><span class="pre">AuthenticationProvider</span></code>に委譲し、<code class="docutils literal"><span class="pre">AuthenticationProvider</span></code>で行われた認証処理の処理結果をハンドリングする仕組みになっている。</p>
@@ -462,11 +467,11 @@ Spring Securityが提供するデフォルト実装(<code class="docutils litera
 </div>
 </div>
 <div class="section" id="authenticationprovider">
-<h4><a class="toc-backref" href="#id68">9.2.1.1.3. AuthenticationProvider</a><a class="headerlink" href="#authenticationprovider" title="Permalink to this headline">¶</a></h4>
+<h4><a class="toc-backref" href="#id71">9.2.1.1.3. AuthenticationProvider</a><a class="headerlink" href="#authenticationprovider" title="Permalink to this headline">¶</a></h4>
 <p><code class="docutils literal"><span class="pre">AuthenticationProvider</span></code>は、認証処理の実装を提供するためのインタフェースである。
 Spring Securityが提供している主な<code class="docutils literal"><span class="pre">AuthenticationProvider</span></code>の実装クラスは以下の通り。</p>
-<table border="1" class="colwidths-given docutils" id="id51">
-<caption><span class="caption-text"><strong>Spring Securityが提供している主なAuthenticationProvider</strong></span><a class="headerlink" href="#id51" title="Permalink to this table">¶</a></caption>
+<table border="1" class="colwidths-given docutils" id="id53">
+<caption><span class="caption-text"><strong>Spring Securityが提供している主なAuthenticationProvider</strong></span><a class="headerlink" href="#id53" title="Permalink to this table">¶</a></caption>
 <colgroup>
 <col width="25%" />
 <col width="75%" />
@@ -501,14 +506,14 @@ Spring Securityが提供している主な<code class="docutils literal"><span c
 </div>
 </div>
 <div class="section" id="how-to-use">
-<span id="howtouse-springsecurity"></span><h2><a class="toc-backref" href="#id69">9.2.2. How to use</a><a class="headerlink" href="#how-to-use" title="Permalink to this headline">¶</a></h2>
+<span id="howtouse-springsecurity"></span><h2><a class="toc-backref" href="#id72">9.2.2. How to use</a><a class="headerlink" href="#how-to-use" title="Permalink to this headline">¶</a></h2>
 <p>認証機能を使用するために必要となるbean定義例や実装方法について説明する。</p>
 <p>本項では <a class="reference internal" href="#springsecurityauthenticationoverview"><span class="std std-ref">Overview</span></a>で説明したとおり、
 HTMLの入力フォームで入力した認証情報とリレーショナルデータベースに格納されているユーザー情報を照合して認証処理を行う方法について説明する。</p>
 <div class="section" id="form-login">
-<span id="id4"></span><h3><a class="toc-backref" href="#id70">9.2.2.1. フォーム認証</a><a class="headerlink" href="#form-login" title="Permalink to this headline">¶</a></h3>
+<span id="id4"></span><h3><a class="toc-backref" href="#id73">9.2.2.1. フォーム認証</a><a class="headerlink" href="#form-login" title="Permalink to this headline">¶</a></h3>
 <p>Spring Securityは、以下のような流れでフォーム認証を行う。</p>
-<div class="figure" id="id52">
+<div class="figure" id="id54">
 <a class="reference internal image-reference" href="../_images/AuthenticationForm.png"><img alt="../_images/AuthenticationForm.png" src="../_images/AuthenticationForm.png" style="width: 100%;" /></a>
 <p class="caption"><span class="caption-text"><strong>フォーム認証の仕組み</strong></span></p>
 </div>
@@ -557,7 +562,7 @@ HTMLの入力フォームで入力した認証情報とリレーショナルデ�
 <div class="line"><br /></div>
 </div>
 <div class="section" id="form-login-usage">
-<span id="id5"></span><h4><a class="toc-backref" href="#id71">9.2.2.1.1. フォーム認証の適用</a><a class="headerlink" href="#form-login-usage" title="Permalink to this headline">¶</a></h4>
+<span id="id5"></span><h4><a class="toc-backref" href="#id74">9.2.2.1.1. フォーム認証の適用</a><a class="headerlink" href="#form-login-usage" title="Permalink to this headline">¶</a></h4>
 <p>フォーム認証を使用する場合は、以下のようなbean定義を行う。</p>
 <ul class="simple">
 <li>spring-security.xmlの定義例</li>
@@ -623,7 +628,7 @@ HTMLの入力フォームで入力した認証情報とリレーショナルデ�
 </td>
 <td><div class="first last line-block">
 <div class="line">RFC1945に準拠したBasic認証を行うSecurity Filter(<code class="docutils literal"><span class="pre">BasicAuthenticationFilter</span></code>)が適用される。</div>
-<div class="line">詳細な利用方法は、<a class="reference external" href="http://docs.spring.io/spring-security/site/docs/4.2.4.RELEASE/apidocs/org/springframework/security/web/authentication/www/BasicAuthenticationFilter.html">BasicAuthenticationFilterのJavaDoc</a>を参照されたい。</div>
+<div class="line">詳細な利用方法は、<a class="reference external" href="https://docs.spring.io/spring-security/site/docs/5.1.3.RELEASE/api/org/springframework/security/web/authentication/www/BasicAuthenticationFilter.html">BasicAuthenticationFilterのJavaDoc</a>を参照されたい。</div>
 </div>
 </td>
 </tr>
@@ -645,7 +650,7 @@ HTMLの入力フォームで入力した認証情報とリレーショナルデ�
 </div>
 </div>
 <div class="section" id="form-login-default-operation">
-<span id="id6"></span><h4><a class="toc-backref" href="#id72">9.2.2.1.2. デフォルトの動作</a><a class="headerlink" href="#form-login-default-operation" title="Permalink to this headline">¶</a></h4>
+<span id="id6"></span><h4><a class="toc-backref" href="#id75">9.2.2.1.2. デフォルトの動作</a><a class="headerlink" href="#form-login-default-operation" title="Permalink to this headline">¶</a></h4>
 <p>Spring Securityのデフォルトの動作では、<code class="docutils literal"><span class="pre">/login</span></code>に対してGETメソッドでアクセスするとSpring Securityが用意しているデフォルトのログインフォームが表示され、
 ログインボタンを押下すると<code class="docutils literal"><span class="pre">/login</span></code>に対してPOSTメソッドでアクセスして認証処理を行う。</p>
 <div class="line-block">
@@ -653,7 +658,7 @@ HTMLの入力フォームで入力した認証情報とリレーショナルデ�
 </div>
 </div>
 <div class="section" id="springsecurityauthenticationloginform">
-<span id="id7"></span><h4><a class="toc-backref" href="#id73">9.2.2.1.3. ログインフォームの作成</a><a class="headerlink" href="#springsecurityauthenticationloginform" title="Permalink to this headline">¶</a></h4>
+<span id="id7"></span><h4><a class="toc-backref" href="#id76">9.2.2.1.3. ログインフォームの作成</a><a class="headerlink" href="#springsecurityauthenticationloginform" title="Permalink to this headline">¶</a></h4>
 <p>Spring Securityはフォーム認証用のログインフォームをデフォルトで提供しているが、そのまま利用するケースは少ない。
 ここでは、自身で作成したログインフォームをSpring Securityに適用する方法を説明する。</p>
 <p>まず、ログインフォームを表示するためのJSPを作成する。
@@ -720,7 +725,7 @@ HTMLの入力フォームで入力した認証情報とリレーショナルデ�
 <div class="line">認証エラー時に出力させる例外メッセージを出力する。</div>
 <div class="line">共通ライブラリで提供している<code class="docutils literal"><span class="pre">&lt;t:messagesPanel&gt;</span></code>タグを使用して出力することを推奨する。</div>
 <div class="line"><code class="docutils literal"><span class="pre">&lt;t:messagesPanel&gt;</span></code>タグの使用方法については、「<a class="reference internal" href="../ArchitectureInDetail/WebApplicationDetail/MessageManagement.html"><span class="doc">メッセージ管理</span></a>」を参照されたい。</div>
-<div class="line">なお、認証エラーが発生した場合は、セッション又はリクエストスコープに<code class="docutils literal"><span class="pre">SPRING_SECURITY_LAST_EXCEPTION</span></code>という属性名で例外オブジェクトが格納される。</div>
+<div class="line">なお、認証エラーが発生した場合、Spring Securityのデフォルトの設定で使用される、<code class="docutils literal"><span class="pre">org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler</span></code>では、認証エラー時に発生した例外オブジェクトを<code class="docutils literal"><span class="pre">SPRING_SECURITY_LAST_EXCEPTION</span></code>という属性名で、リダイレクト時はセッション、フォワード時はリクエストスコープに格納する。</div>
 </div>
 </td>
 </tr>
@@ -827,11 +832,11 @@ HTMLの入力フォームで入力した認証情報とリレーショナルデ�
 </div>
 </div>
 <div class="section" id="springsecurityauthenticationscreenflowonsuccess">
-<span id="id8"></span><h3><a class="toc-backref" href="#id74">9.2.2.2. 認証成功時のレスポンス</a><a class="headerlink" href="#springsecurityauthenticationscreenflowonsuccess" title="Permalink to this headline">¶</a></h3>
+<span id="id8"></span><h3><a class="toc-backref" href="#id77">9.2.2.2. 認証成功時のレスポンス</a><a class="headerlink" href="#springsecurityauthenticationscreenflowonsuccess" title="Permalink to this headline">¶</a></h3>
 <p>Spring Securityは、認証成功時のレスポンスを制御するためのコンポーネントとして、
 <code class="docutils literal"><span class="pre">AuthenticationSuccessHandler</span></code>というインタフェースと実装クラスを提供している。</p>
-<table border="1" class="colwidths-given docutils" id="id53">
-<caption><span class="caption-text"><strong>AuthenticationSuccessHandlerの実装クラス</strong></span><a class="headerlink" href="#id53" title="Permalink to this table">¶</a></caption>
+<table border="1" class="colwidths-given docutils" id="id55">
+<caption><span class="caption-text"><strong>AuthenticationSuccessHandlerの実装クラス</strong></span><a class="headerlink" href="#id55" title="Permalink to this table">¶</a></caption>
 <colgroup>
 <col width="35%" />
 <col width="65%" />
@@ -864,7 +869,7 @@ HTMLの入力フォームで入力した認証情報とリレーショナルデ�
 </tbody>
 </table>
 <div class="section" id="id9">
-<h4><a class="toc-backref" href="#id75">9.2.2.2.1. デフォルトの動作</a><a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h4>
+<h4><a class="toc-backref" href="#id78">9.2.2.2.1. デフォルトの動作</a><a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h4>
 <p>Spring Securityのデフォルトの動作では、認証前にアクセスを拒否したリクエストをHTTPセッションに保存しておいて、
 認証が成功した際にアクセスを拒否したリクエストを復元してリダイレクトする。
 認証したユーザーにリダイレクト先へのアクセス権があればページが表示され、アクセス権がなければ認可エラーとなる。
@@ -877,11 +882,11 @@ Webアプリケーションのルートパス(“<code class="docutils literal">
 </div>
 </div>
 <div class="section" id="springsecurityauthenticationscreenflowonfailure">
-<span id="id10"></span><h3><a class="toc-backref" href="#id76">9.2.2.3. 認証失敗時のレスポンス</a><a class="headerlink" href="#springsecurityauthenticationscreenflowonfailure" title="Permalink to this headline">¶</a></h3>
+<span id="id10"></span><h3><a class="toc-backref" href="#id79">9.2.2.3. 認証失敗時のレスポンス</a><a class="headerlink" href="#springsecurityauthenticationscreenflowonfailure" title="Permalink to this headline">¶</a></h3>
 <p>Spring Securityは、認証失敗時のレスポンスを制御するためのコンポーネントとして、
 <code class="docutils literal"><span class="pre">AuthenticationFailureHandler</span></code>というインタフェースと実装クラスを提供している。</p>
-<table border="1" class="colwidths-given docutils" id="id54">
-<caption><span class="caption-text"><strong>AuthenticationFailureHandlerの実装クラス</strong></span><a class="headerlink" href="#id54" title="Permalink to this table">¶</a></caption>
+<table border="1" class="colwidths-given docutils" id="id56">
+<caption><span class="caption-text"><strong>AuthenticationFailureHandlerの実装クラス</strong></span><a class="headerlink" href="#id56" title="Permalink to this table">¶</a></caption>
 <colgroup>
 <col width="35%" />
 <col width="65%" />
@@ -924,7 +929,7 @@ Webアプリケーションのルートパス(“<code class="docutils literal">
 </tbody>
 </table>
 <div class="section" id="id11">
-<h4><a class="toc-backref" href="#id77">9.2.2.3.1. デフォルトの動作</a><a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h4>
+<h4><a class="toc-backref" href="#id80">9.2.2.3.1. デフォルトの動作</a><a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h4>
 <p>Spring Securityのデフォルトの動作では、ログインフォームを表示するためのパスに<code class="docutils literal"><span class="pre">error</span></code>というクエリパラメータが付与されたURLにリダイレクトする。</p>
 <p>例として、ログインフォームを表示するためのパスが<code class="docutils literal"><span class="pre">/login</span></code>の場合は<code class="docutils literal"><span class="pre">/login?error</span></code>にリダイレクトされる。</p>
 <div class="line-block">
@@ -933,9 +938,9 @@ Webアプリケーションのルートパス(“<code class="docutils literal">
 </div>
 </div>
 <div class="section" id="db">
-<h3><a class="toc-backref" href="#id78">9.2.2.4. DB認証</a><a class="headerlink" href="#db" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id81">9.2.2.4. DB認証</a><a class="headerlink" href="#db" title="Permalink to this headline">¶</a></h3>
 <p>Spring Securityは、以下のような流れでDB認証を行う。</p>
-<div class="figure" id="id55">
+<div class="figure" id="id57">
 <a class="reference internal image-reference" href="../_images/AuthenticationDatabase.png"><img alt="../_images/AuthenticationDatabase.png" src="../_images/AuthenticationDatabase.png" style="width: 100%;" /></a>
 <p class="caption"><span class="caption-text"><strong>DB認証の仕組み</strong></span></p>
 </div>
@@ -1012,7 +1017,7 @@ Webアプリケーションのルートパス(“<code class="docutils literal">
 <div class="line"><br /></div>
 </div>
 <div class="section" id="userdetails">
-<h4><a class="toc-backref" href="#id79">9.2.2.4.1. UserDetailsの作成</a><a class="headerlink" href="#userdetails" title="Permalink to this headline">¶</a></h4>
+<h4><a class="toc-backref" href="#id82">9.2.2.4.1. UserDetailsの作成</a><a class="headerlink" href="#userdetails" title="Permalink to this headline">¶</a></h4>
 <p><code class="docutils literal"><span class="pre">UserDetails</span></code>は、認証処理で必要となる資格情報(ユーザー名とパスワード)とユーザーの状態を提供するためのインタフェースで、以下のメソッドが定義されている。
 <code class="docutils literal"><span class="pre">AuthenticationProvider</span></code>として<code class="docutils literal"><span class="pre">DaoAuthenticationProvider</span></code>を使用する場合は、アプリケーションの要件に合わせて<code class="docutils literal"><span class="pre">UserDetails</span></code>の実装クラスを作成する。</p>
 <p><em>UserDetailsインタフェース</em></p>
@@ -1297,7 +1302,7 @@ Webアプリケーションのルートパス(“<code class="docutils literal">
 </div>
 </div>
 <div class="section" id="userdetailsservice">
-<span id="springsecurityauthenticationuserdetailsservice"></span><h4><a class="toc-backref" href="#id80">9.2.2.4.2. UserDetailsServiceの作成</a><a class="headerlink" href="#userdetailsservice" title="Permalink to this headline">¶</a></h4>
+<span id="springsecurityauthenticationuserdetailsservice"></span><h4><a class="toc-backref" href="#id83">9.2.2.4.2. UserDetailsServiceの作成</a><a class="headerlink" href="#userdetailsservice" title="Permalink to this headline">¶</a></h4>
 <p><code class="docutils literal"><span class="pre">UserDetailsService</span></code>は、認証処理で必要となる資格情報とユーザーの状態をデータストア
 から取得するためのインタフェースで、以下のメソッドが定義されている。
 <code class="docutils literal"><span class="pre">AuthenticationProvider</span></code>として<code class="docutils literal"><span class="pre">DaoAuthenticationProvider</span></code>を使用する場合は、
@@ -1485,20 +1490,15 @@ Webアプリケーションのルートパス(“<code class="docutils literal">
 </div>
 </div>
 <div class="section" id="authenticationproviderconfiguration">
-<span id="id12"></span><h4><a class="toc-backref" href="#id81">9.2.2.4.3. DB認証の適用</a><a class="headerlink" href="#authenticationproviderconfiguration" title="Permalink to this headline">¶</a></h4>
+<span id="id12"></span><h4><a class="toc-backref" href="#id84">9.2.2.4.3. DB認証の適用</a><a class="headerlink" href="#authenticationproviderconfiguration" title="Permalink to this headline">¶</a></h4>
 <p>作成した<code class="docutils literal"><span class="pre">UserDetailsService</span></code>を使用して認証処理を行うためには、
 <code class="docutils literal"><span class="pre">DaoAuthenticationProvider</span></code>を有効化して、作成した<code class="docutils literal"><span class="pre">UserDetailsService</span></code>を適用する必要がある。</p>
 <ul class="simple">
 <li>spring-security.xmlの定義例</li>
 </ul>
 <div class="highlight-xml"><div class="highlight"><pre><span></span><span class="nt">&lt;sec:authentication-manager&gt;</span> <span class="c">&lt;!-- (1) --&gt;</span>
-    <span class="nt">&lt;sec:authentication-provider</span> <span class="na">user-service-ref=</span><span class="s">&quot;accountUserDetailsService&quot;</span><span class="nt">&gt;</span> <span class="c">&lt;!-- (2) --&gt;</span>
-        <span class="nt">&lt;sec:password-encoder</span> <span class="na">ref=</span><span class="s">&quot;passwordEncoder&quot;</span> <span class="nt">/&gt;</span> <span class="c">&lt;!-- (3) --&gt;</span>
-    <span class="nt">&lt;/sec:authentication-provider&gt;</span>
+    <span class="nt">&lt;sec:authentication-provider</span> <span class="na">user-service-ref=</span><span class="s">&quot;accountUserDetailsService&quot;</span> <span class="nt">/&gt;</span> <span class="c">&lt;!-- (2) --&gt;</span>
 <span class="nt">&lt;/sec:authentication-manager&gt;</span>
-
-<span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">&quot;passwordEncoder&quot;</span>
-    <span class="na">class=</span><span class="s">&quot;org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder&quot;</span> <span class="nt">/&gt;</span> <span class="c">&lt;!-- (4) --&gt;</span>
 </pre></div>
 </div>
 <table border="1" class="colwidths-given docutils">
@@ -1532,51 +1532,36 @@ Webアプリケーションのルートパス(“<code class="docutils literal">
 </div>
 </td>
 </tr>
-<tr class="row-even"><td><div class="first last line-block">
-<div class="line">(3)</div>
-</div>
-</td>
-<td><div class="first last line-block">
-<div class="line">パスワード照合時に使用する<code class="docutils literal"><span class="pre">PasswordEncoder</span></code>のbeanを指定する。</div>
-</div>
-</td>
-</tr>
-<tr class="row-odd"><td><div class="first last line-block">
-<div class="line">(4)</div>
-</div>
-</td>
-<td><div class="first last line-block">
-<div class="line">パスワード照合時に使用する<code class="docutils literal"><span class="pre">PasswordEncoder</span></code>をBean定義する。</div>
-<div class="line">上記例では、パスワードをBCryptアルゴリズムでハッシュ化する<code class="docutils literal"><span class="pre">BCryptPasswordEncoder</span></code>を定義している。</div>
-<div class="line">パスワードのハッシュ化については、「<a class="reference internal" href="#springsecurityauthenticationpasswordhashing"><span class="std std-ref">パスワードのハッシュ化</span></a>」を参照されたい。</div>
-</div>
-</td>
-</tr>
 </tbody>
 </table>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>Spring Security 5から、<code class="docutils literal"><span class="pre">passwordEncoder</span></code>という名前のBeanを定義していると、<code class="docutils literal"><span class="pre">sec:authentication-provider</span></code>配下に<code class="docutils literal"><span class="pre">sec:password-encoder</span></code>要素を指定しない場合に自動的に参照されるようになった。
+これにより、Macchinetta Server Framework for Java 1.6.1.RELEASEからは基本的に<code class="docutils literal"><span class="pre">sec:password-encoder</span></code>の指定を省略することができる。</p>
+<p class="last">Spring Security 4では<code class="docutils literal"><span class="pre">sec:password-encoder</span></code>要素を省略した場合、<code class="docutils literal"><span class="pre">PasswordEncoder</span></code>として<code class="docutils literal"><span class="pre">PlaintextPasswordEncoder</span></code>が使用されていた。Spring Security 5では<code class="docutils literal"><span class="pre">sec:password-encoder</span></code>要素を省略し、かつ<code class="docutils literal"><span class="pre">passwordEncoder</span></code>という名前のBeanが存在しない場合、<code class="docutils literal"><span class="pre">org.springframework.security.crypto.factory.PasswordEncoderFactories</span></code>を利用して生成した<code class="docutils literal"><span class="pre">DelegatingPasswordEncoder</span></code>が使用される。</p>
+</div>
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
 </div>
 </div>
 <div class="section" id="springsecurityauthenticationpasswordhashing">
-<span id="id13"></span><h3><a class="toc-backref" href="#id82">9.2.2.5. パスワードのハッシュ化</a><a class="headerlink" href="#springsecurityauthenticationpasswordhashing" title="Permalink to this headline">¶</a></h3>
+<span id="id13"></span><h3><a class="toc-backref" href="#id85">9.2.2.5. パスワードのハッシュ化</a><a class="headerlink" href="#springsecurityauthenticationpasswordhashing" title="Permalink to this headline">¶</a></h3>
 <p>パスワードをデータベースなどに保存する場合は、パスワードそのものではなくパスワードの
 ハッシュ値を保存するのが一般的である。</p>
 <p>Spring Securityは、パスワードをハッシュ化するためのインタフェースと実装クラスを
 提供しており、認証機能と連携して動作する。</p>
-<p>Spring Securityが提供するインタフェースには、以下の2種類がある。</p>
+<p>Spring Securityは以下のインタフェースを提供している。</p>
 <ul class="simple">
 <li><code class="docutils literal"><span class="pre">org.springframework.security.crypto.password.PasswordEncoder</span></code></li>
-<li><code class="docutils literal"><span class="pre">org.springframework.security.authentication.encoding.PasswordEncoder</span></code></li>
 </ul>
-<p>どちらも<code class="docutils literal"><span class="pre">PasswordEncoder</span></code>という名前のインタフェースであるが、
-<code class="docutils literal"><span class="pre">org.springframework.security.authentication.encoding</span></code>パッケージの<code class="docutils literal"><span class="pre">PasswordEncoder</span></code>は非推奨になっている。
-パスワードのハッシュ化要件に制約がない場合は、<code class="docutils literal"><span class="pre">org.springframework.security.crypto.password</span></code>パッケージの<code class="docutils literal"><span class="pre">PasswordEncoder</span></code>インタフェースの実装クラスを使用することを推奨する。</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">非推奨の<code class="docutils literal"><span class="pre">PasswordEncoder</span></code>の利用方法については、
-「<a class="reference internal" href="#authenticationhowtoextendusingdeprecatedpasswordencoder"><span class="std std-ref">非推奨パッケージのPasswordEncoderの利用</span></a>」を参照されたい。</p>
+<p class="last">Spring Security 3.1.4以降、非推奨のインタフェースであった<code class="docutils literal"><span class="pre">org.springframework.security.authentication.encoding.PasswordEncoder</span></code>は、
+Spring Security 5.0で廃止された。</p>
 </div>
 <div class="line-block">
 <div class="line"><br /></div>
@@ -1588,8 +1573,8 @@ Webアプリケーションのルートパス(“<code class="docutils literal">
 <span class="o">}</span>
 </pre></div>
 </div>
-<table border="1" class="colwidths-given docutils" id="id56">
-<caption><span class="caption-text"><strong>PasswordEncoderに定義されているメソッド</strong></span><a class="headerlink" href="#id56" title="Permalink to this table">¶</a></caption>
+<table border="1" class="colwidths-given docutils" id="id58">
+<caption><span class="caption-text"><strong>PasswordEncoderに定義されているメソッド</strong></span><a class="headerlink" href="#id58" title="Permalink to this table">¶</a></caption>
 <colgroup>
 <col width="15%" />
 <col width="85%" />
@@ -1625,9 +1610,10 @@ Webアプリケーションのルートパス(“<code class="docutils literal">
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
-<p>Spring Securityは、<code class="docutils literal"><span class="pre">PasswordEncoder</span></code>インタフェースの実装クラスとして、以下の５クラスを提供している。</p>
-<table border="1" class="colwidths-given docutils" id="id57">
-<caption><span class="caption-text"><strong>PasswordEncoderの実装クラス</strong></span><a class="headerlink" href="#id57" title="Permalink to this table">¶</a></caption>
+<p>Spring Securityは、<code class="docutils literal"><span class="pre">PasswordEncoder</span></code>インタフェースの実装クラスとして以下の3つのいずれかを使用することを推奨している。
+また、本ガイドラインではこれらのクラスを直接使用せず、後述する<code class="docutils literal"><span class="pre">DelegatingPassowordEncoder</span></code>を通して使用することを推奨する。</p>
+<table border="1" class="colwidths-given docutils" id="id59">
+<caption><span class="caption-text"><strong>PasswordEncoderの実装クラス</strong></span><a class="headerlink" href="#id59" title="Permalink to this table">¶</a></caption>
 <colgroup>
 <col width="35%" />
 <col width="65%" />
@@ -1639,42 +1625,23 @@ Webアプリケーションのルートパス(“<code class="docutils literal">
 </thead>
 <tbody valign="top">
 <tr class="row-even"><td><div class="first last line-block">
+<div class="line"><code class="docutils literal"><span class="pre">Pbkdf2PasswordEncoder</span></code></div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">PBKDF2アルゴリズムを使用してパスワードのハッシュ化及び照合を行う実装クラス。</div>
+<div class="line">本ガイドラインでは、このクラスを使用することを推奨している。</div>
+<div class="line">詳細は、<a class="reference external" href="https://docs.spring.io/spring-security/site/docs/5.1.3.RELEASE/api/org/springframework/security/crypto/password/Pbkdf2PasswordEncoder.html">Pbkdf2PasswordEncoderのJavaDoc</a>を参照されたい。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><div class="first last line-block">
 <div class="line"><code class="docutils literal"><span class="pre">BCryptPasswordEncoder</span></code></div>
 </div>
 </td>
 <td><div class="first last line-block">
 <div class="line">BCryptアルゴリズムを使用してパスワードのハッシュ化及び照合を行う実装クラス。</div>
-<div class="line">詳細は、<a class="reference external" href="http://docs.spring.io/spring-security/site/docs/4.2.4.RELEASE/apidocs/org/springframework/security/crypto/bcrypt/BCryptPasswordEncoder.html">BCryptPasswordEncoderのJavaDoc</a>を参照されたい。</div>
-</div>
-</td>
-</tr>
-<tr class="row-odd"><td><div class="first last line-block">
-<div class="line"><code class="docutils literal"><span class="pre">StandardPasswordEncoder</span></code></div>
-</div>
-</td>
-<td><div class="first last line-block">
-<div class="line">SHA-256アルゴリズムを使用してパスワードのハッシュ化及び照合を行う実装クラス。</div>
-<div class="line">詳細は、<a class="reference external" href="http://docs.spring.io/spring-security/site/docs/4.2.4.RELEASE/apidocs/org/springframework/security/crypto/password/StandardPasswordEncoder.html">StandardPasswordEncoderのJavaDoc</a>を参照されたい。</div>
-</div>
-</td>
-</tr>
-<tr class="row-even"><td><div class="first last line-block">
-<div class="line"><code class="docutils literal"><span class="pre">NoOpPasswordEncoder</span></code></div>
-</div>
-</td>
-<td><div class="first last line-block">
-<div class="line">ハッシュ化しない実装クラス。</div>
-<div class="line">テスト用のクラスであり、実際のアプリケーションで使用することはない。</div>
-</div>
-</td>
-</tr>
-<tr class="row-odd"><td><div class="first last line-block">
-<div class="line"><code class="docutils literal"><span class="pre">Pbkdf2PasswordEncoder</span></code></div>
-</div>
-</td>
-<td><div class="first last line-block">
-<div class="line">PBKDF2アルゴリズムを使用してパスワードのハッシュ化及び照合を行う実装クラス。<code class="docutils literal"><span class="pre">Pbkdf2PasswordEncoder</span></code>はSpring Security 4.1から追加されたクラスである。</div>
-<div class="line">詳細は、<a class="reference external" href="https://docs.spring.io/spring-security/site/docs/4.2.4.RELEASE/apidocs/org/springframework/security/crypto/password/Pbkdf2PasswordEncoder.html">Pbkdf2PasswordEncoderのJavaDoc</a>を参照されたい。</div>
+<div class="line">詳細は、<a class="reference external" href="https://docs.spring.io/spring-security/site/docs/5.1.3.RELEASE/api/org/springframework/security/crypto/bcrypt/BCryptPasswordEncoder.html">BCryptPasswordEncoderのJavaDoc</a>を参照されたい。</div>
 </div>
 </td>
 </tr>
@@ -1683,46 +1650,56 @@ Webアプリケーションのルートパス(“<code class="docutils literal">
 </div>
 </td>
 <td><div class="first last line-block">
-<div class="line">SCryptアルゴリズムを使用してパスワードのハッシュ化及び照合を行う実装クラス。<code class="docutils literal"><span class="pre">SCryptPasswordEncoder</span></code>はSpring Security 4.1から追加されたクラスである。</div>
-<div class="line">詳細は、<a class="reference external" href="https://docs.spring.io/spring-security/site/docs/4.2.4.RELEASE/apidocs/org/springframework/security/crypto/scrypt/SCryptPasswordEncoder.html">SCryptPasswordEncoderのJavaDoc</a>を参照されたい。</div>
+<div class="line">SCryptアルゴリズムを使用してパスワードのハッシュ化及び照合を行う実装クラス。</div>
+<div class="line">詳細は、<a class="reference external" href="https://docs.spring.io/spring-security/site/docs/5.1.3.RELEASE/api/org/springframework/security/crypto/scrypt/SCryptPasswordEncoder.html">SCryptPasswordEncoderのJavaDoc</a>を参照されたい。</div>
 </div>
 </td>
 </tr>
 </tbody>
 </table>
-<p>本節では、<code class="docutils literal"><span class="pre">BCryptPasswordEncoder</span></code>の使い方について説明する。</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">ガイドラインでは<code class="docutils literal"><span class="pre">BCryptPasswordEncoder</span></code>の使い方を紹介しているが、<a class="reference external" href="https://www.owasp.org/index.php/Password_Storage_Cheat_Sheet">OWASP</a>ではBCryptアルゴリズムよりPBKDF2アルゴリズムが推奨されている。
-また、<a class="reference external" href="http://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-132.pdf">NIST800-132の「5 Password-Based Key Derivation Functions」</a>ではPBKDFのハッシュ関数に使用するイテレーションカウントを、最低1,000、特に重要なキーや性能が問題にならないシステムの場合は10,000,000を設定することが推奨されている。
-イテレーションカウントが大きくなるほどパスワード強度は増すが、性能にあたえる影響も大きくなる。</p>
+<p><a class="reference external" href="https://www.owasp.org/index.php/Password_Storage_Cheat_Sheet">OWASP(Open Web Application Security Project)</a>では<a class="reference external" href="https://www.nist.gov/topics/federal-information-standards-fips">FIPS</a>に準ずるPBKDF2アルゴリズムが推奨されている。</p>
+<p class="last">Macchinetta Server Framework for Javaでは1.6.1.RELEASEから、OWASP(Open Web Application Security Project)で推奨されるPBKDF2アルゴリズムの使用を推奨する。
+これに伴い、ブランクプロジェクトが提供する<code class="docutils literal"><span class="pre">PasswordEncoder</span></code>の定義も、<code class="docutils literal"><span class="pre">BCryptPasswordEncoder</span></code>からデフォルトで<code class="docutils literal"><span class="pre">Pbkdf2PasswordEncoder</span></code>を使用する定義に変更している。</p>
 </div>
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p><code class="docutils literal"><span class="pre">SCryptPasswordEncoder</span></code>を使用する場合は、ブランクプロジェクトのデフォルト設定から変更する必要がある。</p>
+<p><code class="docutils literal"><span class="pre">applicationContext.xml</span></code>のコメントアウトを外し、<code class="docutils literal"><span class="pre">SCryptPasswordEncoder</span></code>の定義を有効化する。</p>
 <blockquote>
-<div><div class="admonition-todo admonition" id="index-0">
-<p class="first admonition-title">Todo</p>
-<p><strong>TBD</strong></p>
-<p class="last">PBKDF2アルゴリズムに対応するには、前述の<code class="docutils literal"><span class="pre">Pbkdf2PasswordEncoder</span></code>を使用すればよい。
-<code class="docutils literal"><span class="pre">Pbkdf2PasswordEncoder</span></code>の使用方法については、次版以降に記載する予定である。</p>
+<div><p><em>applicationContext.xml</em></p>
+<div class="highlight-xml"><div class="highlight"><pre><span></span><span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">&quot;passwordEncoder&quot;</span> <span class="na">class=</span><span class="s">&quot;org.springframework.security.crypto.password.DelegatingPasswordEncoder&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;constructor-arg</span> <span class="na">name=</span><span class="s">&quot;idForEncode&quot;</span> <span class="na">value=</span><span class="s">&quot;pbkdf2&quot;</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;constructor-arg</span> <span class="na">name=</span><span class="s">&quot;idToPasswordEncoder&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;map&gt;</span>
+            <span class="c">&lt;!-- ommited --&gt;</span>
+            <span class="c">&lt;!-- When using SCryptPasswordEncoder, you need to add bcprov-jdk15on.jar to the dependency.</span>
+<span class="c">            &lt;entry key=&quot;scrypt&quot;&gt;</span>
+<span class="c">                &lt;bean class=&quot;org.springframework.security.crypto.scrypt.SCryptPasswordEncoder&quot; /&gt;</span>
+<span class="c">            &lt;/entry&gt;</span>
+<span class="c">            --&gt;</span>
+        <span class="nt">&lt;/map&gt;</span>
+    <span class="nt">&lt;/constructor-arg&gt;</span>
+<span class="nt">&lt;/bean&gt;</span>
+</pre></div>
 </div>
 </div></blockquote>
-<div class="line-block">
-<div class="line"><br /></div>
-</div>
-<div class="section" id="bcryptpasswordencoder">
-<h4><a class="toc-backref" href="#id83">9.2.2.5.1. BCryptPasswordEncoder</a><a class="headerlink" href="#bcryptpasswordencoder" title="Permalink to this headline">¶</a></h4>
-<p><code class="docutils literal"><span class="pre">BCryptPasswordEncoder</span></code>は、BCryptアルゴリズムを使用してパスワードのハッシュ化及びパスワードの照合を行う実装クラスである。
-<a class="reference internal" href="#springsecurityauthenticationpasswordhashsalt"><span class="std std-ref">ソルト</span></a> には16バイトの乱数(<code class="docutils literal"><span class="pre">java.security.SecureRandom</span></code>)が使用され、
-デフォルトでは1,024(2の10乗)回 <a class="reference internal" href="#springsecurityauthenticationpasswordhashstength"><span class="std std-ref">ストレッチング</span></a> を行う。</p>
-<ul class="simple">
-<li>applicationContext.xmlの定義例</li>
-</ul>
-<div class="highlight-xml"><div class="highlight"><pre><span></span><span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">&quot;passwordEncoder&quot;</span>
-    <span class="na">class=</span><span class="s">&quot;org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder&quot;</span> <span class="nt">&gt;</span> <span class="c">&lt;!-- (1) --&gt;</span>
-    <span class="nt">&lt;constructor-arg</span> <span class="na">name=</span><span class="s">&quot;strength&quot;</span> <span class="na">value=</span><span class="s">&quot;11&quot;</span> <span class="nt">/&gt;</span> <span class="c">&lt;!-- (2) --&gt;</span>
-<span class="nt">&lt;/bean&gt;</span>
+<p>依存ライブラリとして不足している<code class="docutils literal"><span class="pre">bcprov-jdk15on</span></code>を追加する。
+pom.xmlに以下のdependencyを追加すれば良い。</p>
+<blockquote class="last">
+<div><p><em>pom.xml</em></p>
+<div class="highlight-xml"><div class="highlight"><pre><span></span><span class="nt">&lt;dependency&gt;</span>
+    <span class="nt">&lt;groupId&gt;</span>org.bouncycastle<span class="nt">&lt;/groupId&gt;</span>
+    <span class="nt">&lt;artifactId&gt;</span>bcprov-jdk15on<span class="nt">&lt;/artifactId&gt;</span>
+    <span class="nt">&lt;version&gt;</span>${bouncycastle.version}<span class="nt">&lt;/version&gt;</span> <span class="c">&lt;!-- (1) --&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
 </pre></div>
 </div>
 <table border="1" class="colwidths-given docutils">
@@ -1741,7 +1718,53 @@ Webアプリケーションのルートパス(“<code class="docutils literal">
 </div>
 </td>
 <td><div class="first last line-block">
-<div class="line">passwordEncoderのクラスに<code class="docutils literal"><span class="pre">BCryptPasswordEncoder</span></code>を指定する。</div>
+<div class="line">任意のバージョンを指定する。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">アプリケーションの要件によっては、上記以外の非推奨な<code class="docutils literal"><span class="pre">PasswordEncoder</span></code>の実装クラスを利用する必要がある場合もある。
+「<a class="reference internal" href="#authenticationhowtoextendusingdeprecatedpasswordencoder"><span class="std std-ref">非推奨アルゴリズムのPasswordEncoderの利用</span></a>」では非推奨の実装クラスの一つである<code class="docutils literal"><span class="pre">MessageDigestPasswordEncoder</span></code>を利用する方法について解説する</p>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="section" id="delegatingpasswordencoder">
+<h4><a class="toc-backref" href="#id86">9.2.2.5.1. DelegatingPasswordEncoder</a><a class="headerlink" href="#delegatingpasswordencoder" title="Permalink to this headline">¶</a></h4>
+<p><code class="docutils literal"><span class="pre">DelegatingPasswordEncoder</span></code>は、ハッシュ化されたパスワードの照合に複数の<code class="docutils literal"><span class="pre">PasswordEncoder</span></code>から適切なものを選択するためのストラテジインタフェースである。
+これにより、データベース等に格納された様々なアルゴリズムでハッシュ化されたパスワードを、アプリケーションの変更無しに扱うことが可能となる。
+なお、<code class="docutils literal"><span class="pre">DelegatingPasswordEncoder</span></code>がハッシュ化されたアルゴリズムを判定するには、ハッシュ化されたパスワードの先頭にアルゴリズムを示すキーを含む必要があり、<code class="docutils literal"><span class="pre">DelegatingPasswordEncoder</span></code>がパスワードをハッシュ化する際には、このキーが自動的に付与される。</p>
+<div class="figure" id="id60">
+<a class="reference internal image-reference" href="../_images/AuthenticationDelegatingPasswordEncoder.png"><img alt="../_images/AuthenticationDelegatingPasswordEncoder.png" src="../_images/AuthenticationDelegatingPasswordEncoder.png" style="width: 100%;" /></a>
+<p class="caption"><span class="caption-text"><strong>DelegatingPasswordEncoderの解説</strong></span></p>
+</div>
+<table border="1" class="colwidths-given docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">項番</th>
+<th class="head">説明</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><div class="first last line-block">
+<div class="line">(1)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">User1、User2についてパスワードの照合を行う。データストアには<code class="docutils literal"><span class="pre">DelegatingPasswordEncoder</span></code>でハッシュ化したパスワードが格納されている。</div>
+<div class="line">データストアに格納されたパスワードは<code class="docutils literal"><span class="pre">DelegatingPasswordEncoder</span></code>がハッシュ化を行っており、User1は<code class="docutils literal"><span class="pre">BCryptPasswordEncoder</span></code>、User2は<code class="docutils literal"><span class="pre">Pbkdf2PasswordEncoder</span></code>が用いられている。</div>
+<div class="line">なお、この解説ではデータストアから<code class="docutils literal"><span class="pre">DaoAuthenticationProvider</span></code>にユーザ情報を引き渡す際に経由する<code class="docutils literal"><span class="pre">UserDetailsService</span></code>の実装クラス等を省略しているため注意されたい。</div>
 </div>
 </td>
 </tr>
@@ -1750,34 +1773,107 @@ Webアプリケーションのルートパス(“<code class="docutils literal">
 </div>
 </td>
 <td><div class="first last line-block">
-<div class="line">コンストラクタの引数に、ハッシュ化のストレッチング回数のラウンド数を指定する。</div>
-<div class="line">本引数は省略可能であり、指定できる値は”<code class="docutils literal"><span class="pre">4</span></code>”から<code class="docutils literal"><span class="pre">31</span></code>である。</div>
-<div class="line">なお、未指定時のデフォルト値は<code class="docutils literal"><span class="pre">10</span></code>である。</div>
-<div class="line">本ガイドラインでは説明を省略するが、コンストラクタ引数として<code class="docutils literal"><span class="pre">java.security.SecureRandom.SecureRandom</span></code>を指定することも可能である。</div>
+<div class="line"><code class="docutils literal"><span class="pre">DelegatingPasswordEncoder</span></code>を用いて照合を行う。照合の際は、データストアに格納されたハッシュ化されたパスワードからプレフィックスを読み取り適切な<code class="docutils literal"><span class="pre">PasswordEncoder</span></code>に処理を委譲する。</div>
+<div class="line">User1のハッシュ値はプレフィックスとして<code class="docutils literal"><span class="pre">bcrypt</span></code>が付与されているため<code class="docutils literal"><span class="pre">BCryptPasswordEncoder</span></code>で照合が行われ、User2のハッシュ値は<code class="docutils literal"><span class="pre">pbkdf2</span></code>が付与されているため<code class="docutils literal"><span class="pre">Pbksdf2PasswordEncoder</span></code>で照合が行われる。</div>
 </div>
 </td>
 </tr>
 </tbody>
 </table>
-<div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<p><strong>SecureRandomの使用について</strong></p>
-<p>Linux環境で<code class="docutils literal"><span class="pre">SecureRandom</span></code>を使用する場合、処理の遅延やタイムアウトが発生する場合がある。
-これは使用する乱数生成器に左右される事象であり、以下のドキュメントに説明がある。</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>ブランクプロジェクトでは<code class="docutils literal"><span class="pre">Pbkdf2PasswordEncoder</span></code>を使用する<code class="docutils literal"><span class="pre">DelegatingPasswordEncoder</span></code>が定義されている。</p>
+<p>ここではブランクプロジェクトで定義されている<code class="docutils literal"><span class="pre">PasswordEncoder</span></code>をもとに解説を行う。</p>
 <ul class="simple">
-<li><a class="reference external" href="https://docs.oracle.com/javase/8/docs/api/java/security/SecureRandom.html">https://docs.oracle.com/javase/8/docs/api/java/security/SecureRandom.html</a></li>
+<li>applicationContext.xmlの定義</li>
 </ul>
-<p>本事象が発生する場合は、以下のいずれかの設定を追加することで回避することができる。</p>
-<ul class="simple">
-<li>Javaコマンド実行時に <code class="docutils literal"><span class="pre">-Djava.security.egd=file:/dev/urandom</span></code> を指定する。</li>
-<li><code class="docutils literal"><span class="pre">${JAVA_HOME}/jre/lib/security/java.security</span></code> 内の <code class="docutils literal"><span class="pre">securerandom.source=/dev/random</span></code> を <code class="docutils literal"><span class="pre">securerandom.source=/dev/urandom</span></code> に変更する。</li>
-</ul>
-<p class="last">Java SE 7のb19以前のバージョン(正式リリース前)で本事象が発生する場合は、 <code class="docutils literal"><span class="pre">/dev/urandom</span></code> ではなく <code class="docutils literal"><span class="pre">/dev/./urandom</span></code> を指定する必要がある。ただし、 <code class="docutils literal"><span class="pre">SecureRandom</span></code>で使用するアルゴリズムが <code class="docutils literal"><span class="pre">NativePRNG</span></code>の場合は回避することができない。</p>
+<div class="highlight-xml"><div class="highlight"><pre><span></span><span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">&quot;passwordEncoder&quot;</span> <span class="na">class=</span><span class="s">&quot;org.springframework.security.crypto.password.DelegatingPasswordEncoder&quot;</span><span class="nt">&gt;</span> <span class="c">&lt;!-- (1) --&gt;</span>
+    <span class="nt">&lt;constructor-arg</span> <span class="na">name=</span><span class="s">&quot;idForEncode&quot;</span> <span class="na">value=</span><span class="s">&quot;pbkdf2&quot;</span> <span class="nt">/&gt;</span> <span class="c">&lt;!-- (2) --&gt;</span>
+    <span class="nt">&lt;constructor-arg</span> <span class="na">name=</span><span class="s">&quot;idToPasswordEncoder&quot;</span><span class="nt">&gt;</span> <span class="c">&lt;!-- (3) --&gt;</span>
+        <span class="nt">&lt;map&gt;</span> <span class="c">&lt;!-- (4) --&gt;</span>
+            <span class="nt">&lt;entry</span> <span class="na">key=</span><span class="s">&quot;pbkdf2&quot;</span><span class="nt">&gt;</span>
+                <span class="nt">&lt;bean</span> <span class="na">class=</span><span class="s">&quot;org.springframework.security.crypto.password.Pbkdf2PasswordEncoder&quot;</span> <span class="nt">/&gt;</span>
+            <span class="nt">&lt;/entry&gt;</span>
+            <span class="nt">&lt;entry</span> <span class="na">key=</span><span class="s">&quot;bcrypt&quot;</span><span class="nt">&gt;</span>
+                <span class="nt">&lt;bean</span> <span class="na">class=</span><span class="s">&quot;org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder&quot;</span> <span class="nt">/&gt;</span>
+            <span class="nt">&lt;/entry&gt;</span>
+            <span class="nt">&lt;entry</span> <span class="na">key=</span><span class="s">&quot;scrypt&quot;</span><span class="nt">&gt;</span>
+                <span class="nt">&lt;bean</span> <span class="na">class=</span><span class="s">&quot;org.springframework.security.crypto.scrypt.SCryptPasswordEncoder&quot;</span> <span class="nt">/&gt;</span>
+            <span class="nt">&lt;/entry&gt;</span>
+        <span class="nt">&lt;/map&gt;</span>
+    <span class="nt">&lt;/constructor-arg&gt;</span>
+<span class="nt">&lt;/bean&gt;</span>
+</pre></div>
 </div>
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
-<p><code class="docutils literal"><span class="pre">BCryptPasswordEncoder</span></code>を使用して処理を行うクラスでは、<code class="docutils literal"><span class="pre">PasswordEncoder</span></code>をDIコンテナからインジェクションして使用する。</p>
+<table border="1" class="colwidths-given docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">項番</th>
+<th class="head">説明</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><div class="first last line-block">
+<div class="line">(1)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line"><code class="docutils literal"><span class="pre">DelegatingPasswordEncoder</span></code>をid <code class="docutils literal"><span class="pre">passwordEncoder</span></code>で定義する。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><div class="first last line-block">
+<div class="line">(2)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line"><code class="docutils literal"><span class="pre">idToPasswordEncoder</span></code>で登録した<code class="docutils literal"><span class="pre">PasswordEncoder</span></code>の内、ハッシュ化に使用するものの<code class="docutils literal"><span class="pre">key</span></code>値を<code class="docutils literal"><span class="pre">idForEncode</span></code>に指定する。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><div class="first last line-block">
+<div class="line">(3)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line"><code class="docutils literal"><span class="pre">idToPasswordEncoder</span></code>に<code class="docutils literal"><span class="pre">PasswordEncoder</span></code>の実装を格納した<code class="docutils literal"><span class="pre">Map</span></code>を指定する。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><div class="first last line-block">
+<div class="line">(4)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line"><code class="docutils literal"><span class="pre">PasswordEncoder</span></code>の実装を<code class="docutils literal"><span class="pre">Map</span></code>に格納する。</div>
+<div class="line">ハッシュ化したパスワードのプレフィックスが<code class="docutils literal"><span class="pre">Map</span></code>の<code class="docutils literal"><span class="pre">key</span></code>と一致すると、その<code class="docutils literal"><span class="pre">key</span></code>で格納された<code class="docutils literal"><span class="pre">PasswordEncoder</span></code>を使用して照合が行われる。</div>
+<div class="line">また、前述の<code class="docutils literal"><span class="pre">idForEncode</span></code>と<code class="docutils literal"><span class="pre">key</span></code>が一致する<code class="docutils literal"><span class="pre">PasswordEncoder</span></code>を使用してハッシュ化が行われる。</div>
+<div class="line">ハッシュ化の際には<code class="docutils literal"><span class="pre">key</span></code>に指定した値がプレフィックスとして付与される。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p><strong>セキュリティに関わる注意点</strong></p>
+<p>実際のアプリケーション開発では、セキュリティ上のリスクを軽減するため<code class="docutils literal"><span class="pre">idForEncode</span></code>と<code class="docutils literal"><span class="pre">idToPasswordEncoder</span></code>の<code class="docutils literal"><span class="pre">key</span></code>値にアルゴリズム名を推測できないような値を指定することを推奨する。</p>
+<p class="last">また、<code class="docutils literal"><span class="pre">PasswordEncoder</span></code>インタフェースの実装クラスを利用する際は <a class="reference internal" href="#authenticationhowtoextendcustompasswordencoder"><span class="std std-ref">PasswordEncoderのカスタマイズ</span></a> についても参照し、セキュリティ要件を満たすように変更を加えられたい。</p>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>ハッシュ化を行うクラスでは、<code class="docutils literal"><span class="pre">PasswordEncoder</span></code>をDIコンテナからインジェクションして使用する。</p>
 <div class="highlight-java"><div class="highlight"><pre><span></span><span class="nd">@Service</span>
 <span class="nd">@Transactional</span>
 <span class="kd">public</span> <span class="kd">class</span> <span class="nc">AccountServiceImpl</span> <span class="kd">implements</span> <span class="n">AccountService</span> <span class="o">{</span>
@@ -1831,23 +1927,69 @@ Webアプリケーションのルートパス(“<code class="docutils literal">
 </tr>
 </tbody>
 </table>
-<div class="admonition note" id="springsecurityauthenticationpasswordhashsalt">
+<div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p><strong>ソルト</strong></p>
-<p class="last">ハッシュ化対象のデータに追加する文字列のことである。
-ソルトをパスワードに付与することで、実際のパスワードより桁数が長くなるため、レインボークラックなどのパスワード解析を困難にすることができる。
-なお、<strong>ソルトはユーザーごとに異なる値（ランダム値等）を設定することを推奨する。</strong>
-これは、同じソルトを使用していると、ハッシュ値からハッシュ化前の文字列(パスワード)がわかってしまう可能性があるためである。</p>
+<p><strong>Pbkdf2以外のアルゴリズムを使用する場合</strong></p>
+<p class="last">パスワードのハッシュ化に使用する<code class="docutils literal"><span class="pre">PasswordEncoder</span></code>を変更するには、<code class="docutils literal"><span class="pre">idForEncode</span></code>に使用したい<code class="docutils literal"><span class="pre">PasswordEncoder</span></code>の<code class="docutils literal"><span class="pre">key</span></code>値（<code class="docutils literal"><span class="pre">bcrypt</span></code>や<code class="docutils literal"><span class="pre">scrypt</span></code>）に指定すれば良い。</p>
 </div>
-<div class="admonition note" id="springsecurityauthenticationpasswordhashstength">
-<p class="first admonition-title">Note</p>
-<p><strong>ストレッチング</strong></p>
-<p>ハッシュ関数の計算を繰り返し行うことで、保管するパスワードに関する情報を繰り返し暗号化することである。
-パスワードの総当たり攻撃への対策として、パスワード解析に必要な時間を延ばすために行う。
-しかし、ストレッチングはシステムの性能に影響を与えるので、システムの性能を考慮してストレッチング回数を決める必要がある。</p>
-<p class="last">Spring Securityのデフォルトでは1,024(2の10乗)回ストレッチングを行うが、この回数はコンストラクタ引数(<code class="docutils literal"><span class="pre">strength</span></code>)で変更することができる。
-<code class="docutils literal"><span class="pre">strength</span></code>には4(16回)から31(2,147,483,648回)を指定することが可能である。
-ストレッチング回数が多いほどパスワードの強度は増すが、計算量が多くなるため性能にあたえる影響も大きくなる。</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p><strong>既存のアプリケーションにDelegatingPasswordEncoderを適用する際の注意点</strong></p>
+<p><strong>PasswordEncoderに関する注意点</strong></p>
+<blockquote>
+<div><p>既に運用しているシステムでは、パスワードにプレフィックスは付与されていない。
+プレフィックスが付与されていないパスワードをそのまま照合に使用するには、以下で示すように<code class="docutils literal"><span class="pre">defaultPasswordEncoderForMatches</span></code>プロパティで照合に使用するエンコーダを指定する必要がある。</p>
+<ul class="simple">
+<li>applicationContext.xmlの変更</li>
+</ul>
+<div class="highlight-xml"><div class="highlight"><pre><span></span><span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">&quot;passwordEncoder&quot;</span> <span class="na">class=</span><span class="s">&quot;org.springframework.security.crypto.password.DelegatingPasswordEncoder&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;constructor-arg</span> <span class="na">name=</span><span class="s">&quot;idForEncode&quot;</span> <span class="na">value=</span><span class="s">&quot;pbkdf2&quot;</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;constructor-arg</span> <span class="na">name=</span><span class="s">&quot;idToPasswordEncoder&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;map&gt;</span>
+            <span class="nt">&lt;entry</span> <span class="na">key=</span><span class="s">&quot;pbkdf2&quot;</span><span class="nt">&gt;</span>
+                <span class="nt">&lt;bean</span> <span class="na">class=</span><span class="s">&quot;org.springframework.security.crypto.password.Pbkdf2PasswordEncoder&quot;</span> <span class="nt">/&gt;</span>
+            <span class="nt">&lt;/entry&gt;</span>
+            <span class="c">&lt;!-- omitted --&gt;</span>
+        <span class="nt">&lt;/map&gt;</span>
+    <span class="nt">&lt;/constructor-arg&gt;</span>
+    <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">&quot;defaultPasswordEncoderForMatches&quot;</span> <span class="na">ref=</span><span class="s">&quot;passwordEncoderUsedBefore&quot;</span> <span class="nt">/&gt;</span> <span class="c">&lt;!-- (1) --&gt;</span>
+<span class="nt">&lt;/bean&gt;</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<table border="1" class="colwidths-given docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">項番</th>
+<th class="head">説明</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><div class="first last line-block">
+<div class="line">(1)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line"><code class="docutils literal"><span class="pre">defaultPasswordEncoderForMatches</span></code>に移行前に使用していた<code class="docutils literal"><span class="pre">PasswordEncoder</span></code>を指定する。</div>
+<div class="line">これにより、プレフィックスが付与されていないハッシュ値に対して、指定した<code class="docutils literal"><span class="pre">PasswordEncoder</span></code>で照合が行われるようになる。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+<p><code class="docutils literal"><span class="pre">defaultPasswordEncoderForMatches</span></code>プロパティに照合に使用するエンコーダを指定せずに、<code class="docutils literal"><span class="pre">DelegatingPasswordEncoder</span></code>を使用してプレフィックスが付与されていないハッシュ値を照合しようとすると、デフォルトで設定されている<code class="docutils literal"><span class="pre">UnmappedIdPasswordEncoder</span></code>が使用され、<code class="docutils literal"><span class="pre">IllegalArgumentException</span></code>が発生する。</p>
+</div></blockquote>
+<p><strong>データストアに関する注意点</strong></p>
+<blockquote class="last">
+<div>ハッシュ化されたパスワードを格納するデータベースなどでは、プレフィックスが付与されることを考慮する必要がある。</div></blockquote>
 </div>
 <div class="line-block">
 <div class="line"><br /></div>
@@ -1855,7 +1997,7 @@ Webアプリケーションのルートパス(“<code class="docutils literal">
 </div>
 </div>
 <div class="section" id="springsecurityauthenticationevent">
-<span id="id14"></span><h3><a class="toc-backref" href="#id84">9.2.2.6. 認証イベントのハンドリング</a><a class="headerlink" href="#springsecurityauthenticationevent" title="Permalink to this headline">¶</a></h3>
+<span id="id14"></span><h3><a class="toc-backref" href="#id87">9.2.2.6. 認証イベントのハンドリング</a><a class="headerlink" href="#springsecurityauthenticationevent" title="Permalink to this headline">¶</a></h3>
 <p>Spring Securityは、Spring Frameworkが提供しているイベント通知の仕組みを利用して、
 認証処理の処理結果を他のコンポーネントと連携する仕組みを提供している。</p>
 <p>この仕組みを利用すると、以下のようなセキュリティ要件をSpring Securityの認証機能に組み込むことが可能である。</p>
@@ -1864,7 +2006,7 @@ Webアプリケーションのルートパス(“<code class="docutils literal">
 <li>パスワードを連続して間違った場合にアカウントをロックする。</li>
 </ul>
 <p>認証イベントの通知は、以下のような仕組みで行われる。</p>
-<div class="figure" id="id58">
+<div class="figure" id="id61">
 <a class="reference internal image-reference" href="../_images/AuthenticationEventNotification.png"><img alt="../_images/AuthenticationEventNotification.png" src="../_images/AuthenticationEventNotification.png" style="width: 100%;" /></a>
 <p class="caption"><span class="caption-text"><strong>イベント通知の仕組み</strong></span></p>
 </div>
@@ -1933,11 +2075,11 @@ Spring 4.2からはPOJOに<code class="docutils literal"><span class="pre">&#64;
 <div class="line"><br /></div>
 </div>
 <div class="section" id="id15">
-<h4><a class="toc-backref" href="#id85">9.2.2.6.1. 認証成功イベント</a><a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h4>
+<h4><a class="toc-backref" href="#id88">9.2.2.6.1. 認証成功イベント</a><a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h4>
 <p>認証が成功した時にSpring Securityが通知する主なイベントは以下の3つである。
 この3つのイベントは途中でエラーが発生しなければ、以下の順番ですべて通知される。</p>
-<table border="1" class="colwidths-given docutils" id="id59">
-<caption><span class="caption-text"><strong>認証が成功したことを通知するイベントクラス</strong></span><a class="headerlink" href="#id59" title="Permalink to this table">¶</a></caption>
+<table border="1" class="colwidths-given docutils" id="id62">
+<caption><span class="caption-text"><strong>認証が成功したことを通知するイベントクラス</strong></span><a class="headerlink" href="#id62" title="Permalink to this table">¶</a></caption>
 <colgroup>
 <col width="35%" />
 <col width="65%" />
@@ -1968,11 +2110,11 @@ Spring 4.2からはPOJOに<code class="docutils literal"><span class="pre">&#64;
 </div>
 </div>
 <div class="section" id="id16">
-<h4><a class="toc-backref" href="#id86">9.2.2.6.2. 認証失敗イベント</a><a class="headerlink" href="#id16" title="Permalink to this headline">¶</a></h4>
+<h4><a class="toc-backref" href="#id89">9.2.2.6.2. 認証失敗イベント</a><a class="headerlink" href="#id16" title="Permalink to this headline">¶</a></h4>
 <p>認証が失敗した時にSpring Securityが通知する主なイベントは以下の通り。
 認証に失敗した場合は、いずれか一つのイベントが通知される。</p>
-<table border="1" class="colwidths-given docutils" id="id60">
-<caption><span class="caption-text"><strong>認証が失敗したことを通知するイベントクラス</strong></span><a class="headerlink" href="#id60" title="Permalink to this table">¶</a></caption>
+<table border="1" class="colwidths-given docutils" id="id63">
+<caption><span class="caption-text"><strong>認証が失敗したことを通知するイベントクラス</strong></span><a class="headerlink" href="#id63" title="Permalink to this table">¶</a></caption>
 <colgroup>
 <col width="35%" />
 <col width="65%" />
@@ -2043,8 +2185,8 @@ Spring 4.2からはPOJOに<code class="docutils literal"><span class="pre">&#64;
 <div class="line"><br /></div>
 </div>
 </div>
-<div class="section" id="id17">
-<h4><a class="toc-backref" href="#id87">9.2.2.6.3. イベントリスナの作成</a><a class="headerlink" href="#id17" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="springsecurityauthenticationeventlistener">
+<span id="id17"></span><h4><a class="toc-backref" href="#id90">9.2.2.6.3. イベントリスナの作成</a><a class="headerlink" href="#springsecurityauthenticationeventlistener" title="Permalink to this headline">¶</a></h4>
 <p>認証イベントの通知を受け取って処理を行いたい場合は、<code class="docutils literal"><span class="pre">&#64;EventListener</span></code>を付与したメソッドを実装したクラスを作成し、DIコンテナに登録する。</p>
 <ul class="simple">
 <li>イベントリスナクラスの実装例</li>
@@ -2052,7 +2194,7 @@ Spring 4.2からはPOJOに<code class="docutils literal"><span class="pre">&#64;
 <div class="highlight-java"><div class="highlight"><pre><span></span><span class="nd">@Component</span>
 <span class="kd">public</span> <span class="kd">class</span> <span class="nc">AuthenticationEventListeners</span> <span class="o">{</span>
 
-    <span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">Logger</span> <span class="n">log</span> <span class="o">=</span>
+    <span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">Logger</span> <span class="n">logger</span> <span class="o">=</span>
             <span class="n">LoggerFactory</span><span class="o">.</span><span class="na">getLogger</span><span class="o">(</span><span class="n">AuthenticationEventListeners</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
 
 <span class="nd">@EventListener</span> <span class="c1">// (1)</span>
@@ -2096,15 +2238,21 @@ Spring 4.2からはPOJOに<code class="docutils literal"><span class="pre">&#64;
 </table>
 <p>上記例では、クライアントが指定した認証情報に誤りがあった場合に通知される<code class="docutils literal"><span class="pre">AuthenticationFailureBadCredentialsEvent</span></code>をハンドリングするクラスを作成する例としているが、
 他のイベントも同じ要領でハンドリングすることが可能である。</p>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p class="last">総当たり攻撃による不正ログインの兆候を検出するための方法として、ログイン認証時のログを監視することがあげられる。
+実装例のような<code class="docutils literal"><span class="pre">AuthenticationFailureBadCredentialsEvent</span></code>をハンドリングするイベントリスナを作成して
+認証情報の誤りをログ情報として出力することで、Spring Securityを使用した認証時のログを監視することが可能になる。</p>
+</div>
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
 </div>
 </div>
 <div class="section" id="springsecurityauthenticationlogout">
-<span id="id18"></span><h3><a class="toc-backref" href="#id88">9.2.2.7. ログアウト</a><a class="headerlink" href="#springsecurityauthenticationlogout" title="Permalink to this headline">¶</a></h3>
+<span id="id18"></span><h3><a class="toc-backref" href="#id91">9.2.2.7. ログアウト</a><a class="headerlink" href="#springsecurityauthenticationlogout" title="Permalink to this headline">¶</a></h3>
 <p>Spring Securityは、以下のような流れでログアウト処理を行う。</p>
-<div class="figure" id="id61">
+<div class="figure" id="id64">
 <a class="reference internal image-reference" href="../_images/AuthenticationLogout.png"><img alt="../_images/AuthenticationLogout.png" src="../_images/AuthenticationLogout.png" style="width: 100%;" /></a>
 <p class="caption"><span class="caption-text"><strong>ログアウト処理の仕組み</strong></span></p>
 </div>
@@ -2152,8 +2300,8 @@ Spring 4.2からはPOJOに<code class="docutils literal"><span class="pre">&#64;
 <div class="line"><br /></div>
 </div>
 <p><code class="docutils literal"><span class="pre">LogoutHandler</span></code>の実装クラスは複数存在し、それぞれ以下の役割をもっている。</p>
-<table border="1" class="colwidths-given docutils" id="id62">
-<caption><span class="caption-text"><strong>主なLogoutHandlerの実装クラス</strong></span><a class="headerlink" href="#id62" title="Permalink to this table">¶</a></caption>
+<table border="1" class="colwidths-given docutils" id="id65">
+<caption><span class="caption-text"><strong>主なLogoutHandlerの実装クラス</strong></span><a class="headerlink" href="#id65" title="Permalink to this table">¶</a></caption>
 <colgroup>
 <col width="35%" />
 <col width="65%" />
@@ -2200,7 +2348,7 @@ Spring 4.2からはPOJOに<code class="docutils literal"><span class="pre">&#64;
 <div class="line"><br /></div>
 </div>
 <div class="section" id="id19">
-<h4><a class="toc-backref" href="#id89">9.2.2.7.1. ログアウト処理の適用</a><a class="headerlink" href="#id19" title="Permalink to this headline">¶</a></h4>
+<h4><a class="toc-backref" href="#id92">9.2.2.7.1. ログアウト処理の適用</a><a class="headerlink" href="#id19" title="Permalink to this headline">¶</a></h4>
 <p>ログアウト処理を適用するためには、以下のようなbean定義を行う。</p>
 <ul class="simple">
 <li>spring-security.xmlの定義例</li>
@@ -2254,7 +2402,7 @@ Spring 4.2からはPOJOに<code class="docutils literal"><span class="pre">&#64;
 </div>
 </div>
 <div class="section" id="id20">
-<h4><a class="toc-backref" href="#id90">9.2.2.7.2. デフォルトの動作</a><a class="headerlink" href="#id20" title="Permalink to this headline">¶</a></h4>
+<h4><a class="toc-backref" href="#id93">9.2.2.7.2. デフォルトの動作</a><a class="headerlink" href="#id20" title="Permalink to this headline">¶</a></h4>
 <p>Spring Securityのデフォルトの動作では、<code class="docutils literal"><span class="pre">/logout</span></code>というパスにリクエストを送るとログアウト処理が行われる。
 ログアウト処理では、「ログインユーザーの認証情報のクリア」「セッションの破棄」が行われる。</p>
 <p>また、</p>
@@ -2309,11 +2457,11 @@ Spring 4.2からはPOJOに<code class="docutils literal"><span class="pre">&#64;
 </div>
 </div>
 <div class="section" id="id21">
-<h3><a class="toc-backref" href="#id91">9.2.2.8. ログアウト成功時のレスポンス</a><a class="headerlink" href="#id21" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id94">9.2.2.8. ログアウト成功時のレスポンス</a><a class="headerlink" href="#id21" title="Permalink to this headline">¶</a></h3>
 <p>Spring Securityは、ログアウト成功時のレスポンスを制御するためのコンポーネントとして、
 <code class="docutils literal"><span class="pre">LogoutSuccessHandler</span></code>というインタフェースと実装クラスを提供している。</p>
-<table border="1" class="colwidths-given docutils" id="id63">
-<caption><span class="caption-text"><strong>AuthenticationFailureHandlerの実装クラス</strong></span><a class="headerlink" href="#id63" title="Permalink to this table">¶</a></caption>
+<table border="1" class="colwidths-given docutils" id="id66">
+<caption><span class="caption-text"><strong>AuthenticationFailureHandlerの実装クラス</strong></span><a class="headerlink" href="#id66" title="Permalink to this table">¶</a></caption>
 <colgroup>
 <col width="35%" />
 <col width="65%" />
@@ -2336,7 +2484,7 @@ Spring 4.2からはPOJOに<code class="docutils literal"><span class="pre">&#64;
 </tbody>
 </table>
 <div class="section" id="id22">
-<h4><a class="toc-backref" href="#id92">9.2.2.8.1. デフォルトの動作</a><a class="headerlink" href="#id22" title="Permalink to this headline">¶</a></h4>
+<h4><a class="toc-backref" href="#id95">9.2.2.8.1. デフォルトの動作</a><a class="headerlink" href="#id22" title="Permalink to this headline">¶</a></h4>
 <p>Spring Securityのデフォルトの動作では、ログインフォームを表示するためのパスに<code class="docutils literal"><span class="pre">logout</span></code>というクエリパラメータが付与されたURLにリダイレクトする。</p>
 <p>例として、ログインフォームを表示するためのパスが<code class="docutils literal"><span class="pre">/login</span></code>の場合は<code class="docutils literal"><span class="pre">/login?logout</span></code>にリダイレクトされる。</p>
 <div class="line-block">
@@ -2345,12 +2493,12 @@ Spring 4.2からはPOJOに<code class="docutils literal"><span class="pre">&#64;
 </div>
 </div>
 <div class="section" id="springsecurityauthenticationaccess">
-<span id="id23"></span><h3><a class="toc-backref" href="#id93">9.2.2.9. 認証情報へのアクセス</a><a class="headerlink" href="#springsecurityauthenticationaccess" title="Permalink to this headline">¶</a></h3>
+<span id="id23"></span><h3><a class="toc-backref" href="#id96">9.2.2.9. 認証情報へのアクセス</a><a class="headerlink" href="#springsecurityauthenticationaccess" title="Permalink to this headline">¶</a></h3>
 <p>認証されたユーザーの認証情報は、Spring Securityのデフォルト実装ではセッションに格納される。
 セッションに格納された認証情報は、リクエスト毎に<code class="docutils literal"><span class="pre">SecurityContextPersistenceFilter</span></code>クラスによって<code class="docutils literal"><span class="pre">SecurityContextHolder</span></code>というクラスに格納され、同一スレッド内であればどこからでもアクセスすることができるようになる。</p>
 <p>ここでは、認証情報から<code class="docutils literal"><span class="pre">UserDetails</span></code>を取得し、取得した<code class="docutils literal"><span class="pre">UserDetails</span></code>が保持している情報にアクセスする方法を説明する。</p>
 <div class="section" id="java">
-<h4><a class="toc-backref" href="#id94">9.2.2.9.1. Javaからのアクセス</a><a class="headerlink" href="#java" title="Permalink to this headline">¶</a></h4>
+<h4><a class="toc-backref" href="#id97">9.2.2.9.1. Javaからのアクセス</a><a class="headerlink" href="#java" title="Permalink to this headline">¶</a></h4>
 <p>一般的な業務アプリケーションでは、「いつ」「誰が」「どのデータに」「どのようなアクセスをしたか」を記録する監査ログを取得することがある。
 このような要件を実現する際の「誰が」は、認証情報から取得することができる。</p>
 <ul class="simple">
@@ -2446,14 +2594,14 @@ Spring Security 3.1からSpring Security 3.2以降にバージョンアップす
 <li><code class="docutils literal"><span class="pre">org.springframework.security.web.authentication.session.SessionFixationProtectionStrategy</span></code></li>
 </ul>
 <p class="last">具体的な定義方法については、
-<a class="reference external" href="http://docs.spring.io/spring-security/site/docs/4.2.4.RELEASE/reference/htmlsingle/#concurrent-sessions">Spring Security Reference -Web Application Security (Concurrency Control)-</a> のサンプルコードを参考にされたい。</p>
+<a class="reference external" href="https://docs.spring.io/spring-security/site/docs/5.1.3.RELEASE/reference/htmlsingle/#concurrent-sessions">Spring Security Reference -Web Application Security (Concurrency Control)-</a> のサンプルコードを参考にされたい。</p>
 </div>
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
 </div>
 <div class="section" id="jsp">
-<h4><a class="toc-backref" href="#id95">9.2.2.9.2. JSPからのアクセス</a><a class="headerlink" href="#jsp" title="Permalink to this headline">¶</a></h4>
+<h4><a class="toc-backref" href="#id98">9.2.2.9.2. JSPからのアクセス</a><a class="headerlink" href="#jsp" title="Permalink to this headline">¶</a></h4>
 <p>一般的なWebアプリケーションでは、ログインユーザーのユーザー情報などを画面に表示することがある。
 このような要件を実現する際のログインユーザーのユーザー情報は、認証情報から取得することができる。</p>
 <ul class="simple">
@@ -2515,11 +2663,11 @@ ${f:h(principal.account.lastName)}
 </div>
 </div>
 <div class="section" id="spring-mvc">
-<span id="springsecurityauthenticationintegrationwithspringmvc"></span><h3><a class="toc-backref" href="#id96">9.2.2.10. 認証処理とSpring MVCの連携</a><a class="headerlink" href="#spring-mvc" title="Permalink to this headline">¶</a></h3>
+<span id="springsecurityauthenticationintegrationwithspringmvc"></span><h3><a class="toc-backref" href="#id99">9.2.2.10. 認証処理とSpring MVCの連携</a><a class="headerlink" href="#spring-mvc" title="Permalink to this headline">¶</a></h3>
 <p>Spring Securityは、Spring MVCと連携するためのコンポーネントをいくつか提供している。
 ここでは、認証処理と連携するためのコンポーネントの使い方を説明する。</p>
 <div class="section" id="id24">
-<h4><a class="toc-backref" href="#id97">9.2.2.10.1. 認証情報へのアクセス</a><a class="headerlink" href="#id24" title="Permalink to this headline">¶</a></h4>
+<h4><a class="toc-backref" href="#id100">9.2.2.10.1. 認証情報へのアクセス</a><a class="headerlink" href="#id24" title="Permalink to this headline">¶</a></h4>
 <p>Spring Securityは、認証情報(<code class="docutils literal"><span class="pre">UserDetails</span></code>)をSpring MVCのコントローラーのメソッドに引き渡すためのコンポーネントとして、<code class="docutils literal"><span class="pre">AuthenticationPrincipalArgumentResolver</span></code>クラスを提供している。
 <code class="docutils literal"><span class="pre">AuthenticationPrincipalArgumentResolver</span></code>を使用すると、コントローラーのメソッド引数として<code class="docutils literal"><span class="pre">UserDetails</span></code>インタフェースまたはその実装クラスのインスタンスを受け取ることができるため、コンポーネントの疎結合性を高めることができる。</p>
 <p>認証情報(<code class="docutils literal"><span class="pre">UserDetails</span></code>)をコントローラーの引数として受け取るためには、まず<code class="docutils literal"><span class="pre">AuthenticationPrincipalArgumentResolver</span></code>をSpring MVCに適用する必要がある。
@@ -2611,17 +2759,17 @@ ${f:h(principal.account.lastName)}
 </div>
 </div>
 <div class="section" id="how-to-extend">
-<span id="springsecurityauthenticationhowtoextend"></span><h2><a class="toc-backref" href="#id98">9.2.3. How to extend</a><a class="headerlink" href="#how-to-extend" title="Permalink to this headline">¶</a></h2>
+<span id="springsecurityauthenticationhowtoextend"></span><h2><a class="toc-backref" href="#id101">9.2.3. How to extend</a><a class="headerlink" href="#how-to-extend" title="Permalink to this headline">¶</a></h2>
 <p>本節では、Spring Securityが用意しているカスタマイズポイントや拡張方法について説明する。</p>
 <p>Spring Securityは、多くのカスタマイズポイントを提供しているため、すべてのカスタマイズポイントを紹介することはできないため、ここでは代表的なカスタマイズポイントに絞って説明を行う。</p>
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
 <div class="section" id="springsecurityauthenticationcustomizingform">
-<span id="id26"></span><h3><a class="toc-backref" href="#id99">9.2.3.1. フォーム認証のカスタマイズ</a><a class="headerlink" href="#springsecurityauthenticationcustomizingform" title="Permalink to this headline">¶</a></h3>
+<span id="id26"></span><h3><a class="toc-backref" href="#id102">9.2.3.1. フォーム認証のカスタマイズ</a><a class="headerlink" href="#springsecurityauthenticationcustomizingform" title="Permalink to this headline">¶</a></h3>
 <p>フォーム認証処理のカスタマイズポイントを説明する。</p>
 <div class="section" id="id27">
-<h4><a class="toc-backref" href="#id100">9.2.3.1.1. 認証パスの変更</a><a class="headerlink" href="#id27" title="Permalink to this headline">¶</a></h4>
+<h4><a class="toc-backref" href="#id103">9.2.3.1.1. 認証パスの変更</a><a class="headerlink" href="#id27" title="Permalink to this headline">¶</a></h4>
 <p>Spring Securityのデフォルトでは、認証処理を実行するためのパスは「<code class="docutils literal"><span class="pre">/login</span></code>」であるが、
 以下のようなbean定義を行うことで変更することが可能である。</p>
 <ul class="simple">
@@ -2664,7 +2812,7 @@ ${f:h(principal.account.lastName)}
 </div>
 </div>
 <div class="section" id="id28">
-<h4><a class="toc-backref" href="#id101">9.2.3.1.2. 資格情報を送るリクエストパラメータ名の変更</a><a class="headerlink" href="#id28" title="Permalink to this headline">¶</a></h4>
+<h4><a class="toc-backref" href="#id104">9.2.3.1.2. 資格情報を送るリクエストパラメータ名の変更</a><a class="headerlink" href="#id28" title="Permalink to this headline">¶</a></h4>
 <p>Spring Securityのデフォルトでは、資格情報(ユーザー名とパスワード)を送るためのリクエストパラメータは「<code class="docutils literal"><span class="pre">username</span></code>」と「<code class="docutils literal"><span class="pre">password</span></code>」であるが、
 以下のようなbean定義を行うことで変更することが可能である。</p>
 <ul class="simple">
@@ -2719,10 +2867,10 @@ ${f:h(principal.account.lastName)}
 </div>
 </div>
 <div class="section" id="id29">
-<h3><a class="toc-backref" href="#id102">9.2.3.2. 認証成功時のレスポンスのカスタマイズ</a><a class="headerlink" href="#id29" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id105">9.2.3.2. 認証成功時のレスポンスのカスタマイズ</a><a class="headerlink" href="#id29" title="Permalink to this headline">¶</a></h3>
 <p>認証成功時のレスポンスのカスタマイズポイントを説明する。</p>
 <div class="section" id="id30">
-<h4><a class="toc-backref" href="#id103">9.2.3.2.1. デフォルト遷移先の変更</a><a class="headerlink" href="#id30" title="Permalink to this headline">¶</a></h4>
+<h4><a class="toc-backref" href="#id106">9.2.3.2.1. デフォルト遷移先の変更</a><a class="headerlink" href="#id30" title="Permalink to this headline">¶</a></h4>
 <p>ログインフォームを自分で表示して認証処理を行った後の遷移先(デフォルトURL)は、
 Webアプリケーションのルートパス(“<code class="docutils literal"><span class="pre">/</span></code>” )だが、以下のようなbean定義を行うことで変更することが可能である。</p>
 <ul class="simple">
@@ -2760,7 +2908,7 @@ Webアプリケーションのルートパス(“<code class="docutils literal">
 </div>
 </div>
 <div class="section" id="id31">
-<h4><a class="toc-backref" href="#id104">9.2.3.2.2. 遷移先の固定化</a><a class="headerlink" href="#id31" title="Permalink to this headline">¶</a></h4>
+<h4><a class="toc-backref" href="#id107">9.2.3.2.2. 遷移先の固定化</a><a class="headerlink" href="#id31" title="Permalink to this headline">¶</a></h4>
 <p>Spring Securityのデフォルトの動作では、未認証時に認証が必要なページへのリクエストを受信した場合は、受信したリクエストを一旦HTTPセッションに保存し、認証ページに遷移する。
 認証成功時にリクエストを復元してリダイレクトするが、以下のようなbean定義を行うことで常に同じ画面に遷移させることが可能である。</p>
 <ul class="simple">
@@ -2800,7 +2948,7 @@ Webアプリケーションのルートパス(“<code class="docutils literal">
 </div>
 </div>
 <div class="section" id="authenticationsuccesshandler">
-<h4><a class="toc-backref" href="#id105">9.2.3.2.3. AuthenticationSuccessHandlerの適用</a><a class="headerlink" href="#authenticationsuccesshandler" title="Permalink to this headline">¶</a></h4>
+<h4><a class="toc-backref" href="#id108">9.2.3.2.3. AuthenticationSuccessHandlerの適用</a><a class="headerlink" href="#authenticationsuccesshandler" title="Permalink to this headline">¶</a></h4>
 <p>Spring Securityが提供しているデフォルトの動作をカスタマイズする仕組みだけでは要件をみたせない場合は、
 以下のようなbean定義を行うことで<code class="docutils literal"><span class="pre">AuthenticationSuccessHandler</span></code>インタフェースの実装クラスを直接適用することができる。</p>
 <ul class="simple">
@@ -2857,10 +3005,10 @@ Webアプリケーションのルートパス(“<code class="docutils literal">
 </div>
 </div>
 <div class="section" id="springsecurityauthenticationcustomizingscreenflowonfailure">
-<span id="id32"></span><h3><a class="toc-backref" href="#id106">9.2.3.3. 認証失敗時のレスポンスのカスタマイズ</a><a class="headerlink" href="#springsecurityauthenticationcustomizingscreenflowonfailure" title="Permalink to this headline">¶</a></h3>
+<span id="id32"></span><h3><a class="toc-backref" href="#id109">9.2.3.3. 認証失敗時のレスポンスのカスタマイズ</a><a class="headerlink" href="#springsecurityauthenticationcustomizingscreenflowonfailure" title="Permalink to this headline">¶</a></h3>
 <p>認証失敗時のレスポンスのカスタマイズポイントを説明する。</p>
 <div class="section" id="id33">
-<h4><a class="toc-backref" href="#id107">9.2.3.3.1. 遷移先の変更</a><a class="headerlink" href="#id33" title="Permalink to this headline">¶</a></h4>
+<h4><a class="toc-backref" href="#id110">9.2.3.3.1. 遷移先の変更</a><a class="headerlink" href="#id33" title="Permalink to this headline">¶</a></h4>
 <p>Spring Securityのデフォルトの動作では、ログインフォームを表示するためのパスに<code class="docutils literal"><span class="pre">error</span></code>というクエリパラメータが付与されたURLにリダイレクトするが、
 以下のようなbean定義を行うことで変更することが可能である。</p>
 <ul class="simple">
@@ -2898,7 +3046,7 @@ Webアプリケーションのルートパス(“<code class="docutils literal">
 </div>
 </div>
 <div class="section" id="authenticationfailurehandler">
-<h4><a class="toc-backref" href="#id108">9.2.3.3.2. AuthenticationFailureHandlerの適用</a><a class="headerlink" href="#authenticationfailurehandler" title="Permalink to this headline">¶</a></h4>
+<h4><a class="toc-backref" href="#id111">9.2.3.3.2. AuthenticationFailureHandlerの適用</a><a class="headerlink" href="#authenticationfailurehandler" title="Permalink to this headline">¶</a></h4>
 <p>Spring Securityが提供しているデフォルトの動作をカスタマイズする仕組みだけでは要件をみたせない場合は、
 以下のようなbean定義を行うことで<code class="docutils literal"><span class="pre">AuthenticationFailureHandler</span></code>インタフェースの実装クラスを直接適用することができる。</p>
 <ul class="simple">
@@ -3036,10 +3184,10 @@ Webアプリケーションのルートパス(“<code class="docutils literal">
 </div>
 </div>
 <div class="section" id="id34">
-<h3><a class="toc-backref" href="#id109">9.2.3.4. ログアウト処理のカスタマイズ</a><a class="headerlink" href="#id34" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id112">9.2.3.4. ログアウト処理のカスタマイズ</a><a class="headerlink" href="#id34" title="Permalink to this headline">¶</a></h3>
 <p>ログアウト処理のカスタマイズポイントを説明する。</p>
 <div class="section" id="id35">
-<h4><a class="toc-backref" href="#id110">9.2.3.4.1. ログアウトパスの変更</a><a class="headerlink" href="#id35" title="Permalink to this headline">¶</a></h4>
+<h4><a class="toc-backref" href="#id113">9.2.3.4.1. ログアウトパスの変更</a><a class="headerlink" href="#id35" title="Permalink to this headline">¶</a></h4>
 <p>Spring Securityのデフォルトでは、ログアウト処理を実行するためのパスは「<code class="docutils literal"><span class="pre">/logout</span></code>」であるが、
 以下のようなbean定義を行うことで変更することが可能である。</p>
 <ul class="simple">
@@ -3153,10 +3301,10 @@ Webアプリケーションのルートパス(“<code class="docutils literal">
 </div>
 </div>
 <div class="section" id="springsecuritylogoutcustomizingscreenflowonsuccess">
-<span id="id36"></span><h3><a class="toc-backref" href="#id111">9.2.3.5. ログアウト成功時のレスポンスのカスタマイズ</a><a class="headerlink" href="#springsecuritylogoutcustomizingscreenflowonsuccess" title="Permalink to this headline">¶</a></h3>
+<span id="id36"></span><h3><a class="toc-backref" href="#id114">9.2.3.5. ログアウト成功時のレスポンスのカスタマイズ</a><a class="headerlink" href="#springsecuritylogoutcustomizingscreenflowonsuccess" title="Permalink to this headline">¶</a></h3>
 <p>ログアウト処理成功時のレスポンスのカスタマイズポイントを説明する。</p>
 <div class="section" id="id37">
-<h4><a class="toc-backref" href="#id112">9.2.3.5.1. 遷移先の変更</a><a class="headerlink" href="#id37" title="Permalink to this headline">¶</a></h4>
+<h4><a class="toc-backref" href="#id115">9.2.3.5.1. 遷移先の変更</a><a class="headerlink" href="#id37" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
 <li>spring-security.xmlの定義例</li>
 </ul>
@@ -3194,7 +3342,7 @@ Webアプリケーションのルートパス(“<code class="docutils literal">
 </div>
 </div>
 <div class="section" id="logoutsuccesshandler">
-<h4><a class="toc-backref" href="#id113">9.2.3.5.2. LogoutSuccessHandlerの適用</a><a class="headerlink" href="#logoutsuccesshandler" title="Permalink to this headline">¶</a></h4>
+<h4><a class="toc-backref" href="#id116">9.2.3.5.2. LogoutSuccessHandlerの適用</a><a class="headerlink" href="#logoutsuccesshandler" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
 <li>spring-security.xmlの定義例</li>
 </ul>
@@ -3245,12 +3393,12 @@ Webアプリケーションのルートパス(“<code class="docutils literal">
 </div>
 </div>
 <div class="section" id="springsecurityauthenticationcustomizingmessage">
-<span id="id38"></span><h3><a class="toc-backref" href="#id114">9.2.3.6. エラーメッセージのカスタマイズ</a><a class="headerlink" href="#springsecurityauthenticationcustomizingmessage" title="Permalink to this headline">¶</a></h3>
+<span id="id38"></span><h3><a class="toc-backref" href="#id117">9.2.3.6. エラーメッセージのカスタマイズ</a><a class="headerlink" href="#springsecurityauthenticationcustomizingmessage" title="Permalink to this headline">¶</a></h3>
 <p>認証に失敗した場合、Spring Securityが用意しているエラーメッセージが表示されるが、
 このエラーメッセージは変更することが可能である。</p>
 <p>メッセージ変更方法の詳細については、<a class="reference internal" href="../ArchitectureInDetail/WebApplicationDetail/MessageManagement.html"><span class="doc">メッセージ管理</span></a>を参照されたい。</p>
 <div class="section" id="id39">
-<h4><a class="toc-backref" href="#id115">9.2.3.6.1. システムエラー時のメッセージ</a><a class="headerlink" href="#id39" title="Permalink to this headline">¶</a></h4>
+<h4><a class="toc-backref" href="#id118">9.2.3.6.1. システムエラー時のメッセージ</a><a class="headerlink" href="#id39" title="Permalink to this headline">¶</a></h4>
 <p>認証処理の中で予期しないエラー（システムエラーなど）が発生した場合、<code class="docutils literal"><span class="pre">InternalAuthenticationServiceException</span></code>という例外が発生する。
 <code class="docutils literal"><span class="pre">InternalAuthenticationServiceException</span></code>が保持するメッセージには、原因例外のメッセージが設定されるため、画面にそのまま表示するのは適切ではない。</p>
 <p>例えばユーザー情報をデーターベースから取得する時にDBアクセスエラーが発生した場合、<code class="docutils literal"><span class="pre">SQLException</span></code>が保持する例外メッセージが画面に表示されることになる。
@@ -3310,11 +3458,11 @@ Webアプリケーションのルートパス(“<code class="docutils literal">
 </div>
 </div>
 <div class="section" id="springsecurityauthenticationbeanvalidation">
-<span id="id40"></span><h3><a class="toc-backref" href="#id116">9.2.3.7. 認証時の入力チェック</a><a class="headerlink" href="#springsecurityauthenticationbeanvalidation" title="Permalink to this headline">¶</a></h3>
+<span id="id40"></span><h3><a class="toc-backref" href="#id119">9.2.3.7. 認証時の入力チェック</a><a class="headerlink" href="#springsecurityauthenticationbeanvalidation" title="Permalink to this headline">¶</a></h3>
 <p>DBサーバへの負荷軽減等で、認証ページにおける、あきらかな入力誤りに対しては、事前にチェックを行いたい場合がある。
 このような場合は、Bean Validationを使用した入力チェックも可能である。</p>
 <div class="section" id="bean-validation">
-<h4><a class="toc-backref" href="#id117">9.2.3.7.1. Bean Validationによる入力チェック</a><a class="headerlink" href="#bean-validation" title="Permalink to this headline">¶</a></h4>
+<h4><a class="toc-backref" href="#id120">9.2.3.7.1. Bean Validationによる入力チェック</a><a class="headerlink" href="#bean-validation" title="Permalink to this headline">¶</a></h4>
 <p>以下にBean Validationを使用した入力チェックの例を説明する。
 Bean Validationに関する詳細は <a class="reference internal" href="../ArchitectureInDetail/WebApplicationDetail/Validation.html"><span class="doc">入力チェック</span></a>を参照すること。</p>
 <ul class="simple">
@@ -3456,8 +3604,8 @@ Bean Validationに関する詳細は <a class="reference internal" href="../Arch
 </div>
 </div>
 <div class="section" id="id41">
-<h3><a class="toc-backref" href="#id118">9.2.3.8. 認証処理の拡張</a><a class="headerlink" href="#id41" title="Permalink to this headline">¶</a></h3>
-<p>Spring Securityから提供されている<a class="reference external" href="http://docs.spring.io/spring-security/site/docs/4.2.4.RELEASE/apidocs/org/springframework/security/authentication/AuthenticationProvider.html">認証プロバイダ</a>で対応できない認証要件がある場合は、
+<h3><a class="toc-backref" href="#id121">9.2.3.8. 認証処理の拡張</a><a class="headerlink" href="#id41" title="Permalink to this headline">¶</a></h3>
+<p>Spring Securityから提供されている<a class="reference external" href="https://docs.spring.io/spring-security/site/docs/5.1.3.RELEASE/api/org/springframework/security/authentication/AuthenticationProvider.html">認証プロバイダ</a>で対応できない認証要件がある場合は、
 <code class="docutils literal"><span class="pre">org.springframework.security.authentication.AuthenticationProvider</span></code>インタフェースを実装したクラスを作成する必要がある。</p>
 <p>ここでは、ユーザー名、パスワード、<strong>会社識別子(独自の認証パラメータ)</strong>の3つのパラメータを使用してDB認証を行うための拡張例を示す。</p>
 <div class="figure">
@@ -3518,7 +3666,7 @@ Bean Validationに関する詳細は <a class="reference internal" href="../Arch
 <div class="line"><br /></div>
 </div>
 <div class="section" id="authentication">
-<h4><a class="toc-backref" href="#id119">9.2.3.8.1. Authenticationインターフェースの実装クラスの作成</a><a class="headerlink" href="#authentication" title="Permalink to this headline">¶</a></h4>
+<h4><a class="toc-backref" href="#id122">9.2.3.8.1. Authenticationインタフェースの実装クラスの作成</a><a class="headerlink" href="#authentication" title="Permalink to this headline">¶</a></h4>
 <p><code class="docutils literal"><span class="pre">UsernamePasswordAuthenticationToken</span></code>クラスを継承し、ユーザー名とパスワードに加えて、会社識別子(独自の認証パラメータ)を保持するクラスを作成する。</p>
 <div class="highlight-java"><div class="highlight"><pre><span></span><span class="c1">// import omitted</span>
 <span class="kd">public</span> <span class="kd">class</span> <span class="nc">CompanyIdUsernamePasswordAuthenticationToken</span> <span class="kd">extends</span>
@@ -3597,7 +3745,7 @@ Bean Validationに関する詳細は <a class="reference internal" href="../Arch
 </div>
 </div>
 <div class="section" id="id43">
-<h4><a class="toc-backref" href="#id120">9.2.3.8.2. AuthenticationProviderインターフェースの実装クラスの作成</a><a class="headerlink" href="#id43" title="Permalink to this headline">¶</a></h4>
+<h4><a class="toc-backref" href="#id123">9.2.3.8.2. AuthenticationProviderインタフェースの実装クラスの作成</a><a class="headerlink" href="#id43" title="Permalink to this headline">¶</a></h4>
 <p><code class="docutils literal"><span class="pre">DaoAuthenticationProvider</span></code>クラスを継承し、ユーザー名、パスワード、会社識別子を使用してDB認証を行うクラスを作成する。</p>
 <div class="highlight-java"><div class="highlight"><pre><span></span><span class="c1">// import omitted</span>
 <span class="kd">public</span> <span class="kd">class</span> <span class="nc">CompanyIdUsernamePasswordAuthenticationProvider</span> <span class="kd">extends</span>
@@ -3707,7 +3855,7 @@ Bean Validationに関する詳細は <a class="reference internal" href="../Arch
 </div>
 </div>
 <div class="section" id="authentication-custom-usernamepasswordauthenticationfilter">
-<span id="id44"></span><h4><a class="toc-backref" href="#id121">9.2.3.8.3. Authentication Filterの作成</a><a class="headerlink" href="#authentication-custom-usernamepasswordauthenticationfilter" title="Permalink to this headline">¶</a></h4>
+<span id="id44"></span><h4><a class="toc-backref" href="#id124">9.2.3.8.3. Authentication Filterの作成</a><a class="headerlink" href="#authentication-custom-usernamepasswordauthenticationfilter" title="Permalink to this headline">¶</a></h4>
 <p><code class="docutils literal"><span class="pre">UsernamePasswordAuthenticationFilter</span></code>クラスを継承し、
 認証情報(ユーザー名、パスワード、会社識別子)を<code class="docutils literal"><span class="pre">AuthenticationProvider</span></code>に引き渡すためのAuthentication Filterクラスを作成する。</p>
 <p><code class="docutils literal"><span class="pre">attemptAuthentication</span></code>メソッドの実装は、<code class="docutils literal"><span class="pre">UsernamePasswordAuthenticationFilter</span></code>クラスのメソッドをコピーしてカスタマイズしたものである。</p>
@@ -3800,7 +3948,7 @@ Bean Validationに関する詳細は <a class="reference internal" href="../Arch
 </div>
 </div>
 <div class="section" id="id45">
-<h4><a class="toc-backref" href="#id122">9.2.3.8.4. ログインフォームの修正</a><a class="headerlink" href="#id45" title="Permalink to this headline">¶</a></h4>
+<h4><a class="toc-backref" href="#id125">9.2.3.8.4. ログインフォームの修正</a><a class="headerlink" href="#id45" title="Permalink to this headline">¶</a></h4>
 <p><a class="reference internal" href="#springsecurityauthenticationloginform"><span class="std std-ref">ログインフォームの作成</span></a>で作成したログインフォーム(JSP)に対して、会社識別子を追加する。</p>
 <div class="highlight-jsp"><div class="highlight"><pre><span></span><span class="nt">&lt;form:form</span> <span class="na">action=</span><span class="s">&quot;${pageContext.request.contextPath}/login&quot;</span> <span class="na">method=</span><span class="s">&quot;post&quot;</span><span class="nt">&gt;</span>
     <span class="c">&lt;!-- omitted --&gt;</span>
@@ -3847,7 +3995,7 @@ Bean Validationに関する詳細は <a class="reference internal" href="../Arch
 </div>
 </div>
 <div class="section" id="id46">
-<h4><a class="toc-backref" href="#id123">9.2.3.8.5. 拡張した認証処理の適用</a><a class="headerlink" href="#id46" title="Permalink to this headline">¶</a></h4>
+<h4><a class="toc-backref" href="#id126">9.2.3.8.5. 拡張した認証処理の適用</a><a class="headerlink" href="#id46" title="Permalink to this headline">¶</a></h4>
 <p>ユーザー名、パスワード、会社識別子(独自の認証パラメータ)を使用したDB認証機能をSpring Securityに適用する。</p>
 <ul class="simple">
 <li>spring-security.xmlの定義例</li>
@@ -4092,43 +4240,40 @@ Bean Validationに関する詳細は <a class="reference internal" href="../Arch
 </div>
 </div>
 <div class="section" id="passwordencoder">
-<span id="authenticationhowtoextendusingdeprecatedpasswordencoder"></span><h3><a class="toc-backref" href="#id124">9.2.3.9. 非推奨パッケージのPasswordEncoderの利用</a><a class="headerlink" href="#passwordencoder" title="Permalink to this headline">¶</a></h3>
-<p>セキュリティ要件によっては、前述した<code class="docutils literal"><span class="pre">PasswordEncoder</span></code>を実装したクラスでは実現できない場合がある。
-特に、既存のアカウント情報で使用しているハッシュ化要件を踏襲する必要がある場合は、前述の<code class="docutils literal"><span class="pre">PasswordEncoder</span></code>では要件を満たせないことがある。</p>
-<p>具体的には、既存のハッシュ化要件が以下のようなケースである。</p>
-<ul class="simple">
-<li>アルゴリズムがSHA-512である。</li>
-<li>ストレッチング回数が1000回である。</li>
-<li>ソルトがアカウントテーブルのカラムに格納されており、<code class="docutils literal"><span class="pre">PasswordEncoder</span></code>の外から渡す必要がある。</li>
-</ul>
-<p>このようなケースでは、<code class="docutils literal"><span class="pre">org.springframework.security.crypto.password.PasswordEncoder</span></code>インタフェースの実装クラスではなく、
-<code class="docutils literal"><span class="pre">org.springframework.security.authentication.encoding.PasswordEncoder</span></code>インタフェースの実装クラスの使用することで要件を満たすことができる。</p>
-<div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<p class="last">Spring Security 3.1.4以前では、<code class="docutils literal"><span class="pre">org.springframework.security.authentication.encoding.PasswordEncoder</span></code>を実装したクラスをハッシュ化に使用していたが、3.1.4以降では非推奨となっている。</p>
+<span id="authenticationhowtoextendcustompasswordencoder"></span><h3><a class="toc-backref" href="#id127">9.2.3.9. PasswordEncoderのカスタマイズ</a><a class="headerlink" href="#passwordencoder" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal"><span class="pre">DelegatingPasswordEncoder</span></code> で使用される<code class="docutils literal"><span class="pre">PasswordEncoder</span></code>インタフェースの実装は全てデフォルトの設定であるが、システムの要件によってはカスタマイズを行う必要がある。
+ここでは<code class="docutils literal"><span class="pre">PasswordEncoder</span></code>インタフェースの実装のカスタマイズ方法を紹介する。</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">OWASP(Open Web Application Security Project)ではハッシュ関数に使用するイテレーションカウント（ハッシュ化の繰返し回数）について、ユーザに影響を与えない範囲で出来る限り攻撃を対策できる値を設定することが推奨されている。
+ハードウェアの処理速度に比例してユーザに影響を与えない範囲が変化するため、実際に設定すべきイテレーションカウントは環境によって異なる。</p>
 </div>
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
-<div class="section" id="shapasswordencoder">
-<h4><a class="toc-backref" href="#id125">9.2.3.9.1. ShaPasswordEncoderの利用</a><a class="headerlink" href="#shapasswordencoder" title="Permalink to this headline">¶</a></h4>
-<p>本ガイドラインでは、<code class="docutils literal"><span class="pre">ShaPasswordEncoder</span></code>を例に、非推奨パッケージの<code class="docutils literal"><span class="pre">PasswordEncoder</span></code>の利用について説明する。</p>
-<p>ハッシュ化要件が以下のケースの場合は、<code class="docutils literal"><span class="pre">ShaPasswordEncoder</span></code>を利用することで要件を満たすことができる。</p>
+<div class="section" id="pbkdf2passwordencoder">
+<h4><a class="toc-backref" href="#id128">9.2.3.9.1. Pbkdf2PasswordEncoderのカスタマイズ</a><a class="headerlink" href="#pbkdf2passwordencoder" title="Permalink to this headline">¶</a></h4>
+<p><code class="docutils literal"><span class="pre">Pbkdf2PasswordEncoder</span></code>では、<a class="reference internal" href="#springsecurityauthenticationpasswordhashsalt"><span class="std std-ref">ソルト</span></a> に8バイトの乱数(<code class="docutils literal"><span class="pre">java.security.SecureRandom</span></code>)が使用され、
+<a class="reference internal" href="#springsecurityauthenticationpasswordhashiterations"><span class="std std-ref">イテレーション</span></a> カウントはデフォルトでは185,000回に設定されている。</p>
+<p>ここではイテレーションカウントの変更方法を紹介する。</p>
+<p><code class="docutils literal"><span class="pre">applicationContext.xml</span></code>を以下のように変更する。</p>
 <ul class="simple">
-<li>アルゴリズムがSHA-512</li>
-<li>ストレッチング回数を1000回</li>
+<li>applicationContext.xmlの変更</li>
 </ul>
-<div class="line-block">
-<div class="line"><br /></div>
-</div>
-<p>まず、<code class="docutils literal"><span class="pre">ShaPasswordEncoder</span></code>のbeanを定義する。</p>
-<ul class="simple">
-<li>applicationContext.xmlの定義例</li>
-</ul>
-<div class="highlight-xml"><div class="highlight"><pre><span></span><span class="nt">&lt;bean</span> <span class="na">id =</span><span class="s">&quot;passwordEncoder&quot;</span>
-    <span class="na">class=</span><span class="s">&quot;org.springframework.security.authentication.encoding.ShaPasswordEncoder&quot;</span><span class="nt">&gt;</span> <span class="c">&lt;!-- (1) --&gt;</span>
-    <span class="nt">&lt;constructor-arg</span> <span class="na">value=</span><span class="s">&quot;512&quot;</span> <span class="nt">/&gt;</span> <span class="c">&lt;!-- (2) --&gt;</span>
-    <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">&quot;iterations&quot;</span> <span class="na">value=</span><span class="s">&quot;1000&quot;</span> <span class="nt">/&gt;</span> <span class="c">&lt;!-- (3) --&gt;</span>
+<div class="highlight-xml"><div class="highlight"><pre><span></span><span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">&quot;passwordEncoder&quot;</span> <span class="na">class=</span><span class="s">&quot;org.springframework.security.crypto.password.DelegatingPasswordEncoder&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;constructor-arg</span> <span class="na">name=</span><span class="s">&quot;idForEncode&quot;</span> <span class="na">value=</span><span class="s">&quot;pbkdf2&quot;</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;constructor-arg</span> <span class="na">name=</span><span class="s">&quot;idToPasswordEncoder&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;map&gt;</span>
+            <span class="nt">&lt;entry</span> <span class="na">key=</span><span class="s">&quot;pbkdf2&quot;</span><span class="nt">&gt;</span>
+                <span class="nt">&lt;bean</span> <span class="na">class=</span><span class="s">&quot;org.springframework.security.crypto.password.Pbkdf2PasswordEncoder&quot;</span><span class="nt">&gt;</span> <span class="c">&lt;!-- (1) --&gt;</span>
+                    <span class="nt">&lt;constructor-arg</span> <span class="na">name=</span><span class="s">&quot;secret&quot;</span> <span class="na">value=</span><span class="s">&quot;&quot;</span> <span class="nt">/&gt;</span> <span class="c">&lt;!-- (2) --&gt;</span>
+                    <span class="nt">&lt;constructor-arg</span> <span class="na">name=</span><span class="s">&quot;iterations&quot;</span> <span class="na">value=</span><span class="s">&quot;1000000&quot;</span> <span class="nt">/&gt;</span> <span class="c">&lt;!-- (3) --&gt;</span>
+                    <span class="nt">&lt;constructor-arg</span> <span class="na">name=</span><span class="s">&quot;hashWidth&quot;</span> <span class="na">value=</span><span class="s">&quot;256&quot;</span> <span class="nt">/&gt;</span> <span class="c">&lt;!-- (4) --&gt;</span>
+                <span class="nt">&lt;/bean&gt;</span>
+            <span class="nt">&lt;/entry&gt;</span>
+            <span class="c">&lt;!-- omitted --&gt;</span>
+        <span class="nt">&lt;/map&gt;</span>
+    <span class="nt">&lt;/constructor-arg&gt;</span>
 <span class="nt">&lt;/bean&gt;</span>
 </pre></div>
 </div>
@@ -4148,7 +4293,8 @@ Bean Validationに関する詳細は <a class="reference internal" href="../Arch
 </div>
 </td>
 <td><div class="first last line-block">
-<div class="line"><code class="docutils literal"><span class="pre">org.springframework.security.authentication.encoding.ShaPasswordEncoder</span></code>のbeanを定義する。</div>
+<div class="line"><code class="docutils literal"><span class="pre">Pbkdf2PasswordEncoder</span></code>をカスタマイズするため、使用するコンストラクタをデフォルトコンストラクタから変更する</div>
+<div class="line">コンストラクタに指定する引数については以下で解説を行う。</div>
 </div>
 </td>
 </tr>
@@ -4157,9 +4303,8 @@ Bean Validationに関する詳細は <a class="reference internal" href="../Arch
 </div>
 </td>
 <td><div class="first last line-block">
-<div class="line">SHAアルゴリズムの種類を指定する。</div>
-<div class="line">指定可能な値は、「”<code class="docutils literal"><span class="pre">1</span></code>” 、<code class="docutils literal"><span class="pre">256</span></code>、<code class="docutils literal"><span class="pre">384</span></code>、<code class="docutils literal"><span class="pre">512</span></code>」である。</div>
-<div class="line">省略した場合は、「”<code class="docutils literal"><span class="pre">1</span></code>” 」となる。</div>
+<div class="line"><code class="docutils literal"><span class="pre">secret</span></code>にはハッシュ化で使用する秘密鍵を指定する。</div>
+<div class="line">デフォルトは空（”“）である。</div>
 </div>
 </td>
 </tr>
@@ -4168,72 +4313,9 @@ Bean Validationに関する詳細は <a class="reference internal" href="../Arch
 </div>
 </td>
 <td><div class="first last line-block">
-<div class="line">ハッシュ化時のストレッチング回数を指定する。</div>
-<div class="line">省略した場合は、1回となる。</div>
-</div>
-</td>
-</tr>
-</tbody>
-</table>
-<div class="line-block">
-<div class="line"><br /></div>
-</div>
-<p>次に、<code class="docutils literal"><span class="pre">ShaPasswordEncoder</span></code>をSpring Securityの認証処理(<code class="docutils literal"><span class="pre">DaoAuthenticationProvider</span></code>)に適用する。</p>
-<ul class="simple">
-<li>spring-security.xmlの定義例</li>
-</ul>
-<div class="highlight-xml"><div class="highlight"><pre><span></span><span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">&quot;authenticationProvider&quot;</span>
-    <span class="na">class=</span><span class="s">&quot;org.springframework.security.authentication.dao.DaoAuthenticationProvider&quot;</span><span class="nt">&gt;</span>
-    <span class="c">&lt;!-- omitted --&gt;</span>
-    <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">&quot;saltSource&quot;</span> <span class="na">ref=</span><span class="s">&quot;saltSource&quot;</span> <span class="nt">/&gt;</span> <span class="c">&lt;!-- (1) --&gt;</span>
-    <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">&quot;userDetailsService&quot;</span> <span class="na">ref=</span><span class="s">&quot;userDetailsService&quot;</span> <span class="nt">/&gt;</span>
-    <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">&quot;passwordEncoder&quot;</span> <span class="na">ref=</span><span class="s">&quot;passwordEncoder&quot;</span> <span class="nt">/&gt;</span> <span class="c">&lt;!-- (2) --&gt;</span>
-<span class="nt">&lt;/bean&gt;</span>
-
-<span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">&quot;saltSource&quot;</span>
-    <span class="na">class=</span><span class="s">&quot;org.springframework.security.authentication.dao.ReflectionSaltSource&quot;</span><span class="nt">&gt;</span> <span class="c">&lt;!-- (3) --&gt;</span>
-    <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">&quot;userPropertyToUse&quot;</span> <span class="na">value=</span><span class="s">&quot;username&quot;</span> <span class="nt">/&gt;</span> <span class="c">&lt;!-- (4) --&gt;</span>
-<span class="nt">&lt;/bean&gt;</span>
-</pre></div>
-</div>
-<table border="1" class="colwidths-given docutils">
-<colgroup>
-<col width="10%" />
-<col width="90%" />
-</colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">項番</th>
-<th class="head">説明</th>
-</tr>
-</thead>
-<tbody valign="top">
-<tr class="row-even"><td><div class="first last line-block">
-<div class="line">(1)</div>
-</div>
-</td>
-<td><div class="first last line-block">
-<div class="line"><code class="docutils literal"><span class="pre">saltSource</span></code>プロパティに<code class="docutils literal"><span class="pre">org.springframework.security.authentication.dao.SaltSource</span></code>インタフェースの実装クラスのbeanを指定する。</div>
-<div class="line"><code class="docutils literal"><span class="pre">SaltSource</span></code>は、ソルトを<code class="docutils literal"><span class="pre">UserDetails</span></code>から取得するためのインタフェースである。</div>
-</div>
-</td>
-</tr>
-<tr class="row-odd"><td><div class="first last line-block">
-<div class="line">(2)</div>
-</div>
-</td>
-<td><div class="first last line-block">
-<div class="line"><code class="docutils literal"><span class="pre">passwordEncoder</span></code>プロパティに<code class="docutils literal"><span class="pre">org.springframework.security.authentication.encoding.PasswordEncoder</span></code>インタフェースの実装クラスのbeanを指定する。</div>
-<div class="line">上記例では、<code class="docutils literal"><span class="pre">ShaPasswordEncoder</span></code>のbeanを指定している。</div>
-</div>
-</td>
-</tr>
-<tr class="row-even"><td><div class="first last line-block">
-<div class="line">(3)</div>
-</div>
-</td>
-<td><div class="first last line-block">
-<div class="line"><code class="docutils literal"><span class="pre">SaltSource</span></code>のbeanを定義する。</div>
-<div class="line">上記例では、リフレクションを使用して<code class="docutils literal"><span class="pre">UserDetails</span></code>のプロパティからソルトを取得するクラス(<code class="docutils literal"><span class="pre">ReflectionSaltSource</span></code>)を利用している。</div>
+<div class="line"><code class="docutils literal"><span class="pre">iterations</span></code>にはハッシュ化のiterations(反復)回数を指定する。</div>
+<div class="line">ここでは1,000,000回を指定する。</div>
+<div class="line">デフォルトでは185000が設定されている。</div>
 </div>
 </td>
 </tr>
@@ -4242,8 +4324,8 @@ Bean Validationに関する詳細は <a class="reference internal" href="../Arch
 </div>
 </td>
 <td><div class="first last line-block">
-<div class="line">ソルトが格納されている<code class="docutils literal"><span class="pre">UserDetails</span></code>のプロパティを指定する。</div>
-<div class="line">上記例では、<code class="docutils literal"><span class="pre">UserDetails</span></code>の<code class="docutils literal"><span class="pre">username</span></code>プロパティの値をソルトとして使用する。</div>
+<div class="line"><code class="docutils literal"><span class="pre">hashWidth</span></code>には出力されるハッシュ値の長さを指定する。</div>
+<div class="line">デフォルトでは256が設定されている。</div>
 </div>
 </td>
 </tr>
@@ -4252,23 +4334,128 @@ Bean Validationに関する詳細は <a class="reference internal" href="../Arch
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
-<p>アプリケーションの処理で非推奨の<code class="docutils literal"><span class="pre">PasswordEncoder</span></code>を使用する場合は、<code class="docutils literal"><span class="pre">PasswordEncoder</span></code>をインジェクションして使用する。</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p><strong>SecureRandomの使用について</strong></p>
+<p>Linux環境で<code class="docutils literal"><span class="pre">SecureRandom</span></code>を使用する場合、処理の遅延やタイムアウトが発生する場合がある。
+これは使用する乱数生成器に左右される事象であり、以下のドキュメントに説明がある。</p>
 <ul class="simple">
-<li>Javaクラスの実装例</li>
+<li><a class="reference external" href="https://docs.oracle.com/javase/8/docs/api/java/security/SecureRandom.html">https://docs.oracle.com/javase/8/docs/api/java/security/SecureRandom.html</a></li>
 </ul>
-<div class="highlight-java"><div class="highlight"><pre><span></span><span class="nd">@Inject</span>
-<span class="n">PasswordEncoder</span> <span class="n">passwordEncoder</span><span class="o">;</span>
-
-<span class="kd">public</span> <span class="n">String</span> <span class="nf">register</span><span class="o">(</span><span class="n">Customer</span> <span class="n">customer</span><span class="o">,</span> <span class="n">String</span> <span class="n">rawPassword</span><span class="o">,</span> <span class="n">String</span> <span class="n">userSalt</span><span class="o">)</span> <span class="o">{</span>
-    <span class="c1">// omitted</span>
-    <span class="n">String</span> <span class="n">password</span> <span class="o">=</span> <span class="n">passwordEncoder</span><span class="o">.</span><span class="na">encodePassword</span><span class="o">(</span><span class="n">rawPassword</span><span class="o">,</span> <span class="n">userSalt</span><span class="o">);</span> <span class="c1">// (1)</span>
-    <span class="n">customer</span><span class="o">.</span><span class="na">setPassword</span><span class="o">(</span><span class="n">password</span><span class="o">);</span>
-    <span class="c1">// omitted</span>
-<span class="o">}</span>
-
-<span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">matches</span><span class="o">(</span><span class="n">Customer</span> <span class="n">customer</span><span class="o">,</span> <span class="n">String</span> <span class="n">rawPassword</span><span class="o">,</span> <span class="n">String</span> <span class="n">userSalt</span><span class="o">)</span> <span class="o">{</span>
-    <span class="k">return</span> <span class="n">passwordEncoder</span><span class="o">.</span><span class="na">isPasswordValid</span><span class="o">(</span><span class="n">customer</span><span class="o">.</span><span class="na">getPassword</span><span class="o">(),</span> <span class="n">rawPassword</span><span class="o">,</span> <span class="n">userSalt</span><span class="o">);</span> <span class="c1">// (2)</span>
-<span class="o">}</span>
+<p>本事象が発生する場合は、以下のいずれかの設定を追加することで回避することができる。</p>
+<ul class="last simple">
+<li>Javaコマンド実行時に <code class="docutils literal"><span class="pre">-Djava.security.egd=file:/dev/urandom</span></code> を指定する。</li>
+<li><code class="docutils literal"><span class="pre">${JAVA_HOME}/jre/lib/security/java.security</span></code> 内の <code class="docutils literal"><span class="pre">securerandom.source=/dev/random</span></code> を <code class="docutils literal"><span class="pre">securerandom.source=/dev/urandom</span></code> に変更する。</li>
+</ul>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="admonition note" id="springsecurityauthenticationpasswordhashsalt">
+<p class="first admonition-title">Note</p>
+<p><strong>ソルト</strong></p>
+<p class="last">ハッシュ化対象のデータに追加する文字列のことである。
+ソルトをパスワードに付与することで、実際のパスワードより桁数が長くなるため、レインボークラックなどのパスワード解析を困難にすることができる。
+なお、<strong>ソルトはユーザーごとに異なる値（ランダム値等）を設定することを推奨する。</strong>
+これは、同じソルトを使用していると、ハッシュ値からハッシュ化前の文字列(パスワード)がわかってしまう可能性があるためである。</p>
+</div>
+<div class="admonition note" id="springsecurityauthenticationpasswordhashiterations">
+<p class="first admonition-title">Note</p>
+<p><strong>イテレーション</strong></p>
+<p>ハッシュ関数の計算を繰り返し行うことで、保管するパスワードに関する情報を繰り返し暗号化することである。
+パスワードの総当たり攻撃への対策として、パスワード解析に必要な時間を延ばすために行う。
+しかし、イテレーションはシステムの性能に影響を与えるので、システムの性能を考慮してイテレーションカウントを決める必要がある。</p>
+<p class="last">Spring Securityのデフォルトでは185,000回イテレーションを行うが、この回数はコンストラクタ引数(<code class="docutils literal"><span class="pre">iterations</span></code>)で変更することができる。
+イテレーションカウントが多いほどパスワードの強度は増すが、計算量が多くなるため性能にあたえる影響も大きくなる。</p>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+</div>
+<div class="section" id="authenticationhowtoextendusingdeprecatedpasswordencoder">
+<span id="id47"></span><h3><a class="toc-backref" href="#id129">9.2.3.10. 非推奨アルゴリズムのPasswordEncoderの利用</a><a class="headerlink" href="#authenticationhowtoextendusingdeprecatedpasswordencoder" title="Permalink to this headline">¶</a></h3>
+<p>セキュリティ要件によっては、前述した<code class="docutils literal"><span class="pre">PasswordEncoder</span></code>を実装したクラスでは実現できない場合がある。
+特に、既存のアカウント情報で使用しているハッシュ化要件を踏襲する必要がある場合は、前述の<code class="docutils literal"><span class="pre">PasswordEncoder</span></code>では要件を満たせないことがある。</p>
+<p>具体的には、既存のハッシュ化要件が以下のようなケースである。</p>
+<ul class="simple">
+<li>アルゴリズムがSHA-512である。</li>
+<li>ハッシュ化回数が1000回である。</li>
+</ul>
+<p>このようなケースでは、<code class="docutils literal"><span class="pre">PasswordEncoder</span></code>の実装クラスの一つである<code class="docutils literal"><span class="pre">MessageDigestPasswordEncoder</span></code>を利用することで要件を満たすことができる。</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">Spring Security 4では、Spring Security 3.1.4で非推奨になった<code class="docutils literal"><span class="pre">org.springframework.security.authentication.encoding.PasswordEncoder</span></code>を実装したクラスをハッシュ化に使用していたが、Spring Security 5では廃止されている。</p>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="section" id="messagedigestpasswordencoder">
+<h4><a class="toc-backref" href="#id130">9.2.3.10.1. MessageDigestPasswordEncoderの利用</a><a class="headerlink" href="#messagedigestpasswordencoder" title="Permalink to this headline">¶</a></h4>
+<p><code class="docutils literal"><span class="pre">MessageDigestPasswordEncoder</span></code>はJavaが提供する<code class="docutils literal"><span class="pre">java.security.MessageDigest</span></code>クラスを利用してハッシュ化を行う。
+<code class="docutils literal"><span class="pre">MessageDigest</span></code>クラスはMD-5、SHA-1、SHA-256等のハッシュアルゴリズムを提供している。
+詳細については<a class="reference external" href="https://docs.oracle.com/javase/jp/8/docs/api/java/security/MessageDigest.html">Javadoc</a>を参照されたい。</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last"><code class="docutils literal"><span class="pre">MessageDigestPasswordEncoder</span></code>は旧式の実装であることを示すため非推奨となっている。
+このクラスが廃止される予定はないが、セキュリティ上のリスクが想定されるため、Pbkdf2アルゴリズムやBCryptアルゴリズムを利用することを検討されたい。</p>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>本ガイドラインでは、<code class="docutils literal"><span class="pre">DelegatingPassowordEncoder</span></code>を通して<code class="docutils literal"><span class="pre">MessageDigestPasswordEncoder</span></code>を利用する方法について説明する。</p>
+<p>ここでは以下のハッシュ化要件を満たす<code class="docutils literal"><span class="pre">PasswordEncoder</span></code>を実装する。</p>
+<ul class="simple">
+<li>アルゴリズムがSHA-512である。</li>
+<li>ハッシュ化回数が1000回である。</li>
+</ul>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p><strong>MessageDigestPasswordEncoderの仕様</strong></p>
+<p><code class="docutils literal"><span class="pre">MessageDigestPasswordEncoder</span></code>でハッシュ化を行うと以下のフォーマットで出力される。</p>
+<blockquote>
+<div>{<code class="docutils literal"><span class="pre">salt</span></code>}<code class="docutils literal"><span class="pre">hashValue</span></code></div></blockquote>
+<p>ソルトはSpring Security 5からランダムに生成するようになったため、安全性が向上している。</p>
+<p>ハッシュ化したパスワードに付与されたソルトは照合の際に使用される。</p>
+<p><strong>既に固定のソルトを用いてハッシュ化したパスワードについて</strong></p>
+<p>先述の通り、Spring Security 5の<code class="docutils literal"><span class="pre">MessageDigestPasswordEncoder</span></code>はソルトをランダムに生成するが、
+既に固定のソルトを用いてパスワードをハッシュ化していた場合も、パスワードにソルトを付与する移行処理を行うことで、
+照合することができるようになる。</p>
+<p>パスワードデータの移行については、<a class="reference external" href="https://docs.spring.io/spring-security/site/docs/5.1.3.RELEASE/api/org/springframework/security/crypto/password/MessageDigestPasswordEncoder.html">MessageDigestPasswordEncoderのJavadoc</a>を参照されたい。</p>
+<p class="last">この場合、既存のパスワードは固定のソルトを用いて照合が行われるが、パスワードを新規に設定または変更した場合はランダムなソルトが用いられる。</p>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p><code class="docutils literal"><span class="pre">MessageDigestPasswordEncoder</span></code>を使用する際は、以下の点に注意する必要がある。</p>
+<ul class="last simple">
+<li>既存のハッシュ値より文字数が多くなる</li>
+<li>エンコードしたパスワードからソルトの情報が得られる</li>
+</ul>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>まず、<code class="docutils literal"><span class="pre">MessageDigestPasswordEncoder</span></code>でハッシュ化を行う<code class="docutils literal"><span class="pre">DelegatingPasswordEncoder</span></code>のbeanを定義する。</p>
+<ul class="simple">
+<li>applicationContext.xmlの定義例</li>
+</ul>
+<div class="highlight-xml"><div class="highlight"><pre><span></span><span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">&quot;passwordEncoder&quot;</span> <span class="na">class=</span><span class="s">&quot;org.springframework.security.crypto.password.DelegatingPasswordEncoder&quot;</span><span class="nt">&gt;</span> <span class="c">&lt;!-- (1) --&gt;</span>
+    <span class="nt">&lt;constructor-arg</span> <span class="na">name=</span><span class="s">&quot;idForEncode&quot;</span> <span class="na">value=</span><span class="s">&quot;MD&quot;</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;constructor-arg</span> <span class="na">name=</span><span class="s">&quot;idToPasswordEncoder&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;map&gt;</span>
+            <span class="nt">&lt;entry</span> <span class="na">key=</span><span class="s">&quot;MD&quot;</span><span class="nt">&gt;</span>
+                <span class="nt">&lt;bean</span> <span class="na">class=</span><span class="s">&quot;org.springframework.security.crypto.password.MessageDigestPasswordEncoder&quot;</span><span class="nt">&gt;</span> <span class="c">&lt;!-- (2) --&gt;</span>
+                    <span class="nt">&lt;constructor-arg</span> <span class="na">name=</span><span class="s">&quot;algorithm&quot;</span> <span class="na">value=</span><span class="s">&quot;SHA-512&quot;</span> <span class="nt">/&gt;</span> <span class="c">&lt;!-- (3) --&gt;</span>
+                    <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">&quot;iterations&quot;</span> <span class="na">value=</span><span class="s">&quot;1000&quot;</span> <span class="nt">/&gt;</span> <span class="c">&lt;!-- (4) --&gt;</span>
+                <span class="nt">&lt;/bean&gt;</span>
+            <span class="nt">&lt;/entry&gt;</span>
+            <span class="c">&lt;!-- omitted --&gt;</span>
+        <span class="nt">&lt;/map&gt;</span>
+    <span class="nt">&lt;/constructor-arg&gt;</span>
+<span class="nt">&lt;/bean&gt;</span>
 </pre></div>
 </div>
 <table border="1" class="colwidths-given docutils">
@@ -4287,8 +4474,7 @@ Bean Validationに関する詳細は <a class="reference internal" href="../Arch
 </div>
 </td>
 <td><div class="first last line-block">
-<div class="line">パスワードをハッシュ化する場合は、<code class="docutils literal"><span class="pre">encodePassword</span></code>メソッドを使用する。</div>
-<div class="line">メソッドの引数には、パスワード、ソルト文字列の順で指定する。</div>
+<div class="line">ここではbeanのidに<code class="docutils literal"><span class="pre">passwordEncoder</span></code>を指定し、<code class="docutils literal"><span class="pre">sec:authentication-provider</span></code>配下に自動的に参照されるように設定する。</div>
 </div>
 </td>
 </tr>
@@ -4297,8 +4483,28 @@ Bean Validationに関する詳細は <a class="reference internal" href="../Arch
 </div>
 </td>
 <td><div class="first last line-block">
-<div class="line">パスワードを照合する場合は、<code class="docutils literal"><span class="pre">isPasswordValid</span></code>メソッドを使用する。</div>
-<div class="line">メソッドの引数には、ハッシュ化済みのパスワード、平文のパスワード、ソルト文字列の順で指定する。</div>
+<div class="line">ハッシュ化に使用する<code class="docutils literal"><span class="pre">PasswordEncoder</span></code>として<code class="docutils literal"><span class="pre">MessageDigestPasswordEncoder</span></code>をbean定義する。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><div class="first last line-block">
+<div class="line">(3)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line"><code class="docutils literal"><span class="pre">MessageDigestPasswordEncoder</span></code>で使用するハッシュアルゴリズムを指定する。</div>
+<div class="line">ここには<code class="docutils literal"><span class="pre">MessageDigest</span></code>クラスが対応するアルゴリズムを指定することができる。</div>
+<div class="line">指定できる値については、<a class="reference external" href="https://docs.oracle.com/javase/jp/8/docs/technotes/guides/security/StandardNames.html#MessageDigest">Java暗号化アーキテクチャ標準アルゴリズム名のドキュメント</a> を参照されたい。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><div class="first last line-block">
+<div class="line">(4)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">ハッシュ化のiterations(反復)回数を指定する。</div>
+<div class="line">設定を行わなかった場合、1回となる。</div>
 </div>
 </td>
 </tr>
@@ -4307,18 +4513,24 @@ Bean Validationに関する詳細は <a class="reference internal" href="../Arch
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">実際のアプリケーション開発では、セキュリティ上のリスクを軽減するため<code class="docutils literal"><span class="pre">idForEncode</span></code>と<code class="docutils literal"><span class="pre">idToPasswordEncoder</span></code>の<code class="docutils literal"><span class="pre">key</span></code>値にアルゴリズム名を推測できないような値を指定することを推奨する。</p>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
 </div>
 </div>
 </div>
 <div class="section" id="appendix">
-<h2><a class="toc-backref" href="#id126">9.2.4. Appendix</a><a class="headerlink" href="#appendix" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id131">9.2.4. Appendix</a><a class="headerlink" href="#appendix" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="spring-security-authentication-mvc">
-<span id="id47"></span><h3><a class="toc-backref" href="#id127">9.2.4.1. Spring MVCでリクエストを受けてログインフォームを表示する</a><a class="headerlink" href="#spring-security-authentication-mvc" title="Permalink to this headline">¶</a></h3>
+<span id="id49"></span><h3><a class="toc-backref" href="#id132">9.2.4.1. Spring MVCでリクエストを受けてログインフォームを表示する</a><a class="headerlink" href="#spring-security-authentication-mvc" title="Permalink to this headline">¶</a></h3>
 <p>Spring MVCでリクエストを受けてログインフォームを表示する方法を説明する。</p>
 <ul class="simple">
-<li>spring-mvc.xmlの定義例</li>
+<li>ログインフォームを表示するControllerの定義例</li>
 </ul>
-<p>ログインフォームを表示するControllerの定義例。</p>
 <div class="highlight-java"><div class="highlight"><pre><span></span><span class="nd">@Controller</span>
 <span class="nd">@RequestMapping</span><span class="o">(</span><span class="s">&quot;/login&quot;</span><span class="o">)</span>
 <span class="kd">public</span> <span class="kd">class</span> <span class="nc">LoginController</span> <span class="o">{</span> <span class="c1">// (1)</span>
@@ -4359,13 +4571,13 @@ Bean Validationに関する詳細は <a class="reference internal" href="../Arch
 </div>
 </div>
 <div class="section" id="remember-me">
-<span id="springsecurityauthenticationrememberme"></span><h3><a class="toc-backref" href="#id128">9.2.4.2. Remember Me認証の利用</a><a class="headerlink" href="#remember-me" title="Permalink to this headline">¶</a></h3>
-<p>「<a class="reference external" href="http://docs.spring.io/spring-security/site/docs/4.2.4.RELEASE/reference/htmlsingle/#remember-me">Remember Me認証</a>」とは、
+<span id="springsecurityauthenticationrememberme"></span><h3><a class="toc-backref" href="#id133">9.2.4.2. Remember Me認証の利用</a><a class="headerlink" href="#remember-me" title="Permalink to this headline">¶</a></h3>
+<p>「<a class="reference external" href="https://docs.spring.io/spring-security/site/docs/5.1.3.RELEASE/reference/htmlsingle/#remember-me">Remember Me認証</a>」とは、
 Webサイトに頻繁にアクセスするユーザーの利便性を高めるための機能の一つで、ログイン状態を通常のライフサイクルより長く保持するための機能である。
 本機能を使用すると、ブラウザを閉じた後やセッションタイムが発生した後でも、Cookieに保持しているRemember Me認証用のTokenを使用して、
 ユーザ名とパスワードを再入力することなく自動でログインすることができる。
 なお、本機能は、ユーザーがログイン状態を保持することを許可した場合のみ有効となる。</p>
-<p>Spring Securityは、「<a class="reference external" href="http://docs.spring.io/spring-security/site/docs/4.2.4.RELEASE/reference/htmlsingle/#remember-me-hash-token">Hash-Based Token</a> 方式のRemember Me認証」と「<a class="reference external" href="http://docs.spring.io/spring-security/site/docs/4.2.4.RELEASE/reference/htmlsingle/#remember-me-persistent-token">Persistent Token</a> 方式のRemember Me認証」をサポートしており、
+<p>Spring Securityは、「<a class="reference external" href="https://docs.spring.io/spring-security/site/docs/5.1.3.RELEASE/reference/htmlsingle/#remember-me-hash-token">Hash-Based Token</a> 方式のRemember Me認証」と「<a class="reference external" href="https://docs.spring.io/spring-security/site/docs/5.1.3.RELEASE/reference/htmlsingle/#remember-me-persistent-token">Persistent Token</a> 方式のRemember Me認証」をサポートしており、
 デフォルトではHash-Based Token方式が使用される。</p>
 <div class="line-block">
 <div class="line"><br /></div>
@@ -4418,7 +4630,7 @@ Webサイトに頻繁にアクセスするユーザーの利便性を高める�
 </tr>
 </tbody>
 </table>
-<p>上記以外の属性については、<a class="reference external" href="http://docs.spring.io/spring-security/site/docs/4.2.4.RELEASE/reference/htmlsingle/#nsa-remember-me">Spring Security Reference -The Security Namespace (&lt;remember-me&gt;) -</a>を参照されたい。</p>
+<p>上記以外の属性については、<a class="reference external" href="https://docs.spring.io/spring-security/site/docs/5.1.3.RELEASE/reference/htmlsingle/#nsa-remember-me">Spring Security Reference -The Security Namespace (&lt;remember-me&gt;) -</a>を参照されたい。</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p><strong>Spring Security 4.0における変更</strong></p>
@@ -4472,7 +4684,7 @@ Webサイトに頻繁にアクセスするユーザーの利便性を高める�
 <div class="admonition tip">
 <p class="first admonition-title">Tip</p>
 <p><strong>value属性の設定値について</strong></p>
-<p class="last"><code class="docutils literal"><span class="pre">value</span></code>属性には、<code class="docutils literal"><span class="pre">true</span></code>を設定する旨が<a class="reference external" href="http://docs.spring.io/autorepo/docs/spring-security/4.2.4.RELEASE/apidocs/org/springframework/security/web/authentication/rememberme/AbstractRememberMeServices.html#rememberMeRequested-javax.servlet.http.HttpServletRequest-java.lang.String-">rememberMeRequestedのJavaDoc</a>に記載されているが、
+<p class="last"><code class="docutils literal"><span class="pre">value</span></code>属性には、<code class="docutils literal"><span class="pre">true</span></code>を設定する旨が<a class="reference external" href="https://docs.spring.io/spring-security/site/docs/5.1.3.RELEASE/api/org/springframework/security/web/authentication/rememberme/AbstractRememberMeServices.html#rememberMeRequested-javax.servlet.http.HttpServletRequest-java.lang.String-">rememberMeRequestedのJavaDoc</a>に記載されているが、
 実装上は<code class="docutils literal"><span class="pre">on</span></code>、<code class="docutils literal"><span class="pre">yes</span></code>、”<code class="docutils literal"><span class="pre">1</span></code>” も設定可能である。</p>
 </div>
 </div>
@@ -4497,58 +4709,48 @@ Webサイトに頻繁にアクセスするユーザーの利便性を高める�
         <li class="right" >
           <a href="SpringSecurity.html" title="9.1. Spring Security概要"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Macchinetta Server Framework (1.x) Development Guideline 1.5.1.RELEASE documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Macchinetta Server Framework (1.x) Development Guideline 1.6.1.RELEASE documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="index.html" >9. セキュリティ対策</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2013-2018, NTT Corporation.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.6.2.Theme is <a href="http://github.com/vimalkvn/solar-theme">Solar</a>
+        &copy; Copyright 2013, NTT Corporation.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.6.3.Theme is <a href="http://github.com/vimalkvn/solar-theme">Solar</a>
     </div>
     
     <script>
-     
-     $(function() {
-    	   var $sidebar	= $('.sphinxsidebar'),
-    		     $window		= $(window),
-    		     offset		= $sidebar.offset(),
-    		     topPadding	= 3,
-    		     $scroll		= $('#scroll');
-    	   
-    	   $window.scroll(function() {
-    		     if ($scroll.is(':checked')) {
-				         if ($window.scrollTop() > offset.top) {
-					           $sidebar.stop().animate({
-						             marginTop:$window.scrollTop() - offset.top + topPadding
-					           });
-				         } else {
-					           $sidebar.stop().animate({
-						             marginTop:0
-					           });
-				         }
-			       }
-		     });
-    	   
-    	   var $navList = $('ul:first', $sidebar);
-    	   $('li:first', $navList).addClass('open');
-    	   
-    	   $navList.treeview({
-    		     persist: "location",
-    		     collapsed: true,
-    		     unique: false
-    	   });
-    	   
-	   });
-    </script>
     
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-113850349-2"></script>
-    <script>
-     window.dataLayer = window.dataLayer || [];
-     function gtag(){dataLayer.push(arguments);}
-     gtag('js', new Date());
-
-     gtag('config', 'UA-113850349-2');
+    $(function() {
+    	var $sidebar	= $('.sphinxsidebar'),
+    		$window		= $(window),
+    		offset		= $sidebar.offset(),
+    		topPadding	= 3,
+    		$scroll		= $('#scroll');
+    	
+    	$window.scroll(function() {
+    		if ($scroll.is(':checked')) {
+				if ($window.scrollTop() > offset.top) {
+					$sidebar.stop().animate({
+						marginTop:$window.scrollTop() - offset.top + topPadding
+					});
+				} else {
+					$sidebar.stop().animate({
+						marginTop:0
+					});
+				}
+			}
+		});
+    	
+    	var $navList = $('ul:first', $sidebar);
+    	$('li:first', $navList).addClass('open');
+    	
+    	$navList.treeview({
+    		persist: "location",
+    		collapsed: true,
+    		unique: false
+    	});
+    	
+	});
     </script>
   </body>
 </html>

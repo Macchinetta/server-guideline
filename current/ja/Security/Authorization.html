@@ -3,16 +3,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>9.3. 認可 &#8212; Macchinetta Server Framework (1.x) Development Guideline 1.5.1.RELEASE documentation</title>
-    
+    <title>9.3. 認可 &#8212; Macchinetta Server Framework (1.x) Development Guideline 1.6.1.RELEASE documentation</title>
     <link rel="stylesheet" href="../_static/solar.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '1.5.1.RELEASE',
+        VERSION:     '1.6.1.RELEASE',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true,
@@ -43,7 +40,7 @@
         <li class="right" >
           <a href="Authentication.html" title="9.2. 認証"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Macchinetta Server Framework (1.x) Development Guideline 1.5.1.RELEASE documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Macchinetta Server Framework (1.x) Development Guideline 1.6.1.RELEASE documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">9. セキュリティ対策</a> &#187;</li> 
       </ul>
     </div>
@@ -250,7 +247,7 @@ Spring Securityでは、以下の3つのリソースに対してアクセスポ�
 <table class="docutils footnote" frame="void" id="fspringsecurityauthorization1" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id3">[1]</a></td><td>ドメインオブジェクトのアクセスに対する認可処理については、 <a class="reference external" href="http://docs.spring.io/spring-security/site/docs/4.2.4.RELEASE/reference/htmlsingle/#domain-acls">Spring Security Reference -Domain Object Security (ACLs)-</a>を参照されたい。</td></tr>
+<tr><td class="label"><a class="fn-backref" href="#id3">[1]</a></td><td>ドメインオブジェクトのアクセスに対する認可処理については、 <a class="reference external" href="https://docs.spring.io/spring-security/site/docs/5.1.3.RELEASE/reference/htmlsingle/#domain-acls">Spring Security Reference -Domain Object Security (ACLs)-</a>を参照されたい。</td></tr>
 </tbody>
 </table>
 <div class="line-block">
@@ -469,7 +466,7 @@ Spring Securityでは、以下の3つのリソースに対してアクセスポ�
 <p>アクセスポリシーの記述方法を説明する。</p>
 <p>Spring Securityは、アクセスポリシーを指定する記述方法としてSpring Expression Language(SpEL)をサポートしている。
 SpELを使わない方法もあるが、本ガイドラインではExpressionを使ってアクセスポリシーを指定する方法で説明を行う。
-SpELの使い方については本節でも紹介するが、より詳しい使い方を知りたい場合は <a class="reference external" href="http://docs.spring.io/spring/docs/4.3.14.RELEASE/spring-framework-reference/htmlsingle/#expressions">Spring Framework Reference Documentation -Spring Expression Language (SpEL)-</a>を参照されたい。</p>
+SpELの使い方については本節でも紹介するが、より詳しい使い方を知りたい場合は <a class="reference external" href="https://docs.spring.io/spring/docs/5.1.4.RELEASE/spring-framework-reference/core.html#expressions">Spring Framework Documentation -Spring Expression Language (SpEL)-</a>を参照されたい。</p>
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
@@ -780,7 +777,7 @@ SpELの使い方については本節でも紹介するが、より詳しい使�
 </tr>
 </tbody>
 </table>
-<p>上記以外の属性については、<a class="reference external" href="http://docs.spring.io/spring-security/site/docs/4.2.4.RELEASE/reference/htmlsingle/#nsa-intercept-url">&lt;intercept-url&gt;</a>を参照されたい。</p>
+<p>上記以外の属性については、<a class="reference external" href="https://docs.spring.io/spring-security/site/docs/5.1.3.RELEASE/reference/htmlsingle/#nsa-intercept-url">&lt;intercept-url&gt;</a>を参照されたい。</p>
 <ul class="simple">
 <li><code class="docutils literal"><span class="pre">&lt;sec:intercept-url&gt;</span></code>タグ<code class="docutils literal"><span class="pre">pattern</span></code>属性の定義例（spring-security.xml）</li>
 </ul>
@@ -1304,6 +1301,12 @@ Expression内で「# + 引数名」形式のExpressionを指定することで�
 <strong>実装クラスの引数名を、 &#64;PreAuthorize 内で指定した #username と一致させる必要がある</strong> ので、注意されたい。</p>
 <p class="last">JDK 8 から追加されたコンパイルオプション(<code class="docutils literal"><span class="pre">-parameters</span></code>)を使用すると、メソッドパラメータにリフレクション用のメタデータが生成されるため、アノテーションを指定しなくても引数名が解決される。</p>
 </div>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">Spring 5から、SpringのコアAPIに<a class="reference external" href="https://docs.spring.io/spring/docs/5.1.4.RELEASE/spring-framework-reference/core.html#null-safety">null-safety</a>の機能が取り入れられており、SpELが解釈される際の<code class="docutils literal"><span class="pre">null</span></code>に対する動作も変更(<a class="reference external" href="https://jira.spring.io/browse/SPR-15540">SPR-15540</a>)されている。
+例えば<code class="docutils literal"><span class="pre">&#64;PreAuthorizeの</span></code>の引数(<code class="docutils literal"><span class="pre">#xxx</span></code>)や、<code class="docutils literal"><span class="pre">&#64;PreAuthorizeの</span></code>の戻り値（<code class="docutils literal"><span class="pre">resultObject</span></code>）が<code class="docutils literal"><span class="pre">Map</span></code>を含む場合、<code class="docutils literal"><span class="pre">Map</span></code>から値を取得するSpELでキー値に<code class="docutils literal"><span class="pre">null</span></code>となる値を入力すると、Spring 4以前ではそのまま<code class="docutils literal"><span class="pre">Map</span></code>に<code class="docutils literal"><span class="pre">null</span></code>が渡され該当する値がないため<cite>null`</cite>が返却されていたが、Spring 5以降ではキーとなるSpELを評価した結果に対する<code class="docutils literal"><span class="pre">null</span></code>チェックが追加されており、<code class="docutils literal"><span class="pre">null</span></code>の場合は<code class="docutils literal"><span class="pre">IllegalStateException</span></code>が発生する。
+そのため、キーとする値に対して事前に<code class="docutils literal"><span class="pre">null</span></code>チェックを行うなど、<code class="docutils literal"><span class="pre">null</span></code>を考慮した実装が必要となる。</p>
+</div>
 </div>
 <div class="section" id="id18">
 <h5><a class="toc-backref" href="#id64">9.3.2.3.3.2. メソッド実行後に適用するアクセスポリシーの指定</a><a class="headerlink" href="#id18" title="Permalink to this headline">¶</a></h5>
@@ -1606,6 +1609,15 @@ Spring Securityは、<code class="docutils literal"><span class="pre">AccessDeni
 <td><div class="first last line-block">
 <div class="line"><code class="docutils literal"><span class="pre">AccessDeniedException</span></code>と<code class="docutils literal"><span class="pre">AccessDeniedHandler</span></code>インタフェースの実装クラスのマッピングを行い、発生した<code class="docutils literal"><span class="pre">AccessDeniedException</span></code>に対応する<code class="docutils literal"><span class="pre">AccessDeniedHandler</span></code>インタフェースの実装クラスに処理を委譲する。</div>
 <div class="line"><code class="docutils literal"><span class="pre">InvalidSessionAccessDeniedHandler</span></code>はこの仕組みを利用して呼び出されている。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><div class="first last line-block">
+<div class="line"><code class="docutils literal"><span class="pre">RequestMatcherDelegatingAccessDeniedHandler</span></code></div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line"><code class="docutils literal"><span class="pre">RequestMatcher</span></code>インタフェースの仕組みを利用して、指定されたリクエストのパターンに対応する<code class="docutils literal"><span class="pre">AccessDeniedHandler</span></code>インタフェースの実装クラスに処理を委譲する。</div>
 </div>
 </td>
 </tr>
@@ -2144,58 +2156,48 @@ Spring Securityは、<code class="docutils literal"><span class="pre">Authentica
         <li class="right" >
           <a href="Authentication.html" title="9.2. 認証"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Macchinetta Server Framework (1.x) Development Guideline 1.5.1.RELEASE documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Macchinetta Server Framework (1.x) Development Guideline 1.6.1.RELEASE documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="index.html" >9. セキュリティ対策</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2013-2018, NTT Corporation.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.6.2.Theme is <a href="http://github.com/vimalkvn/solar-theme">Solar</a>
+        &copy; Copyright 2013, NTT Corporation.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.6.3.Theme is <a href="http://github.com/vimalkvn/solar-theme">Solar</a>
     </div>
     
     <script>
-     
-     $(function() {
-    	   var $sidebar	= $('.sphinxsidebar'),
-    		     $window		= $(window),
-    		     offset		= $sidebar.offset(),
-    		     topPadding	= 3,
-    		     $scroll		= $('#scroll');
-    	   
-    	   $window.scroll(function() {
-    		     if ($scroll.is(':checked')) {
-				         if ($window.scrollTop() > offset.top) {
-					           $sidebar.stop().animate({
-						             marginTop:$window.scrollTop() - offset.top + topPadding
-					           });
-				         } else {
-					           $sidebar.stop().animate({
-						             marginTop:0
-					           });
-				         }
-			       }
-		     });
-    	   
-    	   var $navList = $('ul:first', $sidebar);
-    	   $('li:first', $navList).addClass('open');
-    	   
-    	   $navList.treeview({
-    		     persist: "location",
-    		     collapsed: true,
-    		     unique: false
-    	   });
-    	   
-	   });
-    </script>
     
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-113850349-2"></script>
-    <script>
-     window.dataLayer = window.dataLayer || [];
-     function gtag(){dataLayer.push(arguments);}
-     gtag('js', new Date());
-
-     gtag('config', 'UA-113850349-2');
+    $(function() {
+    	var $sidebar	= $('.sphinxsidebar'),
+    		$window		= $(window),
+    		offset		= $sidebar.offset(),
+    		topPadding	= 3,
+    		$scroll		= $('#scroll');
+    	
+    	$window.scroll(function() {
+    		if ($scroll.is(':checked')) {
+				if ($window.scrollTop() > offset.top) {
+					$sidebar.stop().animate({
+						marginTop:$window.scrollTop() - offset.top + topPadding
+					});
+				} else {
+					$sidebar.stop().animate({
+						marginTop:0
+					});
+				}
+			}
+		});
+    	
+    	var $navList = $('ul:first', $sidebar);
+    	$('li:first', $navList).addClass('open');
+    	
+    	$navList.treeview({
+    		persist: "location",
+    		collapsed: true,
+    		unique: false
+    	});
+    	
+	});
     </script>
   </body>
 </html>

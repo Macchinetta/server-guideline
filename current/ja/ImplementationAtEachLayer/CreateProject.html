@@ -3,16 +3,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>3.5. 開発プロジェクトのビルド &#8212; Macchinetta Server Framework (1.x) Development Guideline 1.5.1.RELEASE documentation</title>
-    
+    <title>3.5. 開発プロジェクトのビルド &#8212; Macchinetta Server Framework (1.x) Development Guideline 1.6.1.RELEASE documentation</title>
     <link rel="stylesheet" href="../_static/solar.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '1.5.1.RELEASE',
+        VERSION:     '1.6.1.RELEASE',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true,
@@ -43,7 +40,7 @@
         <li class="right" >
           <a href="ApplicationLayer.html" title="3.4. アプリケーション層の実装"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Macchinetta Server Framework (1.x) Development Guideline 1.5.1.RELEASE documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Macchinetta Server Framework (1.x) Development Guideline 1.6.1.RELEASE documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">3. アプリケーション開発</a> &#187;</li> 
       </ul>
     </div>
@@ -346,36 +343,17 @@ warファイルを環境毎に作成してリリースする場合は、GitやSu
 <span id="id7"></span><h3><a class="toc-backref" href="#id18">3.5.1.3. デプロイ</a><a class="headerlink" href="#createwebapplicationprojectbuilddeploy" title="Permalink to this headline">¶</a></h3>
 <div class="section" id="tomcat">
 <span id="createwebapplicationprojectbuilddeploytotomcat"></span><h4><a class="toc-backref" href="#id19">3.5.1.3.1. Tomcatへのデプロイ</a><a class="headerlink" href="#tomcat" title="Permalink to this headline">¶</a></h4>
-<p>WebアプリケーションをTomcat上にリリースする場合は次のような手順をとる。</p>
+<p>WebアプリケーションをTomcat 8.5およびTomcat 9上にリリースする場合は次のような手順をとる。</p>
 <ol class="arabic simple">
 <li>リリース対象のAPサーバ環境にあわせてmavenのprofileを指定し、 *-env プロジェクトを ビルドする。</li>
 <li>上記でビルドした*-env-x.y.z.jarファイル をあらかじめ決定したAPサーバ上のフォルダに設置する。 ex. /etc/foo/bar/abcd-env-x.y.z.jar</li>
 <li>あらかじめパッケージリポジトリにデプロイ済みの*.warファイルを [CATALINA_HOME]/webapps 配下で解凍(unjar)する。</li>
-<li>Tomcat 7を使用する場合は、TomcatのVirtualWebappLoader機能を使用して /etc/foo/bar/*.jar をクラスパスに追加する。</li>
+<li>Tomcatのリソース機能を使用して、 /etc/foo/bar/*.jar をクラスパスに追加する。</li>
 </ol>
 <blockquote>
 <div><ul class="simple">
 <li>[CATALINA_HOME]/conf/[contextPath].xml ファイルに下記の定義を追加する。</li>
-<li>詳しくは、 <a class="reference external" href="http://tomcat.apache.org/tomcat-7.0-doc/api/org/apache/catalina/loader/VirtualWebappLoader.html">http://tomcat.apache.org/tomcat-7.0-doc/api/org/apache/catalina/loader/VirtualWebappLoader.html</a> と <a class="reference external" href="https://github.com/terasolunaorg/terasoluna-tourreservation/tree/5.4.1.RELEASE/terasoluna-tourreservation-env/configs">terasoluna-tourreservation-envのconfigsフォルダ</a>を参考されたい。</li>
-<li>VirtualWebappLoaderの設定例：</li>
-</ul>
-<blockquote>
-<div><div class="highlight-xml"><div class="highlight"><pre><span></span><span class="nt">&lt;Loader</span> <span class="na">className=</span><span class="s">&quot;org.apache.catalina.loader.VirtualWebappLoader&quot;</span>
-        <span class="na">virtualClasspath=</span><span class="s">&quot;/etc/foo/bar/*.jar&quot;</span> <span class="nt">/&gt;</span>
-</pre></div>
-</div>
-</div></blockquote>
-<ul class="simple">
-<li>なお、VirtualWebappLoader機能はTomcat 6でも使用可能。</li>
-</ul>
-</div></blockquote>
-<ol class="arabic simple" start="5">
-<li>Tomcat 8.xを使用する場合は、Tomcatのリソース機能を使用して /etc/foo/bar/*.jar をクラスパスに追加する。</li>
-</ol>
-<blockquote>
-<div><ul class="simple">
-<li>[CATALINA_HOME]/conf/[contextPath].xml ファイルに下記の定義を追加する。</li>
-<li>詳しくは、 <a class="reference external" href="https://tomcat.apache.org/migration-8.html#Web_application_resources">https://tomcat.apache.org/migration-8.html#Web_application_resources</a> と <a class="reference external" href="https://github.com/terasolunaorg/terasoluna-tourreservation/tree/5.4.1.RELEASE/terasoluna-tourreservation-env/configs">terasoluna-tourreservation-envのconfigsフォルダ</a>を参考されたい。</li>
+<li>詳しくは、 <a class="reference external" href="https://tomcat.apache.org/tomcat-9.0-doc/config/resources.html">The Resources Component</a>と <a class="reference external" href="https://github.com/terasolunaorg/terasoluna-tourreservation/tree/5.5.1.RELEASE/terasoluna-tourreservation-env/configs">terasoluna-tourreservation-envのconfigsフォルダ</a>を参考されたい。</li>
 <li>リソースの設定例：</li>
 </ul>
 <blockquote>
@@ -398,6 +376,22 @@ warファイルを環境毎に作成してリリースする場合は、GitやSu
 </div>
 <div class="line-block">
 <div class="line"><br /></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p><strong>Tomcat 7およびTomcat 6を使用する場合</strong></p>
+<p>Tomcat 7およびTomcat 6を使用する場合は、上記手順 4.の代わりにTomcatのVirtualWebappLoader機能を使用して /etc/foo/bar/*.jar をクラスパスに追加する。</p>
+<ul class="simple">
+<li>[CATALINA_HOME]/conf/[contextPath].xml ファイルに下記の定義を追加する。</li>
+<li>詳しくは、 <a class="reference external" href="http://tomcat.apache.org/tomcat-7.0-doc/api/org/apache/catalina/loader/VirtualWebappLoader.html">VirtualWebappLoader</a>と <a class="reference external" href="https://github.com/terasolunaorg/terasoluna-tourreservation/tree/5.5.1.RELEASE/terasoluna-tourreservation-env/configs">terasoluna-tourreservation-envのconfigsフォルダ</a>を参考されたい。</li>
+</ul>
+<p>VirtualWebappLoaderの設定例：</p>
+<blockquote class="last">
+<div><div class="highlight-xml"><div class="highlight"><pre><span></span><span class="nt">&lt;Loader</span> <span class="na">className=</span><span class="s">&quot;org.apache.catalina.loader.VirtualWebappLoader&quot;</span>
+        <span class="na">virtualClasspath=</span><span class="s">&quot;/etc/foo/bar/*.jar&quot;</span> <span class="nt">/&gt;</span>
+</pre></div>
+</div>
+</div></blockquote>
 </div>
 </div>
 <div class="section" id="createwebapplicationprojectbuilddeploytootherserver">
@@ -520,8 +514,12 @@ warファイルを環境毎に作成してリリースする場合は、GitやSu
 <li>コンパイルエラー、コードメトリクスでの一定以上のviolationの発生、テストの失敗の場合、以降の作業を中止する。</li>
 </ul>
 </div></blockquote>
-<p>3. mavenパッケージリポジトリサーバにartifact(jar,warファイル)をアップロード(mvn deploy)する。
-|</p>
+<ol class="arabic simple" start="3">
+<li>mavenパッケージリポジトリサーバにartifact(jar,warファイル)をアップロード(mvn deploy)する。</li>
+</ol>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
 </div>
 <div class="section" id="release">
 <h5>3.5.1.3.3.2. RELEASEバージョンの運用<a class="headerlink" href="#release" title="Permalink to this headline">¶</a></h5>
@@ -545,11 +543,6 @@ warファイルを環境毎に作成してリリースする場合は、GitやSu
 <ol class="arabic simple" start="6">
 <li>mavenパッケージリポジトリサーバにartifact(jar,warファイル)をアップロード(mvn deploy)する。</li>
 </ol>
-<div class="admonition-todo admonition" id="index-0">
-<p class="first admonition-title">Todo</p>
-<p class="last">ここで最後にtrunkのソースツリーのpom.xmlのversionタグを、
-次のSNAPSHOTバージョンに書き変えてコミットするところまで書くべきか？！</p>
-</div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p>pom.xmlファイルの&lt;version&gt;タグの変更は <a class="reference external" href="http://www.mojohaus.org/versions-maven-plugin/">versions-maven-plugin</a> で可能である。</p>
@@ -626,58 +619,48 @@ jar -ufv mywebapp.war WEB-INF/lib
         <li class="right" >
           <a href="ApplicationLayer.html" title="3.4. アプリケーション層の実装"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Macchinetta Server Framework (1.x) Development Guideline 1.5.1.RELEASE documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Macchinetta Server Framework (1.x) Development Guideline 1.6.1.RELEASE documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="index.html" >3. アプリケーション開発</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2013-2018, NTT Corporation.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.6.2.Theme is <a href="http://github.com/vimalkvn/solar-theme">Solar</a>
+        &copy; Copyright 2013, NTT Corporation.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.6.3.Theme is <a href="http://github.com/vimalkvn/solar-theme">Solar</a>
     </div>
     
     <script>
-     
-     $(function() {
-    	   var $sidebar	= $('.sphinxsidebar'),
-    		     $window		= $(window),
-    		     offset		= $sidebar.offset(),
-    		     topPadding	= 3,
-    		     $scroll		= $('#scroll');
-    	   
-    	   $window.scroll(function() {
-    		     if ($scroll.is(':checked')) {
-				         if ($window.scrollTop() > offset.top) {
-					           $sidebar.stop().animate({
-						             marginTop:$window.scrollTop() - offset.top + topPadding
-					           });
-				         } else {
-					           $sidebar.stop().animate({
-						             marginTop:0
-					           });
-				         }
-			       }
-		     });
-    	   
-    	   var $navList = $('ul:first', $sidebar);
-    	   $('li:first', $navList).addClass('open');
-    	   
-    	   $navList.treeview({
-    		     persist: "location",
-    		     collapsed: true,
-    		     unique: false
-    	   });
-    	   
-	   });
-    </script>
     
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-113850349-2"></script>
-    <script>
-     window.dataLayer = window.dataLayer || [];
-     function gtag(){dataLayer.push(arguments);}
-     gtag('js', new Date());
-
-     gtag('config', 'UA-113850349-2');
+    $(function() {
+    	var $sidebar	= $('.sphinxsidebar'),
+    		$window		= $(window),
+    		offset		= $sidebar.offset(),
+    		topPadding	= 3,
+    		$scroll		= $('#scroll');
+    	
+    	$window.scroll(function() {
+    		if ($scroll.is(':checked')) {
+				if ($window.scrollTop() > offset.top) {
+					$sidebar.stop().animate({
+						marginTop:$window.scrollTop() - offset.top + topPadding
+					});
+				} else {
+					$sidebar.stop().animate({
+						marginTop:0
+					});
+				}
+			}
+		});
+    	
+    	var $navList = $('ul:first', $sidebar);
+    	$('li:first', $navList).addClass('open');
+    	
+    	$navList.treeview({
+    		persist: "location",
+    		collapsed: true,
+    		unique: false
+    	});
+    	
+	});
     </script>
   </body>
 </html>

@@ -48,6 +48,8 @@ Spring Frameworkに関して、本ドキュメントを読むための基礎知�
     メッセージ連携機能をどう実装するか、何に気を付けるべきかを説明する。
 * \ :doc:`../Security/index`\
     Spring Securityを中心としたセキュリティ対策について説明する。
+* \ :doc:`../UnitTest/index`\
+    Spring Testを利用した単体テストについて説明する。
 * \ :doc:`../Tutorial/index`\
     簡単なアプリケーション開発を通して、Macchinetta Server Framework (1.x)によるアプリケーション開発を体験する。
 * \ :doc:`../Appendix/index`\
@@ -96,6 +98,8 @@ Spring Frameworkに関して、本ドキュメントを読むための基礎知�
 
 本ガイドラインで説明している内容の動作検証環境については、
 「\ `テスト済み環境 <https://github.com/Macchinetta/spring-functionaltest/wiki/Tested-Environment>`_\」を参照されたい。
+
+なお、本ガイドライン中に記載のあるJava SE 8とJava SE 11の主要な変更点については、":doc:`../Appendix/Java11Changes`"に概要をまとめてあるので、合わせて参照されたい。
 
 
 .. raw:: latex

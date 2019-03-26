@@ -3,16 +3,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>7.6. 文字列処理 &#8212; Macchinetta Server Framework (1.x) Development Guideline 1.5.1.RELEASE documentation</title>
-    
+    <title>7.6. 文字列処理 &#8212; Macchinetta Server Framework (1.x) Development Guideline 1.6.1.RELEASE documentation</title>
     <link rel="stylesheet" href="../../_static/solar.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '1.5.1.RELEASE',
+        VERSION:     '1.6.1.RELEASE',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true,
@@ -43,7 +40,7 @@
         <li class="right" >
           <a href="SystemDate.html" title="7.5. システム時刻"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">Macchinetta Server Framework (1.x) Development Guideline 1.5.1.RELEASE documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Macchinetta Server Framework (1.x) Development Guideline 1.6.1.RELEASE documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">7. アプリケーション形態に依存しない汎用機能</a> &#187;</li> 
       </ul>
     </div>
@@ -321,19 +318,6 @@
 <div class="line">サロゲートペアを区切り文字として、 <code class="docutils literal"><span class="pre">String#split</span></code> の引数に指定することも出来る。</div>
 </div>
 </div>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<div class="line-block">
-<div class="line">Java SE 7までの環境とJava SE 8で、 <code class="docutils literal"><span class="pre">String#split</span></code> に空文字を渡したときの挙動に変化があるため留意されたい。 参照： <a class="reference external" href="http://docs.oracle.com/javase/8/docs/api/java/util/regex/Pattern.html#split-java.lang.CharSequence-int-">Pattern#splitのJavadoc</a></div>
-</div>
-<div class="last highlight-java"><div class="highlight"><pre><span></span><span class="n">String</span> <span class="n">str</span> <span class="o">=</span> <span class="s">&quot;ABC&quot;</span><span class="o">;</span>
-<span class="n">String</span><span class="o">[]</span> <span class="n">elems</span> <span class="o">=</span> <span class="n">str</span><span class="o">.</span><span class="na">split</span><span class="o">(</span><span class="s">&quot;&quot;</span><span class="o">);</span>
-
-<span class="c1">// Java SE 7 =&gt; {, A, B, C}</span>
-<span class="c1">// Java SE 8 =&gt; {A, B, C}</span>
-</pre></div>
-</div>
-</div>
 </div></blockquote>
 </div>
 </div>
@@ -343,7 +327,7 @@
 <p><code class="docutils literal"><span class="pre">FullHalfConverter</span></code>クラスは、変換対象にしたい全角文字と半角文字のペア定義(<code class="docutils literal"><span class="pre">org.terasoluna.gfw.common.fullhalf.FullHalfPair</span></code>)を事前に登録しておくスタイルを採用している。
 共通ライブラリでは、デフォルトのペア定義が登録されている<code class="docutils literal"><span class="pre">FullHalfConverter</span></code>オブジェクトを、
 <code class="docutils literal"><span class="pre">org.terasoluna.gfw.common.fullhalf.DefaultFullHalf</span></code>クラスの<code class="docutils literal"><span class="pre">INSTANCE</span></code>定数として提供している。
-デフォルトのペア定義については、<a class="reference external" href="https://github.com/terasolunaorg/terasoluna-gfw/blob/5.4.1.RELEASE/terasoluna-gfw-common-libraries/terasoluna-gfw-string/src/main/java/org/terasoluna/gfw/common/fullhalf/DefaultFullHalf.java">DefaultFullHalfのソース</a> を参照されたい。</p>
+デフォルトのペア定義については、<a class="reference external" href="https://github.com/terasolunaorg/terasoluna-gfw/blob/5.5.1.RELEASE/terasoluna-gfw-common-libraries/terasoluna-gfw-string/src/main/java/org/terasoluna/gfw/common/fullhalf/DefaultFullHalf.java">DefaultFullHalfのソース</a> を参照されたい。</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">共通ライブラリが提供しているデフォルトのペア定義で変換要件が満たせない場合は、独自のペア定義を登録した<code class="docutils literal"><span class="pre">FullHalfConverter</span></code>オブジェクトを作成すればよい。
@@ -587,7 +571,7 @@
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last"><code class="docutils literal"><span class="pre">FullHalfPairsBuilder#pair</span></code>メソッドの引数に指定可能な値については、
-<a class="reference external" href="https://github.com/terasolunaorg/terasoluna-gfw/blob/5.4.1.RELEASE/terasoluna-gfw-common-libraries/terasoluna-gfw-string/src/main/java/org/terasoluna/gfw/common/fullhalf/FullHalfPair.java">FullHalfPairのコンストラクタのJavaDoc</a>
+<a class="reference external" href="https://github.com/terasolunaorg/terasoluna-gfw/blob/5.5.1.RELEASE/terasoluna-gfw-common-libraries/terasoluna-gfw-string/src/main/java/org/terasoluna/gfw/common/fullhalf/FullHalfPair.java">FullHalfPairのコンストラクタのJavaDoc</a>
 を参照されたい。</p>
 </div>
 <div class="line-block">
@@ -1107,10 +1091,8 @@
 <p>「記号（｡｢｣､･）を除いた半角カタカナ」からなる差集合を用いたコードポイント集合の作成例</p>
 <div class="highlight-java"><div class="highlight"><pre><span></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">HalfwidthKatakana</span> <span class="kd">extends</span> <span class="n">CodePoints</span> <span class="o">{</span>
     <span class="kd">public</span> <span class="nf">HalfwidthKatakana</span><span class="o">()</span> <span class="o">{</span>
-        <span class="n">CodePoints</span> <span class="n">symbolCp</span> <span class="o">=</span> <span class="k">new</span> <span class="n">CodePoints</span><span class="o">(</span><span class="mh">0xFF61</span> <span class="cm">/* ｡ */</span><span class="o">,</span> <span class="mh">0xFF62</span> <span class="cm">/* ｢ */</span><span class="o">,</span>
-                <span class="mh">0xFF63</span> <span class="cm">/* ｣ */</span><span class="o">,</span> <span class="mh">0xFF64</span> <span class="cm">/* ､ */</span><span class="o">,</span> <span class="mh">0xFF65</span> <span class="cm">/* ･ */</span><span class="o">);</span>
-
-        <span class="kd">super</span><span class="o">(</span><span class="k">new</span> <span class="n">JIS_X_0201_Katakana</span><span class="o">().</span><span class="na">subtract</span><span class="o">(</span><span class="n">symbolCp</span><span class="o">));</span>
+        <span class="kd">super</span><span class="o">(</span><span class="k">new</span> <span class="n">JIS_X_0201_Katakana</span><span class="o">().</span><span class="na">subtract</span><span class="o">(</span><span class="k">new</span> <span class="n">CodePoints</span><span class="o">(</span><span class="mh">0xFF61</span> <span class="cm">/* ｡ */</span><span class="o">,</span> <span class="mh">0xFF62</span> <span class="cm">/* ｢ */</span><span class="o">,</span>
+                <span class="mh">0xFF63</span> <span class="cm">/* ｣ */</span><span class="o">,</span> <span class="mh">0xFF64</span> <span class="cm">/* ､ */</span><span class="o">,</span> <span class="mh">0xFF65</span> <span class="cm">/* ･ */</span><span class="o">)));</span>
     <span class="o">}</span>
 <span class="o">}</span>
 </pre></div>
@@ -1444,58 +1426,48 @@ JIS漢字の全角ダッシュ(―)はEM DASHであり、対応するUCS(ISO/IEC
         <li class="right" >
           <a href="SystemDate.html" title="7.5. システム時刻"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">Macchinetta Server Framework (1.x) Development Guideline 1.5.1.RELEASE documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Macchinetta Server Framework (1.x) Development Guideline 1.6.1.RELEASE documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="index.html" >7. アプリケーション形態に依存しない汎用機能</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2013-2018, NTT Corporation.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.6.2.Theme is <a href="http://github.com/vimalkvn/solar-theme">Solar</a>
+        &copy; Copyright 2013, NTT Corporation.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.6.3.Theme is <a href="http://github.com/vimalkvn/solar-theme">Solar</a>
     </div>
     
     <script>
-     
-     $(function() {
-    	   var $sidebar	= $('.sphinxsidebar'),
-    		     $window		= $(window),
-    		     offset		= $sidebar.offset(),
-    		     topPadding	= 3,
-    		     $scroll		= $('#scroll');
-    	   
-    	   $window.scroll(function() {
-    		     if ($scroll.is(':checked')) {
-				         if ($window.scrollTop() > offset.top) {
-					           $sidebar.stop().animate({
-						             marginTop:$window.scrollTop() - offset.top + topPadding
-					           });
-				         } else {
-					           $sidebar.stop().animate({
-						             marginTop:0
-					           });
-				         }
-			       }
-		     });
-    	   
-    	   var $navList = $('ul:first', $sidebar);
-    	   $('li:first', $navList).addClass('open');
-    	   
-    	   $navList.treeview({
-    		     persist: "location",
-    		     collapsed: true,
-    		     unique: false
-    	   });
-    	   
-	   });
-    </script>
     
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-113850349-2"></script>
-    <script>
-     window.dataLayer = window.dataLayer || [];
-     function gtag(){dataLayer.push(arguments);}
-     gtag('js', new Date());
-
-     gtag('config', 'UA-113850349-2');
+    $(function() {
+    	var $sidebar	= $('.sphinxsidebar'),
+    		$window		= $(window),
+    		offset		= $sidebar.offset(),
+    		topPadding	= 3,
+    		$scroll		= $('#scroll');
+    	
+    	$window.scroll(function() {
+    		if ($scroll.is(':checked')) {
+				if ($window.scrollTop() > offset.top) {
+					$sidebar.stop().animate({
+						marginTop:$window.scrollTop() - offset.top + topPadding
+					});
+				} else {
+					$sidebar.stop().animate({
+						marginTop:0
+					});
+				}
+			}
+		});
+    	
+    	var $navList = $('ul:first', $sidebar);
+    	$('li:first', $navList).addClass('open');
+    	
+    	$navList.treeview({
+    		persist: "location",
+    		collapsed: true,
+    		unique: false
+    	});
+    	
+	});
     </script>
   </body>
 </html>

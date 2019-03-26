@@ -3,16 +3,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>8.2. JMS(Java Message Service) &#8212; Macchinetta Server Framework (1.x) Development Guideline 1.5.1.RELEASE documentation</title>
-    
+    <title>8.2. JMS(Java Message Service) &#8212; Macchinetta Server Framework (1.x) Development Guideline 1.6.1.RELEASE documentation</title>
     <link rel="stylesheet" href="../../_static/solar.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '1.5.1.RELEASE',
+        VERSION:     '1.6.1.RELEASE',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true,
@@ -43,7 +40,7 @@
         <li class="right" >
           <a href="Email.html" title="8.1. E-mail送信(SMTP)"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">Macchinetta Server Framework (1.x) Development Guideline 1.5.1.RELEASE documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Macchinetta Server Framework (1.x) Development Guideline 1.6.1.RELEASE documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">8. メッセージ連携</a> &#187;</li> 
       </ul>
     </div>
@@ -98,7 +95,7 @@
 </li>
 <li><a class="reference internal" href="#jmsappendixsendmanysamemessages">8.2.3.2. 同一メッセージの大量送信</a></li>
 <li><a class="reference internal" href="#jmsappendixsendlargedata">8.2.3.3. サイズの大きなデータの送受信</a><ul>
-<li><a class="reference internal" href="#id27">8.2.3.3.1. Apache ActiveMQを利用する場合</a></li>
+<li><a class="reference internal" href="#id25">8.2.3.3.1. Apache ActiveMQを利用する場合</a></li>
 </ul>
 </li>
 </ul>
@@ -144,52 +141,52 @@
 <div class="contents local topic" id="id1">
 <p class="topic-title first">目次</p>
 <ul class="simple">
-<li><a class="reference internal" href="#overview" id="id29">Overview</a><ul>
-<li><a class="reference internal" href="#jms" id="id30">JMSとは</a></li>
-<li><a class="reference internal" href="#jmsoverviewapi" id="id31">JMSの利用</a></li>
-<li><a class="reference internal" href="#spring-frameworkjms" id="id32">Spring Frameworkのコンポーネントを使用したJMSの利用</a><ul>
-<li><a class="reference internal" href="#jmsoverviewsyncsend" id="id33">メッセージを同期送信する場合</a></li>
-<li><a class="reference internal" href="#jmsoverviewasyncreceive" id="id34">メッセージを非同期受信する場合</a></li>
-<li><a class="reference internal" href="#jmsoverviewsyncreceive" id="id35">メッセージを同期受信する場合</a></li>
+<li><a class="reference internal" href="#overview" id="id27">Overview</a><ul>
+<li><a class="reference internal" href="#jms" id="id28">JMSとは</a></li>
+<li><a class="reference internal" href="#jmsoverviewapi" id="id29">JMSの利用</a></li>
+<li><a class="reference internal" href="#spring-frameworkjms" id="id30">Spring Frameworkのコンポーネントを使用したJMSの利用</a><ul>
+<li><a class="reference internal" href="#jmsoverviewsyncsend" id="id31">メッセージを同期送信する場合</a></li>
+<li><a class="reference internal" href="#jmsoverviewasyncreceive" id="id32">メッセージを非同期受信する場合</a></li>
+<li><a class="reference internal" href="#jmsoverviewsyncreceive" id="id33">メッセージを同期受信する場合</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#jmsoverviewaboutprojectconfiguration" id="id36">プロジェクト構成について</a></li>
+<li><a class="reference internal" href="#jmsoverviewaboutprojectconfiguration" id="id34">プロジェクト構成について</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#how-to-use" id="id37">How to use</a><ul>
-<li><a class="reference internal" href="#jmshowtouseenviromentsetting" id="id38">メッセージの送受信に共通する設定</a><ul>
-<li><a class="reference internal" href="#jmshowtousedependentlibrary" id="id39">依存ライブラリの設定</a></li>
-<li><a class="reference internal" href="#connectionfactory" id="id40"><code class="docutils literal"><span class="pre">ConnectionFactory</span></code>の設定</a></li>
-<li><a class="reference internal" href="#destinationresolver" id="id41"><code class="docutils literal"><span class="pre">DestinationResolver</span></code>の設定</a></li>
+<li><a class="reference internal" href="#how-to-use" id="id35">How to use</a><ul>
+<li><a class="reference internal" href="#jmshowtouseenviromentsetting" id="id36">メッセージの送受信に共通する設定</a><ul>
+<li><a class="reference internal" href="#jmshowtousedependentlibrary" id="id37">依存ライブラリの設定</a></li>
+<li><a class="reference internal" href="#connectionfactory" id="id38"><code class="docutils literal"><span class="pre">ConnectionFactory</span></code>の設定</a></li>
+<li><a class="reference internal" href="#destinationresolver" id="id39"><code class="docutils literal"><span class="pre">DestinationResolver</span></code>の設定</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#jmshowtousesyncsendmessage" id="id42">メッセージを同期送信する方法</a><ul>
-<li><a class="reference internal" href="#jmshowtousesettingforsyncsend" id="id43">基本的な同期送信</a></li>
-<li><a class="reference internal" href="#jmshowtousesettingforsendwithheader" id="id44">メッセージヘッダを編集して同期送信する場合</a></li>
-<li><a class="reference internal" href="#jmshowtousesettingforsyncsendtransactionmanagement" id="id45">トランザクション管理</a></li>
+<li><a class="reference internal" href="#jmshowtousesyncsendmessage" id="id40">メッセージを同期送信する方法</a><ul>
+<li><a class="reference internal" href="#jmshowtousesettingforsyncsend" id="id41">基本的な同期送信</a></li>
+<li><a class="reference internal" href="#jmshowtousesettingforsendwithheader" id="id42">メッセージヘッダを編集して同期送信する場合</a></li>
+<li><a class="reference internal" href="#jmshowtousesettingforsyncsendtransactionmanagement" id="id43">トランザクション管理</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#jmshowtouseasyncreceivemessage" id="id46">メッセージを非同期受信する方法</a><ul>
-<li><a class="reference internal" href="#jmshowtouselistenercontainer" id="id47">基本的な非同期受信</a></li>
-<li><a class="reference internal" href="#jmshowtouselistenercontainergetheader" id="id48">メッセージのヘッダ情報を取得する</a></li>
-<li><a class="reference internal" href="#jmshowtouselistenercontainerresendmessage" id="id49">非同期受信後の処理結果をメッセージ送信</a></li>
-<li><a class="reference internal" href="#jmshowtousemessageselectorforasyncreceive" id="id50">非同期受信するメッセージを限定する場合</a></li>
-<li><a class="reference internal" href="#jmshowtousevalidationforasyncreceive" id="id51">非同期受信したメッセージの入力チェック</a></li>
-<li><a class="reference internal" href="#jmshowtousetransactionmanagementforasyncreceive" id="id52">トランザクション管理</a></li>
-<li><a class="reference internal" href="#jmshowtouseexceptionhandlingforasyncreceive" id="id53">非同期受信時の例外ハンドリング</a></li>
+<li><a class="reference internal" href="#jmshowtouseasyncreceivemessage" id="id44">メッセージを非同期受信する方法</a><ul>
+<li><a class="reference internal" href="#jmshowtouselistenercontainer" id="id45">基本的な非同期受信</a></li>
+<li><a class="reference internal" href="#jmshowtouselistenercontainergetheader" id="id46">メッセージのヘッダ情報を取得する</a></li>
+<li><a class="reference internal" href="#jmshowtouselistenercontainerresendmessage" id="id47">非同期受信後の処理結果をメッセージ送信</a></li>
+<li><a class="reference internal" href="#jmshowtousemessageselectorforasyncreceive" id="id48">非同期受信するメッセージを限定する場合</a></li>
+<li><a class="reference internal" href="#jmshowtousevalidationforasyncreceive" id="id49">非同期受信したメッセージの入力チェック</a></li>
+<li><a class="reference internal" href="#jmshowtousetransactionmanagementforasyncreceive" id="id50">トランザクション管理</a></li>
+<li><a class="reference internal" href="#jmshowtouseexceptionhandlingforasyncreceive" id="id51">非同期受信時の例外ハンドリング</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#jmshowtousesyncreceivemessage" id="id54">メッセージを同期受信する方法</a></li>
+<li><a class="reference internal" href="#jmshowtousesyncreceivemessage" id="id52">メッセージを同期受信する方法</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#appendix" id="id55">Appendix</a><ul>
-<li><a class="reference internal" href="#jmsappendixsettingsdependsonjmsprovider" id="id56">JMSプロバイダに依存する設定</a><ul>
-<li><a class="reference internal" href="#apache-activemq" id="id57">Apache ActiveMQを利用する場合</a></li>
+<li><a class="reference internal" href="#appendix" id="id53">Appendix</a><ul>
+<li><a class="reference internal" href="#jmsappendixsettingsdependsonjmsprovider" id="id54">JMSプロバイダに依存する設定</a><ul>
+<li><a class="reference internal" href="#apache-activemq" id="id55">Apache ActiveMQを利用する場合</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#jmsappendixsendmanysamemessages" id="id58">同一メッセージの大量送信</a></li>
-<li><a class="reference internal" href="#jmsappendixsendlargedata" id="id59">サイズの大きなデータの送受信</a><ul>
-<li><a class="reference internal" href="#id27" id="id60">Apache ActiveMQを利用する場合</a></li>
+<li><a class="reference internal" href="#jmsappendixsendmanysamemessages" id="id56">同一メッセージの大量送信</a></li>
+<li><a class="reference internal" href="#jmsappendixsendlargedata" id="id57">サイズの大きなデータの送受信</a><ul>
+<li><a class="reference internal" href="#id25" id="id58">Apache ActiveMQを利用する場合</a></li>
 </ul>
 </li>
 </ul>
@@ -197,13 +194,13 @@
 </ul>
 </div>
 <div class="section" id="overview">
-<span id="jmsoverview"></span><h2><a class="toc-backref" href="#id29">8.2.1. Overview</a><a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<span id="jmsoverview"></span><h2><a class="toc-backref" href="#id27">8.2.1. Overview</a><a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
 <p>本節では、JMS APIとSpring FrameworkのJMS連携用コンポーネントを使用したメッセージの送受信方法について説明する。</p>
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
 <div class="section" id="jms">
-<span id="jmsoverviewaboutjms"></span><h3><a class="toc-backref" href="#id30">8.2.1.1. JMSとは</a><a class="headerlink" href="#jms" title="Permalink to this headline">¶</a></h3>
+<span id="jmsoverviewaboutjms"></span><h3><a class="toc-backref" href="#id28">8.2.1.1. JMSとは</a><a class="headerlink" href="#jms" title="Permalink to this headline">¶</a></h3>
 <div class="line-block">
 <div class="line">JMSはJavaでMOM（Message Oriented Middleware）を利用するための標準APIである。</div>
 <div class="line">JMSのアーキテクチャは、JMSプロバイダを経由してクライアントからクライアントへメッセージを交換する。</div>
@@ -375,15 +372,24 @@
 </tr>
 </tbody>
 </table>
+<div class="admonition warning" id="jmswarningdeserialization">
+<p class="first admonition-title">Warning</p>
+<p><strong>デシリアライズ時の注意点</strong></p>
+<p>Queueに<code class="docutils literal"><span class="pre">ObjectMessage</span></code>が入るとメッセージを取り出す際にデシリアライズが行われる。</p>
+<p>デシリアライズ処理は、不正なデータや予期しないデータを使用して業務ロジックの乱用、サービスの拒否、任意のコードの実行が行われる危険があるため、
+信頼できない送信元から受信しうるものをデシリアライズしてはならない。
+そのため、Queueも(信頼できない送信元を含み得る)不特定多数からのメッセージを受け付ける構成であってはならない。</p>
+<p class="last">詳細については<a class="reference external" href="https://www.owasp.org/index.php/Deserialization_of_untrusted_data">Deserialization of untrusted data</a>を参照されたい。</p>
+</div>
 </div></blockquote>
 </div>
 <div class="section" id="jmsoverviewapi">
-<span id="id2"></span><h3><a class="toc-backref" href="#id31">8.2.1.2. JMSの利用</a><a class="headerlink" href="#jmsoverviewapi" title="Permalink to this headline">¶</a></h3>
+<span id="id2"></span><h3><a class="toc-backref" href="#id29">8.2.1.2. JMSの利用</a><a class="headerlink" href="#jmsoverviewapi" title="Permalink to this headline">¶</a></h3>
 <div class="line-block">
 <div class="line">JMSを用いた処理を実装する場合、Java EEで定義されたJMS API（以下、JMS API）を使用することで、処理を実現できる。</div>
 <div class="line">ただし、本ガイドラインでは、JMS APIをそのまま使用する場合に比べてメリット（記述が容易など）が多い、Spring FrameworkのJMS連携用コンポーネントを利用する前提としている。</div>
 <div class="line">そのため、JMS APIの詳細については説明しない。</div>
-<div class="line">詳細については<a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/jms/package-summary.html">Java API</a>を参照されたい。</div>
+<div class="line">詳細については<a class="reference external" href="https://javaee.github.io/javaee-spec/javadocs/javax/jms/package-summary.html">Java API</a>を参照されたい。</div>
 </div>
 <blockquote>
 <div><div class="admonition note">
@@ -401,7 +407,7 @@
 </div>
 </div>
 <div class="section" id="spring-frameworkjms">
-<span id="jmsoverviewspringjms"></span><h3><a class="toc-backref" href="#id32">8.2.1.3. Spring Frameworkのコンポーネントを使用したJMSの利用</a><a class="headerlink" href="#spring-frameworkjms" title="Permalink to this headline">¶</a></h3>
+<span id="jmsoverviewspringjms"></span><h3><a class="toc-backref" href="#id30">8.2.1.3. Spring Frameworkのコンポーネントを使用したJMSの利用</a><a class="headerlink" href="#spring-frameworkjms" title="Permalink to this headline">¶</a></h3>
 <div class="line-block">
 <div class="line">Spring Frameworkでは、メッセージ送受信を行うためのライブラリとして以下を提供している。</div>
 </div>
@@ -529,7 +535,7 @@
 </li>
 </ul>
 <div class="section" id="jmsoverviewsyncsend">
-<span id="id3"></span><h4><a class="toc-backref" href="#id33">8.2.1.3.1. メッセージを同期送信する場合</a><a class="headerlink" href="#jmsoverviewsyncsend" title="Permalink to this headline">¶</a></h4>
+<span id="id3"></span><h4><a class="toc-backref" href="#id31">8.2.1.3.1. メッセージを同期送信する場合</a><a class="headerlink" href="#jmsoverviewsyncsend" title="Permalink to this headline">¶</a></h4>
 <div class="line-block">
 <div class="line">メッセージを同期送信する処理の流れについて図を用いて説明する。</div>
 </div>
@@ -592,7 +598,7 @@
 </div></blockquote>
 </div>
 <div class="section" id="jmsoverviewasyncreceive">
-<span id="id4"></span><h4><a class="toc-backref" href="#id34">8.2.1.3.2. メッセージを非同期受信する場合</a><a class="headerlink" href="#jmsoverviewasyncreceive" title="Permalink to this headline">¶</a></h4>
+<span id="id4"></span><h4><a class="toc-backref" href="#id32">8.2.1.3.2. メッセージを非同期受信する場合</a><a class="headerlink" href="#jmsoverviewasyncreceive" title="Permalink to this headline">¶</a></h4>
 <div class="line-block">
 <div class="line">メッセージを非同期受信する処理の流れについて図を用いて説明する。</div>
 </div>
@@ -655,7 +661,7 @@
 </div></blockquote>
 </div>
 <div class="section" id="jmsoverviewsyncreceive">
-<span id="id5"></span><h4><a class="toc-backref" href="#id35">8.2.1.3.3. メッセージを同期受信する場合</a><a class="headerlink" href="#jmsoverviewsyncreceive" title="Permalink to this headline">¶</a></h4>
+<span id="id5"></span><h4><a class="toc-backref" href="#id33">8.2.1.3.3. メッセージを同期受信する場合</a><a class="headerlink" href="#jmsoverviewsyncreceive" title="Permalink to this headline">¶</a></h4>
 <div class="line-block">
 <div class="line">メッセージを同期受信する処理の流れについて図を用いて説明する。</div>
 </div>
@@ -720,7 +726,7 @@
 </div>
 </div>
 <div class="section" id="jmsoverviewaboutprojectconfiguration">
-<span id="id6"></span><h3><a class="toc-backref" href="#id36">8.2.1.4. プロジェクト構成について</a><a class="headerlink" href="#jmsoverviewaboutprojectconfiguration" title="Permalink to this headline">¶</a></h3>
+<span id="id6"></span><h3><a class="toc-backref" href="#id34">8.2.1.4. プロジェクト構成について</a><a class="headerlink" href="#jmsoverviewaboutprojectconfiguration" title="Permalink to this headline">¶</a></h3>
 <div class="line-block">
 <div class="line">JMSを利用する場合のプロジェクトの推奨構成について説明する。</div>
 <div class="line">シリアライズしたJavaBeanを<code class="docutils literal"><span class="pre">ObjectMessage</span></code>経由で送受信する場合、このJavaBeanを送信側と受信側で共有する必要がある。</div>
@@ -823,12 +829,12 @@
 </div>
 </div>
 <div class="section" id="how-to-use">
-<span id="jmshowtouse"></span><h2><a class="toc-backref" href="#id37">8.2.2. How to use</a><a class="headerlink" href="#how-to-use" title="Permalink to this headline">¶</a></h2>
+<span id="jmshowtouse"></span><h2><a class="toc-backref" href="#id35">8.2.2. How to use</a><a class="headerlink" href="#how-to-use" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="jmshowtouseenviromentsetting">
-<span id="id7"></span><h3><a class="toc-backref" href="#id38">8.2.2.1. メッセージの送受信に共通する設定</a><a class="headerlink" href="#jmshowtouseenviromentsetting" title="Permalink to this headline">¶</a></h3>
+<span id="id7"></span><h3><a class="toc-backref" href="#id36">8.2.2.1. メッセージの送受信に共通する設定</a><a class="headerlink" href="#jmshowtouseenviromentsetting" title="Permalink to this headline">¶</a></h3>
 <p>本節では、メッセージの送受信に必要となる共通的な設定について説明する。</p>
 <div class="section" id="jmshowtousedependentlibrary">
-<span id="id8"></span><h4><a class="toc-backref" href="#id39">8.2.2.1.1. 依存ライブラリの設定</a><a class="headerlink" href="#jmshowtousedependentlibrary" title="Permalink to this headline">¶</a></h4>
+<span id="id8"></span><h4><a class="toc-backref" href="#id37">8.2.2.1.1. 依存ライブラリの設定</a><a class="headerlink" href="#jmshowtousedependentlibrary" title="Permalink to this headline">¶</a></h4>
 <div class="line-block">
 <div class="line">Spring FrameworkのJMS連携用コンポーネントを利用するために、domainプロジェクトのpom.xmlにSpring Frameworkの<code class="docutils literal"><span class="pre">spring-jms</span></code>を追加する。</div>
 </div>
@@ -877,7 +883,7 @@
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">上記設定例は、依存ライブラリのバージョンを親プロジェクトである terasoluna-gfw-parent で管理する前提であるため、pom.xmlでのバージョンの指定は不要である。
-上記の依存ライブラリはterasoluna-gfw-parentが利用している<a class="reference external" href="http://platform.spring.io/platform/">Spring IO Platform</a>で定義済みである。</p>
+上記の依存ライブラリはterasoluna-gfw-parentが依存している<a class="reference external" href="https://docs.spring.io/spring-boot/docs/2.1.2.RELEASE/reference/htmlsingle/#appendix-dependency-versions">Spring Boot</a>で管理されている。</p>
 </div>
 </div></blockquote>
 <div class="line-block">
@@ -885,7 +891,7 @@
 </div>
 </div>
 <div class="section" id="connectionfactory">
-<span id="jmshowtouseconnectionfactory"></span><h4><a class="toc-backref" href="#id40">8.2.2.1.2. <code class="docutils literal"><span class="pre">ConnectionFactory</span></code>の設定</a><a class="headerlink" href="#connectionfactory" title="Permalink to this headline">¶</a></h4>
+<span id="jmshowtouseconnectionfactory"></span><h4><a class="toc-backref" href="#id38">8.2.2.1.2. <code class="docutils literal"><span class="pre">ConnectionFactory</span></code>の設定</a><a class="headerlink" href="#connectionfactory" title="Permalink to this headline">¶</a></h4>
 <div class="line-block">
 <div class="line"><code class="docutils literal"><span class="pre">ConnectionFactory</span></code>の定義の方法には、アプリケーションサーバで定義する方法と、Bean定義ファイルで定義する方法がある。</div>
 <div class="line">特別な理由がない場合、Bean定義ファイルをJMSプロバイダ非依存とするため、アプリケーションサーバで定義する方法を選択する。</div>
@@ -893,7 +899,7 @@
 <div class="line">アプリケーションサーバで定義した<code class="docutils literal"><span class="pre">ConnectionFactory</span></code>を使用するためには、Bean定義ファイルにJNDI経由で取得したJavaBeanを利用するための設定を行う必要がある。</div>
 </div>
 <ul class="simple">
-<li><code class="file docutils literal"><span class="pre">[projectName]-domain/src/main/resources/META-INF/spring/[projectName]-infra.xml</span></code></li>
+<li><code class="file docutils literal"><span class="pre">[projectName]-env/src/main/resources/META-INF/spring/[projectName]-env.xml</span></code></li>
 </ul>
 <blockquote>
 <div><div class="highlight-xml"><div class="highlight"><pre><span></span><span class="c">&lt;!-- (1) --&gt;</span>
@@ -932,7 +938,7 @@
 </div></blockquote>
 </div>
 <div class="section" id="destinationresolver">
-<span id="jmshowtousedestinationresolver"></span><h4><a class="toc-backref" href="#id41">8.2.2.1.3. <code class="docutils literal"><span class="pre">DestinationResolver</span></code>の設定</a><a class="headerlink" href="#destinationresolver" title="Permalink to this headline">¶</a></h4>
+<span id="jmshowtousedestinationresolver"></span><h4><a class="toc-backref" href="#id39">8.2.2.1.3. <code class="docutils literal"><span class="pre">DestinationResolver</span></code>の設定</a><a class="headerlink" href="#destinationresolver" title="Permalink to this headline">¶</a></h4>
 <div class="line-block">
 <div class="line">Destinationの名前解決には、JNDIによる解決とJMSプロバイダでの解決の二通りの方法がある。</div>
 <div class="line">デフォルトではJMSプロバイダでの解決が行われるが、ポータビリティや管理の観点から、特別な理由がない場合はJNDIによる解決を推奨する。</div>
@@ -942,7 +948,7 @@
 <div class="line">以下に<code class="docutils literal"><span class="pre">JndiDestinationResolver</span></code>の定義例を示す。</div>
 </div>
 <ul class="simple">
-<li><code class="file docutils literal"><span class="pre">[projectName]-domain/src/main/resources/META-INF/spring/[projectName]-infra.xml</span></code></li>
+<li><code class="file docutils literal"><span class="pre">[projectName]-env/src/main/resources/META-INF/spring/[projectName]-env.xml</span></code></li>
 </ul>
 <blockquote>
 <div><div class="highlight-xml"><div class="highlight"><pre><span></span><span class="c">&lt;!-- (1) --&gt;</span>
@@ -987,16 +993,22 @@
 </tr>
 </tbody>
 </table>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p><strong>DynamicDestinationResolverを使用する場合</strong></p>
+<p class="last">JNDIを利用せずにJMSプロバイダでDestinationの名前解決する場合、<code class="docutils literal"><span class="pre">DynamicDestinationResolver</span></code>を利用する。
+<code class="docutils literal"><span class="pre">DynamicDestinationResolver</span></code>の設定については、<a class="reference internal" href="#jmsappendixsettingsdependsonjmsprovider"><span class="std std-ref">JMSプロバイダに依存する設定</span></a> の”JNDIを使用しない場合の設定”を参照されたい。</p>
+</div>
 </div></blockquote>
 </div>
 </div>
 <div class="section" id="jmshowtousesyncsendmessage">
-<span id="id9"></span><h3><a class="toc-backref" href="#id42">8.2.2.2. メッセージを同期送信する方法</a><a class="headerlink" href="#jmshowtousesyncsendmessage" title="Permalink to this headline">¶</a></h3>
+<span id="id9"></span><h3><a class="toc-backref" href="#id40">8.2.2.2. メッセージを同期送信する方法</a><a class="headerlink" href="#jmshowtousesyncsendmessage" title="Permalink to this headline">¶</a></h3>
 <div class="line-block">
 <div class="line">PTPモデルにて、クライアント（Producer）からJMSプロバイダへメッセージを同期送信する方法を説明する。</div>
 </div>
 <div class="section" id="jmshowtousesettingforsyncsend">
-<span id="id10"></span><h4><a class="toc-backref" href="#id43">8.2.2.2.1. 基本的な同期送信</a><a class="headerlink" href="#jmshowtousesettingforsyncsend" title="Permalink to this headline">¶</a></h4>
+<span id="id10"></span><h4><a class="toc-backref" href="#id41">8.2.2.2.1. 基本的な同期送信</a><a class="headerlink" href="#jmshowtousesettingforsyncsend" title="Permalink to this headline">¶</a></h4>
 <div class="line-block">
 <div class="line"><code class="docutils literal"><span class="pre">JmsMessagingTemplate</span></code>を利用して、JMSプロバイダへの同期送信処理を実現する。</div>
 </div>
@@ -1005,24 +1017,13 @@
 <div class="line">最初に<code class="docutils literal"><span class="pre">JmsMessagingTemplate</span></code>の設定方法を示す。</div>
 </div>
 <ul class="simple">
-<li><code class="file docutils literal"><span class="pre">[projectName]-domain/src/main/resources/META-INF/spring/[projectName]-infra.xml</span></code></li>
+<li><code class="file docutils literal"><span class="pre">[projectName]-env/src/main/resources/META-INF/spring/[projectName]-env.xml</span></code></li>
 </ul>
 <blockquote>
 <div><div class="highlight-xml"><div class="highlight"><pre><span></span><span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">&quot;cachingConnectionFactory&quot;</span>
    <span class="na">class=</span><span class="s">&quot;org.springframework.jms.connection.CachingConnectionFactory&quot;</span><span class="nt">&gt;</span> <span class="c">&lt;!-- (1) --&gt;</span>
    <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">&quot;targetConnectionFactory&quot;</span> <span class="na">ref=</span><span class="s">&quot;connectionFactory&quot;</span> <span class="nt">/&gt;</span> <span class="c">&lt;!-- (2) --&gt;</span>
    <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">&quot;sessionCacheSize&quot;</span> <span class="na">value=</span><span class="s">&quot;1&quot;</span> <span class="nt">/&gt;</span>  <span class="c">&lt;!-- (3) --&gt;</span>
-<span class="nt">&lt;/bean&gt;</span>
-
-<span class="c">&lt;!-- (4) --&gt;</span>
-<span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">&quot;jmsTemplate&quot;</span> <span class="na">class=</span><span class="s">&quot;org.springframework.jms.core.JmsTemplate&quot;</span><span class="nt">&gt;</span>
-   <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">&quot;connectionFactory&quot;</span> <span class="na">ref=</span><span class="s">&quot;cachingConnectionFactory&quot;</span> <span class="nt">/&gt;</span>
-   <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">&quot;destinationResolver&quot;</span> <span class="na">ref=</span><span class="s">&quot;destinationResolver&quot;</span> <span class="nt">/&gt;</span>
-<span class="nt">&lt;/bean&gt;</span>
-
-<span class="c">&lt;!-- (5) --&gt;</span>
-<span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">&quot;jmsMessagingTemplate&quot;</span> <span class="na">class=</span><span class="s">&quot;org.springframework.jms.core.JmsMessagingTemplate&quot;</span><span class="nt">&gt;</span>
-    <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">&quot;jmsTemplate&quot;</span> <span class="na">ref=</span><span class="s">&quot;jmsTemplate&quot;</span><span class="nt">/&gt;</span>
 <span class="nt">&lt;/bean&gt;</span>
 </pre></div>
 </div>
@@ -1069,8 +1070,38 @@
 </div>
 </td>
 </tr>
-<tr class="row-odd"><td><div class="first last line-block">
-<div class="line">(4)</div>
+</tbody>
+</table>
+</div></blockquote>
+<ul class="simple">
+<li><code class="file docutils literal"><span class="pre">[projectName]-domain/src/main/resources/META-INF/spring/[projectName]-infra.xml</span></code></li>
+</ul>
+<blockquote>
+<div><div class="highlight-xml"><div class="highlight"><pre><span></span><span class="c">&lt;!-- (1) --&gt;</span>
+<span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">&quot;jmsTemplate&quot;</span> <span class="na">class=</span><span class="s">&quot;org.springframework.jms.core.JmsTemplate&quot;</span><span class="nt">&gt;</span>
+   <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">&quot;connectionFactory&quot;</span> <span class="na">ref=</span><span class="s">&quot;cachingConnectionFactory&quot;</span> <span class="nt">/&gt;</span>
+   <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">&quot;destinationResolver&quot;</span> <span class="na">ref=</span><span class="s">&quot;destinationResolver&quot;</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;/bean&gt;</span>
+
+<span class="c">&lt;!-- (2) --&gt;</span>
+<span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">&quot;jmsMessagingTemplate&quot;</span> <span class="na">class=</span><span class="s">&quot;org.springframework.jms.core.JmsMessagingTemplate&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">&quot;jmsTemplate&quot;</span> <span class="na">ref=</span><span class="s">&quot;jmsTemplate&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/bean&gt;</span>
+</pre></div>
+</div>
+<table border="1" class="colwidths-given docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">項番</th>
+<th class="head">説明</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><div class="first last line-block">
+<div class="line">(1)</div>
 </div>
 </td>
 <td><div class="first last line-block">
@@ -1080,8 +1111,8 @@
 </div>
 </td>
 </tr>
-<tr class="row-even"><td><div class="first last line-block">
-<div class="line">(5)</div>
+<tr class="row-odd"><td><div class="first last line-block">
+<div class="line">(2)</div>
 </div>
 </td>
 <td><div class="first last line-block">
@@ -1398,7 +1429,7 @@
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p><strong>業務ロジック内でJMSの例外ハンドリング</strong></p>
-<p><a class="reference external" href="http://docs.spring.io/spring/docs/4.3.14.RELEASE/javadoc-api/org/springframework/jms/core/JmsTemplate.html">JMS (Java Message Service)のIntroduction</a>で触れられているように、Spring Frameworkでは検査例外を非検査例外に変換している。
+<p><a class="reference external" href="https://docs.spring.io/spring/docs/5.1.4.RELEASE/javadoc-api/org/springframework/jms/core/JmsTemplate.html">JMS (Java Message Service)のIntroduction</a>で触れられているように、Spring Frameworkでは検査例外を非検査例外に変換している。
 そのため、業務ロジック内でJMSの例外をハンドリングする場合は、非検査例外を扱う必要がある。</p>
 <blockquote>
 <div><table border="1" class="colwidths-given docutils">
@@ -1452,9 +1483,9 @@
 </div>
 </div>
 <div class="section" id="jmshowtousesettingforsendwithheader">
-<span id="id11"></span><h4><a class="toc-backref" href="#id44">8.2.2.2.2. メッセージヘッダを編集して同期送信する場合</a><a class="headerlink" href="#jmshowtousesettingforsendwithheader" title="Permalink to this headline">¶</a></h4>
+<span id="id11"></span><h4><a class="toc-backref" href="#id42">8.2.2.2.2. メッセージヘッダを編集して同期送信する場合</a><a class="headerlink" href="#jmshowtousesettingforsendwithheader" title="Permalink to this headline">¶</a></h4>
 <p><code class="docutils literal"><span class="pre">JmsMessagingTemplate</span></code>の<code class="docutils literal"><span class="pre">convertAndSend</span></code>メソッドの引数にKey-Value形式のヘッダ属性と値を指定することで、ヘッダ属性を編集して同期送信することが可能である。
-ヘッダの詳細については、<a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/jms/Message.html">javax.jms.Messages</a>を参照されたい。
+ヘッダの詳細については、<a class="reference external" href="https://javaee.github.io/javaee-spec/javadocs/javax/jms/Message.html">javax.jms.Message</a>を参照されたい。
 送信、応答メッセージなどを紐づける役割の<code class="docutils literal"><span class="pre">JMSCorrelationID</span></code>を同期送信時に指定する場合の実装例を示す。</p>
 <ul class="simple">
 <li><code class="file docutils literal"><span class="pre">[projectName]-domain/src/main/java/com/example/domain/service/todo/TodoServiceImpl.java</span></code></li>
@@ -1532,7 +1563,7 @@ read-onlyのヘッダ属性うち、<code class="docutils literal"><span class="
 </div></blockquote>
 </div>
 <div class="section" id="jmshowtousesettingforsyncsendtransactionmanagement">
-<span id="id12"></span><h4><a class="toc-backref" href="#id45">8.2.2.2.3. トランザクション管理</a><a class="headerlink" href="#jmshowtousesettingforsyncsendtransactionmanagement" title="Permalink to this headline">¶</a></h4>
+<span id="id12"></span><h4><a class="toc-backref" href="#id43">8.2.2.2.3. トランザクション管理</a><a class="headerlink" href="#jmshowtousesettingforsyncsendtransactionmanagement" title="Permalink to this headline">¶</a></h4>
 <div class="line-block">
 <div class="line">データの一貫性を保証する必要がある場合は、トランザクション管理機能を使用する。</div>
 <div class="line">本ガイドラインで推奨する「宣言型トランザクション管理」を利用した実装例を以下に示す。</div>
@@ -1542,7 +1573,7 @@ read-onlyのヘッダ属性うち、<code class="docutils literal"><span class="
 <div class="line">最初に設定例を示す。</div>
 </div>
 <ul class="simple">
-<li><code class="file docutils literal"><span class="pre">[projectName]-domain/src/main/resources/META-INF/spring/[projectName]-domain.xml</span></code></li>
+<li><code class="file docutils literal"><span class="pre">[projectName]-domain/src/main/resources/META-INF/spring/[projectName]-infra.xml</span></code></li>
 </ul>
 <blockquote>
 <div><div class="highlight-xml"><div class="highlight"><pre><span></span><span class="c">&lt;!-- (1) --&gt;</span>
@@ -1681,7 +1712,7 @@ read-onlyのヘッダ属性うち、<code class="docutils literal"><span class="
 <div class="line">以下に、JMSのトランザクション管理に<a class="reference internal" href="#jmshowtousesettingforsyncsendtransactionmanagement"><span class="std std-ref">トランザクション管理</span></a>の<code class="docutils literal"><span class="pre">sendJmsTransactionManager</span></code>を使用し、DBのトランザクション管理にBlankプロジェクトのデフォルトの設定で定義されている<code class="docutils literal"><span class="pre">transactionManager</span></code>を使用する設定例を示す。</div>
 </div>
 <ul class="simple">
-<li><code class="file docutils literal"><span class="pre">[projectName]-domain/src/main/resources/META-INF/spring/[projectName]-env.xml</span></code></li>
+<li><code class="file docutils literal"><span class="pre">[projectName]-domain/src/main/resources/META-INF/spring/[projectName]-infra.xml</span></code></li>
 </ul>
 <blockquote>
 <div><div class="highlight-xml"><div class="highlight"><pre><span></span><span class="c">&lt;!-- (1) --&gt;</span>
@@ -1819,7 +1850,7 @@ read-onlyのヘッダ属性うち、<code class="docutils literal"><span class="
 </div>
 </div>
 <div class="section" id="jmshowtouseasyncreceivemessage">
-<span id="id13"></span><h3><a class="toc-backref" href="#id46">8.2.2.3. メッセージを非同期受信する方法</a><a class="headerlink" href="#jmshowtouseasyncreceivemessage" title="Permalink to this headline">¶</a></h3>
+<span id="id13"></span><h3><a class="toc-backref" href="#id44">8.2.2.3. メッセージを非同期受信する方法</a><a class="headerlink" href="#jmshowtouseasyncreceivemessage" title="Permalink to this headline">¶</a></h3>
 <div class="line-block">
 <div class="line"><a class="reference internal" href="#jmsoverviewaboutjms"><span class="std std-ref">JMSとは</span></a>の”メッセージ受信方式”で述べたように、一般的に受信処理を行う場合には非同期受信を利用する。</div>
 <div class="line">非同期受信機能を司る<code class="docutils literal"><span class="pre">DefaultMessageListenerContainer</span></code>に対し、<code class="docutils literal"><span class="pre">&#64;JmsListener</span></code>アノテーションが付与されたリスナーメソッドを登録することで非同期受信処理を実現する。</div>
@@ -1848,7 +1879,7 @@ read-onlyのヘッダ属性うち、<code class="docutils literal"><span class="
 </li>
 </ol>
 <div class="section" id="jmshowtouselistenercontainer">
-<span id="id14"></span><h4><a class="toc-backref" href="#id47">8.2.2.3.1. 基本的な非同期受信</a><a class="headerlink" href="#jmshowtouselistenercontainer" title="Permalink to this headline">¶</a></h4>
+<span id="id14"></span><h4><a class="toc-backref" href="#id45">8.2.2.3.1. 基本的な非同期受信</a><a class="headerlink" href="#jmshowtouselistenercontainer" title="Permalink to this headline">¶</a></h4>
 <div class="line-block">
 <div class="line"><code class="docutils literal"><span class="pre">&#64;JmsListener</span></code>アノテーションを利用した非同期受信の方法について説明をする。</div>
 <div class="line">非同期受信の実装には下記の設定が必要となる。</div>
@@ -1904,7 +1935,7 @@ read-onlyのヘッダ属性うち、<code class="docutils literal"><span class="
 <td><div class="first last line-block">
 <div class="line">JMS Namespaceを定義する。</div>
 <div class="line">値として<code class="docutils literal"><span class="pre">http://www.springframework.org/schema/jms</span></code>を指定する。</div>
-<div class="line">JMS Namespaceの詳細については、<a class="reference external" href="http://docs.spring.io/autorepo/docs/spring-framework/4.3.14.RELEASE/spring-framework-reference/html/jms.html#jms-namespace">JMS Namespace Support</a>を参照されたい。</div>
+<div class="line">JMS Namespaceの詳細については、<a class="reference external" href="https://docs.spring.io/spring/docs/5.1.4.RELEASE/spring-framework-reference/integration.html#jms-namespace">JMS Namespace Support</a>を参照されたい。</div>
 </div>
 </td>
 </tr>
@@ -1936,12 +1967,12 @@ read-onlyのヘッダ属性うち、<code class="docutils literal"><span class="
 <div class="line"><code class="docutils literal"><span class="pre">&lt;jms:listener-container/&gt;</span></code>の属性には、利用したい<code class="docutils literal"><span class="pre">ConnectionFactory</span></code>のBeanを指定できる<code class="docutils literal"><span class="pre">connection-factory</span></code>属性が存在する。<code class="docutils literal"><span class="pre">connection-factory</span></code>属性のデフォルト値は<code class="docutils literal"><span class="pre">connectionFactory</span></code>である。</div>
 <div class="line">この例では、<a class="reference internal" href="#jmshowtouseconnectionfactory"><span class="std std-ref">ConnectionFactoryの設定</span></a>で示した<code class="docutils literal"><span class="pre">ConnectionFactory</span></code>のBean(Bean名は<code class="docutils literal"><span class="pre">connectionFactory</span></code>)を利用するため、<code class="docutils literal"><span class="pre">connection-factory</span></code>属性を省略している。</div>
 <div class="line"><code class="docutils literal"><span class="pre">&lt;jms:listener-container/&gt;</span></code>には、ここで紹介した以外の属性も存在する。</div>
-<div class="line">詳細については、<a class="reference external" href="http://docs.spring.io/spring/docs/4.3.14.RELEASE/spring-framework-reference/html/jms.html#jms-namespace-listener-container-tbl">Attributes of the JMS &lt;listener-container&gt; element</a>を参照されたい。</div>
+<div class="line">詳細については、<a class="reference external" href="https://docs.spring.io/spring/docs/5.1.4.RELEASE/spring-framework-reference/integration.html#jms-namespace-listener-container-tbl">Attributes of the JMS &lt;listener-container&gt; element</a>を参照されたい。</div>
 </div>
 <div class="last admonition warning">
 <p class="first admonition-title">Warning</p>
 <p class="last"><code class="docutils literal"><span class="pre">DefaultMessageListenerContainer</span></code>内部には独自のキャッシュ機能が備わっている。一方で、APサーバ製品やMOM製品によって関連リソースをキャッシュする場合もある。両者の管理に不整合が生じないように<code class="docutils literal"><span class="pre">cache</span></code>属性でキャッシュレベルを指定すること。
-詳細については、<a class="reference external" href="http://docs.spring.io/autorepo/docs/spring-framework/4.3.14.RELEASE/javadoc-api/org/springframework/jms/listener/DefaultMessageListenerContainer.html">DefaultMessageListenerContainerのJavadoc</a>を参照されたい。
+詳細については、<a class="reference external" href="https://docs.spring.io/spring/docs/5.1.4.RELEASE/javadoc-api/org/springframework/jms/listener/DefaultMessageListenerContainer.html">DefaultMessageListenerContainerのJavadoc</a>を参照されたい。
 本ガイドラインでは、<code class="docutils literal"><span class="pre">&lt;jms:listener-container/&gt;</span></code>の<code class="docutils literal"><span class="pre">connection-factory</span></code>属性には、<a class="reference internal" href="#jmshowtouseconnectionfactory"><span class="std std-ref">ConnectionFactoryの設定</span></a>で定義した<code class="docutils literal"><span class="pre">ConnectionFactory</span></code>を指定する。</p>
 </div>
 </td>
@@ -2042,7 +2073,7 @@ read-onlyのヘッダ属性うち、<code class="docutils literal"><span class="
 </tbody>
 </table>
 <p><code class="docutils literal"><span class="pre">&#64;JmsListener</span></code>アノテーションの主な属性の一覧を以下に示す。
-詳細やその他の属性については、<a class="reference external" href="http://docs.spring.io/spring-framework/docs/4.3.14.RELEASE/javadoc-api/org/springframework/jms/annotation/JmsListener.html#destination--">&#64;JmsListenerアノテーションのJavadoc</a>を参照されたい。</p>
+詳細やその他の属性については、<a class="reference external" href="https://docs.spring.io/spring-framework/docs/5.1.4.RELEASE/javadoc-api/org/springframework/jms/annotation/JmsListener.html#destination--">&#64;JmsListenerアノテーションのJavadoc</a>を参照されたい。</p>
 <table border="1" class="colwidths-given docutils">
 <colgroup>
 <col width="10%" />
@@ -2108,7 +2139,7 @@ read-onlyのヘッダ属性うち、<code class="docutils literal"><span class="
 </div></blockquote>
 </div>
 <div class="section" id="jmshowtouselistenercontainergetheader">
-<span id="id15"></span><h4><a class="toc-backref" href="#id48">8.2.2.3.2. メッセージのヘッダ情報を取得する</a><a class="headerlink" href="#jmshowtouselistenercontainergetheader" title="Permalink to this headline">¶</a></h4>
+<span id="id15"></span><h4><a class="toc-backref" href="#id46">8.2.2.3.2. メッセージのヘッダ情報を取得する</a><a class="headerlink" href="#jmshowtouselistenercontainergetheader" title="Permalink to this headline">¶</a></h4>
 <div class="line-block">
 <div class="line">非同期受信の処理結果をProducer側で指定したDestination(ヘッダ属性<code class="docutils literal"><span class="pre">JMSReplyTo</span></code>の値)に送信する場合など、メッセージのヘッダ情報をリスナーメソッド内で利用する場合には、<code class="docutils literal"><span class="pre">&#64;org.springframework.messaging.handler.annotation.Header</span></code>アノテーションを利用する。</div>
 <div class="line">実装例を以下に示す。</div>
@@ -2144,7 +2175,7 @@ read-onlyのヘッダ属性うち、<code class="docutils literal"><span class="
 </td>
 <td><div class="first last line-block">
 <div class="line">受信メッセージのヘッダ属性<code class="docutils literal"><span class="pre">JMSReplyTo</span></code>の値を取得するために、<code class="docutils literal"><span class="pre">&#64;Header</span></code>アノテーションを指定する。</div>
-<div class="line">JMSの標準ヘッダ属性を取得する場合に指定するキーの値については、<a class="reference external" href="https://docs.spring.io/spring/docs/4.3.14.RELEASE/javadoc-api/constant-values.html#org.springframework.jms.support.JmsHeaders.CORRELATION_ID">JmsHeadersの定数の定義</a>を参照されたい。</div>
+<div class="line">JMSの標準ヘッダ属性を取得する場合に指定するキーの値については、<a class="reference external" href="https://static.javadoc.io/org.springframework/spring-jms/5.1.4.RELEASE/constant-values.html#org.springframework.jms.support.JmsHeaders.CORRELATION_ID">JmsHeadersの定数の定義</a>を参照されたい。</div>
 </div>
 </td>
 </tr>
@@ -2153,7 +2184,7 @@ read-onlyのヘッダ属性うち、<code class="docutils literal"><span class="
 </div></blockquote>
 </div>
 <div class="section" id="jmshowtouselistenercontainerresendmessage">
-<span id="id16"></span><h4><a class="toc-backref" href="#id49">8.2.2.3.3. 非同期受信後の処理結果をメッセージ送信</a><a class="headerlink" href="#jmshowtouselistenercontainerresendmessage" title="Permalink to this headline">¶</a></h4>
+<span id="id16"></span><h4><a class="toc-backref" href="#id47">8.2.2.3.3. 非同期受信後の処理結果をメッセージ送信</a><a class="headerlink" href="#jmshowtouselistenercontainerresendmessage" title="Permalink to this headline">¶</a></h4>
 <div class="line-block">
 <div class="line"><code class="docutils literal"><span class="pre">&#64;JmsListener</span></code>アノテーションを定義したメソッドの処理結果を、応答メッセージとしてDestinationに送信する方法が用意されている。</div>
 <div class="line">処理結果の送信先を指定する方法として、以下の2つが存在する。</div>
@@ -2320,11 +2351,11 @@ Destination名の解決には、<code class="docutils literal"><span class="pre"
 </table>
 </div></blockquote>
 <p class="last">ヘッダ属性<code class="docutils literal"><span class="pre">JMSReplyTo</span></code>はConsumer側で指定したデフォルトのDestinationよりも優先される。
-詳細については、<a class="reference external" href="http://docs.spring.io/spring/docs/4.3.14.RELEASE/spring-framework-reference/htmlsingle/#jms-annotated-response">Response management</a>を参照されたい。</p>
+詳細については、<a class="reference external" href="https://docs.spring.io/spring/docs/5.1.4.RELEASE/spring-framework-reference/integration.html#jms-annotated-response">Response management</a>を参照されたい。</p>
 </div>
 </div>
 <div class="section" id="jmshowtousemessageselectorforasyncreceive">
-<span id="id17"></span><h4><a class="toc-backref" href="#id50">8.2.2.3.4. 非同期受信するメッセージを限定する場合</a><a class="headerlink" href="#jmshowtousemessageselectorforasyncreceive" title="Permalink to this headline">¶</a></h4>
+<span id="id17"></span><h4><a class="toc-backref" href="#id48">8.2.2.3.4. 非同期受信するメッセージを限定する場合</a><a class="headerlink" href="#jmshowtousemessageselectorforasyncreceive" title="Permalink to this headline">¶</a></h4>
 <p>受信時にメッセージセレクタを指定することで受信するメッセージを限定することができる。</p>
 <ul class="simple">
 <li><code class="file docutils literal"><span class="pre">[projectName]-web/src/main/java/com/example/listener/todo/TodoMessageListener.java</span></code></li>
@@ -2355,7 +2386,7 @@ Destination名の解決には、<code class="docutils literal"><span class="pre"
 <div class="line"><code class="docutils literal"><span class="pre">selector</span></code>属性を利用することで受信対象の条件を設定することができる。</div>
 <div class="line">ヘッダ属性の<code class="docutils literal"><span class="pre">TodoStatus</span></code>が<code class="docutils literal"><span class="pre">deleted</span></code>のメッセージのみ受信する。</div>
 <div class="line">メッセージセレクタはSQL92条件式構文のサブセットに基づいている。</div>
-<div class="line">詳細は<a class="reference external" href="http://docs.oracle.com/javaee/7/api/javax/jms/Message.html">Message Selectors</a>を参照されたい。</div>
+<div class="line">詳細は<a class="reference external" href="https://javaee.github.io/javaee-spec/javadocs/javax/jms/Message.html">Message Selectors</a>を参照されたい。</div>
 </div>
 </td>
 </tr>
@@ -2364,7 +2395,7 @@ Destination名の解決には、<code class="docutils literal"><span class="pre"
 </div></blockquote>
 </div>
 <div class="section" id="jmshowtousevalidationforasyncreceive">
-<span id="id18"></span><h4><a class="toc-backref" href="#id51">8.2.2.3.5. 非同期受信したメッセージの入力チェック</a><a class="headerlink" href="#jmshowtousevalidationforasyncreceive" title="Permalink to this headline">¶</a></h4>
+<span id="id18"></span><h4><a class="toc-backref" href="#id49">8.2.2.3.5. 非同期受信したメッセージの入力チェック</a><a class="headerlink" href="#jmshowtousevalidationforasyncreceive" title="Permalink to this headline">¶</a></h4>
 <div class="line-block">
 <div class="line">セキュリティなどの観点から、不正なデータを保持したメッセージを業務ロジック内で処理しないよう、入力チェックを行うべきである。</div>
 <div class="line">Method Validationを利用してServiceのメソッドで入力チェックを実装し、入力チェックエラー時の例外をリスナーメソッドでハンドリングする。</div>
@@ -2547,7 +2578,7 @@ Destination名の解決には、<code class="docutils literal"><span class="pre"
 </div>
 </div>
 <div class="section" id="jmshowtousetransactionmanagementforasyncreceive">
-<span id="id19"></span><h4><a class="toc-backref" href="#id52">8.2.2.3.6. トランザクション管理</a><a class="headerlink" href="#jmshowtousetransactionmanagementforasyncreceive" title="Permalink to this headline">¶</a></h4>
+<span id="id19"></span><h4><a class="toc-backref" href="#id50">8.2.2.3.6. トランザクション管理</a><a class="headerlink" href="#jmshowtousetransactionmanagementforasyncreceive" title="Permalink to this headline">¶</a></h4>
 <div class="line-block">
 <div class="line">データの一貫性を保証する必要がある場合は、トランザクション管理機能を使用する。</div>
 <div class="line">非同期受信で使用するSpring JMS の <code class="docutils literal"><span class="pre">DefaultMessageListenerContainer</span></code>には、JMSのトランザクション管理の仕組みが組み込まれている。<code class="docutils literal"><span class="pre">listener-container</span></code>の<code class="docutils literal"><span class="pre">acknowledge</span></code>属性でその機能を切り替えられる。それを利用した場合の実装例を以下に示す。</div>
@@ -2988,15 +3019,15 @@ JMSとDBの状態に不整合が生じる可能性がある。具体的には以
 </div>
 </div>
 <div class="section" id="jmshowtouseexceptionhandlingforasyncreceive">
-<span id="id20"></span><h4><a class="toc-backref" href="#id53">8.2.2.3.7. 非同期受信時の例外ハンドリング</a><a class="headerlink" href="#jmshowtouseexceptionhandlingforasyncreceive" title="Permalink to this headline">¶</a></h4>
+<span id="id20"></span><h4><a class="toc-backref" href="#id51">8.2.2.3.7. 非同期受信時の例外ハンドリング</a><a class="headerlink" href="#jmshowtouseexceptionhandlingforasyncreceive" title="Permalink to this headline">¶</a></h4>
 <div class="line-block">
 <div class="line">トランザクション管理を行う場合には、ロールバック処理を考慮した例外のハンドリングを行う必要がある。</div>
 <div class="line">トランザクション管理の詳細については、<a class="reference internal" href="#jmshowtousetransactionmanagementforasyncreceive"><span class="std std-ref">トランザクション管理</span></a>を参照されたい。</div>
 <div class="line">JMSの例外ハンドリングは、目的に応じて以下の2種類のパターンに分類される。</div>
 </div>
 <blockquote>
-<div><table border="1" class="colwidths-given docutils" id="id28">
-<caption><span class="caption-text"><strong>表-例外ハンドリングのパターン</strong></span><a class="headerlink" href="#id28" title="Permalink to this table">¶</a></caption>
+<div><table border="1" class="colwidths-given docutils" id="id26">
+<caption><span class="caption-text"><strong>表-例外ハンドリングのパターン</strong></span><a class="headerlink" href="#id26" title="Permalink to this table">¶</a></caption>
 <colgroup>
 <col width="10%" />
 <col width="40%" />
@@ -3250,7 +3281,7 @@ JMSとDBの状態に不整合が生じる可能性がある。具体的には以
 </div>
 </div>
 <div class="section" id="jmshowtousesyncreceivemessage">
-<span id="id21"></span><h3><a class="toc-backref" href="#id54">8.2.2.4. メッセージを同期受信する方法</a><a class="headerlink" href="#jmshowtousesyncreceivemessage" title="Permalink to this headline">¶</a></h3>
+<span id="id21"></span><h3><a class="toc-backref" href="#id52">8.2.2.4. メッセージを同期受信する方法</a><a class="headerlink" href="#jmshowtousesyncreceivemessage" title="Permalink to this headline">¶</a></h3>
 <div class="line-block">
 <div class="line"><code class="docutils literal"><span class="pre">JmsMessagingTemplate</span></code>を利用して、JMSプロバイダへの同期受信処理を実現する。</div>
 <div class="line">同期受信を利用することで、任意のタイミングでメッセージの受信が可能である。</div>
@@ -3260,24 +3291,13 @@ JMSとDBの状態に不整合が生じる可能性がある。具体的には以
 <div class="line">同期受信のBean定義ファイルの設定を以下に示す。</div>
 </div>
 <ul class="simple">
-<li><code class="file docutils literal"><span class="pre">[projectName]-domain/src/main/resources/META-INF/spring/[projectName]-infra.xml</span></code></li>
+<li><code class="file docutils literal"><span class="pre">[projectName]-env/src/main/resources/META-INF/spring/[projectName]-env.xml</span></code></li>
 </ul>
 <blockquote>
 <div><div class="highlight-xml"><div class="highlight"><pre><span></span><span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">&quot;cachingConnectionFactory&quot;</span>
    <span class="na">class=</span><span class="s">&quot;org.springframework.jms.connection.CachingConnectionFactory&quot;</span><span class="nt">&gt;</span> <span class="c">&lt;!-- (1) --&gt;</span>
    <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">&quot;targetConnectionFactory&quot;</span> <span class="na">ref=</span><span class="s">&quot;connectionFactory&quot;</span> <span class="nt">/&gt;</span> <span class="c">&lt;!-- (2) --&gt;</span>
    <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">&quot;sessionCacheSize&quot;</span> <span class="na">value=</span><span class="s">&quot;1&quot;</span> <span class="nt">/&gt;</span>  <span class="c">&lt;!-- (3) --&gt;</span>
-<span class="nt">&lt;/bean&gt;</span>
-
-<span class="c">&lt;!-- (4) --&gt;</span>
-<span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">&quot;jmsTemplate&quot;</span> <span class="na">class=</span><span class="s">&quot;org.springframework.jms.core.JmsTemplate&quot;</span><span class="nt">&gt;</span>
-   <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">&quot;connectionFactory&quot;</span> <span class="na">ref=</span><span class="s">&quot;cachingConnectionFactory&quot;</span> <span class="nt">/&gt;</span>
-   <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">&quot;destinationResolver&quot;</span> <span class="na">ref=</span><span class="s">&quot;destinationResolver&quot;</span> <span class="nt">/&gt;</span>
-<span class="nt">&lt;/bean&gt;</span>
-
-<span class="c">&lt;!-- (5) --&gt;</span>
-<span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">&quot;jmsMessagingTemplate&quot;</span> <span class="na">class=</span><span class="s">&quot;org.springframework.jms.core.JmsMessagingTemplate&quot;</span><span class="nt">&gt;</span>
-    <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">&quot;jmsTemplate&quot;</span> <span class="na">ref=</span><span class="s">&quot;jmsTemplate&quot;</span><span class="nt">/&gt;</span>
 <span class="nt">&lt;/bean&gt;</span>
 </pre></div>
 </div>
@@ -3324,8 +3344,38 @@ JMSとDBの状態に不整合が生じる可能性がある。具体的には以
 </div>
 </td>
 </tr>
-<tr class="row-odd"><td><div class="first last line-block">
-<div class="line">(4)</div>
+</tbody>
+</table>
+</div></blockquote>
+<ul class="simple">
+<li><code class="file docutils literal"><span class="pre">[projectName]-domain/src/main/resources/META-INF/spring/[projectName]-infra.xml</span></code></li>
+</ul>
+<blockquote>
+<div><div class="highlight-xml"><div class="highlight"><pre><span></span><span class="c">&lt;!-- (1) --&gt;</span>
+<span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">&quot;jmsTemplate&quot;</span> <span class="na">class=</span><span class="s">&quot;org.springframework.jms.core.JmsTemplate&quot;</span><span class="nt">&gt;</span>
+   <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">&quot;connectionFactory&quot;</span> <span class="na">ref=</span><span class="s">&quot;cachingConnectionFactory&quot;</span> <span class="nt">/&gt;</span>
+   <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">&quot;destinationResolver&quot;</span> <span class="na">ref=</span><span class="s">&quot;destinationResolver&quot;</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;/bean&gt;</span>
+
+<span class="c">&lt;!-- (2) --&gt;</span>
+<span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">&quot;jmsMessagingTemplate&quot;</span> <span class="na">class=</span><span class="s">&quot;org.springframework.jms.core.JmsMessagingTemplate&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">&quot;jmsTemplate&quot;</span> <span class="na">ref=</span><span class="s">&quot;jmsTemplate&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/bean&gt;</span>
+</pre></div>
+</div>
+<table border="1" class="colwidths-given docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">項番</th>
+<th class="head">説明</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><div class="first last line-block">
+<div class="line">(1)</div>
 </div>
 </td>
 <td><div class="first last line-block">
@@ -3335,8 +3385,8 @@ JMSとDBの状態に不整合が生じる可能性がある。具体的には以
 </div>
 </td>
 </tr>
-<tr class="row-even"><td><div class="first last line-block">
-<div class="line">(5)</div>
+<tr class="row-odd"><td><div class="first last line-block">
+<div class="line">(2)</div>
 </div>
 </td>
 <td><div class="first last line-block">
@@ -3412,13 +3462,9 @@ JMSとDBの状態に不整合が生じる可能性がある。具体的には以
 </ol>
 </td>
 <td><code class="docutils literal"><span class="pre">sessionAcknowledgeMode</span></code></td>
-<td><div class="first line-block">
+<td><div class="first last line-block">
 <div class="line"><code class="docutils literal"><span class="pre">sessionAcknowledgeMode</span></code>はセッションの確認応答モードを設定する。</div>
-<div class="line">詳細については<a class="reference external" href="http://docs.spring.io/spring/docs/4.3.14.RELEASE/javadoc-api/org/springframework/jms/core/JmsTemplate.html">JmsTemplateのJavaDoc</a>を参照されたい。</div>
-</div>
-<div class="admonition-todo last admonition" id="index-0">
-<p class="first admonition-title">Todo</p>
-<p class="last">sessionAcknowledgeModeの詳細については今後追記する。</p>
+<div class="line">詳細については<a class="reference external" href="https://docs.spring.io/spring/docs/5.1.4.RELEASE/javadoc-api/org/springframework/jms/core/JmsTemplate.html">JmsTemplateのJavaDoc</a>を参照されたい。</div>
 </div>
 </td>
 <td>-</td>
@@ -3549,13 +3595,13 @@ JMSとDBの状態に不整合が生じる可能性がある。具体的には以
 </div>
 </div>
 <div class="section" id="appendix">
-<h2><a class="toc-backref" href="#id55">8.2.3. Appendix</a><a class="headerlink" href="#appendix" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id53">8.2.3. Appendix</a><a class="headerlink" href="#appendix" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="jmsappendixsettingsdependsonjmsprovider">
-<span id="id22"></span><h3><a class="toc-backref" href="#id56">8.2.3.1. JMSプロバイダに依存する設定</a><a class="headerlink" href="#jmsappendixsettingsdependsonjmsprovider" title="Permalink to this headline">¶</a></h3>
+<span id="id22"></span><h3><a class="toc-backref" href="#id54">8.2.3.1. JMSプロバイダに依存する設定</a><a class="headerlink" href="#jmsappendixsettingsdependsonjmsprovider" title="Permalink to this headline">¶</a></h3>
 <p>JMSプロバイダごとに設定が異なる場合がある。
 以下にJMSプロバイダごとの設定について説明する。</p>
 <div class="section" id="apache-activemq">
-<h4><a class="toc-backref" href="#id57">8.2.3.1.1. Apache ActiveMQを利用する場合</a><a class="headerlink" href="#apache-activemq" title="Permalink to this headline">¶</a></h4>
+<h4><a class="toc-backref" href="#id55">8.2.3.1.1. Apache ActiveMQを利用する場合</a><a class="headerlink" href="#apache-activemq" title="Permalink to this headline">¶</a></h4>
 <p>Apache ActiveMQを利用する場合の設定について説明する。</p>
 <ul>
 <li><p class="first"><strong>アプリケーションサーバに対するJMSプロバイダ固有の設定</strong></p>
@@ -3563,7 +3609,7 @@ JMSとDBの状態に不整合が生じる可能性がある。具体的には以
 <div class="line">JMSプロバイダによっては、固有の設定が必要な場合がある。</div>
 <div class="line">Apache ActiveMQでは、受信するメッセージのペイロードが許可されたオブジェクトで構成されていることを保障するために、環境変数をアプリケーションサーバの起動引数に追加する必要がある。</div>
 <div class="line">詳細については、<a class="reference external" href="http://activemq.apache.org/objectmessage.html">ObjectMessage</a>を参照されたい。</div>
-<div class="line">環境変数をApache Tomcatの起動引数に追加する例を以下に示す。JBoss Enterprise Application Platform 7.0の場合は<a class="reference external" href="https://access.redhat.com/documentation/en/red-hat-jboss-enterprise-application-platform/7.0/paged/installation-guide/chapter-4-configuring-jboss-eap-to-run-as-a-service">Configuring JBoss EAP to Run as a Service</a>を、JBoss Enterprise Application Platform 6.4の場合は<a class="reference external" href="https://access.redhat.com/documentation/en-US/JBoss_Enterprise_Application_Platform/6.4/html/Installation_Guide/sect-Service_Configuration.html">Service Configuration</a>を、Weblogicの場合は<a class="reference external" href="http://docs.oracle.com/middleware/1221/wls/START/overview.htm#START120">Starting Managed Servers with a Startup Script</a>を参照されたい。</div>
+<div class="line">環境変数をApache Tomcatの起動引数に追加する例を以下に示す。JBoss Enterprise Application Platform 7.2の場合は<a class="reference external" href="https://access.redhat.com/documentation/en-us/red_hat_jboss_enterprise_application_platform/7.2/html/installation_guide/configuring_jboss_eap_to_run_as_a_service">Configuring JBoss EAP to Run as a Service</a>を、JBoss Enterprise Application Platform 6.4の場合は<a class="reference external" href="https://access.redhat.com/documentation/en-US/JBoss_Enterprise_Application_Platform/6.4/html/Installation_Guide/sect-Service_Configuration.html">Service Configuration</a>を、Weblogicの場合は<a class="reference external" href="https://docs.oracle.com/middleware/12213/wls/START/overview.htm#START120">Starting Managed Servers with a Startup Script</a>を参照されたい。</div>
 </div>
 <ul class="simple">
 <li><code class="file docutils literal"><span class="pre">$CATALINA_HOME/bin/setenv.sh</span></code></li>
@@ -3655,7 +3701,7 @@ JMSとDBの状態に不整合が生じる可能性がある。具体的には以
 <div><div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">上記設定例は、依存ライブラリのバージョンを親プロジェクトである terasoluna-gfw-parent で管理する前提であるため、pom.xmlでのバージョンの指定は不要である。
-上記の依存ライブラリはterasoluna-gfw-parentが利用している<a class="reference external" href="http://platform.spring.io/platform/">Spring IO Platform</a>で定義済みである。</p>
+上記の依存ライブラリはterasoluna-gfw-parentが依存している<a class="reference external" href="https://docs.spring.io/spring-boot/docs/2.1.2.RELEASE/reference/htmlsingle/#appendix-dependency-versions">Spring Boot</a>で管理されている。</p>
 </div>
 </div></blockquote>
 <div class="line-block">
@@ -3664,7 +3710,7 @@ JMSとDBの状態に不整合が生じる可能性がある。具体的には以
 <blockquote>
 <div><div class="admonition warning">
 <p class="first admonition-title">Warning</p>
-<p class="last">Macchinetta Server Framework で使用している<a class="reference external" href="http://platform.spring.io/platform/">Spring IO Platform</a>では、Apache ActiveMQと接続などを行う際に使用するライブラリのバージョンを定義している。
+<p class="last">Macchinetta Server Framework で使用している<a class="reference external" href="https://spring.io/projects/spring-boot">Spring Boot</a>では、Apache ActiveMQと接続などを行う際に使用するライブラリのバージョンを定義している。
 そのため、Apache ActiveMQのバージョンを決定する際には注意すること。
 また、Macchinetta Server Framework のバージョンアップの際には、ライブラリとミドルウェアのバージョンの整合性が取れなくなる可能性があるので注意すること。</p>
 </div>
@@ -3682,19 +3728,24 @@ JMSとDBの状態に不整合が生じる可能性がある。具体的には以
 <div class="line-block">
 <div class="line">本ガイドラインではJNDIによる名前解決する方法を推奨しているが、</div>
 <div class="line">アプリケーションサーバ上で動かせない単体テストの実施において、JMSプロバイダと接続する場合などには、JNDIを利用しないケースがある。</div>
-<div class="line">その場合、<code class="docutils literal"><span class="pre">ConnectionFactory</span></code>の実装クラスのBeanを生成する必要がある。</div>
+<div class="line">その場合、<code class="docutils literal"><span class="pre">ConnectionFactory</span></code>の実装クラスのBeanの生成と、JMSプロバイダでDestinationの名前解決を行うために<code class="docutils literal"><span class="pre">DynamicDestinationResolver</span></code>を設定する必要がある。</div>
+<div class="line">ただし、<code class="docutils literal"><span class="pre">JmsTemplate</span></code>の<code class="docutils literal"><span class="pre">destinationResolver</span></code>属性や<code class="docutils literal"><span class="pre">DefaultMessageListenerContainer</span></code>の<code class="docutils literal"><span class="pre">destination-resolver</span></code>属性を省略した場合は、内部的に生成された<code class="docutils literal"><span class="pre">DynamicDestinationResolver</span></code>が使用されるため、<code class="docutils literal"><span class="pre">DynamicDestinationResolver</span></code>のBean定義を省略可能である。</div>
 <div class="line">また、QueueについてもJNDIを用いて指定していたが、JMSプロバイダーの機能を用いてDestinationに指定したQueueが存在しない場合に、指定した名前のQueueを動的に生成させることができる。</div>
 <div class="line">アプリケーションサーバを介さずに接続を行うにはApache ActiveMQの内部Brokerを用いる必要がある。</div>
 <div class="line">Apache ActiveMQの内部Brokerの設定については<a class="reference external" href="http://activemq.apache.org/how-do-i-embed-a-broker-inside-a-connection.html">How do I embed a Broker inside a Connection</a>を参照されたい。</div>
 <div class="line">テスト用のコンテキストに下記の設定を追加すること。</div>
 </div>
 <ul class="simple">
-<li><code class="file docutils literal"><span class="pre">[projectName]-domain/src/main/resources/META-INF/spring/[projectName]-infra.xml</span></code></li>
+<li><code class="file docutils literal"><span class="pre">[projectName]-env/src/main/resources/META-INF/spring/[projectName]-env.xml</span></code></li>
 </ul>
 <blockquote>
 <div><div class="highlight-xml"><div class="highlight"><pre><span></span><span class="c">&lt;!-- (1) --&gt;</span>
 <span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">&quot;connectionFactory&quot;</span> <span class="na">class=</span><span class="s">&quot;org.apache.activemq.ActiveMQConnectionFactory&quot;</span><span class="nt">&gt;</span>
     <span class="nt">&lt;constructor-arg</span> <span class="na">value=</span><span class="s">&quot;tcp://localhost:61616&quot;</span><span class="nt">/&gt;</span>  <span class="c">&lt;!-- (2) --&gt;</span>
+<span class="nt">&lt;/bean&gt;</span>
+
+<span class="c">&lt;!-- (3) --&gt;</span>
+<span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">&quot;destinationResolver&quot;</span> <span class="na">class=</span><span class="s">&quot;org.springframework.jms.support.destination.DynamicDestinationResolver&quot;</span><span class="nt">&gt;</span>
 <span class="nt">&lt;/bean&gt;</span>
 </pre></div>
 </div>
@@ -3727,22 +3778,25 @@ JMSとDBの状態に不整合が生じる可能性がある。具体的には以
 </div>
 </td>
 </tr>
+<tr class="row-even"><td><div class="first last line-block">
+<div class="line">(3)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line"><code class="docutils literal"><span class="pre">DynamicDestinationResolver</span></code>をBean定義する。</div>
+<div class="line">Destinationが指定されていない場合には、省略可能である。</div>
+</div>
+</td>
+</tr>
 </tbody>
 </table>
 </div></blockquote>
 </li>
 </ul>
-<blockquote>
-<div><div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">開発フェーズなどによって、ConnectionFactoryの設定方法をJNDIとBean定義で切り替えたい場合、
-<code class="docutils literal"><span class="pre">[projectName]-env/src/main/resources/META-INF/spring/[projectName]-env.xml</span></code>に設定を記述すること。</p>
-</div>
-</div></blockquote>
 </div>
 </div>
 <div class="section" id="jmsappendixsendmanysamemessages">
-<span id="id25"></span><h3><a class="toc-backref" href="#id58">8.2.3.2. 同一メッセージの大量送信</a><a class="headerlink" href="#jmsappendixsendmanysamemessages" title="Permalink to this headline">¶</a></h3>
+<span id="id23"></span><h3><a class="toc-backref" href="#id56">8.2.3.2. 同一メッセージの大量送信</a><a class="headerlink" href="#jmsappendixsendmanysamemessages" title="Permalink to this headline">¶</a></h3>
 <div class="line-block">
 <div class="line">同一メッセージの大量送信の実装において<code class="docutils literal"><span class="pre">JmsMessageTemplate</span></code>を使用する場合、メモリ使用量が増えてしまう可能性がある。</div>
 <div class="line">そのため、<code class="docutils literal"><span class="pre">JmsTemplate</span></code>クラスの<code class="docutils literal"><span class="pre">send</span></code>メソッドを使用して実装を行うことを検討する必要がある。</div>
@@ -3834,12 +3888,12 @@ JMSとDBの状態に不整合が生じる可能性がある。具体的には以
 </div></blockquote>
 </div>
 <div class="section" id="jmsappendixsendlargedata">
-<span id="id26"></span><h3><a class="toc-backref" href="#id59">8.2.3.3. サイズの大きなデータの送受信</a><a class="headerlink" href="#jmsappendixsendlargedata" title="Permalink to this headline">¶</a></h3>
+<span id="id24"></span><h3><a class="toc-backref" href="#id57">8.2.3.3. サイズの大きなデータの送受信</a><a class="headerlink" href="#jmsappendixsendlargedata" title="Permalink to this headline">¶</a></h3>
 <p>画像データなどサイズの大きなデータ(目安として1 MB以上)を扱う場合、同時トランザクション数やヒープサイズによっては<code class="docutils literal"><span class="pre">OutOfMemoryError</span></code>が発生する可能性がある。
 JMSの標準APIではサイズの大きなデータをストリームとして扱うことができるのはプリミティブ型のデータの送信を行う<code class="docutils literal"><span class="pre">StreamMessage</span></code>と未解釈のバイトストリームの送信を行える<code class="docutils literal"><span class="pre">ByteMessage</span></code>のみである。
 そのため、JMS APIではなく、JMSプロバイダベンダ毎に用意している固有のAPIを使用するケースがある。</p>
-<div class="section" id="id27">
-<h4><a class="toc-backref" href="#id60">8.2.3.3.1. Apache ActiveMQを利用する場合</a><a class="headerlink" href="#id27" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="id25">
+<h4><a class="toc-backref" href="#id58">8.2.3.3.1. Apache ActiveMQを利用する場合</a><a class="headerlink" href="#id25" title="Permalink to this headline">¶</a></h4>
 <p><a class="reference external" href="http://activemq.apache.org/blob-messages.html">Blob Message</a>を使用することでサイズの大きなメッセージを送受信することができる。実装例を以下に示す。</p>
 <blockquote>
 <div><div class="admonition note">
@@ -3854,7 +3908,7 @@ Spring Frameworkが提供している<code class="docutils literal"><span class=
 <p><code class="docutils literal"><span class="pre">BlobMessage</span></code>を用いたメッセージの送信では、メッセージはヒープ領域ではなく、一時的にApache ActiveMQが起動しているサーバに格納される。
 メッセージの格納先の定義例を以下に示す。</p>
 <ul class="simple">
-<li><code class="file docutils literal"><span class="pre">[projectName]-domain/src/main/resources/META-INF/spring/[projectName]-infra.xml</span></code></li>
+<li><code class="file docutils literal"><span class="pre">[projectName]-env/src/main/resources/META-INF/spring/[projectName]-env.xml</span></code></li>
 </ul>
 <blockquote>
 <div><div class="highlight-xml"><div class="highlight"><pre><span></span><span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">&quot;connectionFactory&quot;</span>
@@ -4078,58 +4132,48 @@ Spring Frameworkが提供している<code class="docutils literal"><span class=
         <li class="right" >
           <a href="Email.html" title="8.1. E-mail送信(SMTP)"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">Macchinetta Server Framework (1.x) Development Guideline 1.5.1.RELEASE documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Macchinetta Server Framework (1.x) Development Guideline 1.6.1.RELEASE documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="index.html" >8. メッセージ連携</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2013-2018, NTT Corporation.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.6.2.Theme is <a href="http://github.com/vimalkvn/solar-theme">Solar</a>
+        &copy; Copyright 2013, NTT Corporation.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.6.3.Theme is <a href="http://github.com/vimalkvn/solar-theme">Solar</a>
     </div>
     
     <script>
-     
-     $(function() {
-    	   var $sidebar	= $('.sphinxsidebar'),
-    		     $window		= $(window),
-    		     offset		= $sidebar.offset(),
-    		     topPadding	= 3,
-    		     $scroll		= $('#scroll');
-    	   
-    	   $window.scroll(function() {
-    		     if ($scroll.is(':checked')) {
-				         if ($window.scrollTop() > offset.top) {
-					           $sidebar.stop().animate({
-						             marginTop:$window.scrollTop() - offset.top + topPadding
-					           });
-				         } else {
-					           $sidebar.stop().animate({
-						             marginTop:0
-					           });
-				         }
-			       }
-		     });
-    	   
-    	   var $navList = $('ul:first', $sidebar);
-    	   $('li:first', $navList).addClass('open');
-    	   
-    	   $navList.treeview({
-    		     persist: "location",
-    		     collapsed: true,
-    		     unique: false
-    	   });
-    	   
-	   });
-    </script>
     
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-113850349-2"></script>
-    <script>
-     window.dataLayer = window.dataLayer || [];
-     function gtag(){dataLayer.push(arguments);}
-     gtag('js', new Date());
-
-     gtag('config', 'UA-113850349-2');
+    $(function() {
+    	var $sidebar	= $('.sphinxsidebar'),
+    		$window		= $(window),
+    		offset		= $sidebar.offset(),
+    		topPadding	= 3,
+    		$scroll		= $('#scroll');
+    	
+    	$window.scroll(function() {
+    		if ($scroll.is(':checked')) {
+				if ($window.scrollTop() > offset.top) {
+					$sidebar.stop().animate({
+						marginTop:$window.scrollTop() - offset.top + topPadding
+					});
+				} else {
+					$sidebar.stop().animate({
+						marginTop:0
+					});
+				}
+			}
+		});
+    	
+    	var $navList = $('ul:first', $sidebar);
+    	$('li:first', $navList).addClass('open');
+    	
+    	$navList.treeview({
+    		persist: "location",
+    		collapsed: true,
+    		unique: false
+    	});
+    	
+	});
     </script>
   </body>
 </html>

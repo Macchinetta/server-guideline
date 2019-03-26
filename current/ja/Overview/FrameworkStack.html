@@ -3,16 +3,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>2.1. Macchinetta Server Framework (1.x)のスタック &#8212; Macchinetta Server Framework (1.x) Development Guideline 1.5.1.RELEASE documentation</title>
-    
+    <title>2.1. Macchinetta Server Framework (1.x)のスタック &#8212; Macchinetta Server Framework (1.x) Development Guideline 1.6.1.RELEASE documentation</title>
     <link rel="stylesheet" href="../_static/solar.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '1.5.1.RELEASE',
+        VERSION:     '1.6.1.RELEASE',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true,
@@ -43,7 +40,7 @@
         <li class="right" >
           <a href="index.html" title="2. アーキテクチャ概要"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Macchinetta Server Framework (1.x) Development Guideline 1.5.1.RELEASE documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Macchinetta Server Framework (1.x) Development Guideline 1.6.1.RELEASE documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">2. アーキテクチャ概要</a> &#187;</li> 
       </ul>
     </div>
@@ -161,21 +158,21 @@
 <h3><a class="toc-backref" href="#id12">2.1.2.1. DIコンテナ</a><a class="headerlink" href="#di" title="Permalink to this headline">¶</a></h3>
 <p>DIコンテナとしてSpring Frameworkを利用する。</p>
 <ul class="simple">
-<li><a class="reference external" href="http://docs.spring.io/spring/docs/4.3.14.RELEASE/spring-framework-reference/html/beans.html">Spring Framework 4.3</a></li>
+<li><a class="reference external" href="https://docs.spring.io/spring/docs/5.1.4.RELEASE/spring-framework-reference/core.html#beans">Spring Framework 5.0</a></li>
 </ul>
 </div>
 <div class="section" id="mvc">
 <h3><a class="toc-backref" href="#id13">2.1.2.2. MVCフレームワーク</a><a class="headerlink" href="#mvc" title="Permalink to this headline">¶</a></h3>
 <p>Web MVCフレームワークとしてSpring MVCを利用する。</p>
 <ul class="simple">
-<li><a class="reference external" href="http://docs.spring.io/spring/docs/4.3.14.RELEASE/spring-framework-reference/html/mvc.html">Spring MVC 4.3</a></li>
+<li><a class="reference external" href="https://docs.spring.io/spring/docs/5.1.4.RELEASE/spring-framework-reference/web.html#mvc">Spring MVC 5.0</a></li>
 </ul>
 </div>
 <div class="section" id="o-r-mapper">
 <h3><a class="toc-backref" href="#id14">2.1.2.3. O/R Mapper</a><a class="headerlink" href="#o-r-mapper" title="Permalink to this headline">¶</a></h3>
 <p>本ガイドラインでは、以下を想定している。</p>
 <ul class="simple">
-<li><a class="reference external" href="http://mybatis.github.io/mybatis-3/">MyBatis 3.4</a><ul>
+<li><a class="reference external" href="http://mybatis.github.io/mybatis-3/">MyBatis 3.5</a><ul>
 <li>Spring Frameworkとの連携ライブラリとして、<a class="reference external" href="http://mybatis.github.io/spring/">MyBatis-Spring</a>を使用する。</li>
 </ul>
 </li>
@@ -198,7 +195,7 @@
 <h3><a class="toc-backref" href="#id16">2.1.2.5. セキュリティ</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
 <p>認証・認可のフレームワークとしてSpring Securityを利用する。</p>
 <ul class="simple">
-<li><a class="reference external" href="http://projects.spring.io/spring-security/">Spring Security 4.1</a></li>
+<li><a class="reference external" href="http://projects.spring.io/spring-security/">Spring Security 5.1</a></li>
 </ul>
 <div class="admonition tip">
 <p class="first admonition-title">Tip</p>
@@ -215,11 +212,11 @@
 <div class="section" id="id3">
 <h3><a class="toc-backref" href="#id17">2.1.2.6. バリデーション</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
-<li>単項目チェックには<a class="reference external" href="http://download.oracle.com/otn-pub/jcp/bean_validation-1_1-fr-eval-spec/bean-validation-specification.pdf">BeanValidation 1.1</a>を利用する。<ul>
-<li>実装は、<a class="reference external" href="http://docs.jboss.org/hibernate/validator/5.2/reference/en-US/html/">Hibernate Validator 5.2</a>を利用する。</li>
+<li>単項目チェックには<a class="reference external" href="https://beanvalidation.org/2.0/spec/">BeanValidation 2.0</a>を利用する。<ul>
+<li>実装は、<a class="reference external" href="http://docs.jboss.org/hibernate/validator/6.0/reference/en-US/html_single/">Hibernate Validator 6.0</a>を利用する。</li>
 </ul>
 </li>
-<li>相関チェックには<a class="reference external" href="http://download.oracle.com/otn-pub/jcp/bean_validation-1_1-fr-eval-spec/bean-validation-specification.pdf">Bean Validation</a>、もしくは<a class="reference external" href="http://docs.spring.io/spring/docs/4.3.14.RELEASE/spring-framework-reference/html/validation.html#validator">Spring Validation</a>を利用する。<ul>
+<li>相関チェックには<a class="reference external" href="https://beanvalidation.org/2.0/spec/">Bean Validation 2.0</a>、もしくは<a class="reference external" href="https://docs.spring.io/spring/docs/5.1.4.RELEASE/spring-framework-reference/core.html#validator">Spring Validation</a>を利用する。<ul>
 <li>使い分けについては<a class="reference internal" href="../ArchitectureInDetail/WebApplicationDetail/Validation.html"><span class="doc">入力チェック</span></a>を参照されたい。</li>
 </ul>
 </li>
@@ -240,40 +237,43 @@
 <li><a class="reference external" href="https://github.com/terasolunaorg/terasoluna-gfw">https://github.com/terasolunaorg/terasoluna-gfw</a></li>
 <li>詳細は<a class="reference internal" href="#frameworkstack-common-library"><span class="std std-ref">共通ライブラリの構成要素</span></a>を参照されたい。</li>
 </ul>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">単体テストで利用するOSSライブラリについては、本章とは別に<a class="reference internal" href="../UnitTest/UnitTestOverview.html"><span class="doc">単体テスト概要</span></a>で解説している。</p>
+</div>
 </div>
 </div>
 <div class="section" id="oss">
 <span id="frameworkstack-using-oss-version"></span><h2><a class="toc-backref" href="#id20">2.1.3. 利用するOSSのバージョン</a><a class="headerlink" href="#oss" title="Permalink to this headline">¶</a></h2>
-<p>version 1.5.1.RELEASEで利用するOSSの一覧を以下に示す。</p>
+<p>version 1.6.1.RELEASEで利用するOSSの一覧を以下に示す。</p>
 <div class="admonition tip">
 <p class="first admonition-title">Tip</p>
-<p>version 1.1.0.RELEASEより、
-<a class="reference external" href="http://platform.spring.io/platform/">Spring IO platform</a>の<code class="docutils literal"><span class="pre">&lt;dependencyManagement&gt;</span></code>をインポートする構成を採用している。</p>
-<p>Spring IO platformの<code class="docutils literal"><span class="pre">&lt;dependencyManagement&gt;</span></code>をインポートすることで、</p>
+<p>version 1.6.1.RELEASEより、<a class="reference external" href="https://spring.io/projects/spring-boot">Spring Boot</a>が提供する<a class="reference external" href="https://docs.spring.io/spring-boot/docs/2.1.2.RELEASE/reference/htmlsingle/#using-boot-dependency-management">spring-boot-dependencies</a>の<code class="docutils literal"><span class="pre">&lt;dependencyManagement&gt;</span></code>をインポートする構成を採用している。</p>
+<p><code class="docutils literal"><span class="pre">spring-boot-dependencies</span></code>の<code class="docutils literal"><span class="pre">&lt;dependencyManagement&gt;</span></code>をインポートすることで、</p>
 <ul class="simple">
 <li>Spring Frameworkが提供しているライブラリ</li>
 <li>Spring Frameworkが依存しているOSSライブラリ</li>
 <li>Spring Frameworkと相性のよいOSSライブラリ</li>
 </ul>
 <p>への依存関係を解決しており、
-Macchinetta Server Framework (1.x)で使用するOSSのバージョンは、原則として、Spring IO platformの定義に準じている。</p>
-<p class="last">なお、version 1.5.1.RELEASEで指定しているSpring IO platformのバージョンは、<a class="reference external" href="http://docs.spring.io/platform/docs/Brussels-SR5/reference/htmlsingle/">Brussels-SR5</a>である。</p>
+Macchinetta Server Framework (1.x)で使用するOSSのバージョンは、原則として、Spring Bootで管理されているバージョンに準ずる。</p>
+<p class="last">なお、version 1.6.1.RELEASEでは<a class="reference external" href="https://docs.spring.io/spring-boot/docs/2.1.2.RELEASE/reference/htmlsingle/">Spring Boot 2.1.2.RELEASE</a>に依存しており、管理されるライブラリは<a class="reference external" href="https://docs.spring.io/spring-boot/docs/2.1.2.RELEASE/reference/htmlsingle/#appendix-dependency-versions">Spring Boot Reference Guide - Appendix F. Dependency versions</a>の通りとなる。</p>
 </div>
 <table border="1" class="colwidths-given docutils">
 <colgroup>
 <col width="16%" />
-<col width="28%" />
-<col width="26%" />
+<col width="27%" />
+<col width="27%" />
 <col width="16%" />
 <col width="5%" />
-<col width="8%" />
+<col width="9%" />
 </colgroup>
 <thead valign="bottom">
 <tr class="row-odd"><th class="head stub">Type</th>
 <th class="head">GroupId</th>
 <th class="head">ArtifactId</th>
 <th class="head">Version</th>
-<th class="head">Spring IO platform</th>
+<th class="head">Spring Boot</th>
 <th class="head">Remarks</th>
 </tr>
 </thead>
@@ -281,212 +281,198 @@ Macchinetta Server Framework (1.x)で使用するOSSのバージョンは、原�
 <tr class="row-even"><th class="stub">Spring</th>
 <td>org.springframework</td>
 <td>spring-aop</td>
-<td>4.3.14.RELEASE</td>
-<td>&#160;</td>
+<td>5.1.4.RELEASE</td>
+<td>*</td>
 <td>&#160;</td>
 </tr>
 <tr class="row-odd"><th class="stub">Spring</th>
 <td>org.springframework</td>
 <td>spring-aspects</td>
-<td>4.3.14.RELEASE</td>
-<td>&#160;</td>
+<td>5.1.4.RELEASE</td>
+<td>*</td>
 <td>&#160;</td>
 </tr>
 <tr class="row-even"><th class="stub">Spring</th>
 <td>org.springframework</td>
 <td>spring-beans</td>
-<td>4.3.14.RELEASE</td>
-<td>&#160;</td>
+<td>5.1.4.RELEASE</td>
+<td>*</td>
 <td>&#160;</td>
 </tr>
 <tr class="row-odd"><th class="stub">Spring</th>
 <td>org.springframework</td>
 <td>spring-context</td>
-<td>4.3.14.RELEASE</td>
-<td>&#160;</td>
+<td>5.1.4.RELEASE</td>
+<td>*</td>
 <td>&#160;</td>
 </tr>
 <tr class="row-even"><th class="stub">Spring</th>
 <td>org.springframework</td>
 <td>spring-context-support</td>
-<td>4.3.14.RELEASE</td>
-<td>&#160;</td>
+<td>5.1.4.RELEASE</td>
+<td>*</td>
 <td>&#160;</td>
 </tr>
 <tr class="row-odd"><th class="stub">Spring</th>
 <td>org.springframework</td>
 <td>spring-core</td>
-<td>4.3.14.RELEASE</td>
-<td>&#160;</td>
+<td>5.1.4.RELEASE</td>
+<td>*</td>
 <td>&#160;</td>
 </tr>
 <tr class="row-even"><th class="stub">Spring</th>
 <td>org.springframework</td>
 <td>spring-expression</td>
-<td>4.3.14.RELEASE</td>
-<td>&#160;</td>
+<td>5.1.4.RELEASE</td>
+<td>*</td>
 <td>&#160;</td>
 </tr>
 <tr class="row-odd"><th class="stub">Spring</th>
 <td>org.springframework</td>
 <td>spring-jdbc</td>
-<td>4.3.14.RELEASE</td>
-<td>&#160;</td>
+<td>5.1.4.RELEASE</td>
+<td>*</td>
 <td>&#160;</td>
 </tr>
 <tr class="row-even"><th class="stub">Spring</th>
 <td>org.springframework</td>
 <td>spring-orm</td>
-<td>4.3.14.RELEASE</td>
-<td>&#160;</td>
+<td>5.1.4.RELEASE</td>
+<td>*</td>
 <td>&#160;</td>
 </tr>
 <tr class="row-odd"><th class="stub">Spring</th>
+<td>org.springframework</td>
+<td>spring-oxm</td>
+<td>5.1.4.RELEASE</td>
+<td>*</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-even"><th class="stub">Spring</th>
 <td>org.springframework</td>
 <td>spring-tx</td>
-<td>4.3.14.RELEASE</td>
-<td>&#160;</td>
+<td>5.1.4.RELEASE</td>
+<td>*</td>
 <td>&#160;</td>
 </tr>
-<tr class="row-even"><th class="stub">Spring</th>
+<tr class="row-odd"><th class="stub">Spring</th>
 <td>org.springframework</td>
 <td>spring-web</td>
-<td>4.3.14.RELEASE</td>
-<td>&#160;</td>
+<td>5.1.4.RELEASE</td>
+<td>*</td>
 <td>&#160;</td>
 </tr>
-<tr class="row-odd"><th class="stub">Spring</th>
+<tr class="row-even"><th class="stub">Spring</th>
 <td>org.springframework</td>
 <td>spring-webmvc</td>
-<td>4.3.14.RELEASE</td>
-<td>&#160;</td>
-<td>&#160;</td>
-</tr>
-<tr class="row-even"><th class="stub">Spring</th>
-<td>org.springframework</td>
-<td>spring-jms</td>
-<td>4.3.14.RELEASE</td>
-<td>&#160;</td>
+<td>5.1.4.RELEASE</td>
+<td>*</td>
 <td>&#160;</td>
 </tr>
 <tr class="row-odd"><th class="stub">Spring</th>
+<td>org.springframework</td>
+<td>spring-jms</td>
+<td>5.1.4.RELEASE</td>
+<td>*</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-even"><th class="stub">Spring</th>
 <td>org.springframework</td>
 <td>spring-messaging</td>
-<td>4.3.14.RELEASE</td>
-<td>&#160;</td>
+<td>5.1.4.RELEASE</td>
+<td>*</td>
 <td>&#160;</td>
 </tr>
-<tr class="row-even"><th class="stub">Spring</th>
+<tr class="row-odd"><th class="stub">Spring</th>
 <td>org.springframework.data</td>
 <td>spring-data-commons</td>
-<td>1.13.7.RELEASE</td>
+<td>2.1.4.RELEASE</td>
 <td>*</td>
 <td>&#160;</td>
 </tr>
-<tr class="row-odd"><th class="stub">Spring</th>
+<tr class="row-even"><th class="stub">Spring</th>
 <td>org.springframework.security</td>
 <td>spring-security-acl</td>
-<td>4.2.4.RELEASE</td>
-<td>&#160;</td>
-<td>&#160;</td>
-</tr>
-<tr class="row-even"><th class="stub">Spring</th>
-<td>org.springframework.security</td>
-<td>spring-security-config</td>
-<td>4.2.4.RELEASE</td>
-<td>&#160;</td>
-<td>&#160;</td>
-</tr>
-<tr class="row-odd"><th class="stub">Spring</th>
-<td>org.springframework.security</td>
-<td>spring-security-core</td>
-<td>4.2.4.RELEASE</td>
-<td>&#160;</td>
-<td>&#160;</td>
-</tr>
-<tr class="row-even"><th class="stub">Spring</th>
-<td>org.springframework.security</td>
-<td>spring-security-taglibs</td>
-<td>4.2.4.RELEASE</td>
-<td>&#160;</td>
-<td>&#160;</td>
-</tr>
-<tr class="row-odd"><th class="stub">Spring</th>
-<td>org.springframework.security</td>
-<td>spring-security-web</td>
-<td>4.2.4.RELEASE</td>
-<td>&#160;</td>
-<td>&#160;</td>
-</tr>
-<tr class="row-even"><th class="stub">Spring</th>
-<td>org.springframework.security.oauth</td>
-<td>spring-security-oauth2</td>
-<td>2.0.14.RELEASE</td>
+<td>5.1.3.RELEASE</td>
 <td>*</td>
 <td>&#160;</td>
 </tr>
-<tr class="row-odd"><th class="stub">MyBatis3</th>
-<td>org.mybatis</td>
-<td>mybatis</td>
-<td>3.4.5</td>
+<tr class="row-odd"><th class="stub">Spring</th>
+<td>org.springframework.security</td>
+<td>spring-security-config</td>
+<td>5.1.3.RELEASE</td>
+<td>*</td>
 <td>&#160;</td>
-<td>*1</td>
+</tr>
+<tr class="row-even"><th class="stub">Spring</th>
+<td>org.springframework.security</td>
+<td>spring-security-core</td>
+<td>5.1.3.RELEASE</td>
+<td>*</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-odd"><th class="stub">Spring</th>
+<td>org.springframework.security</td>
+<td>spring-security-taglibs</td>
+<td>5.1.3.RELEASE</td>
+<td>*</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-even"><th class="stub">Spring</th>
+<td>org.springframework.security</td>
+<td>spring-security-web</td>
+<td>5.1.3.RELEASE</td>
+<td>*</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-odd"><th class="stub">Spring</th>
+<td>org.springframework.security.oauth</td>
+<td>spring-security-oauth2</td>
+<td>2.2.4.RELEASE</td>
+<td>&#160;</td>
+<td>&#160;</td>
 </tr>
 <tr class="row-even"><th class="stub">MyBatis3</th>
 <td>org.mybatis</td>
-<td>mybatis-spring</td>
-<td>1.3.1</td>
+<td>mybatis</td>
+<td>3.5.0</td>
 <td>&#160;</td>
 <td>*1</td>
 </tr>
 <tr class="row-odd"><th class="stub">MyBatis3</th>
 <td>org.mybatis</td>
-<td>mybatis-typehandlers-jsr310</td>
-<td>1.0.2</td>
+<td>mybatis-spring</td>
+<td>2.0.0</td>
 <td>&#160;</td>
-<td>*1*5</td>
+<td>*1</td>
 </tr>
 <tr class="row-even"><th class="stub">DI</th>
 <td>javax.inject</td>
 <td>javax.inject</td>
 <td>1</td>
-<td>*</td>
+<td>&#160;</td>
 <td>&#160;</td>
 </tr>
 <tr class="row-odd"><th class="stub">AOP</th>
-<td>aopalliance</td>
-<td>aopalliance</td>
-<td>1</td>
+<td>org.aspectj</td>
+<td>aspectjrt</td>
+<td>1.9.2</td>
 <td>*</td>
 <td>&#160;</td>
 </tr>
 <tr class="row-even"><th class="stub">AOP</th>
 <td>org.aspectj</td>
-<td>aspectjrt</td>
-<td>1.8.10</td>
-<td>*</td>
-<td>&#160;</td>
-</tr>
-<tr class="row-odd"><th class="stub">AOP</th>
-<td>org.aspectj</td>
 <td>aspectjweaver</td>
-<td>1.8.10</td>
-<td>*</td>
-<td>&#160;</td>
-</tr>
-<tr class="row-even"><th class="stub">ログ出力</th>
-<td>ch.qos.logback</td>
-<td>logback-classic</td>
-<td>1.1.11</td>
+<td>1.9.2</td>
 <td>*</td>
 <td>&#160;</td>
 </tr>
 <tr class="row-odd"><th class="stub">ログ出力</th>
 <td>ch.qos.logback</td>
-<td>logback-core</td>
-<td>1.1.11</td>
+<td>logback-classic</td>
+<td>1.2.3</td>
 <td>*</td>
-<td>*3</td>
+<td>&#160;</td>
 </tr>
 <tr class="row-even"><th class="stub">ログ出力</th>
 <td>org.lazyluke</td>
@@ -511,234 +497,164 @@ Macchinetta Server Framework (1.x)で使用するOSSのバージョンは、原�
 </tr>
 <tr class="row-odd"><th class="stub">JSON</th>
 <td>com.fasterxml.jackson.core</td>
-<td>jackson-annotations</td>
-<td>2.8.0</td>
-<td>*</td>
-<td>&#160;</td>
-</tr>
-<tr class="row-even"><th class="stub">JSON</th>
-<td>com.fasterxml.jackson.core</td>
-<td>jackson-core</td>
-<td>2.8.10</td>
-<td>*</td>
-<td>&#160;</td>
-</tr>
-<tr class="row-odd"><th class="stub">JSON</th>
-<td>com.fasterxml.jackson.core</td>
 <td>jackson-databind</td>
-<td>2.8.10</td>
+<td>2.9.8</td>
 <td>*</td>
 <td>&#160;</td>
 </tr>
 <tr class="row-even"><th class="stub">JSON</th>
 <td>com.fasterxml.jackson.datatype</td>
 <td>jackson-datatype-joda</td>
-<td>2.8.10</td>
+<td>2.9.8</td>
 <td>*</td>
 <td>&#160;</td>
 </tr>
 <tr class="row-odd"><th class="stub">JSON</th>
 <td>com.fasterxml.jackson.datatype</td>
 <td>jackson-datatype-jsr310</td>
-<td>2.8.10</td>
-<td>*</td>
-<td>*5</td>
-</tr>
-<tr class="row-even"><th class="stub">入力チェック</th>
-<td>javax.validation</td>
-<td>validation-api</td>
-<td>1.1.0.Final</td>
+<td>2.9.8</td>
 <td>*</td>
 <td>&#160;</td>
 </tr>
-<tr class="row-odd"><th class="stub">入力チェック</th>
-<td>org.hibernate</td>
+<tr class="row-even"><th class="stub">入力チェック</th>
+<td>org.hibernate.validator</td>
 <td>hibernate-validator</td>
-<td>5.3.5.Final</td>
+<td>6.0.14.Final</td>
 <td>*</td>
 <td>&#160;</td>
 </tr>
-<tr class="row-even"><th class="stub">入力チェック</th>
-<td>org.jboss.logging</td>
-<td>jboss-logging</td>
-<td>3.3.1.Final</td>
-<td>*</td>
-<td>*3</td>
-</tr>
-<tr class="row-odd"><th class="stub">入力チェック</th>
-<td>com.fasterxml</td>
-<td>classmate</td>
-<td>1.3.4</td>
-<td>*</td>
-<td>*3</td>
-</tr>
-<tr class="row-even"><th class="stub">Bean変換</th>
+<tr class="row-odd"><th class="stub">Bean変換</th>
 <td>commons-beanutils</td>
 <td>commons-beanutils</td>
 <td>1.9.3</td>
-<td>*</td>
-<td>*2</td>
+<td>&#160;</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-even"><th class="stub">Bean変換</th>
+<td>com.github.dozermapper</td>
+<td>dozer-core</td>
+<td>6.4.1</td>
+<td>&#160;</td>
+<td>&#160;</td>
 </tr>
 <tr class="row-odd"><th class="stub">Bean変換</th>
-<td>net.sf.dozer</td>
-<td>dozer</td>
-<td>5.5.1</td>
+<td>com.github.dozermapper</td>
+<td>dozer-spring4</td>
+<td>6.4.1</td>
 <td>&#160;</td>
 <td>*2</td>
 </tr>
 <tr class="row-even"><th class="stub">Bean変換</th>
-<td>net.sf.dozer</td>
-<td>dozer-spring</td>
-<td>5.5.1</td>
-<td>&#160;</td>
-<td>*2</td>
-</tr>
-<tr class="row-odd"><th class="stub">Bean変換</th>
 <td>org.apache.commons</td>
 <td>commons-lang3</td>
-<td>3.5</td>
-<td>*</td>
-<td>*2</td>
-</tr>
-<tr class="row-even"><th class="stub">日付操作</th>
-<td>joda-time</td>
-<td>joda-time</td>
-<td>2.9.9</td>
+<td>3.8.1</td>
 <td>*</td>
 <td>&#160;</td>
 </tr>
 <tr class="row-odd"><th class="stub">日付操作</th>
 <td>joda-time</td>
+<td>joda-time</td>
+<td>2.10.1</td>
+<td>*</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-even"><th class="stub">日付操作</th>
+<td>joda-time</td>
 <td>joda-time-jsptags</td>
 <td>1.1.1</td>
 <td>&#160;</td>
-<td>*2</td>
-</tr>
-<tr class="row-even"><th class="stub">コネクションプール</th>
-<td>org.apache.commons</td>
-<td>commons-dbcp2</td>
-<td>2.1.1</td>
-<td>*</td>
-<td>*2</td>
+<td>&#160;</td>
 </tr>
 <tr class="row-odd"><th class="stub">コネクションプール</th>
 <td>org.apache.commons</td>
-<td>commons-pool2</td>
-<td>2.4.2</td>
+<td>commons-dbcp2</td>
+<td>2.5.0</td>
 <td>*</td>
-<td>*2</td>
-</tr>
-<tr class="row-even"><th class="stub">Tiles</th>
-<td>commons-digester</td>
-<td>commons-digester</td>
-<td>2.1</td>
-<td>*</td>
-<td>*2</td>
-</tr>
-<tr class="row-odd"><th class="stub">Tiles</th>
-<td>org.apache.tiles</td>
-<td>tiles-api</td>
-<td>3.0.7</td>
-<td>*</td>
-<td>*2</td>
+<td>&#160;</td>
 </tr>
 <tr class="row-even"><th class="stub">Tiles</th>
 <td>org.apache.tiles</td>
 <td>tiles-core</td>
-<td>3.0.7</td>
-<td>*</td>
-<td>*2</td>
+<td>3.0.8</td>
+<td>&#160;</td>
+<td>&#160;</td>
 </tr>
 <tr class="row-odd"><th class="stub">Tiles</th>
 <td>org.apache.tiles</td>
 <td>tiles-jsp</td>
-<td>3.0.7</td>
-<td>*</td>
-<td>*2</td>
+<td>3.0.8</td>
+<td>&#160;</td>
+<td>&#160;</td>
 </tr>
-<tr class="row-even"><th class="stub">Tiles</th>
-<td>org.apache.tiles</td>
-<td>tiles-servlet</td>
-<td>3.0.7</td>
-<td>*</td>
-<td>*2</td>
+<tr class="row-even"><th class="stub">ファイルアップロード</th>
+<td>commons-fileupload</td>
+<td>commons-fileupload</td>
+<td>1.3.3</td>
+<td>&#160;</td>
+<td>&#160;</td>
 </tr>
-<tr class="row-odd"><th class="stub">Tiles</th>
-<td>org.apache.tiles</td>
-<td>tiles-template</td>
-<td>3.0.7</td>
-<td>*</td>
-<td>*2 *3</td>
+<tr class="row-odd"><th class="stub">ファイルダウンロード</th>
+<td>com.github.librepdf</td>
+<td>openpdf</td>
+<td>1.0.5</td>
+<td>&#160;</td>
+<td>&#160;</td>
 </tr>
-<tr class="row-even"><th class="stub">Tiles</th>
-<td>org.apache.tiles</td>
-<td>tiles-autotag-core-runtime</td>
-<td>1.2</td>
-<td>*</td>
-<td>*2 *3</td>
+<tr class="row-even"><th class="stub">ファイルダウンロード</th>
+<td>org.apache.poi</td>
+<td>poi-ooxml</td>
+<td>3.17</td>
+<td>&#160;</td>
+<td>&#160;</td>
 </tr>
-<tr class="row-odd"><th class="stub">Tiles</th>
-<td>org.apache.tiles</td>
-<td>tiles-request-servlet</td>
-<td>1.0.6</td>
+<tr class="row-odd"><th class="stub">E-mail送信(SMTP)</th>
+<td>com.sun.mail</td>
+<td>javax.mail</td>
+<td>1.6.2</td>
 <td>*</td>
-<td>*2 *3</td>
+<td>&#160;</td>
 </tr>
-<tr class="row-even"><th class="stub">Tiles</th>
-<td>org.apache.tiles</td>
-<td>tiles-request-api</td>
-<td>1.0.6</td>
-<td>*</td>
-<td>*2</td>
-</tr>
-<tr class="row-odd"><th class="stub">Tiles</th>
-<td>org.apache.tiles</td>
-<td>tiles-request-jsp</td>
-<td>1.0.6</td>
-<td>*</td>
-<td>*2 *3</td>
-</tr>
-<tr class="row-even"><th class="stub">ユーティリティ</th>
-<td>com.google.guava</td>
-<td>guava</td>
-<td>20.0</td>
+<tr class="row-even"><th class="stub">HTTP通信</th>
+<td>org.apache.httpcomponents</td>
+<td>httpclient</td>
+<td>4.5.6</td>
 <td>*</td>
 <td>&#160;</td>
 </tr>
 <tr class="row-odd"><th class="stub">ユーティリティ</th>
+<td>com.google.guava</td>
+<td>guava</td>
+<td>27.0.1-jre</td>
+<td>&#160;</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-even"><th class="stub">ユーティリティ</th>
 <td>commons-collections</td>
 <td>commons-collections</td>
 <td>3.2.2</td>
-<td>*</td>
-<td>*2</td>
+<td>&#160;</td>
+<td>&#160;</td>
 </tr>
-<tr class="row-even"><th class="stub">ユーティリティ</th>
+<tr class="row-odd"><th class="stub">ユーティリティ</th>
 <td>commons-io</td>
 <td>commons-io</td>
-<td>2.5</td>
-<td>*</td>
-<td>*2</td>
-</tr>
-<tr class="row-odd"><th class="stub">サーブレット</th>
-<td>org.apache.taglibs</td>
-<td>taglibs-standard-jstlel</td>
-<td>1.2.5</td>
-<td>*</td>
+<td>2.6</td>
+<td>&#160;</td>
 <td>&#160;</td>
 </tr>
 <tr class="row-even"><th class="stub">サーブレット</th>
 <td>org.apache.taglibs</td>
-<td>taglibs-standard-spec</td>
+<td>taglibs-standard-jstlel</td>
 <td>1.2.5</td>
-<td>*</td>
-<td>*3</td>
+<td>&#160;</td>
+<td>&#160;</td>
 </tr>
-<tr class="row-odd"><th class="stub">サーブレット</th>
-<td>org.apache.taglibs</td>
-<td>taglibs-standard-impl</td>
-<td>1.2.5</td>
+<tr class="row-odd"><th class="stub">コーディングサポート</th>
+<td>org.projectlombok</td>
+<td>lombok</td>
+<td>1.18.4</td>
 <td>*</td>
-<td>*3</td>
+<td>&#160;</td>
 </tr>
 </tbody>
 </table>
@@ -748,22 +664,7 @@ Macchinetta Server Framework (1.x)で使用するOSSのバージョンは、原�
 </div>
 </li>
 <li><div class="first line-block">
-<div class="line">共通ライブラリに依存しないが、Macchinetta Server Framework (1.x)でアプリケーションを開発する場合に、利用することを推奨しているライブラリ</div>
-</div>
-</li>
-<li><div class="first line-block">
-<div class="line">Spring IO platformでサポートしているライブラリが個別に依存しているライブラリ</div>
-<div class="line">(Spring IO platformとしては依存関係の管理は行っていないライブラリ)</div>
-</div>
-</li>
-<li><div class="first line-block">
-<div class="line">Spring IO platformで適用されるバージョンが、BetaやRC(Release Candidate)であるライブラリ</div>
-<div class="line">(Macchinetta Server Framework (1.x)側でGAのバージョンを明示的に指定しているライブラリ)</div>
-</div>
-</li>
-<li><div class="first line-block">
-<div class="line">Java SE 8以降のAPIを前提としたライブラリ</div>
-<div class="line">Java SE 7以下の場合は本ライブラリへの依存関係を明示的に除去する必要がある</div>
+<div class="line">Spring Framework 4.xに依存するが、ガイドラインで記述している内容においては、Spring Framework 5.xで動作する事を確認しているライブラリ</div>
 </div>
 </li>
 </ol>
@@ -771,7 +672,7 @@ Macchinetta Server Framework (1.x)で使用するOSSのバージョンは、原�
 <div class="section" id="frameworkstack-common-library">
 <span id="id6"></span><h2><a class="toc-backref" href="#id21">2.1.4. 共通ライブラリの構成要素</a><a class="headerlink" href="#frameworkstack-common-library" title="Permalink to this headline">¶</a></h2>
 <p>Macchinetta Server Framework (1.x)では、<a class="reference external" href="https://github.com/terasolunaorg">TERASOLUNA Server Framework for Java (5.x)</a>が提供する<a class="reference external" href="https://github.com/terasolunaorg/terasoluna-gfw">共通ライブラリ</a>を使用する。（以降「共通ライブラリ」と記載する。）
-共通ライブラリは、Macchinetta Server Framework (1.x)が含むSpring Ecosystem や、その他依存ライブラリでは足りない+αな機能を提供するライブラリである。
+共通ライブラリは、Macchinetta Server Framework (1.x)やTERASOLUNA Server Framework for Java (5.x)が含むSpring Ecosystem や、その他依存ライブラリでは足りない+αな機能を提供するライブラリである。
 基本的には、このライブラリがなくてもMacchinetta Server Framework (1.x)によるアプリケーション開発は可能であるが、”あると便利”な存在である。
 また、提供している2種類の <a class="reference external" href="https://github.com/Macchinetta/macchinetta-web-multi-blank">マルチプロジェクト構成のブランクプロジェクト</a>および <a class="reference external" href="https://github.com/Macchinetta/macchinetta-web-blank">シングルプロジェクト構成のブランクプロジェクト</a>の共通ライブラリの標準の組込状況は以下の通りである。</p>
 <table border="1" class="colwidths-given longtable docutils">
@@ -1272,58 +1173,48 @@ Macchinetta Server Framework (1.x)で使用するOSSのバージョンは、原�
         <li class="right" >
           <a href="index.html" title="2. アーキテクチャ概要"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Macchinetta Server Framework (1.x) Development Guideline 1.5.1.RELEASE documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Macchinetta Server Framework (1.x) Development Guideline 1.6.1.RELEASE documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="index.html" >2. アーキテクチャ概要</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2013-2018, NTT Corporation.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.6.2.Theme is <a href="http://github.com/vimalkvn/solar-theme">Solar</a>
+        &copy; Copyright 2013, NTT Corporation.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.6.3.Theme is <a href="http://github.com/vimalkvn/solar-theme">Solar</a>
     </div>
     
     <script>
-     
-     $(function() {
-    	   var $sidebar	= $('.sphinxsidebar'),
-    		     $window		= $(window),
-    		     offset		= $sidebar.offset(),
-    		     topPadding	= 3,
-    		     $scroll		= $('#scroll');
-    	   
-    	   $window.scroll(function() {
-    		     if ($scroll.is(':checked')) {
-				         if ($window.scrollTop() > offset.top) {
-					           $sidebar.stop().animate({
-						             marginTop:$window.scrollTop() - offset.top + topPadding
-					           });
-				         } else {
-					           $sidebar.stop().animate({
-						             marginTop:0
-					           });
-				         }
-			       }
-		     });
-    	   
-    	   var $navList = $('ul:first', $sidebar);
-    	   $('li:first', $navList).addClass('open');
-    	   
-    	   $navList.treeview({
-    		     persist: "location",
-    		     collapsed: true,
-    		     unique: false
-    	   });
-    	   
-	   });
-    </script>
     
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-113850349-2"></script>
-    <script>
-     window.dataLayer = window.dataLayer || [];
-     function gtag(){dataLayer.push(arguments);}
-     gtag('js', new Date());
-
-     gtag('config', 'UA-113850349-2');
+    $(function() {
+    	var $sidebar	= $('.sphinxsidebar'),
+    		$window		= $(window),
+    		offset		= $sidebar.offset(),
+    		topPadding	= 3,
+    		$scroll		= $('#scroll');
+    	
+    	$window.scroll(function() {
+    		if ($scroll.is(':checked')) {
+				if ($window.scrollTop() > offset.top) {
+					$sidebar.stop().animate({
+						marginTop:$window.scrollTop() - offset.top + topPadding
+					});
+				} else {
+					$sidebar.stop().animate({
+						marginTop:0
+					});
+				}
+			}
+		});
+    	
+    	var $navList = $('ul:first', $sidebar);
+    	$('li:first', $navList).addClass('open');
+    	
+    	$navList.treeview({
+    		persist: "location",
+    		collapsed: true,
+    		unique: false
+    	});
+    	
+	});
     </script>
   </body>
 </html>

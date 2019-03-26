@@ -3,16 +3,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>9.4. セッション管理 &#8212; Macchinetta Server Framework (1.x) Development Guideline 1.5.1.RELEASE documentation</title>
-    
+    <title>9.4. セッション管理 &#8212; Macchinetta Server Framework (1.x) Development Guideline 1.6.1.RELEASE documentation</title>
     <link rel="stylesheet" href="../_static/solar.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '1.5.1.RELEASE',
+        VERSION:     '1.6.1.RELEASE',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true,
@@ -43,7 +40,7 @@
         <li class="right" >
           <a href="Authorization.html" title="9.3. 認可"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Macchinetta Server Framework (1.x) Development Guideline 1.5.1.RELEASE documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Macchinetta Server Framework (1.x) Development Guideline 1.6.1.RELEASE documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">9. セキュリティ対策</a> &#187;</li> 
       </ul>
     </div>
@@ -55,8 +52,8 @@
 <li><a class="reference internal" href="#">9.4. セッション管理</a><ul>
 <li><a class="reference internal" href="#overview">9.4.1. Overview</a><ul>
 <li><a class="reference internal" href="#springsecuritysessionmanagementsecuritymeasure">9.4.1.1. セッション利用時のセキュリティ対策</a><ul>
-<li><a class="reference internal" href="#id4">9.4.1.1.1. セッションハイジャック攻撃への対策</a></li>
-<li><a class="reference internal" href="#id5">9.4.1.1.2. セッション固定攻撃への対策</a></li>
+<li><a class="reference internal" href="#sessionmanagementsessionhijackingattacksprotection">9.4.1.1.1. セッションハイジャック攻撃への対策</a></li>
+<li><a class="reference internal" href="#sessionmanagementsessionfixationattacksprotection">9.4.1.1.2. セッション固定攻撃への対策</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#spring-security">9.4.1.2. Spring Securityが提供するセッション管理機能</a></li>
@@ -132,8 +129,8 @@
 <ul class="simple">
 <li><a class="reference internal" href="#overview" id="id25">Overview</a><ul>
 <li><a class="reference internal" href="#springsecuritysessionmanagementsecuritymeasure" id="id26">セッション利用時のセキュリティ対策</a><ul>
-<li><a class="reference internal" href="#id4" id="id27">セッションハイジャック攻撃への対策</a></li>
-<li><a class="reference internal" href="#id5" id="id28">セッション固定攻撃への対策</a></li>
+<li><a class="reference internal" href="#sessionmanagementsessionhijackingattacksprotection" id="id27">セッションハイジャック攻撃への対策</a></li>
+<li><a class="reference internal" href="#sessionmanagementsessionfixationattacksprotection" id="id28">セッション固定攻撃への対策</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#spring-security" id="id29">Spring Securityが提供するセッション管理機能</a></li>
@@ -205,8 +202,8 @@
 </tr>
 </tbody>
 </table>
-<div class="section" id="id4">
-<h4><a class="toc-backref" href="#id27">9.4.1.1.1. セッションハイジャック攻撃への対策</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="sessionmanagementsessionhijackingattacksprotection">
+<span id="id4"></span><h4><a class="toc-backref" href="#id27">9.4.1.1.1. セッションハイジャック攻撃への対策</a><a class="headerlink" href="#sessionmanagementsessionhijackingattacksprotection" title="Permalink to this headline">¶</a></h4>
 <p>セッションハイジャック攻撃への対策は、セッションIDが盗み取られないようにするしかない。
 いったん盗み取られてしまうと、アプリケーションサーバは正規のユーザーからのリクエストなのか、
 攻撃者からのリクエストなのかを判断することができない。</p>
@@ -299,8 +296,8 @@ ServletのAPI仕様では、以下のメソッドを呼び出すとURL Rewriting
 <div class="line"><br /></div>
 </div>
 </div>
-<div class="section" id="id5">
-<h4><a class="toc-backref" href="#id28">9.4.1.1.2. セッション固定攻撃への対策</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="sessionmanagementsessionfixationattacksprotection">
+<span id="id5"></span><h4><a class="toc-backref" href="#id28">9.4.1.1.2. セッション固定攻撃への対策</a><a class="headerlink" href="#sessionmanagementsessionfixationattacksprotection" title="Permalink to this headline">¶</a></h4>
 <p>セッション固定攻撃からアプリケーションを守るためには、以下のような対策が必要になる。</p>
 <table border="1" class="colwidths-given docutils" id="id21">
 <caption><span class="caption-text"><strong>セッション固定攻撃への対策</strong></span><a class="headerlink" href="#id21" title="Permalink to this table">¶</a></caption>
@@ -890,10 +887,6 @@ Spring Securityのセッション管理機能の処理を使用する場合は�
 <p>本節では、Spring Securityのデフォルト実装を使用する方法を紹介する。
 Spring Securityが用意しているデフォルト実装ではHTTPセッションを使用するが、HTTPセッション以外(データベースやキーバリューストアなど)にオブジェクトを格納することも可能なアーキテクチャになっている。
 ただし、ここで紹介する方法は <strong>上記Warningの制約が残っている実装方法であるため</strong> 、適用する際は注意されたい。</p>
-<div class="admonition-todo admonition" id="index-0">
-<p class="first admonition-title">Todo</p>
-<p class="last">インメモリを使用しない実装方法に関しては、今後追加予定である。</p>
-</div>
 <div class="section" id="springsecurityhowtousesessionmanagementconcurrency">
 <span id="id17"></span><h4><a class="toc-backref" href="#id44">9.4.2.6.1. セッションのライフサイクル検知の有効化</a><a class="headerlink" href="#springsecurityhowtousesessionmanagementconcurrency" title="Permalink to this headline">¶</a></h4>
 <p>多重ログインを制御する機能は、<a class="reference internal" href="#springsecuritysessionmanagementlifecycle"><span class="std std-ref">セッションのライフサイクル(セッションの生成と破棄)を検知する仕組み</span></a> を利用してユーザー毎のセッション状態を管理している。
@@ -1041,58 +1034,48 @@ Spring Securityが用意しているデフォルト実装ではHTTPセッショ�
         <li class="right" >
           <a href="Authorization.html" title="9.3. 認可"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Macchinetta Server Framework (1.x) Development Guideline 1.5.1.RELEASE documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Macchinetta Server Framework (1.x) Development Guideline 1.6.1.RELEASE documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="index.html" >9. セキュリティ対策</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2013-2018, NTT Corporation.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.6.2.Theme is <a href="http://github.com/vimalkvn/solar-theme">Solar</a>
+        &copy; Copyright 2013, NTT Corporation.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.6.3.Theme is <a href="http://github.com/vimalkvn/solar-theme">Solar</a>
     </div>
     
     <script>
-     
-     $(function() {
-    	   var $sidebar	= $('.sphinxsidebar'),
-    		     $window		= $(window),
-    		     offset		= $sidebar.offset(),
-    		     topPadding	= 3,
-    		     $scroll		= $('#scroll');
-    	   
-    	   $window.scroll(function() {
-    		     if ($scroll.is(':checked')) {
-				         if ($window.scrollTop() > offset.top) {
-					           $sidebar.stop().animate({
-						             marginTop:$window.scrollTop() - offset.top + topPadding
-					           });
-				         } else {
-					           $sidebar.stop().animate({
-						             marginTop:0
-					           });
-				         }
-			       }
-		     });
-    	   
-    	   var $navList = $('ul:first', $sidebar);
-    	   $('li:first', $navList).addClass('open');
-    	   
-    	   $navList.treeview({
-    		     persist: "location",
-    		     collapsed: true,
-    		     unique: false
-    	   });
-    	   
-	   });
-    </script>
     
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-113850349-2"></script>
-    <script>
-     window.dataLayer = window.dataLayer || [];
-     function gtag(){dataLayer.push(arguments);}
-     gtag('js', new Date());
-
-     gtag('config', 'UA-113850349-2');
+    $(function() {
+    	var $sidebar	= $('.sphinxsidebar'),
+    		$window		= $(window),
+    		offset		= $sidebar.offset(),
+    		topPadding	= 3,
+    		$scroll		= $('#scroll');
+    	
+    	$window.scroll(function() {
+    		if ($scroll.is(':checked')) {
+				if ($window.scrollTop() > offset.top) {
+					$sidebar.stop().animate({
+						marginTop:$window.scrollTop() - offset.top + topPadding
+					});
+				} else {
+					$sidebar.stop().animate({
+						marginTop:0
+					});
+				}
+			}
+		});
+    	
+    	var $navList = $('ul:first', $sidebar);
+    	$('li:first', $navList).addClass('open');
+    	
+    	$navList.treeview({
+    		persist: "location",
+    		collapsed: true,
+    		unique: false
+    	});
+    	
+	});
     </script>
   </body>
 </html>

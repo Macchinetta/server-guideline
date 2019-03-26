@@ -3,16 +3,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>3.2. ドメイン層の実装 &#8212; Macchinetta Server Framework (1.x) Development Guideline 1.5.1.RELEASE documentation</title>
-    
+    <title>3.2. ドメイン層の実装 &#8212; Macchinetta Server Framework (1.x) Development Guideline 1.6.1.RELEASE documentation</title>
     <link rel="stylesheet" href="../_static/solar.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '1.5.1.RELEASE',
+        VERSION:     '1.6.1.RELEASE',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true,
@@ -43,7 +40,7 @@
         <li class="right" >
           <a href="CreateWebApplicationProject.html" title="3.1. Webアプリケーション向け開発プロジェクトの作成"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Macchinetta Server Framework (1.x) Development Guideline 1.5.1.RELEASE documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Macchinetta Server Framework (1.x) Development Guideline 1.6.1.RELEASE documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">3. アプリケーション開発</a> &#187;</li> 
       </ul>
     </div>
@@ -1336,7 +1333,13 @@ Orderクラスのみと思ってしまうかもしれないが、主体となる
 <div class="line">追加するメソッドは、以下のルールに則り追加することを推奨する。</div>
 </div>
 <blockquote>
-<div><table border="1" class="colwidths-given longtable docutils">
+<div><div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>TERASOLUNA Server Framework for Java 5.5.1.RELEASEが利用するSpring Data 2.xでは<code class="docutils literal"><span class="pre">CrudRepository</span></code>等のメソッドシグネチャが変更されているが、
+本章で示すメソッド名のルールはSpring Data 1.xのメソッドシグネチャに従っている。</p>
+<p class="last">次版以降で、Spring Data 2.xのメソッドシグネチャへの移行が検討される予定である。</p>
+</div>
+<table border="1" class="colwidths-given longtable docutils">
 <colgroup>
 <col width="10%" />
 <col width="20%" />
@@ -2378,7 +2381,7 @@ HTTP上に公開するリソースは、業務データ(Entity)または業務�
 <ol class="last arabic simple">
 <li>AOPを使う場合に、JDK標準のDynamic proxies機能が使われる。
 インタフェースがない場合はSpring Frameworkに内包されているCGLIBが使われるが、finalメソッドに対してAdviceできないなどの制約がある。
-詳細は、<a class="reference external" href="http://docs.spring.io/spring/docs/4.3.14.RELEASE/spring-framework-reference/html/aop.html#aop-proxying">Spring Reference Document -Aspect Oriented Programming with Spring(Proxying mechanisms)-</a>を参照されたい。</li>
+詳細は、<a class="reference external" href="https://docs.spring.io/spring/docs/5.1.4.RELEASE/spring-framework-reference/core.html#aop-proxying">Spring Framework Documentation -Aspect Oriented Programming with Spring(Proxying mechanisms)-</a>を参照されたい。</li>
 <li>業務ロジックをスタブ化しやすくなる。
 アプリケーション層とドメイン層を別々の体制で並行して開発する場合は、アプリケーション層を開発するために、Serviceのスタブが必要になるケースがある。
 スタブを作成する必要がある場合は、インタフェースを設けておくことを推奨する。</li>
@@ -3014,7 +3017,7 @@ JDBCドライバに対して「読み取り専用のトランザクション」�
 <li>XML(bean定義ファイル)で宣言する。</li>
 <li><strong>アノテーション（&#64;Transactional）で宣言する。（推奨）</strong></li>
 </ul>
-<p>Spring Frameworkから提供されている「宣言型トランザクション管理」の詳細については、<a class="reference external" href="http://docs.spring.io/spring/docs/4.3.14.RELEASE/spring-framework-reference/html/transaction.html#transaction-declarative">Spring Reference Document -Transaction Management(Declarative transaction management)-</a>を参照されたい。
+<p>Spring Frameworkから提供されている「宣言型トランザクション管理」の詳細については、<a class="reference external" href="https://docs.spring.io/spring/docs/5.1.4.RELEASE/spring-framework-reference/data-access.html#transaction-declarative">Spring Framework Documentation -Transaction Management(Declarative transaction management)-</a>を参照されたい。
 </p>
 <blockquote>
 <div><div class="admonition note">
@@ -3166,7 +3169,7 @@ JDBCドライバに対して「読み取り専用のトランザクション」�
 <p><strong>&#64;Transactionalアノテーションを指定する場所</strong></p>
 <p class="last"><strong>クラスまたはクラスのメソッドに指定することを推奨する。</strong>
 インタフェースまたはインタフェースのメソッドでない点が、ポイント。
-理由は、<a class="reference external" href="http://docs.spring.io/spring/docs/4.3.14.RELEASE/spring-framework-reference/html/transaction.html#transaction-declarative-annotations">Spring Reference Document -Transaction Management(Using &#64;Transactional)-</a>の2個目のTipsを参照されたい。</p>
+理由は、<a class="reference external" href="https://docs.spring.io/spring/docs/5.1.4.RELEASE/spring-framework-reference/data-access.html#transaction-declarative-annotations">Spring Framework Documentation -Transaction Management(Using &#64;Transactional)-</a>の2個目のTipsを参照されたい。</p>
 </div>
 <div class="admonition warning">
 <p class="first admonition-title">Warning</p>
@@ -3182,7 +3185,7 @@ JDBCドライバに対して「読み取り専用のトランザクション」�
 <p><strong>&#64;Transactionalアノテーションのvalue属性について</strong></p>
 <p class="last"><code class="docutils literal"><span class="pre">&#64;Transactional</span></code>アノテーションにはvalue属性があるが、これは複数のTransaction Managerを宣言した際に、どのTransaction Managerを使うのかを指定する属性である。
 Transaction Managerが一つの場合、指定は不要である。
-複数のTransaction Managerを使う必要がある場合は、<a class="reference external" href="http://docs.spring.io/spring/docs/4.3.14.RELEASE/spring-framework-reference/html/transaction.html#tx-multiple-tx-mgrs-with-attransactional">Spring Reference Document -Transaction Management(Multiple Transaction Managers with &#64;Transactional)-</a>を参照されたい。</p>
+複数のTransaction Managerを使う必要がある場合は、<a class="reference external" href="https://docs.spring.io/spring/docs/5.1.4.RELEASE/spring-framework-reference/data-access.html#tx-multiple-tx-mgrs-with-attransactional">Spring Framework Documentation -Transaction Management(Multiple Transaction Managers with &#64;Transactional)-</a>を参照されたい。</p>
 </div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
@@ -3502,7 +3505,7 @@ org.postgresql.util.PSQLException: Cannot change transaction read-only property 
 <p><strong>トランザクション管理の落とし穴について</strong></p>
 <p>IBM DeveloperWorksに「トランザクションの落とし穴を理解する」という記事がある。
 この記事ではトランザクション管理で注意しなくてはいけないことや、Spring Frameworkの&#64;Transactionalを使う場合の注意点がまとめられているので、ぜひ一読してほしい。
-詳細は、<a class="reference external" href="http://www.ibm.com/developerworks/java/library/j-ts1/index.html">IBM DeveloperWorksの記事</a>を参照されたい。</p>
+詳細は、<a class="reference external" href="https://developer.ibm.com/articles/j-ts1/">IBM DeveloperWorksの記事</a>を参照されたい。</p>
 <p>※IBM DeveloperWorksの記事は2009年の記事のため(古いため)、一部の内容がSpring Framework 4.1使用時の動作と異なる部分がある。</p>
 <p>具体的には、「Listing 7. Using read-only with REQUIRED propagation mode — JPA」の内容である。</p>
 <p>Spring Framework 4.1より、JPAのプロバイダとしてHibernate ORM 4.2以上を使用している場合は、
@@ -3513,7 +3516,7 @@ JDBCドライバに対して「読み取り専用のトランザクション」�
 <p class="first admonition-title">Note</p>
 <p><strong>プログラマティックにトランザクションを管理する方法</strong></p>
 <p class="last">本ガイドラインでは、「宣言型トランザクション管理」を推奨しているが、プログラマティックにトランザクションを管理することもできる。
-詳細については、<a class="reference external" href="http://docs.spring.io/spring/docs/4.3.14.RELEASE/spring-framework-reference/html/transaction.html#transaction-programmatic">Spring Reference Document -Transaction Management(Programmatic transaction management)-</a>を参照されたい。</p>
+詳細については、<a class="reference external" href="https://docs.spring.io/spring/docs/5.1.4.RELEASE/spring-framework-reference/data-access.html#transaction-programmatic">Spring Framework Documentation -Transaction Management(Programmatic transaction management)-</a>を参照されたい。</p>
 </div>
 </div></blockquote>
 </div>
@@ -3606,58 +3609,48 @@ JDBCドライバに対して「読み取り専用のトランザクション」�
         <li class="right" >
           <a href="CreateWebApplicationProject.html" title="3.1. Webアプリケーション向け開発プロジェクトの作成"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Macchinetta Server Framework (1.x) Development Guideline 1.5.1.RELEASE documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Macchinetta Server Framework (1.x) Development Guideline 1.6.1.RELEASE documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="index.html" >3. アプリケーション開発</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2013-2018, NTT Corporation.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.6.2.Theme is <a href="http://github.com/vimalkvn/solar-theme">Solar</a>
+        &copy; Copyright 2013, NTT Corporation.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.6.3.Theme is <a href="http://github.com/vimalkvn/solar-theme">Solar</a>
     </div>
     
     <script>
-     
-     $(function() {
-    	   var $sidebar	= $('.sphinxsidebar'),
-    		     $window		= $(window),
-    		     offset		= $sidebar.offset(),
-    		     topPadding	= 3,
-    		     $scroll		= $('#scroll');
-    	   
-    	   $window.scroll(function() {
-    		     if ($scroll.is(':checked')) {
-				         if ($window.scrollTop() > offset.top) {
-					           $sidebar.stop().animate({
-						             marginTop:$window.scrollTop() - offset.top + topPadding
-					           });
-				         } else {
-					           $sidebar.stop().animate({
-						             marginTop:0
-					           });
-				         }
-			       }
-		     });
-    	   
-    	   var $navList = $('ul:first', $sidebar);
-    	   $('li:first', $navList).addClass('open');
-    	   
-    	   $navList.treeview({
-    		     persist: "location",
-    		     collapsed: true,
-    		     unique: false
-    	   });
-    	   
-	   });
-    </script>
     
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-113850349-2"></script>
-    <script>
-     window.dataLayer = window.dataLayer || [];
-     function gtag(){dataLayer.push(arguments);}
-     gtag('js', new Date());
-
-     gtag('config', 'UA-113850349-2');
+    $(function() {
+    	var $sidebar	= $('.sphinxsidebar'),
+    		$window		= $(window),
+    		offset		= $sidebar.offset(),
+    		topPadding	= 3,
+    		$scroll		= $('#scroll');
+    	
+    	$window.scroll(function() {
+    		if ($scroll.is(':checked')) {
+				if ($window.scrollTop() > offset.top) {
+					$sidebar.stop().animate({
+						marginTop:$window.scrollTop() - offset.top + topPadding
+					});
+				} else {
+					$sidebar.stop().animate({
+						marginTop:0
+					});
+				}
+			}
+		});
+    	
+    	var $navList = $('ul:first', $sidebar);
+    	$('li:first', $navList).addClass('open');
+    	
+    	$navList.treeview({
+    		persist: "location",
+    		collapsed: true,
+    		unique: false
+    	});
+    	
+	});
     </script>
   </body>
 </html>

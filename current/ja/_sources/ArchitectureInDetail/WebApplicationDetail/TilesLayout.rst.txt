@@ -123,54 +123,20 @@ Spring MVCとTilesの連携
    * - 項番
      - 説明
    * - | (1)
-     - Spring Framework 4.1から追加された\ ``<mvc:tiles>``\ 要素を使用して、\ ``TilesViewResolver``\ を定義する。
+     - \ ``<mvc:tiles>``\ 要素を使用して、\ ``TilesViewResolver``\ を定義する。
 
        \ ``<mvc:jsp>``\ 要素より上に定義することで、最初にTiles定義ファイル(:file:`tiles-definitions.xml`)を参照して\ ``View``\を解決するようにする。
        Controllerから返却されたView名が、Tiles定義ファイル内の\ ``definition``\ 要素の\ ``name``\ 属性のパターンに合致する場合、\ ``TilesViewResolver``\ によって\ ``View``\が解決される。
    * - | (2)
-     - Spring Framework 4.1から追加された\ ``<mvc:jsp>``\ 要素を使用して、JSP用の\ ``InternalResourceViewResolver``\ を定義する。
+     - \ ``<mvc:jsp>``\ 要素を使用して、JSP用の\ ``InternalResourceViewResolver``\ を定義する。
 
        \ ``<mvc:tiles>``\ 要素より下に定義することで、\ ``TilesViewResolver``\で解決できなかったView名のみ、JSP用の\ ``InternalResourceViewResolver``\を使用して\ ``View``\を解決するようにする。
        View名に対応するJSPファイルが、\ ``/WEB-INF/views/``\ 配下に存在する場合、JSP用の\ ``InternalResourceViewResolver``\ によって\ ``View``\が解決される。
    * - | (3)
-     - Spring Framework 4.1から追加された\ ``<mvc:tiles-configurer>``\ 要素を使用して、Tiles定義ファイルを読み込む。
+     - \ ``<mvc:tiles-configurer>``\ 要素を使用して、Tiles定義ファイルを読み込む。
 
        \ ``<mvc:definitions>``\ 要素の\ ``location``\ 属性に、Tiles定義ファイルを指定する。
 
-
- .. tip::
-
-    \ ``<mvc:view-resolvers>``\ 要素はSpring Framework 4.1から追加されたXML要素である。
-    \ ``<mvc:view-resolvers>``\ 要素を使用すると、\ ``ViewResolver``\ をシンプルに定義することが出来る。
-
-    従来通り\ ``<bean>``\ 要素を使用した場合の定義例を以下に示す。
-
-
-     .. code-block:: xml
-        :emphasize-lines: 1-13
-
-        <bean id="tilesViewResolver"
-            class="org.springframework.web.servlet.view.tiles3.TilesViewResolver">
-            <property name="order" value="1" />
-        </bean>
-
-        <bean id="tilesConfigurer"
-            class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">
-            <property name="definitions">
-                <list>
-                    <value>/WEB-INF/tiles/tiles-definitions.xml</value>
-                </list>
-            </property>
-        </bean>
-
-        <bean id="viewResolver"
-            class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-            <property name="prefix" value="/WEB-INF/views/" />
-            <property name="suffix" value=".jsp" />
-            <property name="order" value="2" />
-        </bean>
-
-    \ ``order``\ プロパティに、\ ``InternalResourceViewResolver``\ より小さい値を指定し、優先度を高くする。
 
 
 **Tilesの定義**
