@@ -34,7 +34,7 @@ JavaMailのAPI仕様については、\ `JavaMail API Design Specification <http
 
 .. note:: **メールセッション**
 
-   メールセッション（\ `Session <http://docs.oracle.com/javaee/7/api/javax/mail/Session.html>`_\ ）は、メールサーバに接続する際に必要となる情報を管理する。
+   メールセッション（\ `Session <https://javaee.github.io/javaee-spec/javadocs/javax/mail/Session.html>`_\ ）は、メールサーバに接続する際に必要となる情報を管理する。
    
    メールセッションを取得するには以下のような方法がある。
    
@@ -110,7 +110,7 @@ Spring Frameworkはメール送信を行うためのコンポーネント（\ ``
 
 * \ ``JavaMailSender``\
     | JavaMail用のメール送信インターフェース。
-    | JavaMailの\ `MimeMessage <http://docs.oracle.com/javaee/7/api/javax/mail/internet/MimeMessage.html>`_\ とSpringの\ ``SimpleMailMessage``\ の両方に対応している。
+    | JavaMailの\ `MimeMessage <https://javaee.github.io/javaee-spec/javadocs/javax/mail/internet/MimeMessage.html>`_\ とSpringの\ ``SimpleMailMessage``\ の両方に対応している。
     | また、JavaMailの\ ``Session``\ の管理は\ ``JavaMailSender``\ の実装クラスによって行われるため、メール送信処理をコーディングする際に\ ``Session``\ を直接扱う必要がない。
 
 * \ ``JavaMailSenderImpl``\
@@ -170,7 +170,7 @@ Spring FrameworkのMail連携用コンポーネントを利用する場合、以
 .. note::
 
     上記設定例は、依存ライブラリのバージョンを親プロジェクトである terasoluna-gfw-parent で管理する前提であるため、pom.xmlでのバージョンの指定は不要である。
-    上記の依存ライブラリはterasoluna-gfw-parentが利用している\ `Spring IO Platform <http://platform.spring.io/platform/>`_\ で定義済みである。
+    上記の依存ライブラリはterasoluna-gfw-parentが依存している\ `Spring Boot <https://docs.spring.io/spring-boot/docs/2.1.2.RELEASE/reference/htmlsingle/#appendix-dependency-versions>`_\ で管理されている。
 
 |
 
@@ -199,20 +199,20 @@ JavaMailSenderの設定方法
       - アプリケーションサーバ
       - 参照ページ
     * - 1.
+      - Apache Tomcat 9.0
+      - | \ `Apache Tomcat 9.0 User Guide(JNDI Resources HOW-TO) <http://tomcat.apache.org/tomcat-9.0-doc/jndi-resources-howto.html#JavaMail_Sessions>`_\ (JavaMail Sessions)を参照されたい。
+    * - 2.
       - Apache Tomcat 8.5
       - | \ `Apache Tomcat 8.5 User Guide(JNDI Resources HOW-TO) <http://tomcat.apache.org/tomcat-8.5-doc/jndi-resources-howto.html#JavaMail_Sessions>`_\ (JavaMail Sessions)を参照されたい。
-    * - 2.
-      - Apache Tomcat 8.0
-      - | \ `Apache Tomcat 8.0 User Guide(JNDI Resources HOW-TO) <http://tomcat.apache.org/tomcat-8.0-doc/jndi-resources-howto.html#JavaMail_Sessions>`_\ (JavaMail Sessions)を参照されたい。
     * - 3.
       - Oracle WebLogic Server 12c
-      - \ `Oracle WebLogic Server 12.2.1.0 Documentation <http://docs.oracle.com/middleware/1221/wls/WLACH/taskhelp/mail/CreateMailSessions.html>`_\ を参照されたい。
+      - \ `Oracle WebLogic Server 12.2.1.3 Documentation <https://docs.oracle.com/middleware/12213/wls/WLACH/taskhelp/mail/CreateMailSessions.html>`_\ を参照されたい。
     * - 4.
       - IBM WebSphere Application Server Version 9.0
       - \ `WebSphere Application Server Version 9.0.0 documentation <https://www-01.ibm.com/support/knowledgecenter/SSD28V_9.0.0/com.ibm.websphere.wlp.core.doc/ae/twlp_admin_javamail.html>`_\ を参照されたい。
     * - 5.
-      - Red Hat JBoss Enterprise Application Platform Version 7.0
-      - \ `JBoss Enterprise Application Platform 7.0 Product Documentation <https://access.redhat.com/documentation/en/red-hat-jboss-enterprise-application-platform/7.0/paged/configuration-guide/chapter-10-mail-subsystem>`_\ を参照されたい。
+      - Red Hat JBoss Enterprise Application Platform Version 7.2
+      - \ `JBoss Enterprise Application Platform 7.2 Product Documentation <https://access.redhat.com/documentation/en-us/red_hat_jboss_enterprise_application_platform/7.2/html/configuration_guide/mail_subsystem>`_\ を参照されたい。
     * - 6.
       - Red Hat JBoss Enterprise Application Platform Version 6.4
       - \ `JBoss Enterprise Application Platform 6.4 Product Documentation <https://access.redhat.com/documentation/en-US/JBoss_Enterprise_Application_Platform/6.4/html/Administration_and_Configuration_Guide/chap-Mail_subsystem.html>`_\ を参照されたい。
@@ -778,18 +778,18 @@ HTMLメールの送信
       - 例外クラス
       - 発生条件
     * - 1.
-      - `MailAuthenticationException <https://docs.spring.io/spring/docs/5.0.8.RELEASE/javadoc-api/org/springframework/mail/MailAuthenticationException.html>`_
+      - `MailAuthenticationException <https://docs.spring.io/spring/docs/5.1.4.RELEASE/javadoc-api/org/springframework/mail/MailAuthenticationException.html>`_
       - | 認証失敗時に発生する。
     * - 2.
-      - `MailParseException <https://docs.spring.io/spring/docs/5.0.8.RELEASE/javadoc-api/org/springframework/mail/MailParseException.html>`_
+      - `MailParseException <https://docs.spring.io/spring/docs/5.1.4.RELEASE/javadoc-api/org/springframework/mail/MailParseException.html>`_
       - | メールメッセージのプロパティに不正な値が設定されている場合に発生する。
     * - 3.
-      - `MailPreparationException <https://docs.spring.io/spring/docs/5.0.8.RELEASE/javadoc-api/org/springframework/mail/MailPreparationException.html>`_
+      - `MailPreparationException <https://docs.spring.io/spring/docs/5.1.4.RELEASE/javadoc-api/org/springframework/mail/MailPreparationException.html>`_
       - | メールメッセージを作成中に想定外のエラーが起きた場合に発生する。
           想定外のエラーとしては、例えばテンプレートライブラリで発生するエラーといったものがある。
         | \ ``MimeMessagePreparator``\ で発生した例外が\ ``MailPreparationException``\ にラップされてスローされる。
     * - 4.
-      - `MailSendException <https://docs.spring.io/spring/docs/5.0.8.RELEASE/javadoc-api/org/springframework/mail/MailSendException.html>`_
+      - `MailSendException <https://docs.spring.io/spring/docs/5.1.4.RELEASE/javadoc-api/org/springframework/mail/MailSendException.html>`_
       - | メールの送信エラーが起きた場合に発生する。
 
 .. note::
@@ -847,7 +847,7 @@ FreeMarkerを使用したメール本文の作成
     .. note::
 
        上記設定例は、依存ライブラリのバージョンを親プロジェクトである terasoluna-gfw-parent で管理する前提であるため、pom.xmlでのバージョンの指定は不要である。
-       上記の依存ライブラリはterasoluna-gfw-parentが利用している\ `Spring IO Platform <http://platform.spring.io/platform/>`_\ で定義済みである。
+       上記の依存ライブラリはterasoluna-gfw-parentが依存している\ `Spring Boot <https://docs.spring.io/spring-boot/docs/2.1.2.RELEASE/reference/htmlsingle/#appendix-dependency-versions>`_\ で管理されている。
 
 
 * \ ``freemarker.template.Configuration``\ を生成するためのFactoryBeanをBean定義する。
@@ -881,7 +881,7 @@ FreeMarkerを使用したメール本文の作成
 
     .. note::
 
-       上記以外の設定については、\ `FreeMarkerConfigurationFactoryBeanのJavaDoc <https://docs.spring.io/spring/docs/5.0.8.RELEASE/javadoc-api/org/springframework/ui/freemarker/FreeMarkerConfigurationFactoryBean.html>`_\ を参照されたい。
+       上記以外の設定については、\ `FreeMarkerConfigurationFactoryBeanのJavaDoc <https://docs.spring.io/spring/docs/5.1.4.RELEASE/javadoc-api/org/springframework/ui/freemarker/FreeMarkerConfigurationFactoryBean.html>`_\ を参照されたい。
        また、FreeMarker自体の設定については、\ `FreeMarker Manual (Programmer's Guide / The Configuration) <http://freemarker.org/docs/pgui_config.html>`_\ を参照されたい。
 
 * メール本文のテンプレートファイルを作成する。

@@ -42,7 +42,7 @@ Overview
 | クラスは、modelの情報を用いてExcelファイルをレンダリングするときに、サブクラスとして利用するクラスである。
 |
 | Spring では上記以外にも、いろいろなViewの実装を提供している。
-| Viewの技術詳細は、\ `Spring Framework Documentation -View Technologies- <https://docs.spring.io/spring/docs/5.0.8.RELEASE/spring-framework-reference/web.html#mvc-view>`_\ を参照されたい。
+| Viewの技術詳細は、\ `Spring Framework Documentation -View Technologies- <https://docs.spring.io/spring/docs/5.1.4.RELEASE/spring-framework-reference/web.html#mvc-view>`_\ を参照されたい。
 
 | 共通ライブラリから提供している、\ ``org.terasoluna.gfw.web.download.AbstractFileDownloadView``\ は、
 | 任意のファイルをダウンロードするために使用する抽象クラスである。
@@ -104,7 +104,7 @@ PDFファイルのダウンロード
 | そのため、Mavenのpom.xmlに OpenPDFの定義を追加する必要がある。
 
     .. note::
-        Macchinettaフレームワーク 1.5.1.RELEASE以前では、iText 2.1.7をサポートしていたが、後継のiText 5.0.0よりAGPLライセンスに変更されたため、Macchinettaフレームワーク 1.6.0以降ではiTextからフォークされた\ `OpenPDF <https://github.com/LibrePDF/OpenPDF>`_\ をサポートする。
+        Macchinetta Server Framework 1.5.xでは、iText 2.1.7をサポートしていたが、後継のiText 5.0.0よりAGPLライセンスに変更されたため、Macchinetta Server Framework 1.6.1.RELEASE以降ではiTextからフォークされた\ `OpenPDF <https://github.com/LibrePDF/OpenPDF>`_\ をサポートする。
         
         OpenPDFでは、iText 2.1.7からいくつかのバグや脆弱性が修正されている。
 
@@ -122,7 +122,6 @@ PDFファイルのダウンロード
 \
     .. note::
         上記設定例は、依存ライブラリのバージョンを親プロジェクトである terasoluna-gfw-parent で管理する前提であるため、pom.xmlでのバージョンの指定は不要である。
-        上記のOpenPDFはterasoluna-gfw-parentが利用している\ `Spring IO Platform <http://platform.spring.io/platform/>`_\ で定義済みである。
 
     .. note::
         iText 2.1.7を利用する場合、日本語の出力を行うためにはiTextAsianを依存ライブラリに追加する必要があったが、OpenPDFはデフォルトで日本語に対応しているため、追加は不要である。
@@ -298,11 +297,11 @@ Excelファイルのダウンロード
 \
     .. note::
         上記設定例は、依存ライブラリのバージョンを親プロジェクトである terasoluna-gfw-parent で管理する前提であるため、pom.xmlでのバージョンの指定は不要である。
-        上記の依存ライブラリはterasoluna-gfw-parentが利用している\ `Spring IO Platform <http://platform.spring.io/platform/>`_\ で定義済みである。
 
-        また、\ ``AbstractExcelView``\ はSpring Framework 4.2から@Deprecatedとなった。そのため、xlsファイルを使用したい場合も同様に\ ``AbstractXlsxView``\ の使用を推奨する。
-        詳細は、\ `AbstractXlsViewのJavaDoc <https://docs.spring.io/spring-framework/docs/5.0.8.RELEASE/javadoc-api/org/springframework/web/servlet/view/document/AbstractXlsView.html>`_\ を参照されたい。
-          
+\
+    .. note::
+        xlsファイル形式をサポートしたい場合は \ ``AbstractXlsView``\を使用されたい。
+        詳細は、\ `AbstractXlsViewのJavaDoc <https://docs.spring.io/spring-framework/docs/5.1.4.RELEASE/javadoc-api/org/springframework/web/servlet/view/document/AbstractXlsView.html>`_\ を参照されたい。
 
 ViewResolverの定義
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -439,7 +438,7 @@ ViewResolverの定義
 
         前述してきたように、SpringはModelの情報をいろいろなViewにレンダリングすることができる。
         Springでは、複数のレンダリングエンジンをサポートしており、さまざまなViewを返却することが可能である。
-        詳細は、Spring の公式ドキュメント\ `Spring reference <https://docs.spring.io/spring/docs/5.0.8.RELEASE/spring-framework-reference/web.html#mvc-view>`_\ を参照されたい。
+        詳細は、Spring の公式ドキュメント\ `Spring Framework Documentation -View Technologies- <https://docs.spring.io/spring/docs/5.1.4.RELEASE/spring-framework-reference/web.html#mvc-view>`_\ を参照されたい。
 
 .. raw:: latex
 

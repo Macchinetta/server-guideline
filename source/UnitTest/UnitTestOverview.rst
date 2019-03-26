@@ -43,20 +43,20 @@ DIコンテナ
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 テスト用のDIコンテナとして
-\ `Spring TestのDI機能 <https://docs.spring.io/spring/docs/5.0.8.RELEASE/spring-framework-reference/testing.html#testing-fixture-di>`_\を使用する。
+\ `Spring TestのDI機能 <https://docs.spring.io/spring/docs/5.1.4.RELEASE/spring-framework-reference/testing.html#testing-fixture-di>`_\を使用する。
 
 MVCフレームワーク
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 テスト用のMVCフレームワークとして
-\ `Spring MVC Test Framework <https://docs.spring.io/spring/docs/5.0.8.RELEASE/spring-framework-reference/testing.html#spring-mvc-test-framework>`_\を使用する。
+\ `Spring MVC Test Framework <https://docs.spring.io/spring/docs/5.1.4.RELEASE/spring-framework-reference/testing.html#spring-mvc-test-framework>`_\を使用する。
 
 
 トランザクション管理
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 テスト用のトランザクション管理として
-\ `Spring Testのトランザクション管理機能 <https://docs.spring.io/spring/docs/5.0.8.RELEASE/spring-framework-reference/testing.html#testing-tx>`_\を使用する。
+\ `Spring Testのトランザクション管理機能 <https://docs.spring.io/spring/docs/5.1.4.RELEASE/spring-framework-reference/testing.html#testing-tx>`_\を使用する。
 
 
 データアクセス
@@ -64,7 +64,7 @@ MVCフレームワーク
 
 テスト用のデータアクセスとして、Spring TestまたはDBUnitとSpring Test DBUnitを使用することを想定している。
 
-* \ `Spring Test <https://docs.spring.io/spring/docs/5.0.8.RELEASE/spring-framework-reference/testing.html#testing-introduction>`_\
+* \ `Spring Test <https://docs.spring.io/spring/docs/5.1.4.RELEASE/spring-framework-reference/testing.html#testing-introduction>`_\
 
   * Spring Testは\ ``@Sql``\ アノテーションや\ ``JdbcTemplate``\ などを使用してSQLを発行する機能を提供している。
 
@@ -82,24 +82,6 @@ MVCフレームワーク
 また、本章内のアプリケーション自体を動作させるために利用するOSSライブラリ一覧については、
 \ :ref:`frameworkstack_using_oss_version`\を参照されたい。
 
-.. tip::
-
-    version 1.1.0.RELEASEより、\ `Spring IO platform <http://platform.spring.io/platform/>`_\ の
-    \ ``<dependencyManagement>``\ をインポートする構成を採用している。
-
-    Spring IO platformの\ ``<dependencyManagement>``\ をインポートすることで、
-
-    * Spring Frameworkが提供しているライブラリ
-    * Spring Frameworkが依存しているOSSライブラリ
-    * Spring Frameworkと相性のよいOSSライブラリ
-
-    への依存関係を解決しており、Macchinetta Server Framework (1.x)で使用するOSSのバージョンは、原則として、
-    Spring IO platformの定義に準じている。
-
-    なお、version 1.6.0.RELEASEで指定しているSpring IO platformのバージョンは、
-    \ `Cairo-SR3 <https://docs.spring.io/platform/docs/Cairo-SR3/reference/htmlsingle/>`_\ である。
-
-|
 
 以下のOSSライブラリの中で、特にSpring Test（MockMvc）、Mockitoの使い方については、\ :ref:`UsageOfLibraryForTest`\
 で詳細を説明する。
@@ -113,7 +95,7 @@ MVCフレームワーク
       - GroupId
       - ArtifactId
       - Version
-      - Spring IO platform
+      - Spring Boot
     * - JUnit
       - junit
       - junit
@@ -132,12 +114,12 @@ MVCフレームワーク
     * - Mockito
       - org.mockito
       - mockito-core
-      - 2.15.0
+      - 2.23.4
       - \*
     * - Spring Test
       - org.springframework
       - spring-test
-      - 5.0.8.RELEASE
+      - 5.1.4.RELEASE
       - \*
     * - DBUnit
       - org.dbunit

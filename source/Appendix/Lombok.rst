@@ -178,7 +178,7 @@ Lombokが提供しているクラスを使用するために、Lombokを依存�
 .. note::
 
     上記設定例は、依存ライブラリのバージョンを親プロジェクトである terasoluna-gfw-parent で管理する前提であるため、pom.xmlでのバージョンの指定は不要である。
-    上記の依存ライブラリはterasoluna-gfw-parentが利用している\ `Spring IO Platform <http://platform.spring.io/platform/>`_\ で定義済みである。
+    上記の依存ライブラリはterasoluna-gfw-parentが依存している\ `Spring Boot <https://docs.spring.io/spring-boot/docs/2.1.2.RELEASE/reference/htmlsingle/#appendix-dependency-versions>`_\ で管理されている。
 
 |
 
@@ -581,15 +581,6 @@ Lombokのアノテーションを使用して\ ``equals``\ メソッドと\ ``ha
         デフォルトコンストラクタを使用した場合は3ステップ必要だったものが、
         1ステップでインスタンスの生成が出来るようになった。
 
-.. warning:: **@Dataと@NoArgsConstructorを付与する順序について**
-
-    Macchinetta Framework 1.6.0が利用するLombok 1.6.22では、\ ``@Data``\と\ ``@NoArgsConstructor``\の付与順序によってはコンパイルエラーが発生するという事象が確認されている。
-    具体的には、\ ``@Data``\により生成されたデフォルトコンストラクタを\ ``@NoArgsConstructor``\が再度生成することによりコンパイルエラーになる事象で、Lombok 1.18.0で修正されている。
-    
-    この事象を回避するには、\ ``@NoArgsConstructor``\を\ ``@Data``\より上に付与すれば良い。
-    また、Lombokのバージョンを1.18.0以上に上げることでも回避可能である。
-    詳しくは、`Lombok-1.16.22-constructor already defined in class <https://github.com/rzwitserloot/lombok/issues/1703>`_ を参照されたい。
-
 |
 
 .. tip::
@@ -622,7 +613,7 @@ Lombokのアノテーションを使用しないでロガーインスタンス�
     @Service
     public class AuthenticationService {
 
-        private static final Logger log = LoggerFactory.getLogger(AuthenticationService.class);
+        private static final Logger logger = LoggerFactory.getLogger(AuthenticationService.class);
 
         public void login(String userId, String password) {
             log.info("{} had tried login.", userId);

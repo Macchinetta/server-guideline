@@ -99,7 +99,7 @@ Mavenのアーキタイプを利用し、\ `Macchinetta Server Framework (1.x)�
     mvn archetype:generate -B^
      -DarchetypeGroupId=com.github.macchinetta.blank^
      -DarchetypeArtifactId=macchinetta-web-blank-archetype^
-     -DarchetypeVersion=1.6.0.RELEASE^
+     -DarchetypeVersion=1.6.1.RELEASE^
      -DgroupId=com.example.security^
      -DartifactId=first-springsecurity^
      -Dversion=1.0.0-SNAPSHOT
@@ -688,13 +688,14 @@ Spring Securityの設定
     package com.example.security.app.login;
 
     import org.springframework.stereotype.Controller;
+    import org.springframework.web.bind.annotation.GetMapping;
     import org.springframework.web.bind.annotation.RequestMapping;
 
     @Controller
     @RequestMapping("/login")
     public class LoginController {
 
-        @RequestMapping("/loginForm") // (1)
+        @GetMapping("/loginForm") // (1)
         public String view() {
             return "login/loginForm";
         }
@@ -964,6 +965,7 @@ Controllerからログインユーザーのアカウント情報へアクセス
     import org.springframework.security.core.annotation.AuthenticationPrincipal;
     import org.springframework.stereotype.Controller;
     import org.springframework.ui.Model;
+    import org.springframework.web.bind.annotation.GetMapping;
     import org.springframework.web.bind.annotation.RequestMapping;
 
     import com.example.security.domain.model.Account;
@@ -973,7 +975,7 @@ Controllerからログインユーザーのアカウント情報へアクセス
     @RequestMapping("account")
     public class AccountController {
 
-        @RequestMapping
+        @GetMapping
         public String view(
                 @AuthenticationPrincipal SampleUserDetails userDetails, // (1)
                 Model model) {

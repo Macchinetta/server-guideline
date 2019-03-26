@@ -62,7 +62,7 @@ Webアプリケーションの入力チェックには、サーバサイドで�
    * - 相関項目チェック
      - | 複数のフィールドを比較するチェック
      - | パスワードと確認用パスワードの一致チェック
-     - | `org.springframework.validation.Validator <https://docs.spring.io/spring/docs/5.0.8.RELEASE/spring-framework-reference/core.html#validator>`_\ インタフェースを実装したValidationクラス
+     - | `org.springframework.validation.Validator <https://docs.spring.io/spring/docs/5.1.4.RELEASE/spring-framework-reference/core.html#validator>`_\ インタフェースを実装したValidationクラス
        | または Bean Validation
 
 
@@ -81,11 +81,11 @@ How to use
 
 依存ライブラリの追加
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-Bean Validation 1.1(Hibernate Validator 5.x)以上を使用する場合、
+Bean Validation 2.0(Hibernate Validator 6.x)以上を使用する場合、
 Bean ValidationのAPI仕様クラス(\ ``javax.validation``\ パッケージのクラス)が格納されているjarファイルとHibernate Validatorのjarファイルに加えて、
 
-* Expression Language 2.2以上のAPI仕様クラス (\ ``javax.el``\ パッケージのクラス)
-* Expression Language 2.2以上のリファレンス実装クラス
+* Expression Language 3.0以上のAPI仕様クラス (\ ``javax.el``\ パッケージのクラス)
+* Expression Language 3.0以上のリファレンス実装クラス
 
 が格納されているライブラリが必要となる。
 
@@ -94,7 +94,7 @@ Bean ValidationのAPI仕様クラス(\ ``javax.validation``\ パッケージの�
 依存ライブラリの追加は不要である。
 ただし、スタンドアロン環境(JUnitなど)で動かす場合は、これらのライブラリを依存ライブラリとして追加する必要がある。
 
-スタンドアロン環境でBean Validation 1.1以上を動かす際に必要となるライブラリの追加例を以下に示す。
+スタンドアロン環境でBean Validation 2.0以上を動かす際に必要となるライブラリの追加例を以下に示す。
 
 .. code-block:: xml
 
@@ -125,7 +125,6 @@ Bean ValidationのAPI仕様クラス(\ ``javax.validation``\ パッケージの�
 .. note::
 
     上記設定例は、依存ライブラリのバージョンを親プロジェクトである terasoluna-gfw-parent で管理する前提であるため、pom.xmlでのバージョンの指定は不要である。
-    上記の依存ライブラリはterasoluna-gfw-parentが利用している\ `Spring IO Platform <http://platform.spring.io/platform/>`_\ で定義済みである。
 
 
 .. _Validation_single_check:
@@ -191,12 +190,11 @@ Bean ValidationのAPI仕様クラス(\ ``javax.validation``\ パッケージの�
 
       import java.io.Serializable;
 
+      import javax.validation.constraints.Email;
       import javax.validation.constraints.Max;
       import javax.validation.constraints.Min;
       import javax.validation.constraints.NotNull;
       import javax.validation.constraints.Size;
-
-      import org.hibernate.validator.constraints.Email;
 
       public class UserForm implements Serializable {
 
@@ -240,9 +238,9 @@ Bean ValidationのAPI仕様クラス(\ ``javax.validation``\ パッケージの�
          | 上記の通り、Spring MVCではデフォルトで、未入力の文字列フィールドには、空文字がバインドされるため、
          | 1文字以上というルールが入力必須を表す。
      * - | (3)
-       - | 対象のフィールドがE-mail形式であることを示す\ ``org.hibernate.validator.constraints.Email``\ を付ける。
+       - | 対象のフィールドがE-mail形式であることを示す\ ``javax.validation.constraints.Email``\ を付ける。
          | E-mail形式の要件が\ ``@Email`` \のチェックと合致しない場合は、\ ``javax.validation.constraints.Pattern``\を用いて、正規表現を指定する必要がある。
-         | \ ``@Email`` \については、\ :ref:`Validation_validator_list`\を参照されたい。
+         | \ ``@Email`` \については、\ :ref:`Validation_jsr380_doc`\を参照されたい。
      * - | (4)
        - | 数値の入力フィールドに未入力の状態でフォームを送信した場合、フォームオブジェクトに\ ``null`` \ がバインドされるため、\ ``@NotNull``\ が\ ``age``\ の入力必須条件を表す。
      * - | (5)
@@ -253,7 +251,7 @@ Bean ValidationのAPI仕様クラス(\ ``javax.validation``\ パッケージの�
 
   .. tip::
   
-    Bean Validation標準のアノテーション、Hibernate Validationが用意しているアノテーションについては、\ :ref:`Validation_jsr303_doc`\ 、\ :ref:`Validation_validator_list`\ を参照されたい。
+    Bean Validation標準のアノテーション、Hibernate Validationが用意しているアノテーションについては、\ :ref:`Validation_jsr380_doc`\ 、\ :ref:`Validation_validator_list`\ を参照されたい。
   
   .. tip::
   
@@ -402,8 +400,8 @@ NameとEmailが空文字であることに対するエラーメッセージと�
   以下のアノテーションを除く。
 
   * ``javax.validation.constraints.NotNull``
-  * ``org.hibernate.validator.constraints.NotEmpty``
-  * ``org.hibernate.validator.constraints.NotBlank``
+  * ``javax.validation.constraints.NotEmpty``
+  * ``javax.validation.constraints.NotBlank``
 
   上記の例では、Ageの値は\ ``null``\ であるため、\ ``@Min``\ と\ ``@Max``\ によるチェックは正常とみなされ、
   エラーメッセージは出力されていない。
@@ -948,12 +946,11 @@ ECサイトにおける「注文」処理の例を考える。「注文」フォ
     import java.util.List;
 
     import javax.validation.Valid;
+    import javax.validation.constraints.Email;
     import javax.validation.constraints.Max;
     import javax.validation.constraints.Min;
     import javax.validation.constraints.NotNull;
     import javax.validation.constraints.Size;
-
-    import org.hibernate.validator.constraints.Email;
 
     public class UserForm implements Serializable {
 
@@ -1209,6 +1206,91 @@ ECサイトにおける「注文」処理の例を考える。「注文」フォ
   :width: 60%
 
 
+コレクション内の値のチェック
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+複数選択可能な画面項目（チェックボックスや複数選択ドロップダウンなど）を扱う際は、フォームクラスで画面項目を \ ``String``\ 等の基本型のコレクションとして扱うことが一般的である。
+
+ここでは、Bean Validation 2.0の標準アノテーションである\ ``@NotEmpty``\ 及び共通ライブラリが提供する\ ``@ExistInCodeList``\ を例に、コレクション内の値の入力チェックを行う例を示す。
+
+* フォームクラス
+
+  .. code-block:: java
+
+    package com.example.sample.app.validation;
+
+    import java.util.List;
+    
+    import javax.validation.constraints.NotEmpty;
+    
+    import org.terasoluna.gfw.common.codelist.ExistInCodeList;
+
+    public class SampleForm {
+        @NotEmpty
+        private List<@NotEmpty @ExistInCodeList(codeListId = "CL_ROLE") String> roles; // (1)
+
+        public List<String> getRoles() {
+            return roles;
+        }
+
+        public void setRoles(List<String> roles) {
+            this.roles = roles;
+        }
+    }
+
+
+  .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
+  .. list-table::
+     :header-rows: 1
+     :widths: 10 90
+
+     * - 項番
+       - 説明
+     * - | (1)
+       - | 入力チェック対象となるコレクションの型引数に対して\ ``@NotEmpty``\ アノテーション及び\ ``@ExistInCodeList``\ アノテーションを設定する。
+         | \ ``@ExistInCodeList``\ アノテーションの\ ``codeListId``\ パラメータにチェック元となるコードリストを指定する。
+
+
+|
+
+* JSP
+
+  .. code-block:: jsp
+
+    <form:form modelAttribute="sampleForm">
+        <!-- (1) -->
+        <form:checkboxes path="roles" items="${CL_ROLE}"/>
+        <form:errors path="roles*"/>
+        <form:button>Submit</form:button>
+    </form:form>
+
+
+  .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
+  .. list-table::
+     :header-rows: 1
+     :widths: 10 90
+
+     * - 項番
+       - 説明
+     * - | (1)
+       - |  \ ``<form:checkboxes>``\ を実装する。
+
+
+.. note::
+
+    Java SE 8で\ ``java.lang.annotation.ElementType.TYPE_USE``\ が追加された。
+    これにより、従来のクラスやメソッド等の宣言に対してだけでなく、型全般（ローカル変数の型等）にアノテーションを付加できるようになり、
+    Java SE 8に対応したHibernate Validator 5.2+は、\ ``Collection``\ , \ ``Map``\ , \ ``Optional``\ , などのパラメータ化された型に付与された制約アノテーションを読み取ることで、コレクション内の値に対するチェックが可能になった。
+
+    さらに、Bean Validation 2.0(Hibernate Validator 6.x)より、Bean Validation 2.0の標準仕様として、\ ``List<@NotNull String>``\ のように、コレクション内の各値に対してBean Validationの標準アノテーションを付与し、チェックすることが可能になった。
+
+    上記に伴い、共通ライブラリで提供される\ ``@ExistInCodeList``\ 、\ ``@ConsistOf``\ 、\ ``@ByteMin``\ 、\ ``@ByteMax``\ 、\ ``@ByteSize``\ の各アノテーションは、
+    TERASOLUNA Server Framework for Java 5.5.1.RELEASEよりBean Validation 2.0に準拠し、\ ``List<@ExistInCodeList String>``\ のように、デフォルトでコレクション内の各値に対して付与し、チェック出来るように変更している。
+
+
+|
+
+
 .. _ValidationGroupValidation:
 
 バリデーションのグループ化
@@ -1250,12 +1332,11 @@ Bean Validationでグループを指定する場合、アノテーションの\ 
     import java.util.List;
 
     import javax.validation.Valid;
+    import javax.validation.constraints.Email;
     import javax.validation.constraints.Max;
     import javax.validation.constraints.Min;
     import javax.validation.constraints.NotNull;
     import javax.validation.constraints.Size;
-
-    import org.hibernate.validator.constraints.Email;
 
     public class UserForm implements Serializable {
 
@@ -1281,17 +1362,15 @@ Bean Validationでグループを指定する場合、アノテーションの\ 
         private String email;
 
         @NotNull
-        @Min.List({ // (2)
-                @Min(value = 18, groups = Chinese.class), // (3)
-                @Min(value = 20, groups = Japanese.class),
-                @Min(value = 21, groups = Singaporean.class)
-                })
+        @Min(value = 18, groups = Chinese.class) // (2)
+        @Min(value = 20, groups = Japanese.class)
+        @Min(value = 21, groups = Singaporean.class)
         @Max(200)
         private Integer age;
 
         @NotNull
         @Size(min = 2, max = 2)
-        private String country; // (4)
+        private String country; // (3)
 
         // omitted setter/getter
     }
@@ -1307,13 +1386,25 @@ Bean Validationでグループを指定する場合、アノテーションの\ 
      * - | (1)
        - | グループクラスを指定するために、各グループをインタフェースで定義する。
      * - | (2)
-       - | 一つのフィールドに同じルールを複数指定するために、\ ``@Min.List``\ アノテーションを使用する。
-         | 他のアノテーションを使用する場合も同様である。
-     * - | (3)
        - | グループごとにルールを定義する。グループを指定するために、\ ``groups``\ 属性に対象のグループクラスを指定する。
          | \ ``groups``\ 属性を省略した場合、\ ``javax.validation.groups.Default``\ グループが使用される。
-     * - | (4)
+     * - | (3)
        - | グループを振り分けるための、フィールドを追加する。
+
+
+ .. note:: **Bean Validation 2.0では、デフォルトで一つのフィールドに同じアノテーションを複数指定できる**
+
+     Bean Validation 1.1では、一つのフィールドに同じ制約アノテーションを複数指定する場合は、以下のように\ ``List``\ で囲う必要があった。
+     Bean Validation 2.0では、\ ``List``\ で囲うことなく複数指定できるようになっている。
+     
+      .. code-block:: java
+     
+         @Min.List({
+                 @Min(value = 18, groups = Chinese.class),
+                 @Min(value = 20, groups = Japanese.class),
+                 @Min(value = 21, groups = Singaporean.class)
+                 })
+         private Integer age;
 
 
 * JSP
@@ -1526,13 +1617,12 @@ Bean Validationでグループを指定する場合、アノテーションの\ 
     import java.util.List;
 
     import javax.validation.Valid;
+    import javax.validation.constraints.Email;
     import javax.validation.constraints.Max;
     import javax.validation.constraints.Min;
     import javax.validation.constraints.NotNull;
     import javax.validation.constraints.Size;
     import javax.validation.groups.Default;
-
-    import org.hibernate.validator.constraints.Email;
 
     public class UserForm implements Serializable {
 
@@ -1556,10 +1646,9 @@ Bean Validationでグループを指定する場合、アノテーションの\ 
         private String email;
 
         @NotNull(groups = { Default.class, Japanese.class, Singaporean.class })
-        @Min.List({
-                @Min(value = 18, groups = Default.class), // (2)
-                @Min(value = 20, groups = Japanese.class),
-                @Min(value = 21, groups = Singaporean.class) })
+        @Min(value = 18, groups = Default.class) // (2)
+        @Min(value = 20, groups = Japanese.class)
+        @Min(value = 21, groups = Singaporean.class)
         @Max(value = 200, groups = { Default.class, Japanese.class, Singaporean.class })
         private Integer age;
 
@@ -2172,7 +2261,7 @@ Bean Validationによって、相関項目チェックの実装するために�
 Spring MVCによるBean Validationのエラーメッセージは、以下の順で解決される。
 
 #. | \ ``org.springframework.context.MessageSource``\ に定義されているメッセージの中に、ルールに合致するものがあればそれをエラーメッセージとして使用する (Springのルール)。
-   | Springのデフォルトのルールについては、「`DefaultMessageCodesResolverのJavaDoc <https://docs.spring.io/spring/docs/5.0.8.RELEASE/javadoc-api/org/springframework/validation/DefaultMessageCodesResolver.html>`_」を参照されたい。
+   | Springのデフォルトのルールについては、「`DefaultMessageCodesResolverのJavaDoc <https://docs.spring.io/spring/docs/5.1.4.RELEASE/javadoc-api/org/springframework/validation/DefaultMessageCodesResolver.html>`_」を参照されたい。
 #. 1.でメッセージが見つからない場合、アノテーションの\ ``message``\ 属性に、指定されたメッセージからエラーメッセージを取得する (Bean Validationのルール)
 
   #. \ ``message``\ 属性に指定されたメッセージが、"{メッセージキー}"形式でない場合、そのテキストをエラーメッセージとして使用する。
@@ -2288,7 +2377,7 @@ Bean Validationのアノテーションの\ ``message``\ 属性に指定され�
     javax.validation.constraints.Size.message=size is not in the range {min} through {max}.
     javax.validation.constraints.Min.message=can not be less than {value}.
     javax.validation.constraints.Max.message=can not be greater than {value}.
-    org.hibernate.validator.constraints.Email.message=is an invalid e-mail address.
+    javax.validation.constraints.Email.message=is an invalid e-mail address.
 
   .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
   .. list-table::
@@ -2329,7 +2418,7 @@ Bean Validationのアノテーションの\ ``message``\ 属性に指定され�
     javax.validation.constraints.Size.message=The size of "{0}" is not in the range {min} through {max}.
     javax.validation.constraints.Min.message="{0}" can not be less than {value}.
     javax.validation.constraints.Max.message="{0}" can not be greater than {value}.
-    org.hibernate.validator.constraints.Email.message="{0}" is an invalid e-mail address.
+    javax.validation.constraints.Email.message="{0}" is an invalid e-mail address.
 
 エラーメッセージは、以下のように変更される。
 
@@ -2370,7 +2459,7 @@ Bean Validationのアノテーションの\ ``message``\ 属性に指定され�
 
     Bean Validation 1.1より、
     :file:`ValidationMessages.properties` に指定するメッセージの中にExpression Language(以降、「EL式」と呼ぶ)を使用する事ができるようになった。
-    Hibernate Validator 5.xでは、Expression Language 2.2以上をサポートしている。
+    Hibernate Validator 6.xでは、Expression Language 3.0以上をサポートしている。
 
     実行可能なEL式のバージョンは、アプリケーションサーバのバージョンによって異なる。
     そのため、EL式を使用する場合は、**アプリケーションサーバがサポートしているEL式のバージョンを確認した上で使用すること。**
@@ -2405,7 +2494,7 @@ Bean Validationのアノテーションの\ ``message``\ 属性に指定され�
             後者は\ ``@DecimalMax``\ アノテーションの \ ``inclusive``\ 属性に \ ``false``\ を指定した場合に生成される。
 
             Bean ValidationにおけるEL式の扱いについては、
-            \ `Hibernate Validator Reference Guide(Interpolation with message expressions) <http://docs.jboss.org/hibernate/validator/5.3/reference/en-US/html/ch04.html#section-interpolation-with-message-expressions>`_\ を参照されたい。
+            \ `Hibernate Validator Reference Guide(Interpolation with message expressions) <http://docs.jboss.org/hibernate/validator/6.0/reference/en-US/html_single/#section-interpolation-with-message-expressions>`_\ を参照されたい。
 
     また、:file:`ValidationMessages.properties` に指定するメッセージに \ ``${validatedValue}``\ を使用することで、エラーメッセージにチェック対象の値を含むことができる。
 
@@ -2432,7 +2521,7 @@ Bean Validationのアノテーションの\ ``message``\ 属性に指定され�
           - 上記のメッセージ定義から実際に生成されるメッセージは、 \ ``${validatedValue}``\ の部分にフォームに入力した値が埋め込まれる。
             入力値に機密情報を含む場合、機密情報がメッセージに表示されないようにするため、 \ ``${validatedValue}``\ を使用しないように注意すること。
 
-            詳細については、\ `Hibernate Validator Reference Guide(Interpolation with message expressions) <http://docs.jboss.org/hibernate/validator/5.3/reference/en-US/html/ch04.html#section-interpolation-with-message-expressions>`_\ を参照されたい。
+            詳細については、\ `Hibernate Validator Reference Guide(Interpolation with message expressions) <http://docs.jboss.org/hibernate/validator/6.0/reference/en-US/html_single/#section-interpolation-with-message-expressions>`_\ を参照されたい。
 
 
 .. _Validation_message_in_application_messages:
@@ -2479,7 +2568,7 @@ ValidationMessages.propertiesでシステムが利用するデフォルトのメ
 * \ ``{2}``\  : \ ``min``\ 属性の値
 
 となる。
-仕様の詳細については \ `SpringValidatorAdapterのJavaDoc <https://docs.spring.io/spring/docs/5.0.8.RELEASE/javadoc-api/org/springframework/validation/beanvalidation/SpringValidatorAdapter.html#getArgumentsForConstraint-java.lang.String-java.lang.String-javax.validation.metadata.ConstraintDescriptor->`_\
+仕様の詳細については \ `SpringValidatorAdapterのJavaDoc <https://docs.spring.io/spring/docs/5.1.4.RELEASE/javadoc-api/org/springframework/validation/beanvalidation/SpringValidatorAdapter.html#getArgumentsForConstraint-java.lang.String-java.lang.String-javax.validation.metadata.ConstraintDescriptor->`_\
 を参照されたい。
 
 エラーメッセージは以下のように変更される。
@@ -2490,7 +2579,7 @@ ValidationMessages.propertiesでシステムが利用するデフォルトのメ
 
 .. note::
 
-  application-messages.propertiesのメッセージキーの形式は、\ `これ以外にも用意されている <https://docs.spring.io/spring/docs/5.0.8.RELEASE/javadoc-api/org/springframework/validation/DefaultMessageCodesResolver.html>`_\ が、
+  application-messages.propertiesのメッセージキーの形式は、\ `これ以外にも用意されている <https://docs.spring.io/spring/docs/5.1.4.RELEASE/javadoc-api/org/springframework/validation/DefaultMessageCodesResolver.html>`_\ が、
   デフォルトメッセージを一部上書きする目的で使用するのであれば、基本的に、\ ``アノテーション名.フォーム属性名.プロパティ名``\ 形式でよい。
 
 |
@@ -2514,6 +2603,7 @@ Bean Validationは標準で用意されているチェックルール以外に�
   package com.example.common.validation;
 
   import java.lang.annotation.Documented;
+  import java.lang.annotation.Repeatable;
   import java.lang.annotation.Retention;
   import java.lang.annotation.Target;
   import javax.validation.Constraint;
@@ -2523,12 +2613,16 @@ Bean Validationは標準で用意されているチェックルール以外に�
   import static java.lang.annotation.ElementType.FIELD;
   import static java.lang.annotation.ElementType.METHOD;
   import static java.lang.annotation.ElementType.PARAMETER;
+  import static java.lang.annotation.ElementType.TYPE_USE;
   import static java.lang.annotation.RetentionPolicy.RUNTIME;
+
+  import com.example.common.validation.Xxx.List;
 
   @Documented
   @Constraint(validatedBy = {})
-  @Target({ METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER })
+  @Target({ METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER, TYPE_USE })
   @Retention(RUNTIME)
+  @Repeatable(List.class)
   public @interface Xxx {
       String message() default "{com.example.common.validation.Xxx.message}";
 
@@ -2536,10 +2630,10 @@ Bean Validationは標準で用意されているチェックルール以外に�
 
       Class<? extends Payload>[] payload() default {};
 
-      @Target({ METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER })
+      @Target({ METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER, TYPE_USE })
       @Retention(RUNTIME)
       @Documented
-      public @interface List {
+      @interface List {
           Xxx[] value();
       }
   }
@@ -2554,7 +2648,7 @@ Bean Validationは標準で用意されているチェックルール以外に�
 システム共通で、
 
 * 文字列は半角英数字の文字種に限定したい
-* 数値は正の数に限定したい
+* 数値は8桁までの正の数に限定したい
 
 | または、ドメイン共通で、
 
@@ -2574,11 +2668,12 @@ Bean Validationは標準で用意されているチェックルール以外に�
 * 半角英数字の文字種に限定する\ ``@Alphanumeric``\ アノテーションの実装例
 
   .. code-block:: java
-    :emphasize-lines: 19,22-23,25
+    :emphasize-lines: 22,26-27,29
 
     package com.example.common.validation;
 
     import java.lang.annotation.Documented;
+    import java.lang.annotation.Repeatable;
     import java.lang.annotation.Retention;
     import java.lang.annotation.Target;
     import javax.validation.Constraint;
@@ -2591,12 +2686,16 @@ Bean Validationは標準で用意されているチェックルール以外に�
     import static java.lang.annotation.ElementType.FIELD;
     import static java.lang.annotation.ElementType.METHOD;
     import static java.lang.annotation.ElementType.PARAMETER;
+    import static java.lang.annotation.ElementType.TYPE_USE;
     import static java.lang.annotation.RetentionPolicy.RUNTIME;
+
+    import com.example.common.validation.AlphaNumeric.List;
 
     @Documented
     @Constraint(validatedBy = {}) // (1)
-    @Target({ METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER })
+    @Target({ METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER, TYPE_USE })
     @Retention(RUNTIME)
+    @Repeatable(List.class)
     @ReportAsSingleViolation // (2)
     @Pattern(regexp = "[a-zA-Z0-9]*") // (3)
     public @interface AlphaNumeric {
@@ -2606,10 +2705,10 @@ Bean Validationは標準で用意されているチェックルール以外に�
 
         Class<? extends Payload>[] payload() default {};
 
-        @Target({ METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER })
+        @Target({ METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER, TYPE_USE })
         @Retention(RUNTIME)
         @Documented
-        public @interface List {
+        @interface List {
             AlphaNumeric[] value();
         }
     }
@@ -2631,46 +2730,53 @@ Bean Validationは標準で用意されているチェックルール以外に�
      * - | (4)
        - | エラーメッセージのデフォルト値を定義する。
 
-* 正の数に限定する\ ``@NotNegative``\ アノテーションの実装例
+* 8桁までの正の数に限定する\ ``@MaxDigits``\ アノテーションの実装例
 
   .. code-block:: java
-    :emphasize-lines: 19,22-23,25
+    :emphasize-lines: 23,27-29,31
 
     package com.example.common.validation;
 
     import java.lang.annotation.Documented;
+    import java.lang.annotation.Repeatable;
     import java.lang.annotation.Retention;
     import java.lang.annotation.Target;
     import javax.validation.Constraint;
     import javax.validation.Payload;
     import javax.validation.ReportAsSingleViolation;
-    import javax.validation.constraints.Min;
+    import javax.validation.constraints.PositiveOrZero;
+    import javax.validation.constraints.Max;
 
     import static java.lang.annotation.ElementType.ANNOTATION_TYPE;
     import static java.lang.annotation.ElementType.CONSTRUCTOR;
     import static java.lang.annotation.ElementType.FIELD;
     import static java.lang.annotation.ElementType.METHOD;
     import static java.lang.annotation.ElementType.PARAMETER;
+    import static java.lang.annotation.ElementType.TYPE_USE;
     import static java.lang.annotation.RetentionPolicy.RUNTIME;
+
+    import com.example.common.validation.MaxDigits.List;
 
     @Documented
     @Constraint(validatedBy = {})
-    @Target({ METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER })
+    @Target({ METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER, TYPE_USE })
     @Retention(RUNTIME)
+    @Repeatable(List.class)
     @ReportAsSingleViolation
-    @Min(value = 0)
-    public @interface NotNegative {
-        String message() default "{com.example.common.validation.NotNegative.message}";
+    @PositiveOrZero
+    @Max(value = 99999999)
+    public @interface MaxDigits {
+        String message() default "{com.example.common.validation.MaxDigits.message}";
 
         Class<?>[] groups() default {};
 
         Class<? extends Payload>[] payload() default {};
 
-        @Target({ METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER })
+        @Target({ METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER, TYPE_USE })
         @Retention(RUNTIME)
         @Documented
-        public @interface List {
-            NotNegative[] value();
+        @interface List {
+            MaxDigits[] value();
         }
     }
 
@@ -2678,11 +2784,12 @@ Bean Validationは標準で用意されているチェックルール以外に�
 * 「ユーザーID」のフォーマットを規定する\ ``@UserId``\ アノテーションの実装例
 
   .. code-block:: java
-    :emphasize-lines: 20,23-25,27
+    :emphasize-lines: 23,27-29,31
 
     package com.example.sample.domain.validation;
 
     import java.lang.annotation.Documented;
+    import java.lang.annotation.Repeatable;
     import java.lang.annotation.Retention;
     import java.lang.annotation.Target;
     import javax.validation.Constraint;
@@ -2696,12 +2803,16 @@ Bean Validationは標準で用意されているチェックルール以外に�
     import static java.lang.annotation.ElementType.FIELD;
     import static java.lang.annotation.ElementType.METHOD;
     import static java.lang.annotation.ElementType.PARAMETER;
+    import static java.lang.annotation.ElementType.TYPE_USE;
     import static java.lang.annotation.RetentionPolicy.RUNTIME;
+
+    import com.example.sample.domain.validation.UserId.List;
 
     @Documented
     @Constraint(validatedBy = {})
-    @Target({ METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER })
+    @Target({ METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER, TYPE_USE })
     @Retention(RUNTIME)
+    @Repeatable(List.class)
     @ReportAsSingleViolation
     @Size(min = 4, max = 20)
     @Pattern(regexp = "[a-z]*")
@@ -2712,10 +2823,10 @@ Bean Validationは標準で用意されているチェックルール以外に�
 
         Class<? extends Payload>[] payload() default {};
 
-        @Target({ METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER })
+        @Target({ METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER, TYPE_USE })
         @Retention(RUNTIME)
         @Documented
-        public @interface List {
+        @interface List {
             UserId[] value();
         }
     }
@@ -2723,11 +2834,12 @@ Bean Validationは標準で用意されているチェックルール以外に�
 * 「年齢」の制限を規定する\ ``@Age``\ アノテーションの実装例
 
   .. code-block:: java
-    :emphasize-lines: 20,23-25,27
+    :emphasize-lines: 23,27-29,31
 
     package com.example.sample.domain.validation;
 
     import java.lang.annotation.Documented;
+    import java.lang.annotation.Repeatable;
     import java.lang.annotation.Retention;
     import java.lang.annotation.Target;
     import javax.validation.Constraint;
@@ -2741,12 +2853,16 @@ Bean Validationは標準で用意されているチェックルール以外に�
     import static java.lang.annotation.ElementType.FIELD;
     import static java.lang.annotation.ElementType.METHOD;
     import static java.lang.annotation.ElementType.PARAMETER;
+    import static java.lang.annotation.ElementType.TYPE_USE;
     import static java.lang.annotation.RetentionPolicy.RUNTIME;
+
+    import com.example.sample.domain.validation.Age.List;
 
     @Documented
     @Constraint(validatedBy = {})
-    @Target({ METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER })
+    @Target({ METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER, TYPE_USE })
     @Retention(RUNTIME)
+    @Repeatable(List.class)
     @ReportAsSingleViolation
     @Min(1)
     @Max(150)
@@ -2757,10 +2873,10 @@ Bean Validationは標準で用意されているチェックルール以外に�
 
         Class<? extends Payload>[] payload() default {};
 
-        @Target({ METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER })
+        @Target({ METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER, TYPE_USE })
         @Retention(RUNTIME)
         @Documented
-        public @interface List {
+        @interface List {
             Age[] value();
         }
     }
@@ -2770,434 +2886,10 @@ Bean Validationは標準で用意されているチェックルール以外に�
 
     1つのアノテーションに複数のルールを設定した場合、それらのAND条件が複合ルールとなる。
     Hibernate Validatorでは、OR条件を実現するための\ ``@ConstraintComposition``\ アノテーションが用意されている。
-    詳細は、\ `Hibernate Validatorのドキュメント <http://docs.jboss.org/hibernate/validator/5.3/reference/en-US/html/ch11.html#section-boolean-constraint-composition>`_\ を参照されたい。
+    詳細は、\ `Hibernate Validatorのドキュメント <http://docs.jboss.org/hibernate/validator/6.0/reference/en-US/html_single/#section-boolean-constraint-composition>`_\ を参照されたい。
 
 
 |
-
-.. _Validation_for_parameter_object_in_collection_corresponding_annotation:
-
-コレクション内の値をBean Validationのアノテーションを使用してチェックする方法
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-複数選択可能な画面項目（チェックボックスや複数選択ドロップダウンなど）を扱う際は、フォームクラスで画面項目を \ ``String``\ 等の基本型のコレクションとして扱うことが一般的である。
-Bean Validationの標準仕様ではコレクション内の各値に対してはBean Validationのアノテーションを使いチェックすることができないが、Java SE 8とHibernate Validatorの独自機能を使う、或いはJava SE 8とHibernate Validatorの独自機能を使わない場合は画面項目の値に対するラッパークラスを作成しコレクションとして扱うことで、コレクション内の値をBean Validationを使いチェックすることが可能になる。
-
-
-ここでは、共通ライブラリが提供している入力値がコードリスト内に定義されたコード値であるかどうかチェックするアノテーション、
-\ ``org.terasoluna.gfw.common.codelist.ExistInCodeList``\ を例に、コレクション内のStringに対する入力チェックについて説明する。
-
-\ 複数選択可能な画面項目（チェックボックスや複数選択ドロップダウンなど）に\ ``@ExistInCodeList``\ アノテーションを対応させるための実装方法を以下に示す。
-
-* :ref:`Validation_exist_in_codelist_javase8`\
-    Java SE 8とHibernate Validatorの独自機能を利用し、\ ``String``\ の\ ``List``\ に付加できる独自のアノテーションを実装する方式。
-    **後者と比べて簡単かつシンプルな実装で実現できるため、Java SE 8とHibernate Validatorの独自機能が使用できる環境ではこちらの方式を推奨する。** また、この方法は将来的にBean Validationの後続バージョンで標準化される予定である。
-    
-
-* :ref:`Validation_exist_in_codelist_formatter`\
-    Java Beanクラスでラップしたプロパティに対して \ ``@ExistInCodeList``\ アノテーションを設定する方式。
-    Java SE 8とHibernate Validatorの独自機能を使用しないユーザ向け。Java SE 8とHibernate Validatorの独自機能が使用できる環境では :ref:`Validation_exist_in_codelist_javase8`\を推奨する。
-
-
-.. _Validation_exist_in_codelist_javase8:
-
-Java SE 8とHibernate Validator 5.2+による実装
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-ここでは、共通ライブラリが提供している\ ``@ExistInCodeList``\ をラップし、
-独自のアノテーションを作成することでコレクションに対応させる方法を紹介する。
-
-Java SE 8で\ ``java.lang.annotation.ElementType.TYPE_USE``\ が追加された。
-これにより、従来のクラスやメソッド等の宣言に対してだけでなく、型全般（ローカル変数の型等）にアノテーションを付加できるようになり、
-Java SE 8に対応したHibernate Validator 5.2+は、\ ``Collection``\ , \ ``Map``\ , \ ``Optional``\ , などのパラメータ化された型に付与された制約アノテーションを読み取ることで、コレクション内の値に対するチェックを可能にしている。
-
-Java SE 8とHibernate Validator 5.2+を組み合わせることで、\ ``List<@NotNullForTypeArgument String>``\ のように、
-リスト内の型指定部分に付加できるアノテーションを作成し、コレクション内の値の入力チェックを行うことができるようになる。
-詳細は、Hibernate Validatorのドキュメント(\ `Type argument constraints <http://docs.jboss.org/hibernate/validator/5.3/reference/en-US/html_single/#type-arguments-constraints>`_\ )を参照されたい。
-
-共通ライブラリが提供する\ ``@ExistInCodeList``\ は、Java SE 7互換のため\ ``TYPE_USE``\ に対応していないが、
-上記のようにリスト内の型指定部分に付加できる独自アノテーションを作成することで、コレクション内の値の入力チェックを行うことができるようになる。
-
-主な手順は以下の通り。
-
-* 「TYPE_USE」を使用し、型使用箇所に付加できる\ ``@ExistInCodeList``\ を拡張したアノテーションを実装する。
-
-* チェック対象にアノテーションを設定する。
-
-複数項目設定可能なRole(\ ``String``\ の\ ``List``\ )に対する入力チェックを例に用いて説明する。
-
-* 型使用箇所に付加できる\ ``@ExistInCodeListForTypeArgument``\ の実装例
-
-  .. code-block:: java
-
-    package com.example.common.validation;
-
-    import static java.lang.annotation.ElementType.TYPE_USE;
-    import static java.lang.annotation.RetentionPolicy.RUNTIME;
-    import java.lang.annotation.Documented;
-    import java.lang.annotation.Retention;
-    import java.lang.annotation.Target;
-    import javax.validation.Constraint;
-    import javax.validation.OverridesAttribute;
-    import javax.validation.Payload;
-    import javax.validation.ReportAsSingleViolation;
-    import org.terasoluna.gfw.common.codelist.ExistInCodeList;
-
-    @Documented
-    @Constraint(validatedBy = {})
-    @Target(TYPE_USE) // (1)
-    @Retention(RUNTIME)
-    @ReportAsSingleViolation
-    @ExistInCodeList(codeListId = "") // (2)
-    public @interface ExistInCodeListForTypeArgument {
-        String message() default "{com.example.common.validation.ExistInCodeListForTypeArgument.message}"; // (3)
-        
-        @OverridesAttribute(constraint = ExistInCodeList.class, name = "codeListId") // (4)
-        String codeListId();
-
-        
-        Class<?>[] groups() default {};
-
-        Class<? extends Payload>[] payload() default {};
-
-        @Target(TYPE_USE) // (1)
-        @Retention(RUNTIME)
-        @Documented
-        @interface List {
-            ExistInCodeListForTypeArgument[] value();
-        }
-    }
-
-
-  .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
-  .. list-table::
-     :header-rows: 1
-     :widths: 10 90
-
-     * - 項番
-       - 説明
-     * - | (1)
-       - | \ ``TYPE_USE``\ を設定し、このアノテーションが型使用箇所で付加できるようにする。
-     * - | (2)
-       - | このアノテーションにより使用されるルール(\ ``@ExistInCodeList``\)を定義する。
-     * - | (3)
-       - | エラーメッセージのデフォルト値を定義する。また、ValidationMessages.propertiesに任意のエラーメッセージを定義する。
-     * - | (4)
-       - | \ ``@ExistInCodeList``\ アノテーションの\ ``codeListId``\ 属性をオーバーライドする。
-
-
-|
-
-* フォームクラス
-
-  .. code-block:: java
-
-    package com.example.sample.app.validation;
-
-    import java.util.List;
-    
-    import javax.validation.constraints.NotNull;
-    
-    import com.example.common.validation.ExistInCodeListForTypeArgument;
-
-    public class SampleForm {
-        @NotNull
-        @Valid // (1)
-        private List<@ExistInCodeListForTypeArgument(codeListId = "CL_ROLE") String> roles; // (2)
-
-        public List<String> getRoles() {
-            return roles;
-        }
-
-        public void setRoles(List<String> roles) {
-            this.roles = roles;
-        }
-    }
-
-
-  .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
-  .. list-table::
-     :header-rows: 1
-     :widths: 10 90
-
-     * - 項番
-       - 説明
-     * - | (1)
-       - | \ ``List``\ 内の要素値に対する入力チェックを有効にするために、\ ``javax.validation.Valid``\ アノテーションを付与する。
-     * - | (2)
-       - | 入力チェック対象となるコレクションの型指定部に対して\ ``@ExistInCodeListForTypeArgument``\ アノテーションを設定する。
-         | アノテーションの\ ``codeListId``\ パラメータにチェック元となるコードリストを指定する。
-
-
-|
-
-* JSP
-
-  .. code-block:: jsp
-
-    <form:form modelAttribute="sampleForm">
-        <!-- (1) -->
-        <form:checkboxes path="roles" items="${CL_ROLE}"/>
-        <form:errors path="roles*"/>
-        <form:button>Submit</form:button>
-    </form:form>
-
-
-  .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
-  .. list-table::
-     :header-rows: 1
-     :widths: 10 90
-
-     * - 項番
-       - 説明
-     * - | (1)
-       - |  \ ``<form:checkboxes>``\ を実装する。
-
-
-|
-
-
-.. _Validation_exist_in_codelist_formatter:
-
-Java Beanを使ったStringのラッパークラスによる実装
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-ここで紹介する実装はJava SE 8とHibernate Validatorの独自機能を使用しないユーザ向けである。Java SE 8とHibernate Validatorの独自機能が使用できる環境では :ref:`Validation_exist_in_codelist_javase8`\を推奨する。
-
-Java SE 8とHibernate Validatorの独自機能を使用しない場合では前述したようなコレクション内の要素に対してBean Validationのアノテーションを使用することができないため、
-Java Beanで\ ``String``\ をラップし、ネストしたBeanのプロパティに対して\ ``@ExistInCodeList``\ を付加することによって入力チェックを行う。
-
-ラッパークラスに対してSpring提供のタグライブラリを使用する場合、フォームへバインドするためには文字列とラッパークラスとの型変換を実施する必要がある。これは `Springが提供している型変換の仕組み(Formatter) <https://docs.spring.io/spring/docs/5.0.8.RELEASE/spring-framework-reference/core.html#format>`_
-を利用して実装を行うことができる。
-
-Formatterで\ ``String``\ から\ ``Role``\ 、\ ``Role``\ から\ ``String``\ への型変換を追加することで、\ ``List<String>``\ にした時と同様に、
-複雑な実装をすることなく \ ``<form:checkboxes>``\ を使用した実装ができる。
-
-主な手順は以下の通り。
-
-* チェック対象に\ ``@ExistInCodeList``\ アノテーションを設定する。
-
-* 変換用インタフェースである\ ``Formatter``\ クラスを実装したクラスを作成する。
-
-* \ ``ConversionServiceFactoryBean``\ を使用し、作成した\ ``Formatter``\ をSpringに登録する。
-
-
-また、\ ``<form:checkboxes>``\ で正常に選択済みの項目を表示するためには、Formatterの実装に加えてラッパークラスの\ ``toString``\ メソッドをオーバーライドする必要がある。
-
-\ ``<form:checkboxes>``\ は\ ``items``\ 属性で指定されたコレクションの要素を選択項目として表示し、選択項目の値が\ ``path``\ 属性で指定されたプロパティの値と一致する場合は、選択済みの項目として表示する。
-この一致性の判断には、プロパティが単項目の場合はFormatterが使用され、配列やコレクションの場合は指定されたプロパティの\ ``toString``\ メソッドの結果が使用される。
-
-正常に選択済みの項目として表示するためには、後述する例のようにラッパークラスで\ ``toString``\ メソッドをオーバーライドし、ラップしている値の文字列を返却する必要がある。
-
-.. note::
-
-    選択済みの判定方法の詳細については実際に判定を行う\ ``org.springframework.web.servlet.tags.form.SelectedValueComparator``\クラスの `javadoc <https://github.com/spring-projects/spring-framework/blob/v5.0.8.RELEASE/spring-webmvc/src/main/java/org/springframework/web/servlet/tags/form/SelectedValueComparator.java>`__ を参照されたい。
-
-
-複数項目設定可能な\ ``Role``\ (Java Bean の\ ``List``\ )に対する入力チェックを例に用いて説明する。
-
-|
-
-* フォームクラス
-
-  .. code-block:: java
-    
-    package com.example.sample.app.validation;
-
-    import java.util.List;
-
-    import javax.validation.Valid;
-    import javax.validation.constraints.NotNull;
-
-    import com.example.sample.domain.model.Role;
-
-    public class SampleForm {
-        @NotNull
-        @Valid // (1)
-        private List<Role> roles; // (2)
-
-        public List<Role> getRoles() {
-            return roles;
-        }
-
-        public void setRoles(List<Role> roles) {
-            this.roles = roles;
-        }
-    }
-
-
-  .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
-  .. list-table::
-     :header-rows: 1
-     :widths: 10 90
-
-     * - 項番
-       - 説明
-     * - | (1)
-       - | ネストしたBeanのBean Validationを有効にするために、\ ``javax.validation.Valid``\ アノテーションを付与する。
-     * - | (2)
-       - | \ ``String``\ の\ ``List``\ には\ ``@ExistInCodeList``\ を付加することはできないが、
-           Java Beanで\ ``String``\ をラップすることで、ネストしたBeanの\ ``String``\ プロパティに対して\ ``@ExistInCodeList``\ を付加することが出来るようになる。
-
-|
-
-* JavaBeanクラス
-
-  .. code-block:: java
-
-    package com.example.sample.domain.model
-
-    import org.terasoluna.gfw.common.codelist.ExistInCodeList;
-
-    public class Role {
-        @ExistInCodeList(codeListId = "CL_ROLE") // (1)
-        private String value;
-
-        public String getValue() {
-            return value;
-        }
-
-        public void setValue(String value) {
-            this.value = value;
-        }
-
-        @Override // (2)
-        public String toString() {
-            return getValue();
-        }
-    }
-
-  .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
-  .. list-table::
-     :header-rows: 1
-     :widths: 10 90
-
-     * - 項番
-       - 説明
-     * - | (1)
-       - | 入力チェックを行うために\ ``Role``\ クラスにラップしたプロパティに対して \ ``@ExistInCodeList``\ アノテーションを設定し、\ ``codeListId``\ にチェック元となるコードリストを指定する。
-     * - | (2)
-       - | 複数選択時の状態を正常に画面描画するためにオーバーライドし、ラップしている値の文字列を返却する。
-
-|
-
-型変換を行うFormatterクラスを実装し、Springに登録する。
-
-前述のとおり、入力チェックを行うために\ ``String``\ を\ ``Role``\ (Java Bean)でラップする必要がある。
-画面の入力（\ ``String``\ ）からラップした\ ``Role``\ への変換と、その逆変換を行うために、\ ``Formatter``\ による型変換の実装を行う。
-
-型変換を追加することで、\ ``String``\ と\ ``Role``\の相互変換が自動で行われる。
-Controller側では\ ``Role``\の\ ``List``\ 、JSP側では\ ``String``\ の\ ``List``\ として扱えるようになる。
-
-* \ ``Formatter``\ クラス
-
-  \ ``String``\ と\ ``Role``\ の相互変換を行う\ ``Formatter``\ の実装
-
-  .. code-block:: java
-
-    package com.example.sample.app.validation.formatter;
-
-    import java.text.ParseException;
-    import java.util.Locale;
-
-    import org.springframework.format.Formatter;
-
-    import com.example.usermanagement.domain.model.Role;
-
-    public class RoleFormatter implements Formatter<Role> { //(1)
-
-        @Override
-        public String print(Role source, Locale locale) {
-            return source.getValue();
-        }
-
-        @Override
-        public Role parse(String source, Locale locale) throws ParseException {
-            Role role = new Role();
-            role.setValue(source);
-            return role;
-        }
-
-    }
-
-  .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
-  .. list-table::
-     :header-rows: 1
-     :widths: 10 90
-
-     * - 項番
-       - 説明
-     * - | (1)
-       - | インタフェース\ ``org.springframework.format.Formatter<T>``\ を実装する。
-
-|
-
-* 独自の\ ``Formatter``\ を適用するためのBean定義
-
-  .. code-block:: xml
-
-    <!-- (1) -->
-    <bean id="conversionService"
-        class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
-        <property name="formatters">
-            <list>
-                <!-- (2) -->
-                <bean class="com.example.sample.app.validation.formatter.RoleFormatter" />
-            </list>
-        </property>
-    </bean>
-
-
-  .. code-block:: xml
-
-    <!-- (3) -->
-    <mvc:annotation-driven conversion-service="conversionService">
-        <!-- omitted -->
-    </mvc:annotation-driven>
-
-
-  .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
-  .. list-table::
-     :header-rows: 1
-     :widths: 10 90
-
-     * - 項番
-       - 説明
-     * - | (1)
-       - | \ ``FormattingConversionServiceFactoryBean``\ のBean定義を追加する。
-     * - | (2)
-       - | 作成したFormatterクラス(\ ``RoleFormatter``\ )を設定する。
-     * - | (3)
-       - | \ カスタマイズした型変換を使用するために、\ ``mvc:annotation-driven``\ の\ ``conversion-service``\ 属性に(1)で定義したBeanを設定する。
-
-|
-
-
-* JSP
-
-  .. code-block:: jsp
-
-    <form:form modelAttribute="sampleForm">
-        <!-- (1) -->
-        <form:checkboxes path="roles" items="${CL_ROLE}"/>
-        <form:errors path="roles*"/>
-        <form:button>Submit</form:button>
-    </form:form>
-
-
-  .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
-  .. list-table::
-     :header-rows: 1
-     :widths: 10 90
-
-     * - 項番
-       - 説明
-     * - | (1)
-       - |  \ ``List<String>``\ にした時と同様に \ ``<form:checkboxes>``\ を使用することができる。
-
-
-|
-
 
 .. _Validation_implement_new_constraint:
 
@@ -3218,7 +2910,7 @@ Controller側では\ ``Role``\の\ ``List``\ 、JSP側では\ ``String``\ の\ `
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 \ ``@Pattern``\ 、\ ``@Size``\ 、\ ``@Min``\ 、\ ``@Max``\ 等を組み合わせても表現できないルールは、\ ``javax.validation.ConstraintValidator``\ 実装クラスに記述する。
 
-例として、ISBN(International Standard Book Number)-13の形式をチェックするルールを挙げる。
+例として、IPv4形式のIPアドレス（Internet Protocol address）であることをチェックするルールを挙げる。
 
 
 * アノテーション
@@ -3228,6 +2920,7 @@ Controller側では\ ``Role``\の\ ``List``\ 、JSP側では\ ``String``\ の\ `
     package com.example.common.validation;
 
     import java.lang.annotation.Documented;
+    import java.lang.annotation.Repeatable;
     import java.lang.annotation.Retention;
     import java.lang.annotation.Target;
     import javax.validation.Constraint;
@@ -3237,24 +2930,28 @@ Controller側では\ ``Role``\の\ ``List``\ 、JSP側では\ ``String``\ の\ `
     import static java.lang.annotation.ElementType.FIELD;
     import static java.lang.annotation.ElementType.METHOD;
     import static java.lang.annotation.ElementType.PARAMETER;
+    import static java.lang.annotation.ElementType.TYPE_USE;
     import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
+    import com.example.common.validation.IPv4.List;
+
     @Documented
-    @Constraint(validatedBy = { ISBN13Validator.class }) // (1)
-    @Target({ METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER })
+    @Constraint(validatedBy = { IPv4Validator.class }) // (1)
+    @Target({ METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER, TYPE_USE })
     @Retention(RUNTIME)
-    public @interface ISBN13 {
-        String message() default "{com.example.common.validation.ISBN13.message}";
+    @Repeatable(List.class)
+    public @interface IPv4 {
+        String message() default "{com.example.common.validation.IPv4.message}";
 
         Class<?>[] groups() default {};
 
         Class<? extends Payload>[] payload() default {};
 
-        @Target({ METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER })
+        @Target({ METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER, TYPE_USE })
         @Retention(RUNTIME)
         @Documented
-        public @interface List {
-            ISBN13[] value();
+        @interface List {
+            IPv4[] value();
         }
     }
 
@@ -3279,10 +2976,10 @@ Controller側では\ ``Role``\の\ ``List``\ 、JSP側では\ ``String``\ の\ `
     import javax.validation.ConstraintValidator;
     import javax.validation.ConstraintValidatorContext;
 
-    public class ISBN13Validator implements ConstraintValidator<ISBN13, String> { // (1)
+    public class IPv4Validator implements ConstraintValidator<IPv4, String> { // (1)
 
         @Override
-        public void initialize(ISBN13 constraintAnnotation) { // (2)
+        public void initialize(IPv4 constraintAnnotation) { // (2)
         }
 
         @Override
@@ -3290,27 +2987,26 @@ Controller側では\ ``Role``\の\ ``List``\ 、JSP側では\ ``String``\ の\ `
             if (value == null) {
                 return true; // (4)
             }
-            return isISBN13Valid(value); // (5)
+            return isIPv4Valid(value); // (5)
         }
 
-        // This logic is written in http://en.wikipedia.org/wiki/International_Standard_Book_Number
-        static boolean isISBN13Valid(String isbn) {
-            if (isbn.length() != 13) {
+        // This logic check IPv4 address like 192.168.0.1
+        static boolean isIPv4Valid(String ipAddress) {
+            String[] octets = ipAddress.split("\\.");
+            if (octets.length != 4) {
                 return false;
             }
-            int check = 0;
             try {
-                for (int i = 0; i < 12; i += 2) {
-                    check += Integer.parseInt(isbn.substring(i, i + 1));
+                for (String octet: octets) {
+                    int intOctet = Integer.parseInt(octet);
+                    if (intOctet < 0 || 255 < intOctet) {
+                        return false;
+                    }
                 }
-                for (int i = 1; i < 12; i += 2) {
-                    check += Integer.parseInt(isbn.substring(i, i + 1)) * 3;
-                }
-                check += Integer.parseInt(isbn.substring(12));
             } catch (NumberFormatException e) {
                 return false;
             }
-            return check % 10 == 0;
+            return true;
         }
     }
 
@@ -3330,7 +3026,7 @@ Controller側では\ ``Role``\の\ ``List``\ 、JSP側では\ ``String``\ の\ `
      * - | (4)
        - | 入力値が、\ ``null``\ の場合は、正常とみなす。
      * - | (5)
-       - | ISBN-13の形式のチェックを行う。
+       - | IPv4形式のIPアドレスであることのチェックを行う。
 
 .. tip::
 
@@ -3389,7 +3085,7 @@ Controller側では\ ``Role``\の\ ``List``\ 、JSP側では\ ``String``\ の\ `
         @Target({ TYPE, ANNOTATION_TYPE })
         @Retention(RUNTIME)
         @Documented
-        public @interface List {
+        @interface List {
             Confirm[] value();
         }
     }
@@ -3470,15 +3166,7 @@ Controller側では\ ``Role``\の\ ``List``\ 、JSP側では\ ``String``\ の\ `
        - | 独自\ ``ConstraintViolation``\ オブジェクトを生成する。
          | \ ``ConstraintValidatorContext.buildConstraintViolationWithTemplate``\ で出力するメッセージを定義する。
          | \ ``ConstraintViolationBuilder.addPropertyNode``\ でエラーメッセージを出力したいフィールド名を指定する。
-         | 詳細は、\ `ConstraintValidatorContextのJavaDoc <http://docs.oracle.com/javaee/7/api/javax/validation/ConstraintValidatorContext.html>`_\ を参照されたい。
-
- .. tip::
-
-    \ ``ConstraintViolationBuilder.addPropertyNode``\ メソッドは、Bean Validation 1.1 から追加されたメソッドである。
-
-    Bean Validation 1.0では \ ``ConstraintViolationBuilder.addNode``\ というメソッドを使用していたが、Bean Validation 1.1から非推奨のAPIとなっている。
-
-    Bean Validationの非推奨APIについては、\ `Bean Validation API Document(Deprecated API) <http://docs.jboss.org/hibernate/beanvalidation/spec/1.1/api/deprecated-list.html>`_\ を参照されたい。
+         | 詳細は、\ `ConstraintValidatorContextのJavaDoc <https://javaee.github.io/javaee-spec/javadocs/index.html?javax/validation/ConstraintValidatorContext.html>`_\ を参照されたい。
 
 .. note::
 
@@ -3652,6 +3340,7 @@ Controller側では\ ``Role``\の\ ``List``\ 、JSP側では\ ``String``\ の\ `
     package com.example.sample.domain.validation;
 
     import java.lang.annotation.Documented;
+    import java.lang.annotation.Repeatable;
     import java.lang.annotation.Retention;
     import java.lang.annotation.Target;
     import javax.validation.Constraint;
@@ -3661,12 +3350,16 @@ Controller側では\ ``Role``\の\ ``List``\ 、JSP側では\ ``String``\ の\ `
     import static java.lang.annotation.ElementType.FIELD;
     import static java.lang.annotation.ElementType.METHOD;
     import static java.lang.annotation.ElementType.PARAMETER;
+    import static java.lang.annotation.ElementType.TYPE_USE;
     import static java.lang.annotation.RetentionPolicy.RUNTIME;
+
+    import com.example.sample.domain.validation.UnusedUserId.List;
 
     @Documented
     @Constraint(validatedBy = { UnusedUserIdValidator.class })
-    @Target({ METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER })
+    @Target({ METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER, TYPE_USE })
     @Retention(RUNTIME)
+    @Repeatable(List.class)
     public @interface UnusedUserId {
         String message() default "{com.example.sample.domain.validation.UnusedUserId.message}";
 
@@ -3674,10 +3367,10 @@ Controller側では\ ``Role``\の\ ``List``\ 、JSP側では\ ``String``\ の\ `
 
         Class<? extends Payload>[] payload() default {};
 
-        @Target({ METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER })
+        @Target({ METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER, TYPE_USE })
         @Retention(RUNTIME)
         @Documented
-        public @interface List {
+        @interface List {
             UnusedUserId[] value();
         }
     }
@@ -4131,7 +3824,7 @@ Bean Validationの制約アノテーションを指定する方法について�
     @ControllerAdvice
     public class ConstraintViolationExceptionHandler {
 
-        private static final Logger log = LoggerFactory.getLogger(ConstraintViolationExceptionHandler.class);
+        private static final Logger logger = LoggerFactory.getLogger(ConstraintViolationExceptionHandler.class);
 
         // (1)
         @ExceptionHandler
@@ -4171,7 +3864,7 @@ Bean Validationの制約アノテーションを指定する方法について�
     
     Springの機能によるメッセージ補完については、:ref:`Validation_message_in_validationmessages` のNoteを参照されたい。
     
-    \ ``ConstraintViolation``\ の詳細については、\ `Hibernate Validatorのリファレンス <http://docs.jboss.org/hibernate/validator/5.3/reference/en-US/html_single/#section-constraint-violation-methods>`_\ を参照されたい。
+    \ ``ConstraintViolation``\ の詳細については、\ `Hibernate Validatorのリファレンス <http://docs.jboss.org/hibernate/validator/6.0/reference/en-US/html_single/#_code_constraintviolation_code_methods>`_\ を参照されたい。
     
 
 Appendix
@@ -4180,16 +3873,16 @@ Appendix
 Hibernate Validatorが用意する入力チェックルール
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 | Hibernate ValidatorはBean Validationで定義されたアノテーションに加え、独自の検証用アノテーションを提供している。
-| 検証に使用することができるアノテーションのリストは、\ `こちら <http://docs.jboss.org/hibernate/validator/5.3/reference/en-US/html/ch02.html#section-builtin-constraints>`_\ を参照されたい。
+| 検証に使用することができるアノテーションのリストは、\ `こちら <http://docs.jboss.org/hibernate/validator/6.0/reference/en-US/html_single/#section-builtin-constraints>`_\ を参照されたい。
 
-.. _Validation_jsr303_doc:
+.. _Validation_jsr380_doc:
 
 Bean Validationのチェックルール
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 Bean Validationの標準アノテーション(\ ``javax.validation.*``\ )を以下に示す。
 
-詳細は、\ `Bean Validation specification <http://download.oracle.com/otn-pub/jcp/bean_validation-1_1-fr-eval-spec/bean-validation-specification.pdf>`_\ の7章を参照されたい。
+詳細は、\ `Bean Validation specification(Built-in Constraint definitions) <https://beanvalidation.org/2.0/spec/#builtinconstraints>`_\ を参照されたい。
 
 .. tabularcolumns:: |p{0.15\linewidth}|p{0.30\linewidth}|p{0.30\linewidth}|p{0.25\linewidth}|
 .. list-table::
@@ -4208,6 +3901,23 @@ Bean Validationの標準アノテーション(\ ``javax.validation.*``\ )を以�
 
             @NotNull
             private String id;
+            
+   * - \ ``@NotEmpty``\
+     - \ ``Collection``\ 、\ ``Map``\ 、Array、任意の\ ``CharSequence``\ インタフェースの実装クラスに適用可能
+     - | \ ``null``\ 、または空でないことを検証する。
+       | \ ``@NotNull``\  + \ ``@Min(1)``\ の組み合わせでチェックする場合は、\ ``@NotEmpty``\ を使用すること。（2.0から追加）
+     - .. code-block:: java
+
+            @NotEmpty
+            private String password;
+            
+   * - \ ``@NotBlank``\
+     - 任意の\ ``CharSequence``\ インタフェースの実装クラスに適用可能
+     - | \ ``null``\ 、空文字(\ ``""``\ )、空白のみでないことを検証する。（2.0から追加）
+     - .. code-block:: java
+
+            @NotBlank
+            private String userId;
             
    * - \ ``@Null``\
      - 任意
@@ -4259,6 +3969,38 @@ Bean Validationの標準アノテーション(\ ``javax.validation.*``\ )を以�
             @DecimalMax("99999.99")
             private BigDecimal price;
             
+   * - \ ``@Positive``\
+     - \ ``BigDecimal``\ , \ ``BigInteger``\, \ ``byte``\ , \ ``short``\ , \ ``int``\ , \ ``long``\ , \ ``float``\ , \ ``double``\ およびラッパー
+     - | 値が正の数値（0を含まない）であるかどうかを検証する。（2.0から追加）
+     - .. code-block:: java
+
+            @Positive
+            private int deposit;
+            
+   * - \ ``@PositiveOrZero``\
+     - \ ``BigDecimal``\ , \ ``BigInteger``\, \ ``byte``\ , \ ``short``\ , \ ``int``\ , \ ``long``\ , \ ``float``\ , \ ``double``\ およびラッパー
+     - | 値が正の数値（0を含む）であるかどうかを検証する。（2.0から追加）
+     - .. code-block:: java
+
+            @PositiveOrZero
+            private int deposit;
+            
+   * - \ ``@Negative``\
+     - \ ``BigDecimal``\ , \ ``BigInteger``\, \ ``byte``\ , \ ``short``\ , \ ``int``\ , \ ``long``\ , \ ``float``\ , \ ``double``\ およびラッパー
+     - | 値が負の数値（0を含まない）であるかどうかを検証する。（2.0から追加）
+     - .. code-block:: java
+
+            @Negative
+            private int deposit;
+            
+   * - \ ``@NegativeOrZero``\
+     - \ ``BigDecimal``\ , \ ``BigInteger``\, \ ``byte``\ , \ ``short``\ , \ ``int``\ , \ ``long``\ , \ ``float``\ , \ ``double``\ およびラッパー
+     - | 値が正の数値（0を含む）であるかどうかを検証する。（2.0から追加）
+     - .. code-block:: java
+
+            @NegativeOrZero
+            private int deposit;
+            
    * - \ ``@Size``\
      - \ ``String``\ (文字列の長さ), \ ``Collection``\ (要素のサイズ), \ ``Map``\ (要素のサイズ), Array(配列の長さ)
        (Hibernate Validator実装では、任意の\ ``CharSequence``\ インタフェースの実装クラスにも適用可能)
@@ -4295,22 +4037,48 @@ Bean Validationの標準アノテーション(\ ``javax.validation.*``\ )を以�
             private boolean checked;
             
    * - \ ``@Future``\
-     - \ ``Date``\ , \ ``Calendar``\
-       (Hibernate Validator実装ではJoda-Timeのクラスにも適用可能)
+     - \ ``Date``\ , \ ``Calendar``\ および\ ``JSR-310 Date and Time API``\ で提供されるクラス
+       (Hibernate Validator実装ではJoda-Timeのクラスにも適用可能。詳細は、「`@FutureアノテーションのJavaDoc <https://javaee.github.io/javaee-spec/javadocs/javax/validation/constraints/Future.html>`_」を参照されたい。)
      - 未来日付であるか検証する。
      - .. code-block:: java
 
             @Future
             private Date eventDate;
             
+   * - \ ``@FutureOrPresent``\
+     - \ ``Date``\ , \ ``Calendar``\ および\ ``JSR-310 Date and Time API``\ で提供されるクラス
+       (Hibernate Validator実装ではJoda-Timeのクラスにも適用可能。詳細は、「`@FutureOrPresentアノテーションのJavaDoc <https://javaee.github.io/javaee-spec/javadocs/javax/validation/constraints/FutureOrPresent.html>`_」を参照されたい。)
+     - | 現在または未来日付であるか検証する。（2.0から追加）
+     - .. code-block:: java
+
+            @FutureOrPresent
+            private Date eventDate;
+            
    * - \ ``@Past``\
-     - \ ``Date``\ , \ ``Calendar``\
-       (Hibernate Validator実装ではJoda-Timeのクラスにも適用可能)
+     - \ ``Date``\ , \ ``Calendar``\ および\ ``JSR-310 Date and Time API``\ で提供されるクラス
+       (Hibernate Validator実装ではJoda-Timeのクラスにも適用可能。詳細は、「`@PastアノテーションのJavaDoc <https://javaee.github.io/javaee-spec/javadocs/javax/validation/constraints/Past.html>`_」を参照されたい。)
      - 過去日付であるか検証する。
      - .. code-block:: java
 
             @Past
             private Date eventDate;
+            
+   * - \ ``@PastOrPresent``\
+     - \ ``Date``\ , \ ``Calendar``\ および\ ``JSR-310 Date and Time API``\ で提供されるクラス
+       (Hibernate Validator実装ではJoda-Timeのクラスにも適用可能。詳細は、「`@PastOrPresentアノテーションのJavaDoc <https://javaee.github.io/javaee-spec/javadocs/javax/validation/constraints/PastOrPresent.html>`_」を参照されたい。)
+     - | 現在または過去日付であるか検証する。（2.0から追加）
+     - .. code-block:: java
+
+            @PastOrPresent
+            private Date eventDate;
+            
+   * - \ ``@Email``\
+     - 任意の\ ``CharSequence``\ インタフェースの実装クラスに適用可能
+     - | E-mailアドレスとして妥当であること検証する。（2.0から追加）
+     - .. code-block:: java
+
+            @Email
+            private String email;
             
    * - \ ``@Valid``\
      - 任意の非プリミティブ型
@@ -4327,14 +4095,6 @@ Bean Validationの標準アノテーション(\ ``javax.validation.*``\ )を以�
 
    \newpage
 
-.. tip::
-
-     \ ``@DecimalMin``\  と \ ``@DecimalMax``\ アノテーションの \ ``inclusive``\ 属性は、
-     Bean Validation 1.1 から追加された属性である。
-
-     \ ``inclusive``\ 属性のデフォルト値には \ ``true``\ (指定した閾値と同じ値を許容する)が指定されており、
-     Bean Validation 1.0 との互換性が保たれている。
-
 .. warning::
 
      \ ``@Size``\ アノテーションでは、サロゲートペアと呼ばれるchar型2つ（32ビット）で表される文字に対する考慮がされていない。
@@ -4342,6 +4102,23 @@ Bean Validationの標準アノテーション(\ ``javax.validation.*``\ )を以�
      サロゲートペアを含む文字列をチェック対象とした場合、カウントした文字数が実際の入力文字数より多くカウントされる可能性があるため注意すること。
 
      サロゲートペアを含む文字列の文字列長については、 :ref:`StringProcessingHowToGetSurrogatePairStringLength` を参照されたい。
+
+.. warning::
+
+    E-mailの形式は\ `RFC2822 <https://www.ietf.org/rfc/rfc2822.txt>`_\ で定義されているが、\ ``@Email``\は厳密にRFC2822に準拠していることをチェックするものではない。
+
+    例えばマルチバイト文字（全角文字）を含んでいても\ ``@Email``\でのチェックをパスすることが確認されている。
+    また、実際に利用されているEmailアドレスも、必ずしもRFC2822に厳密に準拠しているわけではない。
+
+    これらの注意点を考慮した上で、利用・サポートするSMTPサーバなどによって適切なルールでの入力チェックを実装することを推奨する。
+    実装の際は、\ :ref:`Validation_convine_existing_constraint`\ を参照されたい。
+
+.. note::
+
+    Bean Validationが提供する\ ``ClockProvider``\を実装することで、
+    \ ``@Past``\、\ ``@Future``\、\ ``@PastOrPresent``\、\ ``@FutureOrPresent``\の基準となる日付を変更することが出来る。
+    なお、実装した\ ``ClockProvider``\を適用するには、\ ``LocalValidatorFactoryBean``\ の継承クラスを作成し、\ ``postProcessConfiguration``\ メソッドをオーバーライドすれば良い。
+    \ ``ClockProvider``\を実装したクラスの例に関しては、\ `Hibernate Validator Reference Guide(ClockProvider and temporal validation tolerance) <http://docs.jboss.org/hibernate/validator/6.0/reference/en-US/html_single/#section-clock-provider>`_\ を参照されたい。
 
 
 .. _Validation_validator_list:
@@ -4351,7 +4128,7 @@ Hibernate Validatorのチェックルール
 
 Hibernate Validatorの代表的なアノテーション(\ ``org.hibernate.validator.constraints.*``\ )を以下に示す。
 
-詳細は、\ `Hibernate Validator仕様 <http://docs.jboss.org/hibernate/validator/5.3/reference/en-US/html/ch02.html#validator-defineconstraints-hv-constraints>`_\ を参照されたい。
+詳細は、\ `Hibernate Validator仕様 <http://docs.jboss.org/hibernate/validator/6.0/reference/en-US/html_single/#validator-defineconstraints-hv-constraints>`_\ を参照されたい。
 
 .. tabularcolumns:: |p{0.15\linewidth}|p{0.30\linewidth}|p{0.30\linewidth}|p{0.25\linewidth}|
 .. list-table::
@@ -4371,13 +4148,16 @@ Hibernate Validatorの代表的なアノテーション(\ ``org.hibernate.valida
             @CreditCardNumber
             private String cardNumber;
             
-   * - \ ``@Email``\
+   * - \ ``@ISBN``\
      - 任意の\ ``CharSequence``\ インタフェースの実装クラスに適用可能
-     - E-mailアドレスとして妥当であること検証する。
+     - | ISBNの形式として妥当であること（番号の長さとチェックディジット）を検証する。
+       | \ ``type``\ を指定する事で、ISBNの形式（ISBN-10とISBN-13）の選択が出来る。デフォルトではISBN-13となる。
+       | 検証時には、ISBN以外のすべての文字（0-9までの数字とX以外の文字）は無視される。
+       | このため、番号の一部を"\ ``-``\"を利用して区切ることが出来る。（例：978-161-729-045-9）
      - .. code-block:: java
 
-            @Email
-            private String email;
+            @ISBN
+            private String bookNumber;
             
    * - \ ``@URL``\
      - 任意の\ ``CharSequence``\ インタフェースの実装クラスに適用可能
@@ -4388,47 +4168,31 @@ Hibernate Validatorの代表的なアノテーション(\ ``org.hibernate.valida
             @URL
             private String url;
             
-   * - \ ``@NotBlank``\
-     - 任意の\ ``CharSequence``\ インタフェースの実装クラスに適用可能
-     - \ ``null``\ 、空文字(\ ``""``\ )、空白のみでないことを検証する。
-     - .. code-block:: java
-
-            @NotBlank
-            private String userId;
-            
-   * - \ ``@NotEmpty``\
-     - \ ``Collection``\ 、\ ``Map``\ 、Array、任意の\ ``CharSequence``\ インタフェースの実装クラスに適用可能
-     - | \ ``null``\ 、または空でないことを検証する。
-       | \ ``@NotNull``\  + \ ``@Min(1)``\ の組み合わせでチェックする場合は、\ ``@NotEmpty``\ を使用すること。
-     - .. code-block:: java
-
-            @NotEmpty
-            private String password;
 
 .. warning::
 
-    E-mailの形式は\ `RFC2822 <https://www.ietf.org/rfc/rfc2822.txt>`_\ で定義されているが、\ ``@Email``\は厳密にRFC2822に準拠していることをチェックするものではない。
-
-    例えばマルチバイト文字（全角文字）を含んでいても\ ``@Email``\でのチェックをパスすることが確認されている。
-    また、実際に利用されているEmailアドレスも、必ずしもRFC2822に厳密に準拠しているわけではない。
-
-    これらの注意点を考慮した上で、利用・サポートするSMTPサーバなどによって適切なルールでの入力チェックを実装することを推奨する。
-    実装の際は、\ :ref:`Validation_convine_existing_constraint`\ を参照されたい。
+    従来、Hibernate Validatorの独自アノテーションであった\ ``@Email``\、\ ``@NotBlank``\、\ ``@NotEmpty``\は、Bean Validation 2.0よりデフォルトで提供されるようになった。
+    これに伴い、Hibernate Validator 6.0より、Hibernate Validatorが提供する\ ``@Email``\、\ ``@NotBlank``\、\ ``@NotEmpty``\は非推奨となった。
+    引き続き使用することは出来るが、Bean Validationで提供されるアノテーションを使用することを推奨する。
 
 .. tip::
 
      \ ``@URL``\ にて、JVMがサポートしていないプロトコルについても妥当として検証したい場合、Hibernateから提供されている\ ``org.hibernate.validator.constraintvalidators.RegexpURLValidator``\ を使用する。
      当該クラスは\ ``@URL``\ アノテーションに対応するValidatorクラスで、URL形式であるかを正規表現で検証しており、JVMがサポートしていないプロトコルについても妥当として検証可能である。
 
-     * アプリケーション全体の\ ``@URL``\ のチェックルールを変更してもよい場合には、\ `JavaDoc <https://docs.jboss.org/hibernate/validator/5.3/api/org/hibernate/validator/constraints/URL.html>`_\ に記載されているように、
+     * アプリケーション全体の\ ``@URL``\ のチェックルールを変更してもよい場合には、\ `JavaDoc <https://docs.jboss.org/hibernate/validator/6.0/api/org/hibernate/validator/constraints/URL.html>`_\ に記載されているように、
        XMLにてValidatorクラスを\ ``RegexpURLValidator``\ に変更する。
      * 一部の項目だけに正規表現による検証を適用し、\ ``@URL``\ はデフォルトのルールを使用したい場合には、新規アノテーション、および\ ``RegexpURLValidator``\ と同様の検証を行う\ ``javax.validation.ConstraintValidator``\ 実装クラスを作成し、
        必要な項目に作成したアノテーションによる検証を適用する。
 
      など、用途に応じた適用を行えばよい。
 
-     XMLによるチェックルール変更の詳細については\ `Hibernateのリファレンス <https://docs.jboss.org/hibernate/validator/5.3/reference/en-US/html/ch07.html#section-configuration-validation-xml>`_\ を、
+     XMLによるチェックルール変更の詳細については\ `Hibernateのリファレンス <https://docs.jboss.org/hibernate/validator/6.0/reference/en-US/html_single/#section-configuration-validation-xml>`_\ を、
      新規アノテーションの作成方法については、\ :ref:`Validation_implement_new_constraint`\ をそれぞれ参照されたい。
+
+.. note::
+
+     \ ``@ISBN``\ アノテーションはHibernate Validator 6.0.6.Finalより追加された。
 
 .. _Validation_default_message_in_hibernate_validator:
 
@@ -4439,39 +4203,59 @@ hibernate-validator-<version>.jar内のorg/hibernate/validatorに、ValidationMe
 
 .. code-block:: properties
 
-  javax.validation.constraints.AssertFalse.message = must be false
-  javax.validation.constraints.AssertTrue.message  = must be true
-  javax.validation.constraints.DecimalMax.message  = must be less than ${inclusive == true ? 'or equal to ' : ''}{value}
-  javax.validation.constraints.DecimalMin.message  = must be greater than ${inclusive == true ? 'or equal to ' : ''}{value}
-  javax.validation.constraints.Digits.message      = numeric value out of bounds (<{integer} digits>.<{fraction} digits> expected)
-  javax.validation.constraints.Future.message      = must be in the future
-  javax.validation.constraints.Max.message         = must be less than or equal to {value}
-  javax.validation.constraints.Min.message         = must be greater than or equal to {value}
-  javax.validation.constraints.NotNull.message     = may not be null
-  javax.validation.constraints.Null.message        = must be null
-  javax.validation.constraints.Past.message        = must be in the past
-  javax.validation.constraints.Pattern.message     = must match "{regexp}"
-  javax.validation.constraints.Size.message        = size must be between {min} and {max}
+  javax.validation.constraints.AssertFalse.message     = must be false
+  javax.validation.constraints.AssertTrue.message      = must be true
+  javax.validation.constraints.DecimalMax.message      = must be less than ${inclusive == true ? 'or equal to ' : ''}{value}
+  javax.validation.constraints.DecimalMin.message      = must be greater than ${inclusive == true ? 'or equal to ' : ''}{value}
+  javax.validation.constraints.Digits.message          = numeric value out of bounds (<{integer} digits>.<{fraction} digits> expected)
+  javax.validation.constraints.Email.message           = must be a well-formed email address
+  javax.validation.constraints.Future.message          = must be a future date
+  javax.validation.constraints.FutureOrPresent.message = must be a date in the present or in the future
+  javax.validation.constraints.Max.message             = must be less than or equal to {value}
+  javax.validation.constraints.Min.message             = must be greater than or equal to {value}
+  javax.validation.constraints.Negative.message        = must be less than 0
+  javax.validation.constraints.NegativeOrZero.message  = must be less than or equal to 0
+  javax.validation.constraints.NotBlank.message        = must not be blank
+  javax.validation.constraints.NotEmpty.message        = must not be empty
+  javax.validation.constraints.NotNull.message         = must not be null
+  javax.validation.constraints.Null.message            = must be null
+  javax.validation.constraints.Past.message            = must be a past date
+  javax.validation.constraints.PastOrPresent.message   = must be a date in the past or in the present
+  javax.validation.constraints.Pattern.message         = must match "{regexp}"
+  javax.validation.constraints.Positive.message        = must be greater than 0
+  javax.validation.constraints.PositiveOrZero.message  = must be greater than or equal to 0
+  javax.validation.constraints.Size.message            = size must be between {min} and {max}
 
   org.hibernate.validator.constraints.CreditCardNumber.message        = invalid credit card number
+  org.hibernate.validator.constraints.Currency.message                = invalid currency (must be one of {value})
   org.hibernate.validator.constraints.EAN.message                     = invalid {type} barcode
   org.hibernate.validator.constraints.Email.message                   = not a well-formed email address
+  org.hibernate.validator.constraints.ISBN.message                    = invalid ISBN
   org.hibernate.validator.constraints.Length.message                  = length must be between {min} and {max}
-  org.hibernate.validator.constraints.LuhnCheck.message               = The check digit for ${validatedValue} is invalid, Luhn Modulo 10 checksum failed
-  org.hibernate.validator.constraints.Mod10Check.message              = The check digit for ${validatedValue} is invalid, Modulo 10 checksum failed
-  org.hibernate.validator.constraints.Mod11Check.message              = The check digit for ${validatedValue} is invalid, Modulo 11 checksum failed
-  org.hibernate.validator.constraints.ModCheck.message                = The check digit for ${validatedValue} is invalid, ${modType} checksum failed
+  org.hibernate.validator.constraints.CodePointLength.message         = length must be between {min} and {max}
+  org.hibernate.validator.constraints.LuhnCheck.message               = the check digit for ${validatedValue} is invalid, Luhn Modulo 10 checksum failed
+  org.hibernate.validator.constraints.Mod10Check.message              = the check digit for ${validatedValue} is invalid, Modulo 10 checksum failed
+  org.hibernate.validator.constraints.Mod11Check.message              = the check digit for ${validatedValue} is invalid, Modulo 11 checksum failed
+  org.hibernate.validator.constraints.ModCheck.message                = the check digit for ${validatedValue} is invalid, ${modType} checksum failed
   org.hibernate.validator.constraints.NotBlank.message                = may not be empty
   org.hibernate.validator.constraints.NotEmpty.message                = may not be empty
   org.hibernate.validator.constraints.ParametersScriptAssert.message  = script expression "{script}" didn't evaluate to true
   org.hibernate.validator.constraints.Range.message                   = must be between {min} and {max}
   org.hibernate.validator.constraints.SafeHtml.message                = may have unsafe html content
   org.hibernate.validator.constraints.ScriptAssert.message            = script expression "{script}" didn't evaluate to true
+  org.hibernate.validator.constraints.UniqueElements.message          = must only contain unique elements
   org.hibernate.validator.constraints.URL.message                     = must be a valid URL
 
   org.hibernate.validator.constraints.br.CNPJ.message                 = invalid Brazilian corporate taxpayer registry number (CNPJ)
   org.hibernate.validator.constraints.br.CPF.message                  = invalid Brazilian individual taxpayer registry number (CPF)
   org.hibernate.validator.constraints.br.TituloEleitoral.message      = invalid Brazilian Voter ID card number
+
+  org.hibernate.validator.constraints.pl.REGON.message                = invalid Polish Taxpayer Identification Number (REGON)
+  org.hibernate.validator.constraints.pl.NIP.message                  = invalid VAT Identification Number (NIP)
+  org.hibernate.validator.constraints.pl.PESEL.message                = invalid Polish National Identification Number (PESEL)
+
+  org.hibernate.validator.constraints.time.DurationMax.message        = must be shorter than${inclusive == true ? ' or equal to' : ''}${days == 0 ? '' : days == 1 ? ' 1 day' : ' ' += days += ' days'}${hours == 0 ? '' : hours == 1 ? ' 1 hour' : ' ' += hours += ' hours'}${minutes == 0 ? '' : minutes == 1 ? ' 1 minute' : ' ' += minutes += ' minutes'}${seconds == 0 ? '' : seconds == 1 ? ' 1 second' : ' ' += seconds += ' seconds'}${millis == 0 ? '' : millis == 1 ? ' 1 milli' : ' ' += millis += ' millis'}${nanos == 0 ? '' : nanos == 1 ? ' 1 nano' : ' ' += nanos += ' nanos'}
+  org.hibernate.validator.constraints.time.DurationMin.message        = must be longer than${inclusive == true ? ' or equal to' : ''}${days == 0 ? '' : days == 1 ? ' 1 day' : ' ' += days += ' days'}${hours == 0 ? '' : hours == 1 ? ' 1 hour' : ' ' += hours += ' hours'}${minutes == 0 ? '' : minutes == 1 ? ' 1 minute' : ' ' += minutes += ' minutes'}${seconds == 0 ? '' : seconds == 1 ? ' 1 second' : ' ' += seconds += ' seconds'}${millis == 0 ? '' : millis == 1 ? ' 1 milli' : ' ' += millis += ' millis'}${nanos == 0 ? '' : nanos == 1 ? ' 1 nano' : ' ' += nanos += ' nanos'}
 
 
 .. _Validation_terasoluna_gfw:
@@ -4486,7 +4270,7 @@ hibernate-validator-<version>.jar内のorg/hibernate/validatorに、ValidationMe
 terasoluna-gfw-commonのチェックルール
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-\ `terasoluna-gfw-common <https://github.com/terasolunaorg/terasoluna-gfw/tree/5.5.0.RC7/terasoluna-gfw-common-libraries/terasoluna-gfw-common>`_\ が提供するアノテーション(\ ``org.terasoluna.gfw.common.codelist.*``\ )を以下に示す。
+\ `terasoluna-gfw-common <https://github.com/terasolunaorg/terasoluna-gfw/tree/5.5.1.RELEASE/terasoluna-gfw-common-libraries/terasoluna-gfw-common>`_\ が提供するアノテーション(\ ``org.terasoluna.gfw.common.codelist.*``\ )を以下に示す。
 
 .. tabularcolumns:: |p{0.15\linewidth}|p{0.30\linewidth}|p{0.30\linewidth}|p{0.25\linewidth}|
 .. list-table::
@@ -4501,6 +4285,8 @@ terasoluna-gfw-commonのチェックルール
       - | \ ``Character``\
         | \ ``CharSequence``\ の実装クラス
         | (\ ``String``\, \ ``StringBuilder``\ など)
+        | \ ``Number``\ の継承クラス
+        | (\ ``Integer``\, \ ``Long``\ など) **5.4.2から追加**
       - 値がコードリストに含まれているかどうかを検証する。
       - \ :ref:`@ExistInCodeList <codelist-validate>`\ 参照
 
@@ -4508,7 +4294,7 @@ terasoluna-gfw-commonのチェックルール
 terasoluna-gfw-codepointsのチェックルール
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-\ `terasoluna-gfw-codepoints <https://github.com/terasolunaorg/terasoluna-gfw/tree/5.5.0.RC7/terasoluna-gfw-common-libraries/terasoluna-gfw-codepoints>`_\ が提供するアノテーション(\ ``org.terasoluna.gfw.common.codepoints.*``\ )を以下に示す。なお、\ ``terasoluna-gfw-codepoints``\ はバージョン5.1.0.RELEASE以上で利用することができる。
+\ `terasoluna-gfw-codepoints <https://github.com/terasolunaorg/terasoluna-gfw/tree/5.5.1.RELEASE/terasoluna-gfw-common-libraries/terasoluna-gfw-codepoints>`_\ が提供するアノテーション(\ ``org.terasoluna.gfw.common.codepoints.*``\ )を以下に示す。なお、\ ``terasoluna-gfw-codepoints``\ はバージョン5.1.0.RELEASE以上で利用することができる。
 
 .. tabularcolumns:: |p{0.15\linewidth}|p{0.30\linewidth}|p{0.30\linewidth}|p{0.25\linewidth}|
 .. list-table::
@@ -4530,7 +4316,7 @@ terasoluna-gfw-codepointsのチェックルール
 terasoluna-gfw-validatorのチェックルール
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-\ `terasoluna-gfw-validator <https://github.com/terasolunaorg/terasoluna-gfw/tree/5.5.0.RC7/terasoluna-gfw-common-libraries/terasoluna-gfw-validator>`_\ が提供するアノテーション(\ ``org.terasoluna.gfw.common.validator.constraints.*``\ )を以下に示す。なお、\ ``terasoluna-gfw-validator``\ はバージョン5.1.0.RELEASE以上で利用することができる。
+\ `terasoluna-gfw-validator <https://github.com/terasolunaorg/terasoluna-gfw/tree/5.5.1.RELEASE/terasoluna-gfw-common-libraries/terasoluna-gfw-validator>`_\ が提供するアノテーション(\ ``org.terasoluna.gfw.common.validator.constraints.*``\ )を以下に示す。なお、\ ``terasoluna-gfw-validator``\ はバージョン5.1.0.RELEASE以上で利用することができる。
 
 .. tabularcolumns:: |p{0.15\linewidth}|p{0.30\linewidth}|p{0.30\linewidth}|p{0.25\linewidth}|
 .. list-table::
@@ -4550,7 +4336,12 @@ terasoluna-gfw-validatorのチェックルール
         | **[アノテーションの属性]**
         | \ ``long value``\  - バイト長の最小値を指定する。
         | \ ``String charset``\  - 値をバイトシーケンスに符号化する際に使用する文字セットを指定する。デフォルト値は\ ``UTF-8``\ 。
-      - \ ``@ByteMax``\ 参照
+      - .. code-block:: java
+
+             @ByteMin(value = 1,
+                     charset = "Shift_JIS")
+             private String id;
+
     * - \ ``@ByteMax``\
       - | \ ``CharSequence``\ の実装クラス
         | (\ ``String``\, \ ``StringBuilder``\ など)
@@ -4561,9 +4352,22 @@ terasoluna-gfw-validatorのチェックルール
         | \ ``String charset``\  - 値をバイトシーケンスに符号化する際に使用する文字セットを指定する。デフォルト値は\ ``UTF-8``\ 。
       - .. code-block:: java
 
-             @ByteMin(1)
-             @ByteMax(value = 100,
-                     charset = "Shift_JIS")
+             @ByteMax(100)
+             private String id;
+
+    * - \ ``@ByteSize``\
+      - | \ ``CharSequence``\ の実装クラス
+        | (\ ``String``\, \ ``StringBuilder``\ など)
+      - | 値のバイト長が最小値と最大値の範囲内であることを検証する。（**5.4.2から追加**）
+        | \ ``@ByteMin``\ と \ ``@ByteMax``\ を組み合わせて使う場合は、こちらを使うことを推奨する。
+        |
+        | **[アノテーションの属性]**
+        | \ ``long min``\  - バイト長の最小値を指定する。デフォルト値は\ ``0``\ 。
+        | \ ``long max``\  - バイト長の最大値を指定する。デフォルト値は\ ``Long.MAX_VALUE``\ 。
+        | \ ``String charset``\  - 値をバイトシーケンスに符号化する際に使用する文字セットを指定する。デフォルト値は\ ``UTF-8``\ 。
+      - .. code-block:: java
+
+             @ByteSize(min = 1, max = 100)
              private String id;
 
     * - \ ``@Compare``\
@@ -4724,6 +4528,7 @@ terasoluna-gfw-validatorのチェックルール
   # (1)
   org.terasoluna.gfw.common.validator.constraints.ByteMin.message = must be greater than or equal to {value} bytes
   org.terasoluna.gfw.common.validator.constraints.ByteMax.message = must be less than or equal to {value} bytes
+  org.terasoluna.gfw.common.validator.constraints.ByteSize.message = must be between {min} and {max} bytes
   org.terasoluna.gfw.common.validator.constraints.Compare.message = invalid combination of {left} and {right}
 
 .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
@@ -4742,7 +4547,7 @@ terasoluna-gfw-validatorのチェックルール
 
     Bean Validationでは、アノテーションの属性値の不正により検証が実行できない場合、\ ``javax.validation.ValidationException``\ がスローされる。スタックトレースに出力される原因を参照し、属性値を適切な値に修正すること。
     
-    詳細は、\ `Bean Validation specification <http://download.oracle.com/otn-pub/jcp/bean_validation-1_1-fr-eval-spec/bean-validation-specification.pdf>`_\ の9章を参照されたい。
+    詳細は、\ `Bean Validation specification(Exception model) <https://beanvalidation.org/2.0/spec/#exception>`_\ を参照されたい。
 
 
 .. _Validation_terasoluna_gfw_how_to_extend:
@@ -4797,7 +4602,7 @@ terasoluna-gfw-validatorのチェックルール
         @Documented
         @Target({ TYPE, ANNOTATION_TYPE })
         @Retention(RUNTIME)
-        public @interface List {
+        @interface List {
             Confirm[] value();
         }
     }
@@ -4936,7 +4741,7 @@ application-messages.propertiesに以下の定義を行った場合、
 
 .. tip::
 
-  メッセージキーのルールの詳細は、\ `DefaultMessageCodesResolverのJavadoc <https://docs.spring.io/spring/docs/5.0.8.RELEASE/javadoc-api/org/springframework/validation/DefaultMessageCodesResolver.html>`_\ を参照されたい。
+  メッセージキーのルールの詳細は、\ `DefaultMessageCodesResolverのJavadoc <https://docs.spring.io/spring/docs/5.1.4.RELEASE/javadoc-api/org/springframework/validation/DefaultMessageCodesResolver.html>`_\ を参照されたい。
 
 
 .. _Validation_string_trimmer_editor:

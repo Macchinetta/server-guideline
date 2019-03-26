@@ -32,7 +32,7 @@ Spring Securityは、セキュリティ関連のレスポンスヘッダを出�
 デフォルトでサポートしているセキュリティヘッダ
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Spring Securityがデフォルトでサポートしているレスポンスヘッダは以下の7つである。
+Spring Securityがデフォルトでサポートしているレスポンスヘッダは以下の9つである。
 
 * Cache-Control (Pragma, Expires)
 * X-Frame-Options
@@ -41,6 +41,8 @@ Spring Securityがデフォルトでサポートしているレスポンスヘ�
 * Strict-Transport-Security
 * Content-Security-Policy(Content-Security-Policy-Report-Only)
 * Public-Key-Pins(Public-Key-Pins-Report-Only)
+* Referrer-Policy
+* Feature-Policy
 
 .. tip:: **ブラウザのサポート状況**
 
@@ -50,6 +52,15 @@ Spring Securityがデフォルトでサポートしているレスポンスヘ�
     * https://www.owasp.org/index.php/Clickjacking_Defense_Cheat_Sheet (X-Frame-Options)
     * https://www.owasp.org/index.php/OWASP_Secure_Headers_Project#tab=Headers (X-Content-Type-Options, X-XSS-Protection, Content-Security-Policy, Public-Key-Pins)
 
+.. note:: **Referrer-Policyヘッダ**
+
+    Spring Security 4.2より、ブラウザに\ `Referrer Policy <https://www.w3.org/TR/referrer-policy/>`_\ を指示するためのヘッダである\ `Referrer-Policyヘッダ <https://docs.spring.io/spring-security/site/docs/5.1.3.RELEASE/reference/htmlsingle/#headers-referrer>`_\ がサポートされた。
+    詳細については次版以降の開発ガイドラインで記載する予定である。
+
+.. note:: **Feature-Policyヘッダ**
+
+    Spring Security 5.1より、ブラウザに\ `Feature-Policy <https://w3c.github.io/webappsec-feature-policy/>`_\ を指示するためのヘッダである\ `Feature-Policyヘッダ <https://docs.spring.io/spring-security/site/docs/5.1.3.RELEASE/reference/htmlsingle/#headers-feature>`_\ がサポートされた。
+    詳細については次版以降の開発ガイドラインで記載する予定である。
 
 Cache-Control
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -219,10 +230,13 @@ How to use
 
 前述のセキュリティヘッダ出力機能を適用する方法を説明する。
 
-セキュリティヘッダ出力機能は、Spring 3.2から追加された機能で以下のセキュリティヘッダ以外はデフォルトで適用されるようになっている。 
+セキュリティヘッダ出力機能は、Spring 3.2から追加された機能であり、以下のセキュリティヘッダがデフォルトで適用されるようになっている。
 
-* Content-Security-Policy
-* Public-Key-Pins
+* Cache-Control (Pragma, Expires)
+* X-Frame-Options
+* X-Content-Type-Options
+* X-XSS-Protection
+* Strict-Transport-Security
 
 そのため、デフォルトで適用されるセキュリティヘッダ出力機能を有効にするための特別な定義は不要である。 
 なお、デフォルトで適用されるセキュリティヘッダ出力機能を適用したくない場合は、明示的に無効化する必要がある。 
@@ -312,7 +326,7 @@ How to use
 
 上記の例だと、Cache-Control関連のヘッダだけが出力されなくなる。 
 
-セキュリティヘッダの詳細については\ `公式リファレンス <https://docs.spring.io/spring-security/site/docs/5.0.7.RELEASE/reference/htmlsingle/#default-security-headers>`_\ を参照されたい。
+セキュリティヘッダの詳細については\ `公式リファレンス <https://docs.spring.io/spring-security/site/docs/5.1.3.RELEASE/reference/htmlsingle/#default-security-headers>`_\ を参照されたい。
 
 .. note:: **Spring Securityによるセキュリティヘッダ付与の仕様変更**
 
@@ -325,7 +339,7 @@ How to use
 
     ``DispatcherServlet``\ 内の処理で付与したセキュリティヘッダがSpring Securityの\ ``HeaderWriter``\ により上書き（追加）される問題(\ `spring-projects/spring-security/issues/#5193 <https://github.com/spring-projects/spring-security/issues/5193>`_\ )が報告されている。
     Spring Securityでデフォルトのセキュリティヘッダを付与するが、一部のユースケースのみController等で個別にセキュリティヘッダを付与したい場合は、この問題の影響を受けることになる。
-    ただし、\ `CacheControlHeaderWriter <https://github.com/spring-projects/spring-security/blob/5.0.7.RELEASE/web/src/main/java/org/springframework/security/web/header/writers/CacheControlHeadersWriter.java#L62-L63>`_\ は既に付与されているヘッダを優先する実装となっているため、キャッシュ制御に関するヘッダ（Cache-Control, Pragma, Expires）ではこの問題は発生しない。
+    ただし、\ `CacheControlHeaderWriter <https://github.com/spring-projects/spring-security/blob/5.1.3.RELEASE/web/src/main/java/org/springframework/security/web/header/writers/CacheControlHeadersWriter.java#L62-L63>`_\ は既に付与されているヘッダを優先する実装となっているため、キャッシュ制御に関するヘッダ（Cache-Control, Pragma, Expires）ではこの問題は発生しない。
 
 
 セキュリティヘッダのオプション指定
@@ -338,6 +352,8 @@ How to use
 * Strict-Transport-Security
 * Content-Security-Policy(Content-Security-Policy-Report-Only)
 * Public-Key-Pins(Public-Key-Pins-Report-Only)
+* Referrer-Policy
+* Feature-Policy
 
 Spring Securityのbean定義を変更することで、各要素の属性にオプション\ [#fSpringSecurityLinkageWithBrowser2]_\ を指定することができる。
 
@@ -347,7 +363,7 @@ Spring Securityのbean定義を変更することで、各要素の属性にオ�
 
     <sec:frame-options policy="SAMEORIGIN" />
 
-.. [#fSpringSecurityLinkageWithBrowser2] 各要素で指定できるオプションは https://docs.spring.io/spring-security/site/docs/5.0.7.RELEASE/reference/htmlsingle/#nsa-headers を参照されたい。
+.. [#fSpringSecurityLinkageWithBrowser2] 各要素で指定できるオプションは https://docs.spring.io/spring-security/site/docs/5.1.3.RELEASE/reference/htmlsingle/#nsa-headers を参照されたい。
 
 カスタムヘッダの出力
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -424,13 +440,17 @@ Spring Securityは、\ ``RequestMatcher``\ インタフェースの仕組みを�
     * - | (2)
       - | \ ``<sec:headers>``\ 要素の子要素として\ ``<sec:header>`` を追加し、\ ``ref``\ 属性に(1)で定義した\ ``HeaderWriter``\ のbeanを指定する。
 
-.. warning:: **アプリケーションサーバによっては指定したパスが意図した通りに認識されない問題**
+.. warning:: **指定したパスが意図した通りに認識されない問題**
 
-    一部のアプリケーションサーバでは、上記の定義例のように\ ``AntPathRequestMatcher``\ で指定したリクエストパスが意図した通りに認識されない場合がある。
-    Spring Securityはレスポンスのコミット時にセキュリティヘッダを付与するが、一部のアプリケーションサーバではJSPへのフォワード時にサーブレットパスをJSPのパスに変更しており、元のリクエストパスとは合致しなくなるため、ヘッダを付与する処理が行われない。
+    \ ``<sec:http>``\と\ ``DelegatingRequestMatcherHeaderWriter``\がパスマッチングを行うタイミングの違いにより、指定したパスが意図した通りに認識されない場合がある。
+    具体的には、\ ``DelegatingRequestMatcherHeaderWriter``\に指定されたパスはセキュリティヘッダ書き込み時（レスポンスのコミット時およびインクルード時）にリクエストパスとマッチングされる。
+    このため、リクエストのフォワードによりリクエストパスが変更された場合、当初リクエストのパスとマッチングが行われないため、意図したパスでセキュリティヘッダが出力されなくなる。
 
-    なお、現時点でWebLogic 12.2.1.2.0でこの問題が発生することが確認されているが、当該アプリケーションサーバ以外においても同様の問題が発生する可能性がある。
-    ``AntPathRequestMatcher``\ で指定するパスは、アプリケーションサーバの仕様に合わせて適切に設定する必要がある。
+    なお、Spring Security 5.0.10および5.1.2でインクルード時にセキュリティヘッダの書き込みが行われるよう変更された。
+
+    特にTilesを利用している場合は、Tilesの処理によりテンプレートJSPにフォワードされるため、\ ``DelegatingRequestMatcherHeaderWriter``\との併用ができないことが確認されている。
+
+    詳細は https://github.com/spring-projects/spring-security/issues/6338 を参照されたい。
 
 
 .. raw:: latex

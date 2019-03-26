@@ -105,7 +105,7 @@ How to use
         | location属性には、カンマ区切りで複数のパスを指定することができる。
         | 上記設定により、クラスパス中のMETA-INF/springディレクトリ配下のpropertiesファイルを読み込む。
         | 一度設定すれば、あとはMETA-INF/spring以下にpropertiesファイルを追加するだけで良い。
-        | locationの設定値の詳細は、\ `リファレンス <https://docs.spring.io/spring/docs/5.0.8.RELEASE/spring-framework-reference/core.html#resources>`_\ を参照されたい。
+        | locationの設定値の詳細は、\ `リファレンス <https://docs.spring.io/spring/docs/5.1.4.RELEASE/spring-framework-reference/core.html#resources>`_\ を参照されたい。
 
  .. note::
 

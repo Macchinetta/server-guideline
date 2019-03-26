@@ -1536,7 +1536,7 @@ HTTPステータスコードは、以下の指針に則って応答する。
 
     HTTPヘッダを使ったリソースの条件付き更新(排他制御)をどのように行うか記載する。
     
-    Etag/Last-Modified-Sinceなどのヘッダを使って条件付き更新の仕組みについて、次版以降に記載する予定である。
+    Etag/Last-Modifiedなどのヘッダを使って条件付き更新の仕組みについて、次版以降に記載する予定である。
 
 |
 
@@ -1629,25 +1629,6 @@ RESTful Web Serviceとクライアントアプリケーションを一つのWeb�
 pom.xmlの設定
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 terasoluna-gfw-common-dependenciesを使用していれば、依存関係の設定は不要である。
-
-.. Warning:: **Java SE 7環境にて使用する場合の設定**
-
-   terasoluna-gfw-common-dependenciesはJava SE 8を前提とした依存関係を設定している。Java SE 7環境にて使用する場合は下記のようにJava SE 8依存ライブラリをexclusionすること。
-   java SE 8依存ライブラリについてはアーキテクチャ概要の「\ :ref:`frameworkstack_using_oss_version` \」を参照
-
-    .. code-block:: xml
-
-       <dependency>
-           <groupId>org.terasoluna.gfw</groupId>
-           <artifactId>terasoluna-gfw-common-dependencies</artifactId>
-           <exclusions>
-               <exclusion>
-                   <groupId>com.fasterxml.jackson.datatype</groupId>
-                   <artifactId>jackson-datatype-jsr310</artifactId>
-               </exclusion>
-           </exclusions>
-       </dependency>
-
 
 .. _RESTHowToUseApplicationSettings:
 
@@ -1797,8 +1778,8 @@ RESTful Web Serviceで必要となるSpring MVCのコンポーネントを有効
     なお、\ ``ObjectMapper``\ を直接Bean定義するスタイルから\ ``Jackson2ObjectMapperFactoryBean``\ を使用するスタイルに変更する場合は、
     以下のコンフィギュレーションに対するデフォルト値がJacksonのデフォルト値と異なる(無効化されている)点に注意すること。
 
-    * `MapperFeature#DEFAULT_VIEW_INCLUSION <http://fasterxml.github.io/jackson-databind/javadoc/2.8/com/fasterxml/jackson/databind/MapperFeature.html?is-external=true#DEFAULT_VIEW_INCLUSION>`_\
-    * `DeserializationFeature#FAIL_ON_UNKNOWN_PROPERTIES <http://fasterxml.github.io/jackson-databind/javadoc/2.8/com/fasterxml/jackson/databind/DeserializationFeature.html?is-external=true#FAIL_ON_UNKNOWN_PROPERTIES>`_\
+    * `MapperFeature#DEFAULT_VIEW_INCLUSION <http://fasterxml.github.io/jackson-databind/javadoc/2.9/com/fasterxml/jackson/databind/MapperFeature.html?is-external=true#DEFAULT_VIEW_INCLUSION>`_\
+    * `DeserializationFeature#FAIL_ON_UNKNOWN_PROPERTIES <http://fasterxml.github.io/jackson-databind/javadoc/2.9/com/fasterxml/jackson/databind/DeserializationFeature.html?is-external=true#FAIL_ON_UNKNOWN_PROPERTIES>`_\
 
     \ ``ObjectMapper``\の動作をJacksonのデフォルト動作にあわせたい場合は、\ ``featuresToEnable``\ プロパティを使用して上記のコンフィギュレーションを有効化する。
 
@@ -1814,7 +1795,7 @@ RESTful Web Serviceで必要となるSpring MVCのコンポーネントを有効
             </property>
         </bean>
 
-    \ ``Jackson2ObjectMapperFactoryBean``\ の詳細については、 `Jackson2ObjectMapperFactoryBeanのJavaDoc <https://docs.spring.io/spring/docs/5.0.8.RELEASE/javadoc-api/org/springframework/http/converter/json/Jackson2ObjectMapperFactoryBean.html>`_\ を参照されたい。
+    \ ``Jackson2ObjectMapperFactoryBean``\ の詳細については、 `Jackson2ObjectMapperFactoryBeanのJavaDoc <https://docs.spring.io/spring/docs/5.1.4.RELEASE/javadoc-api/org/springframework/http/converter/json/Jackson2ObjectMapperFactoryBean.html>`_\ を参照されたい。
 
 
 .. _REST_note_changed_jackson_version:
@@ -1841,9 +1822,9 @@ RESTful Web Serviceで必要となるSpring MVCのコンポーネントを有効
 
     * Deprecated一覧
 
-     * http://fasterxml.github.io/jackson-core/javadoc/2.8/deprecated-list.html
-     * http://fasterxml.github.io/jackson-databind/javadoc/2.8/deprecated-list.html
-     * http://fasterxml.github.io/jackson-annotations/javadoc/2.8/deprecated-list.html
+     * http://fasterxml.github.io/jackson-core/javadoc/2.9/deprecated-list.html
+     * http://fasterxml.github.io/jackson-databind/javadoc/2.9/deprecated-list.html
+     * http://fasterxml.github.io/jackson-annotations/javadoc/2.9/deprecated-list.html
 
 |
 
@@ -2246,6 +2227,11 @@ Resourceクラスの役割は以下の通りである。
       - | フォーマットに関する定義を行う。
       - | リソースのフォーマットに関する定義を、アノテーションを使って指定する。
         | 使用するアノテーションは、リソースの形式(JSON/XMLなど)よって異なり、JSON形式の場合はJacksonのアノテーション、XML形式の場合はJAXBのアノテーションを使用する事になる。
+
+        .. note::
+
+            Java SE 11環境にてJAXBを使用するには\ :ref:`remove-jaxb-from-java11`\ を参照されたい。
+
     * - | (3)
       - | 入力チェックルールの定義を行う。
       - | 項目毎の単項目の入力チェックルールを、Bean Validationのアノテーションを使って指定する。
@@ -2323,13 +2309,13 @@ Resourceクラスの役割は以下の通りである。
     import java.io.Serializable;
     
     import javax.validation.Valid;
+    import javax.validation.constraints.Email;
+    import javax.validation.constraints.NotEmpty;
     import javax.validation.constraints.NotNull;
     import javax.validation.constraints.Null;
     import javax.validation.constraints.Past;
     import javax.validation.constraints.Size;
     
-    import org.hibernate.validator.constraints.Email;
-    import org.hibernate.validator.constraints.NotEmpty;
     import org.joda.time.DateTime;
     import org.joda.time.LocalDate;
     import org.springframework.format.annotation.DateTimeFormat;
@@ -2426,12 +2412,12 @@ Resourceクラスの役割は以下の通りである。
     
     import java.io.Serializable;
     
+    import javax.validation.constraints.Email;
     import javax.validation.constraints.NotNull;
     import javax.validation.constraints.Null;
     import javax.validation.constraints.Size;
     
     import com.fasterxml.jackson.annotation.JsonInclude;
-    import org.hibernate.validator.constraints.Email;
     import org.joda.time.DateTime;
 
     // (4)
@@ -2476,9 +2462,8 @@ Resourceクラスの役割は以下の通りである。
 |
 
 * | Beanのマッピング定義の追加
-  | これから説明する実装例では、EntityクラスとResourceクラスのコピーは、「\ :doc:`../GeneralFuncDetail/Dozer`\」を使って行う。
-  | 上記に示したJavaBeanには、Joda-Timeのクラスである\ ``org.joda.time.DateTime``\と\ ``org.joda.time.LocalDate``\が含まれているが、「\ :doc:`../GeneralFuncDetail/Dozer`\」を使ってコピーするとJoda-Timeのオブジェクトは正しくコピーされない。
-  | そのため、正しくコピーされるようにするためには、「:ref:`RESTAppendixCopyJodaObjectByBeanConvert`」を適用する必要がある。
+  | これから説明する実装例において、EntityクラスとResourceクラスのコピーは「\ :doc:`../GeneralFuncDetail/Dozer`\」を使用する。
+  | 上記に示したJavaBeanには、Joda-Timeのクラスである\ ``org.joda.time.DateTime``\と\ ``org.joda.time.LocalDate``\が含まれているが、Joda TimeオブジェクトはDozerでサポートされていないため、「\ :ref:`how-to-make-customconverter-label`\」が必要となる。
 
 |
 
@@ -2535,7 +2520,7 @@ Controllerクラスの作成
 
     \ ``@RestController``\ アノテーションの登場により、Controllerの各メソッドに\ ``@ResponseBody``\ アノテーションを付与する必要がなくなったため、
     REST API用のControllerをよりシンプルに作成出来るようになった。
-    \ ``@RestController``\ アノテーションの詳細については、\ `こちら <https://docs.spring.io/spring/docs/5.0.8.RELEASE/javadoc-api/org/springframework/web/bind/annotation/RestController.html>`_\ を参照されたい。
+    \ ``@RestController``\ アノテーションの詳細については、\ `こちら <https://docs.spring.io/spring/docs/5.1.4.RELEASE/javadoc-api/org/springframework/web/bind/annotation/RestController.html>`_\ を参照されたい。
 
     従来通り\ ``@Controller``\ アノテーションと\ ``@ResponseBody``\ アノテーションを組み合わせてREST API用のControllerを作成する例を以下に示す。
 
@@ -2661,6 +2646,29 @@ URIで指定されたMemberリソースのコレクションをページ検索�
       - 説明
     * - | (3)
       - | \ ``@RequestMapping``\アノテーションのmethod属性に、\ ``RequestMethod.GET``\を指定する。
+
+         .. note:: **HTTPメソッドごとの@RequestMappingアノテーション**
+
+            Spring Framework 4.3から、HTTPメソッドごとの \ ``@RequestMapping``\ 合成アノテーションが追加された。
+            よりシンプルにマッピングを定義することができ、意図しないHTTPメソッドのマッピング防止とソースコードの可読性向上が期待できる。
+
+            -  \ ``@GetMapping``\
+            -  \ ``@PostMapping``\
+            -  \ ``@PutMapping``\
+            -  \ ``@DeleteMapping``\
+            -  \ ``@PatchMapping``\
+
+            以下の定義は、 \ ``@RequestMapping(value = "hello", method = RequestMethod.GET)``\ と定義しているのと同様である。
+
+              .. code-block:: java
+
+                  @GetMapping(value = "hello")
+                  public String hello() {
+                      // ...
+                  }
+
+            詳細は、`Spring Framework Documentation - Request Mapping <https://docs.spring.io/spring/docs/5.1.4.RELEASE/spring-framework-reference/web.html#mvc-ann-requestmapping>`_ を参照されたい。
+
     * - | (4)
       - | メソッドアノテーションとして、\ ``@org.springframework.web.bind.annotation.ResponseStatus``\アノテーションを付与し、応答するステータスコードを指定する。
         | \ ``@ResponseStatus``\アノテーションのvalue属性には、200(OK)を設定する。
@@ -4307,6 +4315,8 @@ ExceptionCodeResolverを使ったエラーコードとメッセージの解決
 
 - | :file:`xxx-web/src/main/resources/ValidationMessages.properties`
   | Bean Validationを使った入力チェックで発生するエラーに対して、エラーコードに対応するメッセージの設定を行う。
+  | ここでは、Hibernate Validatorが用意するデフォルトメッセージを利用する。
+  | デフォルトメッセージは、メッセージの中に項目名が含まれないため、\ ``{0}``\（フィールド名）を追加している。
 
  .. code-block:: properties
 
@@ -4315,41 +4325,61 @@ ExceptionCodeResolverを使ったエラーコードとメッセージの解決
     # ---
     
     # for bean validation of standard
-    javax.validation.constraints.AssertFalse.message = "{0}" must be false.
-    javax.validation.constraints.AssertTrue.message  = "{0}" must be true.
-    javax.validation.constraints.DecimalMax.message  = "{0}" must be less than ${inclusive == true ? 'or equal to ' : ''}{value}.
-    javax.validation.constraints.DecimalMin.message  = "{0}" must be greater than ${inclusive == true ? 'or equal to ' : ''}{value}.
-    javax.validation.constraints.Digits.message      = "{0}" numeric value out of bounds (<{integer} digits>.<{fraction} digits> expected).
-    javax.validation.constraints.Future.message      = "{0}" must be in the future.
-    javax.validation.constraints.Max.message         = "{0}" must be less than or equal to {value}.
-    javax.validation.constraints.Min.message         = "{0}" must be greater than or equal to {value}.
-    javax.validation.constraints.NotNull.message     = "{0}" may not be null.
-    javax.validation.constraints.Null.message        = "{0}" must be null.
-    javax.validation.constraints.Past.message        = "{0}" must be in the past.
-    javax.validation.constraints.Pattern.message     = "{0}" must match "{regexp}".
-    javax.validation.constraints.Size.message        = "{0}" size must be between {min} and {max}.
+    javax.validation.constraints.AssertFalse.message     = "{0}" must be false.
+    javax.validation.constraints.AssertTrue.message      = "{0}" must be true.
+    javax.validation.constraints.DecimalMax.message      = "{0}" must be less than ${inclusive == true ? 'or equal to ' : ''}{value}.
+    javax.validation.constraints.DecimalMin.message      = "{0}" must be greater than ${inclusive == true ? 'or equal to ' : ''}{value}.
+    javax.validation.constraints.Digits.message          = "{0}" numeric value out of bounds (<{integer} digits>.<{fraction} digits> expected).
+    javax.validation.constraints.Email.message           = "{0}" must be a well-formed email address.
+    javax.validation.constraints.Future.message          = "{0}" must be a future date.
+    javax.validation.constraints.FutureOrPresent.message = "{0}" must be a date in the present or in the future.
+    javax.validation.constraints.Max.message             = "{0}" must be less than or equal to {value}.
+    javax.validation.constraints.Min.message             = "{0}" must be greater than or equal to {value}.
+    javax.validation.constraints.Negative.message        = "{0}" must be less than 0.
+    javax.validation.constraints.NegativeOrZero.message  = "{0}" must be less than or equal to 0.
+    javax.validation.constraints.NotBlank.message        = "{0}" must not be blank.
+    javax.validation.constraints.NotEmpty.message        = "{0}" must not be empty.
+    javax.validation.constraints.NotNull.message         = "{0}" must not be null.
+    javax.validation.constraints.Null.message            = "{0}" must be null.
+    javax.validation.constraints.Past.message            = "{0}" must be a past date.
+    javax.validation.constraints.PastOrPresent.message   = "{0}" must be a date in the past or in the present.
+    javax.validation.constraints.Pattern.message         = "{0}" must match "{regexp}".
+    javax.validation.constraints.Positive.message        = "{0}" must be greater than 0.
+    javax.validation.constraints.PositiveOrZero.message  = "{0}" must be greater than or equal to 0.
+    javax.validation.constraints.Size.message            = "{0}" size must be between {min} and {max}.
     
     # for bean validation of hibernate
     org.hibernate.validator.constraints.CreditCardNumber.message        = "{0}" invalid credit card number.
+    org.hibernate.validator.constraints.Currency.message                = "{0}" invalid currency (must be one of {value}).
     org.hibernate.validator.constraints.EAN.message                     = "{0}" invalid {type} barcode.
     org.hibernate.validator.constraints.Email.message                   = "{0}" not a well-formed email address.
+    org.hibernate.validator.constraints.ISBN.message                    = "{0}" invalid ISBN.
     org.hibernate.validator.constraints.Length.message                  = "{0}" length must be between {min} and {max}.
-    org.hibernate.validator.constraints.LuhnCheck.message               = "{0}" The check digit for ${validatedValue} is invalid, Luhn Modulo 10 checksum failed.
-    org.hibernate.validator.constraints.Mod10Check.message              = "{0}" The check digit for ${validatedValue} is invalid, Modulo 10 checksum failed.
-    org.hibernate.validator.constraints.Mod11Check.message              = "{0}" The check digit for ${validatedValue} is invalid, Modulo 11 checksum failed.
-    org.hibernate.validator.constraints.ModCheck.message                = "{0}" The check digit for ${validatedValue} is invalid, ${modType} checksum failed.
+    org.hibernate.validator.constraints.CodePointLength.message         = "{0}" length must be between {min} and {max}.
+    org.hibernate.validator.constraints.LuhnCheck.message               = "{0}" the check digit for ${validatedValue} is invalid, Luhn Modulo 10 checksum failed.
+    org.hibernate.validator.constraints.Mod10Check.message              = "{0}" the check digit for ${validatedValue} is invalid, Modulo 10 checksum failed.
+    org.hibernate.validator.constraints.Mod11Check.message              = "{0}" the check digit for ${validatedValue} is invalid, Modulo 11 checksum failed.
+    org.hibernate.validator.constraints.ModCheck.message                = "{0}" the check digit for ${validatedValue} is invalid, ${modType} checksum failed.
     org.hibernate.validator.constraints.NotBlank.message                = "{0}" may not be empty.
     org.hibernate.validator.constraints.NotEmpty.message                = "{0}" may not be empty.
     org.hibernate.validator.constraints.ParametersScriptAssert.message  = "{0}" script expression "{script}" didn't evaluate to true.
     org.hibernate.validator.constraints.Range.message                   = "{0}" must be between {min} and {max}.
     org.hibernate.validator.constraints.SafeHtml.message                = "{0}" may have unsafe html content.
     org.hibernate.validator.constraints.ScriptAssert.message            = "{0}" script expression "{script}" didn't evaluate to true.
+    org.hibernate.validator.constraints.UniqueElements.message          = "{0}" must only contain unique elements.
     org.hibernate.validator.constraints.URL.message                     = "{0}" must be a valid URL.
-
+    
     org.hibernate.validator.constraints.br.CNPJ.message                 = "{0}" invalid Brazilian corporate taxpayer registry number (CNPJ).
     org.hibernate.validator.constraints.br.CPF.message                  = "{0}" invalid Brazilian individual taxpayer registry number (CPF).
     org.hibernate.validator.constraints.br.TituloEleitoral.message      = "{0}" invalid Brazilian Voter ID card number.
-
+    
+    org.hibernate.validator.constraints.pl.REGON.message                = "{0}" invalid Polish Taxpayer Identification Number (REGON).
+    org.hibernate.validator.constraints.pl.NIP.message                  = "{0}" invalid VAT Identification Number (NIP).
+    org.hibernate.validator.constraints.pl.PESEL.message                = "{0}" invalid Polish National Identification Number (PESEL).
+    
+    org.hibernate.validator.constraints.time.DurationMax.message        = "{0}" must be shorter than${inclusive == true ? ' or equal to' : ''}${days == 0 ? '' : days == 1 ? ' 1 day' : ' ' += days += ' days'}${hours == 0 ? '' : hours == 1 ? ' 1 hour' : ' ' += hours += ' hours'}${minutes == 0 ? '' : minutes == 1 ? ' 1 minute' : ' ' += minutes += ' minutes'}${seconds == 0 ? '' : seconds == 1 ? ' 1 second' : ' ' += seconds += ' seconds'}${millis == 0 ? '' : millis == 1 ? ' 1 milli' : ' ' += millis += ' millis'}${nanos == 0 ? '' : nanos == 1 ? ' 1 nano' : ' ' += nanos += ' nanos'}.
+    org.hibernate.validator.constraints.time.DurationMin.message        = "{0}" must be longer than${inclusive == true ? ' or equal to' : ''}${days == 0 ? '' : days == 1 ? ' 1 day' : ' ' += days += ' days'}${hours == 0 ? '' : hours == 1 ? ' 1 hour' : ' ' += hours += ' hours'}${minutes == 0 ? '' : minutes == 1 ? ' 1 minute' : ' ' += minutes += ' minutes'}${seconds == 0 ? '' : seconds == 1 ? ' 1 second' : ' ' += seconds += ' seconds'}${millis == 0 ? '' : millis == 1 ? ' 1 milli' : ' ' += millis += ' millis'}${nanos == 0 ? '' : nanos == 1 ? ' 1 nano' : ' ' += nanos += ' nanos'}.
+    
     # for common library
     org.terasoluna.gfw.common.codelist.ExistInCodeList.message   = "{0}" must exist in code list of {codeListId}.
 
@@ -5093,7 +5123,7 @@ or
 
 .. note::
     上記設定例は、依存ライブラリのバージョンを親プロジェクトである terasoluna-gfw-parent で管理する前提であるため、pom.xmlでのバージョンの指定は不要である。
-    上記のjackson-datatype-jodaはterasoluna-gfw-parentが利用している\ `Spring IO Platform <http://platform.spring.io/platform/>`_\ で定義済みである。
+    上記のjackson-datatype-jodaはterasoluna-gfw-parentが依存している\ `Spring Boot <https://docs.spring.io/spring-boot/docs/2.1.2.RELEASE/reference/htmlsingle/#appendix-dependency-versions>`_\ で管理されている。
 
 
 
@@ -5394,7 +5424,7 @@ JSONの中に関連リソースへのハイパーメディアリンクを含め�
         | 上記例では、リンク情報に設定するURIを組み立てるため \ ``UriComponentsBuilder``\ クラスのメソッドを呼び出し、自身のリソースにアクセスするためのURIをリソースに追加している。
         |
         | Controllerのメソッドの引数として渡された\ ``ServletUriComponentsBuilder``\ のインスタンスは、web.xmlに記載の\ ``<servlet-mapping>``\要素の情報を元に初期化されており、リソースには依存しない。
-        | そのため、Spring Frameworkから提供される `URI Template Patterns <https://docs.spring.io/spring/docs/5.0.8.RELEASE/spring-framework-reference/web.html#mvc-ann-requestmapping-uri-templates>`_\ 等を利用し、
+        | そのため、Spring Frameworkから提供される `URI patterns <https://docs.spring.io/spring/docs/5.1.4.RELEASE/spring-framework-reference/web.html#mvc-ann-requestmapping-uri-templates>`_\ 等を利用し、
         | リクエスト情報をベースにURIを組み立てる事により、リソースに依存しない汎用的な組み立て処理を実装することが可能となる。
         | 
         | 例えば、上記例において\ ``http://example.com/api/v1/members/M000000001``\に対してGETした場合、組み立てられるURIは、リクエストされたURIと同じ値\ ``（http://example.com/api/v1/members/M000000001）``\になる。
@@ -5518,7 +5548,7 @@ POST時のLocationヘッダの設定
         | \ ``buildAndExpand``\ メソッドを呼び出して、作成したリソースのIDをバインドすることで、作成したリソースのURIを組み立てている。
         | 
         | Controllerのメソッドの引数として渡された\ ``ServletUriComponentsBuilder``\ のインスタンスは、web.xmlに記載の\ ``<servlet-mapping>``\要素の情報を元に初期化されており、リソースには依存しない。
-        | そのため、Spring Frameworkから提供される `URI patterns <https://docs.spring.io/spring/docs/5.0.8.RELEASE/spring-framework-reference/web.html#mvc-ann-requestmapping-uri-templates>`_\ 等を利用し、
+        | そのため、Spring Frameworkから提供される `URI patterns <https://docs.spring.io/spring/docs/5.1.4.RELEASE/spring-framework-reference/web.html#mvc-ann-requestmapping-uri-templates>`_\ 等を利用し、
         | リクエスト情報をベースにURIを組み立てる事により、リソースに依存しない汎用的な組み立て処理を実装することが可能となる。
         | 
         | 例えば、上記例において\ ``http://example.com/api/v1/members``\に対してPOSTした場合、組み立てられるURIは、「リクエストされたURI + "\ ``/``\" + 作成したリソースのID」となる。
@@ -5629,127 +5659,6 @@ XXE 対策の有効化
     Macchinetta Server Framework (1.x)では、XXE 対策が行われているSpring MVC(3.2.10.RELEASE以上)に依存しているため、個別に対策を行う必要はない。
 
 |
-
-.. _RESTAppendixCopyJodaObjectByBeanConvert:
-
-Dozerを使ってJoda-Timeのクラスをコピーする方法
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Dozerを使用して、Joda-Timeのクラス(\ ``org.joda.time.DateTime``\、\ ``org.joda.time.LocalDate``\など)をコピーする方法について説明する。
-
-| Joda-Timeのクラスを変換するためのカスタムコンバータを作成する。
-| カスタムコンバータの詳細については、「:doc:`../GeneralFuncDetail/Dozer`」を参照されたい。
-
-* :file:`JodaDateTimeConverter.java`
-
- .. code-block:: java
-  
-    package org.terasoluna.examples.rest.infra.dozer.converter;
-    
-    import com.github.dozermapper.core.DozerConverter;
-    import org.joda.time.DateTime;
-    
-    public class JodaDateTimeConverter extends DozerConverter<DateTime, DateTime> {
-    
-        public JodaDateTimeConverter() {
-            super(DateTime.class, DateTime.class);
-        }
-    
-        @Override
-        public DateTime convertTo(DateTime source, DateTime destination) {
-            // This method not called, because type of from/to is same.
-            return convertFrom(source, destination);
-        }
-    
-        @Override
-        public DateTime convertFrom(DateTime source, DateTime destination) {
-            return source;
-        }
-    
-    }
-
-
-* :file:`JodaLocalDateConverter.java`
-
- .. code-block:: java
-
-    package org.terasoluna.examples.rest.infra.dozer.converter;
-    
-    import com.github.dozermapper.core.DozerConverter;
-    import org.joda.time.LocalDate;
-    
-    public class JodaLocalDateConverter extends
-                                       DozerConverter<LocalDate, LocalDate> {
-    
-        public JodaLocalDateConverter() {
-            super(LocalDate.class, LocalDate.class);
-        }
-    
-        @Override
-        public LocalDate convertTo(LocalDate source, LocalDate destination) {
-            // This method not called, because type of from/to is same.
-            return convertFrom(source, destination);
-        }
-    
-        @Override
-        public LocalDate convertFrom(LocalDate source, LocalDate destination) {
-            return source;
-        }
-    
-    }
-
-| 作成したカスタムコンバータをDozerに適用する。
-| カスタムコンバータの詳細については、「:doc:`../GeneralFuncDetail/Dozer`」を参照されたい。
-
- .. code-block:: xml
-    :emphasize-lines: 1, 10-18
-  
-    <!-- (1) -->
-    <?xml version="1.0" encoding="UTF-8"?>
-    <mappings xmlns="http://dozermapper.github.io/schema/bean-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:schemaLocation="
-            http://dozermapper.github.io/schema/bean-mapping https://dozermapper.github.io/schema/bean-mapping.xsd
-        ">
-    
-        <configuration>
-            <custom-converters>
-                <!-- (2) -->
-                <converter type="org.terasoluna.examples.rest.infra.dozer.converter.JodaDateTimeConverter">
-                    <class-a>org.joda.time.DateTime</class-a>
-                    <class-b>org.joda.time.DateTime</class-b>
-                </converter>
-                <converter type="org.terasoluna.examples.rest.infra.dozer.converter.JodaLocalDateConverter">
-                    <class-a>org.joda.time.LocalDate</class-a>
-                    <class-b>org.joda.time.LocalDate</class-b>
-                </converter>
-            </custom-converters>
-        </configuration>
-    
-    </mappings>
-
- .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
- .. list-table::
-    :header-rows: 1
-    :widths: 10 90
-
-    * - 項番
-      - 説明
-    * - | (1)
-      - | Dozerの動作設定を定義するファイルを作成する。
-        | 
-        | 今回の実装例では、\ :file:`/xxx-domain/src/main/resources/META-INF/dozer/dozer-configration-mapping.xml`\に格納する。
-    * - | (2)
-      - | 上記例では、Joda-Timeのクラス(\ ``org.joda.time.DateTime``\と\ ``org.joda.time.LocalDate``\)に対するカスタムコンバータの定義を追加している。
-
-
- .. note::
- 
-    ドメイン層でもDozerを使用する場合は、Dozerの動作設定を定義するファイルは、ドメイン層用のプロジェクト(\ ``xxx-domain``\)に格納する事を推奨する。
-    
-    アプリケーション層のみでDozerを使う場合は、アプリケーション層用のプロジェクト(\ ``xxx-web``\)に格納してもよい。
-
-|
-
 
 .. _RESTAppendixSoruceCodesOfApplicationLayer:
 

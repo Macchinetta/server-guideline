@@ -159,7 +159,7 @@ initdbプロジェクトについては、\ :ref:`CreateWebApplicationProjectCon
     * SQL解析メタデータ(\ ``config``\ に\ ``@SqlConfig``\ アノテーションを指定)
 
     また、\ ``@Sql``\ アノテーションはデフォルトで有効になっている\ ``SqlScriptsTestExecutionListener``\ によって
-    実行される。詳細は、\ `Executing SQL scripts declaratively with @Sql <https://docs.spring.io/spring/docs/5.0.8.RELEASE/spring-framework-reference/testing.html#testcontext-executing-sql-declaratively>`_\ 
+    実行される。詳細は、\ `Executing SQL scripts declaratively with @Sql <https://docs.spring.io/spring/docs/5.1.4.RELEASE/spring-framework-reference/testing.html#testcontext-executing-sql-declaratively>`_\ 
     を参照されたい。
 
     なお、\ ``@Sql``\ アノテーションと\ ``@SqlConfig``\ アノテーションによる構成は\ ``<jdbc:initialize-database>``\ 要素
@@ -184,9 +184,8 @@ initdbプロジェクトについては、\ :ref:`CreateWebApplicationProjectCon
 
 .. note:: **@Sqlの複数指定**
 
-    \ ``@Sql``\ にはJava SE8から追加された\ ``@Repeatable``\ が付与されているため、Java SE8以降を使う場合は同じ箇所に
-    複数指定することができる。なお、Java SE7以前を使用する場合は、\ ``@org.springframework.test.context.jdbc.SqlGroup``\
-    を使用することで\ ``@Sql``\ を複数指定することができる。
+    \ ``@Sql``\ にはJava SE8から追加された\ ``@Repeatable``\ が付与されているため、同じ箇所に複数指定することができる。
+    なお、\ ``@org.springframework.test.context.jdbc.SqlGroup``\を使用して、\ ``@Sql``\ を配列で複数指定することも可能である。
 
 .. _PreparationForTestDataSetupWithDBUnit:
 

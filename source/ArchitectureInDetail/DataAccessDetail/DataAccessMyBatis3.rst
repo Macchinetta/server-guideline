@@ -451,27 +451,6 @@ pom.xmlの設定
 
     上記設定例は、依存ライブラリのバージョンを親プロジェクトである terasoluna-gfw-parent で管理する前提であるため、pom.xmlでのバージョンの指定は不要である。
 
- .. Warning:: **Java SE 7環境にて使用する場合の設定**
-
-    terasoluna-gfw-mybatis3-dependenciesはJava SE 8を前提とした依存関係を設定している。Java SE 7環境にて使用する場合は下記のようにJava SE 8依存ライブラリをexclusionすること。
-    java SE 8依存ライブラリについてはアーキテクチャ概要の「\ :ref:`frameworkstack_using_oss_version` \」を参照
-
-   .. code-block:: xml
-    :emphasize-lines: 4-9
-
-            <dependency>
-                <groupId>org.terasoluna.gfw</groupId>
-                <artifactId>terasoluna-gfw-mybatis3-dependencies</artifactId>
-                <exclusions>
-                    <exclusion>
-                        <groupId>org.mybatis</groupId>
-                        <artifactId>mybatis-typehandlers-jsr310</artifactId>
-                    </exclusion>
-                </exclusions>
-            </dependency>
-
-
-
 |
 
 .. _DataAccessMyBatis3HowToUseSettingsCooperateWithMyBatis3AndSpring:
@@ -954,12 +933,10 @@ NULL値とJDBC型のマッピング設定
         ...
 
  .. note:: **Oracle使用時の動作について**
- 
-    データベースにOracleを使用する場合は、デフォルトの設定のままだとエラーが発生する事が確認されている。
-    バージョンによって動作がかわる可能性はあるが、Oracleを使う場合は、設定の変更が必要になる可能性がある事を記載しておく。
 
-    エラーが発生する事が確認されているバージョンは、Oracle 11g R1で、JDBC型の\ ``NULL`` \型をマッピングするように設定を変更することで、
-    エラーを解決する事できる。
+    Oracle JDBC ドライバはJDBC型の\ ``OTHER``\をサポートしていないため、デフォルト設定のままだとエラーが発生することが確認されている。
+
+    OracleではJDBC型の\ ``NULL`` \型を指定すれば、\ ``null``\値を正常にマッピングすることが可能となる。
 
 |
 
@@ -1030,6 +1007,10 @@ TypeHandlerの設定
     MyBatis 3.4で追加された\ ``TypeHandler`` \は、JDBC 4.0 (Java 1.6)で追加されたAPIを使用することで、BLOBと\ ``java.io.InputStream`` \、
     CLOBと\ ``java.io.Reader`` \の変換を実現している。JDBC 4.0サポートのJDBCドライバーであれば、BLOB⇔\ ``InputStream`` \、CLOB⇔\ ``Reader`` \
     変換用のタイプハンドラーがデフォルトで有効になるため、\ ``TypeHandler`` \を新たに実装する必要はない。
+
+    JDBC 4.0との互換性のないJDBCドライバを使う場合は、利用するJDBCドライバの互換バージョンを意識した\ ``TypeHandler`` \を作成する必要がある。
+
+    例えば、PostgreSQL用のJDBCドライバ(\ ``postgresql-42.2.5.jar``\)では、JDBC 4.0から追加されたメソッドの一部が、未実装の状態である。
 
 **JSR-310 Date and Time APIを使う場合の設定**
 
@@ -2784,7 +2765,7 @@ RepositoryおよびServiceについては、前述の\ :ref:`DataAccessMyBatis3H
             ]]>
             <choose>
                 <!-- (1)  -->
-                <when test="pageable.sort.iterator().hasNext()">
+                <when test="!pageable.sort.isEmpty()">
                     ORDER BY
                     <!-- (2)  -->
                     <foreach item="order" collection="pageable.sort" separator=",">
@@ -2821,6 +2802,17 @@ RepositoryおよびServiceについては、前述の\ :ref:`DataAccessMyBatis3H
         具体的には\ ``sort=todo_id,DESC&sort=created_at``\が指定された場合、\ ``ORDER BY todo_id DESC, created_at ASC``\が生成される。
     * - (3)
       - ソート条件がセットされていない場合はプライマリキー\ ``todo_id``\でソートを行う。
+
+ .. warning:: **ページネーションのSQL Injection対策ついて**
+
+    ソート条件は ``${order.property}`` 、 ``${order.direction}`` のように置換変数による埋め込みを行うため、SQL Injectionが発生しないように注意する必要がある。
+
+    いずれもリクエストパラメータ ``sort`` で指定した値が格納されるが、不正な値が送信された場合の動作に以下の違いがあり、 ``${order.property}`` でSQL Injectionが発生する可能性がある。
+
+    * ``property`` には、送信されたソートする列名の値がそのまま格納される。
+    * ``direction`` には ``ASC`` または ``DESC`` のどちらかが格納される。それ以外の値が送信された場合は ``SortHandlerMethodArgumentResolver`` 内で例外となる。
+
+    SQL Injection対策については、:ref:`DataAccessMyBatis3HowToUseSqlInjectionCountermeasure` を参照されたい。
 
 |
 
@@ -3326,10 +3318,10 @@ JDBCのバッチ更新機能を使用する方法については、「:ref:`Data
     一括登録するためのSQLは、データベースやバージョンによりサポート状況や文法が異なる。
     以下に主要なデータベースのリファレンスページへのリンクを記載しておく。
 
-    * `Oracle 12c <http://docs.oracle.com/database/121/SQLRF/statements_9014.htm>`_
+    * `Oracle 18c <https://docs.oracle.com/en/database/oracle/oracle-database/18/sqlrf/GRANT.html>`_
     * `DB2 11.1 <https://www.ibm.com/support/knowledgecenter/SSEPGG_11.1.0/com.ibm.db2.luw.sql.ref.doc/doc/r0000970.html>`_
-    * `PostgreSQL 9.6 <http://www.postgresql.org/docs/9.6/static/sql-insert.html>`_
-    * `MySQL 5.7 <http://dev.mysql.com/doc/refman/5.7/en/insert.html>`_
+    * `PostgreSQL 10 <https://www.postgresql.org/docs/10/sql-insert.html>`_
+    * `MySQL 8.0 <https://dev.mysql.com/doc/refman/8.0/en/insert.html>`_
 
 |
 
@@ -4941,7 +4933,7 @@ MyBatis3の標準でサポートされていないJoda-Timeのクラスとのマ
 
     JDBC 4.0との互換性のないJDBCドライバを使う場合は、利用するJDBCドライバの互換バージョンを意識した\ ``TypeHandler`` \を作成する必要がある。
 
-    例えば、PostgreSQL9.4用のJDBCドライバ(\ ``postgresql-9.4-1212.jar``\)では、JDBC 4.0から追加されたメソッドの一部が、未実装の状態である。
+    例えば、PostgreSQL用のJDBCドライバ(\ ``postgresql-42.2.5.jar``\)では、JDBC 4.0から追加されたメソッドの一部が、未実装の状態である。
 
 |
 
@@ -6497,7 +6489,7 @@ MyBatis3では、JDBCドライバから接続しているデータベースの�
  .. tip::
 
     上記例では、PostgreSQLのUUID生成関数として\ ``UUID_GENERATE_V4()``\を呼び出しているが、
-    この関数は、`uuid-ossp <http://www.postgresql.org/docs/9.4/static/uuid-ossp.html>`_\と呼ばれるサブモジュールの関数である。
+    この関数は、`uuid-ossp <https://www.postgresql.org/docs/10/uuid-ossp.html>`_\と呼ばれるサブモジュールの関数である。
 
     この関数を使用したい場合は、uuid-osspモジュールを有効にする必要がある。
 

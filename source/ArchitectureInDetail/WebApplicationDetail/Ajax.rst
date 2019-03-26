@@ -91,7 +91,8 @@ Ajax通信時で使用されるContent-Type(``application/xml`` や ``applicatio
        | Jaxb2RootElementHttpMessageConverter
      - | XML
      - | リクエストBody又はレスポンスBodyとしてXMLを扱うための ``HttpMessageConverter`` 。
-       | JavaSE6からJAXB2.0が標準で同封されているため、デフォルトの状態で使用することができる。
+       | Java SE 8を利用する場合、JAXB2.0が標準で同封されているため、デフォルトの状態で使用することができる。
+       | Java SE 11でJAXBを利用するには\ :ref:`remove-jaxb-from-java11`\ を参照されたい。
 
  .. note::
 

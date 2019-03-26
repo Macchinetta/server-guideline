@@ -26,7 +26,7 @@ Overview
 * JCA (Java Cryptography Architecture) を利用した公開鍵暗号化方式の暗号化と復号
 * JCAを利用したハイブリッド暗号化方式の暗号化と復号
 
-Spring Securityの暗号化機能の詳細については、\ `Spring Security Reference -Spring Security Crypto Module- <https://docs.spring.io/spring-security/site/docs/5.0.7.RELEASE/reference/htmlsingle/#crypto>`_\ を参照されたい。
+Spring Securityの暗号化機能の詳細については、\ `Spring Security Reference -Spring Security Crypto Module- <https://docs.spring.io/spring-security/site/docs/5.1.3.RELEASE/reference/htmlsingle/#crypto>`_\ を参照されたい。
 
 .. _EncryptionOverviewEncryptionScheme:
 
@@ -522,9 +522,9 @@ Oracleなど、一部のJava製品ではAESの鍵長256ビットを扱うため�
 
   .. note:: **暗号化したデータを文字列として扱いたい場合**
 
-    外部システム連携等、暗号化したデータを文字列でやり取りしたい場合は、1つの手段としてBase64エンコードが挙げられる。Java SE8以降の場合は、Java標準の\ ``java.util.Base64``\ を使用する。それ以前の場合は、Spring Securityの\ ``org.springframework.security.crypto.codec.Base64``\ を使用する。
+    外部システム連携等、暗号化したデータを文字列でやり取りしたい場合は、1つの手段としてBase64エンコードが挙げられる。Base64エンコードではJava標準の\ ``java.util.Base64``\ を使用する。
 
-    Base64エンコードおよびデコードする方法をJava標準の\ ``java.util.Base64``\ を使用して説明する。
+    Base64エンコードおよびデコードする方法を\ ``java.util.Base64``\ を使用して説明する。
     
    * Base64エンコード
 

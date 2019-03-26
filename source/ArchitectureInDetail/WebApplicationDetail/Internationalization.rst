@@ -42,6 +42,11 @@ Localeの切り替えイメージを以下に示す。
 
     詳細については\ :ref:`case_Internationalization_can_not_be_done`\ を参照されたい。
 
+.. note::
+
+    Java SE 11ではJava SE 8と日付の文字列表現が異なる場合がある。
+    Java SE 8と同様に表現するには\ :ref:`change-default-locale--data-from-java9`\ を参照されたい。
+
 .. tip::
 
     国際化はi18nという略称が広く知られている。
@@ -141,7 +146,15 @@ AcceptHeaderLocaleResolverの設定
 .. code-block:: xml
 
     <bean id="localeResolver"
-        class="org.springframework.web.servlet.i18n.AcceptHeaderLocaleResolver" /> <!-- (1) -->
+        class="org.springframework.web.servlet.i18n.AcceptHeaderLocaleResolver"> <!-- (1) -->
+        <property name="defaultLocale" value="en" /> <!-- (2) -->
+        <property name="supportedLocales"> <!-- (3) -->
+            <list value-type="java.util.Locale">
+                <value>en</value>
+                <value>ja</value>
+            </list>
+        </property>
+    </bean>
 
 .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
 .. list-table::
@@ -153,6 +166,14 @@ AcceptHeaderLocaleResolverの設定
     * - | (1)
       - | beanタグのid属性"localeResolver"に ``org.springframework.web.servlet.i18n.AcceptHeaderLocaleResolver`` を指定する。
         | この\ ``LocaleResolver``\ を使用すると、リクエスト毎に設定されるHTTPヘッダー(”accept-language”)に指定されているLocaleが使用される。
+    * - | (2)
+      - | デフォルトのLocaleを設定するため、\ ``defaultLocale``\ プロパティを設定する。
+        | 上記の例では、アプリケーションがサポートしていないLocaleがリクエストされた場合、Localeは"en"に設定される。
+    * - | (3)
+      - | アプリケーションがサポートするLocaleを設定するため、\ ``supportedLocales``\ プロパティを設定する。
+        | リクエストが要求するLocaleと、サポートするLocaleが一致する場合はそのLocaleが使用される。
+        | 国と言語を組み合わせたLocale（例：ja_JP）が要求され、サポートするLocaleと一致しない場合、対応する言語のみのLocale（例：ja）で一致を確認する。
+        | 上記の例では、アプリケーションがサポートするLocaleとして、"en"と"ja"を指定している。
 
 .. note::
 
@@ -327,6 +348,14 @@ LocaleChangeInterceptorの設定
           - | 説明
         * - | (2)
           - | \ ``paramName``\ プロパティにリクエストパラメータ名を指定する。上記例では、"リクエストURL?lang=xx"となる。
+
+.. note::
+
+    リクエストパラメータにLocaleとして不正な値が指定された場合は例外がスローされる。
+    例外とせず、リクエストパラメータによるLocaleの設定をスキップしたい場合は\ ``ignoreInvalidLocale``\プロパティに\ ``true``\を指定すれば良い。
+    これによりLocaleの設定がスキップされた場合は、\ ``LocaleResolver``\で指定されたデフォルトのロケールが使用される。
+
+    なお、\ ``LocaleChangeInterceptor``\には\ ``AcceptHeaderLocaleResolver``\の\ ``supportedLocales``\のように、サポートするLocaleを限定する仕組みはない。
 
 |
 

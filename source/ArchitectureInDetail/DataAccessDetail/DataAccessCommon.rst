@@ -55,26 +55,26 @@ JDBC DataSourceについて
       - アプリケーションサーバ
       - 参照ページ
     * - 1.
+      - Apache Tomcat 9.0
+      - | \ `Apache Tomcat 9.0 User Guide(The Tomcat JDBC Connection Pool) <http://tomcat.apache.org/tomcat-9.0-doc/jdbc-pool.html>`_\ を参照されたい。
+        | \ `Apache Tomcat 9.0 User Guide(JNDI Datasource HOW-TO) <http://tomcat.apache.org/tomcat-9.0-doc/jndi-datasource-examples-howto.html>`_\ (Apache Commons DBCP 2)を参照されたい。
+    * - 2.
       - Apache Tomcat 8.5
       - | \ `Apache Tomcat 8.5 User Guide(The Tomcat JDBC Connection Pool) <http://tomcat.apache.org/tomcat-8.5-doc/jdbc-pool.html>`_\ を参照されたい。
         | \ `Apache Tomcat 8.5 User Guide(JNDI Datasource HOW-TO) <http://tomcat.apache.org/tomcat-8.5-doc/jndi-datasource-examples-howto.html>`_\ (Apache Commons DBCP 2)を参照されたい。
-    * - 2.
-      - Apache Tomcat 8.0
-      - | \ `Apache Tomcat 8.0 User Guide(The Tomcat JDBC Connection Pool) <http://tomcat.apache.org/tomcat-8.0-doc/jdbc-pool.html>`_\ を参照されたい。
-        | \ `Apache Tomcat 8.0 User Guide(JNDI Datasource HOW-TO) <http://tomcat.apache.org/tomcat-8.0-doc/jndi-datasource-examples-howto.html>`_\ (Apache Commons DBCP 2)を参照されたい。
     * - 3.
       - Apache Tomcat 7
       - | \ `Apache Tomcat 7 User Guide(The Tomcat JDBC Connection Pool) <http://tomcat.apache.org/tomcat-7.0-doc/jdbc-pool.html>`_\ を参照されたい。
         | \ `Apache Tomcat 7 User Guide(JNDI Datasource HOW-TO) <http://tomcat.apache.org/tomcat-7.0-doc/jndi-datasource-examples-howto.html>`_\ (Apache Commons DBCP)を参照されたい。
     * - 4.
       - Oracle WebLogic Server 12c
-      - \ `Oracle WebLogic Server Product Documentation <http://docs.oracle.com/middleware/1221/wls/INTRO/jdbc.htm>`_\ を参照されたい。
+      - \ `Oracle WebLogic Server Product Documentation <https://docs.oracle.com/middleware/12213/wls/INTRO/jdbc.htm#INTRO215>`_\ を参照されたい。
     * - 5.
       - IBM WebSphere Application Server Version 9.0
       - \ `WebSphere Application Server Online information center <http://www.ibm.com/support/knowledgecenter/ja/SSEQTP_9.0.0/com.ibm.websphere.wlp.doc/ae/twlp_dep_configuring_ds.html>`_\ を参照されたい。
     * - 6.
-      - JBoss Enterprise Application Platform 7.0
-      - \ `JBoss Enterprise Application Platform 7.0 Product Documentation <https://access.redhat.com/documentation/en/red-hat-jboss-enterprise-application-platform/7.0/paged/configuration-guide/chapter-13-datasource-management>`_\ を参照されたい。
+      - JBoss Enterprise Application Platform 7.2
+      - \ `JBoss Enterprise Application Platform 7.2 Product Documentation <https://access.redhat.com/documentation/en-us/red_hat_jboss_enterprise_application_platform/7.2/html/configuration_guide/datasource_management>`_\ を参照されたい。
     * - 7.
       - JBoss Enterprise Application Platform 6.4
       - \ `JBoss Enterprise Application Platform 6.4 Product Documentation <https://access.redhat.com/documentation/en-US/JBoss_Enterprise_Application_Platform/6.4/html/Administration_and_Configuration_Guide/chap-Datasource_Management.html>`_\ を参照されたい。
@@ -237,7 +237,7 @@ How to use
 アプリケーションサーバで定義したDataSourceを使用する場合の設定
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 | アプリケーションサーバで定義したデータソースを使用する場合は、Bean定義ファイルに、JNDI経由で取得したオブジェクトを、beanとして登録するための設定を行う必要がある。
-| 以下に、データベースはPostgreSQL、アプリケーションサーバはTomcat7を使用する際の、設定例を示す。
+| 以下に、データベースはPostgreSQL、アプリケーションサーバはTomcat9を使用する際の、設定例を示す。
 
 - :file:`xxx-context.xml` (Tomcatの設定ファイル)
 
@@ -294,8 +294,8 @@ How to use
       - 自動コミットフラグのデフォルト値を指定する。falseを指定する。トランザクション管理下であれば強制的にfalseになる。
     * - | (2)
       - \-
-      - | Tomcat7の場合、factory属性を省略するとtomcat-jdbc-poolが使用される。
-        | 設定項目の詳細については、\ `Attributes of The Tomcat JDBC Connection Pool <http://tomcat.apache.org/tomcat-7.0-doc/jdbc-pool.html#Attributes>`_\ を参照されたい。
+      - | Tomcat9の場合、factory属性を省略するとtomcat-jdbc-poolが使用される。
+        | 設定項目の詳細については、\ `Attributes of The Tomcat JDBC Connection Pool <http://tomcat.apache.org/tomcat-9.0-doc/jdbc-pool.html#Attributes>`_\ を参照されたい。
     * - | (3)
       - \-
       - データソースのJNDI名を指定する。Tomcatの場合は、データソース定義時のリソース名「(1)-name」に指定した値を指定する。
@@ -345,7 +345,7 @@ Bean定義したDataSourceを使用する場合の設定
         | 設定項目の詳細については、\ `DBCP Configuration <http://commons.apache.org/proper/commons-dbcp/configuration.html>`_\ を参照されたい。
     * - | (8)
       - | 設定例では値を直接指定しているが、環境によって設定値がかわる項目については、Placeholder(${...})を使用して、実際の設定値はプロパティファイルに指定すること。
-        | Placeholderについては、\ `Spring Framework Documentation <https://docs.spring.io/spring/docs/5.0.8.RELEASE/spring-framework-reference/core.html#beans-factory-extension-factory-postprocessors>`_\ の\  ``Example: the Class name substitution PropertyPlaceholderConfigurer``\ を参照されたい。
+        | Placeholderについては、\ `Spring Framework Documentation <https://docs.spring.io/spring/docs/5.1.4.RELEASE/spring-framework-reference/core.html#beans-factory-extension-factory-postprocessors>`_\ の\  ``Example: the Class name substitution PropertyPlaceholderConfigurer``\ を参照されたい。
 
 
 トランザクション管理を有効化するための設定

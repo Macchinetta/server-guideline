@@ -25,7 +25,7 @@ Overview
     一部のアプリケーションサーバ上でServlet 3.0のファイルアップロード機能を使用すると、
     リクエストパラメータやファイル名のマルチバイト文字が文字化けすることがある。
 
-    version 1.6.0.RELEASE時点で問題の発生が確認されているアプリケーションサーバは以下の通りである。
+    version 1.6.1.RELEASE時点で問題の発生が確認されているアプリケーションサーバは以下の通りである。
     
     * WebLogic 12.1.3
     * JBoss EAP 7.0
@@ -33,6 +33,7 @@ Overview
     
     このうちJBoss EAP 7.0では、アプリケーションサーバ独自の設定を追加することで問題を回避することができる。
     詳細は、\ `JBoss EAP 7.0を利用する際の注意点 <https://github.com/terasolunaorg/terasoluna-gfw/wiki/JBoss7_ja>`_\を参照されたい。
+    なお、JBoss EAP 7.2では問題が解消され、設定の追加は不要であることを確認している。
 
     その他の問題が発生するアプリケーションサーバを使用する場合は、Commons FileUploadを使用することで問題を回避することができる。
     Commons FileUploadを使用するための設定方法については、「:ref:`file-upload_usage_commons_fileupload`」を参照されたい。
@@ -42,7 +43,8 @@ Overview
     使用するアプリケーションサーバのファイルアップロードの実装が、Apache Commons FileUploadの実装に依存している場合、\ `CVE-2014-0050 <http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-0050>`_\および\ `CVE-2016-3092 <https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2016-3092>`_\で報告されているセキュリティの脆弱性が発生する可能性がある。
     使用するアプリケーションサーバに同様の脆弱性がない事を確認されたい。
     
-    Tomcatを使用する場合、7.0系は7.0.70以上、8.0系は8.0.36以上、8.5系は8.5.3以上を使用する必要がある。
+    Tomcatを使用する場合、7.0系は7.0.70以上、8.5系は8.5.3以上を使用する必要がある。
+    Tomcat 9.0系ではこの脆弱性は対策済みである。
 
 アップロード処理の基本フロー
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -136,7 +138,7 @@ Spring Webから提供されているファイルアップロード用のクラ�
 
  .. tip::
 
-    本ガイドラインでは、Servlet 3.0から導入されたファイルアップロード機能を使うことを前提としているが、Spring Webでは、\ `「Apache Commons FileUpload」用の実装クラスも提供している <https://docs.spring.io/spring/docs/5.0.8.RELEASE/spring-framework-reference/web.html#mvc-multipart-resolver-commons>`_\ 。
+    本ガイドラインでは、Servlet 3.0から導入されたファイルアップロード機能を使うことを前提としているが、Spring Webでは、\ `「Apache Commons FileUpload」用の実装クラスも提供している <https://docs.spring.io/spring/docs/5.1.4.RELEASE/spring-framework-reference/web.html#mvc-multipart-resolver-commons>`_\ 。
     アップロード処理の実装の違いは、\ ``MultipartResolver``\ と、\ ``MultipartFile``\ オブジェクトによって吸収されるため、Controllerの実装に影響を与えることはない。
 
 |
@@ -148,6 +150,8 @@ How to use
 
 アプリケーションの設定
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _file-upload_how_to_enable_Servlet_3.0:
 
 Servlet 3.0のアップロード機能を有効化するための設定
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -224,6 +228,9 @@ Servlet 3.0のアップロード機能を有効化するために、以下の設
 
     DoS攻撃については、\ :ref:`file-upload_security_related_warning_points_dos`\ を参照されたい。
 
+ .. note::
+
+    Spring Framework 5.0より、指定サイズを超えるファイルのアップロードやマルチパートのリクエストが行われた際、TomcatやWebLogicなど一部のアプリケーションサーバ上では\ ``org.springframework.web.multipart.MultipartException``\ のサブクラスである\ ``org.springframework.web.multipart.MaxUploadSizeExceededException``\ が発生するようになった。
 
  .. note::
 
@@ -339,7 +346,7 @@ multipart/form-dataリクエストの時、ファイルアップロードで許�
     また、プロジェクト独自で作成するServlet Filterでリクエストパラメータにアクセスするものがある場合は、そのServlet Filterより前に定義すること。
 
     ただし、\ ``springSecurityFilterChain``\ より前に定義することで、認証又は認可されていないユーザーからのアップロード(一時ファイル作成)を許容することになる。
-    この動作を回避する方法が\ `Spring Security Reference -Include CSRF token in action- <https://docs.spring.io/spring-security/site/docs/5.0.7.RELEASE/reference/htmlsingle/#csrf-include-csrf-token-in-action>`_\ の中で紹介されているが、セキュリティ上のリスクを含む回避方法になるため、本ガイドラインでは回避策の適用は推奨していない。
+    この動作を回避する方法が\ `Spring Security Reference -Include CSRF token in action- <https://docs.spring.io/spring-security/site/docs/5.1.3.RELEASE/reference/htmlsingle/#csrf-include-csrf-token-in-action>`_\ の中で紹介されているが、セキュリティ上のリスクを含む回避方法になるため、本ガイドラインでは回避策の適用は推奨していない。
 
  .. warning:: **ファイルアップロードの許容サイズを超過した場合の注意点**
 
@@ -499,6 +506,12 @@ multipart/form-dataリクエストの時、ファイルアップロードで許�
        | 上記例では、\ ``e.xx.fw.6001``\ を指定している。
        | 個別に定義を行わない場合は、\ ``defaultExceptionCode``\ に指定した例外コードが適用される。
 
+ .. note::
+
+    TomcatやWebLogicなど一部のアプリケーションサーバでは、\ ``MaxUploadSizeExceededException``\ をハンドリングすることで、アップロードされたファイルやリクエストのサイズ超過を検知することが可能である。
+    \ ``MaxUploadSizeExceededException``\ は\ ``MultipartException``\ のサブクラスであるため、サイズ超過とその他の例外を区別する必要がなければ\ ``MultipartException``\ をハンドリングすれば良い。
+
+    \ ``MaxUploadSizeExceededException``\ については、:ref:`file-upload_how_to_enable_Servlet_3.0` のNoteを参照されたい。
 
 単一ファイルのアップロード
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -716,7 +729,7 @@ Controllerの実装
  .. note:: **MultipartFileについて**
 
     MultipartFileには、アップロードされたファイルを操作するためのメソッドが用意されている。
-    各メソッドの利用方法については、\ `MultipartFileクラスのJavaDoc <https://docs.spring.io/spring/docs/5.0.8.RELEASE/javadoc-api/org/springframework/web/multipart/MultipartFile.html>`_\ を参照されたい。
+    各メソッドの利用方法については、\ `MultipartFileクラスのJavaDoc <https://docs.spring.io/spring/docs/5.1.4.RELEASE/javadoc-api/org/springframework/web/multipart/MultipartFile.html>`_\ を参照されたい。
 
 .. _fileupload_validator:
 
@@ -737,7 +750,7 @@ Controllerの実装
  .. code-block:: java
 
     // (1)
-    @Target({ ElementType.METHOD, ElementType.FIELD, ElementType.ANNOTATION_TYPE })
+    @Target({ METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER, TYPE_USE })
     @Retention(RetentionPolicy.RUNTIME)
     @Constraint(validatedBy = UploadFileRequiredValidator.class)
     public @interface UploadFileRequired {
@@ -745,7 +758,7 @@ Controllerの実装
         Class<?>[] groups() default {};
         Class<? extends Payload>[] payload() default {};
 
-        @Target({ ElementType.METHOD, ElementType.FIELD, ElementType.ANNOTATION_TYPE })
+        @Target({ METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER, TYPE_USE })
         @Retention(RetentionPolicy.RUNTIME)
         @Documented
         @interface List {
@@ -792,7 +805,7 @@ Controllerの実装
  .. code-block:: java
 
     // (3)
-    @Target({ ElementType.METHOD, ElementType.FIELD, ElementType.ANNOTATION_TYPE })
+    @Target({ METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER, TYPE_USE })
     @Retention(RetentionPolicy.RUNTIME)
     @Constraint(validatedBy = UploadFileNotEmptyValidator.class)
     public @interface UploadFileNotEmpty {
@@ -800,7 +813,7 @@ Controllerの実装
         Class<?>[] groups() default {};
         Class<? extends Payload>[] payload() default {};
 
-        @Target({ ElementType.METHOD, ElementType.FIELD, ElementType.ANNOTATION_TYPE })
+        @Target({ METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER, TYPE_USE })
         @Retention(RetentionPolicy.RUNTIME)
         @Documented
         @interface List {
@@ -853,7 +866,7 @@ Controllerの実装
  .. code-block:: java
 
     // (5)
-    @Target({ ElementType.METHOD, ElementType.FIELD, ElementType.ANNOTATION_TYPE })
+    @Target({ METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER, TYPE_USE })
     @Retention(RetentionPolicy.RUNTIME)
     @Constraint(validatedBy = UploadFileMaxSizeValidator.class)
     public @interface UploadFileMaxSize {
@@ -862,7 +875,7 @@ Controllerの実装
         Class<?>[] groups() default {};
         Class<? extends Payload>[] payload() default {};
 
-        @Target({ ElementType.METHOD, ElementType.FIELD, ElementType.ANNOTATION_TYPE })
+        @Target({ METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER, TYPE_USE })
         @Retention(RetentionPolicy.RUNTIME)
         @Documented
         @interface List {
@@ -1232,7 +1245,7 @@ Validatorの実装
 
  .. code-block:: java
 
-    @Target({ ElementType.METHOD, ElementType.FIELD, ElementType.ANNOTATION_TYPE })
+    @Target({ METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER, TYPE_USE })
     @Retention(RetentionPolicy.RUNTIME)
     @Constraint(validatedBy = 
         {UploadFileNotEmptyValidator.class,
@@ -1495,7 +1508,7 @@ How to extend
     不要なファイルを残したままにすると、ディスクを圧迫する可能性があるため、必ず不要なファイルを削除する仕組みを用意すること。
 
 本ガイドラインでは、Spring Frameworkから提供されている「Task Scheduler」機能を使用して、不要なファイルを削除する方法について説明する。
-「Task Scheduler」の詳細については、\ `公式リファレンスの"Task Execution and Scheduling" <https://docs.spring.io/spring/docs/5.0.8.RELEASE/spring-framework-reference/integration.html#scheduling>`_\ を参照されたい。
+「Task Scheduler」の詳細については、\ `公式リファレンスの"Task Execution and Scheduling" <https://docs.spring.io/spring/docs/5.1.4.RELEASE/spring-framework-reference/integration.html#scheduling>`_\ を参照されたい。
 
  .. note::
 
@@ -1645,7 +1658,7 @@ How to extend
      * ``0 0 * * * *`` : 毎時 0分に実行される。
      * ``0 0 9-17 * * MON-FRI`` : 平日9時～17時の間の毎時0分に実行される。
 
-    cronの指定値の詳細については、\ `CronSequenceGeneratorのJavaDoc <https://docs.spring.io/spring/docs/5.0.8.RELEASE/javadoc-api/org/springframework/scheduling/support/CronSequenceGenerator.html>`_\ を参照されたい。
+    cronの指定値の詳細については、\ `CronSequenceGeneratorのJavaDoc <https://docs.spring.io/spring/docs/5.1.4.RELEASE/javadoc-api/org/springframework/scheduling/support/CronSequenceGenerator.html>`_\ を参照されたい。
 
     実行タイミングは、アプリケーションをデプロイする環境によって異なる可能性があるため、外部プロパティから取得すること。
     外部プロパティの詳細については、\ :doc:`../GeneralFuncDetail/PropertyManagement`\ を参照されたい。
@@ -1763,7 +1776,6 @@ Commons FileUploadを使用する場合は以下の設定を行う。
 .. note::
 
    上記設定例は、依存ライブラリのバージョンを親プロジェクトである terasoluna-gfw-parent で管理する前提であるため、pom.xmlでのバージョンの指定は不要である。
-   上記の依存ライブラリはterasoluna-gfw-parentが利用している\ `Spring IO Platform <http://platform.spring.io/platform/>`_\ で定義済みである。
 
 .. warning::
 
@@ -1773,7 +1785,7 @@ Commons FileUploadを使用する場合は以下の設定を行う。
 
     Apache Commons FileUploadを使用する場合、1.3.2以上を使用する必要がある。
 
-    なお、Macchinetta Server Framework version 1.6.0.RELEASEが準拠しているSpring IO Platform Cairo-SR3.RELEASEで管理されているバージョンを使用すれば、CVE-2014-0050およびCVE-2016-3092で報告されている脆弱性は発生しない。
+    なお、Macchinetta Server Framework version 1.6.1.RELEASEで管理されているバージョンを使用すれば、CVE-2014-0050およびCVE-2016-3092で報告されている脆弱性は発生しない。
     意図的にApache Commons FileUploadのバージョンを変更する場合は、当該脆弱性が対処されているバージョンを指定すること。
 
 |
@@ -1803,7 +1815,7 @@ Commons FileUploadを使用する場合は以下の設定を行う。
    * - | (2)
      - | ファイルアップロードで許容する最大サイズを設定する。
        | Commons FileUploadの場合、最大値はHTTPヘッダを含めたリクエスト全体のサイズであることに注意すること。
-       | また、**デフォルト値は-1(無制限)なので、必ず値を設定すること。** その他のプロパティは\ `JavaDoc <https://docs.spring.io/spring-framework/docs/5.0.8.RELEASE/javadoc-api/org/springframework/web/multipart/commons/CommonsMultipartResolver.html>`_\ を参照されたい。
+       | また、**デフォルト値は-1(無制限)なので、必ず値を設定すること。** その他のプロパティは\ `JavaDoc <https://docs.spring.io/spring-framework/docs/5.1.4.RELEASE/javadoc-api/org/springframework/web/multipart/commons/CommonsMultipartResolver.html>`_\ を参照されたい。
 
 .. warning::
 

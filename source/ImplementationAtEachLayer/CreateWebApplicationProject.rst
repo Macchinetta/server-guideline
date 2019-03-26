@@ -97,7 +97,7 @@ Webアプリケーション向け開発プロジェクトの作成
     mvn archetype:generate -B^
      -DarchetypeGroupId=com.github.macchinetta.blank^
      -DarchetypeArtifactId=macchinetta-multi-web-blank-archetype^
-     -DarchetypeVersion=1.6.0.RELEASE^
+     -DarchetypeVersion=1.6.1.RELEASE^
      -DgroupId=com.example.todo^
      -DartifactId=todo^
      -Dversion=1.0.0-SNAPSHOT
@@ -144,7 +144,7 @@ Webアプリケーション向け開発プロジェクトの作成
 
     (... omit)
     [INFO] ----------------------------------------------------------------------------
-    [INFO] Using following parameters for creating project from Archetype: macchinetta-multi-web-blank-archetype:1.6.0.RELEASE
+    [INFO] Using following parameters for creating project from Archetype: macchinetta-multi-web-blank-archetype:1.6.1.RELEASE
     [INFO] ----------------------------------------------------------------------------
     [INFO] Parameter: groupId, Value: com.example.todo
     [INFO] Parameter: artifactId, Value: todo
@@ -628,7 +628,7 @@ Maven Archetypeで作成したプロジェクトでは、インメモリデー�
 .. note::
 
    上記設定例は、依存ライブラリのバージョンを親プロジェクトである terasoluna-gfw-parent で管理する前提であるため、pom.xmlでのバージョンの指定は不要である。
-   上記の依存ライブラリはterasoluna-gfw-parentが利用している\ `Spring IO Platform <http://platform.spring.io/platform/>`_\ で定義済みである。
+   上記の依存ライブラリはterasoluna-gfw-parentが依存している\ `Spring Boot <https://docs.spring.io/spring-boot/docs/2.1.2.RELEASE/reference/htmlsingle/#appendix-dependency-versions>`_\ で管理されている。
 
 **[artifactId-infra.properties]**
 
@@ -752,7 +752,7 @@ Maven Archetypeで作成したプロジェクトでは、インメモリデー�
 
             <!-- ... -->
 
-            <postgresql.version>9.4.1212</postgresql.version>
+            <postgresql.version>42.2.5</postgresql.version>
             <ojdbc.version>12.1.0.2</ojdbc.version>
 
     * ``artifactId/artifactId-web/pom.xml``
@@ -1314,6 +1314,13 @@ domainモジュールの構成
       - Spring FrameworkのBean定義ファイルとプロパティファイルを格納するディレクトリ。
     * - | (5)
       - コードリストを定義するためのBean定義ファイル。
+
+        .. note::
+
+            大量にコードリストを定義する場合は、Bean定義ファイルを複数用意し、コードリストが使用される業務ごとやコードリストが使用されるレイヤごとなどの観点で分類してもよい。
+
+            たとえば、アプリケーション層（画面）のみで使用するコードリストをwebモジュールのartifactId-web-codelist.xmlに定義し、ドメイン層でも使用するコードリストをdomainモジュールのartifactId-domain-codelist.xmlに定義するといった方法が考えられる。
+
     * - | (6)
       - ドメイン層のコンポーネントを定義するためのBean定義ファイル。
 
@@ -1540,7 +1547,7 @@ initdbモジュールの構成
       - データベースを初期化するためのSQLファイルを格納するためのディレクトリ。
 
         作成時点では、空のディレクトリである。
-        作成例については、`サンプルアプリケーションのinitdbプロジェクト <https://github.com/terasolunaorg/terasoluna-tourreservation-mybatis3/tree/5.4.1.RELEASE/terasoluna-tourreservation-initdb/src/main/sqls>`_ を参照されたい。
+        作成例については、`サンプルアプリケーションのinitdbプロジェクト <https://github.com/terasolunaorg/terasoluna-tourreservation-mybatis3/tree/5.5.1.RELEASE/terasoluna-tourreservation-initdb/src/main/sqls>`_ を参照されたい。
 
 .. note::
 
@@ -1596,7 +1603,7 @@ Seleniumを使用したE2E(End To End)テスト用のコンポーネントを管
     * - | (2)
       - テスト用のコンポーネントと設定ファイルを格納するディレクトリ。
 
-        作成例については、`サンプルアプリケーションのseleniumプロジェクト <https://github.com/terasolunaorg/terasoluna-tourreservation-mybatis3/tree/5.4.1.RELEASE/terasoluna-tourreservation-selenium>`_ を参照されたい。
+        作成例については、`サンプルアプリケーションのseleniumプロジェクト <https://github.com/terasolunaorg/terasoluna-tourreservation-mybatis3/tree/5.5.1.RELEASE/terasoluna-tourreservation-selenium>`_ を参照されたい。
 
     * - | (3)
       - Selenium WebDriverを使用したサンプルテストクラス。
@@ -1644,31 +1651,23 @@ Maven Archetypeで作成したプロジェクトのプロジェクト階層の�
         Maven Archetypeで作成したプロジェクトはマルチモジュール構成となっており、
         親プロジェクトと各サブモジュールは相互参照の関係になっている。
 
-        version 1.6.0.RELEASE用のMaven Archetypeで作成したプロジェクトでは、
-        親プロジェクトとして「org.terasoluna.gfw:terasoluna-gfw-parent:5.5.0.RC7」を指定している。
+        version 1.6.1.RELEASE用のMaven Archetypeで作成したプロジェクトでは、
+        親プロジェクトとして「org.terasoluna.gfw:terasoluna-gfw-parent:5.5.1.RELEASE」を指定している。
     * - | (2)
       - TERASOLUNA Server Framework for Java (5.x) Parentプロジェクト。
 
         TERASOLUNA Server Framework for Java (5.x) Parentプロジェクトでは、
 
         * ビルド用のプラグインの設定
-        * Spring IO Platform経由で管理されているライブラリのカスタマイズ(バージョンの調整)
-        * Spring IO Platformで管理されていない推奨ライブラリのバージョン管理
+        * Spring Boot経由で管理されているライブラリのカスタマイズ(バージョンの調整)
+        * Spring Bootで管理されていない推奨ライブラリのバージョン管理
 
         を行っている。
 
-        なお、Spring IO Platform経由で依存ライブラリのバージョンを管理するために、本プロジェクトの\ ``<dependencyManagement>``\ に「Spring IO Platform」をインポートしている。
+        なお、Spring Boot経由で依存ライブラリのバージョンを管理するために、本プロジェクトの\ ``<dependencyManagement>``\ に「Spring Boot Dependencies」をインポートしている。
         
-        利用しているSpring IO Platformのバージョンは\ :ref:`frameworkstack_using_oss_version`\参照のこと。
+        利用しているSpring Bootのバージョンは\ :ref:`frameworkstack_using_oss_version`\参照のこと。
     * - | (3)
-      - Spring IO Platformプロジェクト。
-
-        親プロジェクトとして「org.springframework.boot:spring-boot-starter-parent:1.2.5.RELEASE」が指定されているため、spring-boot-starter-parentのpomファイルに定義されている\ ``<dependencyManagement>``\ の定義も、terasoluna-gfw-parentのpomファイルにインポートされる。
-    * - | (4)
-      - Spring Boot Starter Parentプロジェクト。
-
-        親プロジェクトとして「org.springframework.boot:spring-boot-dependencies:1.2.5.RELEASE」が指定されているため、spring-boot-dependenciesのpomファイルに定義されている\ ``<dependencyManagement>``\の定義も、terasoluna-gfw-parentのpomファイルにインポートされる。
-    * - | (5)
       - Spring Boot Dependenciesプロジェクト。
 
 .. raw:: latex
@@ -1677,17 +1676,17 @@ Maven Archetypeで作成したプロジェクトのプロジェクト階層の�
 
 .. tip::
 
-    version 1.1.0.RELEASEより、Spring IO Platformの\ ``<dependencyManagement>``\ をインポートする構成に変更しており、
-    推奨ライブラリのバージョン管理をSpring IO Platformに委譲するスタイルを採用している。
+    version 1.6.1.RELEASEより、Spring Bootの\ ``<dependencyManagement>``\ をインポートする構成に変更しており、
+    推奨ライブラリのバージョン管理をSpring Bootに委譲するスタイルを採用している。
 
 .. warning::
 
-    version 1.1.0.RELEASEより、Spring IO Platformの\ ``<dependencyManagement>``\ をインポートする構成に変更したため、
+    version 1.6.1.RELEASEより、Spring Bootの\ ``<dependencyManagement>``\ をインポートする構成に変更したため、
     子プロジェクトからライブラリのバージョンを管理するためのプロパティにアクセスする事が出来なくなっている。
 
     そのため、子プロジェクト側でプロパティ値を参照又は上書きしている場合は、version 1.0.xからバージョンアップする際にpomファイルの修正が必要になる。
 
-    なお、Spring IO Platformで管理していない推奨ライブラリ(Macchinetta Server Framework for Java (1.x)独自の推奨ライブラリ)については、
+    なお、Spring Bootで管理していない推奨ライブラリ(Macchinetta Server Framework for Java (1.x)独自の推奨ライブラリ)については、
     従来通りバージョンを管理するためのプロパティにアクセスする事ができる。
 
 

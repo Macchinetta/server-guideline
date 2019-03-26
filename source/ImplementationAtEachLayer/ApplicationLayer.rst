@@ -143,6 +143,25 @@ Controllerクラスの作成方法
     複数の属性を組み合わせることで複雑なマッピングを行うことも可能だが、保守性を考慮し、可能な限りシンプルな定義になるようにマッピングの設計を行うこと。
     2つの属性の組み合わせ（value属性と別の属性1つ）を目安にすることを推奨する。
 
+ .. note:: **HTTPメソッドごとの@RequestMappingアノテーション**
+
+    Spring Framework 4.3から、HTTPメソッドごとの \ ``@RequestMapping``\ 合成アノテーションが追加された。
+    よりシンプルにマッピングを定義することができ、意図しないHTTPメソッドのマッピング防止とソースコードの可読性向上が期待できる。
+
+    -  \ ``@GetMapping``\
+    -  \ ``@PostMapping``\
+
+    以下の定義は、 \ ``@RequestMapping(value = "hello", method = RequestMethod.GET)``\ と定義しているのと同様である。
+
+      .. code-block:: java
+
+          @GetMapping(value = "hello")
+          public String hello() {
+              // ...
+          }
+
+    詳細は、`Spring Framework Documentation - Request Mapping <https://docs.spring.io/spring/docs/5.1.4.RELEASE/spring-framework-reference/web.html#mvc-ann-requestmapping>`_ を参照されたい。
+
 |
 
 | 以下、マッピングの具体例を6つ示す。
@@ -198,7 +217,7 @@ Controllerクラスの作成方法
     @RequestMapping(value = {"hello", "bonjour"})
     public String hello() {
 
-指定するリクエストパスは、具体的な値ではなくパターンを指定することも可能である。パターン指定の詳細は、`URI patterns <https://docs.spring.io/spring/docs/5.0.8.RELEASE/spring-framework-reference/web.html#mvc-ann-requestmapping-uri-templates>`_ を参照されたい。
+指定するリクエストパスは、具体的な値ではなくパターンを指定することも可能である。パターン指定の詳細は、`URI patterns <https://docs.spring.io/spring/docs/5.1.4.RELEASE/spring-framework-reference/web.html#mvc-ann-requestmapping-uri-templates>`_ を参照されたい。
 
 |
 
@@ -207,7 +226,7 @@ Controllerクラスの作成方法
 HTTPメソッドでマッピング
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 下記の定義の場合、 ``sample/hello`` というURLにPOSTメソッドでアクセスすると、helloメソッドが実行される。
-サポートしているHTTPメソッドの一覧は `RequestMethodのJavadoc <https://docs.spring.io/spring/docs/5.0.8.RELEASE/javadoc-api/org/springframework/web/bind/annotation/RequestMethod.html>`_ を参照されたい。
+サポートしているHTTPメソッドの一覧は `RequestMethodのJavadoc <https://docs.spring.io/spring/docs/5.1.4.RELEASE/javadoc-api/org/springframework/web/bind/annotation/RequestMethod.html>`_ を参照されたい。
 指定しない場合、サポートしている全てのHTTPメソッドがマッピング対象となる。
 
  .. code-block:: java
@@ -408,7 +427,7 @@ Acceptヘッダでマッピング
 
  .. note::
 
-     Entity参照、Entity更新、Entity削除処理のURL内に指定している ``{id}`` は、`URI patterns <https://docs.spring.io/spring/docs/5.0.8.RELEASE/spring-framework-reference/web.html#mvc-ann-requestmapping-uri-templates>`_\ と呼ばれ、任意の値を指定する事ができる。
+     Entity参照、Entity更新、Entity削除処理のURL内に指定している ``{id}`` は、`URI patterns <https://docs.spring.io/spring/docs/5.1.4.RELEASE/spring-framework-reference/web.html#mvc-ann-requestmapping-uri-templates>`_\ と呼ばれ、任意の値を指定する事ができる。
      サンプルアプリケーションでは、操作するEntityのIDを指定する。
 
  画面フロー図に各処理に割り振られたURLをマッピングすると以下のようになる。
@@ -1064,7 +1083,7 @@ Backボタン押下時の動作については、 :ref:`controller-mapping-polic
 ハンドラメソッドの引数について
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-`ハンドラメソッドの引数は様々な値をとることができる <https://docs.spring.io/spring/docs/5.0.8.RELEASE/spring-framework-reference/web.html#mvc-ann-arguments>`_ が、
+`ハンドラメソッドの引数は様々な値をとることができる <https://docs.spring.io/spring/docs/5.1.4.RELEASE/spring-framework-reference/web.html#mvc-ann-arguments>`_ が、
 基本的には次に挙げるものは原則として使用しないこと。
 
 * ServletRequest
@@ -1730,7 +1749,7 @@ Cookieに値を書き込む
 
 ハンドラメソッドの返り値について
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-`ハンドラメソッドの返り値についても様々な値をとることができる <https://docs.spring.io/spring/docs/5.0.8.RELEASE/spring-framework-reference/web.html#mvc-ann-return-types>`_ が、
+`ハンドラメソッドの返り値についても様々な値をとることができる <https://docs.spring.io/spring/docs/5.1.4.RELEASE/spring-framework-reference/web.html#mvc-ann-return-types>`_ が、
 基本的には次に挙げるもののみを使用すること。
 
 - String(View名)
@@ -1795,7 +1814,7 @@ HTMLを応答する
 
 
 .. note::
-    上記の例ではJSPを使ってHTMLを生成しているが、VelocityやFreeMarkerなど他のテンプレートエンジンを使用してHTMLを生成する場合でも、ハンドラメソッドの返り値は ``sample/hello`` のままでよい。
+    上記の例ではJSPを使ってHTMLを生成しているが、FreeMarkerなど他のテンプレートエンジンを使用してHTMLを生成する場合でも、ハンドラメソッドの返り値は ``sample/hello`` のままでよい。
     使用するテンプレートエンジンでの差分は ``ViewResolver`` によって解決される。
 
 
@@ -1859,13 +1878,13 @@ HTMLを応答する
     :emphasize-lines: 1-2
 
     @Component("sample/report") // (3)
-    public class XxxExcelView extends AbstractExcelView { // (4)
+    public class XxxExcelView extends AbstractXlsxView { // (4)
         @Override
         protected void buildExcelDocument(Map<String, Object> model,
-                HSSFWorkbook workbook, HttpServletRequest request,
+                Workbook workbook, HttpServletRequest request,
                 HttpServletResponse response) throws Exception {
-            HSSFSheet sheet;
-            HSSFCell cell;
+            Sheet sheet;
+            Cell cell;
 
             sheet = workbook.createSheet("Spring");
             sheet.setDefaultColumnWidth(12);
@@ -1875,7 +1894,7 @@ HTMLを応答する
             setText(cell, "Spring-Excel test");
 
             cell = getCell(sheet, 2, 0);
-            setText(cell, (Date) model.get("serverTime")).toString());
+            setText(cell, ((Date) model.get("serverTime")).toString());
         }
     }
 
@@ -1905,7 +1924,7 @@ HTMLを応答する
    * - | (4)
      - Viewの実装例。
 
-       上記例では、 ``org.springframework.web.servlet.view.document.AbstractExcelView`` を継承し、Excelデータを生成するViewクラスの実装となる。
+       上記例では、 ``org.springframework.web.servlet.view.document.AbstractXlsxView`` を継承し、Excelデータを生成するViewクラスの実装となる。
 
 |
 |
@@ -2240,9 +2259,9 @@ Spring Frameworkでは、HTML formから送信されたリクエストパラメ�
 
     Spring Frameworkは、以下の3つの仕組みを使って型変換を行っており、基本的な型への変換は標準でサポートされている。各変換機能の詳細については、リンク先のページを参照されたい。
 
-    * `Spring Type Conversion <https://docs.spring.io/spring/docs/5.0.8.RELEASE/spring-framework-reference/core.html#core-convert>`_\
-    * `Spring Field Formatting <https://docs.spring.io/spring/docs/5.0.8.RELEASE/spring-framework-reference/core.html#format>`_\
-    * `Built-in PropertyEditor implementations <https://docs.spring.io/spring/docs/5.0.8.RELEASE/spring-framework-reference/core.html#beans-beans-conversion>`_\
+    * `Spring Type Conversion <https://docs.spring.io/spring/docs/5.1.4.RELEASE/spring-framework-reference/core.html#core-convert>`_\
+    * `Spring Field Formatting <https://docs.spring.io/spring/docs/5.1.4.RELEASE/spring-framework-reference/core.html#format>`_\
+    * `java.beans.PropertyEditor implementations <https://docs.spring.io/spring/docs/5.1.4.RELEASE/spring-framework-reference/core.html#beans-beans-conversion>`_\
 
  .. warning::
 
@@ -2288,7 +2307,7 @@ Spring Frameworkでは、HTML formから送信されたリクエストパラメ�
      - 説明
    * - 1.
      - style
-     - 数値のスタイルを指定する。詳細は、`NumberFormat.StyleのJavadoc <https://docs.spring.io/spring/docs/5.0.8.RELEASE/javadoc-api/org/springframework/format/annotation/NumberFormat.Style.html>`_\ を参照されたい。
+     - 数値のスタイルを指定する。詳細は、`NumberFormat.StyleのJavadoc <https://docs.spring.io/spring/docs/5.1.4.RELEASE/javadoc-api/org/springframework/format/annotation/NumberFormat.Style.html>`_\ を参照されたい。
    * - 2.
      - pattern
      - Javaの数値形式を指定する。詳細は、`DecimalFormatのJavadoc <http://docs.oracle.com/javase/8/docs/api/java/text/DecimalFormat.html>`_\ を参照されたい。
@@ -2333,7 +2352,7 @@ Spring Frameworkでは、HTML formから送信されたリクエストパラメ�
      - 説明
    * - 1.
      - iso
-     - ISOの日時形式を指定する。詳細は、`DateTimeFormat.ISOのJavadoc <https://docs.spring.io/spring/docs/5.0.8.RELEASE/javadoc-api/org/springframework/format/annotation/DateTimeFormat.ISO.html>`_\ を参照。
+     - ISOの日時形式を指定する。詳細は、`DateTimeFormat.ISOのJavadoc <https://docs.spring.io/spring/docs/5.1.4.RELEASE/javadoc-api/org/springframework/format/annotation/DateTimeFormat.ISO.html>`_\ を参照。
    * - 2.
      - pattern
      - Javaの日時形式を指定する。詳細は、`SimpleDateFormatのJavadoc <http://docs.oracle.com/javase/8/docs/api/java/text/SimpleDateFormat.html>`_\ を参照されたい。
@@ -2482,7 +2501,7 @@ form-backing beanの初期化は、\ ``@ModelAttribute``\ アノテーション�
 HTML formへのバインディング方法
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 | \ ``Model``\ に追加されたフォームオブジェクトは\ ``<form:xxx>``\ タグを用いて、HTML(JSP)のformにバインドすることができる。
-| \ ``<form:xxx>``\ タグの詳細は、 `Using Spring's form tag library <https://docs.spring.io/spring/docs/5.0.8.RELEASE/spring-framework-reference/web.html#mvc-view-jsp-formtaglib>`_\ を参照されたい。
+| \ ``<form:xxx>``\ タグの詳細は、 `Spring's form tag library <https://docs.spring.io/spring/docs/5.1.4.RELEASE/spring-framework-reference/web.html#mvc-view-jsp-formtaglib>`_\ を参照されたい。
 
  .. code-block:: jsp
     :emphasize-lines: 1
@@ -2674,10 +2693,10 @@ JSPの実装
      - ドキュメント
    * - 1.
      - Spring's form tag library
-     - - `<https://docs.spring.io/spring/docs/5.0.8.RELEASE/spring-framework-reference/web.html#mvc-view-jsp-formtaglib>`_\
+     - - `<https://docs.spring.io/spring/docs/5.1.4.RELEASE/spring-framework-reference/web.html#mvc-view-jsp-formtaglib>`_\
    * - 2.
-     - Spring's tag library
-     - - `<https://docs.spring.io/spring/docs/5.0.8.RELEASE/spring-framework-reference/web.html#mvc-view-jsp-tags>`_\
+     - Spring's JSP Tag Library
+     - - `<https://docs.spring.io/spring/docs/5.1.4.RELEASE/spring-framework-reference/web.html#mvc-view-jsp-tags>`_\
    * - 3.
      - JSTL
      - - `<http://download.oracle.com/otndocs/jcp/jstl-1.2-mrel2-eval-oth-JSpec/>`_\
@@ -3019,7 +3038,7 @@ HTMLの\ ``<form>``\ 要素(JSPタグライブラリの\ ``<form:form>``\ 要素
         \ ``arg``\ メソッドや\ ``buildAndExpand``\ メソッドを呼び出す必要がある。
 
         \ ``arg``\ メソッドと\ ``buildAndExpand``\ メソッドの具体的な使用例については、
-        「\ `Spring Framework Documentation(Links in views) <https://docs.spring.io/spring/docs/5.0.8.RELEASE/spring-framework-reference/web.html#mvc-links-to-controllers-from-views>`_\ 」を参照されたい。
+        「\ `Spring Framework Documentation(Links in views) <https://docs.spring.io/spring/docs/5.1.4.RELEASE/spring-framework-reference/web.html#mvc-links-to-controllers-from-views>`_\ 」を参照されたい。
 
 
  .. note:: **リクエストマッピング名について**
@@ -3076,7 +3095,7 @@ Spring Frameworkから提供されている ``<form:form>`` タグを使用し�
      - \ ``<form:xxx>``\ タグのpath属性に、バインドしたいプロパティのプロパティ名を指定する。  ``xxx`` の部分は、入力項目のタイプによってかわる。
 
 .. note::
-    \ ``<form:form>``\ 、\ ``<form:xxx>``\ タグの詳細は、 `Using Spring's form tag library <https://docs.spring.io/spring/docs/5.0.8.RELEASE/spring-framework-reference/web.html#mvc-view-jsp-formtaglib>`_\ を参照されたい。
+    \ ``<form:form>``\ 、\ ``<form:xxx>``\ タグの詳細は、 `Spring's form tag library <https://docs.spring.io/spring/docs/5.1.4.RELEASE/spring-framework-reference/web.html#mvc-view-jsp-formtaglib>`_\ を参照されたい。
 
 |
 
@@ -3729,7 +3748,7 @@ HandlerMethodArgumentResolverを実装してControllerの引数として受け�
 
            @ControllerAdvice(annotations = LoginFormModelAttributeSetter.LoginFormModelAttribute.class)
            public class LoginFormModelAttributeSetter {
-               @Target(ElementType.TYPE)
+               @Target(TYPE)
                @Retention(RetentionPolicy.RUNTIME)
                public static @interface LoginFormModelAttribute {}
                // ...

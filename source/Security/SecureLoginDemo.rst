@@ -497,8 +497,8 @@ ER図
 ================================================================================
 
 | セキュリティ要件の分類ごとに、本アプリケーションにおける実装の方法とコードの説明を行う。
-| ここでは分類ごとで要件の実現のために必要最小限なコード片のみを掲載している。コード全体を確認したい場合は `GitHub <https://github.com/Macchinetta/tutorial-apps/tree/1.6.0.RELEASE/secure-login-demo>`_ を参照すること。
-| 本アプリケーションを動作させるための初期データ登録用SQLは `ここ <https://github.com/Macchinetta/tutorial-apps/tree/1.6.0.RELEASE/secure-login-demo/src/secure-login-env/src/main/resources/database>`_ に配置されている。
+| ここでは分類ごとで要件の実現のために必要最小限なコード片のみを掲載している。コード全体を確認したい場合は `GitHub <https://github.com/Macchinetta/tutorial-apps/tree/1.6.1.RELEASE/secure-login-demo>`_ を参照すること。
+| 本アプリケーションを動作させるための初期データ登録用SQLは `ここ <https://github.com/Macchinetta/tutorial-apps/tree/1.6.1.RELEASE/secure-login-demo/src/secure-login-env/src/main/resources/database>`_ に配置されている。
 
 .. note::
 
@@ -896,7 +896,7 @@ ER図
      isInitialPassword および isCurrentPasswordExpired に付与されている \ ``@Cacheable``\ は Spring の Cache Abstraction 機能を使用するためのアノテーションである。
      \ ``@Cacheable`` \ アノテーションを付与することで、メソッドの引数に対する結果をキャッシュすることができる。
      ここでは、キャッシュの使用により初期パスワード判定、パスワード期限切れ判定のたびにデータベースへのアクセスが発生することを防止し、パフォーマンスの低下を防いでいる。
-     Cache Abstraction については `公式ドキュメント - Cache <https://docs.spring.io/spring/docs/5.0.8.RELEASE/spring-framework-reference/integration.html#cache>`_ を参照すること。
+     Cache Abstraction については `公式ドキュメント - Cache <https://docs.spring.io/spring/docs/5.1.4.RELEASE/spring-framework-reference/integration.html#cache>`_ を参照すること。
 
      尚、キャッシュを使用する際には、必要なタイミングでキャッシュをクリアする必要があることに注意すること。
      本アプリケーションではパスワード変更時や、ログアウト時には再度初期パスワード判定、パスワード期限切れ判定を行うためにキャッシュをクリアする。
@@ -1347,7 +1347,7 @@ ER図
            @Target({ TYPE, ANNOTATION_TYPE })
            @Retention(RUNTIME)
            @Documented
-           public @interface List {
+           @interface List {
                StrongPassword[] value();
            }
 
@@ -1462,7 +1462,7 @@ ER図
            @Target({ TYPE, ANNOTATION_TYPE })
            @Retention(RUNTIME)
            @Documented
-           public @interface List {
+           @interface List {
                NotReusedPassword[] value();
            }
 
@@ -4864,7 +4864,7 @@ URLに含まれるトークンと秘密情報の組が正しい場合にのみ�
        // omitted
        @Documented
        @Constraint(validatedBy = {})
-       @Target({ FIELD })
+       @Target(FIELD)
        @Retention(RUNTIME)
        @ReportAsSingleViolation  // (1)
        @Pattern(regexp = "^\\P{Cntrl}*$") // (2)
@@ -4873,10 +4873,10 @@ URLに含まれるトークンと秘密情報の組が正しい場合にのみ�
 
            Class<?>[] groups() default {};
 
-           @Target({ FIELD })
+           @Target(FIELD)
            @Retention(RUNTIME)
            @Documented
-           public @interface List {
+           @interface List {
                NotContainControlChars[] value();
            }
 
@@ -4905,7 +4905,7 @@ URLに含まれるトークンと秘密情報の組が正しい場合にのみ�
        // omitted
        @Documented
        @Constraint(validatedBy = {})
-       @Target({ FIELD })
+       @Target(FIELD)
        @Retention(RUNTIME)
        @ReportAsSingleViolation
        @Pattern(regexp = "^[\\r\\n\\P{Cntrl}]*$") // (1)
@@ -4914,10 +4914,10 @@ URLに含まれるトークンと秘密情報の組が正しい場合にのみ�
 
            Class<?>[] groups() default {};
 
-           @Target({ FIELD })
+           @Target(FIELD)
            @Retention(RUNTIME)
            @Documented
-           public @interface List {
+           @interface List {
                NotContainControlCharsExceptNewlines[] value();
            }
 
@@ -4950,7 +4950,7 @@ URLに含まれるトークンと秘密情報の組が正しい場合にのみ�
 
        @Documented
        @Constraint(validatedBy = { FileExtensionValidator.class })
-       @Target({ ElementType.FIELD })
+       @Target(FIELD)
        @Retention(RetentionPolicy.RUNTIME)
        public @interface FileExtension {
            String message() default "{com.example.securelogin.app.common.validation.FileExtension.message}";
@@ -4963,10 +4963,10 @@ URLに含まれるトークンと秘密情報の組が正しい場合にのみ�
 
            boolean ignoreCase() default true;  // (2)
 
-           @Target({ ElementType.FIELD })
+           @Target(FIELD)
            @Retention(RetentionPolicy.RUNTIME)
            @Documented
-           public @interface List {
+           @interface List {
                FileExtension[] value();
            }
        }
@@ -5056,7 +5056,7 @@ URLに含まれるトークンと秘密情報の組が正しい場合にのみ�
 
        @Documented
        @Constraint(validatedBy = { FileNamePatternValidator.class })
-       @Target({ ElementType.FIELD })
+       @Target(FIELD)
        @Retention(RetentionPolicy.RUNTIME)
        public @interface FileNamePattern {
 
@@ -5068,10 +5068,10 @@ URLに含まれるトークンと秘密情報の組が正しい場合にのみ�
 
            String pattern() default "";  // (1)
 
-           @Target({ ElementType.FIELD })
+           @Target(FIELD)
            @Retention(RetentionPolicy.RUNTIME)
            @Documented
-           public @interface List {
+           @interface List {
                FileNamePattern[] value();
            }
 
@@ -5146,7 +5146,7 @@ URLに含まれるトークンと秘密情報の組が正しい場合にのみ�
 
        @Documented
        @Constraint(validatedBy = { DomainRestrictedURLValidator.class })
-       @Target({ FIELD })
+       @Target(FIELD)
        @Retention(RUNTIME)
        @URL  // (1)
        public @interface DomainRestrictedURL {
@@ -5157,10 +5157,10 @@ URLに含まれるトークンと秘密情報の組が正しい場合にのみ�
 
            String[] allowedDomains() default {};  // (2)
 
-           @Target({ FIELD })
+           @Target(FIELD)
            @Retention(RUNTIME)
            @Documented
-           public @interface List {
+           @interface List {
                DomainRestrictedURL[] value();
            }
 
@@ -5243,7 +5243,7 @@ URLに含まれるトークンと秘密情報の組が正しい場合にのみ�
   * 入力されたメールアドレスのドメインが許容されているものであることを検証するアノテーション
 
     | ユーザからメールアドレスの入力を受け付ける際、許容するドメインを制限したい場合がある。そのような場合に、許容するドメインの一覧を設定し、入力されたメールアドレスのドメインが一覧に含まれているかをチェックする。許容するドメインのサブドメインまで許すか否かを切り替えられる仕様とする。
-    | 同時にメールアドレス形式であることをチェックするため、\ ``org.hibernate.validator.constraints.Email`` \ と組み合わせて実装する。
+    | 同時にメールアドレス形式であることをチェックするため、\ ``javax.validation.constraints.Email`` \ と組み合わせて実装する。
 
     .. code-block:: java
 
@@ -5253,7 +5253,7 @@ URLに含まれるトークンと秘密情報の組が正しい場合にのみ�
 
        @Documented
        @Constraint(validatedBy = { DomainRestrictedEmailValidator.class })
-       @Target({ FIELD })
+       @Target(FIELD)
        @Retention(RUNTIME)
        @Email  // (1)
        public @interface DomainRestrictedEmail {
@@ -5265,10 +5265,10 @@ URLに含まれるトークンと秘密情報の組が正しい場合にのみ�
 
            boolean allowSubDomain() default false;  // (3)
 
-           @Target({ FIELD })
+           @Target(FIELD)
            @Retention(RUNTIME)
            @Documented
-           public @interface List {
+           @interface List {
                DomainRestrictedEmail[] value();
            }
 
@@ -5491,7 +5491,7 @@ URLに含まれるトークンと秘密情報の組が正しい場合にのみ�
 
     アドバイスとは、AOPにおいて指定されたタイミングで実行する処理のことを指す。
     また、アドバイスを織り込むことのできる箇所のことをジョインポイントと呼び、どのジョインポイントにアドバイスを織り込むかを定義したものポイントカットと呼ぶ。
-    Springが提供するAOP機能に関しては、`公式ドキュメント - AOP <https://docs.spring.io/spring/docs/5.0.8.RELEASE/spring-framework-reference/core.html#aop>`_ を参照すること。
+    Springが提供するAOP機能に関しては、`公式ドキュメント - AOP <https://docs.spring.io/spring/docs/5.1.4.RELEASE/spring-framework-reference/core.html#aop>`_ を参照すること。
 
 コード解説
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -5678,7 +5678,7 @@ URLに含まれるトークンと秘密情報の組が正しい場合にのみ�
 
      SpringのAOPは、自動的に作成されたプロキシクラスがメソッド呼び出しをハンドリングする、プロキシ方式を採用している。
      プロキシ方式のAOPの制限として、可視性が\ ``public`` \以外のメソッドの呼び出しや、同一クラス内のメソッド呼び出しの際にはアドバイスが実行されない点に注意する必要がある。
-     詳細は `公式ドキュメント <https://docs.spring.io/spring/docs/5.0.8.RELEASE/spring-framework-reference/core.html#aop-understanding-aop-proxies>`_ を参照すること。
+     詳細は `公式ドキュメント <https://docs.spring.io/spring/docs/5.1.4.RELEASE/spring-framework-reference/core.html#aop-understanding-aop-proxies>`_ を参照すること。
 
   ログの出力結果を以下に示す。
 
@@ -6005,6 +6005,12 @@ How to use
 
    Bean定義したコレクションをDIする際には、\ ``@Inject`` \ + \ ``@Named`` \では期待した動作をしない。
    そのため、代わりに\ ``@Resource`` \を使用してBean名でDIする。
+
+.. Warning:: **Java SE 11で@Resourceを使用する場合**
+
+   \ ``@Resource`` \はCommon Annotationsで提供されるアノテーションである。
+   Java SE 11環境にてCommon Annotationsを利用するには\ :ref:`remove-common-annotations-from-java11`\ を参照されたい。
+
 
 .. raw:: latex
 

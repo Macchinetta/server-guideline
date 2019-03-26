@@ -1940,10 +1940,10 @@ SystemExceptionResolverの設定項目について
        | View(JSP)から例外コード(メッセージID)にアクセスする際の属性名となる。
      - exceptionCode
    * - | (3)
-     - | 例外コード(メッセージID)のヘッダー名
+     - | 例外コード(メッセージID)のヘッダ名
      - | exceptionCode
        | Header
-     - | 例外コード(メッセージID)として、HttpServletResponseのレスポンスヘッダーに設定する際のヘッダー名(String)を指定する。
+     - | 例外コード(メッセージID)として、HttpServletResponseのレスポンスヘッダに設定する際のヘッダ名(String)を指定する。
      - X-Exception-Code
    * - | (4)
      - | 例外オブジェクトの属性名
@@ -1973,7 +1973,7 @@ SystemExceptionResolverの設定項目について
      - | HTTPレスポンスのキャッシュ制御有無
      - | preventResponseCaching
      - | HTTPレスポンス時のキャッシュ制御の有無(true:有 false:無)を指定する。
-       | true:有を指定すると、キャッシュを無効にするためのHTTPレスポンスヘッダーが追加される。
+       | true:有を指定すると、キャッシュを無効にするためのHTTPレスポンスヘッダが追加される。
      - | false:無
 
 .. raw:: latex
@@ -2066,9 +2066,9 @@ SystemExceptionResolverの設定項目について
       - | SystemExceptionResolverに設定した値(exceptionCodeForExceptionResolver)を、出力対象の変数名として指定する。
 
 
-例外コード(メッセージID)のヘッダー名
+例外コード(メッセージID)のヘッダ名
 '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
-| デフォルトのヘッダー名が使用されている場合、重複を避けるために、別の値を設定すること。重複がない場合は、デフォルト値を変更する必要はない。
+| デフォルトのヘッダ名が使用されている場合、重複を避けるために、別の値を設定すること。重複がない場合は、デフォルト値を変更する必要はない。
 | 下記は、デフォルト値から「X-Exception-Code-ForExceptionResolver」に変更する場合の、設定&実装例である。
 
 - **spring-mvc.xml**
@@ -2092,7 +2092,7 @@ SystemExceptionResolverの設定項目について
     * - 項番
       - 説明
     * - | (1)
-      - | 例外コード(メッセージID)のヘッダー名(exceptionCodeHeader)に、"X-Exception-Code-ForExceptionResolver"を指定する。
+      - | 例外コード(メッセージID)のヘッダ名(exceptionCodeHeader)に、"X-Exception-Code-ForExceptionResolver"を指定する。
 
 
 例外オブジェクトの属性名
@@ -2136,7 +2136,7 @@ SystemExceptionResolverの設定項目について
 
 HTTPレスポンスのキャッシュ制御有無
 '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
-| HTTPレスポンスに、キャッシュ制御用のヘッダーを追加したい場合は、true:有を指定する。
+| HTTPレスポンスに、キャッシュ制御用のヘッダを追加したい場合は、true:有を指定する。
 
 - **spring-mvc.xml**
 
@@ -2162,14 +2162,19 @@ HTTPレスポンスのキャッシュ制御有無
     * - | (1)
       - | HTTPレスポンスのキャッシュ制御有無(preventResponseCaching)に、true:有を指定する。
 
- .. note:: **有を指定した場合のHTTPレスポンスヘッダー**
+ .. note:: **有を指定した場合のHTTPレスポンスヘッダ**
 
-    HTTPレスポンスのキャッシュ制御有無を有にすると、以下のHTTPレスポンスヘッダーが出力される。
+    HTTPレスポンスのキャッシュ制御有無を有にすると、以下のHTTPレスポンスヘッダが出力される。
 
      | Cache-Control:no-store
 
-    \ ``SystemExceptionResolver``\によるキャッシュ制御用のヘッダー追加はブラウザキャッシュによる意図しないエラー画面の表示を抑止するためのオプションであるが、Spring Securityの機能を使用してセキュリティの観点からキャッシュ制御用のヘッダーを追加することも可能である。
+    \ ``SystemExceptionResolver``\によるキャッシュ制御用のヘッダ追加はブラウザキャッシュによる意図しないエラー画面の表示を抑止するためのオプションであるが、Spring Securityの機能を使用してセキュリティの観点からキャッシュ制御用のヘッダを追加することも可能である。
     Spring Securityの機能については、:ref:`SpringSecurityLinkageWithBrowser`\を参照されたい。
+
+ .. warning:: **SpringSecurityのCache-Controlヘッダを利用する場合の注意点**
+
+    \ ``SystemExceptionResolver``\のキャッシュ制御とSpring SecurityのCache-Controlヘッダを有効にした場合、\ ``SystemExceptionResolver``\のキャッシュ制御が優先される。
+    これにより、正常時はSpring Securityでは\ ``no-store``\以外も付与されるが、例外時は\ ``no-store``\のみ付与されるため、意図したとおりにキャッシュを制御できない恐れがあることに注意されたい。
 
 .. _exception-handling-about-handlerexceptionresolverlogginginterceptor:
 
@@ -2273,17 +2278,17 @@ DefaultHandlerExceptionResolverでハンドリングされるフレームワー�
      - ハンドリングされるフレームワーク例外
      - HTTPステータスコード
    * - | (1)
-     - | org.springframework.web.servlet.mvc.multiaction.NoSuchRequestHandlingMethodException
-     - | 404
-   * - | (2)
      - | org.springframework.web.HttpRequestMethodNotSupportedException
      - | 405
-   * - | (3)
+   * - | (2)
      - | org.springframework.web.HttpMediaTypeNotSupportedException
      - | 415
-   * - | (4)
+   * - | (3)
      - | org.springframework.web.HttpMediaTypeNotAcceptableException
      - | 406
+   * - | (4)
+     - | org.springframework.web.bind.MissingPathVariableException
+     - | 500
    * - | (5)
      - | org.springframework.web.bind.MissingServletRequestParameterException
      - | 400
@@ -2302,7 +2307,7 @@ DefaultHandlerExceptionResolverでハンドリングされるフレームワー�
    * - | (10)
      - | org.springframework.http.converter.HttpMessageNotWritableException
      - | 500
-   * - | (11).
+   * - | (11)
      - | org.springframework.web.bind.MethodArgumentNotValidException
      - | 400
    * - | (12)

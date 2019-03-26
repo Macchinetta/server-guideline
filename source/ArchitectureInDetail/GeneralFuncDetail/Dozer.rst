@@ -61,9 +61,24 @@ Dozerをした場合と使用しない場合のコード例を挙げる。
 
 以降は、Dozerの利用方法について説明する。
 
- .. warning::
+ .. note::
 
-    JSR-310 Date and Time APIで追加されたクラス群はデフォルトのままでは例外が発生するため使用できず、カスタムコンバーターを作成する必要がある。
+    Dozer 6.4.0より、JSR-310 Date and Time APIが提供する以下のクラスのマッピングがサポートされた。
+
+    対象クラス :
+
+    * \ ``java.time.LocalDate``\
+    * \ ``java.time.LocalTime``\
+    * \ ``java.time.LocalDateTime``\
+    * \ ``java.time.OffsetTime``\
+    * \ ``java.time.OffsetDateTime``\
+    * \ ``java.time.ZonedDateTime``\
+
+ .. warning:: **Java SE 11環境にてDozerを利用する場合**
+
+    Dozer 6.3.0より、マッピング定義XMLファイルの解析にデフォルトでJAXBが利用されるようになった。
+    Java SE 11環境にてDozerのマッピング定義XMLファイルを利用する場合、\ :ref:`remove-jaxb-from-java11`\ を参照されたい。
+    ただし、開発の途中からマッピング定義XMLファイルを利用することも想定されるため、Java SE 11環境にてDozerを利用する場合は必ず設定を行なうことを推奨する。
 
 |
 
@@ -78,7 +93,7 @@ Dozerは、Java Beanのマッピング機能ライブラリである。
 Dozerを使用するためのBean定義
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-Dozerは、単独で使用するとき、以下のように、 ``com.github.dozermapper.core.DozerBeanMapperBuilder`` を利用してMapper のインスタンスを作成する。
+Dozerは、単独で使用するとき、以下のように、\ ``com.github.dozermapper.core.DozerBeanMapperBuilder``\ を利用してMapper のインスタンスを作成する。
 
 .. code-block:: java
 
@@ -86,7 +101,7 @@ Dozerは、単独で使用するとき、以下のように、 ``com.github.doze
 
 
 Mapper のインスタンスを毎回作成するのは、効率が悪いため、
-Dozerが提供している ``com.github.dozermapper.spring.DozerBeanMapperFactoryBean`` を使用すること。
+Dozerが提供している\ ``com.github.dozermapper.spring.DozerBeanMapperFactoryBean``\ を使用すること。
 
 
 Bean定義ファイル(applicationContext.xml)に、Mapperを作成するFactoryクラスである\ ``com.github.dozermapper.spring.DozerBeanMapperFactoryBean``\ を定義する
@@ -107,14 +122,14 @@ Bean定義ファイル(applicationContext.xml)に、Mapperを作成するFactory
      - 説明
    * - | (1)
      - | mappingFilesに、マッピング定義XMLファイルを指定する。
-       | ``com.github.dozermapper.spring.DozerBeanMapperFactoryBean`` は、 interfaceとして ``com.github.dozermapper.core.Mapper`` を保持している。そのため、 ``@Inject`` 時は ``Mapper`` を指定する。
+       | \ ``com.github.dozermapper.spring.DozerBeanMapperFactoryBean``\ は、 interfaceとして \ ``com.github.dozermapper.core.Mapper``\ を保持している。そのため、 \ ``@Inject``\ 時は \ ``Mapper``\ を指定する。
        | この例では、クラスパス直下の、/META-INF/dozerの任意フォルダ内の
        | (任意の値)-mapping.xmlを、すべて読み込む。このXMLファイルの内容については、以降で説明する。
 
 |
 
 
-Beanマッピングを行いたいクラスに、 ``Mapper`` をインジェクトすればよい。
+Beanマッピングを行いたいクラスに、\ ``Mapper``\ をインジェクトすればよい。
 
 .. code-block:: java
 
@@ -151,7 +166,7 @@ Bean間のフィールド名、型が同じ場合のマッピング
     }
 
 
-以下のように、 ``Mapper`` の ``map`` メソッドを使ってBeanマッピングを行う。
+以下のように、\ ``Mapper``\ の \ ``map``\ メソッドを使ってBeanマッピングを行う。
 下記メソッドを実行した後、Destinationオブジェクトが新たに作成され、sourceの各フィールドの値が作成されたDestinationオブジェクトにコピーされる。
 
 .. code-block:: java
@@ -347,7 +362,7 @@ Beanマッピングするフィールドを定義することで変換できる�
     }
 
 
-:ref:`bean-mapper-definition`\ の定義がある場合、
+\ :ref:`bean-mapper-definition`\ の定義がある場合、
 src/main/resources/META-INF/dozerフォルダ内に、(任意の値)-mapping.xmlという、マッピング定義XMLファイルを作成する。
 
 .. code-block:: xml
@@ -418,7 +433,7 @@ src/main/resources/META-INF/dozerフォルダ内に、(任意の値)-mapping.xml
     SourceName
 
 
-:ref:`bean-mapper-definition`\ の設定によって、\ ``mappingFiles``\ プロパティにクラスパス直下のMETA-INF/dozer配下に存在するマッピング定義XMLファイルが読み込まれる。
+\ :ref:`bean-mapper-definition`\ の設定によって、\ ``mappingFiles``\ プロパティにクラスパス直下のMETA-INF/dozer配下に存在するマッピング定義XMLファイルが読み込まれる。
 ファイル名は(任意の値)-mapping.xmlである必要がある。
 いずれかのファイル内に\ ``Source``\ クラスと\ ``Destination``\ クラス間におけるマッピング定義があれば、その設定が適用される。
 
@@ -718,12 +733,12 @@ Collectionマッピング
 Dozerは、以下のCollectionタイプの双方向自動マッピングをサポートしている。
 フィールド名が同じである場合、マッピング定義XMLファイルが不要である。
 
-* ``java.util.List`` <=> ``java.util.List``
-* ``java.util.List`` <=> Array
+* \ ``java.util.List``\ <=> ``java.util.List``\
+* \ ``java.util.List``\ <=> Array
 * Array <=> Array
-* ``java.util.Set`` <=> ``java.util.Set``
-* ``java.util.Set`` <=> Array
-* ``java.util.Set`` <=> ``java.util.List``
+* \ ``java.util.Set``\ <=> \ ``java.util.Set``\
+* \ ``java.util.Set``\ <=> Array
+* \ ``java.util.Set``\ <=> \ ``java.util.List``\
 
 
 
@@ -1111,14 +1126,16 @@ Dozerは、以下のCollectionタイプの双方向自動マッピングをサ�
 How to extend
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+.. _how-to-make-customconverter-label:
+
 カスタムコンバーターの作成
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-| Dozerがサポートしていないデータ型のマッピングの場合、カスタムコンバーター経由でマッピングできる。
+| Dozerがサポートしていないデータ型のマッピングでは、同じ型同士の場合も異なる型の場合も、カスタムコンバーター経由でマッピングできる。
 
-* 例 : ``java.lang.String`` <=> ``org.joda.time.DateTime``
+* 例 : \ ``java.lang.String``\ <=> \ ``org.joda.time.DateTime``\
 
-| カスタムコンバーターは、Dozerが提供している ``com.github.dozermapper.core.CustomConverter`` を実装したクラスである。
+| カスタムコンバーターは、Dozerが提供している\ ``com.github.dozermapper.core.CustomConverter``\ を実装したクラスである。
 | カスタムコンバーターの指定は、以下3パターンで行える。
 
 * Global Configuration
@@ -1223,7 +1240,7 @@ dozer-configration-mapping.xml
    * - | (4)
      - | 変換先Beanの完全修飾クラス名(FQCN)
 
-上記のマッピングを行ったことで、アプリケーション全体で、``java.lang.String`` <=> ``org.joda.time.DateTime``\ の変換が必要な場合、標準のマッピングではなく、カスタムコンバーター呼び出しでマッピングが行われる。
+上記のマッピングを行ったことで、アプリケーション全体で、\ ``java.lang.String``\ <=> \ ``org.joda.time.DateTime``\ の変換が必要な場合、標準のマッピングではなく、カスタムコンバーター呼び出しでマッピングが行われる。
 
 例 :
 
@@ -1276,7 +1293,7 @@ dozer-configration-mapping.xml
 
 .. note::
 
-    ``String``\ から\ ``java.utl.Date``\ など標準の日付・時刻オブジェクトへの変換については":ref:`beanconverter-string-and-datetime`"で述べる。
+   \ ``String``\ から\ ``java.utl.Date``\ など標準の日付・時刻オブジェクトへの変換については"\ :ref:`beanconverter-string-and-datetime`\"で述べる。
 
 Appendix
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -1384,7 +1401,7 @@ Beanを変換する際に、コピーしてほしくないフィールドを除�
 
 マッピングの特定化 (map-id)
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-:ref:`fieldexclude`\ で示したマッピングは、アプリケーション全体でBean変換する際に適用される。
+\ :ref:`fieldexclude`\ で示したマッピングは、アプリケーション全体でBean変換する際に適用される。
 マッピングの適用範囲を制限(特定化)したい場合は、以下のように、map-idを指定して定義する。
 
 .. code-block:: xml
@@ -1410,7 +1427,7 @@ Beanを変換する際に、コピーしてほしくないフィールドを除�
 map-idを指定しない場合はこの設定は適用されず、全フィールドがコピーされる。
 
 
-``map`` メソッドにmap-idを渡す例を、以下に示す。
+\ ``map``\ メソッドにmap-idを渡す例を、以下に示す。
 
 
 .. code-block:: java
@@ -1579,27 +1596,32 @@ map-idを指定しない場合はこの設定は適用されず、全フィー�
 
 コピー元の文字列型のフィールドを、コピー先の日付・時刻系のフィールドにマッピングできる。
 
-以下6種類の変換をサポートしている。
+以下の変換をサポートしている。
 
 日付・時刻系
 
-* ``java.lang.String`` <=> ``java.util.Date``
-* ``java.lang.String`` <=> ``java.util.Calendar``
-* ``java.lang.String`` <=> ``java.util.GregorianCalendar``
-* ``java.lang.String`` <=> ``java.sql.Timestamp``
+* \ ``java.lang.String``\ <=> \ ``java.util.Date``\
+* \ ``java.lang.String``\ <=> \ ``java.util.Calendar``\
+* \ ``java.lang.String``\ <=> \ ``java.util.GregorianCalendar``\
+* \ ``java.lang.String``\ <=> \ ``java.sql.Timestamp``\
+* \ ``java.lang.String``\ <=> \ ``java.time.LocalDateTime``\
+* \ ``java.lang.String``\ <=> \ ``java.time.OffsetDateTime``\
+* \ ``java.lang.String``\ <=> \ ``java.time.ZonedDateTime``\
 
 日付のみ
 
-* ``java.lang.String`` <=> ``java.sql.Date``
+* \ ``java.lang.String``\ <=> \ ``java.sql.Date``\
+* \ ``java.lang.String``\ <=> \ ``java.time.LocalDate``\
 
 時刻のみ
 
-* ``java.lang.String`` <=> ``java.sql.Time``
+* \ ``java.lang.String``\ <=> \ ``java.sql.Time``\
+* \ ``java.lang.String``\ <=> \ ``java.time.LocalTime``\
+* \ ``java.lang.String``\ <=> \ ``java.time.OffsetTime``\
 
 
 | 日付・時刻系の変換は、以下のように行う。
-| 例として、\ ``java.util.Date``\ への変換を説明する。
-| ``java.util.Calendar``\ ,\ ``java.util.GregorianCalendar``\ ,\ ``java.sql.Timestamp``\ も同じ方法で行える。
+| 例として、\ ``java.time.LocalDateTime``\ への変換を説明する。
 
 .. code-block:: xml
 
@@ -1612,7 +1634,7 @@ map-idを指定しない場合はこの設定は適用されず、全フィー�
             <class-a>com.xx.xx.Source</class-a>
             <class-b>com.xx.xx.Destination</class-b>
             <field>
-                <a date-format="yyyy-MM-dd HH:mm:ss:SS">date</a><!-- (1) -->
+                <a date-format="uuuu-MM-dd HH:mm:ss.SSS">date</a><!-- (1) -->
                 <b>date</b>
             </field>
         </mapping>
@@ -1646,7 +1668,7 @@ map-idを指定しない場合はこの設定は適用されず、全フィー�
 .. code-block:: java
 
     public class Destination {
-        private Date date;
+        private LocalDateTime date;
         // omitted setter/getter
     }
 
@@ -1657,12 +1679,13 @@ map-idを指定しない場合はこの設定は適用されず、全フィー�
     Source source = new Source();
     source.setDate("2013-10-10 11:11:11.111");
     Destination destination = beanMapper.map(source, Destination.class);
-    assert(destination.getDate().equals(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS").parse("2013-10-10 11:11:11.111")));
+    assert(destination.getDate().equals(LocalDateTime.parse("2013-10-10 11:11:11.111", DateTimeFormatter.ofPattern("uuuu-MM-dd HH:mm:ss.SSS"))));
 
 
 | 日付形式は、個別のマッピング定義毎に設定するよりも、プロジェクトで一括して設定したいケースが多い。
 | その場合はDozerのGlobal configurationファイルで設定することを推奨する。
 | その場合、アプリケーション全体のマッピングで設定された日付形式が、適用される。
+
 
 .. code-block:: xml
 
@@ -1672,7 +1695,7 @@ map-idを指定しない場合はこの設定は適用されず、全フィー�
               https://dozermapper.github.io/schema/bean-mapping.xsd">
         <!-- omitted -->
         <configuration>
-            <date-format>yyyy-MM-dd HH:mm:ss.SSS</date-format>
+            <date-format>uuuu-MM-dd HH:mm:ss.SSS</date-format>
             <!-- omitted other configuration -->
         </configuration>
         <!-- omitted -->
@@ -1684,12 +1707,30 @@ map-idを指定しない場合はこの設定は適用されず、全フィー�
 
 設定可能な項目の詳細について、 `Dozerの公式マニュアル -Global Configuration- <https://dozermapper.github.io/gitbook/documentation/xmlConfiguration.html>`_ を参照されたい。
 
+.. warning::
+
+    \ ``java.util.Date``\と\ ``java.time.LocalDate``\を併用するようなアプリケーションのとき、年形式に\ ``uuuu``\と\ ``yyyy``\を使い分ける必要があるため、アプリケーション全体で設定すると困るケースがある。このような場合では、アプリケーション全体の設定に加えて個別のマッピング定義で日付形式を設定すれば対応可能である。
+
+.. warning::
+
+    JSR-310の日付・時刻オブジェクトから文字列への変換において、マッピング定義XMLファイルの\ ``date-format``\で指定したフォーマットの妥当性チェックに、本来は\ ``java.time.format.DateTimeFormatter``\が使用されるはずが\ ``java.text.SimpleDateFormat``\が使用されているため、`JSR-310で使用できるはずのパターン文字が使用できない不具合 <https://github.com/DozerMapper/dozer/issues/747>`_ が確認されている。
+    使用可能なパターン文字の詳細は、`SimpleDateFormatのJavadoc <http://docs.oracle.com/javase/8/docs/api/java/text/SimpleDateFormat.html>`_ を参照されたい。
+    
+    なお、この不具合によって返却される実行時例外は、\ :ref:`beanconverter-mapping-error`\で述べる\ ``MappingException``\ではなく、\ ``IllegalArgumentException``\であるため、注意されたい。
+
+.. note::
+
+    Java SE 11ではJava SE 8と日付の文字列表現が異なる場合がある。
+    Java SE 8と同様に表現するには\ :ref:`change-default-locale--data-from-java9`\ を参照されたい。
+
+
+.. _beanconverter-mapping-error:
 
 マッピングのエラー
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 マッピング中にマッピング処理が失敗したら、\ ``com.github.dozermapper.core.MappingException``\ (実行時例外)がスローされる。
 
-\ ``MappingException`` がスローされる代表的な例を、以下に挙げる。
+\ ``MappingException`` \がスローされる代表的な例を、以下に挙げる。
 
 * \ ``map``\ メソッドに存在しないmap-idが渡されている。
 * \ ``map``\ メソッドに存在するmap-idを渡したが、マップ処理に渡したソース・ターゲット型は、そのmap-idに指定している定義とは異なる。

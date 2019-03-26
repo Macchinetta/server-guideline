@@ -164,10 +164,10 @@ ECサイトにおいて、ユーザは以下が行える。
 * ユーザ数：10,000人
 * 同時アクセス数：200人
 * オンライン処理件数：10,000件 / 月
-* ユーザ数・同時アクセス数・オンライ処理件数ともに1年で1.2倍の増大が見込まれる
+* ユーザ数・同時アクセス数・オンライン処理件数ともに1年で1.2倍の増大が見込まれる
 
 
-セッション管理の設計をするうえで、以下の項目を検討際に上記要件を考慮する必要がある。
+セッション管理の設計をするうえで、以下の項目を検討する際に上記要件を考慮する必要がある。
 
  .. tabularcolumns::  |p{0.15\linewidth}|p{0.85\linewidth}|
  .. list-table::
@@ -1020,10 +1020,10 @@ STSにインポートしたプロジェクトを対象として、アプリケ�
     import java.io.Serializable;
     import java.util.Date;
      
+    import javax.validation.constraints.Email;
     import javax.validation.constraints.NotNull;
     import javax.validation.constraints.Size;
      
-    import org.hibernate.validator.constraints.Email;
     import org.springframework.format.annotation.DateTimeFormat;
      
     public class AccountUpdateForm implements Serializable {  // (1)
@@ -1190,10 +1190,11 @@ Controllerでは、入力情報を受け取るフォームを ``@SessionAttribut
     import org.springframework.validation.BindingResult;
     import org.springframework.validation.annotation.Validated;
     import org.springframework.web.bind.WebDataBinder;
+    import org.springframework.web.bind.annotation.GetMapping;
     import org.springframework.web.bind.annotation.InitBinder;
     import org.springframework.web.bind.annotation.ModelAttribute;
+    import org.springframework.web.bind.annotation.PostMapping;
     import org.springframework.web.bind.annotation.RequestMapping;
-    import org.springframework.web.bind.annotation.RequestMethod;
     import org.springframework.web.bind.annotation.SessionAttributes;
     import org.springframework.web.bind.support.SessionStatus;
     import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -1206,8 +1207,8 @@ Controllerでは、入力情報を受け取るフォームを ``@SessionAttribut
     import com.example.session.domain.service.userdetails.AccountDetails;
 
     @Controller
+    @RequestMapping("account/update")
     @SessionAttributes(value = { "accountUpdateForm" }) // (1)
-    @RequestMapping("account")
     public class AccountUpdateController {
 
         @Inject
@@ -1226,7 +1227,7 @@ Controllerでは、入力情報を受け取るフォームを ``@SessionAttribut
             return new AccountUpdateForm();
         }
 
-        @RequestMapping(value = "update", params = "form1")
+        @GetMapping(params = "form1")
         public String showUpdateForm1(
                 @AuthenticationPrincipal AccountDetails userDetails,
                 AccountUpdateForm form) { // (3)
@@ -1238,7 +1239,7 @@ Controllerでは、入力情報を受け取るフォームを ``@SessionAttribut
             return "account/updateForm1";
         }
 
-        @RequestMapping(value = "update", params = "form2")
+        @PostMapping(params = "form2")
         public String showUpdateForm2(
                 @Validated((Wizard1.class)) AccountUpdateForm form,
                 BindingResult result) {
@@ -1250,12 +1251,12 @@ Controllerでは、入力情報を受け取るフォームを ``@SessionAttribut
             return "account/updateForm2";
         }
 
-        @RequestMapping(value = "update", params = "redoForm1")
+        @PostMapping(params = "redoForm1")
         public String redoUpdateForm1() {
             return "account/updateForm1";
         }
 
-        @RequestMapping(value = "update", params = "confirm")
+        @PostMapping(params = "confirm")
         public String confirmUpdate(
                 @Validated(Wizard2.class) AccountUpdateForm form,
                 BindingResult result) {
@@ -1267,12 +1268,12 @@ Controllerでは、入力情報を受け取るフォームを ``@SessionAttribut
             return "account/updateConfirm";
         }
 
-        @RequestMapping(value = "update", params = "redoForm2")
+        @PostMapping(params = "redoForm2")
         public String redoUpdateForm2() {
             return "account/updateForm2";
         }
 
-        @RequestMapping(value = "update", method = RequestMethod.POST)
+        @PostMapping
         public String update(
                 @AuthenticationPrincipal AccountDetails userDetails,
                 @Validated({ Wizard1.class, Wizard2.class }) AccountUpdateForm form,
@@ -1293,12 +1294,12 @@ Controllerでは、入力情報を受け取るフォームを ``@SessionAttribut
             return "redirect:/account/update?finish";
         }
 
-        @RequestMapping(value = "update", method = RequestMethod.GET, params = "finish")
+        @GetMapping(params = "finish")
         public String finishUpdate() {
             return "account/updateFinish";
         }
 
-        @RequestMapping(value = "update", method = RequestMethod.GET, params = "home")
+        @GetMapping(params = "home")
         public String home(SessionStatus sessionStatus) {
             sessionStatus.setComplete();
             return "redirect:/goods";
@@ -1644,6 +1645,7 @@ Beanとして登録したいクラスに以下のアノテーションを追加�
     import java.io.Serializable;
     import java.security.MessageDigest;
     import java.security.NoSuchAlgorithmException;
+    import java.util.Base64;
     import java.util.Collection;
     import java.util.LinkedHashMap;
     import java.util.Map;
@@ -1651,7 +1653,6 @@ Beanとして登録したいクラスに以下のアノテーションを追加�
 
     import org.springframework.context.annotation.Scope;
     import org.springframework.context.annotation.ScopedProxyMode;
-    import org.springframework.security.crypto.codec.Base64;
     import org.springframework.stereotype.Component;
     import org.springframework.util.SerializationUtils;
 
@@ -1768,10 +1769,11 @@ Controllerを作成する。
     import org.springframework.ui.Model;
     import org.springframework.validation.BindingResult;
     import org.springframework.validation.annotation.Validated;
+    import org.springframework.web.bind.annotation.GetMapping;
     import org.springframework.web.bind.annotation.ModelAttribute;
     import org.springframework.web.bind.annotation.PathVariable;
+    import org.springframework.web.bind.annotation.PostMapping;
     import org.springframework.web.bind.annotation.RequestMapping;
-    import org.springframework.web.bind.annotation.RequestMethod;
     import org.springframework.web.servlet.mvc.support.RedirectAttributes;
     import org.terasoluna.gfw.common.message.ResultMessages;
 
@@ -1796,7 +1798,7 @@ Controllerを作成する。
             return new GoodViewForm();
         }
 
-        @RequestMapping(value = "", method = RequestMethod.GET)
+        @GetMapping
         String showGoods(GoodViewForm form, Pageable pageable, Model model) {
 
             Page<Goods> page = goodsService.findByCategoryId(form.getCategoryId(),
@@ -1805,7 +1807,7 @@ Controllerを作成する。
             return "goods/showGoods";
         }
 
-        @RequestMapping(value = "/{goodsId}", method = RequestMethod.GET)
+        @GetMapping("/{goodsId}")
         public String showGoodsDetail(@PathVariable String goodsId, Model model) {
 
             Goods goods = goodsService.findOne(goodsId);
@@ -1814,7 +1816,7 @@ Controllerを作成する。
             return "goods/showGoodsDetail";
         }
 
-        @RequestMapping(value = "/addToCart", method = RequestMethod.POST)
+        @PostMapping("/addToCart")
         public String addToCart(@Validated GoodAddForm form, BindingResult result,
                 RedirectAttributes attributes) {
 
@@ -2183,10 +2185,11 @@ Controllerの修正
     import org.springframework.ui.Model;
     import org.springframework.validation.BindingResult;
     import org.springframework.validation.annotation.Validated;
+    import org.springframework.web.bind.annotation.GetMapping;
     import org.springframework.web.bind.annotation.ModelAttribute;
     import org.springframework.web.bind.annotation.PathVariable;
+    import org.springframework.web.bind.annotation.PostMapping;
     import org.springframework.web.bind.annotation.RequestMapping;
-    import org.springframework.web.bind.annotation.RequestMethod;
     import org.springframework.web.servlet.mvc.support.RedirectAttributes;
     import org.terasoluna.gfw.common.message.ResultMessages;
 
@@ -2215,7 +2218,7 @@ Controllerの修正
         }
 
         // (2)
-        @RequestMapping(value = "", method = RequestMethod.GET)
+        @GetMapping
         String showGoods(GoodViewForm form, Model model) {
             Pageable pageable = new PageRequest(criteria.getPage(), 3);
             form.setCategoryId(criteria.getCategoryId());
@@ -2223,7 +2226,7 @@ Controllerの修正
         }
 
         // (3)
-        @RequestMapping(value = "", method = RequestMethod.GET, params = "categoryId")
+        @GetMapping(params = "categoryId")
         String changeCategoryId(GoodViewForm form, Pageable pageable, Model model) {
             criteria.setPage(pageable.getPageNumber());
             criteria.setCategoryId(form.getCategoryId());
@@ -2231,7 +2234,7 @@ Controllerの修正
         }
 
         // (4)
-        @RequestMapping(value = "", method = RequestMethod.GET, params = "page")
+        @GetMapping(params = "page")
         String changePage(GoodViewForm form, Pageable pageable, Model model) {
             criteria.setPage(pageable.getPageNumber());
             form.setCategoryId(criteria.getCategoryId());
@@ -2246,7 +2249,7 @@ Controllerの修正
             return "goods/showGoods";
         }
 
-        @RequestMapping(value = "/{goodsId}", method = RequestMethod.GET)
+        @GetMapping("/{goodsId}")
         public String showGoodsDetail(@PathVariable String goodsId, Model model) {
 
             Goods goods = goodsService.findOne(goodsId);
@@ -2255,7 +2258,7 @@ Controllerの修正
             return "/goods/showGoodsDetail";
         }
 
-        @RequestMapping(value = "/addToCart", method = RequestMethod.POST)
+        @PostMapping("/addToCart")
         public String addToCart(@Validated GoodAddForm form, BindingResult result,
                 RedirectAttributes attributes) {
 
@@ -2346,7 +2349,7 @@ Controllerの修正
 
     import java.util.Set;
 
-    import org.hibernate.validator.constraints.NotEmpty;
+    import javax.validation.constraints.NotEmpty;
 
     public class CartForm {
 
@@ -2381,9 +2384,10 @@ Controllerを作成する。
     import org.springframework.ui.Model;
     import org.springframework.validation.BindingResult;
     import org.springframework.validation.annotation.Validated;
+    import org.springframework.web.bind.annotation.GetMapping;
     import org.springframework.web.bind.annotation.ModelAttribute;
+    import org.springframework.web.bind.annotation.PostMapping;
     import org.springframework.web.bind.annotation.RequestMapping;
-    import org.springframework.web.bind.annotation.RequestMethod;
     import org.terasoluna.gfw.common.message.ResultMessages;
 
     import com.example.session.domain.model.Cart;
@@ -2401,12 +2405,12 @@ Controllerを作成する。
             return new CartForm();
         }
 
-        @RequestMapping(method = RequestMethod.GET)
+        @GetMapping
         String viewCart(Model model) {
             return "cart/viewCart";
         }
 
-        @RequestMapping(method = RequestMethod.POST)
+        @PostMapping
         String removeFromCart(@Validated CartForm cartForm,
                 BindingResult bindingResult, Model model) {
             if (bindingResult.hasErrors()) {
@@ -2573,8 +2577,9 @@ Controllerを作成する。
     import org.springframework.stereotype.Controller;
     import org.springframework.ui.Model;
     import org.springframework.web.bind.annotation.ExceptionHandler;
+    import org.springframework.web.bind.annotation.GetMapping;
+    import org.springframework.web.bind.annotation.PostMapping;
     import org.springframework.web.bind.annotation.RequestMapping;
-    import org.springframework.web.bind.annotation.RequestMethod;
     import org.springframework.web.bind.annotation.RequestParam;
     import org.springframework.web.bind.annotation.ResponseStatus;
     import org.springframework.web.servlet.ModelAndView;
@@ -2604,7 +2609,7 @@ Controllerを作成する。
         @Inject
         GoodsSearchCriteria criteria;
 
-        @RequestMapping(method = RequestMethod.GET, params = "confirm")
+        @GetMapping(params = "confirm")
         String confirm(@AuthenticationPrincipal AccountDetails userDetails,
                 Model model) {
             if (cart.isEmpty()) {
@@ -2618,7 +2623,7 @@ Controllerを作成する。
             return "order/confirm";
         }
 
-        @RequestMapping(method = RequestMethod.POST)
+        @PostMapping
         String order(@AuthenticationPrincipal AccountDetails userDetails,
                 @RequestParam String signature, RedirectAttributes attributes) {
             Order order = orderService.purchase(userDetails.getAccount(), cart,
@@ -2628,7 +2633,7 @@ Controllerを作成する。
             return "redirect:/order?finish";
         }
 
-        @RequestMapping(method = RequestMethod.GET, params = "finish")
+        @GetMapping(params = "finish")
         String finish() {
             return "order/finish";
         }

@@ -378,7 +378,7 @@ RFC 3986では、クエリ文字列のパート以下のように定義してい
     "\ ``+``\" がエンコーディング対象外となったことによる影響を受ける可能性がある為、注意すること。
     なお、\ ``UriComponentsBuilder``\ では、クエリパラメータに含まれる\ ``unreserved``\文字以外をエンコーディングする機能を提供している為、
     当機能を用いる事でクエリパラメータに含まれる "\ ``+``\" のエンコーディングは可能である。
-    \ ``UriComponentsBuilder``\ を利用してURIをエンコーディングする方法については、`Springの公式リファレンス <https://docs.spring.io/spring/docs/5.0.8.RELEASE/spring-framework-reference/web.html#web-uri-encoding>`_\ を参照されたい。
+    \ ``UriComponentsBuilder``\ を利用してURIをエンコーディングする方法については、`Springの公式リファレンス <https://docs.spring.io/spring/docs/5.1.4.RELEASE/spring-framework-reference/web.html#web-uri-encoding>`_\ を参照されたい。
 
 
 f:query() 関数仕様
@@ -416,7 +416,7 @@ f:query() 関数仕様
     指定されたオブジェクトのシンプル型のプロパティ値は、
     \ ``org.springframework.format.support.DefaultFormattingConversionService``\ の \ ``convert``\ メソッドを使用して文字列に変換される。
     \ ``ConversionService``\ については、
-    \ `Spring Framework Documentation(Spring Type Conversion) <https://docs.spring.io/spring/docs/5.0.8.RELEASE/spring-framework-reference/core.html#core-convert>`_\ を参照されたい。
+    \ `Spring Framework Reference Documentation(Spring Type Conversion) <https://docs.spring.io/spring/docs/5.1.4.RELEASE/spring-framework-reference/core.html#core-convert>`_\ を参照されたい。
 
 
 **戻り値**
