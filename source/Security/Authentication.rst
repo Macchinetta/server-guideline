@@ -205,7 +205,7 @@ Spring Securityは、以下のような流れでフォーム認証を行う。
            - | フォーム認証処理を行うSecurity Filter(\ ``UsernamePasswordAuthenticationFilter``\ )が適用される。
          * - | \ ``<http-basic>``\
            - | RFC1945に準拠したBasic認証を行うSecurity Filter(\ ``BasicAuthenticationFilter``\ )が適用される。
-             | 詳細な利用方法は、\ `BasicAuthenticationFilterのJavaDoc <http://docs.spring.io/spring-security/site/docs/4.2.4.RELEASE/apidocs/org/springframework/security/web/authentication/www/BasicAuthenticationFilter.html>`_\ を参照されたい。
+             | 詳細な利用方法は、\ `BasicAuthenticationFilterのJavaDoc <https://docs.spring.io/spring-security/site/docs/4.2.12.RELEASE/apidocs/org/springframework/security/web/authentication/www/BasicAuthenticationFilter.html>`_\ を参照されたい。
          * - | \ ``<logout>``\
            - | ログアウト処理を行うSecurity Filter(\ ``LogoutFilter``\ )が適用される。
              | ログアウト処理の詳細については、「\ :ref:`SpringSecurityAuthenticationLogout`\ 」を参照されたい。
@@ -280,7 +280,7 @@ Spring Securityはフォーム認証用のログインフォームをデフォ�
       - | 認証エラー時に出力させる例外メッセージを出力する。
         | 共通ライブラリで提供している\ ``<t:messagesPanel>``\ タグを使用して出力することを推奨する。
         | \ ``<t:messagesPanel>``\ タグの使用方法については、「\ :doc:`../ArchitectureInDetail/WebApplicationDetail/MessageManagement`\ 」を参照されたい。
-        | なお、認証エラーが発生した場合は、セッション又はリクエストスコープに\ ``SPRING_SECURITY_LAST_EXCEPTION``\ という属性名で例外オブジェクトが格納される。
+        | なお、認証エラーが発生した場合、Spring Securityのデフォルトの設定で使用される、\ ``org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler``\ では、認証エラー時に発生した例外オブジェクトを\ ``SPRING_SECURITY_LAST_EXCEPTION``\ という属性名で、リダイレクト時はセッション、フォワード時はリクエストスコープに格納する。
     * - | (3)
       - | ユーザー名とパスワードを入力するためのログインフォーム。
         | ここではユーザー名を\ ``username``\、パスワードを\ ``passowrd``\ というリクエストパラメータで送信する。
@@ -828,13 +828,6 @@ Spring Securityが提供するインタフェースには、以下の2種類が�
 パスワードのハッシュ化要件に制約がない場合は、\ ``org.springframework.security.crypto.password``\
 パッケージの\ ``PasswordEncoder``\ インタフェースの実装クラスを使用することを推奨する。
 
-.. note::
-
-    非推奨の\ ``PasswordEncoder``\ の利用方法については、
-    「:ref:`AuthenticationHowToExtendUsingDeprecatedPasswordEncoder`」を参照されたい。
-
-|
-
 *org.springframework.security.crypto.password.PasswordEncoderのメソッド定義*
 
 .. code-block:: java
@@ -860,7 +853,7 @@ Spring Securityが提供するインタフェースには、以下の2種類が�
 
 |
 
-Spring Securityは、\ ``PasswordEncoder``\ インタフェースの実装クラスとして、以下の５クラスを提供している。
+Spring Securityは、\ ``PasswordEncoder``\ インタフェースの実装クラスとして以下の3つのいずれかを使用することを推奨している。
 
 .. tabularcolumns:: |p{0.35\linewidth}|p{0.65\linewidth}|
 .. list-table:: **PasswordEncoderの実装クラス**
@@ -871,36 +864,68 @@ Spring Securityは、\ ``PasswordEncoder``\ インタフェースの実装クラ
       - 説明
     * - | \ ``BCryptPasswordEncoder``\
       - | BCryptアルゴリズムを使用してパスワードのハッシュ化及び照合を行う実装クラス。
-        | 詳細は、\ `BCryptPasswordEncoderのJavaDoc <http://docs.spring.io/spring-security/site/docs/4.2.4.RELEASE/apidocs/org/springframework/security/crypto/bcrypt/BCryptPasswordEncoder.html>`_\ を参照されたい。
-    * - | \ ``StandardPasswordEncoder``\
-      - | SHA-256アルゴリズムを使用してパスワードのハッシュ化及び照合を行う実装クラス。
-        | 詳細は、\ `StandardPasswordEncoderのJavaDoc <http://docs.spring.io/spring-security/site/docs/4.2.4.RELEASE/apidocs/org/springframework/security/crypto/password/StandardPasswordEncoder.html>`_\ を参照されたい。
-    * - | \ ``NoOpPasswordEncoder``\
-      - | ハッシュ化しない実装クラス。
-        | テスト用のクラスであり、実際のアプリケーションで使用することはない。
+        | 詳細は、\ `BCryptPasswordEncoderのJavaDoc <https://docs.spring.io/spring-security/site/docs/4.2.12.RELEASE/apidocs/org/springframework/security/crypto/bcrypt/BCryptPasswordEncoder.html>`_\ を参照されたい。
     * - | \ ``Pbkdf2PasswordEncoder``\
       - | PBKDF2アルゴリズムを使用してパスワードのハッシュ化及び照合を行う実装クラス。\ ``Pbkdf2PasswordEncoder``\ はSpring Security 4.1から追加されたクラスである。
-        | 詳細は、\ `Pbkdf2PasswordEncoderのJavaDoc <https://docs.spring.io/spring-security/site/docs/4.2.4.RELEASE/apidocs/org/springframework/security/crypto/password/Pbkdf2PasswordEncoder.html>`_\ を参照されたい。
+        | 詳細は、\ `Pbkdf2PasswordEncoderのJavaDoc <https://docs.spring.io/spring-security/site/docs/4.2.12.RELEASE/apidocs/org/springframework/security/crypto/password/Pbkdf2PasswordEncoder.html>`_\ を参照されたい。
     * - | \ ``SCryptPasswordEncoder``\
       - | SCryptアルゴリズムを使用してパスワードのハッシュ化及び照合を行う実装クラス。\ ``SCryptPasswordEncoder``\ はSpring Security 4.1から追加されたクラスである。
-        | 詳細は、\ `SCryptPasswordEncoderのJavaDoc <https://docs.spring.io/spring-security/site/docs/4.2.4.RELEASE/apidocs/org/springframework/security/crypto/scrypt/SCryptPasswordEncoder.html>`_\ を参照されたい。
+        | 詳細は、\ `SCryptPasswordEncoderのJavaDoc <https://docs.spring.io/spring-security/site/docs/4.2.12.RELEASE/apidocs/org/springframework/security/crypto/scrypt/SCryptPasswordEncoder.html>`_\ を参照されたい。
 
 本節では、\ ``BCryptPasswordEncoder``\ の使い方について説明する。
 
 .. note::
 
     ガイドラインでは\ ``BCryptPasswordEncoder``\ の使い方を紹介しているが、\ `OWASP <https://www.owasp.org/index.php/Password_Storage_Cheat_Sheet>`_\
-    ではBCryptアルゴリズムよりPBKDF2アルゴリズムが推奨されている。
-    また、\ `NIST800-132の「5 Password-Based Key Derivation Functions」 <http://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-132.pdf>`_\
-    ではPBKDFのハッシュ関数に使用するイテレーションカウントを、最低1,000、特に重要なキーや性能が問題にならないシステムの場合は10,000,000を設定することが推奨されている。
-    イテレーションカウントが大きくなるほどパスワード強度は増すが、性能にあたえる影響も大きくなる。
+    では\ `FIPS <https://www.nist.gov/topics/federal-information-standards-fips>`_\に準ずるPBKDF2アルゴリズムが推奨されている。
 
 |
 
- .. todo:: **TBD**
+.. note::
 
-    PBKDF2アルゴリズムに対応するには、前述の\ ``Pbkdf2PasswordEncoder``\ を使用すればよい。
-    \ ``Pbkdf2PasswordEncoder``\ の使用方法については、次版以降に記載する予定である。
+    ブランクプロジェクトで\ ``SCryptPasswordEncoder``\を使用する場合は、デフォルト設定から変更する必要がある。
+
+    依存ライブラリとして不足している\ ``bcprov-jdk15on``\を追加する。
+    pom.xmlに以下のdependencyを追加すれば良い。
+
+        *pom.xml*
+
+        .. code-block:: xml
+
+            <dependency>
+                <groupId>org.bouncycastle</groupId>
+                <artifactId>bcprov-jdk15on</artifactId>
+                <version>${bouncycastle.version}</version> <!-- (1) -->
+            </dependency>
+
+        .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
+        .. list-table::
+            :header-rows: 1
+            :widths: 10 90
+
+            * - 項番
+              - 説明
+            * - | (1)
+              - | 任意のバージョンを指定する。
+
+
+    \ ``applicationContext.xml``\の既存の\ ``PasswordEncoder``\を変更し、\ ``SCryptPasswordEncoder``\を有効化する。
+
+        *applicationContext.xml*
+
+        .. code-block:: xml
+
+            <bean id="passwordEncoder" class="org.springframework.security.crypto.password.SCryptPasswordEncoder">
+
+
+    \ ``Pbkdf2PasswordEncoder``\を使用する場合は、\ ``applicationContext.xml``\の変更のみ行えば良い。
+
+|
+
+.. note::
+
+    アプリケーションの要件によっては、上記以外の非推奨な\ ``PasswordEncoder``\の実装クラスを利用する必要がある場合もある。
+    「:ref:`AuthenticationHowToExtendUsingDeprecatedPasswordEncoder`」では非推奨の実装クラスの一つである\ ``MessageDigestPasswordEncoder``\を利用する方法について解説する
 
 |
 
@@ -1116,6 +1141,8 @@ Spring Security使用しているイベントは、認証が成功したこと�
 
 |
 
+.. _SpringSecurityAuthenticationEventListener:
+
 イベントリスナの作成
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
@@ -1128,7 +1155,7 @@ Spring Security使用しているイベントは、認証が成功したこと�
     @Component
     public class AuthenticationEventListeners {
 
-        private static final Logger log =
+        private static final Logger logger =
                 LoggerFactory.getLogger(AuthenticationEventListeners.class);
 
     @EventListener // (1) 
@@ -1153,6 +1180,12 @@ Spring Security使用しているイベントは、認証が成功したこと�
 
 上記例では、クライアントが指定した認証情報に誤りがあった場合に通知される\ ``AuthenticationFailureBadCredentialsEvent``\ をハンドリングするクラスを作成する例としているが、
 他のイベントも同じ要領でハンドリングすることが可能である。
+
+.. tip::
+
+    総当たり攻撃による不正ログインの兆候を検出するための方法として、ログイン認証時のログを監視することがあげられる。
+    実装例のような\ ``AuthenticationFailureBadCredentialsEvent``\ をハンドリングするイベントリスナを作成して
+    認証情報の誤りをログ情報として出力することで、Spring Securityを使用した認証時のログを監視することが可能になる。
 
 |
 
@@ -1396,7 +1429,7 @@ Javaからのアクセス
     * ``org.springframework.security.web.authentication.session.SessionFixationProtectionStrategy``
 
     具体的な定義方法については、
-    `Spring Security Reference -Web Application Security (Concurrency Control)- <http://docs.spring.io/spring-security/site/docs/4.2.4.RELEASE/reference/htmlsingle/#concurrent-sessions>`_ のサンプルコードを参考にされたい。
+    `Spring Security Reference -Web Application Security (Concurrency Control)- <https://docs.spring.io/spring-security/site/docs/4.2.12.RELEASE/reference/htmlsingle/#concurrent-sessions>`_ のサンプルコードを参考にされたい。
 
 |
 
@@ -2144,7 +2177,7 @@ Bean Validationに関する詳細は \ :doc:`../ArchitectureInDetail/WebApplicat
 認証処理の拡張
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Spring Securityから提供されている\ `認証プロバイダ <http://docs.spring.io/spring-security/site/docs/4.2.4.RELEASE/apidocs/org/springframework/security/authentication/AuthenticationProvider.html>`_\ で対応できない認証要件がある場合は、
+Spring Securityから提供されている\ `認証プロバイダ <https://docs.spring.io/spring-security/site/docs/4.2.12.RELEASE/apidocs/org/springframework/security/authentication/AuthenticationProvider.html>`_\ で対応できない認証要件がある場合は、
 \ ``org.springframework.security.authentication.AuthenticationProvider``\ インタフェースを実装したクラスを作成する必要がある。
 
 ここでは、ユーザー名、パスワード、\ **会社識別子(独自の認証パラメータ)**\ の3つのパラメータを使用してDB認証を行うための拡張例を示す。
@@ -2587,7 +2620,7 @@ Authentication Filterの作成
 
 .. _AuthenticationHowToExtendUsingDeprecatedPasswordEncoder:
 
-非推奨パッケージのPasswordEncoderの利用
+非推奨アルゴリズムのPasswordEncoderの利用
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 セキュリティ要件によっては、前述した\ ``PasswordEncoder``\ を実装したクラスでは実現できない場合がある。
@@ -2596,40 +2629,79 @@ Authentication Filterの作成
 具体的には、既存のハッシュ化要件が以下のようなケースである。
 
 * アルゴリズムがSHA-512である。
-* ストレッチング回数が1000回である。
-* ソルトがアカウントテーブルのカラムに格納されており、\ ``PasswordEncoder``\ の外から渡す必要がある。
+* ハッシュ化回数が1000回である。
 
-このようなケースでは、\ ``org.springframework.security.crypto.password.PasswordEncoder``\ インタフェースの実装クラスではなく、
-\ ``org.springframework.security.authentication.encoding.PasswordEncoder``\ インタフェースの実装クラスの使用することで要件を満たすことができる。
+このようなケースでは、\ ``org.springframework.security.crypto.password.PasswordEncoder``\の実装クラスの一つである\ ``MessageDigestPasswordEncoder``\を利用することで要件を満たすことができる。
 
 .. warning::
 
-    Spring Security 3.1.4以前では、\ ``org.springframework.security.authentication.encoding.PasswordEncoder``\
-    を実装したクラスをハッシュ化に使用していたが、3.1.4以降では非推奨となっている。
+    非推奨アルゴリズムの\ ``PasswordEncoder``\として\ ``org.springframework.security.authentication.encoding.PasswordEncoder``\の実装クラスが存在するが、
+    これらのクラスは固定のソルトを使用する必要があり、セキュリティ上のリスクを伴う。
+
+    \ ``org.springframework.security.authentication.encoding.PasswordEncoder``\の実装クラスを利用している場合は、ランダムなソルトを利用する\ ``MessageDigestPasswordEncoder``\への移行を検討されたい。
 
 |
 
-ShaPasswordEncoderの利用
+MessageDigestPasswordEncoderの利用
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-本ガイドラインでは、\ ``ShaPasswordEncoder``\ を例に、非推奨パッケージの\ ``PasswordEncoder``\ の利用について説明する。
+\ ``MessageDigestPasswordEncoder``\はJavaが提供する\ ``java.security.MessageDigest``\クラスを利用してハッシュ化を行う。
+\ ``MessageDigest``\ クラスはMD-5、SHA-1、SHA-256等のハッシュアルゴリズムを提供している。
+詳細については\ `Javadoc <https://docs.oracle.com/javase/jp/8/docs/api/java/security/MessageDigest.html>`_\を参照されたい。
 
-ハッシュ化要件が以下のケースの場合は、\ ``ShaPasswordEncoder``\ を利用することで要件を満たすことができる。
+.. warning::
 
-* アルゴリズムがSHA-512
-* ストレッチング回数を1000回
+    \ ``MessageDigestPasswordEncoder``\は旧式の実装であることを示すため非推奨となっている。
+    このクラスが廃止される予定はないが、セキュリティ上のリスクが想定されるため、Pbkdf2アルゴリズムやBCryptアルゴリズムを利用することを検討されたい。
 
 |
 
-まず、\ ``ShaPasswordEncoder``\ のbeanを定義する。
+ここでは\ ``MessageDigestPasswordEncoder``\ を利用して、以下のハッシュ化要件を満たす\ ``PasswordEncoder``\を実装する。
+
+* アルゴリズムがSHA-512である。
+* ハッシュ化回数が1000回である。
+
+.. note::
+
+    **MessageDigestPasswordEncoderの仕様**
+
+    \ ``MessageDigestPasswordEncoder``\でハッシュ化を行うと以下のフォーマットで出力される。
+
+        {\ ``salt``\}\ ``hashValue``\
+
+    ソルトはSpring Security 4.2.6からランダムに生成するようになったため、安全性が向上している。
+
+    ハッシュ化したパスワードに付与されたソルトは照合の際に使用される。
+
+    **既に固定のソルトを用いてハッシュ化したパスワードについて**
+
+    先述の通り、Spring Security 4.2.6以降の\ ``MessageDigestPasswordEncoder``\はソルトをランダムに生成するが、
+    既に固定のソルトを用いてパスワードをハッシュ化していた場合も、パスワードにソルトを付与する移行処理を行うことで、
+    照合することができるようになる。
+
+    パスワードデータの移行については、\ `MessageDigestPasswordEncoderのJavadoc <https://docs.spring.io/spring-security/site/docs/4.2.12.RELEASE/apidocs/org/springframework/security/crypto/password/MessageDigestPasswordEncoder.html>`_\ を参照されたい。
+
+    この場合、既存のパスワードは固定のソルトを用いて照合が行われるが、パスワードを新規に設定または変更した場合はランダムなソルトが用いられる。
+
+|
+
+.. warning::
+
+    \ ``MessageDigestPasswordEncoder``\を使用する際は、以下の点に注意する必要がある。
+
+    * 既存のハッシュ値より文字数が多くなる
+    * エンコードしたパスワードからソルトの情報が得られる
+
+|
+
+\ ``MessageDigestPasswordEncoder``\ のbeanを定義する。
 
 * applicationContext.xmlの定義例
 
 .. code-block:: xml
-  
-    <bean id ="passwordEncoder"
-        class="org.springframework.security.authentication.encoding.ShaPasswordEncoder"> <!-- (1) -->
-        <constructor-arg value="512" /> <!-- (2) -->
+
+    <bean id="passwordEncoder" class="org.springframework.security.crypto.password.MessageDigestPasswordEncoder"> <!-- (1) -->
+        <constructor-arg name="algorithm" value="SHA-512" /> <!-- (2) -->
         <property name="iterations" value="1000" /> <!-- (3) -->
     </bean>
 
@@ -2641,91 +2713,14 @@ ShaPasswordEncoderの利用
     * - 項番
       - 説明
     * - | (1)
-      - | \ ``org.springframework.security.authentication.encoding.ShaPasswordEncoder``\ のbeanを定義する。
+      - | ハッシュ化に使用する\ ``PasswordEncoder``\として\ ``MessageDigestPasswordEncoder``\をbean定義する。
     * - | (2)
-      - | SHAアルゴリズムの種類を指定する。
-        | 指定可能な値は、「"\ ``1``\" 、\ ``256``\ 、\ ``384``\ 、\ ``512``\ 」である。
-        | 省略した場合は、「"\ ``1``\" 」となる。
+      - | \ ``MessageDigestPasswordEncoder``\で使用するハッシュアルゴリズムを指定する。
+        | ここには\ ``MessageDigest``\ クラスが対応するアルゴリズムを指定することができる。
+        | 指定できる値については、`Java暗号化アーキテクチャ標準アルゴリズム名のドキュメント <https://docs.oracle.com/javase/jp/8/docs/technotes/guides/security/StandardNames.html#MessageDigest>`_ を参照されたい。
     * - | (3)
-      - | ハッシュ化時のストレッチング回数を指定する。
-        | 省略した場合は、1回となる。
-
-|
-
-次に、\ ``ShaPasswordEncoder``\ をSpring Securityの認証処理(\ ``DaoAuthenticationProvider``\ )に適用する。
-
-* spring-security.xmlの定義例
-
-.. code-block:: xml
-  
-    <bean id="authenticationProvider"
-        class="org.springframework.security.authentication.dao.DaoAuthenticationProvider">
-        <!-- omitted -->
-        <property name="saltSource" ref="saltSource" /> <!-- (1) -->
-        <property name="userDetailsService" ref="userDetailsService" />
-        <property name="passwordEncoder" ref="passwordEncoder" /> <!-- (2) -->
-    </bean>
-  
-    <bean id="saltSource"
-        class="org.springframework.security.authentication.dao.ReflectionSaltSource"> <!-- (3) -->
-        <property name="userPropertyToUse" value="username" /> <!-- (4) -->
-    </bean>
-  
-.. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
-.. list-table::
-    :header-rows: 1
-    :widths: 10 90
-  
-    * - 項番
-      - 説明
-    * - | (1)
-      - | \ ``saltSource``\ プロパティに\ ``org.springframework.security.authentication.dao.SaltSource``\ インタフェースの実装クラスのbeanを指定する。
-        | \ ``SaltSource``\ は、ソルトを\ ``UserDetails``\ から取得するためのインタフェースである。
-    * - | (2)
-      - | \ ``passwordEncoder``\ プロパティに\ ``org.springframework.security.authentication.encoding.PasswordEncoder``\ インタフェースの実装クラスのbeanを指定する。
-        | 上記例では、\ ``ShaPasswordEncoder``\ のbeanを指定している。
-    * - | (3)
-      - | \ ``SaltSource``\ のbeanを定義する。
-        | 上記例では、リフレクションを使用して\ ``UserDetails``\ のプロパティからソルトを取得するクラス(\ ``ReflectionSaltSource``\ )を利用している。
-    * - | (4)
-      - | ソルトが格納されている\ ``UserDetails``\ のプロパティを指定する。
-        | 上記例では、\ ``UserDetails``\ の\ ``username``\ プロパティの値をソルトとして使用する。
-
-|
-
-アプリケーションの処理で非推奨の\ ``PasswordEncoder``\ を使用する場合は、\ ``PasswordEncoder``\ をインジェクションして使用する。
-
-* Javaクラスの実装例
-
-.. code-block:: java
-  
-    @Inject
-    PasswordEncoder passwordEncoder;
-  
-    public String register(Customer customer, String rawPassword, String userSalt) {
-        // omitted
-        String password = passwordEncoder.encodePassword(rawPassword, userSalt); // (1)
-        customer.setPassword(password);
-        // omitted
-    }
-  
-    public boolean matches(Customer customer, String rawPassword, String userSalt) {
-        return passwordEncoder.isPasswordValid(customer.getPassword(), rawPassword, userSalt); // (2)
-    }
-  
-.. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
-.. list-table::
-    :header-rows: 1
-    :widths: 10 90
-  
-    * - 項番
-      - 説明
-    * - | (1)
-      - | パスワードをハッシュ化する場合は、\ ``encodePassword``\ メソッドを使用する。
-        | メソッドの引数には、パスワード、ソルト文字列の順で指定する。
-    * - | (2)
-      - | パスワードを照合する場合は、\ ``isPasswordValid``\ メソッドを使用する。
-        | メソッドの引数には、ハッシュ化済みのパスワード、平文のパスワード、ソルト文字列の順で指定する。
+      - | ハッシュ化のiterations(反復)回数を指定する。
+        | 設定を行わなかった場合、1回となる。
 
 |
 
@@ -2738,9 +2733,7 @@ Spring MVCでリクエストを受けてログインフォームを表示する
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Spring MVCでリクエストを受けてログインフォームを表示する方法を説明する。
 
-* spring-mvc.xmlの定義例
-
-ログインフォームを表示するControllerの定義例。
+* ログインフォームを表示するControllerの定義例
 
 .. code-block:: java
 
@@ -2775,13 +2768,13 @@ Spring MVCでリクエストを受けてログインフォームを表示する�
 Remember Me認証の利用
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-「\ `Remember Me認証 <http://docs.spring.io/spring-security/site/docs/4.2.4.RELEASE/reference/htmlsingle/#remember-me>`_\ 」とは、
+「\ `Remember Me認証 <https://docs.spring.io/spring-security/site/docs/4.2.12.RELEASE/reference/htmlsingle/#remember-me>`_\ 」とは、
 Webサイトに頻繁にアクセスするユーザーの利便性を高めるための機能の一つで、ログイン状態を通常のライフサイクルより長く保持するための機能である。
 本機能を使用すると、ブラウザを閉じた後やセッションタイムが発生した後でも、Cookieに保持しているRemember Me認証用のTokenを使用して、
 ユーザ名とパスワードを再入力することなく自動でログインすることができる。
 なお、本機能は、ユーザーがログイン状態を保持することを許可した場合のみ有効となる。
 
-Spring Securityは、「`Hash-Based Token <http://docs.spring.io/spring-security/site/docs/4.2.4.RELEASE/reference/htmlsingle/#remember-me-hash-token>`_ 方式のRemember Me認証」と「`Persistent Token <http://docs.spring.io/spring-security/site/docs/4.2.4.RELEASE/reference/htmlsingle/#remember-me-persistent-token>`_ 方式のRemember Me認証」をサポートしており、
+Spring Securityは、「`Hash-Based Token <https://docs.spring.io/spring-security/site/docs/4.2.12.RELEASE/reference/htmlsingle/#remember-me-hash-token>`_ 方式のRemember Me認証」と「`Persistent Token <https://docs.spring.io/spring-security/site/docs/4.2.12.RELEASE/reference/htmlsingle/#remember-me-persistent-token>`_ 方式のRemember Me認証」をサポートしており、
 デフォルトではHash-Based Token方式が使用される。
 
 |
@@ -2816,7 +2809,7 @@ Remember Me認証を利用する場合は、\ ``<sec:remember-me>``\ タグを�
         | 指定が無い場合、デフォルトで14日間が有効時間になる。
         | 上記例では、有効時間として30日間を設定している。
 
-上記以外の属性については、\ `Spring Security Reference -The Security Namespace (<remember-me>) - <http://docs.spring.io/spring-security/site/docs/4.2.4.RELEASE/reference/htmlsingle/#nsa-remember-me>`_\ を参照されたい。
+上記以外の属性については、\ `Spring Security Reference -The Security Namespace (<remember-me>) - <https://docs.spring.io/spring-security/site/docs/4.2.12.RELEASE/reference/htmlsingle/#nsa-remember-me>`_\ を参照されたい。
 
 .. note:: **Spring Security 4.0における変更**
 
@@ -2856,7 +2849,7 @@ Remember Me認証を利用する場合は、\ ``<sec:remember-me>``\ タグを�
 
 .. tip:: **value属性の設定値について**
 
-    \ ``value``\ 属性には、\ ``true``\を設定する旨が\ `rememberMeRequestedのJavaDoc <http://docs.spring.io/autorepo/docs/spring-security/4.2.4.RELEASE/apidocs/org/springframework/security/web/authentication/rememberme/AbstractRememberMeServices.html#rememberMeRequested-javax.servlet.http.HttpServletRequest-java.lang.String->`_\ に記載されているが、
+    \ ``value``\ 属性には、\ ``true``\を設定する旨が\ `rememberMeRequestedのJavaDoc <https://docs.spring.io/spring-security/site/docs/4.2.12.RELEASE/apidocs/org/springframework/security/web/authentication/rememberme/AbstractRememberMeServices.html#rememberMeRequested-javax.servlet.http.HttpServletRequest-java.lang.String->`_\ に記載されているが、
     実装上は\ ``on``\ 、\ ``yes``\ 、"\ ``1``\" も設定可能である。
 
 .. raw:: latex

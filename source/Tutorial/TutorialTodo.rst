@@ -217,8 +217,8 @@ Delete TODO
         mvn archetype:generate -B\
          -DarchetypeGroupId=com.github.macchinetta.blank\
          -DarchetypeArtifactId=macchinetta-web-blank-noorm-archetype\
-         -DarchetypeVersion=1.5.1.RELEASE\
-         -DgroupId=todo\
+         -DarchetypeVersion=1.5.2.RELEASE\
+         -DgroupId=com.example.todo\
          -DartifactId=todo\
          -Dversion=1.0.0-SNAPSHOT
 
@@ -237,8 +237,8 @@ O/R Mapperに依存しないブランクプロジェクトの作成
     mvn archetype:generate -B^
      -DarchetypeGroupId=com.github.macchinetta.blank^
      -DarchetypeArtifactId=macchinetta-web-blank-noorm-archetype^
-     -DarchetypeVersion=1.5.1.RELEASE^
-     -DgroupId=todo^
+     -DarchetypeVersion=1.5.2.RELEASE^
+     -DgroupId=com.example.todo^
      -DartifactId=todo^
      -Dversion=1.0.0-SNAPSHOT
 
@@ -255,8 +255,8 @@ MyBatis3を使用してデータベースにアクセスするRepositoryImpl用�
     mvn archetype:generate -B^
      -DarchetypeGroupId=com.github.macchinetta.blank^
      -DarchetypeArtifactId=macchinetta-web-blank-archetype^
-     -DarchetypeVersion=1.5.1.RELEASE^
-     -DgroupId=todo^
+     -DarchetypeVersion=1.5.2.RELEASE^
+     -DgroupId=com.example.todo^
      -DartifactId=todo^
      -Dversion=1.0.0-SNAPSHOT
 
@@ -354,15 +354,17 @@ Root Directoryに \ ``C:\work\todo``\ を設定し、Projectsにtodoのpom.xml�
     src
       └main
           ├java
-          │  └todo
-          │    ├ app ... (1)
-          │    │   └todo
-          │    └domain ... (2)
-          │        ├model ... (3)
-          │        ├repository ... (4)
+          │  └com
+          │    └example
+          │      └todo
+          │        ├ app ... (1)
           │        │   └todo
-          │        └service ... (5)
-          │            └todo
+          │        └domain ... (2)
+          │            ├model ... (3)
+          │            ├repository ... (4)
+          │            │   └todo
+          │            └service ... (5)
+          │                └todo
           ├resources
           │  └META-INF
           │      └spring ... (6)
@@ -407,23 +409,27 @@ Root Directoryに \ ``C:\work\todo``\ を設定し、Projectsにtodoのpom.xml�
     src
       └main
           ├java
-          │  └todo
-          │    ├ app
-          │    │   └todo
-          │    └domain
-          │        ├model
-          │        ├repository
+          │  └com
+          │    └example
+          │      └todo
+          │        ├ app
           │        │   └todo
-          │        └service
-          │            └todo
+          │        └domain
+          │            ├model
+          │            ├repository
+          │            │   └todo
+          │            └service
+          │                └todo
           ├resources
           │  ├META-INF
           │  │  ├mybatis ... (8)
           │  │  └spring
-          │  └todo
-          │    └domain
-          │        └repository ... (9)
-          │             └todo
+          │  └com
+          │    └example
+          │      └todo
+          │        └domain
+          │            └repository ... (9)
+          │                 └todo
           └wepapp
               └WEB-INF
                   └views
@@ -468,13 +474,13 @@ Todoアプリケーションの開発を始める前に、プロジェクトの�
 ブランクプロジェクトでは、トップページを表示するためのControllerとJSPの実装が用意されているため、
 トップページを表示する事で動作確認を行う事ができる。
 
-ブランクプロジェクトから提供されているController(\ :file:`src/main/java/todo/app/welcome/HelloController.java`\ )は、
+ブランクプロジェクトから提供されているController(\ :file:`src/main/java/com/example/todo/app/welcome/HelloController.java`\ )は、
 以下のような実装となっている。
 
 .. code-block:: java
     :emphasize-lines: 17, 21, 28, 31, 40, 43
 
-    package todo.app.welcome;
+    package com.example.todo.app.welcome;
 
     import java.text.DateFormat;
     import java.util.Date;
@@ -603,7 +609,7 @@ todoが「Configured」に含まれていることを確認して「Finish」を
 |
 
 起動すると以下のようなログが出力される。
-\ ``/``\ というパスに対して\ ``todo.app.welcome.HelloController``\ のhelloメソッドがマッピングされていることが分かる。
+\ ``/``\ というパスに対して\ ``com.example.todo.app.welcome.HelloController``\ のhelloメソッドがマッピングされていることが分かる。
 
 
 .. code-block:: console
@@ -611,7 +617,7 @@ todoが「Configured」に含まれていることを確認して「Finish」を
 
     date:2016-02-17 11:25:30	thread:localhost-startStop-1	X-Track:	level:INFO 	logger:o.springframework.web.servlet.DispatcherServlet 	message:FrameworkServlet 'appServlet': initialization started
     date:2016-02-17 11:25:31	thread:localhost-startStop-1	X-Track:	level:DEBUG	logger:o.t.gfw.web.codelist.CodeListInterceptor        	message:registered codeList : []
-    date:2016-02-17 11:25:31	thread:localhost-startStop-1	X-Track:	level:INFO 	logger:o.s.w.s.m.m.a.RequestMappingHandlerMapping      	message:Mapped "{[/],methods=[GET || POST],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public java.lang.String todo.app.welcome.HelloController.home(java.util.Locale,org.springframework.ui.Model)
+    date:2016-02-17 11:25:31	thread:localhost-startStop-1	X-Track:	level:INFO 	logger:o.s.w.s.m.m.a.RequestMappingHandlerMapping      	message:Mapped "{[/],methods=[GET || POST],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public java.lang.String com.example.todo.app.welcome.HelloController.home(java.util.Locale,org.springframework.ui.Model)
     date:2016-02-17 11:25:31	thread:localhost-startStop-1	X-Track:	level:INFO 	logger:o.s.w.s.m.m.a.RequestMappingHandlerAdapter      	message:Looking for @ControllerAdvice: WebApplicationContext for namespace 'appServlet-servlet': startup date [Wed Feb 17 11:25:30 JST 2016]; parent: Root WebApplicationContext
     date:2016-02-17 11:25:32	thread:localhost-startStop-1	X-Track:	level:INFO 	logger:o.s.w.s.m.m.a.RequestMappingHandlerAdapter      	message:Looking for @ControllerAdvice: WebApplicationContext for namespace 'appServlet-servlet': startup date [Wed Feb 17 11:25:30 JST 2016]; parent: Root WebApplicationContext
     date:2016-02-17 11:25:32	thread:localhost-startStop-1	X-Track:	level:INFO 	logger:o.s.web.servlet.handler.SimpleUrlHandlerMapping 	message:Mapped URL path [/**] onto handler 'org.springframework.web.servlet.resource.DefaultServletHttpRequestHandler#0'
@@ -637,7 +643,7 @@ todoが「Configured」に含まれていることを確認して「Finish」を
    :emphasize-lines: 1-4
 
     date:2016-02-17 11:25:35	thread:tomcat-http--11	X-Track:b49b630274974bffbcd9e8d13261f6a7	level:TRACE	logger:o.t.gfw.web.logging.TraceLoggingInterceptor     	message:[START CONTROLLER] HelloController.home(Locale,Model)
-    date:2016-02-17 11:25:35	thread:tomcat-http--11	X-Track:b49b630274974bffbcd9e8d13261f6a7	level:INFO 	logger:todo.app.welcome.HelloController                 	message:Welcome home! The client locale is ja_JP.
+    date:2016-02-17 11:25:35	thread:tomcat-http--11	X-Track:b49b630274974bffbcd9e8d13261f6a7	level:INFO 	logger:com.example.todo.app.welcome.HelloController                 	message:Welcome home! The client locale is ja_JP.
     date:2016-02-17 11:25:35	thread:tomcat-http--11	X-Track:b49b630274974bffbcd9e8d13261f6a7	level:TRACE	logger:o.t.gfw.web.logging.TraceLoggingInterceptor     	message:[END CONTROLLER  ] HelloController.home(Locale,Model)-> view=welcome/home, model={serverTime=2016/02/17 11:25:35 JST}
     date:2016-02-17 11:25:35	thread:tomcat-http--11	X-Track:b49b630274974bffbcd9e8d13261f6a7	level:TRACE	logger:o.t.gfw.web.logging.TraceLoggingInterceptor     	message:[HANDLING TIME   ] HelloController.home(Locale,Model)-> 97,346,576 ns
 
@@ -693,7 +699,7 @@ Package Explorer上で右クリック -> New -> Class を選択し、「New Java
       - 入力値
     * - 1
       - Package
-      - ``todo.domain.model``
+      - ``com.example.todo.domain.model``
     * - 2
       - Name
       - ``Todo``
@@ -721,7 +727,7 @@ Package Explorer上で右クリック -> New -> Class を選択し、「New Java
 
 .. code-block:: java
 
-    package todo.domain.model;
+    package com.example.todo.domain.model;
 
     import java.io.Serializable;
     import java.util.Date;
@@ -806,7 +812,7 @@ Package Explorer上で右クリック -> New -> Interface を選択し、「New 
       - 入力値
     * - 1
       - Package
-      - ``todo.domain.repository.todo``
+      - ``com.example.todo.domain.repository.todo``
     * - 2
       - Name
       - ``TodoRepository``
@@ -828,11 +834,11 @@ Package Explorer上で右クリック -> New -> Interface を選択し、「New 
 
 .. code-block:: java
 
-    package todo.domain.repository.todo;
+    package com.example.todo.domain.repository.todo;
 
     import java.util.Collection;
 
-    import todo.domain.model.Todo;
+    import com.example.todo.domain.model.Todo;
 
     public interface TodoRepository {
         Todo findOne(String todoId);
@@ -876,13 +882,13 @@ Package Explorer上で右クリック -> New -> Class を選択し、「New Java
       - 入力値
     * - 1
       - Package
-      - ``todo.domain.repository.todo``
+      - ``com.example.todo.domain.repository.todo``
     * - 2
       - Name
       - ``TodoRepositoryImpl``
     * - 3
       - Interfaces
-      - ``todo.domain.repository.todo.TodoRepository``
+      - ``com.example.todo.domain.repository.todo.TodoRepository``
 
 を入力して「Finish」する。
 
@@ -899,7 +905,7 @@ Package Explorer上で右クリック -> New -> Class を選択し、「New Java
 .. code-block:: java
     :emphasize-lines: 11
 
-    package todo.domain.repository.todo;
+    package com.example.todo.domain.repository.todo;
 
     import java.util.Collection;
     import java.util.Map;
@@ -907,7 +913,7 @@ Package Explorer上で右クリック -> New -> Class を選択し、「New Java
 
     import org.springframework.stereotype.Repository;
 
-    import todo.domain.model.Todo;
+    import com.example.todo.domain.model.Todo;
 
     @Repository // (1)
     public class TodoRepositoryImpl implements TodoRepository {
@@ -963,8 +969,8 @@ Package Explorer上で右クリック -> New -> Class を選択し、「New Java
 
 .. note::
  
-    本チュートリアルでは、インフラストラクチャ層に属するクラス(RepositoryImpl)をドメイン層のパッケージ(\ ``todo.domain``\)に格納しているが、
-    完全に層別にパッケージを分けるのであれば、インフラストラクチャ層のクラスは、\ ``todo.infra``\以下に作成した方が良い。
+    本チュートリアルでは、インフラストラクチャ層に属するクラス(RepositoryImpl)をドメイン層のパッケージ(\ ``com.example.todo.domain``\)に格納しているが、
+    完全に層別にパッケージを分けるのであれば、インフラストラクチャ層のクラスは、\ ``com.example.todo.infra``\以下に作成した方が良い。
 
     ただし、通常のプロジェクトでは、インフラストラクチャ層が変更されることを前提としていない(そのような前提で進めるプロジェクトは、少ない)。
     そこで、作業効率向上のために、ドメイン層のRepositoryインタフェースと同じ階層に、RepositoryImplを作成しても良い。
@@ -988,7 +994,7 @@ Package Explorer上で右クリック -> New -> Interface を選択し、「New 
       - 入力値
     * - 1
       - Package
-      - ``todo.domain.service.todo``
+      - ``com.example.todo.domain.service.todo``
     * - 2
       - Name
       - ``TodoService``
@@ -1008,11 +1014,11 @@ Package Explorer上で右クリック -> New -> Interface を選択し、「New 
 
 .. code-block:: java
 
-    package todo.domain.service.todo;
+    package com.example.todo.domain.service.todo;
 
     import java.util.Collection;
 
-    import todo.domain.model.Todo;
+    import com.example.todo.domain.model.Todo;
 
     public interface TodoService {
         Collection<Todo> findAll();
@@ -1040,13 +1046,13 @@ Package Explorer上で右クリック -> New -> Class を選択し、「New Java
       - 入力値
     * - 1
       - Package
-      - ``todo.domain.service.todo``
+      - ``com.example.todo.domain.service.todo``
     * - 2
       - Name
       - ``TodoServiceImpl``
     * - 3
       - Interfaces
-      - ``todo.domain.service.todo.TodoService``
+      - ``com.example.todo.domain.service.todo.TodoService``
 
 を入力して「Finish」する。
 
@@ -1057,7 +1063,7 @@ Package Explorer上で右クリック -> New -> Class を選択し、「New Java
 .. code-block:: java
     :emphasize-lines: 19, 20, 25-26, 28-29, 32-33, 37-38, 44, 57-58, 61-62
 
-    package todo.domain.service.todo;
+    package com.example.todo.domain.service.todo;
 
     import java.util.Collection;
     import java.util.Date;
@@ -1072,8 +1078,8 @@ Package Explorer上で右クリック -> New -> Class を選択し、「New Java
     import org.terasoluna.gfw.common.message.ResultMessage;
     import org.terasoluna.gfw.common.message.ResultMessages;
 
-    import todo.domain.model.Todo;
-    import todo.domain.repository.todo.TodoRepository;
+    import com.example.todo.domain.model.Todo;
+    import com.example.todo.domain.repository.todo.TodoRepository;
 
     @Service// (1)
     @Transactional // (2)
@@ -1085,7 +1091,7 @@ Package Explorer上で右クリック -> New -> Class を選択し、「New Java
         TodoRepository todoRepository;
 
         // (4)
-        public Todo findOne(String todoId) {
+        private Todo findOne(String todoId) {
             Todo todo = todoRepository.findOne(todoId);
             if (todo == null) {
                 // (5)
@@ -1201,15 +1207,6 @@ Package Explorer上で右クリック -> New -> Class を選択し、「New Java
 
 |
 
-ServiceのJUnit作成
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-.. todo:: **TBD**
- 
-    ServiceのUnitテストの方法については、次版以降で記載する予定である。
-
-|
-
 アプリケーション層の作成
 --------------------------------------------------------------------------------
 
@@ -1232,7 +1229,7 @@ Package Explorer上で右クリック -> New -> Class を選択し、「New Java
       - 入力値
     * - 1
       - Package
-      - ``todo.app.todo``
+      - ``com.example.todo.app.todo``
     * - 2
       - Name
       - ``TodoController``
@@ -1250,7 +1247,7 @@ Package Explorer上で右クリック -> New -> Class を選択し、「New Java
 .. code-block:: java
     :emphasize-lines: 6, 7
 
-    package todo.app.todo;
+    package com.example.todo.app.todo;
 
     import org.springframework.stereotype.Controller;
     import org.springframework.web.bind.annotation.RequestMapping;
@@ -1285,6 +1282,8 @@ Show all TODOの実装
 
 を行う。
 
+はじめに、TODOの全件表示を行うための処理を実装する。
+
 Formの作成
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
@@ -1302,7 +1301,7 @@ Package Explorer上で右クリック -> New -> Class を選択し、「New Java
       - 入力値
     * - 1
       - Package
-      - ``todo.app.todo``
+      - ``com.example.todo.app.todo``
     * - 2
       - Name
       - ``TodoForm``
@@ -1322,7 +1321,7 @@ Package Explorer上で右クリック -> New -> Class を選択し、「New Java
 
 .. code-block:: java
 
-    package todo.app.todo;
+    package com.example.todo.app.todo;
 
     import java.io.Serializable;
 
@@ -1349,7 +1348,7 @@ Controllerの実装
 .. code-block:: java
     :emphasize-lines: 18-19, 21-22, 27, 30, 31
 
-    package todo.app.todo;
+    package com.example.todo.app.todo;
 
     import java.util.Collection;
 
@@ -1357,11 +1356,12 @@ Controllerの実装
 
     import org.springframework.stereotype.Controller;
     import org.springframework.ui.Model;
+    import org.springframework.web.bind.annotation.GetMapping;
     import org.springframework.web.bind.annotation.ModelAttribute;
     import org.springframework.web.bind.annotation.RequestMapping;
 
-    import todo.domain.model.Todo;
-    import todo.domain.service.todo.TodoService;
+    import com.example.todo.domain.model.Todo;
+    import com.example.todo.domain.service.todo.TodoService;
 
     @Controller
     @RequestMapping("todo")
@@ -1375,7 +1375,7 @@ Controllerの実装
             return form;
         }
 
-        @RequestMapping(value = "list") // (3)
+        @GetMapping("list") // (3)
         public String list(Model model) {
             Collection<Todo> todos = todoService.findAll();
             model.addAttribute("todos", todos); // (4)
@@ -1400,13 +1400,19 @@ Controllerの実装
        | \ ``@ModelAttribute``\ アノテーションをつけることで、このメソッドの返り値のformオブジェクトが、\ ``todoForm``\ という名前で\ ``Model``\ に追加される。
        | これは、\ ``TodoController``\ の各処理で、\ ``model.addAttribute("todoForm", form)``\ を実装するのと同義である。
    * - | (3)
-     - | \ ``/todo/list``\ というパスにリクエストされた際に、一覧画面表示処理用のメソッド(\ ``list``\ メソッド)が実行されるように\ ``@RequestMapping``\ アノテーションを設定する。
+     - | \ ``/todo/list``\ というパスに\ ``GET``\ メソッドを使用してリクエストされた際に、一覧画面表示処理用のメソッド(\ ``list``\ メソッド)が実行されるように\ ``@GetMapping``\ アノテーションを設定する。
        |
-       | クラスレベルに\ ``@RequestMapping(“todo”)``\ が設定されているため、ここでは\ ``@RequestMapping("list")``\ のみで良い。
+       | クラスレベルに\ ``@RequestMapping(“todo”)``\ が設定されているため、ここでは\ ``@GetMapping("list")``\ のみで良い。
    * - | (4)
      - | \ ``Model``\ にTodoのリストを追加して、Viewに渡す。
    * - | (5)
      - | View名として\ ``todo/list``\ を返すと、spring-mvc.xmlに定義した\ ``ViewResolver``\ によって、\ :file:`WEB-INF/views/todo/list.jsp`\がレンダリングされることになる。
+
+.. note::
+
+   \ ``@GetMapping``\や以降に登場する\ ``@PostMapping``\は、対応するHTTPメソッドにマッピングする。
+
+   詳細は、 :ref:`controller_mapping-label` を参照されたい。
 
 JSPの作成
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -1436,14 +1442,10 @@ Package Explorer上で右クリック -> New -> File を選択し、「New File�
 
 .. figure:: ./images/create-list-jsp.png
 
-まず、以下を表示するために必要なJSPの実装を行う。
-
-* TODOの入力フォーム
-* 「Create Todo」ボタン
-* TODOの一覧表示エリア
+まず、TODOの全件表示を行うために必要なJSPの実装を行う。
 
 .. code-block:: jsp
-    :emphasize-lines: 15, 19-20, 27-28, 30, 32-33
+    :emphasize-lines: 17-18, 20, 22-23
 
     <!DOCTYPE html>
     <html>
@@ -1458,25 +1460,15 @@ Package Explorer上で右クリック -> New -> File を選択し、「New File�
     </head>
     <body>
         <h1>Todo List</h1>
-        <div id="todoForm">
-            <!-- (1) -->
-            <form:form
-               action="${pageContext.request.contextPath}/todo/create"
-                method="post" modelAttribute="todoForm">
-                <!-- (2) -->
-                <form:input path="todoTitle" />
-                <form:button>Create Todo</form:button>
-            </form:form>
-        </div>
         <hr />
         <div id="todoList">
             <ul>
-                <!-- (3) -->
+                <!-- (1) -->
                 <c:forEach items="${todos}" var="todo">
                     <li><c:choose>
-                            <c:when test="${todo.finished}"><!-- (4) -->
+                            <c:when test="${todo.finished}"><!-- (2) -->
                                 <span class="strike">
-                                <!-- (5) -->
+                                <!-- (3) -->
                                 ${f:h(todo.todoTitle)}
                                 </span>
                             </c:when>
@@ -1498,21 +1490,10 @@ Package Explorer上で右クリック -> New -> File を選択し、「New File�
    * - 項番
      - 説明
    * - | (1)
-     - | 新規作成処理用のformを表示する。
-       | formを表示するために、\ ``<form:form>``\ タグを使用する。
-       | \ ``modelAttribute``\ 属性には、Controllerで\ ``Model``\ に追加したFormの名前を指定する。
-       | \ ``action``\ 属性には新規作成処理を実行するためのURL(\ ``<contextPath>/todo/create``\ )を指定する。
-       | 新規作成処理は更新系の処理なので、\ ``method``\属性には\ ``POST``\ メソッドを指定する。
-       |
-       | \ ``action``\ 属性に指定する<contextPath>は、\ ``${pageContext.request.contextPath}``\ で取得することができる。
-   * - | (2)
-     - | \ ``<form:input>``\ タグでフォームのプロパティをバインドする。
-       | \ ``modelAttribute``\ 属性に指定したFormのプロパティ名と、\ ``path``\ 属性の値が一致している必要がある。
-   * - | (3)
      - | \ ``<c:forEach>``\ タグを用いて、Todoのリストを全て表示する。
-   * - | (4)
+   * - | (2)
      - | 完了かどうか(\ ``finished``\ )で、打ち消し線(\ ``text-decoration: line-through;``\ )を装飾するかどうかを判断する。
-   * - | (5)
+   * - | (3)
      - | **文字列値を出力する際は、XSS対策のため、必ずf:h()関数を使用してHTMLエスケープを行うこと。**
        | XSS対策についての詳細は、\ :doc:`../Security/XSS`\ を参照されたい。
 
@@ -1523,9 +1504,66 @@ STSで「todo」プロジェクトを右クリックし、「Run As」→「Run 
 ブラウザで http://localhost:8080/todo/todo/list にアクセスすると、以下のような画面が表示される。
 
 .. figure:: ./images/image067.png
-   :width: 50%
+   :width: 25%
 
 |
+
+.. note::
+
+    上記で表示されている画面には、TODOが１件も登録されていないため、TODOの一覧は出力されない。
+    
+    以下のように、ドメイン層の作成で作成したTodoRepositoryImplを一時的に修正し初期データを登録することで、TODOの一覧が出力されることを確認できる。
+    
+    なお、次節「\ :ref:`CreateTodoImplementation`\ 」で実際にTODOを登録できるようになるため、一覧の出力が確認できたら削除して構わない。
+
+    * ``TodoRepositoryImpl.java``
+
+     .. code-block:: java
+        :emphasize-lines: 15-29
+
+        package com.example.todo.domain.repository.todo;
+
+        import java.util.Collection;
+        import java.util.Map;
+        import java.util.concurrent.ConcurrentHashMap;
+
+        import org.springframework.stereotype.Repository;
+
+        import com.example.todo.domain.model.Todo;
+
+        @Repository
+        public class TodoRepositoryImpl implements TodoRepository {
+            private static final Map<String, Todo> TODO_MAP = new ConcurrentHashMap<String, Todo>();
+
+            static {
+                Todo todo1 = new Todo();
+                todo1.setTodoId("1");
+                todo1.setTodoTitle("Send a e-mail");
+                Todo todo2 = new Todo();
+                todo2.setTodoId("2");
+                todo2.setTodoTitle("Have a lunch");
+                Todo todo3 = new Todo();
+                todo3.setTodoId("3");
+                todo3.setTodoTitle("Read a book");
+                todo3.setFinished(true);
+                TODO_MAP.put(todo1.getTodoId(), todo1);
+                TODO_MAP.put(todo2.getTodoId(), todo2);
+                TODO_MAP.put(todo3.getTodoId(), todo3);
+            }
+
+              // omitted
+
+
+    以下のように画面に出力される。
+
+    .. figure:: ./images/show-all-todo-note.png
+       :width: 30%
+
+
+|
+
+
+.. _CreateTodoImplementation:
 
 Create TODOの実装
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -1540,7 +1578,7 @@ Controllerの修正
 .. code-block:: java
     :emphasize-lines: 8,29-31,46-70
 
-    package todo.app.todo;
+    package com.example.todo.app.todo;
 
     import java.util.Collection;
 
@@ -1551,16 +1589,17 @@ Controllerの修正
     import org.springframework.stereotype.Controller;
     import org.springframework.ui.Model;
     import org.springframework.validation.BindingResult;
+    import org.springframework.web.bind.annotation.GetMapping;
     import org.springframework.web.bind.annotation.ModelAttribute;
+    import org.springframework.web.bind.annotation.PostMapping;
     import org.springframework.web.bind.annotation.RequestMapping;
-    import org.springframework.web.bind.annotation.RequestMethod;
     import org.springframework.web.servlet.mvc.support.RedirectAttributes;
     import org.terasoluna.gfw.common.exception.BusinessException;
     import org.terasoluna.gfw.common.message.ResultMessage;
     import org.terasoluna.gfw.common.message.ResultMessages;
 
-    import todo.domain.model.Todo;
-    import todo.domain.service.todo.TodoService;
+    import com.example.todo.domain.model.Todo;
+    import com.example.todo.domain.service.todo.TodoService;
 
     @Controller
     @RequestMapping("todo")
@@ -1578,14 +1617,14 @@ Controllerの修正
             return form;
         }
 
-        @RequestMapping(value = "list")
+        @GetMapping("list")
         public String list(Model model) {
             Collection<Todo> todos = todoService.findAll();
             model.addAttribute("todos", todos);
             return "todo/list";
         }
 
-        @RequestMapping(value = "create", method = RequestMethod.POST) // (2)
+        @PostMapping("create") // (2)
         public String create(@Valid TodoForm todoForm, BindingResult bindingResult, // (3)
                 Model model, RedirectAttributes attributes) { // (4)
 
@@ -1624,7 +1663,7 @@ Controllerの修正
    * - | (1)
      - | FormオブジェクトをDomainObjectに変換するために、Dozerの\ ``Mapper``\ インタフェースをインジェクションする。
    * - | (2)
-     - | \ ``/todo/create``\ というパスに\ ``POST``\ メソッドを使用してリクエストされた際に、新規作成処理用のメソッド(\ ``create``\ メソッド)が実行されるように\ ``@RequestMapping``\ アノテーションを設定する。
+     - | \ ``/todo/create``\ というパスに\ ``POST``\ メソッドを使用してリクエストされた際に、新規作成処理用のメソッド(\ ``create``\ メソッド)が実行されるように\ ``@PostMapping``\ アノテーションを設定する。
    * - | (3)
      - | フォームの入力チェックを行うため、Formの引数に\ ``@Valid``\ アノテーションをつける。入力チェック結果は、その直後の引数\ ``BindingResult``\ に格納される。
    * - | (4)
@@ -1656,7 +1695,7 @@ Formの修正
 .. code-block:: java
     :emphasize-lines: 5-6,11-12
 
-    package todo.app.todo;
+    package com.example.todo.app.todo;
 
     import java.io.Serializable;
 
@@ -1695,10 +1734,15 @@ Formの修正
 JSPの修正
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-結果メッセージと入力チェックエラーを表示するエリアを追加する。
+以下を表示するために必要なJSPの実装を追加する。
+
+* TODOの入力フォーム
+* 「Create Todo」ボタン
+* 入力チェックエラーを表示するエリア
+* 結果メッセージを表示するエリア
 
 .. code-block:: jsp
-    :emphasize-lines: 15-16,22
+    :emphasize-lines: 15-16,18,22,23
 
     <!DOCTYPE html>
     <html>
@@ -1717,11 +1761,12 @@ JSPの修正
             <!-- (1) -->
             <t:messagesPanel />
 
+            <!-- (2) -->
             <form:form
                action="${pageContext.request.contextPath}/todo/create"
                 method="post" modelAttribute="todoForm">
-                <form:input path="todoTitle" />
-                <form:errors path="todoTitle" /><!-- (2) -->
+                <form:input path="todoTitle" /><!-- (3) -->
+                <form:errors path="todoTitle" /><!-- (4) -->
                 <form:button>Create Todo</form:button>
             </form:form>
         </div>
@@ -1731,7 +1776,7 @@ JSPの修正
                 <c:forEach items="${todos}" var="todo">
                     <li><c:choose>
                             <c:when test="${todo.finished}">
-                                <span style="text-decoration: line-through;">
+                                <span class="strike">
                                 ${f:h(todo.todoTitle)}
                                 </span>
                             </c:when>
@@ -1757,6 +1802,17 @@ JSPの修正
    * - | (1)
      - | \ ``<t:messagesPanel>``\ タグで、結果メッセージを表示する。
    * - | (2)
+     - | 新規作成処理用のformを表示する。
+       | formを表示するために、\ ``<form:form>``\ タグを使用する。
+       | \ ``modelAttribute``\ 属性には、Controllerで\ ``Model``\ に追加したFormの名前を指定する。
+       | \ ``action``\ 属性には新規作成処理を実行するためのURL(\ ``<contextPath>/todo/create``\ )を指定する。
+       | 新規作成処理は更新系の処理なので、\ ``method``\属性には\ ``POST``\ メソッドを指定する。
+       |
+       | \ ``action``\ 属性に指定する<contextPath>は、\ ``${pageContext.request.contextPath}``\ で取得することができる。
+   * - | (3)
+     - | \ ``<form:input>``\ タグでフォームのプロパティをバインドする。
+       | \ ``modelAttribute``\ 属性に指定したFormのプロパティ名と、\ ``path``\ 属性の値が一致している必要がある。
+   * - | (4)
      - | \ ``<form:errors>``\ タグで、入力エラーがあった場合に表示する。\ ``path``\ 属性の値は、\ ``<form:input>``\ タグと合わせる。
 
 |
@@ -1865,7 +1921,7 @@ Formクラスに以下のプロパティを追加する。
 .. code-block:: java
     :emphasize-lines: 9-11,13-14,18-20,22-24,27-29,31-33
 
-    package todo.app.todo;
+    package com.example.todo.app.todo;
 
     import java.io.Serializable;
 
@@ -1940,7 +1996,7 @@ Controllerの修正
 .. code-block:: java
     :emphasize-lines: 6,12,50,72-94
 
-    package todo.app.todo;
+    package com.example.todo.app.todo;
 
     import java.util.Collection;
 
@@ -1952,18 +2008,19 @@ Controllerの修正
     import org.springframework.ui.Model;
     import org.springframework.validation.BindingResult;
     import org.springframework.validation.annotation.Validated;
+    import org.springframework.web.bind.annotation.GetMapping;
     import org.springframework.web.bind.annotation.ModelAttribute;
+    import org.springframework.web.bind.annotation.PostMapping;
     import org.springframework.web.bind.annotation.RequestMapping;
-    import org.springframework.web.bind.annotation.RequestMethod;
     import org.springframework.web.servlet.mvc.support.RedirectAttributes;
     import org.terasoluna.gfw.common.exception.BusinessException;
     import org.terasoluna.gfw.common.message.ResultMessage;
     import org.terasoluna.gfw.common.message.ResultMessages;
 
-    import todo.app.todo.TodoForm.TodoCreate;
-    import todo.app.todo.TodoForm.TodoFinish;
-    import todo.domain.model.Todo;
-    import todo.domain.service.todo.TodoService;
+    import com.example.todo.app.todo.TodoForm.TodoCreate;
+    import com.example.todo.app.todo.TodoForm.TodoFinish;
+    import com.example.todo.domain.model.Todo;
+    import com.example.todo.domain.service.todo.TodoService;
 
     @Controller
     @RequestMapping("todo")
@@ -1980,14 +2037,14 @@ Controllerの修正
             return form;
         }
 
-        @RequestMapping(value = "list")
+        @GetMapping("list")
         public String list(Model model) {
             Collection<Todo> todos = todoService.findAll();
             model.addAttribute("todos", todos);
             return "todo/list";
         }
 
-        @RequestMapping(value = "create", method = RequestMethod.POST)
+        @PostMapping("create")
         public String create(
                 @Validated({ Default.class, TodoCreate.class }) TodoForm todoForm, // (1)
                 BindingResult bindingResult, Model model,
@@ -2011,7 +2068,7 @@ Controllerの修正
             return "redirect:/todo/list";
         }
 
-        @RequestMapping(value = "finish", method = RequestMethod.POST) // (2)
+        @PostMapping("finish") // (2)
         public String finish(
                 @Validated({ Default.class, TodoFinish.class }) TodoForm form, // (3)
                 BindingResult bindingResult, Model model,
@@ -2051,7 +2108,7 @@ Controllerの修正
        | \ ``value``\ 属性には、適用する入力チェックルールのグループ(グループインタフェース)を指定する。
        | \ ``Default.class``\ は、グループ化されていない入力チェックルールを適用するために用意されているグループインタフェースである。
    * - | (2)
-     - | \ ``/todo/finish``\というパスに\ ``POST``\ メソッドを使用してリクエストされた際に、完了処理用のメソッド(\ ``finish``\ メソッド)が実行されるように\ ``@RequestMapping``\ アノテーションを設定する。
+     - | \ ``/todo/finish``\というパスに\ ``POST``\ メソッドを使用してリクエストされた際に、完了処理用のメソッド(\ ``finish``\ メソッド)が実行されるように\ ``@PostMapping``\ アノテーションを設定する。
    * - | (3)
      - | 適用する入力チェックのグループとして、完了処理用のグループインタフェース(\ ``TodoFinish``\ インタフェース)を指定する。
    * - | (4)
@@ -2082,7 +2139,7 @@ JSPの修正
 完了処理用のformを追加する。
 
 .. code-block:: jsp
-    :emphasize-lines: 56-66
+    :emphasize-lines: 12-14, 60-70
 
     <!DOCTYPE html>
     <html>
@@ -2093,6 +2150,10 @@ JSPの修正
     <style type="text/css">
     .strike {
         text-decoration: line-through;
+    }
+
+    .inline {
+        display: inline-block;
     }
 
     .alert {
@@ -2144,7 +2205,7 @@ JSPの修正
                                     action="${pageContext.request.contextPath}/todo/finish"
                                     method="post"
                                     modelAttribute="todoForm"
-                                    cssStyle="display: inline-block;">
+                                    cssClass="inline">
                                     <!-- (2) -->
                                     <form:hidden path="todoId"
                                         value="${f:h(todo.todoId)}" />
@@ -2170,6 +2231,7 @@ JSPの修正
      - | TODOが未完了の場合は、TODOを完了させるためのリクエストを送信するformを表示する。
        | \ ``action``\ 属性には完了処理を実行するためのURL(\ ``<contextPath>/todo/finish``\ )を指定する。
        | 完了処理は更新系の処理なので、\ ``method``\属性には\ ``POST``\ メソッドを指定する。
+       | なお、「Finish」ボタンをインラインブロック要素（\ ``display: inline-block;``\）としてTODOの横に表示させている。
    * - | (2)
      - | \ ``<form:hidden>``\ タグを使用して、リクエストパラメータとして\ ``todoId``\ を送信する。
        | \ ``value``\ 属性に値を設定する場合も、 **必ずf:h()関数でHTMLエスケープすること。**
@@ -2200,7 +2262,7 @@ Formの修正
 .. code-block:: java
     :emphasize-lines: 15-17,21-22
 
-    package todo.app.todo;
+    package com.example.todo.app.todo;
 
     import java.io.Serializable;
 
@@ -2267,7 +2329,7 @@ Controllerの修正
 .. code-block:: java
     :emphasize-lines: 94-114
 
-    package todo.app.todo;
+    package com.example.todo.app.todo;
 
     import java.util.Collection;
 
@@ -2279,19 +2341,20 @@ Controllerの修正
     import org.springframework.ui.Model;
     import org.springframework.validation.BindingResult;
     import org.springframework.validation.annotation.Validated;
+    import org.springframework.web.bind.annotation.GetMapping;
     import org.springframework.web.bind.annotation.ModelAttribute;
+    import org.springframework.web.bind.annotation.PostMapping;
     import org.springframework.web.bind.annotation.RequestMapping;
-    import org.springframework.web.bind.annotation.RequestMethod;
     import org.springframework.web.servlet.mvc.support.RedirectAttributes;
     import org.terasoluna.gfw.common.exception.BusinessException;
     import org.terasoluna.gfw.common.message.ResultMessage;
     import org.terasoluna.gfw.common.message.ResultMessages;
 
-    import todo.app.todo.TodoForm.TodoDelete;
-    import todo.app.todo.TodoForm.TodoCreate;
-    import todo.app.todo.TodoForm.TodoFinish;
-    import todo.domain.model.Todo;
-    import todo.domain.service.todo.TodoService;
+    import com.example.todo.app.todo.TodoForm.TodoDelete;
+    import com.example.todo.app.todo.TodoForm.TodoCreate;
+    import com.example.todo.app.todo.TodoForm.TodoFinish;
+    import com.example.todo.domain.model.Todo;
+    import com.example.todo.domain.service.todo.TodoService;
 
     @Controller
     @RequestMapping("todo")
@@ -2308,14 +2371,14 @@ Controllerの修正
             return form;
         }
 
-        @RequestMapping(value = "list")
+        @GetMapping("list")
         public String list(Model model) {
             Collection<Todo> todos = todoService.findAll();
             model.addAttribute("todos", todos);
             return "todo/list";
         }
 
-        @RequestMapping(value = "create", method = RequestMethod.POST)
+        @PostMapping("create")
         public String create(
                 @Validated({ Default.class, TodoCreate.class }) TodoForm todoForm,
                 BindingResult bindingResult, Model model,
@@ -2339,7 +2402,7 @@ Controllerの修正
             return "redirect:/todo/list";
         }
 
-        @RequestMapping(value = "finish", method = RequestMethod.POST)
+        @PostMapping("finish")
         public String finish(
                 @Validated({ Default.class, TodoFinish.class }) TodoForm form,
                 BindingResult bindingResult, Model model,
@@ -2360,7 +2423,7 @@ Controllerの修正
             return "redirect:/todo/list";
         }
 
-        @RequestMapping(value = "delete", method = RequestMethod.POST) // (1)
+        @PostMapping("delete") // (1)
         public String delete(
                 @Validated({ Default.class, TodoDelete.class }) TodoForm form,
                 BindingResult bindingResult, Model model,
@@ -2394,14 +2457,14 @@ Controllerの修正
      - 説明
    * - | (1)
      - \ ``/todo/delete``\ というパスに\ ``POST``\ メソッドを使用してリクエストされた際に、
-       削除処理用のメソッド(\ ``delete``\ メソッド)が実行されるように\ ``@RequestMapping``\ アノテーションを設定する。
+       削除処理用のメソッド(\ ``delete``\ メソッド)が実行されるように\ ``@PostMapping``\ アノテーションを設定する。
 
 JSPの修正
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 削除処理用のformを追加する。
 
 .. code-block:: jsp
-    :emphasize-lines: 67-76
+    :emphasize-lines: 71-80
 
     <!DOCTYPE html>
     <html>
@@ -2412,6 +2475,10 @@ JSPの修正
     <style type="text/css">
     .strike {
         text-decoration: line-through;
+    }
+
+    .inline {
+        display: inline-block;
     }
 
     .alert {
@@ -2462,7 +2529,7 @@ JSPの修正
                                     action="${pageContext.request.contextPath}/todo/finish"
                                     method="post"
                                     modelAttribute="todoForm"
-                                    cssStyle="display: inline-block;">
+                                    cssClass="inline">
                                     <form:hidden path="todoId"
                                         value="${f:h(todo.todoId)}" />
                                     <form:button>Finish</form:button>
@@ -2473,7 +2540,7 @@ JSPの修正
                         <form:form
                             action="${pageContext.request.contextPath}/todo/delete"
                             method="post" modelAttribute="todoForm"
-                            cssStyle="display: inline-block;">
+                            cssClass="inline">
                             <!-- (2) -->
                             <form:hidden path="todoId"
                                 value="${f:h(todo.todoId)}" />
@@ -2527,6 +2594,10 @@ CSSファイルの使用
 
     .strike {
         text-decoration: line-through;
+    }
+
+    .inline {
+        display: inline-block;
     }
 
     .alert {
@@ -2601,7 +2672,7 @@ JSPからCSSファイルを読み込む。
                                     action="${pageContext.request.contextPath}/todo/finish"
                                     method="post"
                                     modelAttribute="todoForm"
-                                    cssStyle="display: inline-block;">
+                                    cssClass="inline">
                                     <form:hidden path="todoId"
                                         value="${f:h(todo.todoId)}" />
                                     <form:button>Finish</form:button>
@@ -2611,7 +2682,7 @@ JSPからCSSファイルを読み込む。
                         <form:form
                             action="${pageContext.request.contextPath}/todo/delete"
                             method="post" modelAttribute="todoForm"
-                            cssStyle="display: inline-block;">
+                            cssClass="inline">
                             <form:hidden path="todoId"
                                 value="${f:h(todo.todoId)}" />
                             <form:button>Delete</form:button>
@@ -2761,7 +2832,7 @@ Package Explorer上で右クリック -> New -> File を選択し、「New File�
       - 入力値
     * - 1
       - Enter or select the parent folder
-      - ``todo/src/main/resources/todo/domain/repository/todo``
+      - ``todo/src/main/resources/com/example/todo/domain/repository/todo``
     * - 2
       - File name
       - ``TodoRepository.xml``
@@ -2782,7 +2853,7 @@ Package Explorer上で右クリック -> New -> File を選択し、「New File�
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
     <!-- (1) -->
-    <mapper namespace="todo.domain.repository.todo.TodoRepository">
+    <mapper namespace="com.example.todo.domain.repository.todo.TodoRepository">
 
         <!-- (2) -->
         <resultMap id="todoResultMap" type="Todo">
@@ -2919,7 +2990,7 @@ Service及びアプリケーション層を作成後にAPサーバーを起動�
    :emphasize-lines: 2-3,6-18,20-22
 
     date:2016-02-17 13:18:54	thread:tomcat-http--5	X-Track:390066c43aa94b6588e5bac6a54812b2	level:TRACE	logger:o.t.gfw.web.logging.TraceLoggingInterceptor     	message:[START CONTROLLER] TodoController.list(Model)
-    date:2016-02-17 13:18:54	thread:tomcat-http--5	X-Track:390066c43aa94b6588e5bac6a54812b2	level:DEBUG	logger:o.s.jdbc.datasource.DataSourceTransactionManager	message:Creating new transaction with name [todo.domain.service.todo.TodoServiceImpl.findAll]: PROPAGATION_REQUIRED,ISOLATION_DEFAULT,readOnly; ''
+    date:2016-02-17 13:18:54	thread:tomcat-http--5	X-Track:390066c43aa94b6588e5bac6a54812b2	level:DEBUG	logger:o.s.jdbc.datasource.DataSourceTransactionManager	message:Creating new transaction with name [com.example.todo.domain.service.todo.TodoServiceImpl.findAll]: PROPAGATION_REQUIRED,ISOLATION_DEFAULT,readOnly; ''
     date:2016-02-17 13:18:55	thread:tomcat-http--5	X-Track:390066c43aa94b6588e5bac6a54812b2	level:DEBUG	logger:o.s.jdbc.datasource.DataSourceTransactionManager	message:Acquired Connection [net.sf.log4jdbc.ConnectionSpy@4e53de7c] for JDBC transaction
     date:2016-02-17 13:18:55	thread:tomcat-http--5	X-Track:390066c43aa94b6588e5bac6a54812b2	level:DEBUG	logger:t.domain.repository.todo.TodoRepository.findAll 	message:==>  Preparing: SELECT todo_id, todo_title, finished, created_at FROM todo 
     date:2016-02-17 13:18:55	thread:tomcat-http--5	X-Track:390066c43aa94b6588e5bac6a54812b2	level:DEBUG	logger:t.domain.repository.todo.TodoRepository.findAll 	message:==> Parameters: 
@@ -2939,7 +3010,7 @@ Service及びアプリケーション層を作成後にAPサーバーを起動�
     date:2016-02-17 13:18:55	thread:tomcat-http--5	X-Track:390066c43aa94b6588e5bac6a54812b2	level:DEBUG	logger:o.s.jdbc.datasource.DataSourceTransactionManager	message:Initiating transaction commit
     date:2016-02-17 13:18:55	thread:tomcat-http--5	X-Track:390066c43aa94b6588e5bac6a54812b2	level:DEBUG	logger:o.s.jdbc.datasource.DataSourceTransactionManager	message:Committing JDBC transaction on Connection [net.sf.log4jdbc.ConnectionSpy@4e53de7c]
     date:2016-02-17 13:18:55	thread:tomcat-http--5	X-Track:390066c43aa94b6588e5bac6a54812b2	level:DEBUG	logger:o.s.jdbc.datasource.DataSourceTransactionManager	message:Releasing JDBC Connection [net.sf.log4jdbc.ConnectionSpy@4e53de7c] after transaction
-    date:2016-02-17 13:18:55	thread:tomcat-http--5	X-Track:390066c43aa94b6588e5bac6a54812b2	level:TRACE	logger:o.t.gfw.web.logging.TraceLoggingInterceptor     	message:[END CONTROLLER  ] TodoController.list(Model)-> view=todo/list, model={todoForm=todo.app.todo.TodoForm@2a075f1d, todos=[], org.springframework.validation.BindingResult.todoForm=org.springframework.validation.BeanPropertyBindingResult: 0 errors}
+    date:2016-02-17 13:18:55	thread:tomcat-http--5	X-Track:390066c43aa94b6588e5bac6a54812b2	level:TRACE	logger:o.t.gfw.web.logging.TraceLoggingInterceptor     	message:[END CONTROLLER  ] TodoController.list(Model)-> view=todo/list, model={todoForm=com.example.todo.app.todo.TodoForm@2a075f1d, todos=[], org.springframework.validation.BindingResult.todoForm=org.springframework.validation.BeanPropertyBindingResult: 0 errors}
     date:2016-02-17 13:18:55	thread:tomcat-http--5	X-Track:390066c43aa94b6588e5bac6a54812b2	level:TRACE	logger:o.t.gfw.web.logging.TraceLoggingInterceptor     	message:[HANDLING TIME   ] TodoController.list(Model)-> 756,709,153 ns
 
 |
@@ -3282,8 +3353,8 @@ applicationContext.xml
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xmlns:context="http://www.springframework.org/schema/context"
         xsi:schemaLocation="
-            http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-            http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+            http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+            http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd
         ">
 
         <!-- (1) -->
@@ -3391,9 +3462,9 @@ todo-domain.xml
         xmlns:context="http://www.springframework.org/schema/context"
         xmlns:aop="http://www.springframework.org/schema/aop"
         xsi:schemaLocation="
-            http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
-            http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-            http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+            http://www.springframework.org/schema/aop https://www.springframework.org/schema/aop/spring-aop.xsd
+            http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+            http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd
         ">
 
         <!-- (1) -->
@@ -3401,7 +3472,7 @@ todo-domain.xml
         <import resource="classpath*:META-INF/spring/**/*-codelist.xml" />
 
         <!-- (2) -->
-        <context:component-scan base-package="todo.domain" />
+        <context:component-scan base-package="com.example.todo.domain" />
 
         <!-- AOP. -->
         <bean id="resultMessagesLoggingInterceptor"
@@ -3425,8 +3496,8 @@ todo-domain.xml
    * - | (1)
      - | インフラストラクチャ層に関するBean定義ファイルをimportする。
    * - | (2)
-     - | ドメイン層のクラスを管理するtodo.domainパッケージ配下をcomponent-scan対象とする。
-       | これにより、todo.domainパッケージ配下のクラスに ``@Repository`` , ``@Service`` などのアノテーションを付けることで、Spring Framerowkが管理するBeanとして登録される。
+     - | ドメイン層のクラスを管理するcom.example.todo.domainパッケージ配下をcomponent-scan対象とする。
+       | これにより、com.example.todo.domainパッケージ配下のクラスに ``@Repository`` , ``@Service`` などのアノテーションを付けることで、Spring Framerowkが管理するBeanとして登録される。
        | 登録されたクラス(Bean)は、ControllerやServiceクラスにDIする事で、利用する事が出来る。
 
 .. note::
@@ -3464,7 +3535,7 @@ O/R Mapperに依存しないブランクプロジェクトを作成した場合�
     <beans xmlns="http://www.springframework.org/schema/beans"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="
-            http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+            http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
         ">
 
     </beans>
@@ -3482,7 +3553,7 @@ MyBatis3用のブランクプロジェクトを作成した場合、以下のよ
         xmlns:mybatis="http://mybatis.org/schema/mybatis-spring"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="
-            http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+            http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
             http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring.xsd
         ">
 
@@ -3500,7 +3571,7 @@ MyBatis3用のブランクプロジェクトを作成した場合、以下のよ
 
          <!-- (5) -->
         <!-- scan for Mappers -->
-        <mybatis:scan base-package="todo.domain.repository" />
+        <mybatis:scan base-package="com.example.todo.domain.repository" />
 
     </beans>
 
@@ -3557,16 +3628,16 @@ MyBatis3用のブランクプロジェクトを作成した場合、以下のよ
             </settings>
 
             <typeAliases>
-                <package name="todo.domain.model" />
-                <package name="todo.domain.repository" />
+                <package name="com.example.todo.domain.model" />
+                <package name="com.example.todo.domain.repository" />
         <!--
-                <package name="todo.infra.mybatis.typehandler" />
+                <package name="com.example.todo.infra.mybatis.typehandler" />
         -->
             </typeAliases>
 
             <typeHandlers>
         <!--
-                <package name="todo.infra.mybatis.typehandler" />
+                <package name="com.example.todo.infra.mybatis.typehandler" />
         -->
             </typeHandlers>
 
@@ -3639,8 +3710,8 @@ todo-env.xml
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xmlns:jdbc="http://www.springframework.org/schema/jdbc"
         xsi:schemaLocation="
-            http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
-            http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+            http://www.springframework.org/schema/jdbc https://www.springframework.org/schema/jdbc/spring-jdbc.xsd
+            http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
         ">
 
         <bean id="dateFactory" class="org.terasoluna.gfw.common.date.jodatime.DefaultJodaTimeDateFactory" />
@@ -3732,11 +3803,11 @@ spring-mvc.xml
         xmlns:mvc="http://www.springframework.org/schema/mvc"
         xmlns:util="http://www.springframework.org/schema/util"
         xmlns:aop="http://www.springframework.org/schema/aop"
-        xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
-            http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-            http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
-            http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
-            http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+        xsi:schemaLocation="http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
+            http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+            http://www.springframework.org/schema/util https://www.springframework.org/schema/util/spring-util.xsd
+            http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd
+            http://www.springframework.org/schema/aop https://www.springframework.org/schema/aop/spring-aop.xsd
         ">
 
         <!-- (1) -->
@@ -3756,7 +3827,7 @@ spring-mvc.xml
         <mvc:default-servlet-handler />
 
         <!-- (3) -->
-        <context:component-scan base-package="todo.app" />
+        <context:component-scan base-package="com.example.todo.app" />
 
         <!-- (4) -->
         <mvc:resources mapping="/resources/**"
@@ -3862,7 +3933,7 @@ spring-mvc.xml
    * - | (2)
      - | Spring MVCのアノテーションベースのデフォルト設定を行う。
    * - | (3)
-     - | アプリケーション層のクラスを管理するtodo.appパッケージ配下をcomponent-scan対象とする。
+     - | アプリケーション層のクラスを管理するcom.example.todo.appパッケージ配下をcomponent-scan対象とする。
    * - | (4)
      - | 静的リソース(css, images, jsなど)アクセスのための設定を行う。
 
@@ -3871,7 +3942,7 @@ spring-mvc.xml
        | どこにも\ ``styles.css``\ が格納されていない場合は、404エラーを返す。
 
        | ここでは\ ``cache-period``\ 属性で静的リソースのキャッシュ時間(3600秒=60分)も設定している。
-       | \ ``cache-period="3600"``\ と設定しても良いが、60分であることを明示するために `SpEL <http://docs.spring.io/spring/docs/4.3.14.RELEASE/spring-framework-reference/html/expressions.html#expressions-beandef-xml-based>`_ を使用して \ ``cache-period="#{60 * 60}"``\  と書く方が分かりやすい。
+       | \ ``cache-period="3600"``\ と設定しても良いが、60分であることを明示するために `SpEL <https://docs.spring.io/spring/docs/4.3.23.RELEASE/spring-framework-reference/html/expressions.html#expressions-beandef-xml-based>`_ を使用して \ ``cache-period="#{60 * 60}"``\  と書く方が分かりやすい。
    * - | (5)
      - | コントローラ処理のTraceログを出力するインターセプタを設定する。
        | \ ``/resources``\ 配下を除く任意のパスに適用されるように設定する。
@@ -3879,20 +3950,6 @@ spring-mvc.xml
      - | \ ``ViewResolver``\ の設定を行う。
        | この設定により、例えばコントローラからview名として\ ``hello``\が返却された場合には\ ``/WEB-INF/views/hello.jsp``\ が実行される。
 
-       .. tip::
-
-           \ ``<mvc:view-resolvers>``\ 要素はSpring Framework 4.1から追加されたXML要素である。
-           \ ``<mvc:view-resolvers>``\ 要素を使用すると、\ ``ViewResolver``\ をシンプルに定義することが出来る。
-
-           従来通り\ ``<bean>``\ 要素を使用した場合の定義例を以下に示す。
-
-            .. code-block:: xml
-
-               <bean id="viewResolver"
-                   class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-                   <property name="prefix" value="/WEB-INF/views/" />
-                   <property name="suffix" value=".jsp" />
-               </bean>
 
 .. raw:: latex
 
@@ -3915,8 +3972,8 @@ spring-security.xml
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xmlns:sec="http://www.springframework.org/schema/security"
         xsi:schemaLocation="
-            http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
-            http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+            http://www.springframework.org/schema/security https://www.springframework.org/schema/security/spring-security.xsd
+            http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
         ">
 
         <sec:http pattern="/resources/**" security="none"/>
@@ -4017,7 +4074,7 @@ logback.xml
 
         <!-- Application Loggers -->
         <!-- (2) -->
-        <logger name="todo">
+        <logger name="com.example.todo">
             <level value="debug" />
         </logger>
 
@@ -4079,7 +4136,7 @@ logback.xml
    * - | (1)
      - | 標準出力でログを出力するアペンダを設定。
    * - | (2)
-     - | todoパッケージ以下はdebugレベル以上を出力するように設定。
+     - | com.example.todoパッケージ以下はdebugレベル以上を出力するように設定。
    * - | (3)
      - | spring-mvc.xmlに設定した\ ``TraceLoggingInterceptor``\ に出力されるようにtraceレベルで設定。
 

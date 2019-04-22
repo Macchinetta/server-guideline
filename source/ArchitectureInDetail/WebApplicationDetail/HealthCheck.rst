@@ -285,7 +285,7 @@ Controllerクラス
     * - | (2)
       - | Apache Tilesの設定を受けないようにするため、JSPファイルを配置するディレクトリを1階層深くしている。詳細は、\ :ref:`HealthCheckAppendixAppatchTiles`\を参照されたい。
 
-.. _HealthCheckHowToUseJsp:
+.. _HealthCheckHowToUseView:
 
 JSPファイル
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -309,7 +309,7 @@ JSPファイル
 
 | ヘルスチェック処理を使用する際は、認証・認可機能などによりヘルスチェック用のURLがアクセス不可にならないように注意する必要がある。
 | 例えば、どのロールでもアクセスできるようにするには、spring-security.xmlの\ ``<sec:intercept-url>``\を設定する。
-| \ ``/common/healthcheck``\ 配下の除外設定を行う例を以下に示す。
+| \ ``/healthcheck``\ 配下の除外設定を行う例を以下に示す。
 | 詳細は\ :doc:`../../../Security/Authorization`\を参照されたい。
 
 **spring-security.xml**
@@ -336,7 +336,7 @@ Appendix
 レスポンスのデータ量を最低限にする設定
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-| \ :ref:`HealthCheckHowToUseJsp`\で示した通り、レスポンスのデータ量を最低限にするにあたり、主に以下の点に注意が必要である。
+| \ :ref:`HealthCheckHowToUseView`\で示した通り、レスポンスのデータ量を最低限にするにあたり、主に以下の点に注意が必要である。
 
 * \ :ref:`Apache Tilesの設定を受けないようにする<HealthCheckAppendixAppatchTiles>`\
 * \ :ref:`ヘッダファイルやフッタファイルを読み込まないようにする<HealthCheckAppendixHeader>`\

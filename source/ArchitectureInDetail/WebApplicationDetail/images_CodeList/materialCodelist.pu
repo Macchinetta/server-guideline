@@ -1,0 +1,61 @@
+@startuml codelist-class-diagram
+
+package org.terasoluna.gfw {
+    package common.codelist {
+        interface CodeList
+        interface ReloadableCodeList
+        interface CodeListItem
+        abstract class AbstractCodeList
+        abstract class AbstractReloadableCodeList
+        class SimpleMapCodeList
+        class NumberRangeCodeList
+        class EnumCodeList
+        class JdbcCodeList
+        CodeList <|-- ReloadableCodeList
+        CodeList <|.. AbstractCodeList
+        ReloadableCodeList <|.. AbstractReloadableCodeList
+        AbstractCodeList <|-- AbstractReloadableCodeList
+        AbstractCodeList <|-- SimpleMapCodeList
+        AbstractCodeList <|-- NumberRangeCodeList
+        AbstractCodeList <|-- EnumCodeList
+        AbstractReloadableCodeList <|--  JdbcCodeList
+        EnumCodeList +-- CodeListItem
+
+        package i18n {
+            interface I18nCodeList
+            interface ReloadableI18nCodeList
+            abstract class AbstractI18nCodeList
+            class SimpleI18nCodeList
+            class SimpleReloadableI18nCodeList
+            CodeList <|-- I18nCodeList
+            I18nCodeList <|-- ReloadableI18nCodeList
+            ReloadableCodeList <|-- ReloadableI18nCodeList
+            I18nCodeList <|.. AbstractI18nCodeList
+            AbstractI18nCodeList <|-- SimpleI18nCodeList
+            ReloadableI18nCodeList <|.. SimpleReloadableI18nCodeList
+            AbstractI18nCodeList <|-- SimpleReloadableI18nCodeList
+        }
+
+'        interface ExistInCodeList
+'        ExistInCodeList "1" o- "1" CodeList
+
+'        package validator {
+'            abstract class AbstractExistInCodeListValidator
+'            class ExistInCodeListValidatorForCharacter
+'            class ExistInCodeListValidatorForCharSequence
+'            class ExistInCodeListValidatorForNumber
+'            ExistInCodeList --> AbstractExistInCodeListValidator
+'            ConstraintValidator ()-- AbstractExistInCodeListValidator
+'            AbstractExistInCodeListValidator <|-- ExistInCodeListValidatorForCharacter
+'            AbstractExistInCodeListValidator <|-- ExistInCodeListValidatorForCharSequence
+'            AbstractExistInCodeListValidator <|-- ExistInCodeListValidatorForNumber
+'        }
+    }
+
+    package web.codelist {
+        class CodeListInterceptor
+        CodeListInterceptor "1" o- "0..*" CodeList
+    }
+}
+
+@enduml

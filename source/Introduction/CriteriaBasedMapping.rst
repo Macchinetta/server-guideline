@@ -7,8 +7,8 @@
 
 OWASP(Open Web Application Security Project)による観点
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-\ `OWASP Top 10 for 2013 <https://www.owasp.org/index.php/Category:OWASP_Top_Ten_Project>`_\ を軸として、
-セキュリティに関連する機能の説明へのリンクを記載する。
+\ `OWASP Top 10 for 2017 <https://www.owasp.org/index.php/Category:OWASP_Top_Ten_Project>`_\ を軸として、
+セキュリティに関連するガイドライン内の説明へのリンクを記載する。
 
 
 .. tabularcolumns:: |p{0.10\linewidth}|p{0.40\linewidth}|p{0.50\linewidth}|
@@ -19,58 +19,58 @@ OWASP(Open Web Application Security Project)による観点
 
    * - 項番
      - 項目名
-     - 関連するガイドライン
-   * - A1
-     - `Injection <https://www.owasp.org/index.php/Top_10_2013-A1-Injection>`_ SQL Injection
-     - * \ :doc:`../ArchitectureInDetail/DataAccessDetail/DataAccessMyBatis3`\
-
-       (クエリにパラメータを埋め込む場合は、バインド変数を使用する旨を記載)
-   * - A1
-     - `Injection <https://www.owasp.org/index.php/Top_10_2013-A1-Injection>`_ XXE(XML External Entity) Injection
-     - * \ :doc:`../ArchitectureInDetail/WebApplicationDetail/Ajax`\
-   * - A1
-     - `Injection <https://www.owasp.org/index.php/Top_10_2013-A1-Injection>`_ OS Command Injection
-     - * \ :doc:`../ArchitectureInDetail/WebApplicationDetail/Validation`\
-   * - A1
-     - `Injection <https://www.owasp.org/index.php/Top_10_2013-A1-Injection>`_ Email Header Injection
-     - * \ :ref:`email-header-injection`\
-   * - A1
-     - `Injection <https://www.owasp.org/index.php/Top_10_2013-A1-Injection>`_
-     - * \ :ref:`secure-input-validation`\
-
-       (外部からの入力全般に対する入力チェック方法を記載)
-   * - A2
-     - `Broken Authentication and Session Management <https://www.owasp.org/index.php/Top_10_2013-A2-Broken_Authentication_and_Session_Management>`_
-     - * \ :doc:`../Security/SessionManagement`\
-       * \ :doc:`../Security/Authentication`\
-   * - A3
-     - `Cross-Site Scripting (XSS) <https://www.owasp.org/index.php/Top_10_2013-A3-Cross-Site_Scripting_(XSS)>`_
-     - * \ :doc:`../Security/XSS`\
-       * \ :doc:`../Security/LinkageWithBrowser`\
-   * - A4
-     - `Insecure Direct Object References <https://www.owasp.org/index.php/Top_10_2013-A4-Insecure_Direct_Object_References>`_ Directory Traversal
-     - * \ :ref:`file-upload_security_related_warning_points_directory_traversal`\
-   * - A5
-     - `Security Misconfiguration <https://www.owasp.org/index.php/Top_10_2013-A5-Security_Misconfiguration>`_
-     - * \ :doc:`../ArchitectureInDetail/GeneralFuncDetail/Logging`\ (ログのメッセージ内容に言及)
-       * \ :ref:`exception-handling-how-to-use-codingpoint-jsp-exceptioncode-label`\ (システム例外時に出力するメッセージ内容に言及)
-   * - A6
-     - `Sensitive Data Exposure <https://www.owasp.org/index.php/Top_10_2013-A6-Sensitive_Data_Exposure>`_
-     - * \ :doc:`../ArchitectureInDetail/GeneralFuncDetail/PropertyManagement`\
-       * \ :doc:`../Security/Encryption`\
-       * \ :ref:`SpringSecurityAuthenticationPasswordHashing`\
-   * - A7
-     - `Missing Function Level Access Control <https://www.owasp.org/index.php/Top_10_2013-A7-Missing_Function_Level_Access_Control>`_
-     - * \ :doc:`../Security/Authorization`\ 
-   * - A8
-     - `Cross-Site Request Forgery (CSRF) <https://www.owasp.org/index.php/Top_10_2013-A8-Cross-Site_Request_Forgery_(CSRF)>`_
-     - * \ :doc:`../Security/CSRF`\ 
-   * - A9
-     - `Using Components with Known Vulnerabilities <https://www.owasp.org/index.php/Top_10_2013-A9-Using_Components_with_Known_Vulnerabilities>`_
-     - 特に言及なし
-   * - A10
-     - `Unvalidated Redirects and Forwards <https://www.owasp.org/index.php/Top_10_2013-A10-Unvalidated_Redirects_and_Forwards>`_
-     - 特に言及なし
+     - ガイドライン内の関連箇所
+   * - A1:2017
+     - `Injection <https://www.owasp.org/index.php/Top_10-2017_A1-Injection>`_ SQL Injection
+     - * \ :ref:`DataAccessMyBatis3HowToUseSqlInjectionCountermeasure`\ 
+   * - A1:2017
+     - `Injection <https://www.owasp.org/index.php/Top_10-2017_A1-Injection>`_ OS Command Injection
+     - * \ :ref:`Validation_os_command_injection`\ 
+   * - A1:2017
+     - `Injection <https://www.owasp.org/index.php/Top_10-2017_A1-Injection>`_ Email Header Injection
+     - * \ :ref:`email-header-injection`\ 
+   * - A1:2017
+     - `Injection <https://www.owasp.org/index.php/Top_10-2017_A1-Injection>`_
+     - * \ :ref:`secure-input-validation`\ 
+   * - A2:2017
+     - `Broken Authentication <https://www.owasp.org/index.php/Top_10-2017_A2-Broken_Authentication>`_
+     - * \ :ref:`SessionManagementSessionHijackingAttacksProtection`\ 
+       * \ :ref:`SessionManagementSessionFixationAttacksProtection`\ 
+       * \ :ref:`SpringSecurityAuthenticationPasswordHashing`\ 
+   * - A3:2017
+     - `Sensitive Data Exposure <https://www.owasp.org/index.php/Top_10-2017_A3-Sensitive_Data_Exposure>`_
+     - * \ :ref:`PropertyManagementDecryptAndUseTheEncryptedPropertyValue`\ 
+       * \ :doc:`../Security/Encryption`\ 
+       * \ :ref:`SpringSecurityAuthenticationPasswordHashing`\ 
+   * - A4:2017
+     - `XML External Entities (XXE) <https://www.owasp.org/index.php/Top_10-2017_A4-XML_External_Entities_(XXE)>`_
+     - * \ :ref:`iText 2.1.7に存在するXXE (XML External Entity) 脆弱性について<file-download_warning_CVE-2017-9096>`\ 
+       * \ :ref:`XXE(XML External Entity) 対策について<AjaxWarningXXEProtection>`\ 
+       * \ :ref:`RESTAppendixEnabledXXEProtection`\ 
+   * - A5:2017
+     - `Broken Access Control <https://www.owasp.org/index.php/Top_10-2017_A5-Broken_Access_Control>`_
+     - * \ :ref:`file-upload_security_related_warning_points_directory_traversal`\ 
+   * - A6:2017
+     - `Security Misconfiguration <https://www.owasp.org/index.php/Top_10-2017_A6-Security_Misconfiguration>`_
+     - * \ :ref:`LoggingLogOutputContents`\ 
+       * \ :ref:`exception-handling-how-to-use-codingpoint-view-exceptioncode-label`\ 
+       * \ :ref:`SpringSecurityAuthorizationOnError`\ 
+   * - A7:2017
+     - `Cross-Site Scripting (XSS) <https://www.owasp.org/index.php/Top_10-2017_A7-Cross-Site_Scripting_(XSS)>`_
+     - * \ :doc:`../Security/XSS`\ 
+       * \ :ref:`LinkageWithBrowserXXSSProtection`\ 
+   * - A8:2017
+     - `Insecure Deserialization <https://www.owasp.org/index.php/Top_10-2017_A8-Insecure_Deserialization>`_
+     - * \ :ref:`デシリアライズ時の注意点<JMSWarningDeserialization>`\ 
+       * \ :ref:`ajax_post_formdata`\ 
+       * \ :ref:`RESTHowToUseResourceClass`\ 
+   * - A9:2017
+     - `Using Components with Known Vulnerabilities <https://www.owasp.org/index.php/Top_10-2017_A9-Using_Components_with_Known_Vulnerabilities>`_
+     - * 特に言及なし
+   * - A10:2017
+     - `Insufficient Logging & Monitoring <https://www.owasp.org/index.php/Top_10-2017_A10-Insufficient_Logging%26Monitoring>`_
+     - * \ :ref:`SpringSecurityAuthenticationEventListener`\ 
+       * \ :ref:`audit-logging`\ 
 
 CVE(Common Vulnerabilities and Exposures)による観点
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -104,6 +104,9 @@ CVE(Common Vulnerabilities and Exposures)による観点
    * - \ `CVE-2016-5007 <https://pivotal.io/jp/security/cve-2016-5007>`_\
      - Spring SecurityとSpring MVCのパス比較方法の差異を利用して認可のすり抜けが可能となる
      - * :ref:`access_policy_designate_web_resource`
+   * - \ `CVE-2019-3778 <https://pivotal.io/security/cve-2019-3778>`_\
+     - 認可コードグラントを利用した認可サーバにおけるオープンリダイレクト脆弱性
+     - * :ref:`OAuthSetup`
 
 .. raw:: latex
 

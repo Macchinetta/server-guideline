@@ -51,7 +51,7 @@ Spring MVCを用いたWebアプリケーションの開発に対するイメー�
     mvn archetype:generate -B^
      -DarchetypeGroupId=com.github.macchinetta.blank^
      -DarchetypeArtifactId=macchinetta-web-blank-noorm-archetype^
-     -DarchetypeVersion=1.5.1.RELEASE^
+     -DarchetypeVersion=1.5.2.RELEASE^
      -DgroupId=com.example.helloworld^
      -DartifactId=helloworld^
      -Dversion=1.0.0-SNAPSHOT
@@ -63,7 +63,7 @@ Spring MVCを用いたWebアプリケーションの開発に対するイメー�
     C:\work>mvn archetype:generate -B^
     More?  -DarchetypeGroupId=com.github.macchinetta.blank^
     More?  -DarchetypeArtifactId=macchinetta-web-blank-noorm-archetype^
-    More?  -DarchetypeVersion=1.5.1.RELEASE^
+    More?  -DarchetypeVersion=1.5.2.RELEASE^
     More?  -DgroupId=com.example.helloworld^
     More?  -DartifactId=helloworld^
     More?  -Dversion=1.0.0-SNAPSHOT
@@ -79,9 +79,9 @@ Spring MVCを用いたWebアプリケーションの開発に対するイメー�
     [INFO]
     [INFO] --- maven-archetype-plugin:2.4:generate (default-cli) @ standalone-pom ---
     [INFO] Generating project in Batch mode
-    [INFO] Archetype repository not defined. Using the one from [com.github.macchinetta.blank:macchinetta-web-blank-noorm-archetype:1.5.1.RELEASE] found in catalog remote
+    [INFO] Archetype repository not defined. Using the one from [com.github.macchinetta.blank:macchinetta-web-blank-noorm-archetype:1.5.2.RELEASE] found in catalog remote
     [INFO] ----------------------------------------------------------------------------
-    [INFO] Using following parameters for creating project from Archetype: macchinetta-web-blank-noorm-archetype:1.5.1.RELEASE
+    [INFO] Using following parameters for creating project from Archetype: macchinetta-web-blank-noorm-archetype:1.5.2.RELEASE
     [INFO] ----------------------------------------------------------------------------
     [INFO] Parameter: groupId, Value: com.example.helloworld
     [INFO] Parameter: artifactId, Value: helloworld
@@ -131,11 +131,11 @@ Spring MVCの設定方法を理解するために、生成されたSpring MVCの
         xmlns:mvc="http://www.springframework.org/schema/mvc"
         xmlns:util="http://www.springframework.org/schema/util"
         xmlns:aop="http://www.springframework.org/schema/aop"
-        xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
-            http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-            http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
-            http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
-            http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+        xsi:schemaLocation="http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
+            http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+            http://www.springframework.org/schema/util https://www.springframework.org/schema/util/spring-util.xsd
+            http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd
+            http://www.springframework.org/schema/aop https://www.springframework.org/schema/aop/spring-aop.xsd
         ">
 
         <context:property-placeholder
@@ -250,26 +250,11 @@ Spring MVCの設定方法を理解するために、生成されたSpring MVCの
    * - 項番
      - 説明
    * - | (1)
-     - \ ``<mvc:annotation-driven>``\要素を定義することにより、Spring MVCのデフォルト設定が行われる。デフォルトの設定については、 Springの公式ページである `Enabling the MVC Java Config or the MVC XML Namespace <http://docs.spring.io/spring/docs/4.3.14.RELEASE/spring-framework-reference/html/mvc.html#mvc-config-enable>`_ を参照されたい。
+     - \ ``<mvc:annotation-driven>``\要素を定義することにより、Spring MVCのデフォルト設定が行われる。デフォルトの設定については、 Springの公式ページである `Enabling the MVC Java Config or the MVC XML Namespace <https://docs.spring.io/spring/docs/4.3.23.RELEASE/spring-framework-reference/html/mvc.html#mvc-config-enable>`_ を参照されたい。
    * - | (2)
      - Spring MVCで使用するコンポーネントを探すパッケージを定義する。
    * - | (3)
      - JSP用の\ ``ViewResolver``\ を指定し、JSPファイルの配置場所を定義する。
-
-       .. tip::
-
-           \ ``<mvc:view-resolvers>``\ 要素はSpring Framework 4.1から追加されたXML要素である。
-           \ ``<mvc:view-resolvers>``\ 要素を使用すると、\ ``ViewResolver``\ をシンプルに定義することが出来る。
-
-           従来通り\ ``<bean>``\ 要素を使用した場合の定義例を以下に示す。
-
-            .. code-block:: xml
-
-               <bean id="viewResolver"
-                   class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-                   <property name="prefix" value="/WEB-INF/views/" />
-                   <property name="suffix" value=".jsp" />
-               </bean>
 
 |
 
@@ -551,7 +536,7 @@ JSPの作成
      - 説明
    * - | (1)
      - | タグライブラリを利用し、HTMLフォームを構築している。 ``modelAttribute`` 属性に、Controllerで用意したフォームオブジェクトの名前を指定する。
-       | タグライブラリは `こちら <http://docs.spring.io/spring/docs/4.3.14.RELEASE/spring-framework-reference/html/view.html#view-jsp-formtaglib-formtag>`_\を参照されたい。
+       | タグライブラリは `こちら <https://docs.spring.io/spring/docs/4.3.23.RELEASE/spring-framework-reference/html/view.html#view-jsp-formtaglib-formtag>`_\を参照されたい。
 
 .. note::
 

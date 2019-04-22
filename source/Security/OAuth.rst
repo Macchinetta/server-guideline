@@ -909,6 +909,15 @@ Spring Security OAuthが提供している機能を使用するために、Sprin
     上記設定例は、依存ライブラリのバージョンを親プロジェクトである terasoluna-gfw-parent で管理する前提であるため、pom.xmlでのバージョンの指定は不要である。
     上記の依存ライブラリはterasoluna-gfw-parentが利用している\ `Spring IO Platform <http://platform.spring.io/platform/>`_\ で定義済みである。
 
+.. note:: **Spring Security OAuthにおけるオープンリダイレクト脆弱性**
+
+    Spring Security OAuth 2.3.4, 2.2.3, 2.1.3, 2.0.16以前では、
+    \ `CVE-2019-3778 <https://pivotal.io/security/cve-2019-3778>`_\で報告されているオープンリダイレクト脆弱性が存在した。
+
+    具体的には、認可コードグラントを利用した認可サーバにおいて、オープンリダイレクト脆弱性により認可コードが漏洩する危険性があった。
+
+    Macchinetta Server Framework for Java version 1.5.2.RELEASEが利用する2.0.17では修正されており、脆弱性の影響を受けない。
+
 |
 
 .. _ImplementationAutorizationCodeGrant:
@@ -946,11 +955,11 @@ Spring Security OAuthが提供している機能を使用するために、Sprin
            xmlns:sec="http://www.springframework.org/schema/security"
            xmlns:oauth2="http://www.springframework.org/schema/security/oauth2"
            xsi:schemaLocation="http://www.springframework.org/schema/security
-               http://www.springframework.org/schema/security/spring-security.xsd
+               https://www.springframework.org/schema/security/spring-security.xsd
                http://www.springframework.org/schema/security/oauth2
-               http://www.springframework.org/schema/security/spring-security-oauth2.xsd
+               https://www.springframework.org/schema/security/spring-security-oauth2.xsd
                http://www.springframework.org/schema/beans
-               http://www.springframework.org/schema/beans/spring-beans.xsd">
+               https://www.springframework.org/schema/beans/spring-beans.xsd">
 
 
     </beans>
@@ -1056,7 +1065,7 @@ Spring Security OAuthが提供している機能を使用するために、Sprin
     .. figure:: ./images/OAuth_ERDiagramCode.png
         :width: 30%
 
-    認可サーバの設定ファイルには、\ ``<oauth2:authorization-code />``\ タグの\ ``authorization-code-services-ref``\ に、認可コードをDB管理する\ ``org.springframework.security.oauth2.provider.code.JdbcAuthorizationCodeServices``\ のBeanIDを指定する。
+    認可サーバの設定ファイルには、\ ``<oauth2:authorization-code />``\ タグの\ ``authorization-code-services-ref``\ に、認可コードをDB管理する\ ``org.springframework.security.oauth2.provider.code.JdbcAuthorizationCodeServices``\ のBean名を指定する。
     \ ``JdbcAuthorizationCodeServices``\ のコンストラクタには、認可コード格納用のテーブルに接続するためのデータソースを指定する。
     認可コードをDBにて永続管理する場合の注意点については\ :ref:`OAuthAuthorizationServerHowToControllTarnsaction`\ を **必ず** 参照のこと。
 
@@ -1130,6 +1139,11 @@ Spring Security OAuthではクライアント情報を取得するためのイ�
         | 保持するリダイレクトURIは、クライアントが認可リクエスト時に申告するリダイレクトURIのホワイトリストチェックで使用される。
         | クライアントが申告する可能性のあるURIの数だけレコードを登録する。
 
+        .. warning::
+
+            Spring Security OAuth 2.0.17 より、リダイレクトURIのホワイトリストチェックの仕様が変更された。Spring Security OAuth 2.0.16以前では、認可サーバに登録されたリダイレクトURIのパス配下であることを確認していたが、2.0.17ではパスと完全一致することを確認するようになった。これにより、認可サーバにリダイレクトするすべてのパスを指定しなければならなくなったことに注意されたい。
+
+|
 
 クライアント情報を保持するモデルを作成する。
 
@@ -1278,7 +1292,7 @@ Spring Security OAuthではクライアント情報を取得するためのイ�
             <sec:access-denied-handler ref="oauth2AccessDeniedHandler"/>  <!-- (6) -->
         </sec:http>
 
-        <sec:authentication-manager alias="clientAuthenticationManager">  <!-- (7) -->
+        <sec:authentication-manager id="clientAuthenticationManager">  <!-- (7) -->
             <sec:authentication-provider user-service-ref="clientDetailsUserService" >  <!-- (8) -->
                 <sec:password-encoder ref="passwordEncoder"/>  <!-- (9) -->
             </sec:authentication-provider>
@@ -1306,7 +1320,7 @@ Spring Security OAuthではクライアント情報を取得するためのイ�
       - 説明
     * - | (1)
       - | \ ``client-details-service-ref``\ 属性に\ ``OAuthClientDetailsService``\ のBeanを指定する。
-        | 指定するBeanIDは、\ ``ClientDetailsService``\ の実装クラスで指定したBeanIDと合わせる必要がある。
+        | 指定するBean名は、\ ``ClientDetailsService``\ の実装クラスで指定したBean名と合わせる必要がある。
     * - | (2)
       - | アクセストークン操作に関するエンドポイントへのセキュリティ設定を行うために、エンドポイントとして
           \ ``/oauth/*token*/``\ 配下をアクセス制御の対象として指定する。
@@ -1319,7 +1333,7 @@ Spring Security OAuthではクライアント情報を取得するためのイ�
         | \ ``authentication-manager-ref``\ 属性に(7)で定義しているクライアント認証用の\ ``AuthenticationManager``\のBeanを指定する。
     * - | (3)
       - | クライアント認証にBasic認証を適用する。
-        | 詳細については\ `Basic and Digest Authentication <http://docs.spring.io/spring-security/site/docs/4.2.4.RELEASE/reference/html/basic.html>`_\を参照されたい。
+        | 詳細については\ `Basic and Digest Authentication <https://docs.spring.io/spring-security/site/docs/4.2.12.RELEASE/reference/html/basic.html>`_\を参照されたい。
     * - | (4)
       - | \ ``/oauth/*token*/**``\ へのアクセスに対してCSRF対策機能を無効化する。
         | Spring Security OAuthでは、OAuth 2.0のCSRF対策として推奨されている、stateパラメータを使用したリクエストの正当性確認を採用している。
@@ -1330,7 +1344,9 @@ Spring Security OAuthではクライアント情報を取得するためのイ�
       - | \ ``access-denied-handler``\には\ ``OAuth2AccessDeniedHandler``\のBeanを設定する。ここでは(12)で定義している\ ``oauth2AccessDeniedHandler``\のBeanを指定する。
     * - | (7)
       - | クライアントを認証するための\ ``AuthenticationManager``\ をBean定義する。
-        | リソースオーナの認証で使用する\ ``AuthenticationManager``\ と別名のBeanIDを指定する必要がある。
+        | リソースオーナの認証で使用する\ ``AuthenticationManager``\ と別名のBean名を指定する必要がある。
+        | ここでは、\ ``sec:authentication-manager``\を複数定義する必要があるため、それぞれにid属性を用いてBean名を付与する。
+        | 一つのコンテキストに\ ``sec:authentication-manager``\が一つしかない場合は、alias属性を用いてBean名を付与しても良い。
         | リソースオーナの認証については\ :ref:`OAuthAuthorizationServerResourceOwnerAuthentication`\を参照されたい。
     * - | (8)
       - | \ ``sec:authentication-provider``\ の\ ``user-service-ref``\ 属性に(13)で定義している\ ``org.springframework.security.oauth2.provider.client.ClientDetailsUserDetailsService``\のBeanを指定する。
@@ -1348,10 +1364,10 @@ Spring Security OAuthではクライアント情報を取得するためのイ�
         | \ ``OAuth2AccessDeniedHandler``\は、認可エラー時に発生する例外をハンドリングしてエラー応答を行う。
     * - | (13)
       - | \ ``UserDetailsService``\ インタフェースの実装クラスである\ ``ClientDetailsUserDetailsService``\ をBean定義する。
-        | リソースオーナの認証で使用する\ ``UserDetailsService``\ と別名のBeanIDを指定する必要がある。
+        | リソースオーナの認証で使用する\ ``UserDetailsService``\ と別名のBean名を指定する必要がある。
     * - | (14)
       - | コンストラクタの引数に、DBからクライアント情報を取得する\ ``OAuthClientDetailsService``\のBeanを指定する。
-        | 指定するBeanIDは、\ ``ClientDetailsService``\ の実装クラスで指定したBeanIDと合わせる必要がある。
+        | 指定するBean名は、\ ``ClientDetailsService``\ の実装クラスで指定したBean名と合わせる必要がある。
 
 
 |
@@ -1392,7 +1408,7 @@ Spring Securityの詳細については \ :doc:`../../Security/Authentication`\ 
             <!-- omitted -->
         </sec:http>
 
-         <sec:authentication-manager alias="authenticationManager"> <!-- (3) -->
+         <sec:authentication-manager id="authenticationManager"> <!-- (3) -->
             <sec:authentication-provider
                 user-service-ref="userDetailsService">
                 <sec:password-encoder ref="passwordEncoder" />
@@ -1414,7 +1430,7 @@ Spring Securityの詳細については \ :doc:`../../Security/Authentication`\ 
       - 説明
     * - | (1)
       - | 認可サーバにフォーム認証を適用し、\ ``authentication-manager-ref``\ 属性に(3)で定義している\ ``authenticationManager``\ を指定する。
-        | \ ``oauth2-auth.xml``\ でも\ ``AuthenticationManager``\ を定義しているため、別名のBeanIDを指定する必要がある。
+        | \ ``oauth2-auth.xml``\ でも\ ``AuthenticationManager``\ を定義しているため、別名のBean名を指定する必要がある。
     * - | (2)
       - | 以下を含んだパス(\ ``/oauth/``\)配下を認証済みユーザのみがアクセスできるよう指定する。
 
@@ -1424,6 +1440,8 @@ Spring Securityの詳細については \ :doc:`../../Security/Authentication`\ 
 
     * - | (3)
       - | リソースオーナを認証するための\ ``authenticationManager``\ をBean定義する。
+        | ここでは、\ ``sec:authentication-manager``\を複数定義する必要があるため、それぞれにid属性を用いてBean名を付与する。
+        | 一つのコンテキストに\ ``sec:authentication-manager``\が一つしかない場合は、alias属性を用いてBean名を付与しても良い。
 
 
 .. _OAuthAuthorizationServerHowToAuthorizeByScope:
@@ -1580,14 +1598,14 @@ Spring Securityの詳細については \ :doc:`../../Security/Authentication`\ 
                 <c:forEach var="scope" items="${scopes}">  <!-- (2) -->
                     <li>
                         ${f:h(scope.key)}
-                        <input type="radio" name="${f:h(scope.key)}" value="true"/>Approve
-                        <input type="radio" name="${f:h(scope.key)}" value="false"/>Deny
+                        <input type="radio" name="${f:h(scope.key)}" id="${f:h(scope.key)}_approve" value="true"/><label for="${f:h(scope.key)}_approve">Approve</label>
+                        <input type="radio" name="${f:h(scope.key)}" id="${f:h(scope.key)}_deny" value="false"/><label for="${f:h(scope.key)}_deny">Deny</label>
                     </li>
                 </c:forEach>
-                <input name="user_oauth_approval" value="true" type="hidden"/>  <!-- (3) -->
+                <input type="hidden" name="user_oauth_approval" value="true"/>  <!-- (3) -->
                 <sec:csrfInput />  <!-- (4) -->
                 <label>
-                    <input name="authorize" value="Authorize" type="submit"/>
+                    <input type="submit" id="authorize" value="Authorize"/>
                 </label>
             </form>
         </div>
@@ -1752,11 +1770,6 @@ Spring Securityの詳細については \ :doc:`../../Security/Authentication`\ 
         | メモリを介してアクセストークンを共有する実装はサーバ再起動などでアクセストークンが失われるため、テスト用途専用の実装である。
 
 |
-
-.. todo:: **TBD**
-
-    JWTを利用した連携の実装方法については、次版以降で詳細化する予定である。
-
 
 
 ここでは、代表的な連携方法として共有DBを介して連携させる方法を説明する。
@@ -2120,11 +2133,11 @@ Spring Security OAuthが取り扱う情報（認可コード、認可情報、�
            xmlns:oauth2="http://www.springframework.org/schema/security/oauth2"
            xmlns:sec="http://www.springframework.org/schema/security"
            xsi:schemaLocation="http://www.springframework.org/schema/security
-               http://www.springframework.org/schema/security/spring-security.xsd
+               https://www.springframework.org/schema/security/spring-security.xsd
                http://www.springframework.org/schema/security/oauth2
-               http://www.springframework.org/schema/security/spring-security-oauth2.xsd
+               https://www.springframework.org/schema/security/spring-security-oauth2.xsd
                http://www.springframework.org/schema/beans
-               http://www.springframework.org/schema/beans/spring-beans.xsd">
+               https://www.springframework.org/schema/beans/spring-beans.xsd">
 
         <sec:http pattern="/api/v1/todos/**" create-session="stateless"
                        entry-point-ref="oauth2AuthenticationEntryPoint"> <!-- (1) -->
@@ -2170,7 +2183,7 @@ Spring Security OAuthが取り扱う情報（認可コード、認可情報、�
         | ここでは(7)で定義している\ ``oauth2AuthenticationFilter``\のBeanを指定する。
         | \ ``OAuth2AuthenticationProcessingFilter``\はリクエストに含まれるアクセストークンを利用してPre-Authenticationを行うためのフィルタであるため、
           \ ``before``\に\ ``PRE_AUTH_FILTER``\を指定し\ ``PRE_AUTH_FILTER``\の前に\ ``OAuth2AuthenticationProcessingFilter``\の処理が実行されるように設定する。
-        | Pre-Authenticationについては\ `Pre-Authentication Scenarios <http://docs.spring.io/spring-security/site/docs/3.0.x/reference/preauth.html>`_\を参照されたい。
+        | Pre-Authenticationについては\ `Pre-Authentication Scenarios <https://docs.spring.io/spring-security/site/docs/4.2.12.RELEASE/reference/html/preauth.html>`_\を参照されたい。
     * - | (5)
       - | Spring Security OAuthが提供するリソースサーバ用の\ ``AccessDeniedHandler``\を定義する。
         | \ ``OAuth2AccessDeniedHandler``\は、認可エラー時に発生する例外をハンドリングしてエラー応答を行う。
@@ -2237,11 +2250,11 @@ Spring Security OAuthが取り扱う情報（認可コード、認可情報、�
            xmlns:oauth2="http://www.springframework.org/schema/security/oauth2"
            xmlns:sec="http://www.springframework.org/schema/security"
            xsi:schemaLocation="http://www.springframework.org/schema/security
-               http://www.springframework.org/schema/security/spring-security.xsd
+               https://www.springframework.org/schema/security/spring-security.xsd
                http://www.springframework.org/schema/security/oauth2
-               http://www.springframework.org/schema/security/spring-security-oauth2.xsd
+               https://www.springframework.org/schema/security/spring-security-oauth2.xsd
                http://www.springframework.org/schema/beans
-               http://www.springframework.org/schema/beans/spring-beans.xsd">
+               https://www.springframework.org/schema/beans/spring-beans.xsd">
 
         <sec:http pattern="/api/v1/todos/**" create-session="stateless"
                        entry-point-ref="oauth2AuthenticationEntryPoint">
@@ -2480,9 +2493,9 @@ Spring Security OAuthが用意している主なExpressionを紹介する。
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:sec="http://www.springframework.org/schema/security"
         xmlns:oauth2="http://www.springframework.org/schema/security/oauth2"
         xsi:schemaLocation="
-            http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
-            http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-            http://www.springframework.org/schema/security/oauth2 http://www.springframework.org/schema/security/spring-security-oauth2.xsd
+            http://www.springframework.org/schema/security https://www.springframework.org/schema/security/spring-security.xsd
+            http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+            http://www.springframework.org/schema/security/oauth2 https://www.springframework.org/schema/security/spring-security-oauth2.xsd
         ">
 
 
@@ -2576,8 +2589,8 @@ OAuth2ClientContextFilterの適用
     * - 項番
       - 説明
     * - | (1)
-      - | \ ``DelegatingFilterProxy``\ を使用して、フィルタ名(\ ``<filter-name>``\ 属性に指定した値)とBeanIDが一致するBeanをサーブレットフィルタとして登録する。
-        | フィルタ名には\ ``<oauth2:client>``\ の\ ``id``\ 属性に指定したBeanIDと同じ値を設定する。
+      - | \ ``DelegatingFilterProxy``\ を使用して、フィルタ名(\ ``<filter-name>``\ 属性に指定した値)とBean名が一致するBeanをサーブレットフィルタとして登録する。
+        | フィルタ名には\ ``<oauth2:client>``\ の\ ``id``\ 属性に指定したBean名と同じ値を設定する。
         | なお、Spring Security OAuthで発生する例外が意図しない例外ハンドリングが行われないようにするために、\ ``OAuth2ClientContextFilter``\ はサーブレットフィルタの定義の一番最後に記述することを推奨する。
     * - | (2)
       - | \ ``UserRedirectRequiredException``\ が発生する可能性があるパスに対して\ ``OAuth2ClientContextFilter``\ を適用している。
@@ -2668,7 +2681,7 @@ OAuth2RestTemplateの設定
         | 各項目の設定値については下記表を参照のこと。
     * - | (2)
       - | \ ``OAuth2RestTemplate``\ を定義する。
-        | \ ``id``\ には\ ``OAuth2RestTemplate``\ のBeanIDを指定する。
+        | \ ``id``\ には\ ``OAuth2RestTemplate``\ のBean名を指定する。
         | \ ``resource``\には(1)で定義したBeanの\ ``id``\ を指定する。
 
 |
@@ -2682,7 +2695,7 @@ OAuth2RestTemplateの設定
     * - 項目
       - 説明
     * - | \ ``id``\
-      - | リソースのBeanID。
+      - | リソースのBean名。
     * - | \ ``client-id``\
       - | 認可サーバにてクライントを識別するID。
     * - | \ ``client-secret``\
@@ -3647,8 +3660,8 @@ JSON形式のデータを取得し、画面に表示させる方法を説明す�
             あくまで現状の\ ``TokenServices``\ の実装に基づいたワークアラウンド的な判定条件であり、
             今後のSpring Security OAuthの実装変更に合わせて変更が必要となる可能性がある点に留意されたい。
 
-            * `DefaultTokenServices <https://github.com/spring-projects/spring-security-oauth/blob/master/spring-security-oauth2/src/main/java/org/springframework/security/oauth2/provider/token/DefaultTokenServices.java#L235>`_\ ：有効期限切れを示す\ ``expired``\ という文字列とアクセストークンを返却する
-            * `RemoteTokenServices <https://github.com/spring-projects/spring-security-oauth/blob/master/spring-security-oauth2/src/main/java/org/springframework/security/oauth2/provider/token/RemoteTokenServices.java#L110>`_\ ：有効期限切れを明確に判断できる文字列はなくアクセストークンのみ返却する
+            * `DefaultTokenServices <https://github.com/spring-projects/spring-security-oauth/blob/2.0.17.RELEASE/spring-security-oauth2/src/main/java/org/springframework/security/oauth2/provider/token/DefaultTokenServices.java#L235>`_\ ：有効期限切れを示す\ ``expired``\ という文字列とアクセストークンを返却する
+            * `RemoteTokenServices <https://github.com/spring-projects/spring-security-oauth/blob/2.0.17.RELEASE/spring-security-oauth2/src/main/java/org/springframework/security/oauth2/provider/token/RemoteTokenServices.java#L111>`_\ ：有効期限切れを明確に判断できる文字列はなくアクセストークンのみ返却する
 
             もし、リソースサーバが\ ``RemoteTokenServices``\ を使用しない場合は、以下の条件に緩和することが出来る。
 
@@ -3867,14 +3880,6 @@ JSPでは、前述の独自に実装したJavaScriptを利用して、認可サ�
     Spring Security OAuth以外のアーキテクチャで実装されている認可サーバに対してアクセストークンの発行を依頼する場合は
     リクエストパラメータが上記とは異なる可能性があるため注意されたい。
     その場合はアーキテクチャの仕様を確認し、必要なリクエストパラメータを設定されたい。
-
-|
-
- .. todo:: **TBD**
-
-    JavaScriptで作られたクライアントから同一ドメインでない認可サーバやリソースサーバへのアクセスを行う場合、認可サーバやリソースサーバで\ ``Cross-Origin Resource Sharing``\のサポートが必要になる。
-
-    詳細については、次版以降に記載する予定である。
 
 |
 
@@ -4200,7 +4205,7 @@ OAuth2RestTemplateの設定
         | 各項目の設定値については下記表を参照のこと。
     * - | (2)
       - | \ ``OAuth2RestTemplate``\を定義する。
-        | \ ``id``\には\ ``OAuth2RestTemplate``\ のBeanIDを指定する。
+        | \ ``id``\には\ ``OAuth2RestTemplate``\ のBean名を指定する。
         | \ ``resource``\には(1)で定義したBeanの\ ``id``\ を指定する。
 
 
@@ -4729,7 +4734,7 @@ HTTPアクセスを介した認可サーバとリソースサーバの連携
              user-approval-handler-ref="userApprovalHandler"
              token-services-ref="tokenServices"
              check-token-enabled="true"
-             check-token-endpoint-url="/oauth/check-token">  <!-- (2) -->
+             check-token-endpoint-url="/oauth/check_token">  <!-- (2) -->
             <oauth2:authorization-code />
             <oauth2:implicit />
             <oauth2:refresh-token />
@@ -4781,6 +4786,8 @@ HTTPアクセスを介した認可サーバとリソースサーバの連携
         <bean id="tokenServices"
             class="org.springframework.security.oauth2.provider.token.RemoteTokenServices">
             <property name="checkTokenEndpointUrl" value="${auth.serverUrl}/oauth/check_token" />  <!-- (1) -->
+            <property name="clientId" value="${resource.clientId}" />  <!-- (2) -->
+            <property name="clientSecret" value="${resource.clientSecret}" />  <!-- (3) -->
         </bean>
 
 

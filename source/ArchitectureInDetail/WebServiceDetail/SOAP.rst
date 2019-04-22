@@ -161,7 +161,7 @@ Spring FrameworkのJAX-WS連携機能について
 
 .. note::
 
-    SpringでのJAX-WS実装の詳細は、\ `Spring Framework Reference Documentation -Remoting and web services using Spring(Web services)- <http://docs.spring.io/spring/docs/4.3.14.RELEASE/spring-framework-reference/html/remoting.html#remoting-web-services>`_\ を参照されたい。
+    SpringでのJAX-WS実装の詳細は、\ `Spring Framework Reference Documentation -Remoting and web services using Spring(Web services)- <https://docs.spring.io/spring/docs/4.3.23.RELEASE/spring-framework-reference/html/remoting.html#remoting-web-services>`_\ を参照されたい。
 
 |
 
@@ -357,9 +357,9 @@ SOAPサーバの作成
     以下、参考資料として、APサーバのマニュアルを記述しておく。
     必ず、使用するバージョンとあっているか確認してから参照すること。
      
-    Oracle WebLogic Server 12.2.1: \ `Oracle(R) Fusion Middleware Understanding WebLogic Web Services for Oracle WebLogic Server  Features and Standards Supported by WebLogic Web Services <https://docs.oracle.com/middleware/1221/wls/WSOVR/weblogic-web-service-stand.htm#WSOVR137>`_\
+    Oracle WebLogic Server 12.2.1: \ `Oracle(R) Fusion Middleware Understanding WebLogic Web Services for Oracle WebLogic Server  Features and Standards Supported by WebLogic Web Services <https://docs.oracle.com/middleware/12213/wls/WSOVR/weblogic-web-service-stand.htm#WSOVR137>`_\
      
-    JBoss Enterprise Application Platform 7.0: \ `DEVELOPING JAX-WS WEB SERVICES <https://access.redhat.com/documentation/en/red-hat-jboss-enterprise-application-platform/7.0/paged/developing-web-services-applications/chapter-3-developing-jax-ws-web-services>`_\
+    JBoss Enterprise Application Platform 7.2: \ `DEVELOPING JAX-WS WEB SERVICES <https://access.redhat.com/documentation/en-us/red_hat_jboss_enterprise_application_platform/7.2/html/developing_web_services_applications/developing_jax_ws_web_services>`_\
 
     JBoss Enterprise Application Platform 6.4: \ `DEVELOPMENT GUIDE JAX-WS WEB SERVICES <https://access.redhat.com/documentation/en-US/JBoss_Enterprise_Application_Platform/6.4/html/Development_Guide/chap-JAX-WS_Web_Services.html>`_\
     
@@ -380,9 +380,9 @@ Webサービスで使用するコンポーネントをスキャンするため�
         xmlns:context="http://www.springframework.org/schema/context"
         xsi:schemaLocation="
              http://www.springframework.org/schema/beans
-             http://www.springframework.org/schema/beans/spring-beans.xsd
+             https://www.springframework.org/schema/beans/spring-beans.xsd
              http://www.springframework.org/schema/context
-             http://www.springframework.org/schema/context/spring-context.xsd">
+             https://www.springframework.org/schema/context/spring-context.xsd">
         <!-- (1) -->
         <context:component-scan base-package="com.example.ws" />
     </beans>
@@ -646,7 +646,7 @@ webプロジェクト内にWebServiceインターフェースの実装クラス�
         .. note::
           使用するAPサーバのJAX-WS実装により、バインディング方式で挙動が異なる場合があるため注意すること。
           
-          たとえば、WebSphere Application Serverの特定のバージョンではSOAP1.2でのバインディングの場合にWSDLが自動生成されない。詳細については\ `IBM Knowledge Center - Using annotations to create web services <https://www.ibm.com/support/knowledgecenter/SSRTLW_9.0.0/com.ibm.webservice.doc/topics/jaxws/cwsandoc001.html>`_\を参照されたい。
+          たとえば、WebSphere Application Serverの特定のバージョンではSOAP1.2でのバインディングの場合にWSDLが自動生成されない。詳細については\ `IBM Knowledge Center - Using annotations to create web services <https://www.ibm.com/support/knowledgecenter/SSRTLW_9.7.0/com.ibm.webservice.doc/topics/jaxws/cwsandoc001.html>`_\を参照されたい。
 
     * - | (3)
       - | 先ほど作成した\ ``TodoWebService``\ インターフェースを実装する。
@@ -1590,7 +1590,7 @@ WebServiceインターフェースを実装したプロキシを生成する\ ``
 
         .. Note:: **wsdlDocumentResourceへのWSDLファイルのURL以外の指定**
 
-            上記の例では、SOAPサーバがWSDLファイルを公開している前提である。\ ``classpath:``\ や\ ``file:``\ プレフィックスを使用して指定することで静的ファイルを指定することもできる。指定できる文字列は、\ `Spring Framework Reference Documentation -Resources(The ResourceLoader)- <http://docs.spring.io/spring/docs/4.3.14.RELEASE/spring-framework-reference/html/resources.html#resources-resourceloader>`_\ を参照されたい。
+            上記の例では、SOAPサーバがWSDLファイルを公開している前提である。\ ``classpath:``\ や\ ``file:``\ プレフィックスを使用して指定することで静的ファイルを指定することもできる。指定できる文字列は、\ `Spring Framework Reference Documentation -Resources(The ResourceLoader)- <https://docs.spring.io/spring/docs/4.3.23.RELEASE/spring-framework-reference/html/resources.html#resources-resourceloader>`_\ を参照されたい。
 
 
 .. Note:: **エンドポイントアドレスの上書き指定**
@@ -2578,9 +2578,9 @@ Webサービス実装クラスをエンドポイントとして設定する。
         xmlns:context="http://www.springframework.org/schema/context"
         xmlns:jaxws="http://cxf.apache.org/jaxws" xmlns:soap="http://cxf.apache.org/bindings/soap"
         xsi:schemaLocation="http://www.springframework.org/schema/beans
-             http://www.springframework.org/schema/beans/spring-beans.xsd
+             https://www.springframework.org/schema/beans/spring-beans.xsd
              http://www.springframework.org/schema/context
-             http://www.springframework.org/schema/context/spring-context.xsd
+             https://www.springframework.org/schema/context/spring-context.xsd
              http://cxf.apache.org/jaxws
              http://cxf.apache.org/schemas/jaxws.xsd
              http://cxf.apache.org/bindings/soap
@@ -2679,9 +2679,9 @@ CXFServlet用のBean定義ファイルに、SOAPのエンドポイントとな�
         xmlns:context="http://www.springframework.org/schema/context"
         xmlns:jaxws="http://cxf.apache.org/jaxws" xmlns:soap="http://cxf.apache.org/bindings/soap"
         xsi:schemaLocation="http://www.springframework.org/schema/beans
-             http://www.springframework.org/schema/beans/spring-beans.xsd
+             https://www.springframework.org/schema/beans/spring-beans.xsd
              http://www.springframework.org/schema/context
-             http://www.springframework.org/schema/context/spring-context.xsd
+             https://www.springframework.org/schema/context/spring-context.xsd
              http://cxf.apache.org/jaxws
              http://cxf.apache.org/schemas/jaxws.xsd
              http://cxf.apache.org/bindings/soap

@@ -42,7 +42,7 @@ Overview
 | クラスは、modelの情報を用いてExcelファイルをレンダリングするときに、サブクラスとして利用するクラスである。
 |
 | Spring では上記以外にも、いろいろなViewの実装を提供している。
-| Viewの技術詳細は、\ `Spring Reference View technologies <http://docs.spring.io/spring/docs/4.3.14.RELEASE/spring-framework-reference/html/view.html>`_\ を参照されたい。
+| Viewの技術詳細は、\ `Spring Reference View technologies <https://docs.spring.io/spring/docs/4.3.23.RELEASE/spring-framework-reference/html/view.html>`_\ を参照されたい。
 
 | 共通ライブラリから提供している、\ ``org.terasoluna.gfw.web.download.AbstractFileDownloadView``\ は、
 | 任意のファイルをダウンロードするために使用する抽象クラスである。
@@ -100,6 +100,13 @@ PDFファイルのダウンロード
    * - | (3)
      - | \ ``buildPdfDocument``\ メソッドを実装する。
 
+.. _file-download_warning_CVE-2017-9096:
+
+.. warning:: **iText 2.1.7に存在するXXE (XML External Entity) 脆弱性について**
+
+    Macchinetta Server Framework for Java 1.5.2.RELEASEでサポートしているiText 2.1.7では、
+    外部から取得したXMLを読み込んでPDFを作成するような実装を行っている場合、\ `CVE-2017-9096 <http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-9096>`_\で報告されている脆弱性が発生する可能性がある。
+
 | \ ``AbstractPdfView``\ は、PDFのレンダリングに、\ `iText <http://itextpdf.com/>`_\ を利用している。
 | そのため、Mavenのpom.xmlに itextの定義を追加する必要がある。
 
@@ -110,38 +117,7 @@ PDFファイルのダウンロード
       <dependency>
           <groupId>com.lowagie</groupId>
           <artifactId>itext</artifactId>
-          <exclusions>
-              <exclusion>
-                  <artifactId>xml-apis</artifactId>
-                  <groupId>xml-apis</groupId>
-              </exclusion>
-              <exclusion>
-                  <artifactId>bctsp-jdk14</artifactId>
-                  <groupId>org.bouncycastle</groupId>
-              </exclusion>
-              <exclusion>
-                  <artifactId>jfreechart</artifactId>
-                  <groupId>jfree</groupId>
-              </exclusion>
-              <exclusion>
-                  <artifactId>dom4j</artifactId>
-                  <groupId>dom4j</groupId>
-              </exclusion>
-              <exclusion>
-                  <groupId>org.swinglabs</groupId>
-                  <artifactId>pdf-renderer</artifactId>
-              </exclusion>
-              <exclusion>
-                    <groupId>org.bouncycastle</groupId>
-                    <artifactId>bcprov-jdk14</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>org.bouncycastle</groupId>
-            <artifactId>bcprov-jdk14</artifactId>
-            <version>1.38</version>
-        </dependency>
+      </dependency>
   </dependencies>
   
 
@@ -169,12 +145,7 @@ Springのコンテキストで管理されたbean名を用いて実行するView
     Spring Frameworkはさまざまな\ ``ViewResolver``\ を提供しており、複数の\ ``ViewResolver``\をチェーンすることができる。
     そのため、特定の状況では、意図しないViewが選択されてしまうことがある。
 
-    この動作は、\ ``ViewResolver``\に適切な優先順位を設定する事で防ぐことができる。
-    優先順位の設定方法は、\ ``ViewResolver``\ の定義方法によって異なる。
-
-    * Spring Framework 4.1から追加された\ ``<mvc:view-resolvers>``\ 要素を使用して\ ``ViewResolver``\ を定義する場合は、子要素に指定する\ ``ViewResolver``\の定義順が優先順位となる。(上から順に実行される)
-
-    * 従来通り\ ``<bean>``\ 要素を使用して\ ``ViewResolver``\ を指定する場合は、\ ``order``\ プロパティに優先順位を設定する。(設定値が小さいものから実行される)
+    この動作は、\ ``<mvc:view-resolvers>``\ 要素の子要素に、優先したい\ ``ViewResolver``\を上から順に定義する事で防ぐことができる。
 
 |
 
@@ -196,33 +167,10 @@ Springのコンテキストで管理されたbean名を用いて実行するView
    * - 項番
      - 説明
    * - | (1)
-     - | Spring Framework 4.1から追加された\ ``<mvc:bean-name>``\ 要素を使用して、\ ``BeanNameViewResolver``\ を定義する。
+     - | \ ``<mvc:bean-name>``\ 要素を使用して、\ ``BeanNameViewResolver``\ を定義する。
    * - | (2)
      - | \ ``<mvc:bean-name>``\ 要素を先頭に定義し、通常使用する\ ``ViewResolver``\ (JSP用の\ ``ViewResolver``\ )より優先度を高くする。
 
-
-.. tip::
-
-    \ ``<mvc:view-resolvers>``\ 要素はSpring Framework 4.1から追加されたXML要素である。
-    \ ``<mvc:view-resolvers>``\ 要素を使用すると、\ ``ViewResolver``\ をシンプルに定義することが出来る。
-
-    従来通り\ ``<bean>``\ 要素を使用した場合の定義例を以下に示す。
-
-
-     .. code-block:: xml
-        :emphasize-lines: 1-3
-
-        <bean class="org.springframework.web.servlet.view.BeanNameViewResolver">
-            <property name="order" value="0"/>
-        </bean>
-
-        <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-            <property name="prefix" value="/WEB-INF/views/" />
-            <property name="suffix" value=".jsp" />
-            <property name="order" value="1" />
-        </bean>
-
-    \ ``order``\ プロパティに、\ ``InternalResourceViewResolver``\ より小さい値を指定し、優先度を高くする。
 
 |
 
@@ -352,8 +300,8 @@ Excelファイルのダウンロード
         上記の依存ライブラリはterasoluna-gfw-parentが利用している\ `Spring IO Platform <http://platform.spring.io/platform/>`_\ で定義済みである。
 
         また、\ ``AbstractExcelView``\ はSpring Framework 4.2から@Deprecatedとなった。そのため、xlsファイルを使用したい場合も同様に\ ``AbstractXlsxView``\ の使用を推奨する。
-        詳細は、\ `AbstractExcelViewのJavaDoc <https://docs.spring.io/spring/docs/4.3.14.RELEASE/javadoc-api/org/springframework/web/servlet/view/document/AbstractExcelView.html>`_\ を参照されたい。
-          
+        詳細は、\ `AbstractXlsViewのJavaDoc <https://docs.spring.io/spring-framework/docs/4.3.23.RELEASE/javadoc-api/org/springframework/web/servlet/view/document/AbstractXlsView.html>`_\ を参照されたい。
+
 
 ViewResolverの定義
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -490,7 +438,7 @@ ViewResolverの定義
 
         前述してきたように、SpringはModelの情報をいろいろなViewにレンダリングすることができる。
         Springでは、Jasper Reportsのようなレンダリングエンジンをサポートし、さまざまなViewを返却することも可能である。
-        詳細は、Spring の公式ドキュメント\ `Spring reference <http://docs.spring.io/spring/docs/4.3.14.RELEASE/spring-framework-reference/html/view.html#view-jasper-reports>`_\ を参照されたい。
+        詳細は、Spring の公式ドキュメント\ `Spring reference <https://docs.spring.io/spring/docs/4.3.23.RELEASE/spring-framework-reference/html/view.html#view-jasper-reports>`_\ を参照されたい。
 
 .. raw:: latex
 

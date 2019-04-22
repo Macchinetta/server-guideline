@@ -1,6 +1,12 @@
 共通ライブラリが提供するJSP Tag Library と EL Functions
 ================================================================================
 
+.. only:: html
+
+ .. contents:: 目次
+    :depth: 3
+    :local:
+
 .. _TagLibAndELFunctionsOverview:
 
 Overview
@@ -129,8 +135,8 @@ How to use
 
 ページネーション機能の説明及び本タグの使用方法は、「:doc:`./Pagination`」の以下の節を参照されたい。
 
-* ページネーションリンクについては、「:ref:`pagination_overview_paginationlink`」
-* 本タグのパラメータ値については、「:ref:`pagination_overview_paginationlink_taglibparameters`」
+* ページネーションリンクについては、「:ref:`pagination_overview_page_display_paginationlink`」
+* 本タグのパラメータ値については、「:ref:`pagination_overview_page_display_paginationlink_taglibparameters`」
 * 本タグを使用したJSPの基本的な実装方法については、「:ref:`pagination_how_to_use_make_jsp_basic_paginationlink`」
 * ページネーションリンクのレイアウトの変更方法については、「:ref:`pagination_how_to_use_make_jsp_layout`」
 
@@ -395,7 +401,7 @@ f:query() 関数仕様
     指定されたオブジェクトのシンプル型のプロパティ値は、
     \ ``org.springframework.format.support.DefaultFormattingConversionService``\ の \ ``convert``\ メソッドを使用して文字列に変換される。
     \ ``ConversionService``\ については、
-    \ `Spring Framework Reference Documentation(Spring Type Conversion) <http://docs.spring.io/spring/docs/4.3.14.RELEASE/spring-framework-reference/html/validation.html#core-convert>`_\ を参照されたい。
+    \ `Spring Framework Reference Documentation(Spring Type Conversion) <https://docs.spring.io/spring/docs/4.3.23.RELEASE/spring-framework-reference/html/validation.html#core-convert>`_\ を参照されたい。
 
 
 **戻り値**

@@ -361,9 +361,7 @@ Date and Time APIの各クラスの相互運用性
 java.util.Dateとの相互運用性
 ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 
-``java.time.LocalDate`` 等のクラスを、``java.util.Date`` に直接変換するメソッドは提供されていない。
-
-| ただし、Java8からは ``java.util.Date`` にDate and Time APIが提供する  ``java.time.Instant`` を変換するメソッドが追加されているため、``java.time.Instant`` を経由して変換を行うことが可能である。
+| ``java.time.LocalDate`` 等のクラスは、``java.time.Instant`` に変換したうえで ``java.util.Date`` に変換することが可能である。
 | 以下に例を示す。
 
 1. ``java.time.LocalDateTime`` から、 ``java.util.Date`` への変換。
@@ -578,7 +576,7 @@ org.terasoluna.gfw.common.date パッケージの利用方法
                                               .withResolverStyle(ResolverStyle.STRICT);
 
    LocalDate localDate = LocalDate.parse("2015/12/25", formatter1);
-   LocalTime localTime = LocalDate.parse("14:09:20", formatter2);
+   LocalTime localTime = LocalTime.parse("14:09:20", formatter2);
  
 |
 

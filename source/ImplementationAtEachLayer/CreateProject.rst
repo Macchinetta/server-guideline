@@ -55,7 +55,7 @@ Maven Archetypeで作成したプロジェクトでは、warファイルを作�
     #. CIサーバ上ではビルドツール(maven)によるテストの実行とパッケージングを行い、必要に応じてパッケージリポジトリにartifactをdeployする。
     #. 試験サーバ、本番サーバでは、パッケージリポジトリにあらかじめ保管しているプロジェクト本体に、リリース先環境にあわせてビルドした\*-envプロジェクトを追加してリリースすることにより、アプリケーションの動作が可能になる。
 
-    詳細については\ `サンプルアプリケーション <https://github.com/terasolunaorg/terasoluna-tourreservation>`_\ を参考にされたい。
+    詳細については\ `サンプルアプリケーション <https://github.com/terasolunaorg/terasoluna-tourreservation-mybatis3/>`_\ を参考にされたい。
 
 .. warning:: **ビルド環境について**
 
@@ -214,28 +214,15 @@ warファイルの作成
 Tomcatへのデプロイ
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-WebアプリケーションをTomcat上にリリースする場合は次のような手順をとる。 
+WebアプリケーションをTomcat 8.5およびTomcat 9上にリリースする場合は次のような手順をとる。 
 
 1. リリース対象のAPサーバ環境にあわせてmavenのprofileを指定し、 \*-env プロジェクトを ビルドする。
 2. 上記でビルドした\*-env-x.y.z.jarファイル をあらかじめ決定したAPサーバ上のフォルダに設置する。 ex. /etc/foo/bar/abcd-env-x.y.z.jar
 3. あらかじめパッケージリポジトリにデプロイ済みの\*.warファイルを [CATALINA_HOME]/webapps 配下で解凍(unjar)する。
-4. Tomcat 7を使用する場合は、TomcatのVirtualWebappLoader機能を使用して /etc/foo/bar/\*.jar をクラスパスに追加する。
+4. Tomcatのリソース機能を使用して、 /etc/foo/bar/\*.jar をクラスパスに追加する。
 
  * [CATALINA_HOME]/conf/[contextPath].xml ファイルに下記の定義を追加する。
- * 詳しくは、 http://tomcat.apache.org/tomcat-7.0-doc/api/org/apache/catalina/loader/VirtualWebappLoader.html と `terasoluna-tourreservation-envのconfigsフォルダ <https://github.com/terasolunaorg/terasoluna-tourreservation/tree/5.4.1.RELEASE/terasoluna-tourreservation-env/configs>`_\ を参考されたい。
- * VirtualWebappLoaderの設定例：
-   
-  .. code-block:: xml
-
-   <Loader className="org.apache.catalina.loader.VirtualWebappLoader"
-           virtualClasspath="/etc/foo/bar/*.jar" />
-
- * なお、VirtualWebappLoader機能はTomcat 6でも使用可能。
-
-5. Tomcat 8.xを使用する場合は、Tomcatのリソース機能を使用して /etc/foo/bar/\*.jar をクラスパスに追加する。
-
- * [CATALINA_HOME]/conf/[contextPath].xml ファイルに下記の定義を追加する。
- * 詳しくは、 https://tomcat.apache.org/migration-8.html#Web_application_resources と `terasoluna-tourreservation-envのconfigsフォルダ <https://github.com/terasolunaorg/terasoluna-tourreservation/tree/5.4.1.RELEASE/terasoluna-tourreservation-env/configs>`_\ を参考されたい。
+ * 詳しくは、 `The Resources Component <https://tomcat.apache.org/tomcat-9.0-doc/config/resources.html>`_\ と `terasoluna-tourreservation-envのconfigsフォルダ <https://github.com/terasolunaorg/terasoluna-tourreservation-mybatis3/tree/5.4.2.RELEASE/terasoluna-tourreservation-env/configs>`_\ を参考されたい。
  * リソースの設定例：
    
   .. code-block:: xml
@@ -253,6 +240,20 @@ WebアプリケーションをTomcat上にリリースする場合は次のよ�
  * autoDeployを無効化している場合、[CATALINA_HOME]/webappsにwarファイルを置くだけではWebアプリケーションは起動しない。必ずwarファイルをunjar(unzip)すること。
 
 |
+
+.. note:: **Tomcat 7およびTomcat 6を使用する場合**
+
+    Tomcat 7およびTomcat 6を使用する場合は、上記手順 4.の代わりにTomcatのVirtualWebappLoader機能を使用して /etc/foo/bar/\*.jar をクラスパスに追加する。
+
+    * [CATALINA_HOME]/conf/[contextPath].xml ファイルに下記の定義を追加する。
+    * 詳しくは、 `VirtualWebappLoader <http://tomcat.apache.org/tomcat-7.0-doc/api/org/apache/catalina/loader/VirtualWebappLoader.html>`_\ と `terasoluna-tourreservation-envのconfigsフォルダ <https://github.com/terasolunaorg/terasoluna-tourreservation-mybatis3/tree/5.4.2.RELEASE/terasoluna-tourreservation-env/configs>`_\ を参考されたい。
+
+    VirtualWebappLoaderの設定例：
+    
+        .. code-block:: xml
+
+           <Loader className="org.apache.catalina.loader.VirtualWebappLoader"
+                   virtualClasspath="/etc/foo/bar/*.jar" />
 
 .. _CreateWebApplicationProjectBuildDeployToOtherServer:
 
@@ -382,6 +383,7 @@ SNAPSHOTバージョンのソフトウェアのデリバリーフローは下図
  * コンパイルエラー、コードメトリクスでの一定以上のviolationの発生、テストの失敗の場合、以降の作業を中止する。
 
 3. mavenパッケージリポジトリサーバにartifact(jar,warファイル)をアップロード(mvn deploy)する。
+
 |
 
 RELEASEバージョンの運用
@@ -403,11 +405,6 @@ RELEASEバージョンの運用
  * 失敗した場合はVCS上のtagを削除する。
 
 6. mavenパッケージリポジトリサーバにartifact(jar,warファイル)をアップロード(mvn deploy)する。
-
-.. todo:: 
- 
- ここで最後にtrunkのソースツリーのpom.xmlのversionタグを、
- 次のSNAPSHOTバージョンに書き変えてコミットするところまで書くべきか？！
 
 .. note::
 

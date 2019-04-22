@@ -92,6 +92,7 @@ Overview
     SLF4JやLogbackのログレベルの順番は、 TRACE < DEBUG < INFO < WARN < ERROR である。
     commons-logginsや、Log4Jで用意されていたFATALレベルは、存在しない。
 
+.. _LoggingLogOutputContents:
 
 ログの出力内容
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -778,7 +779,7 @@ How to extend
        | 詳細は、\ :doc:`../../ArchitectureInDetail/WebApplicationDetail/MessageManagement`\ の\ :ref:`properties-display`\ を参照されたい。
    * - | (5)
      - | 国際化を考慮し\ ``setBasenames``\ メソッドを使用してプロパティファイルを指定する。
-       | \ ``setBasenames``\ の詳細は\ `ReloadableResourceBundleMessageSourceクラスのsetBasenamesのJavaDoc <http://docs.spring.io/spring/docs/4.3.14.RELEASE/javadoc-api/org/springframework/context/support/ReloadableResourceBundleMessageSource.html#setBasenames-java.lang.String...->`_\を参照されたい。
+       | \ ``setBasenames``\ の詳細は\ `ReloadableResourceBundleMessageSourceクラスのsetBasenamesのJavaDoc <https://docs.spring.io/spring/docs/4.3.23.RELEASE/javadoc-api/org/springframework/context/support/ReloadableResourceBundleMessageSource.html#setBasenames-java.lang.String...->`_\を参照されたい。
    * - | (6)
      - | Loggerラッパークラスにおいても、SLF4Jを使用する。ロギングライブラリの実装を直接使用しない。
    * - | (7)
@@ -1343,7 +1344,8 @@ spring-mvc.xmlの\ ``<mvc:interceptors>``\ 内に以下のように\ ``TraceLogg
 | デフォルトでは、Controllerの処理に3秒以上かかった場合にWARNログを出力する。
 | この閾値を変える場合は、\ ``warnHandlingNanos``\ プロパティにナノ秒単位で指定する。
 
-閾値を10秒(10 * 1000 * 1000 * 1000 ナノ秒)に変更したい場合は以下のように設定すればよい。
+| 閾値を10秒(10 * 1000 * 1000 * 1000 ナノ秒)に変更したい場合は以下のように設定すればよい。
+| このとき、10秒（10000000000ナノ秒）のようにint型の範囲を超える閾値を設定する場合は、long型で値を設定する点に留意されたい。
 
 .. code-block:: xml
     :emphasize-lines: 8
@@ -1355,7 +1357,7 @@ spring-mvc.xmlの\ ``<mvc:interceptors>``\ 内に以下のように\ ``TraceLogg
             <mvc:exclude-mapping path="/resources/**" />
             <bean
                 class="org.terasoluna.gfw.web.logging.TraceLoggingInterceptor">
-                <property name="warnHandlingNanos" value="#{10 * 1000 * 1000 * 1000}" />
+                <property name="warnHandlingNanos" value="#{10L * 1000L * 1000L * 1000L}" />
             </bean>
         </mvc:interceptor>
         <!-- omitted -->

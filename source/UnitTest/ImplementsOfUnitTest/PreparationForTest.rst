@@ -159,7 +159,7 @@ initdbプロジェクトについては、\ :ref:`CreateWebApplicationProjectCon
     * SQL解析メタデータ(\ ``config``\ に\ ``@SqlConfig``\ アノテーションを指定)
 
     また、\ ``@Sql``\ アノテーションはデフォルトで有効になっている\ ``SqlScriptsTestExecutionListener``\ によって
-    実行される。詳細は、\ `Executing SQL scripts declaratively with @Sql <https://docs.spring.io/spring/docs/4.3.14.RELEASE/spring-framework-reference/html/integration-testing.html#testcontext-executing-sql-declaratively>`_\ 
+    実行される。詳細は、\ `Executing SQL scripts declaratively with @Sql <https://docs.spring.io/spring/docs/4.3.23.RELEASE/spring-framework-reference/html/integration-testing.html#testcontext-executing-sql-declaratively>`_\ 
     を参照されたい。
 
     なお、\ ``@Sql``\ アノテーションと\ ``@SqlConfig``\ アノテーションによる構成は\ ``<jdbc:initialize-database>``\ 要素
@@ -341,8 +341,8 @@ Spring Testの DI機能を使用することでテストで使用するBeanを�
     <beans xmlns="http://www.springframework.org/schema/beans"
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xmlns:context="http://www.springframework.org/schema/context"
-      xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-            http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+      xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+            http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
 
         <context:property-placeholder
                         location="classpath*:/META-INF/spring/*.properties" />

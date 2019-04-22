@@ -26,7 +26,7 @@ Spring Securityでは、以下の3つのリソースに対してアクセスポ�
 
 本節では、「Webリソース」「Javaメソッド」「JSPの画面項目」のアクセスに対して認可処理を適用するための実装例(定義例)を紹介しながら、Spring Securityの認可機能について説明する。
 
-.. [#fSpringSecurityAuthorization1] ドメインオブジェクトのアクセスに対する認可処理については、 \ `Spring Security Reference -Domain Object Security (ACLs)- <http://docs.spring.io/spring-security/site/docs/4.2.4.RELEASE/reference/htmlsingle/#domain-acls>`_\ を参照されたい。
+.. [#fSpringSecurityAuthorization1] ドメインオブジェクトのアクセスに対する認可処理については、 \ `Spring Security Reference -Domain Object Security (ACLs)- <https://docs.spring.io/spring-security/site/docs/4.2.12.RELEASE/reference/htmlsingle/#domain-acls>`_\ を参照されたい。
 
 |
 
@@ -155,7 +155,7 @@ How to use
 
 Spring Securityは、アクセスポリシーを指定する記述方法としてSpring Expression Language(SpEL)をサポートしている。
 SpELを使わない方法もあるが、本ガイドラインではExpressionを使ってアクセスポリシーを指定する方法で説明を行う。
-SpELの使い方については本節でも紹介するが、より詳しい使い方を知りたい場合は \ `Spring Framework Reference Documentation -Spring Expression Language (SpEL)- <http://docs.spring.io/spring/docs/4.3.14.RELEASE/spring-framework-reference/htmlsingle/#expressions>`_\ を参照されたい。
+SpELの使い方については本節でも紹介するが、より詳しい使い方を知りたい場合は \ `Spring Framework Reference Documentation -Spring Expression Language (SpEL)- <https://docs.spring.io/spring/docs/4.3.23.RELEASE/spring-framework-reference/htmlsingle/#expressions>`_\ を参照されたい。
 
 |
 
@@ -329,7 +329,7 @@ bean定義ファイルを使用して、Webリソースに対してアクセス�
       - | 「http」、もしくは「https」を指定する。指定したプロトコルでのアクセスを強制するための属性。
         | 指定しない場合、どちらでもアクセス可能である。
 
-上記以外の属性については、\ `<intercept-url> <http://docs.spring.io/spring-security/site/docs/4.2.4.RELEASE/reference/htmlsingle/#nsa-intercept-url>`_\ を参照されたい。
+上記以外の属性については、\ `<intercept-url> <https://docs.spring.io/spring-security/site/docs/4.2.12.RELEASE/reference/htmlsingle/#nsa-intercept-url>`_\ を参照されたい。
 
 * \ ``<sec:intercept-url>``\ タグ\ ``pattern``\ 属性の定義例（spring-security.xml）
 
@@ -680,6 +680,7 @@ Spring Securityは、以下のアノテーションをサポートしている�
 ここでポイントになるのは、Expressionの中からメソッドの引数にアクセスしている部分である。
 具体的には、「\ ``#username``\ 」の部分が引数にアクセスしている部分である。
 Expression内で「# + 引数名」形式のExpressionを指定することで、メソッドの引数にアクセスすることができる。
+なお、引数のプロパティやメソッドにアクセスする場合などは、実行時エラーを防止するため引数の\ ``null``\ チェックを行うよう注意されたい。
 
 .. tip:: **引数名を指定するアノテーション**
 
@@ -727,6 +728,7 @@ Expression内で「# + 引数名」形式のExpressionを指定することで�
 ここでポイントになるのは、Expressionの中からメソッドの返り値にアクセスしている部分である。
 具体的には、「\ ``returnObject.departmentCode``\ 」の部分が返り値にアクセスしている部分である。
 Expression内で「\ ``returnObject``\ 」を指定すると、メソッドの返り値にアクセスすることができる。
+なお、返り値のプロパティやメソッドにアクセスする場合などは、実行時エラーを防止するため返り値の\ ``null``\ チェックを行うよう注意されたい。
 
 |
 

@@ -19,7 +19,7 @@ Overview
 * 画面内のテキスト要素（コード値の名称、メッセージ、GUIコンポーネントのラベルなど）は、プログラム内でハードコードせずに、プロパティファイルなどの外部定義から取得する。
 * クライアントからLocaleを指定する仕組みを提供する。
 
-クライアントからLocaleを指定する方法は通りである。
+クライアントからLocaleを指定する方法は以下の通りである。
 
 * 標準のリクエストヘッダを使用する。(ブラウザの言語設定で指定)
 * リクエストパラメータを使用してCookieに保存する。
@@ -141,7 +141,15 @@ AcceptHeaderLocaleResolverの設定
 .. code-block:: xml
 
     <bean id="localeResolver"
-        class="org.springframework.web.servlet.i18n.AcceptHeaderLocaleResolver" /> <!-- (1) -->
+        class="org.springframework.web.servlet.i18n.AcceptHeaderLocaleResolver"> <!-- (1) -->
+        <property name="defaultLocale" value="en" /> <!-- (2) -->
+        <property name="supportedLocales"> <!-- (3) -->
+            <list value-type="java.util.Locale">
+                <value>en</value>
+                <value>ja</value>
+            </list>
+        </property>
+    </bean>
 
 .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
 .. list-table::
@@ -153,6 +161,14 @@ AcceptHeaderLocaleResolverの設定
     * - | (1)
       - | beanタグのid属性"localeResolver"に ``org.springframework.web.servlet.i18n.AcceptHeaderLocaleResolver`` を指定する。
         | この\ ``LocaleResolver``\ を使用すると、リクエスト毎に設定されるHTTPヘッダー(”accept-language”)に指定されているLocaleが使用される。
+    * - | (2)
+      - | デフォルトのLocaleを設定するため、\ ``defaultLocale``\ プロパティを設定する。
+        | 上記の例では、アプリケーションがサポートしていないLocaleがリクエストされた場合、Localeは"en"に設定される。
+    * - | (3)
+      - | アプリケーションがサポートするLocaleを設定するため、\ ``supportedLocales``\ プロパティを設定する。
+        | リクエストが要求するLocaleと、サポートするLocaleが一致する場合はそのLocaleが使用される。
+        | 国と言語を組み合わせたLocale（例：ja_JP）が要求され、サポートするLocaleと一致しない場合、対応する言語のみのLocale（例：ja）で一致を確認する。
+        | 上記の例では、アプリケーションがサポートするLocaleとして、"en"と"ja"を指定している。
 
 .. note::
 
@@ -304,7 +320,7 @@ LocaleChangeInterceptorの設定
       - | 説明
     * - | (1)
       - | Spring MVCのインタセプターに、 ``org.springframework.web.servlet.i18n.LocaleChangeInterceptor`` を定義する。
-        | この設定により、"リクエストURL?locale=xx"で :ref:`使用可能<i18n_set_locale_jsp>` となる。
+        | この設定により、"リクエストURL?locale=xx"で :ref:`使用可能<i18n_set_locale_view>` となる。
 
 .. note::
 
@@ -327,6 +343,14 @@ LocaleChangeInterceptorの設定
           - | 説明
         * - | (2)
           - | \ ``paramName``\ プロパティにリクエストパラメータ名を指定する。上記例では、"リクエストURL?lang=xx"となる。
+
+.. note::
+
+    リクエストパラメータにLocaleとして不正な値が指定された場合は例外がスローされる。
+    例外とせず、リクエストパラメータによるLocaleの設定をスキップしたい場合は\ ``ignoreInvalidLocale``\プロパティに\ ``true``\を指定すれば良い。
+    これによりLocaleの設定がスキップされた場合は、\ ``LocaleResolver``\で指定されたデフォルトのロケールが使用される。
+
+    なお、\ ``LocaleChangeInterceptor``\には\ ``AcceptHeaderLocaleResolver``\の\ ``supportedLocales``\のように、サポートするLocaleを限定する仕組みはない。
 
 |
 
@@ -422,7 +446,7 @@ Localeをクライアントに保存する場合は、\ ``CookieLocaleResolver``
 
 |
 
-.. _i18n_set_locale_jsp:
+.. _i18n_set_locale_view:
 
 JSPの実装
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""

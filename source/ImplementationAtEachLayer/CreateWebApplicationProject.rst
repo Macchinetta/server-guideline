@@ -97,7 +97,7 @@ Webアプリケーション向け開発プロジェクトの作成
     mvn archetype:generate -B^
      -DarchetypeGroupId=com.github.macchinetta.blank^
      -DarchetypeArtifactId=macchinetta-multi-web-blank-archetype^
-     -DarchetypeVersion=1.5.1.RELEASE^
+     -DarchetypeVersion=1.5.2.RELEASE^
      -DgroupId=com.example.todo^
      -DartifactId=todo^
      -Dversion=1.0.0-SNAPSHOT
@@ -144,7 +144,7 @@ Webアプリケーション向け開発プロジェクトの作成
 
     (... omit)
     [INFO] ----------------------------------------------------------------------------
-    [INFO] Using following parameters for creating project from Archetype: macchinetta-multi-web-blank-archetype:1.5.1.RELEASE
+    [INFO] Using following parameters for creating project from Archetype: macchinetta-multi-web-blank-archetype:1.5.2.RELEASE
     [INFO] ----------------------------------------------------------------------------
     [INFO] Parameter: groupId, Value: com.example.todo
     [INFO] Parameter: artifactId, Value: todo
@@ -752,7 +752,7 @@ Maven Archetypeで作成したプロジェクトでは、インメモリデー�
 
             <!-- ... -->
 
-            <postgresql.version>9.4.1212</postgresql.version>
+            <postgresql.version>42.2.5.jre7</postgresql.version>
             <ojdbc.version>12.1.0.2</ojdbc.version>
 
     * ``artifactId/artifactId-web/pom.xml``
@@ -1314,6 +1314,13 @@ domainモジュールの構成
       - Spring FrameworkのBean定義ファイルとプロパティファイルを格納するディレクトリ。
     * - | (5)
       - コードリストを定義するためのBean定義ファイル。
+
+        .. note::
+
+            大量にコードリストを定義する場合は、Bean定義ファイルを複数用意し、コードリストが使用される業務ごとやコードリストが使用されるレイヤごとなどの観点で分類してもよい。
+
+            たとえば、アプリケーション層（画面）のみで使用するコードリストをwebモジュールのartifactId-web-codelist.xmlに定義し、ドメイン層でも使用するコードリストをdomainモジュールのartifactId-domain-codelist.xmlに定義するといった方法が考えられる。
+
     * - | (6)
       - ドメイン層のコンポーネントを定義するためのBean定義ファイル。
 
@@ -1540,7 +1547,7 @@ initdbモジュールの構成
       - データベースを初期化するためのSQLファイルを格納するためのディレクトリ。
 
         作成時点では、空のディレクトリである。
-        作成例については、`サンプルアプリケーションのinitdbプロジェクト <https://github.com/terasolunaorg/terasoluna-tourreservation-mybatis3/tree/5.4.1.RELEASE/terasoluna-tourreservation-initdb/src/main/sqls>`_ を参照されたい。
+        作成例については、`サンプルアプリケーションのinitdbプロジェクト <https://github.com/terasolunaorg/terasoluna-tourreservation-mybatis3/tree/5.4.2.RELEASE/terasoluna-tourreservation-initdb/src/main/sqls>`_ を参照されたい。
 
 .. note::
 
@@ -1596,7 +1603,7 @@ Seleniumを使用したE2E(End To End)テスト用のコンポーネントを管
     * - | (2)
       - テスト用のコンポーネントと設定ファイルを格納するディレクトリ。
 
-        作成例については、`サンプルアプリケーションのseleniumプロジェクト <https://github.com/terasolunaorg/terasoluna-tourreservation-mybatis3/tree/5.4.1.RELEASE/terasoluna-tourreservation-selenium>`_ を参照されたい。
+        作成例については、`サンプルアプリケーションのseleniumプロジェクト <https://github.com/terasolunaorg/terasoluna-tourreservation-mybatis3/tree/5.4.2.RELEASE/terasoluna-tourreservation-selenium>`_ を参照されたい。
 
     * - | (3)
       - Selenium WebDriverを使用したサンプルテストクラス。
@@ -1644,8 +1651,8 @@ Maven Archetypeで作成したプロジェクトのプロジェクト階層の�
         Maven Archetypeで作成したプロジェクトはマルチモジュール構成となっており、
         親プロジェクトと各サブモジュールは相互参照の関係になっている。
 
-        version 1.5.1.RELEASE用のMaven Archetypeで作成したプロジェクトでは、
-        親プロジェクトとして「org.terasoluna.gfw:terasoluna-gfw-parent:5.4.1.RELEASE」を指定している。
+        version 1.5.2.RELEASE用のMaven Archetypeで作成したプロジェクトでは、
+        親プロジェクトとして「org.terasoluna.gfw:terasoluna-gfw-parent:5.4.2.RELEASE」を指定している。
     * - | (2)
       - TERASOLUNA Server Framework for Java (5.x) Parentプロジェクト。
 
@@ -1663,11 +1670,11 @@ Maven Archetypeで作成したプロジェクトのプロジェクト階層の�
     * - | (3)
       - Spring IO Platformプロジェクト。
 
-        親プロジェクトとして「org.springframework.boot:spring-boot-starter-parent:1.2.5.RELEASE」が指定されているため、spring-boot-starter-parentのpomファイルに定義されている\ ``<dependencyManagement>``\ の定義も、terasoluna-gfw-parentのpomファイルにインポートされる。
+        親プロジェクトとして「org.springframework.boot:spring-boot-starter-parent:1.5.20.RELEASE」が指定されているため、spring-boot-starter-parentのpomファイルに定義されている\ ``<dependencyManagement>``\ の定義も、terasoluna-gfw-parentのpomファイルにインポートされる。
     * - | (4)
       - Spring Boot Starter Parentプロジェクト。
 
-        親プロジェクトとして「org.springframework.boot:spring-boot-dependencies:1.2.5.RELEASE」が指定されているため、spring-boot-dependenciesのpomファイルに定義されている\ ``<dependencyManagement>``\の定義も、terasoluna-gfw-parentのpomファイルにインポートされる。
+        親プロジェクトとして「org.springframework.boot:spring-boot-dependencies:1.5.20.RELEASE」が指定されているため、spring-boot-dependenciesのpomファイルに定義されている\ ``<dependencyManagement>``\の定義も、terasoluna-gfw-parentのpomファイルにインポートされる。
     * - | (5)
       - Spring Boot Dependenciesプロジェクト。
 
@@ -1677,17 +1684,17 @@ Maven Archetypeで作成したプロジェクトのプロジェクト階層の�
 
 .. tip::
 
-    version 5.0.0.RELEASEより、Spring IO Platformの\ ``<dependencyManagement>``\ をインポートする構成に変更しており、
+    version 1.1.0.RELEASEより、Spring IO Platformの\ ``<dependencyManagement>``\ をインポートする構成に変更しており、
     推奨ライブラリのバージョン管理をSpring IO Platformに委譲するスタイルを採用している。
 
 .. warning::
 
-    version 5.0.0.RELEASEより、Spring IO Platformの\ ``<dependencyManagement>``\ をインポートする構成に変更したため、
+    version 1.1.0.RELEASEより、Spring IO Platformの\ ``<dependencyManagement>``\ をインポートする構成に変更したため、
     子プロジェクトからライブラリのバージョンを管理するためのプロパティにアクセスする事が出来なくなっている。
 
     そのため、子プロジェクト側でプロパティ値を参照又は上書きしている場合は、version 1.0.xからバージョンアップする際にpomファイルの修正が必要になる。
 
-    なお、Spring IO Platformで管理していない推奨ライブラリ(TERASOLUNA Server Framework for Java (5.x)独自の推奨ライブラリ)については、
+    なお、Spring IO Platformで管理していない推奨ライブラリ(Macchinetta Server Framework (1.x)独自の推奨ライブラリ)については、
     従来通りバージョンを管理するためのプロパティにアクセスする事ができる。
 
 
@@ -1756,22 +1763,6 @@ Spring Frameworkのアプリケーションコンテキスト(DIコンテナ)の
 
     なお、Maven Archetypeで作成したプロジェクトでは、上記のような現象は発生しないように設定が行われている。
     設定の追加又は変更を行う場合は、注意してほしい。
-
-|
-
-.. _CreateWebApplicationProjectAppendixDescribeConfigurationFile:
-
-設定ファイルの解説
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-.. todo::
-
-    各種設定が意味することの理解度を高めるために、設定ファイルの解説を追加する予定である。
-
-    * 機能詳細に説明があるものについては、機能詳細への参照を記載する。
-    * 機能詳細に記載がないものについては、ここに説明を記載する。
-
-    具体的な対応時期は未定。
 
 |
 

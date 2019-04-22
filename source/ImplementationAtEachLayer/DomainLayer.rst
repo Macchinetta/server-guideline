@@ -1237,7 +1237,7 @@ Serviceクラスを作成する際の注意点を、以下に示す。
 
     #. AOPを使う場合に、JDK標準のDynamic proxies機能が使われる。
        インタフェースがない場合はSpring Frameworkに内包されているCGLIBが使われるが、finalメソッドに対してAdviceできないなどの制約がある。
-       詳細は、\ `Spring Reference Document -Aspect Oriented Programming with Spring(Proxying mechanisms)- <http://docs.spring.io/spring/docs/4.3.14.RELEASE/spring-framework-reference/html/aop.html#aop-proxying>`_\ を参照されたい。
+       詳細は、\ `Spring Reference Document -Aspect Oriented Programming with Spring(Proxying mechanisms)- <https://docs.spring.io/spring/docs/4.3.23.RELEASE/spring-framework-reference/html/aop.html#aop-proxying>`_\ を参照されたい。
     #. 業務ロジックをスタブ化しやすくなる。
        アプリケーション層とドメイン層を別々の体制で並行して開発する場合は、アプリケーション層を開発するために、Serviceのスタブが必要になるケースがある。
        スタブを作成する必要がある場合は、インタフェースを設けておくことを推奨する。
@@ -1717,7 +1717,7 @@ ServiceおよびSharedServiceでは、アプリケーションで使用する業
 * XML(bean定義ファイル)で宣言する。
 * **アノテーション（@Transactional）で宣言する。（推奨）**
 
-Spring Frameworkから提供されている「宣言型トランザクション管理」の詳細については、\ `Spring Reference Document -Transaction Management(Declarative transaction management)- <http://docs.spring.io/spring/docs/4.3.14.RELEASE/spring-framework-reference/html/transaction.html#transaction-declarative>`_\ を参照されたい。
+Spring Frameworkから提供されている「宣言型トランザクション管理」の詳細については、\ `Spring Reference Document -Transaction Management(Declarative transaction management)- <https://docs.spring.io/spring/docs/4.3.23.RELEASE/spring-framework-reference/html/transaction.html#transaction-declarative>`_\ を参照されたい。
 \
 
  .. note:: **「アノテーションで指定する」方法を推奨する理由**
@@ -1833,7 +1833,7 @@ Spring Frameworkから提供されている「宣言型トランザクション�
 
     **クラスまたはクラスのメソッドに指定することを推奨する。**
     インタフェースまたはインタフェースのメソッドでない点が、ポイント。
-    理由は、\ `Spring Reference Document -Transaction Management(Using @Transactional)- <http://docs.spring.io/spring/docs/4.3.14.RELEASE/spring-framework-reference/html/transaction.html#transaction-declarative-annotations>`_\ の2個目のTipsを参照されたい。
+    理由は、\ `Spring Reference Document -Transaction Management(Using @Transactional)- <https://docs.spring.io/spring/docs/4.3.23.RELEASE/spring-framework-reference/html/transaction.html#transaction-declarative-annotations>`_\ の2個目のTipsを参照されたい。
 
  .. warning:: **例外発生時のrollbackとcommitのデフォルト動作**
 
@@ -1846,7 +1846,7 @@ Spring Frameworkから提供されている「宣言型トランザクション�
 
     \ ``@Transactional``\ アノテーションにはvalue属性があるが、これは複数のTransaction Managerを宣言した際に、どのTransaction Managerを使うのかを指定する属性である。
     Transaction Managerが一つの場合、指定は不要である。
-    複数のTransaction Managerを使う必要がある場合は、\ `Spring Reference Document -Transaction Management(Multiple Transaction Managers with @Transactional)- <http://docs.spring.io/spring/docs/4.3.14.RELEASE/spring-framework-reference/html/transaction.html#tx-multiple-tx-mgrs-with-attransactional>`_\ を参照されたい。
+    複数のTransaction Managerを使う必要がある場合は、\ `Spring Reference Document -Transaction Management(Multiple Transaction Managers with @Transactional)- <https://docs.spring.io/spring/docs/4.3.23.RELEASE/spring-framework-reference/html/transaction.html#tx-multiple-tx-mgrs-with-attransactional>`_\ を参照されたい。
 
  .. note:: **主要DBのisolationのデフォルトについて**
 
@@ -2093,7 +2093,7 @@ PlatformTransactionManagerの設定
 
     IBM DeveloperWorksに「トランザクションの落とし穴を理解する」という記事がある。
     この記事ではトランザクション管理で注意しなくてはいけないことや、Spring Frameworkの@Transactionalを使う場合の注意点がまとめられているので、ぜひ一読してほしい。
-    詳細は、\ `IBM DeveloperWorksの記事 <http://www.ibm.com/developerworks/java/library/j-ts1/index.html>`_\ を参照されたい。
+    詳細は、\ `IBM DeveloperWorksの記事 <https://www.ibm.com/developerworks/library/j-ts1/index.html>`_\ を参照されたい。
 
     ※IBM DeveloperWorksの記事は2009年の記事のため(古いため)、一部の内容がSpring Framework 4.1使用時の動作と異なる部分がある。
 
@@ -2108,7 +2108,7 @@ PlatformTransactionManagerの設定
  .. note:: **プログラマティックにトランザクションを管理する方法**
 
     本ガイドラインでは、「宣言型トランザクション管理」を推奨しているが、プログラマティックにトランザクションを管理することもできる。
-    詳細については、\ `Spring Reference Document -Transaction Management(Programmatic transaction management)- <http://docs.spring.io/spring/docs/4.3.14.RELEASE/spring-framework-reference/html/transaction.html#transaction-programmatic>`_\ を参照されたい。
+    詳細については、\ `Spring Reference Document -Transaction Management(Programmatic transaction management)- <https://docs.spring.io/spring/docs/4.3.23.RELEASE/spring-framework-reference/html/transaction.html#transaction-programmatic>`_\ を参照されたい。
 
 
 <tx:annotation-driven>要素の属性について

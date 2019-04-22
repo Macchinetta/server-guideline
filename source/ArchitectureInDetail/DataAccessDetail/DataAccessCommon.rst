@@ -8,15 +8,6 @@
     :depth: 3
 
 
-.. todo::
-
-    **TBD**
-
-    本章では以下の内容について、現在精査中である。
-
-    * | 複数データソースについて
-      | 具体的な内容は、\ :ref:`Overviewの複数データソースについて <data-access-common_todo_multiple_datasource_overview>`\ および\ :ref:`How to extendsの複数データソースを使用するための設定 <data-access-common_todo_multiple_datasource_howtoextends>`\ を参照されたい。
-
 .. _data_access_overview-label:
 
 Overview
@@ -64,26 +55,26 @@ JDBC DataSourceについて
       - アプリケーションサーバ
       - 参照ページ
     * - 1.
+      - Apache Tomcat 9.0
+      - | \ `Apache Tomcat 9.0 User Guide(The Tomcat JDBC Connection Pool) <http://tomcat.apache.org/tomcat-9.0-doc/jdbc-pool.html>`_\ を参照されたい。
+        | \ `Apache Tomcat 9.0 User Guide(JNDI Datasource HOW-TO) <http://tomcat.apache.org/tomcat-9.0-doc/jndi-datasource-examples-howto.html>`_\ (Apache Commons DBCP 2)を参照されたい。
+    * - 2.
       - Apache Tomcat 8.5
       - | \ `Apache Tomcat 8.5 User Guide(The Tomcat JDBC Connection Pool) <http://tomcat.apache.org/tomcat-8.5-doc/jdbc-pool.html>`_\ を参照されたい。
         | \ `Apache Tomcat 8.5 User Guide(JNDI Datasource HOW-TO) <http://tomcat.apache.org/tomcat-8.5-doc/jndi-datasource-examples-howto.html>`_\ (Apache Commons DBCP 2)を参照されたい。
-    * - 2.
-      - Apache Tomcat 8.0
-      - | \ `Apache Tomcat 8.0 User Guide(The Tomcat JDBC Connection Pool) <http://tomcat.apache.org/tomcat-8.0-doc/jdbc-pool.html>`_\ を参照されたい。
-        | \ `Apache Tomcat 8.0 User Guide(JNDI Datasource HOW-TO) <http://tomcat.apache.org/tomcat-8.0-doc/jndi-datasource-examples-howto.html>`_\ (Apache Commons DBCP 2)を参照されたい。
     * - 3.
       - Apache Tomcat 7
       - | \ `Apache Tomcat 7 User Guide(The Tomcat JDBC Connection Pool) <http://tomcat.apache.org/tomcat-7.0-doc/jdbc-pool.html>`_\ を参照されたい。
         | \ `Apache Tomcat 7 User Guide(JNDI Datasource HOW-TO) <http://tomcat.apache.org/tomcat-7.0-doc/jndi-datasource-examples-howto.html>`_\ (Apache Commons DBCP)を参照されたい。
     * - 4.
       - Oracle WebLogic Server 12c
-      - \ `Oracle WebLogic Server Product Documentation <http://docs.oracle.com/middleware/1221/wls/INTRO/jdbc.htm>`_\ を参照されたい。
+      - \ `Oracle WebLogic Server Product Documentation <https://docs.oracle.com/middleware/12213/wls/INTRO/jdbc.htm#INTRO215>`_\ を参照されたい。
     * - 5.
       - IBM WebSphere Application Server Version 9.0
       - \ `WebSphere Application Server Online information center <http://www.ibm.com/support/knowledgecenter/ja/SSEQTP_9.0.0/com.ibm.websphere.wlp.doc/ae/twlp_dep_configuring_ds.html>`_\ を参照されたい。
     * - 6.
-      - JBoss Enterprise Application Platform 7.0
-      - \ `JBoss Enterprise Application Platform 7.0 Product Documentation <https://access.redhat.com/documentation/en/red-hat-jboss-enterprise-application-platform/7.0/paged/configuration-guide/chapter-13-datasource-management>`_\ を参照されたい。
+      - JBoss Enterprise Application Platform 7.2
+      - \ `JBoss Enterprise Application Platform 7.2 Product Documentation <https://access.redhat.com/documentation/en-us/red_hat_jboss_enterprise_application_platform/7.2/html/configuration_guide/datasource_management>`_\ を参照されたい。
     * - 7.
       - JBoss Enterprise Application Platform 6.4
       - \ `JBoss Enterprise Application Platform 6.4 Product Documentation <https://access.redhat.com/documentation/en-US/JBoss_Enterprise_Application_Platform/6.4/html/Administration_and_Configuration_Guide/chap-Datasource_Management.html>`_\ を参照されたい。
@@ -223,13 +214,6 @@ Spring Framework提供のJDBCデータソース
 
  .. _data-access-common_todo_multiple_datasource_overview:
 
- .. todo::
-
-    **TBD**
-
-    今後、以下の内容を追加する予定である。
-
-    * 概念レベルのイメージ図
 
 
 共通ライブラリから提供しているクラスについて
@@ -253,7 +237,7 @@ How to use
 アプリケーションサーバで定義したDataSourceを使用する場合の設定
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 | アプリケーションサーバで定義したデータソースを使用する場合は、Bean定義ファイルに、JNDI経由で取得したオブジェクトを、beanとして登録するための設定を行う必要がある。
-| 以下に、データベースはPostgreSQL、アプリケーションサーバはTomcat7を使用する際の、設定例を示す。
+| 以下に、データベースはPostgreSQL、アプリケーションサーバはTomcat8.5を使用する際の、設定例を示す。
 
 - :file:`xxx-context.xml` (Tomcatの設定ファイル)
 
@@ -310,8 +294,8 @@ How to use
       - 自動コミットフラグのデフォルト値を指定する。falseを指定する。トランザクション管理下であれば強制的にfalseになる。
     * - | (2)
       - \-
-      - | Tomcat7の場合、factory属性を省略するとtomcat-jdbc-poolが使用される。
-        | 設定項目の詳細については、\ `Attributes of The Tomcat JDBC Connection Pool <http://tomcat.apache.org/tomcat-7.0-doc/jdbc-pool.html#Attributes>`_\ を参照されたい。
+      - | Tomcat8.5の場合、factory属性を省略するとtomcat-jdbc-poolが使用される。
+        | 設定項目の詳細については、\ `Attributes of The Tomcat JDBC Connection Pool <http://tomcat.apache.org/tomcat-8.5-doc/jdbc-pool.html#Attributes>`_\ を参照されたい。
     * - | (3)
       - \-
       - データソースのJNDI名を指定する。Tomcatの場合は、データソース定義時のリソース名「(1)-name」に指定した値を指定する。
@@ -361,7 +345,7 @@ Bean定義したDataSourceを使用する場合の設定
         | 設定項目の詳細については、\ `DBCP Configuration <http://commons.apache.org/proper/commons-dbcp/configuration.html>`_\ を参照されたい。
     * - | (8)
       - | 設定例では値を直接指定しているが、環境によって設定値がかわる項目については、Placeholder(${...})を使用して、実際の設定値はプロパティファイルに指定すること。
-        | Placeholderについては、\ `Spring Reference Document <http://docs.spring.io/spring/docs/4.3.14.RELEASE/spring-framework-reference/html/beans.html#beans-factory-extension-factory-postprocessors>`_\ の\  ``PropertyPlaceholderConfigurer``\ を参照されたい。
+        | Placeholderについては、\ `Spring Reference Document <https://docs.spring.io/spring/docs/4.3.23.RELEASE/spring-framework-reference/html/beans.html#beans-factory-extension-factory-postprocessors>`_\ の\  ``PropertyPlaceholderConfigurer``\ を参照されたい。
 
 
 トランザクション管理を有効化するための設定
@@ -398,10 +382,10 @@ log4jdbc提供のデータソースの設定
 
  .. code-block:: xml
 
-    <jee:jndi-lookup id="dataSourceSpied" jndi-name="jdbc/SampleDataSource" /> <!-- (1) -->
+    <jee:jndi-lookup id="realDataSource" jndi-name="jdbc/SampleDataSource" /> <!-- (1) -->
 
     <bean id="dataSource" class="net.sf.log4jdbc.Log4jdbcProxyDataSource"> <!-- (2) -->
-        <constructor-arg ref="dataSourceSpied" /> <!-- (3) -->
+        <constructor-arg ref="realDataSource" /> <!-- (3) -->
     </bean>
 
  .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
@@ -422,7 +406,7 @@ log4jdbc提供のデータソースの設定
 
     **性能試験及び商用環境にリリースする場合、データソースとしてLog4jdbcProxyDataSourceは使用しないこと。**
 
-    具体的には、(2)と(3)の設定を外し、\ ``dataSourceSpied``\ のbean名を\ ``dataSource``\ に変更する。
+    具体的には、(2)と(3)の設定を外し、\ ``realDataSource``\ のbean名を\ ``dataSource``\ に変更する。
 
 
 log4jdbc用ロガーの設定
@@ -524,18 +508,6 @@ How to extend
 --------------------------------------------------------------------------------
 
 .. _data-access-common_todo_multiple_datasource_howtoextends:
-
-複数データソースを使用するための設定
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
- .. todo::
-
-    **TBD**
-
-    今後、以下の内容を追加する予定である。
-
-    * 処理パターン（複数のデータソースに対して更新あり、更新は１つのデータソース、参照のみ、同時アクセスはなしなど）によってトランザクション管理の方法がかわると思うので、その辺りを中心にブレークダウンする予定である。
-
 
 動的にデータソースを切り替えるための設定
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

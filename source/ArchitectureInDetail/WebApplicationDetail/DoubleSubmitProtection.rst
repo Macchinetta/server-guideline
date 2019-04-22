@@ -213,11 +213,6 @@ Solutions
    AjaxとWebサービスでは、リクエスト毎に変更されるトランザクショントークンの受け渡しを行いにくいため、トランザクショントークンチェックを使用しなくてよい。
    Ajaxの場合は、JavaScriptによるボタンの2度押し防止のみで二重送信防止を行う。
 
- .. todo::
- 
-    **TBD**
-
-    AjaxとWebサービスでのチェック方法は、今後検討の余地あり。
 
 
 JavaScriptによるボタンの2度押し防止について
@@ -533,12 +528,6 @@ JavaScriptによるボタンの2度押し防止の適用
 
 | クライアントでのボタンの二重クリック防止は、JavaScriptで実現することになる。
 | ボタンをクリックした後は、再描画するまでクリックできないようにする。
-
- .. todo::
- 
-    **TBD**
-    
-    JavaScriptでのチェック方法については、次版以降で詳細化する予定である。
 
 PRG(Post-Redirect-Get)パターンの適用
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -1639,7 +1628,7 @@ HTTPレスポンスヘッダの\ ``Cache-Control``\ の設定により、ブラ�
    :width: 60%
 
 この場合でも二重送信自体は防止されているため、問題はない。
-バージョン5.0.0.RELEASE以降の\ :doc:`雛形プロジェクト <../../ImplementationAtEachLayer/CreateWebApplicationProject>`\ では、
+バージョン1.5.0.RELEASE以降の\ :doc:`雛形プロジェクト <../../ImplementationAtEachLayer/CreateWebApplicationProject>`\ では、
 \ :ref:`Spring Securityの機能 <SpringSecurityLinkageWithBrowser>`\ でキャッシュが無効になる設定が行われている。
 
 もしこの画面の表示が出る代わりにトランザクショントークンエラー画面を表示したい場合は、

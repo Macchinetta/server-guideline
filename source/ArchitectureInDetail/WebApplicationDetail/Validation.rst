@@ -38,11 +38,6 @@ Webアプリケーションの入力チェックには、サーバサイドで�
   クライアントサイドのみでチェックを行い、サーバーサイドでチェックを省略した場合は、システムが危険な状態に晒されていることになる。
 
 
-.. todo::
-
-  クライアントサイドの入力チェックについては今後追記する。初版では、サーバーサイドの入力チェックのみ言及する。
-
-
 入力チェックの分類
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -67,7 +62,7 @@ Webアプリケーションの入力チェックには、サーバサイドで�
    * - 相関項目チェック
      - | 複数のフィールドを比較するチェック
      - | パスワードと確認用パスワードの一致チェック
-     - | `org.springframework.validation.Validator <http://docs.spring.io/spring/docs/4.3.14.RELEASE/spring-framework-reference/html/validation.html#validator>`_\ インタフェースを実装したValidationクラス
+     - | `org.springframework.validation.Validator <https://docs.spring.io/spring/docs/4.3.23.RELEASE/spring-framework-reference/html/validation.html#validator>`_\ インタフェースを実装したValidationクラス
        | または Bean Validation
 
 
@@ -610,7 +605,7 @@ NameとEmailが空文字であることに対するエラーメッセージと�
 
 .. note:: **@GroupSequenceアノテーションについて**
 
-   チェック順番を制御するための仕組みとして\ `@GroupSequenceアノテーション <http://docs.jboss.org/hibernate/validator/5.2/reference/en-US/html/ch05.html#section-default-group-class>`_\ が提供されているが、
+   チェック順番を制御するための仕組みとして\ `@GroupSequenceアノテーション <http://docs.jboss.org/hibernate/validator/5.3/reference/en-US/html/ch05.html#section-default-group-class>`_\ が提供されているが、
    この仕組みは以下のような動作になるため、エラーメッセージの出力順序を制御するための仕組みではないという点を補足しておく。
 
    * エラーが発生した場合に後続のグループのチェックが実行されない。
@@ -2177,7 +2172,7 @@ Bean Validationによって、相関項目チェックの実装するために�
 Spring MVCによるBean Validationのエラーメッセージは、以下の順で解決される。
 
 #. | \ ``org.springframework.context.MessageSource``\ に定義されているメッセージの中に、ルールに合致するものがあればそれをエラーメッセージとして使用する (Springのルール)。
-   | Springのデフォルトのルールについては、「`DefaultMessageCodesResolverのJavaDoc <http://docs.spring.io/spring/docs/4.3.14.RELEASE/javadoc-api/org/springframework/validation/DefaultMessageCodesResolver.html>`_」を参照されたい。
+   | Springのデフォルトのルールについては、「`DefaultMessageCodesResolverのJavaDoc <https://docs.spring.io/spring/docs/4.3.23.RELEASE/javadoc-api/org/springframework/validation/DefaultMessageCodesResolver.html>`_」を参照されたい。
 #. 1.でメッセージが見つからない場合、アノテーションの\ ``message``\ 属性に、指定されたメッセージからエラーメッセージを取得する (Bean Validationのルール)
 
   #. \ ``message``\ 属性に指定されたメッセージが、"{メッセージキー}"形式でない場合、そのテキストをエラーメッセージとして使用する。
@@ -2410,7 +2405,7 @@ Bean Validationのアノテーションの\ ``message``\ 属性に指定され�
             後者は\ ``@DecimalMax``\ アノテーションの \ ``inclusive``\ 属性に \ ``false``\ を指定した場合に生成される。
 
             Bean ValidationにおけるEL式の扱いについては、
-            \ `Hibernate Validator Reference Guide(Interpolation with message expressions) <http://docs.jboss.org/hibernate/validator/5.2/reference/en-US/html/ch04.html#section-interpolation-with-message-expressions>`_\ を参照されたい。
+            \ `Hibernate Validator Reference Guide(Interpolation with message expressions) <http://docs.jboss.org/hibernate/validator/5.3/reference/en-US/html/ch04.html#section-interpolation-with-message-expressions>`_\ を参照されたい。
 
     また、:file:`ValidationMessages.properties` に指定するメッセージに \ ``${validatedValue}``\ を使用することで、エラーメッセージにチェック対象の値を含むことができる。
 
@@ -2437,7 +2432,7 @@ Bean Validationのアノテーションの\ ``message``\ 属性に指定され�
           - 上記のメッセージ定義から実際に生成されるメッセージは、 \ ``${validatedValue}``\ の部分にフォームに入力した値が埋め込まれる。
             入力値に機密情報を含む場合、機密情報がメッセージに表示されないようにするため、 \ ``${validatedValue}``\ を使用しないように注意すること。
 
-            詳細については、\ `Hibernate Validator Reference Guide(Interpolation with message expressions) <http://docs.jboss.org/hibernate/validator/5.2/reference/en-US/html/ch04.html#section-interpolation-with-message-expressions>`_\ を参照されたい。
+            詳細については、\ `Hibernate Validator Reference Guide(Interpolation with message expressions) <http://docs.jboss.org/hibernate/validator/5.3/reference/en-US/html/ch04.html#section-interpolation-with-message-expressions>`_\ を参照されたい。
 
 
 .. _Validation_message_in_application_messages:
@@ -2484,7 +2479,7 @@ ValidationMessages.propertiesでシステムが利用するデフォルトのメ
 * \ ``{2}``\  : \ ``min``\ 属性の値
 
 となる。
-仕様の詳細については \ `SpringValidatorAdapterのJavaDoc <http://docs.spring.io/spring/docs/4.3.14.RELEASE/javadoc-api/org/springframework/validation/beanvalidation/SpringValidatorAdapter.html#getArgumentsForConstraint-java.lang.String-java.lang.String-javax.validation.metadata.ConstraintDescriptor->`_\
+仕様の詳細については \ `SpringValidatorAdapterのJavaDoc <https://docs.spring.io/spring/docs/4.3.23.RELEASE/javadoc-api/org/springframework/validation/beanvalidation/SpringValidatorAdapter.html#getArgumentsForConstraint-java.lang.String-java.lang.String-javax.validation.metadata.ConstraintDescriptor->`_\
 を参照されたい。
 
 エラーメッセージは以下のように変更される。
@@ -2495,7 +2490,7 @@ ValidationMessages.propertiesでシステムが利用するデフォルトのメ
 
 .. note::
 
-  application-messages.propertiesのメッセージキーの形式は、\ `これ以外にも用意されている <http://docs.spring.io/spring/docs/4.3.14.RELEASE/javadoc-api/org/springframework/validation/DefaultMessageCodesResolver.html>`_\ が、
+  application-messages.propertiesのメッセージキーの形式は、\ `これ以外にも用意されている <https://docs.spring.io/spring/docs/4.3.23.RELEASE/javadoc-api/org/springframework/validation/DefaultMessageCodesResolver.html>`_\ が、
   デフォルトメッセージを一部上書きする目的で使用するのであれば、基本的に、\ ``アノテーション名.フォーム属性名.プロパティ名``\ 形式でよい。
 
 |
@@ -2544,7 +2539,7 @@ Bean Validationは標準で用意されているチェックルール以外に�
       @Target({ METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER })
       @Retention(RUNTIME)
       @Documented
-      public @interface List {
+      @interface List {
           Xxx[] value();
       }
   }
@@ -2614,7 +2609,7 @@ Bean Validationは標準で用意されているチェックルール以外に�
         @Target({ METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER })
         @Retention(RUNTIME)
         @Documented
-        public @interface List {
+        @interface List {
             AlphaNumeric[] value();
         }
     }
@@ -2674,7 +2669,7 @@ Bean Validationは標準で用意されているチェックルール以外に�
         @Target({ METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER })
         @Retention(RUNTIME)
         @Documented
-        public @interface List {
+        @interface List {
             NotNegative[] value();
         }
     }
@@ -2720,7 +2715,7 @@ Bean Validationは標準で用意されているチェックルール以外に�
         @Target({ METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER })
         @Retention(RUNTIME)
         @Documented
-        public @interface List {
+        @interface List {
             UserId[] value();
         }
     }
@@ -2765,7 +2760,7 @@ Bean Validationは標準で用意されているチェックルール以外に�
         @Target({ METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER })
         @Retention(RUNTIME)
         @Documented
-        public @interface List {
+        @interface List {
             Age[] value();
         }
     }
@@ -2775,7 +2770,7 @@ Bean Validationは標準で用意されているチェックルール以外に�
 
     1つのアノテーションに複数のルールを設定した場合、それらのAND条件が複合ルールとなる。
     Hibernate Validatorでは、OR条件を実現するための\ ``@ConstraintComposition``\ アノテーションが用意されている。
-    詳細は、\ `Hibernate Validatorのドキュメント <http://docs.jboss.org/hibernate/validator/5.2/reference/en-US/html/ch11.html#section-boolean-constraint-composition>`_\ を参照されたい。
+    詳細は、\ `Hibernate Validatorのドキュメント <http://docs.jboss.org/hibernate/validator/5.3/reference/en-US/html/ch11.html#section-boolean-constraint-composition>`_\ を参照されたい。
 
 
 |
@@ -2818,7 +2813,7 @@ Java SE 8に対応したHibernate Validator 5.2+は、\ ``Collection``\ , \ ``Ma
 
 Java SE 8とHibernate Validator 5.2+を組み合わせることで、\ ``List<@NotNullForTypeArgument String>``\ のように、
 リスト内の型指定部分に付加できるアノテーションを作成し、コレクション内の値の入力チェックを行うことができるようになる。
-詳細は、Hibernate Validatorのドキュメント(\ `Type argument constraints <http://docs.jboss.org/hibernate/validator/5.2/reference/en-US/html_single/#type-arguments-constraints>`_\ )を参照されたい。
+詳細は、Hibernate Validatorのドキュメント(\ `Type argument constraints <http://docs.jboss.org/hibernate/validator/5.3/reference/en-US/html_single/#type-arguments-constraints>`_\ )を参照されたい。
 
 共通ライブラリが提供する\ ``@ExistInCodeList``\ は、Java SE 7互換のため\ ``TYPE_USE``\ に対応していないが、
 上記のようにリスト内の型指定部分に付加できる独自アノテーションを作成することで、コレクション内の値の入力チェックを行うことができるようになる。
@@ -2972,7 +2967,7 @@ Java Beanを使ったStringのラッパークラスによる実装
 Java SE 8とHibernate Validatorの独自機能を使用しない場合では前述したようなコレクション内の要素に対してBean Validationのアノテーションを使用することができないため、
 Java Beanで\ ``String``\ をラップし、ネストしたBeanのプロパティに対して\ ``@ExistInCodeList``\ を付加することによって入力チェックを行う。
 
-ラッパークラスに対してSpring提供のタグライブラリを使用する場合、フォームへバインドするためには文字列とラッパークラスとの型変換を実施する必要がある。これは `Springが提供している型変換の仕組み(Formatter) <http://docs.spring.io/spring/docs/4.3.14.RELEASE/spring-framework-reference/htmlsingle/#format>`_
+ラッパークラスに対してSpring提供のタグライブラリを使用する場合、フォームへバインドするためには文字列とラッパークラスとの型変換を実施する必要がある。これは `Springが提供している型変換の仕組み(Formatter) <https://docs.spring.io/spring/docs/4.3.23.RELEASE/spring-framework-reference/htmlsingle/#format>`_
 を利用して実装を行うことができる。
 
 Formatterで\ ``String``\ から\ ``Role``\ 、\ ``Role``\ から\ ``String``\ への型変換を追加することで、\ ``List<String>``\ にした時と同様に、
@@ -2996,7 +2991,7 @@ Formatterで\ ``String``\ から\ ``Role``\ 、\ ``Role``\ から\ ``String``\ �
 
 .. note::
 
-    選択済みの判定方法の詳細については実際に判定を行う\ ``org.springframework.web.servlet.tags.form.SelectedValueComparator``\クラスの `javadoc <https://github.com/spring-projects/spring-framework/blob/v4.3.14.RELEASE/spring-webmvc/src/main/java/org/springframework/web/servlet/tags/form/SelectedValueComparator.java>`__ を参照されたい。
+    選択済みの判定方法の詳細については実際に判定を行う\ ``org.springframework.web.servlet.tags.form.SelectedValueComparator``\クラスの `javadoc <https://github.com/spring-projects/spring-framework/blob/v4.3.23.RELEASE/spring-webmvc/src/main/java/org/springframework/web/servlet/tags/form/SelectedValueComparator.java>`__ を参照されたい。
 
 
 複数項目設定可能な\ ``Role``\ (Java Bean の\ ``List``\ )に対する入力チェックを例に用いて説明する。
@@ -3258,7 +3253,7 @@ Controller側では\ ``Role``\の\ ``List``\ 、JSP側では\ ``String``\ の\ `
         @Target({ METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER })
         @Retention(RUNTIME)
         @Documented
-        public @interface List {
+        @interface List {
             ISBN13[] value();
         }
     }
@@ -3394,7 +3389,7 @@ Controller側では\ ``Role``\の\ ``List``\ 、JSP側では\ ``String``\ の\ `
         @Target({ TYPE, ANNOTATION_TYPE })
         @Retention(RUNTIME)
         @Documented
-        public @interface List {
+        @interface List {
             Confirm[] value();
         }
     }
@@ -3475,7 +3470,7 @@ Controller側では\ ``Role``\の\ ``List``\ 、JSP側では\ ``String``\ の\ `
        - | 独自\ ``ConstraintViolation``\ オブジェクトを生成する。
          | \ ``ConstraintValidatorContext.buildConstraintViolationWithTemplate``\ で出力するメッセージを定義する。
          | \ ``ConstraintViolationBuilder.addPropertyNode``\ でエラーメッセージを出力したいフィールド名を指定する。
-         | 詳細は、\ `ConstraintValidatorContextのJavaDoc <http://docs.oracle.com/javaee/7/api/javax/validation/ConstraintValidatorContext.html>`_\ を参照されたい。
+         | 詳細は、\ `ConstraintValidatorContextのJavaDoc <https://docs.oracle.com/javaee/7/api/javax/validation/ConstraintValidatorContext.html>`_\ を参照されたい。
 
  .. tip::
 
@@ -3682,7 +3677,7 @@ Controller側では\ ``Role``\の\ ``List``\ 、JSP側では\ ``String``\ の\ `
         @Target({ METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER })
         @Retention(RUNTIME)
         @Documented
-        public @interface List {
+        @interface List {
             UnusedUserId[] value();
         }
     }
@@ -4136,7 +4131,7 @@ Bean Validationの制約アノテーションを指定する方法について�
     @ControllerAdvice
     public class ConstraintViolationExceptionHandler {
 
-        private static final Logger log = LoggerFactory.getLogger(ConstraintViolationExceptionHandler.class);
+        private static final Logger logger = LoggerFactory.getLogger(ConstraintViolationExceptionHandler.class);
 
         // (1)
         @ExceptionHandler
@@ -4176,7 +4171,7 @@ Bean Validationの制約アノテーションを指定する方法について�
     
     Springの機能によるメッセージ補完については、:ref:`Validation_message_in_validationmessages` のNoteを参照されたい。
     
-    \ ``ConstraintViolation``\ の詳細については、\ `Hibernate Validatorのリファレンス <http://docs.jboss.org/hibernate/validator/5.2/reference/en-US/html_single/#section-constraint-violation-methods>`_\ を参照されたい。
+    \ ``ConstraintViolation``\ の詳細については、\ `Hibernate Validatorのリファレンス <http://docs.jboss.org/hibernate/validator/5.3/reference/en-US/html_single/#section-constraint-violation-methods>`_\ を参照されたい。
     
 
 Appendix
@@ -4185,7 +4180,7 @@ Appendix
 Hibernate Validatorが用意する入力チェックルール
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 | Hibernate ValidatorはBean Validationで定義されたアノテーションに加え、独自の検証用アノテーションを提供している。
-| 検証に使用することができるアノテーションのリストは、\ `こちら <http://docs.jboss.org/hibernate/validator/5.2/reference/en-US/html/ch02.html#section-builtin-constraints>`_\ を参照されたい。
+| 検証に使用することができるアノテーションのリストは、\ `こちら <http://docs.jboss.org/hibernate/validator/5.3/reference/en-US/html/ch02.html#section-builtin-constraints>`_\ を参照されたい。
 
 .. _Validation_jsr303_doc:
 
@@ -4348,6 +4343,12 @@ Bean Validationの標準アノテーション(\ ``javax.validation.*``\ )を以�
 
      サロゲートペアを含む文字列の文字列長については、 :ref:`StringProcessingHowToGetSurrogatePairStringLength` を参照されたい。
 
+.. note::
+
+    Hibernate Validatorが提供する\ ``TimeProvider``\を実装することで、\ ``@Past``\、\ ``@Future``\の基準となる日付を変更することが出来る。
+    なお、実装した\ ``TimeProvider``\を適用するには、\ ``LocalValidatorFactoryBean``\ の継承クラスを作成し、\ ``postProcessConfiguration``\ メソッドをオーバーライドすれば良い。
+    \ ``TimeProvider``\を実装したクラスの例に関しては、\ `Hibernate Validator Reference Guide(Time providers for @Future and @Past) <http://docs.jboss.org/hibernate/validator/5.3/reference/en-US/html/ch11.html#section-time-provider>`_\ を参照されたい。
+
 
 .. _Validation_validator_list:
 
@@ -4356,7 +4357,7 @@ Hibernate Validatorのチェックルール
 
 Hibernate Validatorの代表的なアノテーション(\ ``org.hibernate.validator.constraints.*``\ )を以下に示す。
 
-詳細は、\ `Hibernate Validator仕様 <http://docs.jboss.org/hibernate/validator/5.2/reference/en-US/html/ch02.html#validator-defineconstraints-hv-constraints>`_\ を参照されたい。
+詳細は、\ `Hibernate Validator仕様 <http://docs.jboss.org/hibernate/validator/5.3/reference/en-US/html/ch02.html#validator-defineconstraints-hv-constraints>`_\ を参照されたい。
 
 .. tabularcolumns:: |p{0.15\linewidth}|p{0.30\linewidth}|p{0.30\linewidth}|p{0.25\linewidth}|
 .. list-table::
@@ -4425,14 +4426,14 @@ Hibernate Validatorの代表的なアノテーション(\ ``org.hibernate.valida
      \ ``@URL``\ にて、JVMがサポートしていないプロトコルについても妥当として検証したい場合、Hibernateから提供されている\ ``org.hibernate.validator.constraintvalidators.RegexpURLValidator``\ を使用する。
      当該クラスは\ ``@URL``\ アノテーションに対応するValidatorクラスで、URL形式であるかを正規表現で検証しており、JVMがサポートしていないプロトコルについても妥当として検証可能である。
 
-     * アプリケーション全体の\ ``@URL``\ のチェックルールを変更してもよい場合には、\ `JavaDoc <https://docs.jboss.org/hibernate/validator/5.2/api/org/hibernate/validator/constraints/URL.html>`_\ に記載されているように、
+     * アプリケーション全体の\ ``@URL``\ のチェックルールを変更してもよい場合には、\ `JavaDoc <https://docs.jboss.org/hibernate/validator/5.3/api/org/hibernate/validator/constraints/URL.html>`_\ に記載されているように、
        XMLにてValidatorクラスを\ ``RegexpURLValidator``\ に変更する。
      * 一部の項目だけに正規表現による検証を適用し、\ ``@URL``\ はデフォルトのルールを使用したい場合には、新規アノテーション、および\ ``RegexpURLValidator``\ と同様の検証を行う\ ``javax.validation.ConstraintValidator``\ 実装クラスを作成し、
        必要な項目に作成したアノテーションによる検証を適用する。
 
      など、用途に応じた適用を行えばよい。
 
-     XMLによるチェックルール変更の詳細については\ `Hibernateのリファレンス <https://docs.jboss.org/hibernate/validator/5.2/reference/en-US/html/ch07.html#section-configuration-validation-xml>`_\ を、
+     XMLによるチェックルール変更の詳細については\ `Hibernateのリファレンス <https://docs.jboss.org/hibernate/validator/5.3/reference/en-US/html/ch07.html#section-configuration-validation-xml>`_\ を、
      新規アノテーションの作成方法については、\ :ref:`Validation_implement_new_constraint`\ をそれぞれ参照されたい。
 
 .. _Validation_default_message_in_hibernate_validator:
@@ -4491,7 +4492,7 @@ hibernate-validator-<version>.jar内のorg/hibernate/validatorに、ValidationMe
 terasoluna-gfw-commonのチェックルール
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-\ `terasoluna-gfw-common <https://github.com/terasolunaorg/terasoluna-gfw/tree/5.4.1.RELEASE/terasoluna-gfw-common-libraries/terasoluna-gfw-common>`_\ が提供するアノテーション(\ ``org.terasoluna.gfw.common.codelist.*``\ )を以下に示す。
+\ `terasoluna-gfw-common <https://github.com/terasolunaorg/terasoluna-gfw/tree/5.4.2.RELEASE/terasoluna-gfw-common-libraries/terasoluna-gfw-common>`_\ が提供するアノテーション(\ ``org.terasoluna.gfw.common.codelist.*``\ )を以下に示す。
 
 .. tabularcolumns:: |p{0.15\linewidth}|p{0.30\linewidth}|p{0.30\linewidth}|p{0.25\linewidth}|
 .. list-table::
@@ -4506,6 +4507,8 @@ terasoluna-gfw-commonのチェックルール
       - | \ ``Character``\
         | \ ``CharSequence``\ の実装クラス
         | (\ ``String``\, \ ``StringBuilder``\ など)
+        | \ ``Number``\ の継承クラス
+        | (\ ``Integer``\, \ ``Long``\ など) **5.4.2から追加**
       - 値がコードリストに含まれているかどうかを検証する。
       - \ :ref:`@ExistInCodeList <codelist-validate>`\ 参照
 
@@ -4513,7 +4516,7 @@ terasoluna-gfw-commonのチェックルール
 terasoluna-gfw-codepointsのチェックルール
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-\ `terasoluna-gfw-codepoints <https://github.com/terasolunaorg/terasoluna-gfw/tree/5.4.1.RELEASE/terasoluna-gfw-common-libraries/terasoluna-gfw-codepoints>`_\ が提供するアノテーション(\ ``org.terasoluna.gfw.common.codepoints.*``\ )を以下に示す。なお、\ ``terasoluna-gfw-codepoints``\ はバージョン5.1.0.RELEASE以上で利用することができる。
+\ `terasoluna-gfw-codepoints <https://github.com/terasolunaorg/terasoluna-gfw/tree/5.4.2.RELEASE/terasoluna-gfw-common-libraries/terasoluna-gfw-codepoints>`_\ が提供するアノテーション(\ ``org.terasoluna.gfw.common.codepoints.*``\ )を以下に示す。なお、\ ``terasoluna-gfw-codepoints``\ はバージョン5.1.0.RELEASE以上で利用することができる。
 
 .. tabularcolumns:: |p{0.15\linewidth}|p{0.30\linewidth}|p{0.30\linewidth}|p{0.25\linewidth}|
 .. list-table::
@@ -4535,7 +4538,7 @@ terasoluna-gfw-codepointsのチェックルール
 terasoluna-gfw-validatorのチェックルール
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-\ `terasoluna-gfw-validator <https://github.com/terasolunaorg/terasoluna-gfw/tree/5.4.1.RELEASE/terasoluna-gfw-common-libraries/terasoluna-gfw-validator>`_\ が提供するアノテーション(\ ``org.terasoluna.gfw.common.validator.constraints.*``\ )を以下に示す。なお、\ ``terasoluna-gfw-validator``\ はバージョン5.1.0.RELEASE以上で利用することができる。
+\ `terasoluna-gfw-validator <https://github.com/terasolunaorg/terasoluna-gfw/tree/5.4.2.RELEASE/terasoluna-gfw-common-libraries/terasoluna-gfw-validator>`_\ が提供するアノテーション(\ ``org.terasoluna.gfw.common.validator.constraints.*``\ )を以下に示す。なお、\ ``terasoluna-gfw-validator``\ はバージョン5.1.0.RELEASE以上で利用することができる。
 
 .. tabularcolumns:: |p{0.15\linewidth}|p{0.30\linewidth}|p{0.30\linewidth}|p{0.25\linewidth}|
 .. list-table::
@@ -4555,7 +4558,12 @@ terasoluna-gfw-validatorのチェックルール
         | **[アノテーションの属性]**
         | \ ``long value``\  - バイト長の最小値を指定する。
         | \ ``String charset``\  - 値をバイトシーケンスに符号化する際に使用する文字セットを指定する。デフォルト値は\ ``UTF-8``\ 。
-      - \ ``@ByteMax``\ 参照
+      - .. code-block:: java
+
+             @ByteMin(value = 1,
+                     charset = "Shift_JIS")
+             private String id;
+
     * - \ ``@ByteMax``\
       - | \ ``CharSequence``\ の実装クラス
         | (\ ``String``\, \ ``StringBuilder``\ など)
@@ -4566,9 +4574,22 @@ terasoluna-gfw-validatorのチェックルール
         | \ ``String charset``\  - 値をバイトシーケンスに符号化する際に使用する文字セットを指定する。デフォルト値は\ ``UTF-8``\ 。
       - .. code-block:: java
 
-             @ByteMin(1)
-             @ByteMax(value = 100,
-                     charset = "Shift_JIS")
+             @ByteMax(100)
+             private String id;
+
+    * - \ ``@ByteSize``\
+      - | \ ``CharSequence``\ の実装クラス
+        | (\ ``String``\, \ ``StringBuilder``\ など)
+      - | 値のバイト長が最小値と最大値の範囲内であることを検証する。（**5.4.2から追加**）
+        | \ ``@ByteMin``\ と \ ``@ByteMax``\ を組み合わせて使う場合は、こちらを使うことを推奨する。
+        |
+        | **[アノテーションの属性]**
+        | \ ``long min``\  - バイト長の最小値を指定する。デフォルト値は\ ``0``\ 。
+        | \ ``long max``\  - バイト長の最大値を指定する。デフォルト値は\ ``Long.MAX_VALUE``\ 。
+        | \ ``String charset``\  - 値をバイトシーケンスに符号化する際に使用する文字セットを指定する。デフォルト値は\ ``UTF-8``\ 。
+      - .. code-block:: java
+
+             @ByteSize(min = 1, max = 100)
              private String id;
 
     * - \ ``@Compare``\
@@ -4729,6 +4750,7 @@ terasoluna-gfw-validatorのチェックルール
   # (1)
   org.terasoluna.gfw.common.validator.constraints.ByteMin.message = must be greater than or equal to {value} bytes
   org.terasoluna.gfw.common.validator.constraints.ByteMax.message = must be less than or equal to {value} bytes
+  org.terasoluna.gfw.common.validator.constraints.ByteSize.message = must be between {min} and {max} bytes
   org.terasoluna.gfw.common.validator.constraints.Compare.message = invalid combination of {left} and {right}
 
 .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
@@ -4802,7 +4824,7 @@ terasoluna-gfw-validatorのチェックルール
         @Documented
         @Target({ TYPE, ANNOTATION_TYPE })
         @Retention(RUNTIME)
-        public @interface List {
+        @interface List {
             Confirm[] value();
         }
     }
@@ -4941,7 +4963,7 @@ application-messages.propertiesに以下の定義を行った場合、
 
 .. tip::
 
-  メッセージキーのルールの詳細は、\ `DefaultMessageCodesResolverのJavadoc <http://docs.spring.io/spring/docs/4.3.14.RELEASE/javadoc-api/org/springframework/validation/DefaultMessageCodesResolver.html>`_\ を参照されたい。
+  メッセージキーのルールの詳細は、\ `DefaultMessageCodesResolverのJavadoc <https://docs.spring.io/spring/docs/4.3.23.RELEASE/javadoc-api/org/springframework/validation/DefaultMessageCodesResolver.html>`_\ を参照されたい。
 
 
 .. _Validation_string_trimmer_editor:

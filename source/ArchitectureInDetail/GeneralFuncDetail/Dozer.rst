@@ -529,6 +529,67 @@ src/main/resources/META-INF/dozerフォルダ内に、(任意の値)-mapping.xml
     1
     SourceName
 
+.. warning:: **単方向マッピングのバグについて**
+
+    同名フィールドは\ ``<mapping>``\ タグの\ ``type``\ 属性に\ ``one-way``\ を付与しても正常に単方向マッピングとならず、逆方向でもマッピングされるバグが存在する。
+    
+    具体的には、以下のように定義した場合、同名フィールドは双方向マッピングとなる。
+    
+    * 変換元のBean定義
+
+     .. code-block:: java
+    
+        public class Source {
+            private String sameNameField;
+            // omitted setter/getter
+        }
+    
+    * 変換先のBean定義
+
+     .. code-block:: java
+    
+        public class Destination {
+            private String sameNameField;
+            // omitted setter/getter
+        }
+    
+    * クラスベースでマッピング定義
+    
+     .. code-block:: xml
+    
+        <mapping type="one-way">
+            <class-a>xxx.Source</class-a>
+            <class-b>xxx.Destination</class-b>
+        </mapping>
+    
+    * 同名フィールドを\ ``<field>``\ タグを使用してマッピング定義
+    
+     .. code-block:: xml
+    
+        <mapping type="one-way">
+            <class-a>xxx.Source</class-a>
+            <class-b>xxx.Destination</class-b>
+            <field>
+                <a>sameNameField</a>
+                <b>sameNameField</b>
+            </field>
+        </mapping>
+
+    正常に単方向マッピングするためには、以下のように\ ``<field>``\ タグの\ ``type``\ 属性に\ ``one-way``\ を付与する必要がある。
+    
+     .. code-block:: xml
+    
+        <mapping>
+            <class-a>xxx.Source</class-a>
+            <class-b>xxx.Destination</class-b>
+            <field type="one-way">
+                <a>sameNameField</a>
+                <b>sameNameField</b>
+            </field>
+        </mapping>
+
+    なお、このバグはMacchinetta Server Framework for Java 1.7.0.RELEASEが依存するDozer 6.4.1では、既に修正されている。
+
 .. _beanconverter-custom-converter-label:
 
 
@@ -1052,33 +1113,15 @@ Dozerは、以下のCollectionタイプの双方向自動マッピングをサ�
    Dozerでは、Genericsを使用しないリスト間でもマッピングできる。このとき、変換元と変換先に含まれているオブジェクトのデータ型をHINTとして指定できる。
    詳細は、 `Dozerの公式マニュアル -Collection and Array Mapping(Using Hints for Collection Mapping)- <http://dozer.sourceforge.net/documentation/collectionandarraymapping.html#Using_Hints_for_Collection_Mapping>`_ を参照されたい。
 
-.. todo::
-
-    Collection<T>を使用したBean間のマッピングは失敗することが確認されている。
-
-    例 :
-
-        .. code-block:: java
-        
-            public class ListNestedBean<T> {
-               private List<T> nest;
-               // omitted other declarations
-            }
-
-     実行結果 :
-     
-        .. code-block:: console
-        
-            java.lang.ClassCastException: sun.reflect.generics.reflectiveObjects.TypeVariableImpl cannot be cast to java.lang.Class
-
-
 How to extend
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _how-to-make-customconverter-label:
 
 カスタムコンバーターの作成
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-| Dozerがサポートしていないデータ型のマッピングの場合、カスタムコンバーター経由でマッピングできる。
+| Dozerがサポートしていないデータ型のマッピングでは、同じ型同士の場合も異なる型の場合も、カスタムコンバーター経由でマッピングできる。
 
 * 例 : ``java.lang.String`` <=> ``org.joda.time.DateTime``
 

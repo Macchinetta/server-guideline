@@ -133,6 +133,18 @@ JMSとは
       | JavaBeanを送信したい場合は、\ ``ObjectMessage``\ を利用する。
       | その場合は、JavaBeanをクライアント間で共有する必要がある。
 
+ .. _JMSWarningDeserialization:
+
+ .. warning:: **デシリアライズ時の注意点**
+
+    Queueに\ ``ObjectMessage``\ が入るとメッセージを取り出す際にデシリアライズが行われる。
+
+    デシリアライズ処理は、不正なデータや予期しないデータを使用して業務ロジックの乱用、サービスの拒否、任意のコードの実行が行われる危険があるため、
+    信頼できない送信元から受信しうるものをデシリアライズしてはならない。
+    そのため、Queueも(信頼できない送信元を含み得る)不特定多数からのメッセージを受け付ける構成であってはならない。
+
+    詳細については\ `Deserialization of untrusted data <https://www.owasp.org/index.php/Deserialization_of_untrusted_data>`_\ を参照されたい。
+
 
 .. _JMSOverviewAPI:
 
@@ -426,7 +438,7 @@ How to use
 | 本節では、アプリケーションサーバで定義する方法についてのみ説明する。
 | アプリケーションサーバで定義した\ ``ConnectionFactory``\ を使用するためには、Bean定義ファイルにJNDI経由で取得したJavaBeanを利用するための設定を行う必要がある。
 
-- :file:`[projectName]-domain/src/main/resources/META-INF/spring/[projectName]-infra.xml`
+- :file:`[projectName]-env/src/main/resources/META-INF/spring/[projectName]-env.xml`
 
  .. code-block:: xml
 
@@ -460,7 +472,7 @@ How to use
 | \ ``org.springframework.jms.support.destination.JndiDestinationResolver``\ を使用することで、JNDI名によりDestinationの名前解決を行うことができる。
 | 以下に\ ``JndiDestinationResolver``\ の定義例を示す。
 
-- :file:`[projectName]-domain/src/main/resources/META-INF/spring/[projectName]-infra.xml`
+- :file:`[projectName]-env/src/main/resources/META-INF/spring/[projectName]-env.xml`
 
  .. code-block:: xml
 
@@ -486,6 +498,11 @@ How to use
 
            \ ``<jee:jndi-lookup/>``\ の\ ``resource-ref``\ 属性とはデフォルト値が異なることに注意されたい。
 
+ .. note:: **DynamicDestinationResolverを使用する場合**
+
+    JNDIを利用せずにJMSプロバイダでDestinationの名前解決する場合、\ ``DynamicDestinationResolver``\ を利用する。
+    \ ``DynamicDestinationResolver``\ の設定については、:ref:`JMSAppendixSettingsDependsOnJMSProvider` の"JNDIを使用しない場合の設定"を参照されたい。
+
 
 .. _JMSHowToUseSyncSendMessage:
 
@@ -503,7 +520,7 @@ How to use
 | \ ``Todo``\ クラスのオブジェクトをメッセージ同期送信する場合の実装例を示す。
 | 最初に\ ``JmsMessagingTemplate``\ の設定方法を示す。
 
-- :file:`[projectName]-domain/src/main/resources/META-INF/spring/[projectName]-infra.xml`
+- :file:`[projectName]-env/src/main/resources/META-INF/spring/[projectName]-env.xml`
 
  .. code-block:: xml
 
@@ -511,17 +528,6 @@ How to use
        class="org.springframework.jms.connection.CachingConnectionFactory"> <!-- (1) -->
        <property name="targetConnectionFactory" ref="connectionFactory" /> <!-- (2) -->
        <property name="sessionCacheSize" value="1" />  <!-- (3) -->
-    </bean>
-
-    <!-- (4) -->
-    <bean id="jmsTemplate" class="org.springframework.jms.core.JmsTemplate">
-       <property name="connectionFactory" ref="cachingConnectionFactory" />
-       <property name="destinationResolver" ref="destinationResolver" />
-    </bean>
-
-    <!-- (5) -->
-    <bean id="jmsMessagingTemplate" class="org.springframework.jms.core.JmsMessagingTemplate">
-        <property name="jmsTemplate" ref="jmsTemplate"/>
     </bean>
 
  .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
@@ -542,11 +548,35 @@ How to use
         | この例では1を指定しているが、性能要件に応じて適宜キャッシュ数を変更すること。
         | このキャッシュ数を超えてセッションが必要になるとキャッシュを使用せず、新しいセッションの作成と破棄を繰り返すことになる。
         | すると処理効率が下がり、性能劣化の原因になるので注意すること。
-    * - | (4)
+
+
+- :file:`[projectName]-domain/src/main/resources/META-INF/spring/[projectName]-infra.xml`
+
+ .. code-block:: xml
+
+    <!-- (1) -->
+    <bean id="jmsTemplate" class="org.springframework.jms.core.JmsTemplate">
+       <property name="connectionFactory" ref="cachingConnectionFactory" />
+       <property name="destinationResolver" ref="destinationResolver" />
+    </bean>
+
+    <!-- (2) -->
+    <bean id="jmsMessagingTemplate" class="org.springframework.jms.core.JmsMessagingTemplate">
+        <property name="jmsTemplate" ref="jmsTemplate"/>
+    </bean>
+
+ .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
+ .. list-table::
+    :header-rows: 1
+    :widths: 10 90
+
+    * - 項番
+      - 説明
+    * - | (1)
       - | \ ``JmsTemplate``\ をBean定義する。
         | \ ``JmsTemplate``\ は低レベルのAPIハンドリング（JMS API呼び出し）を代行する。
         | 設定可能な属性に関しては、下記の\ ``JmsTemplate``\ の属性一覧を参照されたい。
-    * - | (5)
+    * - | (2)
       - | \ ``JmsMessagingTemplate``\ をBean定義する。同期送信処理を代行する\ ``JmsTemplate``\ をインジェクションする。
 
 
@@ -742,7 +772,7 @@ How to use
 
  .. note:: **業務ロジック内でJMSの例外ハンドリング**
 
-    \ `JMS (Java Message Service)のIntroduction <http://docs.spring.io/spring/docs/4.3.14.RELEASE/javadoc-api/org/springframework/jms/core/JmsTemplate.html>`_\ で触れられているように、Spring Frameworkでは検査例外を非検査例外に変換している。
+    \ `JMS (Java Message Service)のIntroduction <https://docs.spring.io/spring/docs/4.3.23.RELEASE/javadoc-api/org/springframework/jms/core/JmsTemplate.html>`_\ で触れられているように、Spring Frameworkでは検査例外を非検査例外に変換している。
     そのため、業務ロジック内でJMSの例外をハンドリングする場合は、非検査例外を扱う必要がある。
 
      .. tabularcolumns:: |p{0.20\linewidth}|p{0.60\linewidth}|p{0.20\linewidth}|
@@ -772,7 +802,7 @@ How to use
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 \ ``JmsMessagingTemplate``\ の\ ``convertAndSend``\ メソッドの引数にKey-Value形式のヘッダ属性と値を指定することで、ヘッダ属性を編集して同期送信することが可能である。
-ヘッダの詳細については、\ `javax.jms.Messages  <https://docs.oracle.com/javaee/7/api/javax/jms/Message.html>`_\ を参照されたい。
+ヘッダの詳細については、\ `javax.jms.Message  <https://docs.oracle.com/javaee/7/api/javax/jms/Message.html>`_\ を参照されたい。
 送信、応答メッセージなどを紐づける役割の\ ``JMSCorrelationID``\ を同期送信時に指定する場合の実装例を示す。
 
 
@@ -841,7 +871,7 @@ How to use
 | トランザクション管理を実現するためには、\ ``org.springframework.jms.connection.JmsTransactionManager``\ を利用する。
 | 最初に設定例を示す。
 
-- :file:`[projectName]-domain/src/main/resources/META-INF/spring/[projectName]-domain.xml`
+- :file:`[projectName]-domain/src/main/resources/META-INF/spring/[projectName]-infra.xml`
 
  .. code-block:: xml
 
@@ -940,7 +970,7 @@ DBのトランザクション管理を行う必要があるアプリケーショ
   | "Best Effort 1 Phase Commit"は\ ``org.springframework.data.transaction.ChainedTransactionManager``\ を利用することで実現する。
   | 以下に、JMSのトランザクション管理に\ :ref:`JMSHowToUseSettingForSyncSendTransactionManagement`\ の\ ``sendJmsTransactionManager``\ を使用し、DBのトランザクション管理にBlankプロジェクトのデフォルトの設定で定義されている\ ``transactionManager``\ を使用する設定例を示す。
 
-  - :file:`[projectName]-domain/src/main/resources/META-INF/spring/[projectName]-env.xml`
+  - :file:`[projectName]-domain/src/main/resources/META-INF/spring/[projectName]-infra.xml`
 
    .. code-block:: xml
 
@@ -1068,8 +1098,8 @@ DBのトランザクション管理を行う必要があるアプリケーショ
     <beans xmlns="http://www.springframework.org/schema/beans"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xmlns:jms="http://www.springframework.org/schema/jms"
-        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-            http://www.springframework.org/schema/jms http://www.springframework.org/schema/jms/spring-jms.xsd">
+        xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+            http://www.springframework.org/schema/jms https://www.springframework.org/schema/jms/spring-jms.xsd">
 
         <!-- (2) -->
         <jms:annotation-driven />
@@ -1094,11 +1124,11 @@ DBのトランザクション管理を行う必要があるアプリケーショ
       - xmlns:jms
       - | JMS Namespaceを定義する。
         | 値として\ ``http://www.springframework.org/schema/jms``\ を指定する。
-        | JMS Namespaceの詳細については、\ `JMS Namespace Support <http://docs.spring.io/autorepo/docs/spring-framework/4.3.14.RELEASE/spring-framework-reference/html/jms.html#jms-namespace>`_\ を参照されたい。
+        | JMS Namespaceの詳細については、\ `JMS Namespace Support <https://docs.spring.io/spring/docs/4.3.23.RELEASE/spring-framework-reference/html/jms.html#jms-namespace>`_\ を参照されたい。
     * -
       - xsi:schemaLocation
       - | スキーマのURLを指定する。
-        | 値に\ ``http://www.springframework.org/schema/jms``\ と\ ``http://www.springframework.org/schema/jms/spring-jms.xsd``\ を追加する。
+        | 値に\ ``http://www.springframework.org/schema/jms``\ と\ ``https://www.springframework.org/schema/jms/spring-jms.xsd``\ を追加する。
     * - | (2)
       - \-
       - | \ ``<jms:annotation-driven />``\ を利用して、\ ``@JmsListener``\ アノテーションや\ ``@SendTo``\ アノテーション等のJMS関連のアノテーション機能を有効化する。
@@ -1108,12 +1138,12 @@ DBのトランザクション管理を行う必要があるアプリケーショ
         | \ ``<jms:listener-container/>``\ の属性には、利用したい\ ``ConnectionFactory``\ のBeanを指定できる\ ``connection-factory``\ 属性が存在する。\ ``connection-factory``\ 属性のデフォルト値は\ ``connectionFactory``\ である。
         | この例では、\ :ref:`JMSHowToUseConnectionFactory`\ で示した\ ``ConnectionFactory``\ のBean(Bean名は\ ``connectionFactory``\ )を利用するため、\ ``connection-factory``\ 属性を省略している。
         | \ ``<jms:listener-container/>``\ には、ここで紹介した以外の属性も存在する。
-        | 詳細については、\ `Attributes of the JMS <listener-container> element <http://docs.spring.io/spring/docs/4.3.14.RELEASE/spring-framework-reference/html/jms.html#jms-namespace-listener-container-tbl>`_\ を参照されたい。
+        | 詳細については、\ `Attributes of the JMS <listener-container> element <https://docs.spring.io/spring/docs/4.3.23.RELEASE/spring-framework-reference/html/jms.html#jms-namespace-listener-container-tbl>`_\ を参照されたい。
 
         .. warning::
 
             \ ``DefaultMessageListenerContainer``\ 内部には独自のキャッシュ機能が備わっている。一方で、APサーバ製品やMOM製品によって関連リソースをキャッシュする場合もある。両者の管理に不整合が生じないように\ ``cache``\ 属性でキャッシュレベルを指定すること。
-            詳細については、\ `DefaultMessageListenerContainerのJavadoc <http://docs.spring.io/autorepo/docs/spring-framework/4.3.14.RELEASE/javadoc-api/org/springframework/jms/listener/DefaultMessageListenerContainer.html>`_\ を参照されたい。
+            詳細については、\ `DefaultMessageListenerContainerのJavadoc <https://docs.spring.io/spring/docs/4.3.23.RELEASE/javadoc-api/org/springframework/jms/listener/DefaultMessageListenerContainer.html>`_\ を参照されたい。
             本ガイドラインでは、\ ``<jms:listener-container/>``\ の\ ``connection-factory``\ 属性には、\ :ref:`JMSHowToUseConnectionFactory`\ で定義した\ ``ConnectionFactory``\ を指定する。
 
     * -
@@ -1192,7 +1222,7 @@ DBのトランザクション管理を行う必要があるアプリケーショ
 
 
  \ ``@JmsListener``\ アノテーションの主な属性の一覧を以下に示す。
- 詳細やその他の属性については、\ `@JmsListenerアノテーションのJavadoc <http://docs.spring.io/spring-framework/docs/4.3.14.RELEASE/javadoc-api/org/springframework/jms/annotation/JmsListener.html#destination-->`_\ を参照されたい。
+ 詳細やその他の属性については、\ `@JmsListenerアノテーションのJavadoc <https://docs.spring.io/spring/docs/4.3.23.RELEASE/javadoc-api/org/springframework/jms/annotation/JmsListener.html#destination-->`_\ を参照されたい。
 
 
  .. tabularcolumns:: |p{0.10\linewidth}|p{0.20\linewidth}|p{0.70\linewidth}|
@@ -1253,7 +1283,7 @@ DBのトランザクション管理を行う必要があるアプリケーショ
       - 説明
     * - | (1)
       - | 受信メッセージのヘッダ属性\ ``JMSReplyTo``\ の値を取得するために、\ ``@Header``\ アノテーションを指定する。
-        | JMSの標準ヘッダ属性を取得する場合に指定するキーの値については、\ `JmsHeadersの定数の定義 <https://docs.spring.io/spring/docs/4.3.14.RELEASE/javadoc-api/constant-values.html#org.springframework.jms.support.JmsHeaders.CORRELATION_ID>`_\ を参照されたい。
+        | JMSの標準ヘッダ属性を取得する場合に指定するキーの値については、\ `JmsHeadersの定数の定義 <https://static.javadoc.io/org.springframework/spring-jms/4.3.23.RELEASE/constant-values.html#org.springframework.jms.support.JmsHeaders.CORRELATION_ID>`_\ を参照されたい。
 
 
 .. _JMSHowToUseListenerContainerReSendMessage:
@@ -1360,7 +1390,7 @@ DBのトランザクション管理を行う必要があるアプリケーショ
          - | メッセージ送信するオブジェクトを返却する。
 
    ヘッダ属性\ ``JMSReplyTo``\ はConsumer側で指定したデフォルトのDestinationよりも優先される。
-   詳細については、\ `Response management <http://docs.spring.io/spring/docs/4.3.14.RELEASE/spring-framework-reference/htmlsingle/#jms-annotated-response>`_\ を参照されたい。
+   詳細については、\ `Response management <https://docs.spring.io/spring/docs/4.3.23.RELEASE/spring-framework-reference/htmlsingle/#jms-annotated-response>`_\ を参照されたい。
 
 
 .. _JMSHowToUseMessageSelectorForAsyncReceive:
@@ -1391,7 +1421,7 @@ DBのトランザクション管理を行う必要があるアプリケーショ
       - | \ ``selector``\ 属性を利用することで受信対象の条件を設定することができる。
         | ヘッダ属性の\ ``TodoStatus``\ が\ ``deleted``\ のメッセージのみ受信する。
         | メッセージセレクタはSQL92条件式構文のサブセットに基づいている。
-        | 詳細は\ `Message Selectors <http://docs.oracle.com/javaee/7/api/javax/jms/Message.html>`_\ を参照されたい。
+        | 詳細は\ `Message Selectors <https://docs.oracle.com/javaee/7/api/javax/jms/Message.html>`_\ を参照されたい。
 
 
 .. _JMSHowToUseValidationForAsyncReceive:
@@ -1942,7 +1972,7 @@ DBトランザクション境界がJMSトランザクション境界の外側に
 
 | 同期受信のBean定義ファイルの設定を以下に示す。
 
-- :file:`[projectName]-domain/src/main/resources/META-INF/spring/[projectName]-infra.xml`
+- :file:`[projectName]-env/src/main/resources/META-INF/spring/[projectName]-env.xml`
 
  .. code-block:: xml
 
@@ -1950,17 +1980,6 @@ DBトランザクション境界がJMSトランザクション境界の外側に
        class="org.springframework.jms.connection.CachingConnectionFactory"> <!-- (1) -->
        <property name="targetConnectionFactory" ref="connectionFactory" /> <!-- (2) -->
        <property name="sessionCacheSize" value="1" />  <!-- (3) -->
-    </bean>
-
-    <!-- (4) -->
-    <bean id="jmsTemplate" class="org.springframework.jms.core.JmsTemplate">
-       <property name="connectionFactory" ref="cachingConnectionFactory" />
-       <property name="destinationResolver" ref="destinationResolver" />
-    </bean>
-
-    <!-- (5) -->
-    <bean id="jmsMessagingTemplate" class="org.springframework.jms.core.JmsMessagingTemplate">
-        <property name="jmsTemplate" ref="jmsTemplate"/>
     </bean>
 
  .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
@@ -1981,11 +2000,35 @@ DBトランザクション境界がJMSトランザクション境界の外側に
         | この例では1を指定しているが、性能要件に応じて適宜キャッシュ数を変更すること。
         | このキャッシュ数を超えてセッションが必要になるとキャッシュを使用せず、新しいセッションの作成と破棄を繰り返すことになる。
         | すると処理効率が下がり、性能劣化の原因になるので注意すること。
-    * - | (4)
+
+
+- :file:`[projectName]-domain/src/main/resources/META-INF/spring/[projectName]-infra.xml`
+
+ .. code-block:: xml
+
+    <!-- (1) -->
+    <bean id="jmsTemplate" class="org.springframework.jms.core.JmsTemplate">
+       <property name="connectionFactory" ref="cachingConnectionFactory" />
+       <property name="destinationResolver" ref="destinationResolver" />
+    </bean>
+
+    <!-- (2) -->
+    <bean id="jmsMessagingTemplate" class="org.springframework.jms.core.JmsMessagingTemplate">
+        <property name="jmsTemplate" ref="jmsTemplate"/>
+    </bean>
+
+ .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
+ .. list-table::
+    :header-rows: 1
+    :widths: 10 90
+
+    * - 項番
+      - 説明
+    * - | (1)
       - | \ ``JmsTemplate``\ をBean定義する。
         | \ ``JmsTemplate``\ は低レベルのAPIハンドリング（JMS API呼び出し）を代行する。
         | 設定可能な属性に関しては、下記の\ ``JmsTemplate``\ の属性一覧を参照されたい。
-    * - | (5)
+    * - | (2)
       - | \ ``JmsMessagingTemplate``\ をBean定義する。同期受信処理を代行する\ ``JmsTemplate``\ をインジェクションする。
 
 
@@ -2023,7 +2066,7 @@ DBトランザクション境界がJMSトランザクション境界の外側に
     * - 4.
       - \ ``sessionAcknowledgeMode``\
       - | \ ``sessionAcknowledgeMode``\ はセッションの確認応答モードを設定する。
-        | 詳細については\ `JmsTemplateのJavaDoc <http://docs.spring.io/spring/docs/4.3.14.RELEASE/javadoc-api/org/springframework/jms/core/JmsTemplate.html>`_\ を参照されたい。
+        | 詳細については\ `JmsTemplateのJavaDoc <https://docs.spring.io/spring/docs/4.3.23.RELEASE/javadoc-api/org/springframework/jms/core/JmsTemplate.html>`_\ を参照されたい。
 
         .. todo::
 
@@ -2129,7 +2172,7 @@ Apache ActiveMQを利用する場合の設定について説明する。
   | JMSプロバイダによっては、固有の設定が必要な場合がある。
   | Apache ActiveMQでは、受信するメッセージのペイロードが許可されたオブジェクトで構成されていることを保障するために、環境変数をアプリケーションサーバの起動引数に追加する必要がある。
   | 詳細については、\ `ObjectMessage <http://activemq.apache.org/objectmessage.html>`_\ を参照されたい。
-  | 環境変数をApache Tomcatの起動引数に追加する例を以下に示す。JBoss Enterprise Application Platform 7.0の場合は\ `Configuring JBoss EAP to Run as a Service <https://access.redhat.com/documentation/en/red-hat-jboss-enterprise-application-platform/7.0/paged/installation-guide/chapter-4-configuring-jboss-eap-to-run-as-a-service>`_\ を、JBoss Enterprise Application Platform 6.4の場合は\ `Service Configuration <https://access.redhat.com/documentation/en-US/JBoss_Enterprise_Application_Platform/6.4/html/Installation_Guide/sect-Service_Configuration.html>`_\ を、Weblogicの場合は\ `Starting Managed Servers with a Startup Script <http://docs.oracle.com/middleware/1221/wls/START/overview.htm#START120>`_\ を参照されたい。
+  | 環境変数をApache Tomcatの起動引数に追加する例を以下に示す。JBoss Enterprise Application Platform 7.2の場合は\ `Configuring JBoss EAP to Run as a Service <https://access.redhat.com/documentation/en-us/red_hat_jboss_enterprise_application_platform/7.2/html/installation_guide/configuring_jboss_eap_to_run_as_a_service>`_\ を、JBoss Enterprise Application Platform 6.4の場合は\ `Service Configuration <https://access.redhat.com/documentation/en-US/JBoss_Enterprise_Application_Platform/6.4/html/Installation_Guide/sect-Service_Configuration.html>`_\ を、Weblogicの場合は\ `Starting Managed Servers with a Startup Script <https://docs.oracle.com/middleware/12213/wls/START/overview.htm#START120>`_\ を参照されたい。
 
   - :file:`$CATALINA_HOME/bin/setenv.sh`
 
@@ -2211,19 +2254,24 @@ Apache ActiveMQを利用する場合の設定について説明する。
 
   | 本ガイドラインではJNDIによる名前解決する方法を推奨しているが、
   | アプリケーションサーバ上で動かせない単体テストの実施において、JMSプロバイダと接続する場合などには、JNDIを利用しないケースがある。
-  | その場合、\ ``ConnectionFactory``\ の実装クラスのBeanを生成する必要がある。
+  | その場合、\ ``ConnectionFactory``\ の実装クラスのBeanの生成と、JMSプロバイダでDestinationの名前解決を行うために\ ``DynamicDestinationResolver``\ を設定する必要がある。
+  | ただし、\ ``JmsTemplate``\ の\ ``destinationResolver``\ 属性や\ ``DefaultMessageListenerContainer``\ の\ ``destination-resolver``\ 属性を省略した場合は、内部的に生成された\ ``DynamicDestinationResolver``\ が使用されるため、\ ``DynamicDestinationResolver``\ のBean定義を省略可能である。
   | また、QueueについてもJNDIを用いて指定していたが、JMSプロバイダーの機能を用いてDestinationに指定したQueueが存在しない場合に、指定した名前のQueueを動的に生成させることができる。
   | アプリケーションサーバを介さずに接続を行うにはApache ActiveMQの内部Brokerを用いる必要がある。
   | Apache ActiveMQの内部Brokerの設定については\ `How do I embed a Broker inside a Connection  <http://activemq.apache.org/how-do-i-embed-a-broker-inside-a-connection.html>`_\ を参照されたい。
   | テスト用のコンテキストに下記の設定を追加すること。
 
-  - :file:`[projectName]-domain/src/main/resources/META-INF/spring/[projectName]-infra.xml`
+  - :file:`[projectName]-env/src/main/resources/META-INF/spring/[projectName]-env.xml`
 
    .. code-block:: xml
 
       <!-- (1) -->
       <bean id="connectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory">
           <constructor-arg value="tcp://localhost:61616"/>  <!-- (2) -->
+      </bean>
+
+      <!-- (3) -->
+      <bean id="destinationResolver" class="org.springframework.jms.support.destination.DynamicDestinationResolver">
       </bean>
 
    .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
@@ -2237,11 +2285,9 @@ Apache ActiveMQを利用する場合の設定について説明する。
         - | Apache ActiveMQの\ ``ConnectionFactory``\ をBean定義する。
       * - | (2)
         - | Apache ActiveMQの起動URLを指定する。起動URLは各環境に沿った値を設定する。
-
- .. note::
-
-   開発フェーズなどによって、ConnectionFactoryの設定方法をJNDIとBean定義で切り替えたい場合、
-   \ ``[projectName]-env/src/main/resources/META-INF/spring/[projectName]-env.xml``\ に設定を記述すること。
+      * - | (3)
+        - | \ ``DynamicDestinationResolver``\ をBean定義する。
+          | Destinationが指定されていない場合には、省略可能である。
 
 .. _JMSAppendixSendManySameMessages:
 
@@ -2334,7 +2380,7 @@ Apache ActiveMQを利用する場合
   \ ``BlobMessage``\ を用いたメッセージの送信では、メッセージはヒープ領域ではなく、一時的にApache ActiveMQが起動しているサーバに格納される。
   メッセージの格納先の定義例を以下に示す。
 
-  - :file:`[projectName]-domain/src/main/resources/META-INF/spring/[projectName]-infra.xml`
+  - :file:`[projectName]-env/src/main/resources/META-INF/spring/[projectName]-env.xml`
 
    .. code-block:: xml
 
