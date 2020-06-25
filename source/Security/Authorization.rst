@@ -26,7 +26,7 @@ Spring Securityでは、以下の3つのリソースに対してアクセスポ�
 
 本節では、「Webリソース」「Javaメソッド」「JSPの画面項目」のアクセスに対して認可処理を適用するための実装例(定義例)を紹介しながら、Spring Securityの認可機能について説明する。
 
-.. [#fSpringSecurityAuthorization1] ドメインオブジェクトのアクセスに対する認可処理については、 \ `Spring Security Reference -Domain Object Security (ACLs)- <https://docs.spring.io/spring-security/site/docs/5.1.3.RELEASE/reference/htmlsingle/#domain-acls>`_\ を参照されたい。
+.. [#fSpringSecurityAuthorization1] ドメインオブジェクトのアクセスに対する認可処理については、 \ `Spring Security Reference -Domain Object Security (ACLs)- <https://docs.spring.io/spring-security/site/docs/5.2.1.RELEASE/reference/htmlsingle/#domain-acls>`_\ を参照されたい。
 
 |
 
@@ -124,6 +124,8 @@ Spring Securityが提供する主な実装クラスは以下の通り。
       - 説明
     * - | \ ``WebExpressionVoter``\
       - | SpEL経由で認証情報(\ ``Authentication``\ )が保持する権限情報とリクエスト情報(\ ``HttpServletRequest``\ )を参照して投票を行う実装クラス。
+    * - | \ ``PreInvocationAuthorizationAdviceVoter``\
+      - | メソッド呼び出しに対する認可処理を行う\ ``@PreAuthorize``\ 、\ ``@PreFilter``\ が付与されている場合に投票を行う実装クラス。
     * - | \ ``RoleVoter``\
       - | 利用者が持つロールを参照して投票を行う実装クラス。
     * - | \ ``RoleHierarchyVoter``\
@@ -155,7 +157,7 @@ How to use
 
 Spring Securityは、アクセスポリシーを指定する記述方法としてSpring Expression Language(SpEL)をサポートしている。
 SpELを使わない方法もあるが、本ガイドラインではExpressionを使ってアクセスポリシーを指定する方法で説明を行う。
-SpELの使い方については本節でも紹介するが、より詳しい使い方を知りたい場合は \ `Spring Framework Documentation -Spring Expression Language (SpEL)- <https://docs.spring.io/spring/docs/5.1.4.RELEASE/spring-framework-reference/core.html#expressions>`_\ を参照されたい。
+SpELの使い方については本節でも紹介するが、より詳しい使い方を知りたい場合は \ `Spring Framework Documentation -Spring Expression Language (SpEL)- <https://docs.spring.io/spring/docs/5.2.3.RELEASE/spring-framework-reference/core.html#expressions>`_\ を参照されたい。
 
 |
 
@@ -174,8 +176,10 @@ Spring Securityが用意している共通的なExpressionは以下の通り。
       - 説明
     * - | \ ``hasRole(String role)``\
       - | ログインユーザーが、引数に指定したロールを保持している場合に\ ``true``\ を返却する。
+        | ロールの\ ``ROLE_`` \ プレフィックスは省略可能である。
     * - | \ ``hasAnyRole(String... roles)``\
       - | ログインユーザーが、引数に指定したロールのいずれかを保持している場合に\ ``true``\ を返却する。
+        | ロールの\ ``ROLE_`` \ プレフィックスは省略可能である。
     * - | \ ``isAnonymous()``\
       - | ログインしていない匿名ユーザーの場合に\ ``true``\ を返却する。
     * - | \ ``isRememberMe()``\
@@ -201,14 +205,14 @@ Spring Securityが用意している共通的なExpressionは以下の通り。
 
     Expressionとして\ ``principal``\ や\ ``authentication``\ を使用すると、ログインユーザーのユーザー情報や認証情報を参照することができるため、ロール以外の属性を使ってアクセスポリシーを設定することが可能になる。
 
-.. note:: **ロール名のプレフィックス** 
+.. note:: **Spring Secuirtyが提供するその他のExpression**
 
-    Spring Security 3.2までは、ロール名には\ ``ROLE_`` \ プレフィックスを指定する必要があったが、Spring Security 4.0から\ ``ROLE_`` \ プレフィックスの指定が不要となっている。 
+    上記に記載した以外にも、Spring Securityではログインユーザーが保持する権限を確認するExpressionとして、
+    \ ``hasAuthority(String authority)``\ 、\ ``hasAnyAuthority(String... authorities)``\ 、\ ``hasPermission(Object target, Object permission)``\ 、\ ``hasPermission(Object targetId, String targetType, Object permission)``\ を提供している。
 
-    例）
-
-    * Spring Secuirty 3.2以前 : \ ``hasRole('ROLE_USER')``\ 
-    * Spring Security 4.0以降 : \ ``hasRole('USER')``\ 
+    ユーザの属性により権限をグループ化したものがロールであり、一般的には個々の権限による認可ではなくロールによる認可が推奨される。
+    Spring Securityの認可においてはいずれもログインユーザが「指定した権限（ロール）を保持しているか」を確認するため利用方法に違いはないが、
+    権限名はロール名と異なり\ ``ROLE_``\ のようなプレフィックスがないため、権限の定義と認可で名称を完全一致させる必要がある。
 
 |
 
@@ -295,10 +299,6 @@ Webリソースに対して認可処理を適用する場合は、以下のよ�
       - | \ ``<sec:intercept-url>``\ タグに、HTTPリクエストに対してアクセスポリシーを定義する。
         | ここでは、SpELを使用して「Webアプリケーション配下の全てのリクエストに対して認証済みのユーザーのみアクセスを許可する」というアクセスポリシーを定義している。
 
-.. note:: **use-expressionsのデフォルト定義**
-
-    Spring Security 4.0から、\ ``<sec:http>``\  タグの\ ``use-expressions``\ 属性のデフォルト値が\ ``true``\ に変更になっているため、\ ``true``\を使用する場合に明示的な記述は不要となった。
-
 アクセスポリシーの定義
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
@@ -329,7 +329,7 @@ bean定義ファイルを使用して、Webリソースに対してアクセス�
       - | 「http」、もしくは「https」を指定する。指定したプロトコルでのアクセスを強制するための属性。
         | 指定しない場合、どちらでもアクセス可能である。
 
-上記以外の属性については、\ `<intercept-url> <https://docs.spring.io/spring-security/site/docs/5.1.3.RELEASE/reference/htmlsingle/#nsa-intercept-url>`_\ を参照されたい。
+上記以外の属性については、\ `<intercept-url> <https://docs.spring.io/spring-security/site/docs/5.2.1.RELEASE/reference/htmlsingle/#nsa-intercept-url>`_\ を参照されたい。
 
 * \ ``<sec:intercept-url>``\ タグ\ ``pattern``\ 属性の定義例（spring-security.xml）
 
@@ -684,7 +684,7 @@ Expression内で「# + 引数名」形式のExpressionを指定することで�
 .. tip:: **引数名を指定するアノテーション**
 
     Spring Securityは、クラスに出力されているデバッグ情報から引数名を解決する仕組み
-    になっているが、アノテーション(\ ``@org.springframework.security.access.method.P``\ )
+    になっているが、アノテーション(\ ``@org.springframework.security.core.parameters.P``\ )
     を使用して明示的に引数名を指定することもできる。
 
     以下のケースにあてはまる場合は、アノテーションを使用して明示的に変数名を指定する。
@@ -707,8 +707,8 @@ Expression内で「# + 引数名」形式のExpressionを指定することで�
 
 .. warning::
 
-   Spring 5から、SpringのコアAPIに\ `null-safety <https://docs.spring.io/spring/docs/5.1.4.RELEASE/spring-framework-reference/core.html#null-safety>`_\ の機能が取り入れられており、SpELが解釈される際の\ ``null``\に対する動作も変更(\ `SPR-15540 <https://jira.spring.io/browse/SPR-15540>`_\ )されている。
-   例えば\ ``@PreAuthorizeの``\ の引数(\ ``#xxx``\)や、\ ``@PreAuthorizeの``\ の戻り値（\ ``resultObject``\）が\ ``Map``\ を含む場合、\ ``Map``\ から値を取得するSpELでキー値に\ ``null``\ となる値を入力すると、Spring 4以前ではそのまま\ ``Map``\ に\ ``null``\ が渡され該当する値がないため\ `null``\ が返却されていたが、Spring 5以降ではキーとなるSpELを評価した結果に対する\ ``null``\ チェックが追加されており、\ ``null``\ の場合は\ ``IllegalStateException``\ が発生する。
+   Spring 5から、SpringのコアAPIに\ `null-safety <https://docs.spring.io/spring/docs/5.2.3.RELEASE/spring-framework-reference/core.html#null-safety>`_\ の機能が取り入れられており、SpELが解釈される際の\ ``null``\に対する動作も変更(\ `SPR-15540 <https://jira.spring.io/browse/SPR-15540>`_\ )されている。
+   例えば\ ``@PreAuthorize``\ の引数(\ ``#xxx``\)や、\ ``@PostAuthorize``\ の戻り値（\ ``resultObject``\）が\ ``Map``\ を含む場合、\ ``Map``\ から値を取得するSpELでキー値に\ ``null``\ となる値を入力すると、Spring 4以前ではそのまま\ ``Map``\ に\ ``null``\ が渡され該当する値がないため\ ``null``\ が返却されていたが、Spring 5以降ではキーとなるSpELを評価した結果に対する\ ``null``\ チェックが追加されており、\ ``null``\ の場合は\ ``IllegalStateException``\ が発生する。
    そのため、キーとする値に対して事前に\ ``null``\ チェックを行うなど、\ ``null``\ を考慮した実装が必要となる。
 
 メソッド実行後に適用するアクセスポリシーの指定
@@ -907,8 +907,15 @@ Spring Securityは、\ ``AccessDeniedHandler``\ インタフェースの実装�
       - | \ ``AccessDeniedException``\ と\ ``AccessDeniedHandler``\ インタフェースの実装クラスのマッピングを行い、発生した\ ``AccessDeniedException``\に対応する\ ``AccessDeniedHandler``\ インタフェースの実装クラスに処理を委譲する。
         | \ ``InvalidSessionAccessDeniedHandler``\ はこの仕組みを利用して呼び出されている。
     * - | \ ``RequestMatcherDelegatingAccessDeniedHandler``\
-      - | \ ``RequestMatcher``\ インタフェースの仕組みを利用して、指定されたリクエストのパターンに対応する\ ``AccessDeniedHandler``\ インタフェースの実装クラスに処理を委譲する。
+      - \ ``RequestMatcher``\ インタフェースの仕組みを利用して、指定されたリクエストのパターンに対応する\ ``AccessDeniedHandler``\ インタフェースの実装クラスに処理を委譲する。
 
+        .. note::
+
+            \ ``RequestMatcherDelegatingAccessDeniedHandler``\ の設定方法については、\ :ref:`LinkageWithBrowserEachRequestPattern`\ の
+            \ ``DelegatingRequestMatcherHeaderWriter``\ と同様にリクエストパターンの判定を行う\ ``RequestMatcher``\ と処理を委譲する\ ``AccessDeniedHandler``\ を設定すれば良い。
+
+            なお、\ ``<sec:intercept-url>``\ と\ ``RequestMatcherDelegatingAccessDeniedHandler``\ がパスマッチングを行う間にはリクエストのパスが変わる可能性がある処理が挟まれないため、
+            Warning「指定したパスが意図した通りに認識されない問題」に記載されているような事象は発生しない。
 
 Spring Securityのデフォルトの設定では、エラーページの指定がない\ ``AccessDeniedHandlerImpl``\ が使用される。
 
@@ -937,8 +944,10 @@ Spring Securityは、\ ``AuthenticationEntryPoint``\ インタフェースの実
         | 具体的には、HTTPレスポンスコードに401(Unauthorized)を、レスポンスヘッダとしてDigest認証用の「\ ``WWW-Authenticate``\ 」ヘッダを設定してエラー応答(\ ``HttpServletResponse#sendError``\ )を行う。
     * - | \ ``Http403ForbiddenEntryPoint``\
       - | HTTPレスポンスコードに403(Forbidden)を設定してエラー応答(\ ``HttpServletResponse#sendError``\ )を行う。
+    * - | \ ``HttpStatusEntryPoint``\
+      - | 任意のHTTPレスポンスコードを設定して正常応答(\ ``HttpServletResponse#setStatus``\ )を行う。
     * - | \ ``DelegatingAuthenticationEntryPoint``\
-      - | \ ``RequestMatcher``\ と\ ``AuthenticationEntryPoint``\ インタフェースの実装クラスのマッピングを行い、HTTPリクエストに対応する\ ``AuthenticationEntryPoint``\ インタフェースの実装クラスに処理を委譲する。
+      - | \ ``RequestMatcher``\ インタフェースの仕組みを利用して、指定されたリクエストのパターンに対応する\ ``AuthenticationEntryPoint``\ インタフェースの実装クラスに処理を委譲する。
 
 Spring Securityのデフォルトの設定では、認証方式に対応する\ ``AuthenticationEntryPoint``\ インタフェースの実装クラスが使用される。
 

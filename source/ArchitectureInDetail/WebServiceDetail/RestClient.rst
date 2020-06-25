@@ -126,8 +126,8 @@ Spring Frameworkが提供するHTTPクライアントである。
         * メディアタイプが\ ``multipart/form-data``\ の場合、\ ``MultiValueMap<String, Object>``\ として書込され、\ ``Object``\ は\ ``AllEncompassingFormHttpMessageConverter``\ 内に別途設定される\ ``HttpMessageConveter``\ で変換される。
           （注意： Note 参照）
 
-        | デフォルトで登録されるパートデータ変換用の\ ``HttpMessageConveter``\ は、`AllEncompassingFormHttpMessageConverter <https://github.com/spring-projects/spring-framework/blob/v5.1.4.RELEASE/spring-web/src/main/java/org/springframework/http/converter/support/AllEncompassingFormHttpMessageConverter.java>`_\
-          と `FormHttpMessageConverter <https://github.com/spring-projects/spring-framework/blob/v5.1.4.RELEASE/spring-web/src/main/java/org/springframework/http/converter/FormHttpMessageConverter.java>`_\ のソースを参照されたい。なお、任意の\ ``HttpMessageConverter``\ を登録することもできる。
+        | デフォルトで登録されるパートデータ変換用の\ ``HttpMessageConveter``\ は、`AllEncompassingFormHttpMessageConverter <https://github.com/spring-projects/spring-framework/blob/v5.2.3.RELEASE/spring-web/src/main/java/org/springframework/http/converter/support/AllEncompassingFormHttpMessageConverter.java>`_\
+          と `FormHttpMessageConverter <https://github.com/spring-projects/spring-framework/blob/v5.2.3.RELEASE/spring-web/src/main/java/org/springframework/http/converter/FormHttpMessageConverter.java>`_\ のソースを参照されたい。なお、任意の\ ``HttpMessageConverter``\ を登録することもできる。
       - | ``MultiValueMap`` [#p3]_
 
 .. raw:: latex
@@ -337,7 +337,7 @@ How to use
 
     本ガイドラインでは、GETメソッドとPOSTメソッドを使用したクライアント処理の実装例のみを紹介するが、
     \ ``RestTemplate``\ は他のHTTPメソッド(PUT, PATCH, DELETE, HEAD, OPTIONSなど)もサポートしており、同じような要領で使用することができる。
-    詳細は\ `RestTemplate <https://docs.spring.io/spring/docs/5.1.4.RELEASE/javadoc-api/org/springframework/web/client/RestTemplate.html>`_\ のJavadocを参照されたい。
+    詳細は\ `RestTemplate <https://docs.spring.io/spring/docs/5.2.3.RELEASE/javadoc-api/org/springframework/web/client/RestTemplate.html>`_\ のJavadocを参照されたい。
 
 .. _RestClientHowToUseSetup:
 
@@ -367,7 +367,7 @@ How to use
 
 .. note::
     上記設定例は、依存ライブラリのバージョンを親プロジェクトである terasoluna-gfw-parent で管理する前提であるため、pom.xmlでのバージョンの指定は不要である。
-    上記の依存ライブラリはterasoluna-gfw-parentが依存している\ `Spring Boot <https://docs.spring.io/spring-boot/docs/2.1.2.RELEASE/reference/htmlsingle/#appendix-dependency-versions>`_\ で管理されている。
+    上記の依存ライブラリはterasoluna-gfw-parentが依存している\ `Spring Boot <https://docs.spring.io/spring-boot/docs/2.2.4.RELEASE/reference/htmlsingle/#dependency-versions>`_\ で管理されている。
 
 .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
 .. list-table::
@@ -537,7 +537,7 @@ HTTPステータスコード、レスポンスヘッダ、レスポンスボデ�
 .. note:: **ResponseEntityとは**
 
     ``ResponseEntity``\ はHTTPレスポンスを表すクラスで、HTTPステータスコード、レスポンスヘッダ、レスポンスボディの情報を取得することができる。
-    詳細は\ `ResponseEntity <https://docs.spring.io/spring/docs/5.1.4.RELEASE/javadoc-api/org/springframework/http/ResponseEntity.html>`_\ のJavadocを参照されたい。
+    詳細は\ `ResponseEntity <https://docs.spring.io/spring/docs/5.2.3.RELEASE/javadoc-api/org/springframework/http/ResponseEntity.html>`_\ のJavadocを参照されたい。
 
 
 
@@ -598,7 +598,7 @@ import部
 .. note:: **RequestEntityとは**
 
     ``RequestEntity``\ はHTTPリクエストを表すクラスで、接続URI、HTTPメソッド、リクエストヘッダ、リクエストボディを設定することができる。
-    詳細は\ `RequestEntity <https://docs.spring.io/spring/docs/5.1.4.RELEASE/javadoc-api/org/springframework/http/RequestEntity.html>`_\ のJavadocを参照されたい。
+    詳細は\ `RequestEntity <https://docs.spring.io/spring/docs/5.2.3.RELEASE/javadoc-api/org/springframework/http/RequestEntity.html>`_\ のJavadocを参照されたい。
 
     なお、リクエストヘッダの設定方法については、:ref:`RestClientHowToUseRequestHeader` を参照されたい。
 
@@ -769,7 +769,7 @@ import部
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 \ ``RequestEntity``\ と\ ``exchange``\ メソッドを使用すると、\ ``RequestEntity``\ のメソッドを使用して特定のヘッダ及び任意のヘッダを設定することができる。
-詳細は\ `RequestEntity <https://docs.spring.io/spring/docs/5.1.4.RELEASE/javadoc-api/org/springframework/http/RequestEntity.html>`_\ のJavadocを参照されたい。
+詳細は\ `RequestEntity <https://docs.spring.io/spring/docs/5.2.3.RELEASE/javadoc-api/org/springframework/http/RequestEntity.html>`_\ のJavadocを参照されたい。
 
 本ガイドラインでは、
 
@@ -929,8 +929,8 @@ Acceptヘッダの設定
 
             responseEntity = restTemplate.exchange(requestEntity, String.class);
 
-            if (log.isInfoEnabled()) {
-                log.info("Success({}) ", responseEntity.getStatusCode());
+            if (logger.isInfoEnabled()) {
+                logger.info("Success({}) ", responseEntity.getStatusCode());
             }
 
             break;
@@ -943,8 +943,8 @@ Acceptヘッダの設定
 
             retryCount++;
 
-            if (log.isWarnEnabled()) {
-                log.warn("An error ({}) occurred on the server. (The number of retries：{} Times)", e.getStatusCode(),
+            if (logger.isWarnEnabled()) {
+                logger.warn("An error ({}) occurred on the server. (The number of retries：{} Times)", e.getStatusCode(),
                     retryCount);
             }
 
@@ -1052,8 +1052,8 @@ Acceptヘッダの設定
 
             retryCount++;
 
-            if (log.isWarnEnabled()) {
-                log.warn("An error ({}) occurred on the server. (The number of retries：{} Times)",
+            if (logger.isWarnEnabled()) {
+                logger.warn("An error ({}) occurred on the server. (The number of retries：{} Times)",
                     responseEntity.getStatusCode(), retryCount);
             }
 
@@ -1247,7 +1247,7 @@ SSL自己署名証明書の使用
 
 .. note::
     上記設定例は、依存ライブラリのバージョンを親プロジェクトである terasoluna-gfw-parent で管理する前提であるため、pom.xmlでのバージョンの指定は不要である。
-    上記の依存ライブラリはterasoluna-gfw-parentが依存している\ `Spring Boot <https://docs.spring.io/spring-boot/docs/2.1.2.RELEASE/reference/htmlsingle/#appendix-dependency-versions>`_\ で管理されている。
+    上記の依存ライブラリはterasoluna-gfw-parentが依存している\ `Spring Boot <https://docs.spring.io/spring-boot/docs/2.2.4.RELEASE/reference/htmlsingle/#dependency-versions>`_\ で管理されている。
 
 **bean定義ファイル(applicationContext.xml)の定義例**
 
@@ -1575,7 +1575,7 @@ RESTfulなURLを扱うには、URIテンプレートを使用して実装を行�
       - | URIテンプレートの変数{action}は、``RestTeamplate``\の使用時に指定の値に変換される。
     * - | (2)
       - | ``UriComponentsBuilder``\ を使用することで、URIテンプレートの変数1つ目が ``buildAndExpand``\ の引数で指定した値に置換され、『http://localhost:8080/api/users/create』のURIが作成される。
-        | 詳細は\ `UriComponentsBuilder <https://docs.spring.io/spring/docs/5.1.4.RELEASE/javadoc-api/org/springframework/web/util/UriComponentsBuilder.html>`_\ のJavadocを参照されたい。
+        | 詳細は\ `UriComponentsBuilder <https://docs.spring.io/spring/docs/5.2.3.RELEASE/javadoc-api/org/springframework/web/util/UriComponentsBuilder.html>`_\ のJavadocを参照されたい。
 
 
 
@@ -1658,18 +1658,18 @@ How to extend
         public ClientHttpResponse intercept(HttpRequest request, byte[] body,
                 ClientHttpRequestExecution execution) throws IOException {
 
-            if (log.isInfoEnabled()) {
+            if (logger.isInfoEnabled()) {
                 String requestBody = new String(body, StandardCharsets.UTF_8);
 
-                log.info("Request Header {}", request.getHeaders()); //(2)
-                log.info("Request Body {}", requestBody);
+                logger.info("Request Header {}", request.getHeaders()); //(2)
+                logger.info("Request Body {}", requestBody);
             }
 
             ClientHttpResponse response = execution.execute(request, body); //(3)
           
-            if (log.isInfoEnabled()) {
-                log.info("Response Header {}", response.getHeaders()); // (4)
-                log.info("Response Status Code {}", response.getStatusCode()); // (5)
+            if (logger.isInfoEnabled()) {
+                logger.info("Response Header {}", response.getHeaders()); // (4)
+                logger.info("Response Status Code {}", response.getStatusCode()); // (5)
             }
 
             return response; // (6)
@@ -1791,7 +1791,7 @@ Basic認証用のリクエストヘッダ設定処理
 
     Spring Framework 5.0から、Spring Web Reactiveの機能として\ ``RestTemplate``\の後継となる\ ``WebClient``\が提供された。これに伴い\ ``AsyncRestTemplate``\は非推奨となった。将来のバージョンでは\ ``RestTemplate``\も非推奨となる予定であり、今後は主要な新機能の追加はされずメンテナンスのみとなることがアナウンスされている。
 
-    Macchinetta Server Framework for Java (1.x)ではSpring Web Reactiveをサポートしていないため、\ ``WebClient``\への移行は推奨していない。
+    Macchinetta Server Framework (1.x)ではSpring Web Reactiveをサポートしていないため、\ ``WebClient``\への移行は推奨していない。
 
 |
 
@@ -1827,17 +1827,19 @@ Basic認証用のリクエストヘッダ設定処理
     スレッドの同時実行数に制限は無い。
     そのため、同時に使用するスレッド数が非常に大きい場合はOutOfMemoryErrorが発生する可能性がある。
     
-    \ ``AsyncRestTemplate``\のコンストラクタに\ ``org.springframework.core.task.AsyncListenableTaskExecutor``\ インターフェースのBeanを設定することで、スレッドプール数の上限などを指定できる。
+    \ ``AsyncRestTemplate``\のコンストラクタに\ ``org.springframework.core.task.AsyncListenableTaskExecutor``\ インターフェースのBeanを設定することで、スレッドプールの設定を行える。
     下記は\ ``org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor``\ を設定する例である。
 
      .. code-block:: xml
 
         <!-- (1) -->
         <bean id="asyncTaskExecutor" class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
-            <property name="maxPoolSize" value="100" />
+            <property name="corePoolSize" value="5" /> <!-- (2) -->
+            <property name="queueCapacity" value="25" /> <!-- (3) -->
+            <property name="maxPoolSize" value="10" /> <!-- (4) -->
         </bean>
 
-        <!-- (2) -->
+        <!-- (5) -->
         <bean id="asyncRestTemplate" class="org.springframework.web.client.AsyncRestTemplate" >
             <constructor-arg index="0" ref="asyncTaskExecutor" />
         </bean>
@@ -1853,17 +1855,29 @@ Basic認証用のリクエストヘッダ設定処理
         * - | (1)
           - | \ ``AsyncTaskExecutor``\ のbean定義を行う。
             | \ ``ThreadPoolTaskExecutor``\ を使うことで、スレッドプールを使ったスレッド運用が行われる。
-            | また、\ ``maxPoolSize``\ プロパティを設定することで、スレッド数の制御が行える。
         * - | (2)
+          - | \ ``corePoolSize``\ プロパティを設定することで、通常使用するスレッド数のカスタマイズを行える。
+            | タスク実行時にプール内のスレッド数が\ ``corePoolSize``\ 未満の場合、アイドル状態のスレッドが存在していてもプール内に新しいスレッドが作成される。
+            | デフォルト値は\ ``1``\。
+        * - | (3)
+          - | \ ``queueCapacity``\ プロパティを設定すると、キュー容量のカスタマイズを行える。
+            | \ ``corePoolSize``\を超えたリクエストは、\ ``queueCapacity``\までキューイングされる。
+            | デフォルト値は\ ``Integer.MAX_VALUE``\。
+        * - | (4)
+          - | \ ``maxPoolSize``\ プロパティを設定することで、最大スレッド数のカスタマイズを行える。
+            | リクエストが\ ``queueCapacity``\を超えた場合、\ ``maxPoolSize``\ まで新しいスレッドを作成する。
+            | デフォルト値は\ ``Integer.MAX_VALUE``\。
+            | キュー容量、 スレッド数が共に飽和状態の場合、新しいタスクは拒否される。
+        * - | (5)
           - | \ ``AsyncRestTemplate``\ のbean定義を行う。
             | \ ``ThreadPoolTaskExecutor``\ を引数に指定するコンストラクタを使用してbeanを登録する。
 
     本ガイドラインでは、タスク実行処理をカスタマイズする実装例のみを紹介するが、
     \ ``AsyncRestTemplate``\は、HTTP通信処理もカスタマイズ出来る。
-    詳細は\ `AsyncRestTemplate <https://docs.spring.io/spring/docs/5.1.4.RELEASE/javadoc-api/org/springframework/web/client/AsyncRestTemplate.html>`_\ のJavadocを参照されたい。
+    詳細は\ `AsyncRestTemplate <https://docs.spring.io/spring/docs/5.2.3.RELEASE/javadoc-api/org/springframework/web/client/AsyncRestTemplate.html>`_\ のJavadocを参照されたい。
     
     また、\ ``ThreadPoolTaskExecutor``\ についても、スレッドプールサイズ以外のカスタマイズが出来る。
-    詳細は\ `ThreadPoolTaskExecutor <https://docs.spring.io/spring/docs/5.1.4.RELEASE/javadoc-api/org/springframework/scheduling/concurrent/ThreadPoolTaskExecutor.html>`_\ のJavadocを参照されたい。
+    詳細は\ `ThreadPoolTaskExecutor <https://docs.spring.io/spring/docs/5.2.3.RELEASE/javadoc-api/org/springframework/scheduling/concurrent/ThreadPoolTaskExecutor.html>`_\ のJavadocを参照されたい。
 
 
 
@@ -1953,35 +1967,35 @@ Basic認証用のリクエストヘッダ設定処理
                 byte[] body,
                 AsyncClientHttpRequestExecution execution) throws IOException {
             // (2)
-            if (log.isInfoEnabled()) {
+            if (logger.isInfoEnabled()) {
                 String requestBody = new String(body, StandardCharsets.UTF_8);
 
-                log.info("Request Header {}", request.getHeaders());
-                log.info("Request Body {}", requestBody);
+                logger.info("Request Header {}", request.getHeaders());
+                logger.info("Request Body {}", requestBody);
             }
 
             // (3)
             ListenableFuture<ClientHttpResponse> future = execution.executeAsync(
                     request, body);
-            if (log.isInfoEnabled()) {
+            if (logger.isInfoEnabled()) {
                 // (4)
                 future.addCallback(new ListenableFutureCallback<ClientHttpResponse>() {
 
                     @Override
                     public void onSuccess(ClientHttpResponse response) {
                         try {
-                            log.info("Response Header {}", response
+                            logger.info("Response Header {}", response
                                     .getHeaders());
-                            log.info("Response Status Code {}", response
+                            logger.info("Response Status Code {}", response
                                     .getStatusCode());
                         } catch (IOException e) {
-                            log.warn("I/O Error", e);
+                            logger.warn("I/O Error", e);
                         }
                     }
 
                     @Override
                     public void onFailure(Throwable e) {
-                        log.info("Communication Error", e);
+                        logger.info("Communication Error", e);
                     }
                 });
             }
@@ -2155,7 +2169,7 @@ HTTP Proxyサーバの指定方法
 
 .. note::
     上記設定例は、依存ライブラリのバージョンを親プロジェクトである terasoluna-gfw-parent で管理する前提であるため、pom.xmlでのバージョンの指定は不要である。
-    上記の依存ライブラリはterasoluna-gfw-parentが依存している\ `Spring Boot <https://docs.spring.io/spring-boot/docs/2.1.2.RELEASE/reference/htmlsingle/#appendix-dependency-versions>`_\ で管理されている。
+    上記の依存ライブラリはterasoluna-gfw-parentが依存している\ `Spring Boot <https://docs.spring.io/spring-boot/docs/2.2.4.RELEASE/reference/htmlsingle/#dependency-versions>`_\ で管理されている。
 
 
 **Bean定義ファイル**

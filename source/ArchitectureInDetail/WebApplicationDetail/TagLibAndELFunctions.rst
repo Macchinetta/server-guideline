@@ -369,16 +369,17 @@ RFC 3986では、クエリ文字列のパート以下のように定義してい
 .. warning::
 
     Spring Framework 4までは、クエリ文字列として使用できる文字のうち("\ ``=``\", "\ ``&``\", "\ ``+``\")の3文字をSpring Frameworkがエンコーディングしていたが、
-    Spring Framework 5より、"\ ``+``\"はエンコーディング対象外となった。
+    Spring Framework 5から、クエリ文字列のエンコードを行う\ ``org.springframework.web.util.UriComponentsBuilder``\や
+    \ ``org.springframework.web.util.UriUtils.encodeQueryParam``\メソッドの仕様が変更され、"\ ``+``\"はエンコーディング対象外となった。
     
-    共通ライブラリの\ ``f:query()``\, \ ``f:u()``\では、内部でSpring Frameworkの機能を利用しているが、
+    共通ライブラリの\ ``f:query()``\, \ ``f:u()``\では、内部で上記の仕様変更されたクラスを利用しているが、
     独自に"\ ``+``\"をエンコーディングすることで仕様変更の影響を受けないようにしている。
     
-    ガイドラインでは紹介していないが、Spring Frameworkの \ ``org.springframework.web.util.UriComponentsBuilder``\ を利用して\ ``query``\を含むURIを生成しているアプリケーションでは、
+    ガイドラインでは紹介していないが、上記の仕様変更されたクラスを直接利用して\ ``query``\を含むURIを生成しているアプリケーションでは、
     "\ ``+``\" がエンコーディング対象外となったことによる影響を受ける可能性がある為、注意すること。
     なお、\ ``UriComponentsBuilder``\ では、クエリパラメータに含まれる\ ``unreserved``\文字以外をエンコーディングする機能を提供している為、
     当機能を用いる事でクエリパラメータに含まれる "\ ``+``\" のエンコーディングは可能である。
-    \ ``UriComponentsBuilder``\ を利用してURIをエンコーディングする方法については、`Springの公式リファレンス <https://docs.spring.io/spring/docs/5.1.4.RELEASE/spring-framework-reference/web.html#web-uri-encoding>`_\ を参照されたい。
+    \ ``UriComponentsBuilder``\ を利用してURIをエンコーディングする方法については、`Spring Framework Documentation -URI Encoding- <https://docs.spring.io/spring/docs/5.2.3.RELEASE/spring-framework-reference/web.html#web-uri-encoding>`_\ を参照されたい。
 
 
 f:query() 関数仕様
@@ -416,7 +417,7 @@ f:query() 関数仕様
     指定されたオブジェクトのシンプル型のプロパティ値は、
     \ ``org.springframework.format.support.DefaultFormattingConversionService``\ の \ ``convert``\ メソッドを使用して文字列に変換される。
     \ ``ConversionService``\ については、
-    \ `Spring Framework Reference Documentation(Spring Type Conversion) <https://docs.spring.io/spring/docs/5.1.4.RELEASE/spring-framework-reference/core.html#core-convert>`_\ を参照されたい。
+    \ `Spring Framework Documentation -Spring Type Conversion- <https://docs.spring.io/spring/docs/5.2.3.RELEASE/spring-framework-reference/core.html#core-convert>`_\ を参照されたい。
 
 
 **戻り値**
@@ -437,7 +438,7 @@ f:query() 関数仕様
 
  .. note:: **クエリ文字列への変換ルール**
 
-    \ ``f:query()``\ は、Spring Web MVCのバインディング処理で扱うことができる形式に変換している。
+    \ ``f:query()``\ は、Spring Web MVCのバインディング処理(``WebDataBinder``)で扱うことができる形式に変換している。
     具体的には以下のルールでクエリ文字列に変換している。
 
     **[リクエストパラメータ名]**
@@ -453,7 +454,7 @@ f:query() 関数仕様
         * - プロパティの型が\ ``Iterable``\ の実装クラス又は配列の場合
           - プロパティ名 + \ ``[要素位置]``\
           - \ ``status[0]=accepting``\
-        * - プロパティの型が\ ``Iterable``\ の実装クラス又は配列で値の要素が空の場合
+        * - プロパティの型が\ ``Iterable``\ の実装クラス又は配列で値の要素が空の場合、および型が\ ``Boolean``\で値が\ ``null``\の場合
           - | プロパティ名
             | (\ ``[要素位置]``\ は付与しない)
           -  \ ``status=``\
@@ -467,7 +468,7 @@ f:query() 関数仕様
         * - プロパティの型がシンプル型の場合
           - プロパティ名
           - \ ``userId=xxx``\
-        * - プロパティの値が\ ``null``\ の場合
+        * - プロパティの値が\ ``null``\ の場合(プロパティの型が\ ``Boolean``\の場合を除く)
           - "\ ``_``\" (アンダースコア) + プロパティ名
           - | \ ``_mainContract.name=``\
             | \ ``_status[0]=``\
@@ -484,15 +485,22 @@ f:query() 関数仕様
         * - 条件
           - パラメータ値の変換仕様
           - 変換例
-        * - プロパティの値が\ ``null``\ の場合
+        * - プロパティの値が\ ``null``\ の場合(プロパティの型が\ ``Boolean``\の場合を除く)
           - ブランク文字列
           - \ ``_userId=``\
-        * - プロパティの型が\ ``Iterable``\ の実装クラス又は配列で値の要素が空の場合
+        * - プロパティの型が\ ``Iterable``\ の実装クラス又は配列で値の要素が空の場合、および型が\ ``Boolean``\で値が\ ``null``\の場合
           - ブランク文字列
           - \ ``status=``\
         * - プロパティの値が\ ``null``\ でない場合
           - \ ``DefaultFormattingConversionService``\ を使って\ ``String``\ 型へ変換した値
           - \ ``targetDate=20150801``\
+
+    Spring Web MVCのバインディング処理(\ ``WebDataBinder``\)のデフォルト設定では「"\ ``_``\" (アンダースコア) + プロパティ名」のリクエストパラメータが送信された場合、
+    \ ``List``\、配列、\ ``Map``\に対してはそれぞれに対応する空のオブジェクトをバインドし、\ ``boolean``\及び\ ``Boolean``\型のプロパティに対しては\ ``Boolean``\型のfalseをバインドする。
+    詳細は\ `WebDataBinder#getEmptyValueのJavadoc <https://docs.spring.io/spring/docs/5.2.3.RELEASE/javadoc-api/org/springframework/web/bind/WebDataBinder.html#getEmptyValue-java.lang.Class->`_\を参照されたい。
+
+    terasoluna-gfw-web 5.6.0.RELEASEからは、\ ``Boolean``\型プロパティで\ ``null``\がfalseに変換されてしまうことを防ぐため「"\ ``_``\" (アンダースコア) + プロパティ名」のリクエストパラメータを送信しないよう改善されている。
+
 
 f:query() 使用方法
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""

@@ -103,6 +103,15 @@ CVE(Common Vulnerabilities and Exposures)による観点
    * - \ `CVE-2016-5007 <https://pivotal.io/jp/security/cve-2016-5007>`_\
      - Spring SecurityとSpring MVCのパス比較方法の差異を利用して認可のすり抜けが可能となる
      - * :ref:`access_policy_designate_web_resource`
+   * - \ `CVE-2019-3778 <https://pivotal.io/security/cve-2019-3778>`_\
+     - 認可コードグラントを利用した認可サーバにおけるオープンリダイレクト脆弱性
+     - * :ref:`OAuthSetup`
+   * - \ `CVE-2019-12415 <https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-12415>`_\
+     - Apache POI 4.1.0以前を利用したEXCELファイルからXMLへの変換において、細工されたEXCELファイルによるXXE攻撃を受ける可能性がある
+     - * :ref:`ImplementsOfTestByLayerTestingRepositoryWithSpringTestDBUnit`
+   * - \ `CVE-2020-5408 <https://tanzu.vmware.com/security/cve-2020-5408>`_\
+     - 暗号化の結果が毎回同一となることを利用した辞書攻撃により、暗号化前の平文を取得されてしまう可能性がある
+     - * :ref:`EncryptionEncryptText`
 
 .. raw:: latex
 

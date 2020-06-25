@@ -26,7 +26,7 @@ Overview
 * JCA (Java Cryptography Architecture) を利用した公開鍵暗号化方式の暗号化と復号
 * JCAを利用したハイブリッド暗号化方式の暗号化と復号
 
-Spring Securityの暗号化機能の詳細については、\ `Spring Security Reference -Spring Security Crypto Module- <https://docs.spring.io/spring-security/site/docs/5.1.3.RELEASE/reference/htmlsingle/#crypto>`_\ を参照されたい。
+Spring Securityの暗号化機能の詳細については、\ `Spring Security Reference -Spring Security Crypto Module- <https://docs.spring.io/spring-security/site/docs/5.2.1.RELEASE/reference/htmlsingle/#crypto>`_\ を参照されたい。
 
 .. _EncryptionOverviewEncryptionScheme:
 
@@ -207,6 +207,8 @@ Oracleなど、一部のJava製品ではAESの鍵長256ビットを扱うため�
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 | 暗号化アルゴリズムとしてAESを利用した方法について説明する。
 
+.. _EncryptionEncryptText:
+
 文字列の暗号化
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
@@ -241,33 +243,12 @@ Oracleなど、一部のJava製品ではAESの鍵長256ビットを扱うため�
     \ ``encrypt``\ メソッドの返り値 (暗号化の結果) は実行毎に異なる値を返すが、
     鍵とソルトが同一であれば復号処理の結果は同一になる (正しく復号できる) 。
 
-| 
+  .. note:: **暗号化の結果が毎回同一となる**\ ``TextEncryptor``\ **ファクトリメソッドについて**
 
-- 同一の暗号化結果を取得する。
+    \ ``Encryptors#queryableText``\ メソッドにより暗号化の結果が毎回同一となる\ ``TextEncryptor``\ を生成することができるが、
+    暗号化した結果への辞書攻撃を行うことで暗号化前の平文を取得されてしまう脆弱性があるため、Spring Security 4.2.16, 5.0.16, 5.1.10, 5.2.4, 5.3.2より非推奨となった。
 
-  この方法は、暗号化した結果を用いてデータベースの検索を行うようなケースで利用できる。
-  ただし、セキュリティ強度が落ちる点を踏まえ、使用の可否を検討してほしい。
-
-  .. code-block:: java
-
-    public static void encryptTextResult(
-        String secret, String salt, String plainText) {
-        TextEncryptor encryptor = Encryptors.queryableText(secret, salt); // (1)
-        System.out.println(encryptor.encrypt(plainText)); // (2)
-        System.out.println(encryptor.encrypt(plainText)); //
-    }
-
-  .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
-  .. list-table::
-     :header-rows: 1
-     :widths: 10 90
-  
-     * - 項番
-       - 説明
-     * - | (1)
-       - | 暗号化した結果として同じ値が必要な場合は、\ ``Encryptors#queryableText``\ メソッドを利用して\ ``TextEncryptor``\ クラスのインスタンスを生成する。
-     * - | (2)
-       - | \ ``Encryptors#queryableText``\ メソッドで生成したインスタンスは、\ ``encrypt``\ メソッドでの暗号化の結果として同一の値を返す。
+    詳細は\ `CVE-2020-5408: Dictionary attack with Spring Security queryable text encryptor <https://tanzu.vmware.com/security/cve-2020-5408>`_\ を参照されたい。
 
 | 
 

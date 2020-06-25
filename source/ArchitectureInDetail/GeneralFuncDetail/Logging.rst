@@ -272,6 +272,10 @@ logback.xml
           <level value="debug" />
       </logger>
 
+      <logger name="com.example.sample.domain.repository">
+          <level value="trace" />
+      </logger>
+
       <!-- TERASOLUNA -->
       <logger name="org.terasoluna.gfw">
           <level value="info" />
@@ -296,16 +300,15 @@ logback.xml
           <level value="info" />
       </logger>
 
+      <logger name="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping">
+          <level value="trace" />
+      </logger>
+
+      <logger name="org.springframework.jdbc.core.JdbcTemplate">
+          <level value="debug" />
+      </logger>
+
       <logger name="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-          <level value="debug" />
-      </logger>
-
-      <logger name="jdbc.sqltiming">
-          <level value="debug" />
-      </logger>
-
-      <!-- only for development -->
-      <logger name="jdbc.resultsettable">
           <level value="debug" />
       </logger>
 
@@ -779,7 +782,7 @@ How to extend
        | 詳細は、\ :doc:`../../ArchitectureInDetail/WebApplicationDetail/MessageManagement`\ の\ :ref:`properties-display`\ を参照されたい。
    * - | (5)
      - | 国際化を考慮し\ ``setBasenames``\ メソッドを使用してプロパティファイルを指定する。
-       | \ ``setBasenames``\ の詳細は\ ``ResourceBundleMessageSource``\ が継承する\ ``AbstractResourceBasedMessageSource``\ クラスの\ `JavaDoc <https://docs.spring.io/spring/docs/5.1.4.RELEASE/javadoc-api/org/springframework/context/support/AbstractResourceBasedMessageSource.html#setBasenames-java.lang.String...->`_\を参照されたい。
+       | \ ``setBasenames``\ の詳細は\ ``ResourceBundleMessageSource``\ が継承する\ ``AbstractResourceBasedMessageSource``\ クラスの\ `JavaDoc <https://docs.spring.io/spring/docs/5.2.3.RELEASE/javadoc-api/org/springframework/context/support/AbstractResourceBasedMessageSource.html#setBasenames-java.lang.String...->`_\を参照されたい。
    * - | (6)
      - | Loggerラッパークラスにおいても、SLF4Jを使用する。ロギングライブラリの実装を直接使用しない。
    * - | (7)

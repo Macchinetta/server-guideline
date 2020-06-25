@@ -68,10 +68,10 @@ JDBC DataSourceについて
         | \ `Apache Tomcat 7 User Guide(JNDI Datasource HOW-TO) <http://tomcat.apache.org/tomcat-7.0-doc/jndi-datasource-examples-howto.html>`_\ (Apache Commons DBCP)を参照されたい。
     * - 4.
       - Oracle WebLogic Server 12c
-      - \ `Oracle WebLogic Server Product Documentation <https://docs.oracle.com/middleware/12213/wls/INTRO/jdbc.htm#INTRO215>`_\ を参照されたい。
+      - \ `Oracle WebLogic Server 12.2.1.4 Documentation <https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/12.2.1.4/intro/jdbc.html#GUID-9FD5F552-B2E4-4FEC-8C10-503A08764B52>`_\ を参照されたい。
     * - 5.
       - IBM WebSphere Application Server Version 9.0
-      - \ `WebSphere Application Server Online information center <http://www.ibm.com/support/knowledgecenter/ja/SSEQTP_9.0.0/com.ibm.websphere.wlp.doc/ae/twlp_dep_configuring_ds.html>`_\ を参照されたい。
+      - \ `WebSphere Application Server Online information center <https://www.ibm.com/support/knowledgecenter/ja/SSEQTP_9.0.5/com.ibm.websphere.wlp.doc/ae/twlp_dep_configuring_ds.html>`_\ を参照されたい。
     * - 6.
       - JBoss Enterprise Application Platform 7.2
       - \ `JBoss Enterprise Application Platform 7.2 Product Documentation <https://access.redhat.com/documentation/en-us/red_hat_jboss_enterprise_application_platform/7.2/html/configuration_guide/datasource_management>`_\ を参照されたい。
@@ -345,7 +345,7 @@ Bean定義したDataSourceを使用する場合の設定
         | 設定項目の詳細については、\ `DBCP Configuration <http://commons.apache.org/proper/commons-dbcp/configuration.html>`_\ を参照されたい。
     * - | (8)
       - | 設定例では値を直接指定しているが、環境によって設定値がかわる項目については、Placeholder(${...})を使用して、実際の設定値はプロパティファイルに指定すること。
-        | Placeholderについては、\ `Spring Framework Documentation <https://docs.spring.io/spring/docs/5.1.4.RELEASE/spring-framework-reference/core.html#beans-factory-extension-factory-postprocessors>`_\ の\  ``Example: the Class name substitution PropertyPlaceholderConfigurer``\ を参照されたい。
+        | Placeholderについては、\ `Spring Framework Documentation -Customizing Configuration Metadata with a BeanFactoryPostProcessor- <https://docs.spring.io/spring/docs/5.2.3.RELEASE/spring-framework-reference/core.html#beans-factory-extension-factory-postprocessors>`_\ の\  ``Example: The Class Name Substitution PropertySourcesPlaceholderConfigurer``\ を参照されたい。
 
 
 トランザクション管理を有効化するための設定
@@ -358,151 +358,24 @@ PlatformTransactionManagerについては、使用するO/R Mapperによって�
 
 を参照されたい。
 
-.. _DataAccessCommonDataSourceDebug:
 
 JDBCのDebug用ログの設定
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-| O/R Mapper(MyBatis, Hibernate)で出力されるログより、さらに細かい情報が必要な場合、log4jdbc(log4jdbc-remix)を使って出力される情報が有効である。
+| O/R Mapper(MyBatis)で出力されるログより、さらに細かい情報が必要な場合、log4jdbc(log4jdbc-remix)を使って出力される情報が有効である。
 | log4jdbcの詳細については、\ `log4jdbc project page <https://code.google.com/p/log4jdbc/>`_\ を参照されたい。
 | log4jdbc-remixの詳細については、\ `log4jdbc-remix project page <https://code.google.com/p/log4jdbc-remix/>`_\ を参照されたい。
 
-\
+ .. note::
 
- .. warning::
-
-    **log4jdbc-remixが提供しているLog4jdbcProxyDataSourceを使用していると、ログレベルを"debug"以外に設定しても、オーバーヘッドが少なからず発生する。**
-    **そのため、本設定はデバッグ用として使用し、性能試験及び商用環境にリリースする場合はLog4jdbcProxyDataSourceを経由せずにデータベースへ接続することを推奨する。**
+    log4jdbcはJDBC 4.2に対応しておらず実行時エラーとなる場合があるため、Macchinetta Server Framework 1.7.0よりサポート対象外となった。
+    log4jdbcと同等のログを出力したい場合は、独自に実装することを検討されたい。
 
 
-log4jdbc提供のデータソースの設定
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+ .. todo::
 
-- :file:`xxx-env.xml`
+    log4jdbcの代替となるログ出力の方法は、次版以降に記載する予定である。
 
- .. code-block:: xml
-
-    <jee:jndi-lookup id="realDataSource" jndi-name="jdbc/SampleDataSource" /> <!-- (1) -->
-
-    <bean id="dataSource" class="net.sf.log4jdbc.Log4jdbcProxyDataSource"> <!-- (2) -->
-        <constructor-arg ref="realDataSource" /> <!-- (3) -->
-    </bean>
-
- .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
- .. list-table::
-    :header-rows: 1
-    :widths: 10 90
-
-    * - 項番
-      - 説明
-    * - | (1)
-      - データソースの実体を定義する。例では、アプリケーションサーバからJNDI経由で取得したデータソースを使用している。
-    * - | (2)
-      - log4jdbcより提供されている\ ``net.sf.log4jdbc.Log4jdbcProxyDataSource``\ を指定する。
-    * - | (3)
-      - データソースの実体となるbeanを、コンストラクタに指定する。
-
- .. warning::
-
-    **性能試験及び商用環境にリリースする場合、データソースとしてLog4jdbcProxyDataSourceは使用しないこと。**
-
-    具体的には、(2)と(3)の設定を外し、\ ``realDataSource``\ のbean名を\ ``dataSource``\ に変更する。
-
-
-log4jdbc用ロガーの設定
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-- :file:`logback.xml`
-
- .. code-block:: xml
-
-    <!-- (1) -->
-    <logger name="jdbc.sqltiming">
-        <level value="debug" />
-    </logger>
-
-    <!-- (2) -->
-    <logger name="jdbc.sqlonly">
-        <level value="warn" />
-    </logger>
-
-    <!-- (3) -->
-    <logger name="jdbc.audit">
-        <level value="warn" />
-    </logger>
-
-    <!-- (4) -->
-    <logger name="jdbc.connection">
-        <level value="warn" />
-    </logger>
-
-    <!-- (5) -->
-    <logger name="jdbc.resultset">
-        <level value="warn" />
-    </logger>
-
-    <!-- (6) -->
-    <logger name="jdbc.resultsettable">
-        <level value="debug" />
-    </logger>
-
- .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
- .. list-table::
-    :header-rows: 1
-    :widths: 10 90
-
-    * - 項番
-      - 説明
-    * - | (1)
-      - | バインド変数に値が設定された状態のSQL文と、SQLの実行時間を出力するためのロガー。値がバインドされた形式のSQLが出力されるので、DBアクセスツールに貼りつけて実行する事ができる。
-    * - | (2)
-      - | バインド変数に値が設定された状態のSQL文を、出力するためのロガー。(1)との違いは、実行時間が出力されない。
-    * - | (3)
-      - | ResultSetインタフェースを除く、JDBCインタフェースのメソッド呼び出し（引数と、返り値）を出力するためのロガー。JDBC関連で問題が発生した時の解析に有効なログであるが、出力されるログの量が多い。
-    * - | (4)
-      - | Connectionの接続/切断イベントと使用中の接続数を出力するためのロガー。接続リークが発生時の解析に有効なログであるが、接続リークの問題がなければ、出力する必要はない。
-    * - | (5)
-      - | ResultSetインタフェースに対するメソッド呼び出し（引数と、返り値）を出力するためのロガー。取得結果が、想定と異なった時の解析に有効なログであるが、出力されるログの量が多い。
-    * - | (6)
-      - | ResultSetの中身を確認しやすい形式にフォーマットして出力するためのロガー。取得結果が、想定と異なった時の解析に有効なログであるが、出力されるログの量が多い。
-
- .. warning::
-
-    **ロガーによっては大量にログが出力されるので、必要なロガーのみ定義、または出力対象にすること。**
-
-    上記サンプルでは、開発中の非常に有効なログを出力するロガーについて、ログレベルを\ ``debug``\ に設定している。
-    その他のロガーについては、必要に応じて\ ``debug``\ に設定する必要がある。
-
-    **性能試験及び商用環境にリリースする場合、正常終了時にlog4jdbc用のロガーによってログが出力されないようにすること。**
-
-    具体的には、ログレベルを\ ``warn``\ に設定する。
-
-
-log4jdbcのオプションの設定
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-クラスパス直下に、\ :file:`log4jdbc.properties`\ というプロパティファイルを配置することで、log4jdbcのデフォルトの動作をカスタマイズすることができる。
-
-- :file:`log4jdbc.properties`
-
- .. code-block:: properties
-
-     # (1)
-     log4jdbc.dump.sql.maxlinelength=0
-     # (2)
-
- .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
- .. list-table::
-    :header-rows: 1
-    :widths: 10 90
-
-    * - 項番
-      - 説明
-    * - | (1)
-      - SQL分の折り返し文字数を指定する。0を指定すると、折り返しはされない。
-    * - | (2)
-      - オプションの詳細については、\ `log4jdbc project page -Options- <https://code.google.com/p/log4jdbc/#Options>`_\ を参照されたい。
-
-|
 
 How to extend
 --------------------------------------------------------------------------------
@@ -570,10 +443,10 @@ AbstractRoutingDataSourceの実装
     * - | (5)
       - 後述するbean定義ファイル内の\ ``targetDataSources``\ とマッピングさせる\ ``key``\ を返す。
 
-.. note
+ .. note::
 
     認証ユーザー情報(IDや権限)によってデータソースを切り替えたい場合には、\ ``determineCurrentLookupKey``\ メソッド内で、\ ``org.springframework.security.core.context.SecurityContext``\ を使用して取得すれば良い。
-    \ ``org.springframework.security.core.context.SecurityContext``\ クラスの詳細は\ :doc:`../Security/Authentication`\ を参照のこと。
+    \ ``org.springframework.security.core.context.SecurityContext``\ クラスの詳細は\ :doc:`../../Security/Authentication`\ を参照のこと。
 
 データソースの定義
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""

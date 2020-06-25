@@ -540,7 +540,7 @@ spring-mvc-rest.xmlの作成
 ``src/main/resources/META-INF/spring/spring-mvc-rest.xml``
 
 .. code-block:: xml
-    :emphasize-lines: 15,20-34,37,39,50
+    :emphasize-lines: 15,20-34,37,39,49
 
     <?xml version="1.0" encoding="UTF-8"?>
     <beans xmlns="http://www.springframework.org/schema/beans"
@@ -549,11 +549,11 @@ spring-mvc-rest.xmlの作成
         xmlns:mvc="http://www.springframework.org/schema/mvc"
         xmlns:util="http://www.springframework.org/schema/util"
         xmlns:aop="http://www.springframework.org/schema/aop"
-        xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
-            http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-            http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
-            http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
-            http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+        xsi:schemaLocation="http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
+            http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+            http://www.springframework.org/schema/util https://www.springframework.org/schema/util/spring-util.xsd
+            http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd
+            http://www.springframework.org/schema/aop https://www.springframework.org/schema/aop/spring-aop.xsd
         ">
 
         <!-- (1) -->
@@ -585,7 +585,6 @@ spring-mvc-rest.xmlの作成
             <mvc:interceptor>
                 <mvc:mapping path="/**" />
                 <mvc:exclude-mapping path="/resources/**" />
-                <mvc:exclude-mapping path="/**/*.html" />
                 <bean
                     class="org.terasoluna.gfw.web.logging.TraceLoggingInterceptor" />
             </mvc:interceptor>
@@ -656,8 +655,8 @@ REST API用のSpring Securityの定義追加
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xmlns:sec="http://www.springframework.org/schema/security"
         xsi:schemaLocation="
-            http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
-            http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+            http://www.springframework.org/schema/security https://www.springframework.org/schema/security/spring-security.xsd
+            http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
         ">
 
         <sec:http pattern="/resources/**" security="none"/>
@@ -970,7 +969,7 @@ Todoリソースを新規作成するAPI(POST Todos)の処理を、\ ``TodoRestC
 ``src/main/java/com/example/todo/api/todo/TodoRestController.java``
 
 .. code-block:: java
-    :emphasize-lines: 41-47
+    :emphasize-lines: 42-48
 
     package com.example.todo.api.todo;
 
@@ -1214,7 +1213,7 @@ GET Todoの実装
 | ``src/main/java/com/example/todo/api/todo/TodoRestController.java``
 
 .. code-block:: java
-    :emphasize-lines: 50-56
+    :emphasize-lines: 51-57
 
     package com.example.todo.api.todo;
 
@@ -1312,7 +1311,7 @@ Todoリソースを一件更新(完了状態へ更新)するAPI(PUT Todo)の処�
 ``src/main/java/com/example/todo/api/todo/TodoRestController.java``
 
 .. code-block:: java
-    :emphasize-lines: 58-64
+    :emphasize-lines: 60-66
 
     package com.example.todo.api.todo;
     
@@ -1425,7 +1424,7 @@ DELETE Todoの実装
 ``src/main/java/com/example/todo/api/todo/TodoRestController.java``
 
 .. code-block:: java
-    :emphasize-lines: 66-70
+    :emphasize-lines: 69-73
 
     package com.example.todo.api.todo;
 

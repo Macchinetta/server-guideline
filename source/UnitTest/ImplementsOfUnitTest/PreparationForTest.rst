@@ -33,10 +33,6 @@ OSSライブラリの設定
     <dependency>
         <groupId>junit</groupId>
         <artifactId>junit</artifactId>
-    </dependency>
-    <dependency>
-        <groupId>org.hamcrest</groupId>
-        <artifactId>hamcrest-library</artifactId>
         <scope>test</scope>
     </dependency>
     <dependency>
@@ -47,6 +43,7 @@ OSSライブラリの設定
     <dependency>
         <groupId>org.springframework</groupId>
         <artifactId>spring-test</artifactId>
+        <scope>test</scope>
     </dependency>
     <!--  REMOVE THIS LINE IF YOU USE DBUnit
     <dependency>
@@ -70,7 +67,7 @@ OSSライブラリの設定
 
     \ ``dbunit``\ と\ ``spring-test-dbunit``\ 以外の上記設定例は、依存ライブラリのバージョンを親プロジェクトである
     terasoluna-gfw-parentで管理する前提であるため、\ ``pom.xml``\ でのバージョン指定は不要である。
-    また、\ ``hamcrest-core``\ については、\ ``junit``\ が依存関係を解決しているため、改めて定義する必要はない。
+    また、\ ``hamcrest``\ については、\ ``junit``\ が依存関係を解決しているため、改めて定義する必要はない。
 
 .. tip:: **PostgreSQLドライバの追加方法について**
 
@@ -159,7 +156,7 @@ initdbプロジェクトについては、\ :ref:`CreateWebApplicationProjectCon
     * SQL解析メタデータ(\ ``config``\ に\ ``@SqlConfig``\ アノテーションを指定)
 
     また、\ ``@Sql``\ アノテーションはデフォルトで有効になっている\ ``SqlScriptsTestExecutionListener``\ によって
-    実行される。詳細は、\ `Executing SQL scripts declaratively with @Sql <https://docs.spring.io/spring/docs/5.1.4.RELEASE/spring-framework-reference/testing.html#testcontext-executing-sql-declaratively>`_\ 
+    実行される。詳細は、\ `Executing SQL scripts declaratively with @Sql <https://docs.spring.io/spring/docs/5.2.3.RELEASE/spring-framework-reference/testing.html#testcontext-executing-sql-declaratively>`_\ 
     を参照されたい。
 
     なお、\ ``@Sql``\ アノテーションと\ ``@SqlConfig``\ アノテーションによる構成は\ ``<jdbc:initialize-database>``\ 要素
@@ -343,8 +340,8 @@ Spring Testの DI機能を使用することでテストで使用するBeanを�
     <beans xmlns="http://www.springframework.org/schema/beans"
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xmlns:context="http://www.springframework.org/schema/context"
-      xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-            http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+      xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+            http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
 
         <context:property-placeholder
                         location="classpath*:/META-INF/spring/*.properties" />
@@ -367,9 +364,14 @@ Spring Testの DI機能を使用することでテストで使用するBeanを�
               <entry key="bcrypt">
                 <bean class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
               </entry>
+              <!-- When using commented out PasswordEncoders, you need to add bcprov-jdk15on.jar to the dependency.
+              <entry key="argon2">
+                <bean class="org.springframework.security.crypto.argon2.Argon2PasswordEncoder" />
+              </entry>
               <entry key="scrypt">
                 <bean class="org.springframework.security.crypto.scrypt.SCryptPasswordEncoder" />
               </entry>
+              -->
             </map>
           </constructor-arg>
         </bean>

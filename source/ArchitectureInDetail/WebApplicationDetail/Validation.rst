@@ -62,7 +62,7 @@ Webアプリケーションの入力チェックには、サーバサイドで�
    * - 相関項目チェック
      - | 複数のフィールドを比較するチェック
      - | パスワードと確認用パスワードの一致チェック
-     - | `org.springframework.validation.Validator <https://docs.spring.io/spring/docs/5.1.4.RELEASE/spring-framework-reference/core.html#validator>`_\ インタフェースを実装したValidationクラス
+     - | `org.springframework.validation.Validator <https://docs.spring.io/spring/docs/5.2.3.RELEASE/spring-framework-reference/core.html#validator>`_\ インタフェースを実装したValidationクラス
        | または Bean Validation
 
 
@@ -603,7 +603,7 @@ NameとEmailが空文字であることに対するエラーメッセージと�
 
 .. note:: **@GroupSequenceアノテーションについて**
 
-   チェック順番を制御するための仕組みとして\ `@GroupSequenceアノテーション <http://docs.jboss.org/hibernate/validator/5.3/reference/en-US/html/ch05.html#section-default-group-class>`_\ が提供されているが、
+   チェック順番を制御するための仕組みとして\ `@GroupSequenceアノテーション <https://docs.jboss.org/hibernate/validator/6.0/reference/en-US/html_single/#_code_groupsequence_code>`_\ が提供されているが、
    この仕組みは以下のような動作になるため、エラーメッセージの出力順序を制御するための仕組みではないという点を補足しておく。
 
    * エラーが発生した場合に後続のグループのチェックが実行されない。
@@ -2261,7 +2261,7 @@ Bean Validationによって、相関項目チェックの実装するために�
 Spring MVCによるBean Validationのエラーメッセージは、以下の順で解決される。
 
 #. | \ ``org.springframework.context.MessageSource``\ に定義されているメッセージの中に、ルールに合致するものがあればそれをエラーメッセージとして使用する (Springのルール)。
-   | Springのデフォルトのルールについては、「`DefaultMessageCodesResolverのJavaDoc <https://docs.spring.io/spring/docs/5.1.4.RELEASE/javadoc-api/org/springframework/validation/DefaultMessageCodesResolver.html>`_」を参照されたい。
+   | Springのデフォルトのルールについては、「`DefaultMessageCodesResolverのJavaDoc <https://docs.spring.io/spring/docs/5.2.3.RELEASE/javadoc-api/org/springframework/validation/DefaultMessageCodesResolver.html>`_」を参照されたい。
 #. 1.でメッセージが見つからない場合、アノテーションの\ ``message``\ 属性に、指定されたメッセージからエラーメッセージを取得する (Bean Validationのルール)
 
   #. \ ``message``\ 属性に指定されたメッセージが、"{メッセージキー}"形式でない場合、そのテキストをエラーメッセージとして使用する。
@@ -2494,7 +2494,7 @@ Bean Validationのアノテーションの\ ``message``\ 属性に指定され�
             後者は\ ``@DecimalMax``\ アノテーションの \ ``inclusive``\ 属性に \ ``false``\ を指定した場合に生成される。
 
             Bean ValidationにおけるEL式の扱いについては、
-            \ `Hibernate Validator Reference Guide(Interpolation with message expressions) <http://docs.jboss.org/hibernate/validator/6.0/reference/en-US/html_single/#section-interpolation-with-message-expressions>`_\ を参照されたい。
+            \ `Hibernate Validator Reference Guide(Interpolation with message expressions) <https://docs.jboss.org/hibernate/validator/6.0/reference/en-US/html_single/#section-interpolation-with-message-expressions>`_\ を参照されたい。
 
     また、:file:`ValidationMessages.properties` に指定するメッセージに \ ``${validatedValue}``\ を使用することで、エラーメッセージにチェック対象の値を含むことができる。
 
@@ -2521,7 +2521,7 @@ Bean Validationのアノテーションの\ ``message``\ 属性に指定され�
           - 上記のメッセージ定義から実際に生成されるメッセージは、 \ ``${validatedValue}``\ の部分にフォームに入力した値が埋め込まれる。
             入力値に機密情報を含む場合、機密情報がメッセージに表示されないようにするため、 \ ``${validatedValue}``\ を使用しないように注意すること。
 
-            詳細については、\ `Hibernate Validator Reference Guide(Interpolation with message expressions) <http://docs.jboss.org/hibernate/validator/6.0/reference/en-US/html_single/#section-interpolation-with-message-expressions>`_\ を参照されたい。
+            詳細については、\ `Hibernate Validator Reference Guide(Interpolation with message expressions) <https://docs.jboss.org/hibernate/validator/6.0/reference/en-US/html_single/#section-interpolation-with-message-expressions>`_\ を参照されたい。
 
 
 .. _Validation_message_in_application_messages:
@@ -2568,7 +2568,7 @@ ValidationMessages.propertiesでシステムが利用するデフォルトのメ
 * \ ``{2}``\  : \ ``min``\ 属性の値
 
 となる。
-仕様の詳細については \ `SpringValidatorAdapterのJavaDoc <https://docs.spring.io/spring/docs/5.1.4.RELEASE/javadoc-api/org/springframework/validation/beanvalidation/SpringValidatorAdapter.html#getArgumentsForConstraint-java.lang.String-java.lang.String-javax.validation.metadata.ConstraintDescriptor->`_\
+仕様の詳細については \ `SpringValidatorAdapterのJavaDoc <https://docs.spring.io/spring/docs/5.2.3.RELEASE/javadoc-api/org/springframework/validation/beanvalidation/SpringValidatorAdapter.html#getArgumentsForConstraint-java.lang.String-java.lang.String-javax.validation.metadata.ConstraintDescriptor->`_\
 を参照されたい。
 
 エラーメッセージは以下のように変更される。
@@ -2579,7 +2579,7 @@ ValidationMessages.propertiesでシステムが利用するデフォルトのメ
 
 .. note::
 
-  application-messages.propertiesのメッセージキーの形式は、\ `これ以外にも用意されている <https://docs.spring.io/spring/docs/5.1.4.RELEASE/javadoc-api/org/springframework/validation/DefaultMessageCodesResolver.html>`_\ が、
+  application-messages.propertiesのメッセージキーの形式は、\ `これ以外にも用意されている <https://docs.spring.io/spring/docs/5.2.3.RELEASE/javadoc-api/org/springframework/validation/DefaultMessageCodesResolver.html>`_\ が、
   デフォルトメッセージを一部上書きする目的で使用するのであれば、基本的に、\ ``アノテーション名.フォーム属性名.プロパティ名``\ 形式でよい。
 
 |
@@ -3830,8 +3830,8 @@ Bean Validationの制約アノテーションを指定する方法について�
         @ExceptionHandler
         public String handleConstraintViolationException(ConstraintViolationException e){
             // (2)
-            if (log.isErrorEnabled()) {
-                log.error("ConstraintViolations[\n{}\n]", e.getConstraintViolations());
+            if (logger.isErrorEnabled()) {
+                logger.error("ConstraintViolations[\n{}\n]", e.getConstraintViolations());
             }
             return "common/error/systemError";
         }
@@ -4039,7 +4039,8 @@ Bean Validationの標準アノテーション(\ ``javax.validation.*``\ )を以�
    * - \ ``@Future``\
      - \ ``Date``\ , \ ``Calendar``\ および\ ``JSR-310 Date and Time API``\ で提供されるクラス
        (Hibernate Validator実装ではJoda-Timeのクラスにも適用可能。詳細は、「`@FutureアノテーションのJavaDoc <https://javaee.github.io/javaee-spec/javadocs/javax/validation/constraints/Future.html>`_」を参照されたい。)
-     - 未来日付であるか検証する。
+     - | 未来であるか検証する。
+       | \ ``Date``\ のように日時を持つ型では未来日時であるか検証し、\ ``java.time.LocalDate``\ のように日付のみ持つ型では未来日付であるか検証する。
      - .. code-block:: java
 
             @Future
@@ -4048,7 +4049,8 @@ Bean Validationの標準アノテーション(\ ``javax.validation.*``\ )を以�
    * - \ ``@FutureOrPresent``\
      - \ ``Date``\ , \ ``Calendar``\ および\ ``JSR-310 Date and Time API``\ で提供されるクラス
        (Hibernate Validator実装ではJoda-Timeのクラスにも適用可能。詳細は、「`@FutureOrPresentアノテーションのJavaDoc <https://javaee.github.io/javaee-spec/javadocs/javax/validation/constraints/FutureOrPresent.html>`_」を参照されたい。)
-     - | 現在または未来日付であるか検証する。（2.0から追加）
+     - | 現在または未来であるか検証する。（2.0から追加）
+       | \ ``Date``\ のように日時を持つ型では未来日時であるか検証し、\ ``java.time.LocalDate``\ のように日付のみ持つ型では未来日付であるか検証する。
      - .. code-block:: java
 
             @FutureOrPresent
@@ -4057,7 +4059,8 @@ Bean Validationの標準アノテーション(\ ``javax.validation.*``\ )を以�
    * - \ ``@Past``\
      - \ ``Date``\ , \ ``Calendar``\ および\ ``JSR-310 Date and Time API``\ で提供されるクラス
        (Hibernate Validator実装ではJoda-Timeのクラスにも適用可能。詳細は、「`@PastアノテーションのJavaDoc <https://javaee.github.io/javaee-spec/javadocs/javax/validation/constraints/Past.html>`_」を参照されたい。)
-     - 過去日付であるか検証する。
+     - | 過去であるか検証する。
+       | \ ``Date``\ のように日時を持つ型では過去日時であるか検証し、\ ``java.time.LocalDate``\ のように日付のみ持つ型では過去日付であるか検証する。
      - .. code-block:: java
 
             @Past
@@ -4066,7 +4069,8 @@ Bean Validationの標準アノテーション(\ ``javax.validation.*``\ )を以�
    * - \ ``@PastOrPresent``\
      - \ ``Date``\ , \ ``Calendar``\ および\ ``JSR-310 Date and Time API``\ で提供されるクラス
        (Hibernate Validator実装ではJoda-Timeのクラスにも適用可能。詳細は、「`@PastOrPresentアノテーションのJavaDoc <https://javaee.github.io/javaee-spec/javadocs/javax/validation/constraints/PastOrPresent.html>`_」を参照されたい。)
-     - | 現在または過去日付であるか検証する。（2.0から追加）
+     - | 現在または過去であるか検証する。（2.0から追加）
+       | \ ``Date``\ のように日時を持つ型では過去日時であるか検証し、\ ``java.time.LocalDate``\ のように日付のみ持つ型では過去日付であるか検証する。
      - .. code-block:: java
 
             @PastOrPresent
@@ -4112,6 +4116,17 @@ Bean Validationの標準アノテーション(\ ``javax.validation.*``\ )を以�
 
     これらの注意点を考慮した上で、利用・サポートするSMTPサーバなどによって適切なルールでの入力チェックを実装することを推奨する。
     実装の際は、\ :ref:`Validation_convine_existing_constraint`\ を参照されたい。
+
+.. warning::
+
+     \ ``@Past``\、\ ``@Future``\、\ ``@PastOrPresent``\、\ ``@FutureOrPresent``\アノテーションでは検証を\ ``compareTo``\メソッドで行っており、検証対象の型により日付のみ検証するか日時を検証するかが異なる。
+
+     このため、日付項目に\ ``Date``\型を利用していると以下のような事象が発生する可能性がある。
+
+     * 現在日付を入力しているにも関わらず\ ``@Past``\でのチェックをパスしてしまう。
+     * 現在日付を入力しているにも関わらず\ ``@FutureOrPresent``\でのチェックをパスできない。
+
+     日付時刻の検証を行う場合は適切な型を利用するよう留意されたい。
 
 .. note::
 
@@ -4197,7 +4212,7 @@ Hibernate Validatorの代表的なアノテーション(\ ``org.hibernate.valida
 .. _Validation_default_message_in_hibernate_validator:
 
 Hibernate Validatorが用意するデフォルトメッセージ
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 hibernate-validator-<version>.jar内のorg/hibernate/validatorに、ValidationMessages.propertiesのデフォルト値が定義されている。
 
@@ -4270,7 +4285,7 @@ hibernate-validator-<version>.jar内のorg/hibernate/validatorに、ValidationMe
 terasoluna-gfw-commonのチェックルール
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-\ `terasoluna-gfw-common <https://github.com/terasolunaorg/terasoluna-gfw/tree/5.5.1.RELEASE/terasoluna-gfw-common-libraries/terasoluna-gfw-common>`_\ が提供するアノテーション(\ ``org.terasoluna.gfw.common.codelist.*``\ )を以下に示す。
+\ `terasoluna-gfw-common <https://github.com/terasolunaorg/terasoluna-gfw/tree/5.6.0.RELEASE/terasoluna-gfw-common-libraries/terasoluna-gfw-common>`_\ が提供するアノテーション(\ ``org.terasoluna.gfw.common.codelist.*``\ )を以下に示す。
 
 .. tabularcolumns:: |p{0.15\linewidth}|p{0.30\linewidth}|p{0.30\linewidth}|p{0.25\linewidth}|
 .. list-table::
@@ -4294,7 +4309,7 @@ terasoluna-gfw-commonのチェックルール
 terasoluna-gfw-codepointsのチェックルール
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-\ `terasoluna-gfw-codepoints <https://github.com/terasolunaorg/terasoluna-gfw/tree/5.5.1.RELEASE/terasoluna-gfw-common-libraries/terasoluna-gfw-codepoints>`_\ が提供するアノテーション(\ ``org.terasoluna.gfw.common.codepoints.*``\ )を以下に示す。なお、\ ``terasoluna-gfw-codepoints``\ はバージョン5.1.0.RELEASE以上で利用することができる。
+\ `terasoluna-gfw-codepoints <https://github.com/terasolunaorg/terasoluna-gfw/tree/5.6.0.RELEASE/terasoluna-gfw-common-libraries/terasoluna-gfw-codepoints>`_\ が提供するアノテーション(\ ``org.terasoluna.gfw.common.codepoints.*``\ )を以下に示す。なお、\ ``terasoluna-gfw-codepoints``\ はバージョン5.1.0.RELEASE以上で利用することができる。
 
 .. tabularcolumns:: |p{0.15\linewidth}|p{0.30\linewidth}|p{0.30\linewidth}|p{0.25\linewidth}|
 .. list-table::
@@ -4316,7 +4331,7 @@ terasoluna-gfw-codepointsのチェックルール
 terasoluna-gfw-validatorのチェックルール
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-\ `terasoluna-gfw-validator <https://github.com/terasolunaorg/terasoluna-gfw/tree/5.5.1.RELEASE/terasoluna-gfw-common-libraries/terasoluna-gfw-validator>`_\ が提供するアノテーション(\ ``org.terasoluna.gfw.common.validator.constraints.*``\ )を以下に示す。なお、\ ``terasoluna-gfw-validator``\ はバージョン5.1.0.RELEASE以上で利用することができる。
+\ `terasoluna-gfw-validator <https://github.com/terasolunaorg/terasoluna-gfw/tree/5.6.0.RELEASE/terasoluna-gfw-common-libraries/terasoluna-gfw-validator>`_\ が提供するアノテーション(\ ``org.terasoluna.gfw.common.validator.constraints.*``\ )を以下に示す。なお、\ ``terasoluna-gfw-validator``\ はバージョン5.1.0.RELEASE以上で利用することができる。
 
 .. tabularcolumns:: |p{0.15\linewidth}|p{0.30\linewidth}|p{0.30\linewidth}|p{0.25\linewidth}|
 .. list-table::
@@ -4493,20 +4508,66 @@ terasoluna-gfw-validatorのチェックルール
                   LocalDate to;
                 }
 
-|
-
-.. _Validation_terasoluna_gfw_how_to_use:
-
 .. raw:: latex
 
    \newpage
+
+.. _Validation_default_message_in_terasoluna_gfw:
+
+共通ライブラリが用意するデフォルトメッセージ
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+共通ライブラリの各Jar内のContributorValidationMessages.propertiesファイルに、ValidationMessages.propertiesのデフォルト値が定義されている。
+
+.. code-block:: properties
+
+  # terasoluna-gfw-common
+  org.terasoluna.gfw.common.codelist.ExistInCodeList.message = Does not exist in {codeListId}
+
+  # terasoluna-gfw-codepoints
+  org.terasoluna.gfw.common.codepoints.ConsistOf.message = not consist of specified code points
+
+  # terasoluna-gfw-validator
+  org.terasoluna.gfw.common.validator.constraints.ByteMin.message = must be greater than or equal to {value} bytes
+  org.terasoluna.gfw.common.validator.constraints.ByteMax.message = must be less than or equal to {value} bytes
+  org.terasoluna.gfw.common.validator.constraints.ByteSize.message = must be between {min} and {max} bytes
+  org.terasoluna.gfw.common.validator.constraints.Compare.message = invalid combination of {left} and {right}
+
+.. note::
+
+  共通ライブラリでは5.6.0.RELEASEより、デフォルトメッセージをブランクプロジェクトのsrc/main/resources/ValidationMessages.propertiesファイルで提供するのをやめ、
+  共通ライブラリの各Jar内のContributorValidationMessages.propertiesファイルで提供するよう変更した。
+
+  ContributorValidationMessages.propertiesファイルはHibernate Validatorのメッセージ定義ファイルである。
+  他のBean Validation実装ライブラリを利用する場合はデフォルトメッセージが適用されないことに注意されたい。
+
+.. note::
+
+  terasoluna-gfw-common 5.0.0.RELEASEより、
+  メッセージのプロパティキーの形式を、Bean Validationのスタンダードな形式(アノテーションのFQCN + \ ``.message``\ )に変更している。
+
+   .. tabularcolumns:: |p{0.40\linewidth}|p{0.60\linewidth}|
+   .. list-table::
+      :header-rows: 1
+      :widths: 40 60
+
+      * - バージョン
+        - メッセージのプロパティキー
+      * - | version 5.0.0.RELEASE以降
+        - | ``org.terasoluna.gfw.common.codelist.ExistInCodeList.message``
+      * - | version 1.0.x.RELEASE
+        - | ``org.terasoluna.gfw.common.codelist.ExistInCodeList``
+
+
+.. _Validation_terasoluna_gfw_how_to_use:
 
 共通ライブラリのチェックルールの適用方法
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 以下の手順で、共通ライブラリのチェックルールを適用する。
 
-使用したいチェックルールに応じて、依存ライブラリを追加する。\ ``terasoluna-gfw-validator``\ を追加する例を以下に示す。
+| 使用したいチェックルールに応じて、依存ライブラリを追加する。\ ``terasoluna-gfw-validator``\ を追加する例を以下に示す。
+| なお、\ ``terasoluna-gfw-common``\ はブランクプロジェクトのデフォルト設定で使用可能であり、依存ライブラリを追加する必要はない。
 
 .. code-block:: xml
 
@@ -4521,27 +4582,7 @@ terasoluna-gfw-validatorのチェックルール
 
     上記設定例は、依存ライブラリのバージョンを親プロジェクトである terasoluna-gfw-parent で管理する前提であるため、pom.xmlでのバージョンの指定は不要である。
 
-次に、\ :ref:`Validation_message_in_validationmessages`\ で説明したように :file:`ValidationMessages.properties` に、アノテーションに対応する任意のメッセージ定義を追加する。
-
-.. code-block:: properties
-
-  # (1)
-  org.terasoluna.gfw.common.validator.constraints.ByteMin.message = must be greater than or equal to {value} bytes
-  org.terasoluna.gfw.common.validator.constraints.ByteMax.message = must be less than or equal to {value} bytes
-  org.terasoluna.gfw.common.validator.constraints.ByteSize.message = must be between {min} and {max} bytes
-  org.terasoluna.gfw.common.validator.constraints.Compare.message = invalid combination of {left} and {right}
-
-.. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
-.. list-table::
-    :header-rows: 1
-    :widths: 10 90
-
-    * - 項番
-      - 説明
-    * - | (1)
-      - アノテーションごとにメッセージ定義を追加する。アノテーションの属性値は、プレースホルダ（\ ``{属性名}``\ の形式）を使用してメッセージの中に埋め込むことができる。
-
-最後に、\ :ref:`Validation_basic_validation`\ で説明したように、JavaBeanのプロパティにアノテーションを付与する。
+あとは\ :ref:`Validation_basic_validation`\ で説明したように、JavaBeanのプロパティにアノテーションを付与すればよい。
 
 .. note::
 
@@ -4741,7 +4782,7 @@ application-messages.propertiesに以下の定義を行った場合、
 
 .. tip::
 
-  メッセージキーのルールの詳細は、\ `DefaultMessageCodesResolverのJavadoc <https://docs.spring.io/spring/docs/5.1.4.RELEASE/javadoc-api/org/springframework/validation/DefaultMessageCodesResolver.html>`_\ を参照されたい。
+  メッセージキーのルールの詳細は、\ `DefaultMessageCodesResolverのJavadoc <https://docs.spring.io/spring/docs/5.2.3.RELEASE/javadoc-api/org/springframework/validation/DefaultMessageCodesResolver.html>`_\ を参照されたい。
 
 
 .. _Validation_string_trimmer_editor:

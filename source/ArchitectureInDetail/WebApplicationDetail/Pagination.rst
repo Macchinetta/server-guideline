@@ -386,41 +386,45 @@ JSPタグライブラリのパラメータに値を指定することで、デ�
         | 例) div
     * - 2.
       - outerElementClass
-      - | 「Outer Element Class」に設定するスタイルシートのクラス名を指定する。
+      - | 「Outer Element」のclass属性に設定するスタイルシートのクラス名を指定する。
         | 例) pagination
     * - 3.
       - innerElement
       - | 「Inner Element」として使用するHTML要素名を指定する。
         | 例) span
     * - 4.
+      - innerElementClass
+      - | 「Inner Element」のclass属性に設定するスタイルシートのクラス名を指定する。 **5.6.0から追加**
+        | 例) enablePageLink
+    * - 5.
       - disabledClass
       - | ``disabled`` 状態と判断された「Inner Element」のclass属性に設定する値を指定する。
         | 例) hiddenPageLink
-    * - 5.
+    * - 6.
       - activeClass
       - | ``active`` 状態の「Inner Element」のclass属性に設定する値を指定する。
         | 例) currentPageLink
-    * - 6.
+    * - 7.
       - firstLinkText
       - | 「最初のページに移動するためのリンク」の「Page Link Text」に設定する値を指定する。
         | ``""`` を指定すると、「最初のページに移動するためのリンク」自体が出力されなくなる。
         | 例) First
-    * - 7.
+    * - 8.
       - previousLinkText
       - | 「前のページに移動するためのリンク」の「Page Link Text」に設定する値を指定する。
         | ``""`` を指定すると、「前のページに移動するためのリンク」自体が出力されなくなる。
         | 例) Prev
-    * - 8.
+    * - 9.
       - nextLinkText
       - | 「次のページに移動するためのリンク」の「Page Link Text」に設定する値を指定する。
         | ``""`` を指定すると、「次のページに移動するためのリンク」自体が出力されなくなる。
         | 例) Next
-    * - 9.
+    * - 10.
       - lastLinkText
       - | 「最後のページに移動するためのリンク」の「Page Link Text」に設定する値を指定する。
         | ``""`` を指定すると、「次のページに移動するためのリンク」自体が出力されなくなる。
         | 例) Last
-    * - 10.
+    * - 11.
       - maxDisplayCount
       - | 「指定したページに移動するためのリンク」の最大表示数を指定する。
         | "``0``" を指定すると、「指定したページに移動するためのリンク」自体が出力されなくなる。
@@ -443,6 +447,7 @@ JSPタグライブラリのパラメータに値を指定することで、デ�
         outerElement="div"
         outerElementClass="pagination"
         innerElement="span"
+        innerElementClass="enablePageLink"
         disabledClass="hiddenPageLink"
         activeClass="currentPageLink"
         firstLinkText="First"
@@ -1787,7 +1792,7 @@ Appendix
                 <property name="maxPageSize" value="100" />
                 <!-- (2) -->
                 <property name="fallbackPageable">
-                    <bean class="org.springframework.data.domain.PageRequest">
+                    <bean class="org.springframework.data.domain.PageRequest" factory-method="of">
                         <!-- (3) -->
                         <constructor-arg index="0" value="0" />
                         <!-- (4) -->
@@ -1799,7 +1804,7 @@ Appendix
                     <bean class="org.springframework.data.web.SortHandlerMethodArgumentResolver">
                         <!-- (6) -->
                         <property name="fallbackSort">
-                            <bean class="org.springframework.data.domain.Sort">
+                            <bean class="org.springframework.data.domain.Sort" factory-method="by">
                                 <!-- (7) -->
                                 <constructor-arg index="0">
                                     <list>
@@ -1838,18 +1843,20 @@ Appendix
       - | 上記例では取得件数の最大値を `100` に設定している。 取得件数(size)に `101` 以上が指定された場合は、 `100` に切り捨てて検索が行われる。
     * - | (2)
       - | ``org.springframework.data.domain.PageRequest`` のインスタンスを生成し、 ``fallbackPageable`` に設定する。
+        | spring-data-commons 2.2.0より ``PageRequest`` クラスからpublicなコンストラクタが削除されたため、factory-methodを利用してstaticな ``PageRequest#of`` メソッドによりBeanを生成する必要がある。
     * - | (3)
-      - | ``PageRequest`` のコンストラクタの第1引数に、ページ位置のデフォルト値を指定する。
-        |  上記例では `0` を指定しているため、デフォルト値は変更していない。
+      - | ``PageRequest#of`` メソッドの第1引数に、ページ位置のデフォルト値を指定する。
+        | 上記例では `0` を指定しているため、デフォルト値は変更していない。
     * - | (4)
-      - | ``PageRequest`` のコンストラクタの第2引数に、取得件数のデフォルト値を指定する。
+      - | ``PageRequest#of`` メソッドの第2引数に、取得件数のデフォルト値を指定する。
         | 上記例ではリクエストパラメータに取得件数の指定がない場合の取得件数は `50` となる。
     * - | (5)
       - | ``PageableHandlerMethodArgumentResolver`` のコンストラクタとして、 ``SortHandlerMethodArgumentResolver`` のインスタンスを設定する。
     * - | (6)
       - | ``Sort`` のインスタンスを生成し、 ``fallbackSort`` に設定する。
+        | spring-data-commons 2.2.0より ``Sort`` クラスからpublicなコンストラクタが削除されたため、factory-methodを利用してstaticな ``Sort#by`` メソッドによりBeanを生成する必要がある。
     * - | (7)
-      - | ``Sort`` のコンストラクタの第1引数に、 デフォルト値として使用する ``Order`` オブジェクトのリストを設定する。
+      - | ``Sort#by`` メソッドの第1引数に、 デフォルト値として使用する ``Order`` オブジェクトのリストを設定する。
     * - | (8)
       - | ``Order`` のインスタンスを生成し、 デフォルト値として使用する ``Order`` オブジェクトのリストに追加する。
         | 上記例ではリクエストパラメータにソート条件の指定がない場合は ``ORDER BY lastModifiedDate DESC, id ASC`` のようなOrder By句をQueryに追加することになる。

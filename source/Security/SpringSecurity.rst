@@ -16,14 +16,7 @@ Spring Securityはスタンドアロンなアプリケーションでも利用�
 .. tip:: **ガイドラインで紹介していない機能**
 
     Spring Securityは、本ガイドラインで紹介していない機能も多く提供している。
-    Spring Securityが提供するすべての機能を知りたい場合は、\ `Spring Security Reference -The Security Filter Chain- <https://docs.spring.io/spring-security/site/docs/5.1.3.RELEASE/reference/htmlsingle/#security-filter-chain>`_\ を参照されたい。
-
-.. note:: **Spring Securityのバージョン**
-
-    本ガイドラインでは、Spring Securityのバージョンは4.xを使用することを前提としている。
-    Spring Securityが4.0にバージョンアップするにあたり、様々な変更が適用されており、以降で記述されるサンプルについても、Spring Security 4を使用したサンプルとなっている。
-
-    変更内容については\ `Migrating from Spring Security 3.x to 4.x (XML Configuration) <https://docs.spring.io/spring-security/site/migrate/current/3-to-4/html5/migrate-3-to-4-xml.html>`_\ を参照されたい。
+    Spring Securityが提供するすべての機能を知りたい場合は、\ `Spring Security Reference -Servlet Applications- <https://docs.spring.io/spring-security/site/docs/5.2.1.RELEASE/reference/htmlsingle/#servlet-applications>`_\ を参照されたい。
 
 .. _SpringSecurityFunctionalities:
 
@@ -198,7 +191,7 @@ Spring Security 4.0からはテストを支援するためのモジュールが�
 
 .. [#fSpringSecurityArchitecture1] OpenIDは、簡単に言うと「1つのIDで複数のサイトにログインできるようにする」ための仕組みである。
 .. [#fSpringSecurityArchitecture2] CASは、OSSとして提供されているシングルサインオン用のサーバーコンポーネントである。詳細は https://www.apereo.org/cas を参照されたい。
-.. [#fSpringSecurityArchitecture3] 詳細は http://projects.spring.io/spring-security-oauth/ を参照されたい。
+.. [#fSpringSecurityArchitecture3] 詳細は https://spring.io/projects/spring-security-oauth を参照されたい。
 .. [#fSpringSecurityArchitecture4] OAuth 2.0は、OAuth 1.0が抱えていた課題(署名と認証フローの複雑さ、モバイルやデスクトップのクライアントアプリの未対応など)を改善したバージョンで、OAuth 1.0との後方互換性はない。
 .. [#fSpringSecurityArchitecture5] Spring Security 4.0から追加されたモジュールである。
 
@@ -240,7 +233,7 @@ Spring Securityは、サーブレットフィルタの仕組みを使用してWe
 |
 
 Webアプリケーション向けのフレームワーク処理を構成する主要なコンポーネントは以下の通りである。
-詳細は \ `Spring Security Reference -The Security Filter Chain- <https://docs.spring.io/spring-security/site/docs/5.1.3.RELEASE/reference/htmlsingle/#security-filter-chain>`_\ を参照されたい。
+詳細は \ `Spring Security Reference -Authentication in a Web Application- <https://docs.spring.io/spring-security/site/docs/5.2.1.RELEASE/reference/htmlsingle/#tech-intro-web-authentication>`_\ を参照されたい。
 
 
 FilterChainProxy
@@ -253,7 +246,21 @@ HttpFirewall
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 \ ``HttpFirewall``\ インタフェースは、\ ``HttpServletRequest``\ と\ ``HttpServletResponse``\ に対してファイアウォール機能を組み込むためのインタフェースである。
-デフォルトでは、\ ``DefaultHttpFirewall``\ クラスが使用され、ディレクトリトラバーサル攻撃やHTTPレスポンス分割攻撃に対するチェックなどが実装されている。
+デフォルトでは、\ ``StrictHttpFirewall``\ クラスが使用され、ディレクトリトラバーサル攻撃やHTTPレスポンス分割攻撃に対するチェックなどが実装されている。
+
+.. note::
+
+    Spring Security 5.0.1, 4.2.4, 4.1.5より、
+    デフォルトで使用される\ ``HttpFirewall``\ インタフェースの実装クラスは\ ``DefaultHttpFirewall``\ から\ ``StrictHttpFirewall``\ へ変更された。
+    
+    \ ``DefaultHttpFirewall``\ は\ `RFC 2396 <http://www.ietf.org/rfc/rfc2396.txt>`_\ に基づきリクエストURLの正規化を行うことで悪意あるURLを拒否するが、
+    \ ``StrictHttpFirewall``\ はより厳密にURLを構成する文字に不正な値がないことをチェックし、悪意あるURLを拒否する。
+    これにより、認証認可のバイパスやReflected File Download(RFD)攻撃への対策がなされている。
+    
+    URLの正規化は脆弱性対策としては不十分であるため、従来通り\ ``DefaultHttpFirewall``\ を利用するように変更することは推奨しない。
+    また、\ ``StrictHttpFirewall``\ のチェックについても、一部カスタマイズ可能なパラメータも存在するが、脆弱性の原因となりうるため変更することは推奨しない。
+    
+    \ ``StrictHttpFirewall``\ の詳細については、\ `Javadoc <https://docs.spring.io/spring-security/site/docs/5.2.1.RELEASE/api/org/springframework/security/web/firewall/StrictHttpFirewall.html>`_\ を参照されたい。
 
 SecurityFilterChain
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -283,6 +290,7 @@ Security Filterクラスは、フレームワーク機能やセキュリティ�
 Spring Securityは、複数のSecurity Filterを連鎖させることでWebアプリケーションのセキュリティ対策を行う仕組みになっている。
 ここでは、認証と認可機能を実現するために必要となるコアなクラスを紹介する。
 詳細は \ `Spring Security Reference -Core Security Filters- <https://docs.spring.io/spring-security/site/docs/5.1.3.RELEASE/reference/htmlsingle/#core-web-filters>`_\ を参照されたい。
+リンク先はSpring Security 5.1.3のリファレンスを示している。
 
 .. _SpringSecurityTableSecurityFilter:
 
@@ -388,8 +396,8 @@ Spring Securityのコンポーネントをbean定義するため、以下のよ�
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xmlns:sec="http://www.springframework.org/schema/security"
         xsi:schemaLocation="
-            http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
-            http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+            http://www.springframework.org/schema/security https://www.springframework.org/schema/security/spring-security.xsd
+            http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
         "> <!-- (1) -->
 
         <sec:http pattern="/resources/**" security="none"/> <!-- (2) -->

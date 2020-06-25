@@ -97,7 +97,7 @@ Webアプリケーション向け開発プロジェクトの作成
     mvn archetype:generate -B^
      -DarchetypeGroupId=com.github.macchinetta.blank^
      -DarchetypeArtifactId=macchinetta-multi-web-blank-archetype^
-     -DarchetypeVersion=1.6.1.RELEASE^
+     -DarchetypeVersion=1.7.0.RELEASE^
      -DgroupId=com.example.todo^
      -DartifactId=todo^
      -Dversion=1.0.0-SNAPSHOT
@@ -144,7 +144,7 @@ Webアプリケーション向け開発プロジェクトの作成
 
     (... omit)
     [INFO] ----------------------------------------------------------------------------
-    [INFO] Using following parameters for creating project from Archetype: macchinetta-multi-web-blank-archetype:1.6.1.RELEASE
+    [INFO] Using following parameters for creating project from Archetype: macchinetta-multi-web-blank-archetype:1.7.0.RELEASE
     [INFO] ----------------------------------------------------------------------------
     [INFO] Parameter: groupId, Value: com.example.todo
     [INFO] Parameter: artifactId, Value: todo
@@ -628,7 +628,7 @@ Maven Archetypeで作成したプロジェクトでは、インメモリデー�
 .. note::
 
    上記設定例は、依存ライブラリのバージョンを親プロジェクトである terasoluna-gfw-parent で管理する前提であるため、pom.xmlでのバージョンの指定は不要である。
-   上記の依存ライブラリはterasoluna-gfw-parentが依存している\ `Spring Boot <https://docs.spring.io/spring-boot/docs/2.1.2.RELEASE/reference/htmlsingle/#appendix-dependency-versions>`_\ で管理されている。
+   上記の依存ライブラリはterasoluna-gfw-parentが依存している\ `Spring Boot <https://docs.spring.io/spring-boot/docs/2.2.4.RELEASE/reference/htmlsingle/#dependency-versions>`_\ で管理されている。
 
 **[artifactId-infra.properties]**
 
@@ -745,15 +745,15 @@ Maven Archetypeで作成したプロジェクトでは、インメモリデー�
                              <version>${postgresql.version}</version>
                          </dependency>
         <!--             <dependency> -->
-        <!--                 <groupId>com.oracle.jdbc</groupId> -->
-        <!--                 <artifactId>ojdbc7</artifactId> -->
+        <!--                 <groupId>com.oracle.ojdbc</groupId> -->
+        <!--                 <artifactId>ojdbc8</artifactId> -->
         <!--                 <version>${ojdbc.version}</version> -->
         <!--             </dependency> -->
 
             <!-- ... -->
 
-            <postgresql.version>42.2.5</postgresql.version>
-            <ojdbc.version>12.1.0.2</ojdbc.version>
+            <postgresql.version>42.2.9</postgresql.version>
+            <ojdbc.version>19.3.0.0</ojdbc.version>
 
     * ``artifactId/artifactId-web/pom.xml``
 
@@ -766,7 +766,7 @@ Maven Archetypeで作成したプロジェクトでは、インメモリデー�
                      </dependency>
         <!--         <dependency> -->
         <!--             <groupId>com.oracle.jdbc</groupId> -->
-        <!--             <artifactId>ojdbc7</artifactId> -->
+        <!--             <artifactId>ojdbc8</artifactId> -->
         <!--             <scope>runtime</scope> -->
         <!--         </dependency> -->
 
@@ -999,11 +999,11 @@ Maven Archetypeで作成したプロジェクトは、以下の構成になっ�
     
     * bar-web-a-selenium
     
-      web-aプロジェクトのための、`Selenium WebDriver <http://seleniumhq.org/projects/webdriver/>`_ によるテストケースを格納するプロジェクト。
+      web-aプロジェクトのための、`Selenium WebDriver <https://www.selenium.dev/>`_ によるテストケースを格納するプロジェクト。
     
     * bar-web-b-selenium
     
-      web-bプロジェクトのための、`Selenium WebDriver <http://seleniumhq.org/projects/webdriver/>`_ によるテストケースを格納するプロジェクト。
+      web-bプロジェクトのための、`Selenium WebDriver <https://www.selenium.dev/>`_ によるテストケースを格納するプロジェクト。
 
 
 .. _CreateWebApplicationProjectConfigurationWeb:
@@ -1468,8 +1468,7 @@ envモジュールの構成
                     │   ├── H2-dataload.sql
                     │   └── H2-schema.sql
                     ├── dozer.properties  ... (8)
-                    ├── log4jdbc.properties  ... (9)
-                    └── logback.xml  ... (10)
+                    └── logback.xml  ... (9)
 
 .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
 .. list-table::
@@ -1504,11 +1503,6 @@ envモジュールの構成
 
         作成時点では、空のファイルである。(ファイルがないと起動時に警告ログが出力されるため、これを防ぐために空のファイルを用意している)
     * - | (9)
-      - Log4jdbc-remix(JDBC関連のログ出力を行うライブラリ)のグローバル設定を行うためのプロパティファイル。
-        Log4jdbc-remixについては、「:ref:`DataAccessCommonDataSourceDebug`」を参照されたい。
-
-        作成時点では、ログに出力するSQLの改行に関する設定のみ指定されている。
-    * - | (10)
       - Logback(ログ出力)の設定ファイル。
         ログ出力については、「:doc:`../ArchitectureInDetail/GeneralFuncDetail/Logging`」を参照されたい。
 
@@ -1547,7 +1541,7 @@ initdbモジュールの構成
       - データベースを初期化するためのSQLファイルを格納するためのディレクトリ。
 
         作成時点では、空のディレクトリである。
-        作成例については、`サンプルアプリケーションのinitdbプロジェクト <https://github.com/terasolunaorg/terasoluna-tourreservation-mybatis3/tree/5.5.1.RELEASE/terasoluna-tourreservation-initdb/src/main/sqls>`_ を参照されたい。
+        作成例については、`サンプルアプリケーションのinitdbプロジェクト <https://github.com/terasolunaorg/terasoluna-tourreservation-mybatis3/tree/5.6.0.RELEASE/terasoluna-tourreservation-initdb/src/main/sqls>`_ を参照されたい。
 
 .. note::
 
@@ -1603,7 +1597,7 @@ Seleniumを使用したE2E(End To End)テスト用のコンポーネントを管
     * - | (2)
       - テスト用のコンポーネントと設定ファイルを格納するディレクトリ。
 
-        作成例については、`サンプルアプリケーションのseleniumプロジェクト <https://github.com/terasolunaorg/terasoluna-tourreservation-mybatis3/tree/5.5.1.RELEASE/terasoluna-tourreservation-selenium>`_ を参照されたい。
+        作成例については、`サンプルアプリケーションのseleniumプロジェクト <https://github.com/terasolunaorg/terasoluna-tourreservation-mybatis3/tree/5.6.0.RELEASE/terasoluna-tourreservation-selenium>`_ を参照されたい。
 
     * - | (3)
       - Selenium WebDriverを使用したサンプルテストクラス。
@@ -1651,8 +1645,8 @@ Maven Archetypeで作成したプロジェクトのプロジェクト階層の�
         Maven Archetypeで作成したプロジェクトはマルチモジュール構成となっており、
         親プロジェクトと各サブモジュールは相互参照の関係になっている。
 
-        version 1.6.1.RELEASE用のMaven Archetypeで作成したプロジェクトでは、
-        親プロジェクトとして「org.terasoluna.gfw:terasoluna-gfw-parent:5.5.1.RELEASE」を指定している。
+        version 1.7.0.RELEASE用のMaven Archetypeで作成したプロジェクトでは、
+        親プロジェクトとして「org.terasoluna.gfw:terasoluna-gfw-parent:5.6.0.RELEASE」を指定している。
     * - | (2)
       - TERASOLUNA Server Framework for Java (5.x) Parentプロジェクト。
 
@@ -1686,7 +1680,7 @@ Maven Archetypeで作成したプロジェクトのプロジェクト階層の�
 
     そのため、子プロジェクト側でプロパティ値を参照又は上書きしている場合は、version 1.0.xからバージョンアップする際にpomファイルの修正が必要になる。
 
-    なお、Spring Bootで管理していない推奨ライブラリ(Macchinetta Server Framework for Java (1.x)独自の推奨ライブラリ)については、
+    なお、Spring Bootで管理していない推奨ライブラリ(Macchinetta Server Framework (1.x)独自の推奨ライブラリ)については、
     従来通りバージョンを管理するためのプロパティにアクセスする事ができる。
 
 

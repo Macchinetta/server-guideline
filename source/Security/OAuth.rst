@@ -908,6 +908,15 @@ Spring Security OAuthが提供している機能を使用するために、Sprin
 
     上記設定例は、依存ライブラリのバージョンを親プロジェクトである terasoluna-gfw-parent で管理する前提であるため、pom.xmlでのバージョンの指定は不要である。
 
+.. note:: **Spring Security OAuthにおけるオープンリダイレクト脆弱性**
+
+    Spring Security OAuth 2.3.4, 2.2.3, 2.1.3, 2.0.16以前では、
+    \ `CVE-2019-3778 <https://pivotal.io/security/cve-2019-3778>`_\で報告されているオープンリダイレクト脆弱性が存在した。
+
+    具体的には、認可コードグラントを利用した認可サーバにおいて、オープンリダイレクト脆弱性により認可コードが漏洩する危険性があった。
+
+    2.3.5, 2.2.4, 2.1.4, 2.0.17で修正されており、脆弱性の影響を受けない。
+
 |
 
 .. _ImplementationAutorizationCodeGrant:
@@ -945,11 +954,11 @@ Spring Security OAuthが提供している機能を使用するために、Sprin
            xmlns:sec="http://www.springframework.org/schema/security"
            xmlns:oauth2="http://www.springframework.org/schema/security/oauth2"
            xsi:schemaLocation="http://www.springframework.org/schema/security
-               http://www.springframework.org/schema/security/spring-security.xsd
+               https://www.springframework.org/schema/security/spring-security.xsd
                http://www.springframework.org/schema/security/oauth2
-               http://www.springframework.org/schema/security/spring-security-oauth2.xsd
+               https://www.springframework.org/schema/security/spring-security-oauth2.xsd
                http://www.springframework.org/schema/beans
-               http://www.springframework.org/schema/beans/spring-beans.xsd">
+               https://www.springframework.org/schema/beans/spring-beans.xsd">
 
 
     </beans>
@@ -1328,7 +1337,7 @@ Spring Security OAuthではクライアント情報を取得するためのイ�
         | \ ``authentication-manager-ref``\ 属性に(7)で定義しているクライアント認証用の\ ``AuthenticationManager``\のBeanを指定する。
     * - | (3)
       - | クライアント認証にBasic認証を適用する。
-        | 詳細については\ `Basic and Digest Authentication <https://docs.spring.io/spring-security/site/docs/5.1.3.RELEASE/reference/html/web-app-security.html#basic>`_\を参照されたい。
+        | 詳細については\ `Spring Security Reference -Basic and Digest Authentication- <https://docs.spring.io/spring-security/site/docs/5.2.1.RELEASE/reference/htmlsingle/#basic>`_\を参照されたい。
     * - | (4)
       - | \ ``/oauth/*token*/**``\ へのアクセスに対してCSRF対策機能を無効化する。
         | Spring Security OAuthでは、OAuth 2.0のCSRF対策として推奨されている、stateパラメータを使用したリクエストの正当性確認を採用している。
@@ -2125,11 +2134,11 @@ Spring Security OAuthが取り扱う情報（認可コード、認可情報、�
            xmlns:oauth2="http://www.springframework.org/schema/security/oauth2"
            xmlns:sec="http://www.springframework.org/schema/security"
            xsi:schemaLocation="http://www.springframework.org/schema/security
-               http://www.springframework.org/schema/security/spring-security.xsd
+               https://www.springframework.org/schema/security/spring-security.xsd
                http://www.springframework.org/schema/security/oauth2
-               http://www.springframework.org/schema/security/spring-security-oauth2.xsd
+               https://www.springframework.org/schema/security/spring-security-oauth2.xsd
                http://www.springframework.org/schema/beans
-               http://www.springframework.org/schema/beans/spring-beans.xsd">
+               https://www.springframework.org/schema/beans/spring-beans.xsd">
 
         <sec:http pattern="/api/v1/todos/**" create-session="stateless"
                        entry-point-ref="oauth2AuthenticationEntryPoint"> <!-- (1) -->
@@ -2175,7 +2184,7 @@ Spring Security OAuthが取り扱う情報（認可コード、認可情報、�
         | ここでは(7)で定義している\ ``oauth2AuthenticationFilter``\のBeanを指定する。
         | \ ``OAuth2AuthenticationProcessingFilter``\はリクエストに含まれるアクセストークンを利用してPre-Authenticationを行うためのフィルタであるため、
           \ ``before``\に\ ``PRE_AUTH_FILTER``\を指定し\ ``PRE_AUTH_FILTER``\の前に\ ``OAuth2AuthenticationProcessingFilter``\の処理が実行されるように設定する。
-        | Pre-Authenticationについては\ `Pre-Authentication Scenarios <https://docs.spring.io/spring-security/site/docs/5.1.3.RELEASE/reference/html/advanced-topics.html#preauth>`_\を参照されたい。
+        | Pre-Authenticationについては\ `Spring Security Reference -Pre-Authentication Scenarios- <https://docs.spring.io/spring-security/site/docs/5.2.1.RELEASE/reference/htmlsingle/#preauth>`_\を参照されたい。
     * - | (5)
       - | Spring Security OAuthが提供するリソースサーバ用の\ ``AccessDeniedHandler``\を定義する。
         | \ ``OAuth2AccessDeniedHandler``\は、認可エラー時に発生する例外をハンドリングしてエラー応答を行う。
@@ -2242,11 +2251,11 @@ Spring Security OAuthが取り扱う情報（認可コード、認可情報、�
            xmlns:oauth2="http://www.springframework.org/schema/security/oauth2"
            xmlns:sec="http://www.springframework.org/schema/security"
            xsi:schemaLocation="http://www.springframework.org/schema/security
-               http://www.springframework.org/schema/security/spring-security.xsd
+               https://www.springframework.org/schema/security/spring-security.xsd
                http://www.springframework.org/schema/security/oauth2
-               http://www.springframework.org/schema/security/spring-security-oauth2.xsd
+               https://www.springframework.org/schema/security/spring-security-oauth2.xsd
                http://www.springframework.org/schema/beans
-               http://www.springframework.org/schema/beans/spring-beans.xsd">
+               https://www.springframework.org/schema/beans/spring-beans.xsd">
 
         <sec:http pattern="/api/v1/todos/**" create-session="stateless"
                        entry-point-ref="oauth2AuthenticationEntryPoint">
@@ -2295,7 +2304,7 @@ Spring Security OAuthが取り扱う情報（認可コード、認可情報、�
 
 Spring Security OAuthが用意している主なExpressionを紹介する。
 
-詳細については\ ``org.springframework.security.oauth2.provider.expression.OAuth2SecurityExpressionMethods``\の\ `JavaDoc <https://docs.spring.io/spring-security/oauth/apidocs/org/springframework/security/oauth2/provider/expression/OAuth2SecurityExpressionMethods.html>`_\を参照されたい。
+詳細については\ ``org.springframework.security.oauth2.provider.expression.OAuth2SecurityExpressionMethods``\の\ `JavaDoc <https://docs.spring.io/spring-security/oauth/site/docs/2.4.0.RELEASE/apidocs/org/springframework/security/oauth2/provider/expression/OAuth2SecurityExpressionMethods.html>`_\を参照されたい。
 
 .. tabularcolumns:: |p{0.35\linewidth}|p{0.65\linewidth}|
 .. list-table:: **Spring Security OAuthが用意しているExpression**
@@ -2485,9 +2494,9 @@ Spring Security OAuthが用意している主なExpressionを紹介する。
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:sec="http://www.springframework.org/schema/security"
         xmlns:oauth2="http://www.springframework.org/schema/security/oauth2"
         xsi:schemaLocation="
-            http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
-            http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-            http://www.springframework.org/schema/security/oauth2 http://www.springframework.org/schema/security/spring-security-oauth2.xsd
+            http://www.springframework.org/schema/security https://www.springframework.org/schema/security/spring-security.xsd
+            http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+            http://www.springframework.org/schema/security/oauth2 https://www.springframework.org/schema/security/spring-security-oauth2.xsd
         ">
 
 
@@ -3652,8 +3661,8 @@ JSON形式のデータを取得し、画面に表示させる方法を説明す�
             あくまで現状の\ ``TokenServices``\ の実装に基づいたワークアラウンド的な判定条件であり、
             今後のSpring Security OAuthの実装変更に合わせて変更が必要となる可能性がある点に留意されたい。
 
-            * `DefaultTokenServices <https://github.com/spring-projects/spring-security-oauth/blob/2.2.4.RELEASE/spring-security-oauth2/src/main/java/org/springframework/security/oauth2/provider/token/DefaultTokenServices.java#L235>`_\ ：有効期限切れを示す\ ``expired``\ という文字列とアクセストークンを返却する
-            * `RemoteTokenServices <https://github.com/spring-projects/spring-security-oauth/blob/2.2.4.RELEASE/spring-security-oauth2/src/main/java/org/springframework/security/oauth2/provider/token/RemoteTokenServices.java#L110>`_\ ：有効期限切れを明確に判断できる文字列はなくアクセストークンのみ返却する
+            * `DefaultTokenServices <https://github.com/spring-projects/spring-security-oauth/blob/2.4.0.RELEASE/spring-security-oauth2/src/main/java/org/springframework/security/oauth2/provider/token/DefaultTokenServices.java#L239>`_\ ：有効期限切れを示す\ ``expired``\ という文字列とアクセストークンを返却する
+            * `RemoteTokenServices <https://github.com/spring-projects/spring-security-oauth/blob/2.4.0.RELEASE/spring-security-oauth2/src/main/java/org/springframework/security/oauth2/provider/token/RemoteTokenServices.java#L116>`_\ ：有効期限切れを明確に判断できる文字列はなくアクセストークンのみ返却する
 
             もし、リソースサーバが\ ``RemoteTokenServices``\ を使用しない場合は、以下の条件に緩和することが出来る。
 

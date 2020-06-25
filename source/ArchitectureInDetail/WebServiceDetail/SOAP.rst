@@ -157,11 +157,11 @@ Spring FrameworkのJAX-WS連携機能について
 .. note::
 
     Springでは、ドキュメントドリブンでWebサービスを開発するSpring Web Servicesが提供されているが、ここでは扱わない。
-    詳細は\ `Spring Web Services <http://projects.spring.io/spring-ws/>`_\ を参照されたい。
+    詳細は\ `Spring Web Services <https://spring.io/projects/spring-ws>`_\ を参照されたい。
 
 .. note::
 
-    SpringでのJAX-WS実装の詳細は、\ `Spring Framework Documentation -Remoting and web services using Spring- <https://docs.spring.io/spring/docs/5.1.4.RELEASE/spring-framework-reference/integration.html#remoting>`_\ を参照されたい。
+    SpringでのJAX-WS実装の詳細は、\ `Spring Framework Documentation -Remoting and Web Services- <https://docs.spring.io/spring/docs/5.2.3.RELEASE/spring-framework-reference/integration.html#remoting>`_\ を参照されたい。
 
 |
 
@@ -357,13 +357,13 @@ SOAPサーバの作成
     以下、参考資料として、APサーバのマニュアルを記述しておく。
     必ず、使用するバージョンとあっているか確認してから参照すること。
      
-    Oracle WebLogic Server 12.2.1: \ `Oracle(R) Fusion Middleware Understanding WebLogic Web Services for Oracle WebLogic Server  Features and Standards Supported by WebLogic Web Services <https://docs.oracle.com/middleware/12213/wls/WSOVR/weblogic-web-service-stand.htm#WSOVR137>`_\
+    Oracle WebLogic Server 12.2.1.4: \ `Understanding WebLogic Web Services for Oracle WebLogic Server -Features and Standards Supported by WebLogic Web Services- <https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/12.2.1.4/wsovr/weblogic-web-service-stand.html#GUID-FB83E047-F696-4B96-A982-140C0C8AD7EF>`_\
      
     JBoss Enterprise Application Platform 7.2: \ `DEVELOPING JAX-WS WEB SERVICES <https://access.redhat.com/documentation/en-us/red_hat_jboss_enterprise_application_platform/7.2/html/developing_web_services_applications/developing_jax_ws_web_services>`_\
 
     JBoss Enterprise Application Platform 6.4: \ `DEVELOPMENT GUIDE JAX-WS WEB SERVICES <https://access.redhat.com/documentation/en-US/JBoss_Enterprise_Application_Platform/6.4/html/Development_Guide/chap-JAX-WS_Web_Services.html>`_\
     
-    WebSphere Application Server 9.0: \ `IBM Knowledge Center - Web services <https://www.ibm.com/support/knowledgecenter/SSEQTP_9.0.0/com.ibm.websphere.base.doc/ae/cwbs_wbs2.html>`_\
+    WebSphere Application Server 9.0: \ `IBM Knowledge Center - Web services <https://www.ibm.com/support/knowledgecenter/SSEQTP_9.0.5/com.ibm.websphere.base.doc/ae/cwbs_wbs2.html>`_\
 
 |
 
@@ -380,9 +380,9 @@ Webサービスで使用するコンポーネントをスキャンするため�
         xmlns:context="http://www.springframework.org/schema/context"
         xsi:schemaLocation="
              http://www.springframework.org/schema/beans
-             http://www.springframework.org/schema/beans/spring-beans.xsd
+             https://www.springframework.org/schema/beans/spring-beans.xsd
              http://www.springframework.org/schema/context
-             http://www.springframework.org/schema/context/spring-context.xsd">
+             https://www.springframework.org/schema/context/spring-context.xsd">
         <!-- (1) -->
         <context:component-scan base-package="com.example.ws" />
     </beans>
@@ -1587,7 +1587,7 @@ WebServiceインターフェースを実装したプロキシを生成する\ ``
 
         .. Note:: **wsdlDocumentResourceへのWSDLファイルのURL以外の指定**
 
-            上記の例では、SOAPサーバがWSDLファイルを公開している前提である。\ ``classpath:``\ や\ ``file:``\ プレフィックスを使用して指定することで静的ファイルを指定することもできる。指定できる文字列は、\ `Spring Framework Documentation -The ResourceLoader- <https://docs.spring.io/spring/docs/5.1.4.RELEASE/spring-framework-reference/core.html#resources-resourceloader>`_\ を参照されたい。
+            上記の例では、SOAPサーバがWSDLファイルを公開している前提である。\ ``classpath:``\ や\ ``file:``\ プレフィックスを使用して指定することで静的ファイルを指定することもできる。指定できる文字列は、\ `Spring Framework Documentation -The ResourceLoader- <https://docs.spring.io/spring/docs/5.2.3.RELEASE/spring-framework-reference/core.html#resources-resourceloader>`_\ を参照されたい。
 
 
 .. Note:: **エンドポイントアドレスの上書き指定**
@@ -2382,7 +2382,6 @@ SOAPサーバから提供される[server projectName]-webserviceの依存関係
                  │      ├[projectName]-env.xml ...(5)
                  │      └[projectName]-infra.properties ...(6)
                  ├dozer.properties
-                 ├log4jdbc.properties
                  └logback.xml ...(7)
 
 .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
@@ -2557,7 +2556,7 @@ CXFServletを使用する場合の設定
 
    .. note::
 
-      saaj-implのバージョンはterasoluna-gfw-parentが依存している\ `Spring Boot <https://docs.spring.io/spring-boot/docs/2.1.2.RELEASE/reference/htmlsingle/#appendix-dependency-versions>`_\ で管理されているため、pom.xmlでのバージョンの指定は不要である。
+      saaj-implのバージョンはterasoluna-gfw-parentが依存している\ `Spring Boot <https://docs.spring.io/spring-boot/docs/2.2.4.RELEASE/reference/htmlsingle/#dependency-versions>`_\ で管理されているため、pom.xmlでのバージョンの指定は不要である。
 
 
 |
@@ -2613,9 +2612,9 @@ Webサービス実装クラスをエンドポイントとして設定する。
         xmlns:context="http://www.springframework.org/schema/context"
         xmlns:jaxws="http://cxf.apache.org/jaxws" xmlns:soap="http://cxf.apache.org/bindings/soap"
         xsi:schemaLocation="http://www.springframework.org/schema/beans
-             http://www.springframework.org/schema/beans/spring-beans.xsd
+             https://www.springframework.org/schema/beans/spring-beans.xsd
              http://www.springframework.org/schema/context
-             http://www.springframework.org/schema/context/spring-context.xsd
+             https://www.springframework.org/schema/context/spring-context.xsd
              http://cxf.apache.org/jaxws
              http://cxf.apache.org/schemas/jaxws.xsd
              http://cxf.apache.org/bindings/soap
@@ -2714,9 +2713,9 @@ CXFServlet用のBean定義ファイルに、SOAPのエンドポイントとな�
         xmlns:context="http://www.springframework.org/schema/context"
         xmlns:jaxws="http://cxf.apache.org/jaxws" xmlns:soap="http://cxf.apache.org/bindings/soap"
         xsi:schemaLocation="http://www.springframework.org/schema/beans
-             http://www.springframework.org/schema/beans/spring-beans.xsd
+             https://www.springframework.org/schema/beans/spring-beans.xsd
              http://www.springframework.org/schema/context
-             http://www.springframework.org/schema/context/spring-context.xsd
+             https://www.springframework.org/schema/context/spring-context.xsd
              http://cxf.apache.org/jaxws
              http://cxf.apache.org/schemas/jaxws.xsd
              http://cxf.apache.org/bindings/soap

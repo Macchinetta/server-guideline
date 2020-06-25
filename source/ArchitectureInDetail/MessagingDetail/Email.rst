@@ -12,7 +12,7 @@ Overview
 
 本節では、SMTPによるE-mailの送信方法について説明する。
 
-本ガイドラインでは、JavaMailのAPIとSpring Frameworkから提供されているMail連携用コンポーネントを利用することを前提としている。
+本ガイドラインでは、Jakarta MailのAPIとSpring Frameworkから提供されているMail連携用コンポーネントを利用することを前提としている。
 
 .. note::
 
@@ -22,19 +22,18 @@ Overview
 
 |
 
-JavaMailについて
+Jakarta Mailについて
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-\ `JavaMail <https://java.net/projects/javamail/pages/Home>`_\ は、Javaでメールの送受信を行うためのAPIを提供している。
-Java EEに含まれるものであるが、Java SEでも追加パッケージとして利用可能である。
-JavaMailを利用することで、メール機能を容易にJavaアプリケーションに組み込むことができる。
+\ `Jakarta Mail <https://eclipse-ee4j.github.io/mail/>`_\ は、Javaでメールの送受信を行うためのAPIを提供している。
+Jakarta Mailを利用することで、メール機能を容易にJavaアプリケーションに組み込むことができる。
 
-なお、本ガイドラインでは、Spring FrameworkのMail連携用コンポーネントを利用する前提であるため、JavaMailのAPIについての詳細には触れていない。
-JavaMailのAPI仕様については、\ `JavaMail API Design Specification <http://download.oracle.com/otn-pub/jcp/java_mail-1_5-mrel2-eval-spec/JavaMail-1.5.pdf>`_\ を参照されたい。
+なお、本ガイドラインでは、Spring FrameworkのMail連携用コンポーネントを利用する前提であるため、Jakarta MailのAPIについての詳細には触れていない。
+Jakarta MailのAPI仕様については、\ `API Documentation <https://eclipse-ee4j.github.io/mail/#API_Documentation>`_\ を参照されたい。
 
 .. note:: **メールセッション**
 
-   メールセッション（\ `Session <https://javaee.github.io/javaee-spec/javadocs/javax/mail/Session.html>`_\ ）は、メールサーバに接続する際に必要となる情報を管理する。
+   メールセッション（\ `Session <https://jakarta.ee/specifications/platform/8/apidocs/javax/mail/Session.html>`_\ ）は、メールサーバに接続する際に必要となる情報を管理する。
    
    メールセッションを取得するには以下のような方法がある。
    
@@ -56,7 +55,7 @@ Spring FrameworkのMail連携用コンポーネントについて
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Spring Frameworkはメール送信を行うためのコンポーネント（\ ``org.springframework.mail``\ パッケージ）を提供している。
-このパッケージに含まれるコンポーネントはメール送信に係る詳細なロジックを隠蔽し、低レベルのAPIハンドリング(JavaMailのAPI呼び出し)を代行する。
+このパッケージに含まれるコンポーネントはメール送信に係る詳細なロジックを隠蔽し、低レベルのAPIハンドリング(Jakarta MailのAPI呼び出し)を代行する。
 
 具体的な実装方法の説明を行う前に、Spring Frameworkが提供するメール送信用のコンポーネントがどのようにメールを送信しているかを説明する。
 
@@ -84,7 +83,7 @@ Spring Frameworkはメール送信を行うためのコンポーネント（\ ``
         | \* 単純なメッセージを送信する場合は、\ ``SimpleMailMessage``\ を生成し宛先や本文を設定することでメールを送信することもできる。
     * - | (2)
       - | \ ``JavaMailSender``\
-      - | アプリケーションから指定された\ ``MimeMessagePreparator``\ (JavaMailの\ ``MimeMessage``\ を作成するためのコールバックインターフェース)を呼び出し、メール送信用のメッセージ(\ ``MimeMessage``\ )の作成依頼を行う。
+      - | アプリケーションから指定された\ ``MimeMessagePreparator``\ (Jakarta Mailの\ ``MimeMessage``\ を作成するためのコールバックインターフェース)を呼び出し、メール送信用のメッセージ(\ ``MimeMessage``\ )の作成依頼を行う。
         |
         | \* \ ``SimpleMailMessage``\ を使用してメッセージを送信する場合はこの処理は呼びだされない。
     * - | (3)
@@ -95,9 +94,9 @@ Spring Frameworkはメール送信を行うためのコンポーネント（\ ``
         | \* \ ``SimpleMailMessage``\ を使用してメッセージを送信する場合はこの処理は呼びだされない。
     * - | (4)
       - | \ ``JavaMailSender``\
-      - | JavaMailのAPIを使用して、メールの送信依頼を行う。
+      - | Jakarta MailのAPIを使用して、メールの送信依頼を行う。
     * - | (5)
-      - | JavaMail
+      - | Jakarta Mail
       - | メールサーバへメッセージを送信する。
 
 .. raw:: latex
@@ -109,37 +108,39 @@ Spring Frameworkはメール送信を行うためのコンポーネント（\ ``
 本ガイドラインでは、以下のインタフェースやクラスを使用してメール送信処理を実装する方法について説明する。
 
 * \ ``JavaMailSender``\
-    | JavaMail用のメール送信インターフェース。
-    | JavaMailの\ `MimeMessage <https://javaee.github.io/javaee-spec/javadocs/javax/mail/internet/MimeMessage.html>`_\ とSpringの\ ``SimpleMailMessage``\ の両方に対応している。
-    | また、JavaMailの\ ``Session``\ の管理は\ ``JavaMailSender``\ の実装クラスによって行われるため、メール送信処理をコーディングする際に\ ``Session``\ を直接扱う必要がない。
+    | Jakarta Mail用のメール送信インターフェース。
+    | Jakarta Mailの\ `MimeMessage <https://jakarta.ee/specifications/platform/8/apidocs/javax/mail/internet/MimeMessage.html>`_\ とSpringの\ ``SimpleMailMessage``\ の両方に対応している。
+    | また、Jakarta Mailの\ ``Session``\ の管理は\ ``JavaMailSender``\ の実装クラスによって行われるため、メール送信処理をコーディングする際に\ ``Session``\ を直接扱う必要がない。
 
 * \ ``JavaMailSenderImpl``\
     | \ ``JavaMailSender``\ インタフェースの実装クラス。
     | このクラスでは、設定済みの\ ``Session``\をDIする方法と、プロパティに指定した接続情報から\ ``Session``\を作成する方法をサポートしている。
 
 * \ ``MimeMessagePreparator``\
-    | JavaMailの\ ``MimeMessage``\ を作成するためのコールバックインターフェース。
+    | Jakarta Mailの\ ``MimeMessage``\ を作成するためのコールバックインターフェース。
     | \ ``JavaMailSender``\ の\ ``send``\ メソッド内から呼び出される。
     | \ ``MimeMessagePreparator``\ の\ ``prepare``\ メソッドで発生した例外は\ ``MailPreparationException``\ （実行時例外）にラップされ再スローされる。
 
 * \ ``MimeMessageHelper``\
-    | JavaMailの\ ``MimeMessage``\ の作成を容易にするためのヘルパークラス。
+    | Jakarta Mailの\ ``MimeMessage``\ の作成を容易にするためのヘルパークラス。
     | \ ``MimeMessageHelper``\ には、\ ``MimeMessage``\ に値を設定するための便利なメソッドがいくつも用意されている。
 
 * \ ``SimpleMailMessage``\
     | 単純なメールメッセージを作成するためのクラス。
     | 英文のプレーンテキストメールを作成する際に使用できる。
-    | UTF-8等の特定のエンコード指定、HTMLメールや添付ファイル付きメールの送信、あるいはメールアドレスに個人名を付随させるといったリッチなメッセージの作成を行う際は、JavaMailの\ ``MimeMessage``\ を使用する必要がある。
+    | UTF-8等の特定のエンコード指定、HTMLメールや添付ファイル付きメールの送信、あるいはメールアドレスに個人名を付随させるといったリッチなメッセージの作成を行う際は、Jakarta Mailの\ ``MimeMessage``\ を使用する必要がある。
 
 How to use
 --------------------------------------------------------------------------------
+
+.. _depends_jakartaMail:
 
 依存ライブラリについて
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Spring FrameworkのMail連携用コンポーネントを利用する場合、以下のライブラリが追加で必要となる。
 
-* `JavaMail <https://java.net/projects/javamail/pages/Home>`_
+* `Jakarta Mail <https://eclipse-ee4j.github.io/mail/>`_
 
 | 上記ライブラリに対する依存関係を\ :file:`pom.xml`\ に追加する。
 | マルチプロジェクト構成の場合は、domainプロジェクトの\ :file:`pom.xml`\ (:file:`projectName-domain/pom.xml`)に追加する。
@@ -151,7 +152,7 @@ Spring FrameworkのMail連携用コンポーネントを利用する場合、以
         <!-- (1) -->
         <dependency>
             <groupId>com.sun.mail</groupId>
-            <artifactId>javax.mail</artifactId>
+            <artifactId>jakarta.mail</artifactId>
         </dependency>
 
     </dependencies>
@@ -164,13 +165,13 @@ Spring FrameworkのMail連携用コンポーネントを利用する場合、以
     * - 項番
       - 説明
     * - | (1)
-      - | JavaMailのライブラリをdependenciesに追加する。
+      - | Jakarta Mailのライブラリをdependenciesに追加する。
         | アプリケーションサーバ提供のメールセッションを使用する場合、\ ``<scope>``\ を\ ``provided``\ に設定する。
 
 .. note::
 
     上記設定例は、依存ライブラリのバージョンを親プロジェクトである terasoluna-gfw-parent で管理する前提であるため、pom.xmlでのバージョンの指定は不要である。
-    上記の依存ライブラリはterasoluna-gfw-parentが依存している\ `Spring Boot <https://docs.spring.io/spring-boot/docs/2.1.2.RELEASE/reference/htmlsingle/#appendix-dependency-versions>`_\ で管理されている。
+    上記の依存ライブラリはterasoluna-gfw-parentが依存している\ `Spring Boot <https://docs.spring.io/spring-boot/docs/2.2.4.RELEASE/reference/htmlsingle/#dependency-versions>`_\ で管理されている。
 
 |
 
@@ -206,10 +207,10 @@ JavaMailSenderの設定方法
       - | \ `Apache Tomcat 8.5 User Guide(JNDI Resources HOW-TO) <http://tomcat.apache.org/tomcat-8.5-doc/jndi-resources-howto.html#JavaMail_Sessions>`_\ (JavaMail Sessions)を参照されたい。
     * - 3.
       - Oracle WebLogic Server 12c
-      - \ `Oracle WebLogic Server 12.2.1.3 Documentation <https://docs.oracle.com/middleware/12213/wls/WLACH/taskhelp/mail/CreateMailSessions.html>`_\ を参照されたい。
+      - \ `Oracle WebLogic Server 12.2.1.4 Documentation <https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/12.2.1.4/wlach/taskhelp/mail/CreateMailSessions.html>`_\ を参照されたい。
     * - 4.
       - IBM WebSphere Application Server Version 9.0
-      - \ `WebSphere Application Server Version 9.0.0 documentation <https://www-01.ibm.com/support/knowledgecenter/SSD28V_9.0.0/com.ibm.websphere.wlp.core.doc/ae/twlp_admin_javamail.html>`_\ を参照されたい。
+      - \ `WebSphere Application Server Version 9.0.5 documentation <https://www.ibm.com/support/knowledgecenter/SSEQTP_9.0.5/com.ibm.websphere.base.doc/ae/umai_rjmsi.html>`_\ を参照されたい。
     * - 5.
       - Red Hat JBoss Enterprise Application Platform Version 7.2
       - \ `JBoss Enterprise Application Platform 7.2 Product Documentation <https://access.redhat.com/documentation/en-us/red_hat_jboss_enterprise_application_platform/7.2/html/configuration_guide/mail_subsystem>`_\ を参照されたい。
@@ -778,18 +779,18 @@ HTMLメールの送信
       - 例外クラス
       - 発生条件
     * - 1.
-      - `MailAuthenticationException <https://docs.spring.io/spring/docs/5.1.4.RELEASE/javadoc-api/org/springframework/mail/MailAuthenticationException.html>`_
+      - `MailAuthenticationException <https://docs.spring.io/spring/docs/5.2.3.RELEASE/javadoc-api/org/springframework/mail/MailAuthenticationException.html>`_
       - | 認証失敗時に発生する。
     * - 2.
-      - `MailParseException <https://docs.spring.io/spring/docs/5.1.4.RELEASE/javadoc-api/org/springframework/mail/MailParseException.html>`_
+      - `MailParseException <https://docs.spring.io/spring/docs/5.2.3.RELEASE/javadoc-api/org/springframework/mail/MailParseException.html>`_
       - | メールメッセージのプロパティに不正な値が設定されている場合に発生する。
     * - 3.
-      - `MailPreparationException <https://docs.spring.io/spring/docs/5.1.4.RELEASE/javadoc-api/org/springframework/mail/MailPreparationException.html>`_
+      - `MailPreparationException <https://docs.spring.io/spring/docs/5.2.3.RELEASE/javadoc-api/org/springframework/mail/MailPreparationException.html>`_
       - | メールメッセージを作成中に想定外のエラーが起きた場合に発生する。
           想定外のエラーとしては、例えばテンプレートライブラリで発生するエラーといったものがある。
         | \ ``MimeMessagePreparator``\ で発生した例外が\ ``MailPreparationException``\ にラップされてスローされる。
     * - 4.
-      - `MailSendException <https://docs.spring.io/spring/docs/5.1.4.RELEASE/javadoc-api/org/springframework/mail/MailSendException.html>`_
+      - `MailSendException <https://docs.spring.io/spring/docs/5.2.3.RELEASE/javadoc-api/org/springframework/mail/MailSendException.html>`_
       - | メールの送信エラーが起きた場合に発生する。
 
 .. note::
@@ -847,7 +848,7 @@ FreeMarkerを使用したメール本文の作成
     .. note::
 
        上記設定例は、依存ライブラリのバージョンを親プロジェクトである terasoluna-gfw-parent で管理する前提であるため、pom.xmlでのバージョンの指定は不要である。
-       上記の依存ライブラリはterasoluna-gfw-parentが依存している\ `Spring Boot <https://docs.spring.io/spring-boot/docs/2.1.2.RELEASE/reference/htmlsingle/#appendix-dependency-versions>`_\ で管理されている。
+       上記の依存ライブラリはterasoluna-gfw-parentが依存している\ `Spring Boot <https://docs.spring.io/spring-boot/docs/2.2.4.RELEASE/reference/htmlsingle/#dependency-versions>`_\ で管理されている。
 
 
 * \ ``freemarker.template.Configuration``\ を生成するためのFactoryBeanをBean定義する。
@@ -881,7 +882,7 @@ FreeMarkerを使用したメール本文の作成
 
     .. note::
 
-       上記以外の設定については、\ `FreeMarkerConfigurationFactoryBeanのJavaDoc <https://docs.spring.io/spring/docs/5.1.4.RELEASE/javadoc-api/org/springframework/ui/freemarker/FreeMarkerConfigurationFactoryBean.html>`_\ を参照されたい。
+       上記以外の設定については、\ `FreeMarkerConfigurationFactoryBeanのJavaDoc <https://docs.spring.io/spring/docs/5.2.3.RELEASE/javadoc-api/org/springframework/ui/freemarker/FreeMarkerConfigurationFactoryBean.html>`_\ を参照されたい。
        また、FreeMarker自体の設定については、\ `FreeMarker Manual (Programmer's Guide / The Configuration) <http://freemarker.org/docs/pgui_config.html>`_\ を参照されたい。
 
 * メール本文のテンプレートファイルを作成する。
@@ -1140,16 +1141,16 @@ ISO-2022-JPのエンコードが指定された場合にx-windows-iso2022jpで�
 
 |
 
-.. _email-note-of-when-sending:
-
-JavaMailでマルチバイト文字を使用する際の注意点
+JavaMailで発生していたマルチバイト文字を使用する際の不具合について
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-JavaMailでは、送信するメールの本文の終端がマルチバイト文字で終わっていると、終端に余計な文字（「?」や「w)」等）が出力される場合がある。  
-本事象は以下の方法で回避できる。  
+JavaMailでは、送信するメールの本文の終端がマルチバイト文字で終わっていると、終端に余計な文字（「?」や「w)」等）が出力される場合があり、従来は以下の方法で回避していた。
 
-* メール本文の終端文字を半角文字にする  
-* メール本文の終端を改行コード（CRLF）にする  
+* メール本文の終端文字を半角文字にする
+* メール本文の終端を改行コード（CRLF）にする
+
+これは、シングルバイト文字とマルチバイト文字の切り替えのために付与される制御コードが付与されていなかったことに起因し、
+JavaMail 1.4.4でワークアラウンドが施されたことによって、以降のバージョンでは当事象が発生しなくなった。
 
 |
 
@@ -1227,6 +1228,13 @@ GreenMailを利用したテストコードの実装例を以下に示す。
             <artifactId>greenmail</artifactId>
             <version>1.4.1</version>
             <scope>test</scope>
+            <!-- (2) -->
+            <exclusions>
+                <exclusion>
+                    <groupId>com.sun.mail</groupId>
+                    <artifactId>javax.mail</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
     </dependencies>
@@ -1240,6 +1248,9 @@ GreenMailを利用したテストコードの実装例を以下に示す。
       - 説明
     * - | (1)
       - | GreenMailのライブラリをdependenciesに追加する。
+    * - | (2)
+      - | GreenMailはJakarta Mailの前身であるJavaMailに依存している。
+        | \ :ref:`depends_jakartaMail`\ においてJakarta Mailを追加している前提で、クラス競合を防ぐためJavaMailは除外すると良い。
 
 **JUnitソースの実装例**
 

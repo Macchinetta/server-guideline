@@ -308,7 +308,6 @@ LocaleChangeInterceptorの設定
     <mvc:interceptor>
       <mvc:mapping path="/**" />
       <mvc:exclude-mapping path="/resources/**" />
-      <mvc:exclude-mapping path="/**/*.html" />
       <bean
         class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">  <!-- (1) -->
       </bean>
@@ -351,11 +350,16 @@ LocaleChangeInterceptorの設定
 
 .. note::
 
-    リクエストパラメータにLocaleとして不正な値が指定された場合は例外がスローされる。
-    例外とせず、リクエストパラメータによるLocaleの設定をスキップしたい場合は\ ``ignoreInvalidLocale``\プロパティに\ ``true``\を指定すれば良い。
-    これによりLocaleの設定がスキップされた場合は、\ ``LocaleResolver``\で指定されたデフォルトのロケールが使用される。
+    リクエストパラメータにLocaleとして使用できない文字（半角スペース、ハイフン、アンダースコア、英数字 **以外** ）を含む値が指定された場合、例外がスローされる。
+    この時、前回のリクエストまでのLocaleが継続して有効になる。
+    例外については、\ ``ignoreInvalidLocale``\プロパティに\ ``true``\を指定することでスローされなくなる。
 
-    なお、\ ``LocaleChangeInterceptor``\には\ ``AcceptHeaderLocaleResolver``\の\ ``supportedLocales``\のように、サポートするLocaleを限定する仕組みはない。
+    リクエストパラメータにLocaleとして指定された値はJDKでサポートされないLocaleでも、そのままLocaleとして有効になる。
+    \ ``LocaleChangeInterceptor``\には\ ``AcceptHeaderLocaleResolver``\の\ ``supportedLocales``\のように、サポートするLocaleを限定する仕組みはないため、注意されたい。
+
+    空文字が指定された場合は\ ``LocaleResolver``\に予め設定された\ ``defaultLocale``\が有効になる。
+    \ ``defaultLocale``\が設定されていない場合はユーザ端末（ブラウザ）に設定されたLocaleが有効になる。
+    このため、\ ``defaultLocale``\を設定することを推奨する。
 
 |
 

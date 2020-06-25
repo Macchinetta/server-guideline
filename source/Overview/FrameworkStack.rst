@@ -10,7 +10,7 @@ Macchinetta Server Framework (1.x)のスタック
 Macchinetta Server Framework (1.x)のSoftware Framework概要
 --------------------------------------------------------------------------------
 
-Macchinetta Server Framework (1.x)で使用するSoftware Frameworkは独自のフレームワークではなく、\ `Spring Framework <http://projects.spring.io/spring-framework/>`_\ を中心としたOSSの組み合わせである。
+Macchinetta Server Framework (1.x)で使用するSoftware Frameworkは独自のフレームワークではなく、\ `Spring Framework <https://spring.io/projects/spring-framework>`_\ を中心としたOSSの組み合わせである。
 
 .. figure:: images/introduction-software-framework.png
    :width: 95%
@@ -29,13 +29,13 @@ DIコンテナ
 DIコンテナとしてSpring Frameworkを利用する。
 
 
-* `Spring Framework 5.0 <https://docs.spring.io/spring/docs/5.1.4.RELEASE/spring-framework-reference/core.html#beans>`_
+* `Spring Framework 5.2 <https://docs.spring.io/spring/docs/5.2.3.RELEASE/spring-framework-reference/core.html#beans>`_
 
 MVCフレームワーク
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Web MVCフレームワークとしてSpring MVCを利用する。
 
-* `Spring MVC 5.0 <https://docs.spring.io/spring/docs/5.1.4.RELEASE/spring-framework-reference/web.html#mvc>`_
+* `Spring MVC 5.2 <https://docs.spring.io/spring/docs/5.2.3.RELEASE/spring-framework-reference/web.html#mvc>`_
 
 O/R Mapper
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -64,7 +64,7 @@ Viewのレイアウトを共通化する場合は、
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 認証・認可のフレームワークとしてSpring Securityを利用する。
 
-* `Spring Security 5.1 <http://projects.spring.io/spring-security/>`_
+* `Spring Security 5.2 <https://spring.io/projects/spring-security>`_
 
 .. tip::
 
@@ -85,7 +85,7 @@ Viewのレイアウトを共通化する場合は、
 
   * 実装は、\ `Hibernate Validator 6.0 <http://docs.jboss.org/hibernate/validator/6.0/reference/en-US/html_single/>`_\ を利用する。
 
-* 相関チェックには\ `Bean Validation 2.0 <https://beanvalidation.org/2.0/spec/>`_\ 、もしくは\ `Spring Validation <https://docs.spring.io/spring/docs/5.1.4.RELEASE/spring-framework-reference/core.html#validator>`_\ を利用する。
+* 相関チェックには\ `Bean Validation 2.0 <https://beanvalidation.org/2.0/spec/>`_\ 、もしくは\ `Spring Validation <https://docs.spring.io/spring/docs/5.2.3.RELEASE/spring-framework-reference/core.html#validator>`_\ を利用する。
 
   * 使い分けについては\ :doc:`../ArchitectureInDetail/WebApplicationDetail/Validation`\ を参照されたい。
 
@@ -113,11 +113,11 @@ Viewのレイアウトを共通化する場合は、
 利用するOSSのバージョン
 --------------------------------------------------------------------------------
 
-version 1.6.1.RELEASEで利用するOSSの一覧を以下に示す。
+version 1.7.0.RELEASEで利用するOSSの一覧を以下に示す。
 
-.. tip::
+.. note::
 
-    version 1.6.1.RELEASEより、\ `Spring Boot <https://spring.io/projects/spring-boot>`_\ が提供する\ `spring-boot-dependencies <https://docs.spring.io/spring-boot/docs/2.1.2.RELEASE/reference/htmlsingle/#using-boot-dependency-management>`_\ の\ ``<dependencyManagement>``\ をインポートする構成を採用している。
+    version 1.6.1.RELEASEより、\ `Spring Boot <https://spring.io/projects/spring-boot>`_\ が提供する\ `spring-boot-dependencies <https://docs.spring.io/spring-boot/docs/2.2.4.RELEASE/reference/htmlsingle/#using-boot-dependency-management>`_\ の\ ``<dependencyManagement>``\ をインポートする構成を採用している。
 
     \ ``spring-boot-dependencies``\ の\ ``<dependencyManagement>``\ をインポートすることで、
 
@@ -128,7 +128,7 @@ version 1.6.1.RELEASEで利用するOSSの一覧を以下に示す。
     への依存関係を解決しており、
     Macchinetta Server Framework (1.x)で使用するOSSのバージョンは、原則として、Spring Bootで管理されているバージョンに準ずる。
 
-    なお、version 1.6.1.RELEASEでは\ `Spring Boot 2.1.2.RELEASE <https://docs.spring.io/spring-boot/docs/2.1.2.RELEASE/reference/htmlsingle/>`_\ に依存しており、管理されるライブラリは\ `Spring Boot Reference Guide - Appendix F. Dependency versions <https://docs.spring.io/spring-boot/docs/2.1.2.RELEASE/reference/htmlsingle/#appendix-dependency-versions>`_\ の通りとなる。
+    なお、version 1.7.0.RELEASEでは\ `Spring Boot 2.2.4.RELEASE <https://docs.spring.io/spring-boot/docs/2.2.4.RELEASE/reference/htmlsingle/>`_\ に依存しており、管理されるライブラリは\ `Spring Boot Reference Guide - Appendix F. Dependency versions <https://docs.spring.io/spring-boot/docs/2.2.4.RELEASE/reference/htmlsingle/#dependency-versions>`_\ の通りとなる。
 
 .. tabularcolumns:: |p{0.15\linewidth}|p{0.27\linewidth}|p{0.25\linewidth}|p{0.15\linewidth}|p{0.05\linewidth}|p{0.08\linewidth}|
 .. list-table::
@@ -145,145 +145,145 @@ version 1.6.1.RELEASEで利用するOSSの一覧を以下に示す。
     * - Spring
       - org.springframework
       - spring-aop
-      - 5.1.4.RELEASE
+      - 5.2.3.RELEASE
       - \*
       -
     * - Spring
       - org.springframework
       - spring-aspects
-      - 5.1.4.RELEASE
+      - 5.2.3.RELEASE
       - \*
       -
     * - Spring
       - org.springframework
       - spring-beans
-      - 5.1.4.RELEASE
+      - 5.2.3.RELEASE
       - \*
       -
     * - Spring
       - org.springframework
       - spring-context
-      - 5.1.4.RELEASE
+      - 5.2.3.RELEASE
       - \*
       -
     * - Spring
       - org.springframework
       - spring-context-support
-      - 5.1.4.RELEASE
+      - 5.2.3.RELEASE
       - \*
       -
     * - Spring
       - org.springframework
       - spring-core
-      - 5.1.4.RELEASE
+      - 5.2.3.RELEASE
       - \*
       -
     * - Spring
       - org.springframework
       - spring-expression
-      - 5.1.4.RELEASE
+      - 5.2.3.RELEASE
       - \*
       -
     * - Spring
       - org.springframework
       - spring-jdbc
-      - 5.1.4.RELEASE
+      - 5.2.3.RELEASE
       - \*
       -
     * - Spring
       - org.springframework
       - spring-orm
-      - 5.1.4.RELEASE
+      - 5.2.3.RELEASE
       - \*
       -
     * - Spring
       - org.springframework
       - spring-oxm
-      - 5.1.4.RELEASE
+      - 5.2.3.RELEASE
       - \*
       -
     * - Spring
       - org.springframework
       - spring-tx
-      - 5.1.4.RELEASE
+      - 5.2.3.RELEASE
       - \*
       -
     * - Spring
       - org.springframework
       - spring-web
-      - 5.1.4.RELEASE
+      - 5.2.3.RELEASE
       - \*
       -
     * - Spring
       - org.springframework
       - spring-webmvc
-      - 5.1.4.RELEASE
+      - 5.2.3.RELEASE
       - \*
       -
     * - Spring
       - org.springframework
       - spring-jms
-      - 5.1.4.RELEASE
+      - 5.2.3.RELEASE
       - \*
       -
     * - Spring
       - org.springframework
       - spring-messaging
-      - 5.1.4.RELEASE
+      - 5.2.3.RELEASE
       - \*
       -
     * - Spring
       - org.springframework.data
       - spring-data-commons
-      - 2.1.4.RELEASE
+      - 2.2.4.RELEASE
       - \*
       -
     * - Spring
       - org.springframework.security
       - spring-security-acl
-      - 5.1.3.RELEASE
+      - 5.2.1.RELEASE
       - \*
       -
     * - Spring
       - org.springframework.security
       - spring-security-config
-      - 5.1.3.RELEASE
+      - 5.2.1.RELEASE
       - \*
       -
     * - Spring
       - org.springframework.security
       - spring-security-core
-      - 5.1.3.RELEASE
+      - 5.2.1.RELEASE
       - \*
       -
     * - Spring
       - org.springframework.security
       - spring-security-taglibs
-      - 5.1.3.RELEASE
+      - 5.2.1.RELEASE
       - \*
       -
     * - Spring
       - org.springframework.security
       - spring-security-web
-      - 5.1.3.RELEASE
+      - 5.2.1.RELEASE
       - \*
       -
     * - Spring
       - org.springframework.security.oauth
       - spring-security-oauth2
-      - 2.2.4.RELEASE
+      - 2.4.0.RELEASE
       -
       -
     * - MyBatis3
       - org.mybatis
       - mybatis
-      - 3.5.0
+      - 3.5.3
       -
       - \*1
     * - MyBatis3
       - org.mybatis
       - mybatis-spring
-      - 2.0.0
+      - 2.0.3
       -
       - \*1
     * - DI
@@ -295,13 +295,13 @@ version 1.6.1.RELEASEで利用するOSSの一覧を以下に示す。
     * - AOP
       - org.aspectj
       - aspectjrt
-      - 1.9.2
+      - 1.9.5
       - \*
       -
     * - AOP
       - org.aspectj
       - aspectjweaver
-      - 1.9.2
+      - 1.9.5
       - \*
       -
     * - ログ出力
@@ -311,75 +311,63 @@ version 1.6.1.RELEASEで利用するOSSの一覧を以下に示す。
       - \*
       -
     * - ログ出力
-      - org.lazyluke
-      - log4jdbc-remix
-      - 0.2.7
-      -
-      -
-    * - ログ出力
-      - org.slf4j
-      - jcl-over-slf4j
-      - 1.7.25
-      - \*
-      -
-    * - ログ出力
       - org.slf4j
       - slf4j-api
-      - 1.7.25
+      - 1.7.30
       - \*
       -
     * - JSON
       - com.fasterxml.jackson.core
       - jackson-databind
-      - 2.9.8
+      - 2.10.2
       - \*
       -
     * - JSON
       - com.fasterxml.jackson.datatype
       - jackson-datatype-joda
-      - 2.9.8
+      - 2.10.2
       - \*
       -
     * - JSON
       - com.fasterxml.jackson.datatype
       - jackson-datatype-jsr310
-      - 2.9.8
+      - 2.10.2
       - \*
       -
     * - 入力チェック
       - org.hibernate.validator
       - hibernate-validator
-      - 6.0.14.Final
+      - 6.0.18.Final
       - \*
       -
     * - Bean変換
       - commons-beanutils
       - commons-beanutils
-      - 1.9.3
+      - 1.9.4
       -
       -
     * - Bean変換
       - com.github.dozermapper
       - dozer-core
-      - 6.4.1
+      - 6.5.0
       -
       -
     * - Bean変換
       - com.github.dozermapper
       - dozer-spring4
-      - 6.4.1
+      - 6.5.0
       -
       - \*2
     * - Bean変換
       - org.apache.commons
       - commons-lang3
-      - 3.8.1
+      - 3.9
       - \*
       -
     * - 日付操作
       - joda-time
       - joda-time
-      - 2.10.1
+      - 2.10.5
       - \*
       -
     * - 日付操作
@@ -391,7 +379,7 @@ version 1.6.1.RELEASEで利用するOSSの一覧を以下に示す。
     * - コネクションプール
       - org.apache.commons
       - commons-dbcp2
-      - 2.5.0
+      - 2.7.0
       - \*
       -
     * - Tiles
@@ -421,19 +409,19 @@ version 1.6.1.RELEASEで利用するOSSの一覧を以下に示す。
     * - ファイルダウンロード
       - org.apache.poi
       - poi-ooxml
-      - 3.17
+      - 4.1.1
       -
       -
     * - E-mail送信(SMTP)
       - com.sun.mail
-      - javax.mail
-      - 1.6.2
+      - jakarta.mail
+      - 1.6.4
       - \*
       -
     * - HTTP通信
       - org.apache.httpcomponents
       - httpclient
-      - 4.5.6
+      - 4.5.10
       - \*
       -
     * - ユーティリティ
@@ -463,7 +451,7 @@ version 1.6.1.RELEASEで利用するOSSの一覧を以下に示す。
     * - コーディングサポート
       - org.projectlombok
       - lombok
-      - 1.18.4
+      - 1.18.10
       - \*
       -
 
@@ -646,7 +634,10 @@ Javaソースコードを含まないものは、ライブラリの依存関係�
 
   このようなプロジェクトでは、共通ライブラリへの依存関係定義の他に、利用を推奨するOSSライブラリへの依存関係定義を提供している為、
   共通ライブラリを利用する際は"dependencies"が付与されたプロジェクトの方を、依存関係としてpom.xmlに追加することを推奨する。
-  
+
+.. note::
+
+  version 1.7.0.RELEASEでは TERASOLUNA Server Framework for Java 5.6.0.RELEASE の共通ライブラリを使用している。
 
 terasoluna-gfw-common
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

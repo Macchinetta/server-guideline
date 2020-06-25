@@ -484,7 +484,7 @@ Repositoryを作成することにより、永続化技術を隠蔽できたり�
 
 .. tip::
 
-    マルチプロジェクト構成の例として、\ `サンプルアプリケーション <https://github.com/terasolunaorg/terasoluna-tourreservation>`_\ や\ `共通ライブラリのテストアプリケーション <https://github.com/terasolunaorg/terasoluna-gfw-functionaltest>`_\ を参照されたい。
+    マルチプロジェクト構成の例として、\ `サンプルアプリケーション <https://github.com/terasolunaorg/terasoluna-tourreservation-mybatis3/>`_\ や\ `共通ライブラリのテストアプリケーション <https://github.com/terasolunaorg/terasoluna-gfw-functionaltest>`_\ を参照されたい。
 
 |
 
@@ -652,7 +652,6 @@ Repositoryを作成することにより、永続化技術を隠蔽できたり�
                  │      ├[projectName]-env.xml ...(5)
                  │      └[projectName]-infra.properties ...(6)
                  ├dozer.properties
-                 ├log4jdbc.properties
                  └logback.xml ...(7)
 
 

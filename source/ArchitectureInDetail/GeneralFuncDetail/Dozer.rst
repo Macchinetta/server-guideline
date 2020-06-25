@@ -74,11 +74,10 @@ Dozerをした場合と使用しない場合のコード例を挙げる。
     * \ ``java.time.OffsetDateTime``\
     * \ ``java.time.ZonedDateTime``\
 
- .. warning:: **Java SE 11環境にてDozerを利用する場合**
+ .. note:: **Java SE 11環境にてDozerを利用する場合**
 
     Dozer 6.3.0より、マッピング定義XMLファイルの解析にデフォルトでJAXBが利用されるようになった。
-    Java SE 11環境にてDozerのマッピング定義XMLファイルを利用する場合、\ :ref:`remove-jaxb-from-java11`\ を参照されたい。
-    ただし、開発の途中からマッピング定義XMLファイルを利用することも想定されるため、Java SE 11環境にてDozerを利用する場合は必ず設定を行なうことを推奨する。
+    Dozer 6.5.0より、Mavenを利用してJava SE 9以降でビルドするとjaxb-runtimeへの依存が推移的に解決されるため、JAXBを利用するために特別な設定を施す必要はない。
 
 |
 
@@ -442,6 +441,22 @@ src/main/resources/META-INF/dozerフォルダ内に、(任意の値)-mapping.xml
     マッピング定義XMLファイルは、Controller単位で作成し、ファイル名は、(Controller名からControllerを除いた値)-mapping.xmlにすることを推奨する。
     例えば、TodoControllerに対するマッピング定義XMLファイルは、src/main/resources/META-INF/dozer/todo-mapping.xmlに作成する。
 
+ .. note::
+
+    本ガイドラインでは解説しないが、マッピング定義XMLファイルにおいてEL式を使用することができる。
+
+    EL式の解釈にはjavax.el標準APIを用いており、デフォルトでは\ ``com.sun.el.ExpressionFactoryImpl``\ クラスが利用される。
+    利用する実装クラスは\ ``javax.el.ExpressionFactory``\ システムプロパティにより切り替えることが可能である。
+
+    なお、ブランクプロジェクトのデフォルト設定では依存ライブラリにjavax.el標準APIの実装ライブラリが存在しないため、
+    実行環境によっては起動時ログに以下のような警告が表示されるが、EL式を利用しない場合は実行に支障はないため無視して良い。
+
+    .. code-block:: console
+
+        X-Track:        level:WARN  logger:c.github.dozermapper.core.el.ELExpressionFactory     message:javax.el is not supported; Failed to resolve ExpressionFactory, com.sun.el.ExpressionFactoryImpl
+
+    詳細は、`Expression Language <https://dozermapper.github.io/gitbook/documentation/expressionlanguage.html>`_ を参照されたい。
+
 |
 
 単方向・双方向マッピング
@@ -547,7 +562,7 @@ src/main/resources/META-INF/dozerフォルダ内に、(任意の値)-mapping.xml
 .. note:: **Dozer 6.1.0以前のバージョンに存在する単方向マッピングのバグについて**
 
     Dozer 6.1.0以前では、同名フィールドは\ ``<mapping>``\ タグの\ ``type``\ 属性に\ ``one-way``\ を付与しても正常に単方向マッピングとならず、逆方向でもマッピングされるバグが存在する。
-    Macchinetta Server Framework for Java 1.5.X以前はDozer 6.1.0以前のバージョンを使用しているため、バグの影響を受けていた。
+    Macchinetta Server Framework 1.5.X以前はDozer 6.1.0以前のバージョンを使用しているため、バグの影響を受けていた。
     
     具体的には、\ ``<mapping>``\ タグの\ ``type``\ 属性に\ ``one-way``\ を付与した場合、フィールドが別名であれば正常に単方向マッピングとなる。
     それ以外の項目は双方向マッピングされてしまう。
@@ -1710,13 +1725,6 @@ map-idを指定しない場合はこの設定は適用されず、全フィー�
 .. warning::
 
     \ ``java.util.Date``\と\ ``java.time.LocalDate``\を併用するようなアプリケーションのとき、年形式に\ ``uuuu``\と\ ``yyyy``\を使い分ける必要があるため、アプリケーション全体で設定すると困るケースがある。このような場合では、アプリケーション全体の設定に加えて個別のマッピング定義で日付形式を設定すれば対応可能である。
-
-.. warning::
-
-    JSR-310の日付・時刻オブジェクトから文字列への変換において、マッピング定義XMLファイルの\ ``date-format``\で指定したフォーマットの妥当性チェックに、本来は\ ``java.time.format.DateTimeFormatter``\が使用されるはずが\ ``java.text.SimpleDateFormat``\が使用されているため、`JSR-310で使用できるはずのパターン文字が使用できない不具合 <https://github.com/DozerMapper/dozer/issues/747>`_ が確認されている。
-    使用可能なパターン文字の詳細は、`SimpleDateFormatのJavadoc <http://docs.oracle.com/javase/8/docs/api/java/text/SimpleDateFormat.html>`_ を参照されたい。
-    
-    なお、この不具合によって返却される実行時例外は、\ :ref:`beanconverter-mapping-error`\で述べる\ ``MappingException``\ではなく、\ ``IllegalArgumentException``\であるため、注意されたい。
 
 .. note::
 

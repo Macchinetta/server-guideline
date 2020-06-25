@@ -42,7 +42,7 @@ Overview
 | クラスは、modelの情報を用いてExcelファイルをレンダリングするときに、サブクラスとして利用するクラスである。
 |
 | Spring では上記以外にも、いろいろなViewの実装を提供している。
-| Viewの技術詳細は、\ `Spring Framework Documentation -View Technologies- <https://docs.spring.io/spring/docs/5.1.4.RELEASE/spring-framework-reference/web.html#mvc-view>`_\ を参照されたい。
+| Viewの技術詳細は、\ `Spring Framework Documentation -View Technologies- <https://docs.spring.io/spring/docs/5.2.3.RELEASE/spring-framework-reference/web.html#mvc-view>`_\ を参照されたい。
 
 | 共通ライブラリから提供している、\ ``org.terasoluna.gfw.web.download.AbstractFileDownloadView``\ は、
 | 任意のファイルをダウンロードするために使用する抽象クラスである。
@@ -212,6 +212,8 @@ Springのコンテキストで管理されたbean名を用いて実行するView
 
 |
 
+.. _excelfiledownload-label:
+
 Excelファイルのダウンロード
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 | EXCELファイルのレンダリングには、Springから提供されている、
@@ -281,19 +283,9 @@ Excelファイルのダウンロード
       <dependency>
           <groupId>org.apache.poi</groupId>
           <artifactId>poi-ooxml</artifactId>
-          <exclusions>
-              <exclusion>
-                  <groupId>stax</groupId>
-                  <artifactId>stax-api</artifactId>
-              </exclusion>
-          </exclusions>
       </dependency>
   </dependencies>
   
-\
-    .. note::
-        poi-ooxmlが依存しているstax-apiはJava SEより標準で提供されるようになったため、不要なライブラリである。また、ライブラリの競合が発生する可能性があることから、 \ ``<exclusions>``\ 要素を追加し、当該ライブラリがアプリケーションに含まれないよう考慮する必要がある。
-
 \
     .. note::
         上記設定例は、依存ライブラリのバージョンを親プロジェクトである terasoluna-gfw-parent で管理する前提であるため、pom.xmlでのバージョンの指定は不要である。
@@ -301,7 +293,7 @@ Excelファイルのダウンロード
 \
     .. note::
         xlsファイル形式をサポートしたい場合は \ ``AbstractXlsView``\を使用されたい。
-        詳細は、\ `AbstractXlsViewのJavaDoc <https://docs.spring.io/spring-framework/docs/5.1.4.RELEASE/javadoc-api/org/springframework/web/servlet/view/document/AbstractXlsView.html>`_\ を参照されたい。
+        詳細は、\ `AbstractXlsViewのJavaDoc <https://docs.spring.io/spring/docs/5.2.3.RELEASE/javadoc-api/org/springframework/web/servlet/view/document/AbstractXlsView.html>`_\ を参照されたい。
 
 ViewResolverの定義
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -438,7 +430,7 @@ ViewResolverの定義
 
         前述してきたように、SpringはModelの情報をいろいろなViewにレンダリングすることができる。
         Springでは、複数のレンダリングエンジンをサポートしており、さまざまなViewを返却することが可能である。
-        詳細は、Spring の公式ドキュメント\ `Spring Framework Documentation -View Technologies- <https://docs.spring.io/spring/docs/5.1.4.RELEASE/spring-framework-reference/web.html#mvc-view>`_\ を参照されたい。
+        詳細は、Spring の公式ドキュメント\ `Spring Framework Documentation -View Technologies- <https://docs.spring.io/spring/docs/5.2.3.RELEASE/spring-framework-reference/web.html#mvc-view>`_\ を参照されたい。
 
 .. raw:: latex
 

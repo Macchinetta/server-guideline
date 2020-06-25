@@ -31,7 +31,7 @@ Install and Start up
 NEXUSをインストールするマシンは次の条件を満たしている必要がある。
 
 * JRE6以上がインストール済みであること
-* インターネット上のセントラルリポジトリ（先頭がhttp://repo1.maven.org/ で始まるURL）にhttpアクセス可能であること
+* インターネット上のセントラルリポジトリ（先頭がhttps://repo1.maven.org/ で始まるURL）にhttpsアクセス可能であること
 
 インストール手順は次の通り。
 
@@ -45,7 +45,7 @@ NEXUSをインストールするマシンは次の条件を満たしている必
 .. figure:: ./images/appendix-nexus-repositories.png
    :alt: default repositories on nexus
 
-* **Central** = インターネット上のセントラルリポジトリ(http://repo1.maven.org/maven2/)へのproxyの役割を果たすリポジトリ。
+* **Central** = インターネット上のセントラルリポジトリ(https://repo1.maven.org/maven2/)へのproxyの役割を果たすリポジトリ。
 * **3rd party** = インターネット上で公開されているリポジトリにはないが、開発で必要となるサードパーティ製ライブラリを保管するリポジトリ。
 * **Releases** = 自分たちで開発したアプリケーションのリリースバージョンの成果物を格納するリポジトリ。
 * **Snapshots** = 自分たちで開発したアプリケーションのSNAPSHOTバージョンの成果物を格納するリポジトリ。

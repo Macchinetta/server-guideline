@@ -497,11 +497,11 @@ MyBatis3とSpringを連携する場合、データソースはSpringのDIコン�
         xmlns:jee="http://www.springframework.org/schema/jee"
         xmlns:jdbc="http://www.springframework.org/schema/jdbc"
         xsi:schemaLocation="http://www.springframework.org/schema/jdbc
-            http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
+            https://www.springframework.org/schema/jdbc/spring-jdbc.xsd
             http://www.springframework.org/schema/jee
-            http://www.springframework.org/schema/jee/spring-jee.xsd
+            https://www.springframework.org/schema/jee/spring-jee.xsd
             http://www.springframework.org/schema/beans
-            http://www.springframework.org/schema/beans/spring-beans.xsd">
+            https://www.springframework.org/schema/beans/spring-beans.xsd">
 
         <!-- omitted -->
 
@@ -565,13 +565,13 @@ MyBatis3とSpringを連携する場合、データソースはSpringのDIコン�
         xmlns:jdbc="http://www.springframework.org/schema/jdbc"
         xmlns:tx="http://www.springframework.org/schema/tx"
         xsi:schemaLocation="http://www.springframework.org/schema/jdbc
-            http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
+            https://www.springframework.org/schema/jdbc/spring-jdbc.xsd
             http://www.springframework.org/schema/jee
-            http://www.springframework.org/schema/jee/spring-jee.xsd
+            https://www.springframework.org/schema/jee/spring-jee.xsd
             http://www.springframework.org/schema/beans
-            http://www.springframework.org/schema/beans/spring-beans.xsd
+            https://www.springframework.org/schema/beans/spring-beans.xsd
             http://www.springframework.org/schema/tx
-            http://www.springframework.org/schema/tx/spring-tx.xsd">
+            https://www.springframework.org/schema/tx/spring-tx.xsd">
 
         <!-- omitted -->
 
@@ -622,7 +622,7 @@ MyBatis3とSpringを連携する場合、MyBatis-Springのコンポーネント�
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xmlns:mybatis="http://mybatis.org/schema/mybatis-spring"
         xsi:schemaLocation="http://www.springframework.org/schema/beans 
-            http://www.springframework.org/schema/beans/spring-beans.xsd
+            https://www.springframework.org/schema/beans/spring-beans.xsd
             http://mybatis.org/schema/mybatis-spring
             http://mybatis.org/schema/mybatis-spring.xsd">
 
@@ -1010,14 +1010,13 @@ TypeHandlerの設定
 
     JDBC 4.0との互換性のないJDBCドライバを使う場合は、利用するJDBCドライバの互換バージョンを意識した\ ``TypeHandler`` \を作成する必要がある。
 
-    例えば、PostgreSQL用のJDBCドライバ(\ ``postgresql-42.2.5.jar``\)では、JDBC 4.0から追加されたメソッドの一部が、未実装の状態である。
+    例えば、PostgreSQL用のJDBCドライバ(\ ``postgresql-42.2.9.jar``\)では、JDBC 4.0から追加されたメソッドの一部が、未実装の状態である。
 
-**JSR-310 Date and Time APIを使う場合の設定**
 
-MyBatis3でJSR-310 Date and Time APIから提供されている日付や時刻を表現するクラスを使用する場合には、MyBatisより別ライブラリ(\ ``mybatis-typehandlers-jsr310`` \)で提供されている\ ``TypeHandler`` \を使用する。
-なお、`ブランクプロジェクト <https://github.com/Macchinetta/macchinetta-web-multi-blank#multi-blank-project>`_ \では、デフォルトで\ ``mybatis-typehandlers-jsr310`` \が使用可能である。
+.. note:: 
 
-また、MyBatis 3.4では\ ``TypeHandler`` \を自動検出する様になっているため、MyBatisの設定ファイルに\ ``TypeHandler``\を追加する必要はない。
+    \ ``mybatis-typehandlers-jsr310`` \で提供されていたJSR-310 Date and Time API用の\ ``TypeHandler`` \が、MyBatis 3.4.5からコアモジュールに統合された。
+    これにより、依存ライブラリとして別途\ ``mybatis-typehandlers-jsr310`` \を追加する必要はなくなった。
 
 .. tip::
 
@@ -1118,9 +1117,9 @@ Joda-TimeのクラスとJDBC型をマッピングする\ ``TypeHandler`` \の作
                xmlns:tx="http://www.springframework.org/schema/tx" xmlns:mybatis="http://mybatis.org/schema/mybatis-spring"
                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                xsi:schemaLocation="http://www.springframework.org/schema/beans
-            http://www.springframework.org/schema/beans/spring-beans.xsd
+            https://www.springframework.org/schema/beans/spring-beans.xsd
             http://www.springframework.org/schema/tx
-            http://www.springframework.org/schema/tx/spring-tx.xsd
+            https://www.springframework.org/schema/tx/spring-tx.xsd
             http://mybatis.org/schema/mybatis-spring
             http://mybatis.org/schema/mybatis-spring.xsd">
 
@@ -3318,9 +3317,9 @@ JDBCのバッチ更新機能を使用する方法については、「:ref:`Data
     一括登録するためのSQLは、データベースやバージョンによりサポート状況や文法が異なる。
     以下に主要なデータベースのリファレンスページへのリンクを記載しておく。
 
-    * `Oracle 18c <https://docs.oracle.com/en/database/oracle/oracle-database/18/sqlrf/GRANT.html>`_
-    * `DB2 11.1 <https://www.ibm.com/support/knowledgecenter/SSEPGG_11.1.0/com.ibm.db2.luw.sql.ref.doc/doc/r0000970.html>`_
-    * `PostgreSQL 10 <https://www.postgresql.org/docs/10/sql-insert.html>`_
+    * `Oracle 19c <https://docs.oracle.com/en/database/oracle/oracle-database/19/sqlrf/GRANT.html>`_
+    * `DB2 11.5 <https://www.ibm.com/support/knowledgecenter/SSEPGG_11.5.0/com.ibm.db2.luw.sql.ref.doc/doc/r0000970.html>`_
+    * `PostgreSQL 11 <https://www.postgresql.org/docs/11/sql-insert.html>`_
     * `MySQL 8.0 <https://dev.mysql.com/doc/refman/8.0/en/insert.html>`_
 
 |
@@ -4798,18 +4797,25 @@ MyBatis3では、SQLに値を埋め込む仕組みとして、以下の2つの�
         <?xml version="1.0" encoding="UTF-8"?>
         <beans xmlns="http://www.springframework.org/schema/beans"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://www.springframework.org/schema/beans
-            http://www.springframework.org/schema/beans/spring-beans.xsd">
+            xmlns:util="http://www.springframework.org/schema/util"
+            xsi:schemaLocation="
+                http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+                http://www.springframework.org/schema/util https://www.springframework.org/schema/util/spring-util.xsd
+            ">
 
             <bean id="CL_DIRECTION" class="org.terasoluna.gfw.common.codelist.SimpleMapCodeList">
                 <property name="map">
-                    <map>
+                    <util:map>
                         <entry key="1" value="ASC" />
                         <entry key="2" value="DESC" />
-                    </map>
+                    </util:map>
                 </property>
             </bean>
         </beans>
+
+    .. raw:: latex
+
+       \newpage
 
     - Serviceクラス
 
@@ -4933,7 +4939,7 @@ MyBatis3の標準でサポートされていないJoda-Timeのクラスとのマ
 
     JDBC 4.0との互換性のないJDBCドライバを使う場合は、利用するJDBCドライバの互換バージョンを意識した\ ``TypeHandler`` \を作成する必要がある。
 
-    例えば、PostgreSQL用のJDBCドライバ(\ ``postgresql-42.2.5.jar``\)では、JDBC 4.0から追加されたメソッドの一部が、未実装の状態である。
+    例えば、PostgreSQL用のJDBCドライバ(\ ``postgresql-42.2.9.jar``\)では、JDBC 4.0から追加されたメソッドの一部が、未実装の状態である。
 
 |
 
@@ -5399,9 +5405,9 @@ RepositoryのBean定義を行えばよい。
            xmlns:mybatis="http://mybatis.org/schema/mybatis-spring"
            xsi:schemaLocation="
            http://www.springframework.org/schema/beans
-           http://www.springframework.org/schema/beans/spring-beans.xsd
+           https://www.springframework.org/schema/beans/spring-beans.xsd
            http://www.springframework.org/schema/context
-           http://www.springframework.org/schema/context/spring-context.xsd
+           https://www.springframework.org/schema/context/spring-context.xsd
            http://mybatis.org/schema/mybatis-spring
            http://mybatis.org/schema/mybatis-spring.xsd">
 
@@ -5538,9 +5544,9 @@ RepositoryのBean定義を行えばよい。
            xmlns:mybatis="http://mybatis.org/schema/mybatis-spring"
            xsi:schemaLocation="
            http://www.springframework.org/schema/beans
-           http://www.springframework.org/schema/beans/spring-beans.xsd
+           https://www.springframework.org/schema/beans/spring-beans.xsd
            http://www.springframework.org/schema/context
-           http://www.springframework.org/schema/context/spring-context.xsd
+           https://www.springframework.org/schema/context/spring-context.xsd
            http://mybatis.org/schema/mybatis-spring
            http://mybatis.org/schema/mybatis-spring.xsd">
 
@@ -6370,7 +6376,7 @@ MyBatis3では、JDBCドライバから接続しているデータベースの�
         xmlns:mybatis="http://mybatis.org/schema/mybatis-spring"
         xsi:schemaLocation="
             http://www.springframework.org/schema/beans
-            http://www.springframework.org/schema/beans/spring-beans.xsd
+            https://www.springframework.org/schema/beans/spring-beans.xsd
             http://mybatis.org/schema/mybatis-spring
             http://mybatis.org/schema/mybatis-spring.xsd
         ">
@@ -6489,7 +6495,7 @@ MyBatis3では、JDBCドライバから接続しているデータベースの�
  .. tip::
 
     上記例では、PostgreSQLのUUID生成関数として\ ``UUID_GENERATE_V4()``\を呼び出しているが、
-    この関数は、`uuid-ossp <https://www.postgresql.org/docs/10/uuid-ossp.html>`_\と呼ばれるサブモジュールの関数である。
+    この関数は、`uuid-ossp <https://www.postgresql.org/docs/11/uuid-ossp.html>`_\と呼ばれるサブモジュールの関数である。
 
     この関数を使用したい場合は、uuid-osspモジュールを有効にする必要がある。
 

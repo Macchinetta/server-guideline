@@ -1250,50 +1250,6 @@ JSPからコードリストを参照する場合は、 ``CodeListInterceptor`` �
 
 BeanValidationや、メッセージ出力方法の詳細については、 :doc:`../WebApplicationDetail/Validation` を参照されたい。
 
-
-\ ``@ExistInCodeList``\ アノテーションを使用して入力チェックを行う場合は、
-\ ``@ExistInCodeList``\ 用の「:ref:`Validation_message_def`」を行う必要がある。
-
-`ブランクプロジェクト <https://github.com/Macchinetta/macchinetta-web-multi-blank>`_ \ からプロジェクトを生成した場合は、
-\ ``xxx-web/src/main/resources``\ の直下の\ ``ValidationMessages.properties``\ ファイルの中に以下のメッセージが定義されている。
-メッセージは、アプリケーションの要件に合わせて変更すること。
-
-.. code-block:: properties
-
-    org.terasoluna.gfw.common.codelist.ExistInCodeList.message = Does not exist in {codeListId}
-
-.. note::
-
-    terasoluna-gfw-common 5.0.0.RELEASEより、
-    メッセージのプロパティキーの形式を、Bean Validationのスタンダードな形式(アノテーションのFQCN + \ ``.message``\ )に変更している。
-
-     .. tabularcolumns:: |p{0.40\linewidth}|p{0.60\linewidth}|
-     .. list-table::
-        :header-rows: 1
-        :widths: 40 60
-
-        * - バージョン
-          - メッセージのプロパティキー
-        * - | version 5.0.0.RELEASE以降
-          - | ``org.terasoluna.gfw.common.codelist.ExistInCodeList.message``
-        * - | version 1.0.x.RELEASE
-          - | ``org.terasoluna.gfw.common.codelist.ExistInCodeList``
-
-    version 1.0.x.RELEASEからversion 5.0.0.RELEASE以降にバージョンアップする際に、
-    アプリケーション要件に合わせてメッセージを変更している場合は、
-    プロパティキーの変更が必要になる。
-
-.. note::
-
-    terasoluna-gfw-common 1.0.2.RELEASEより、
-    \ ``@ExistInCodeList``\ のメッセージを定義した\ ``ValidationMessages.properties``\ を、
-    jarファイルの中に含めないようにしている。
-    これは、「`ValidationMessages.propertiesが複数存在する場合にメッセージが表示されないバグ <https://github.com/terasolunaorg/terasoluna-gfw/issues/256>`_」を修正するためである。
-
-    version 1.0.1.RELEASE以前からversion 1.0.2.RELEASE以降にバージョンアップする際に、
-    terasoluna-gfw-commonのjarの中に含まれる\ ``ValidationMessages.properties``\ に定義しているメッセージを使用している場合は、
-    \ ``ValidationMessages.properties``\ を作成してメッセージを定義する必要がある。
-
 |
 
 @ExistInCodeList の設定例
@@ -1372,7 +1328,7 @@ How to extend
 #. Task Schedulerで実現する方法
 #. Controller(Service)クラスでrefreshメソッドを呼び出す方法
 
-本ガイドラインでは、\ `Springから提供されているTask Scheduler <https://docs.spring.io/spring/docs/5.1.4.RELEASE/spring-framework-reference/integration.html#scheduling>`_\ を使用して、コードリストを定期的にリロードする方式を基本的に推奨する。
+本ガイドラインでは、\ `Springから提供されているTask Scheduler <https://docs.spring.io/spring/docs/5.2.3.RELEASE/spring-framework-reference/integration.html#scheduling>`_\ を使用して、コードリストを定期的にリロードする方式を基本的に推奨する。
 
 ただし、任意のタイミングでコードリストをリフレッシュする必要がある場合はControllerクラスでrefreshメソッドを呼び出す方法で実現すればよい。
 
@@ -1428,7 +1384,7 @@ Task Schedulerの設定例について、以下に示す。
        | 平日の9-17時の毎時実行 「0 0 9-17 \* \* MON-FRI」
        |
        | 詳細はJavaDocを参照されたい。
-       | https://docs.spring.io/spring/docs/5.1.4.RELEASE/javadoc-api/org/springframework/scheduling/support/CronSequenceGenerator.html
+       | https://docs.spring.io/spring/docs/5.2.3.RELEASE/javadoc-api/org/springframework/scheduling/support/CronSequenceGenerator.html
 
 |
 

@@ -54,13 +54,19 @@ Spring Securityがデフォルトでサポートしているレスポンスヘ�
 
 .. note:: **Referrer-Policyヘッダ**
 
-    Spring Security 4.2より、ブラウザに\ `Referrer Policy <https://www.w3.org/TR/referrer-policy/>`_\ を指示するためのヘッダである\ `Referrer-Policyヘッダ <https://docs.spring.io/spring-security/site/docs/5.1.3.RELEASE/reference/htmlsingle/#headers-referrer>`_\ がサポートされた。
+    Spring Security 4.2より、ブラウザに\ `Referrer Policy <https://www.w3.org/TR/referrer-policy/>`_\ を指示するためのヘッダである\ `Referrer-Policyヘッダ <https://docs.spring.io/spring-security/site/docs/5.2.1.RELEASE/reference/htmlsingle/#headers-referrer>`_\ がサポートされた。
     詳細については次版以降の開発ガイドラインで記載する予定である。
 
 .. note:: **Feature-Policyヘッダ**
 
-    Spring Security 5.1より、ブラウザに\ `Feature-Policy <https://w3c.github.io/webappsec-feature-policy/>`_\ を指示するためのヘッダである\ `Feature-Policyヘッダ <https://docs.spring.io/spring-security/site/docs/5.1.3.RELEASE/reference/htmlsingle/#headers-feature>`_\ がサポートされた。
+    Spring Security 5.1より、ブラウザに\ `Feature-Policy <https://w3c.github.io/webappsec-feature-policy/>`_\ を指示するためのヘッダである\ `Feature-Policyヘッダ <https://docs.spring.io/spring-security/site/docs/5.2.1.RELEASE/reference/htmlsingle/#headers-feature>`_\ がサポートされた。
     詳細については次版以降の開発ガイドラインで記載する予定である。
+
+.. note:: **Clear-Site-Dataヘッダ**
+
+    Spring Security 5.2より、ブラウザに\ `Clear-Site-Data <https://w3c.github.io/webappsec-clear-site-data/>`_\ を指示するためのヘッダである\ `Clear-Site-Dataヘッダ <https://docs.spring.io/spring-security/site/docs/5.2.1.RELEASE/reference/htmlsingle/#headers-clearsitedata>`_\ がサポート可能となった。
+
+    詳細は \ :ref:`SpringSecurityAuthenticationLogout`\ を参照されたい。
 
 Cache-Control
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -156,15 +162,28 @@ HTTPSでアクセスした後にHTTPが使われないようにするために�
     Spring Securityのデフォルト実装では、Strict-Transport-Securityヘッダは、アプリケーションサーバに対してHTTPSを使ってアクセスがあった場合のみ出力される。
     なお、Strict-Transport-Securityヘッダ値は、オプションを指定することで変更することができる。
 
+
+.. note:: **HTTP Strict Transport Security (HSTS) preload list**
+
+    Strict-Transport-Securityヘッダーを設定していても、一度HTTPSアクセスが行われるまでの間や有効期限切れ後のアクセスでは中間者攻撃を受けるリスクがある。
+    Googleはこのリスクを回避出来るようにHSTS preload listを運営している。
+    このリストにドメインを登録すると、ブラウザからのアクセスで自動的にHTTPSが使用される。
+    主要なブラウザ(Chrome, Edge, IE11, Firefox, Opera, Safari)は全て、HSTS preload listに対応している。
+
+    HSTS preload listへのドメインの登録方法は\ `HSTS Preload List Submission <https://hstspreload.org/>`_\を参照されたい。
+
+    Spring SecurityではHSTS preload listへの登録に必要となるpreloadディレクティブをサポートしており、オプションを指定することで出力することが出来る。
+
+
 Content-Security-Policy
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-Content-Security-Policyヘッダーはブラウザに読み込みを許可するコンテンツを指示するためのヘッダーである。
-ブラウザはContent-Security-Policyヘッダーに指定したホワイトリストのコンテンツのみを読み込むため、悪意のあるコンテンツを読み込むことで実行される攻撃（クロスサイトスクリプティング攻撃など）を受けるリスクを減らすことができる。
+Content-Security-Policyヘッダはブラウザに読み込みを許可するコンテンツを指示するためのヘッダである。
+ブラウザはContent-Security-Policyヘッダに指定したホワイトリストのコンテンツのみを読み込むため、悪意のあるコンテンツを読み込むことで実行される攻撃（クロスサイトスクリプティング攻撃など）を受けるリスクを減らすことができる。
 
-Content-Security-Policyヘッダーを送信しない場合、ブラウザは標準の同一オリジンポリシーを適用する。
+Content-Security-Policyヘッダを送信しない場合、ブラウザは標準の同一オリジンポリシーを適用する。
 
-コンテンツの取得元を同一オリジンのみに制限するためには、以下のようなヘッダーを出力する。
+コンテンツの取得元を同一オリジンのみに制限するためには、以下のようなヘッダを出力する。
 
 * レスポンスヘッダの出力例
 
@@ -176,7 +195,7 @@ Content-Security-Policyヘッダーを送信しない場合、ブラウザは標
 
     ポリシー違反時にレポートを送信したい場合、report-uriディレクティブに報告先のURIを指定する。
 
-    同一オリジンポリシー違反があった場合にコンテンツをブロックして\ ``/csp_report``\ にレポートを送信するためには、以下のようなヘッダーを出力する。
+    同一オリジンポリシー違反があった場合にコンテンツをブロックして\ ``/csp_report``\ にレポートを送信するためには、以下のようなヘッダを出力する。
 
     * レスポンスヘッダの出力例
 
@@ -184,16 +203,38 @@ Content-Security-Policyヘッダーを送信しない場合、ブラウザは標
 
         Content-Security-Policy: default-src 'self'; report-uri /csp_report;
 
-    また、ポリシー違反があった際に、コンテンツのブロックを行わずレポートの送信のみを行いたい場合はContent-Security-Policy-Report-Onlyヘッダーを使用する。
-    Content-Security-Policy-Report-Onlyヘッダーを使用してレポートを収集しながら段階的にポリシーとコンテンツを修正することで、既にサービス提供しているサイトに対してポリシーを適用した場合に正常に動作しなくなるリスクを減らすことが出来る。
+    また、ポリシー違反があった際に、コンテンツのブロックを行わずレポートの送信のみを行いたい場合はContent-Security-Policy-Report-Onlyヘッダを使用する。
+    Content-Security-Policy-Report-Onlyヘッダを使用してレポートを収集しながら段階的にポリシーとコンテンツを修正することで、既にサービス提供しているサイトに対してポリシーを適用した場合に正常に動作しなくなるリスクを減らすことが出来る。
 
-    同一オリジンポリシー違反があった場合にコンテンツをブロックせず\ ``/csp_report``\ にレポートを送信するためには、以下のようなヘッダーを出力する。
+    同一オリジンポリシー違反があった場合にコンテンツをブロックせず\ ``/csp_report``\ にレポートを送信するためには、以下のようなヘッダを出力する。
 
     * レスポンスヘッダの出力例
 
      .. code-block:: text
 
         Content-Security-Policy-Report-Only: default-src 'self'; report-uri /csp_report;
+
+.. note:: **混在コンテンツについて**
+
+    HTTPSのページの中にHTTPで送られてくるコンテンツ（画像、動画、スタイルシート、スクリプト等）が含まれる場合、混在コンテンツと呼ばれる。
+    混在コンテンツが存在する場合、中間者攻撃を受けるリスクが発生する
+
+    Google Chrome 81以降では混在コンテンツに対してHTTPSアクセスを強制し、HTTPSでアクセスできない場合はブロックを行う。
+    IE以外のブラウザでは、upgrade-insecure-requestsディレクティブを指定することでChromeと同等の動作をブラウザに指示することが出来る。
+
+    * レスポンスヘッダの出力例
+
+     .. code-block:: text
+
+        Content-Security-Policy: upgrade-insecure-requests; default-src 'self';
+
+.. warning:: **サポート対象外のブラウザについて**
+
+    IEではヘッダ名が異なり、Content-Security-Policyヘッダの代わりにX-Content-Security-Policyヘッダを指定する必要がある。
+    また、sandbox以外のディレクティブは対応しておらず動作しない。
+    上記出力例のようにコンテンツの取得元を同一オリジンのみに制限する方法は存在しないため注意されたい。
+
+    ブラウザごとの対応状況については\ `Content-Security-Policy - Browser compatibility <https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy#Browser_compatibility>`_\を参照されたい。
 
 Public-Key-Pins
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -326,20 +367,14 @@ How to use
 
 上記の例だと、Cache-Control関連のヘッダだけが出力されなくなる。 
 
-セキュリティヘッダの詳細については\ `公式リファレンス <https://docs.spring.io/spring-security/site/docs/5.1.3.RELEASE/reference/htmlsingle/#default-security-headers>`_\ を参照されたい。
+セキュリティヘッダの詳細については\ `Spring Security Reference -Default Security Headers- <https://docs.spring.io/spring-security/site/docs/5.2.1.RELEASE/reference/htmlsingle/#default-security-headers>`_\ を参照されたい。
 
 .. note:: **Spring Securityによるセキュリティヘッダ付与の仕様変更**
 
-    Macchinetta Server Framework for Java 1.5.1の依存ライブラリであるSpring Security 4.2.4では、Spring Securityによって先にセキュリティヘッダが付与されることによりController等で任意に付与したヘッダが有効にならないことがあった。
+    Spring Security 4.2.4では、Spring Securityによって先にセキュリティヘッダが付与されることによりController等で任意に付与したヘッダが有効にならないことがあった。
     例えば、Controllerで個別にキャッシュ制御のヘッダを付与した場合でもSpring Securityが先に付与した\ ``Pragma: no-cache``\ ヘッダが残ることにより意図したキャッシュ制御ができないといった問題があった。
 
     このため、Spring Security 4.2.5及び5.0.2以降ではレスポンスコミットのタイミングでセキュリティヘッダを付与するように変更(\ `spring-projects/spring-security/issues/#5004 <https://github.com/spring-projects/spring-security/issues/5004>`_\ )されている。
-
-.. warning:: **個別に付与したセキュリティヘッダがSpring Securityにより上書き（追加）される問題**
-
-    ``DispatcherServlet``\ 内の処理で付与したセキュリティヘッダがSpring Securityの\ ``HeaderWriter``\ により上書き（追加）される問題(\ `spring-projects/spring-security/issues/#5193 <https://github.com/spring-projects/spring-security/issues/5193>`_\ )が報告されている。
-    Spring Securityでデフォルトのセキュリティヘッダを付与するが、一部のユースケースのみController等で個別にセキュリティヘッダを付与したい場合は、この問題の影響を受けることになる。
-    ただし、\ `CacheControlHeaderWriter <https://github.com/spring-projects/spring-security/blob/5.1.3.RELEASE/web/src/main/java/org/springframework/security/web/header/writers/CacheControlHeadersWriter.java#L62-L63>`_\ は既に付与されているヘッダを優先する実装となっているため、キャッシュ制御に関するヘッダ（Cache-Control, Pragma, Expires）ではこの問題は発生しない。
 
 
 セキュリティヘッダのオプション指定
@@ -363,7 +398,7 @@ Spring Securityのbean定義を変更することで、各要素の属性にオ�
 
     <sec:frame-options policy="SAMEORIGIN" />
 
-.. [#fSpringSecurityLinkageWithBrowser2] 各要素で指定できるオプションは https://docs.spring.io/spring-security/site/docs/5.1.3.RELEASE/reference/htmlsingle/#nsa-headers を参照されたい。
+.. [#fSpringSecurityLinkageWithBrowser2] 各要素で指定できるオプションは\ `Spring Security Reference -The Security Namespace (<headers>)- <https://docs.spring.io/spring-security/site/docs/5.2.1.RELEASE/reference/htmlsingle/#nsa-headers>`_\ を参照されたい。
 
 カスタムヘッダの出力
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -395,6 +430,8 @@ Spring Securityがデフォルトで用意していないヘッダを出力す�
       - 説明
     * - | (1)
       - | \ ``<sec:headers>``\ 要素の子要素として\ ``<sec:header>`` を追加し、\ ``name``\ 属性にヘッダ名を\ ``value``\ 属性にヘッダ値を指定する。
+
+.. _LinkageWithBrowserEachRequestPattern:
 
 リクエストパターン毎のセキュリティヘッダの出力
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

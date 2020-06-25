@@ -404,7 +404,12 @@ How to use
              <groupId>org.springframework</groupId>
              <artifactId>spring-jms</artifactId>
          </dependency>
-
+         <!-- (2) -->
+         <dependency>
+             <groupId>javax.jms</groupId>
+             <artifactId>javax.jms-api</artifactId>
+             <scope>provided</scope>
+         </dependency>
      </dependencies>
 
  .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
@@ -417,6 +422,8 @@ How to use
      * - | (1)
        - | \ ``spring-jms``\ をdependenciesに追加する。
          | \ ``spring-jms``\ は\ ``spring-messaging``\ に依存するため、\ ``spring-messaging``\ も推移的に依存ライブラリとして追加される。
+     * - | (2)
+       - | Spring Framework 5.0より実行時にJMS 2.0のAPIが必要となるため、実行環境に\ ``javax.jms-api``\ が必要となることを\ ``provided``\ スコープで明示する。
 
  | \ ``spring-jms``\ の他に、pom.xmlにJMSプロバイダのライブラリを追加する。
  | pom.xmlへのライブラリの追加例については、:ref:`JMSAppendixSettingsDependsOnJMSProvider` を参照されたい。
@@ -424,7 +431,14 @@ How to use
  .. note::
 
    上記設定例は、依存ライブラリのバージョンを親プロジェクトである terasoluna-gfw-parent で管理する前提であるため、pom.xmlでのバージョンの指定は不要である。
-   上記の依存ライブラリはterasoluna-gfw-parentが依存している\ `Spring Boot <https://docs.spring.io/spring-boot/docs/2.1.2.RELEASE/reference/htmlsingle/#appendix-dependency-versions>`__\ で管理されている。
+   上記の依存ライブラリはterasoluna-gfw-parentが依存している\ `Spring Boot <https://docs.spring.io/spring-boot/docs/2.2.4.RELEASE/reference/htmlsingle/#dependency-versions>`__\ で管理されている。
+
+ .. note::
+
+   Spring Framework 5.0より、JMS 2.0に対応した。
+   JMS 1.1との後方互換性も維持されているため、JMS 1.1で動作させることも可能である。
+   ただし、JMS 1.1で動作させる場合でも、JMS 2.0のAPIをクラスパスに追加する必要がある。
+   詳細は、\ `spring-projects/spring-framework/issues/#18366 <https://github.com/spring-projects/spring-framework/issues/18366>`_\ を参照されたい。
 
 |
 
@@ -772,7 +786,7 @@ How to use
 
  .. note:: **業務ロジック内でJMSの例外ハンドリング**
 
-    \ `JMS (Java Message Service)のIntroduction <https://docs.spring.io/spring/docs/5.1.4.RELEASE/javadoc-api/org/springframework/jms/core/JmsTemplate.html>`_\ で触れられているように、Spring Frameworkでは検査例外を非検査例外に変換している。
+    \ `JMS (Java Message Service)のIntroduction <https://docs.spring.io/spring/docs/5.2.3.RELEASE/javadoc-api/org/springframework/jms/core/JmsTemplate.html>`_\ で触れられているように、Spring Frameworkでは検査例外を非検査例外に変換している。
     そのため、業務ロジック内でJMSの例外をハンドリングする場合は、非検査例外を扱う必要がある。
 
      .. tabularcolumns:: |p{0.20\linewidth}|p{0.60\linewidth}|p{0.20\linewidth}|
@@ -1098,14 +1112,15 @@ DBのトランザクション管理を行う必要があるアプリケーショ
     <beans xmlns="http://www.springframework.org/schema/beans"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xmlns:jms="http://www.springframework.org/schema/jms"
-        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-            http://www.springframework.org/schema/jms http://www.springframework.org/schema/jms/spring-jms.xsd">
+        xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+            http://www.springframework.org/schema/jms https://www.springframework.org/schema/jms/spring-jms.xsd">
 
         <!-- (2) -->
         <jms:annotation-driven />
-
-
         <!-- (3) -->
+        <context:component-scan base-package="com.example.listener" />
+
+        <!-- (4) -->
         <jms:listener-container
             factory-id="jmsListenerContainerFactory"
             destination-resolver="destinationResolver"
@@ -1124,26 +1139,29 @@ DBのトランザクション管理を行う必要があるアプリケーショ
       - xmlns:jms
       - | JMS Namespaceを定義する。
         | 値として\ ``http://www.springframework.org/schema/jms``\ を指定する。
-        | JMS Namespaceの詳細については、\ `JMS Namespace Support <https://docs.spring.io/spring/docs/5.1.4.RELEASE/spring-framework-reference/integration.html#jms-namespace>`_\ を参照されたい。
+        | JMS Namespaceの詳細については、\ `Spring Framework Documentation -JMS Namespace Support- <https://docs.spring.io/spring/docs/5.2.3.RELEASE/spring-framework-reference/integration.html#jms-namespace>`_\ を参照されたい。
     * -
       - xsi:schemaLocation
       - | スキーマのURLを指定する。
-        | 値に\ ``http://www.springframework.org/schema/jms``\ と\ ``http://www.springframework.org/schema/jms/spring-jms.xsd``\ を追加する。
+        | 値に\ ``http://www.springframework.org/schema/jms``\ と\ ``https://www.springframework.org/schema/jms/spring-jms.xsd``\ を追加する。
     * - | (2)
       - \-
       - | \ ``<jms:annotation-driven />``\ を利用して、\ ``@JmsListener``\ アノテーションや\ ``@SendTo``\ アノテーション等のJMS関連のアノテーション機能を有効化する。
     * - | (3)
       - \-
+      - | リスナークラスを格納するcom.example.listenerパッケージ配下をcomponent-scan対象とする。
+    * - | (4)
+      - \-
       - | \ ``<jms:listener-container/>``\ を利用して\ ``DefaultMessageListenerContainer``\ を生成するファクトリへパラメータを与えることで、\ ``DefaultMessageListenerContainer``\ の設定を行う。
         | \ ``<jms:listener-container/>``\ の属性には、利用したい\ ``ConnectionFactory``\ のBeanを指定できる\ ``connection-factory``\ 属性が存在する。\ ``connection-factory``\ 属性のデフォルト値は\ ``connectionFactory``\ である。
         | この例では、\ :ref:`JMSHowToUseConnectionFactory`\ で示した\ ``ConnectionFactory``\ のBean(Bean名は\ ``connectionFactory``\ )を利用するため、\ ``connection-factory``\ 属性を省略している。
         | \ ``<jms:listener-container/>``\ には、ここで紹介した以外の属性も存在する。
-        | 詳細については、\ `Attributes of the JMS <listener-container> element <https://docs.spring.io/spring/docs/5.1.4.RELEASE/spring-framework-reference/integration.html#jms-namespace-listener-container-tbl>`_\ を参照されたい。
+        | 詳細については、\ `Spring Framework Documentation -Attributes of the JMS <listener-container> element- <https://docs.spring.io/spring/docs/5.2.3.RELEASE/spring-framework-reference/integration.html#jms-namespace-listener-container-tbl>`_\ を参照されたい。
 
         .. warning::
 
             \ ``DefaultMessageListenerContainer``\ 内部には独自のキャッシュ機能が備わっている。一方で、APサーバ製品やMOM製品によって関連リソースをキャッシュする場合もある。両者の管理に不整合が生じないように\ ``cache``\ 属性でキャッシュレベルを指定すること。
-            詳細については、\ `DefaultMessageListenerContainerのJavadoc <https://docs.spring.io/spring/docs/5.1.4.RELEASE/javadoc-api/org/springframework/jms/listener/DefaultMessageListenerContainer.html>`_\ を参照されたい。
+            詳細については、\ `DefaultMessageListenerContainerのJavadoc <https://docs.spring.io/spring/docs/5.2.3.RELEASE/javadoc-api/org/springframework/jms/listener/DefaultMessageListenerContainer.html>`_\ を参照されたい。
             本ガイドラインでは、\ ``<jms:listener-container/>``\ の\ ``connection-factory``\ 属性には、\ :ref:`JMSHowToUseConnectionFactory`\ で定義した\ ``ConnectionFactory``\ を指定する。
 
     * -
@@ -1222,7 +1240,7 @@ DBのトランザクション管理を行う必要があるアプリケーショ
 
 
  \ ``@JmsListener``\ アノテーションの主な属性の一覧を以下に示す。
- 詳細やその他の属性については、\ `@JmsListenerアノテーションのJavadoc <https://docs.spring.io/spring-framework/docs/5.1.4.RELEASE/javadoc-api/org/springframework/jms/annotation/JmsListener.html#destination-->`_\ を参照されたい。
+ 詳細やその他の属性については、\ `@JmsListenerアノテーションのJavadoc <https://docs.spring.io/spring/docs/5.2.3.RELEASE/javadoc-api/org/springframework/jms/annotation/JmsListener.html#destination-->`_\ を参照されたい。
 
 
  .. tabularcolumns:: |p{0.10\linewidth}|p{0.20\linewidth}|p{0.70\linewidth}|
@@ -1283,7 +1301,7 @@ DBのトランザクション管理を行う必要があるアプリケーショ
       - 説明
     * - | (1)
       - | 受信メッセージのヘッダ属性\ ``JMSReplyTo``\ の値を取得するために、\ ``@Header``\ アノテーションを指定する。
-        | JMSの標準ヘッダ属性を取得する場合に指定するキーの値については、\ `JmsHeadersの定数の定義 <https://static.javadoc.io/org.springframework/spring-jms/5.1.4.RELEASE/constant-values.html#org.springframework.jms.support.JmsHeaders.CORRELATION_ID>`_\ を参照されたい。
+        | JMSの標準ヘッダ属性を取得する場合に指定するキーの値については、\ `JmsHeadersの定数の定義 <https://docs.spring.io/spring/docs/5.2.3.RELEASE/javadoc-api/constant-values.html#org.springframework.jms.support.JmsHeaders.CORRELATION_ID>`_\ を参照されたい。
 
 
 .. _JMSHowToUseListenerContainerReSendMessage:
@@ -1390,7 +1408,7 @@ DBのトランザクション管理を行う必要があるアプリケーショ
          - | メッセージ送信するオブジェクトを返却する。
 
    ヘッダ属性\ ``JMSReplyTo``\ はConsumer側で指定したデフォルトのDestinationよりも優先される。
-   詳細については、\ `Response management <https://docs.spring.io/spring/docs/5.1.4.RELEASE/spring-framework-reference/integration.html#jms-annotated-response>`_\ を参照されたい。
+   詳細については、\ `Spring Framework Documentation -Response Management- <https://docs.spring.io/spring/docs/5.2.3.RELEASE/spring-framework-reference/integration.html#jms-annotated-response>`_\ を参照されたい。
 
 
 .. _JMSHowToUseMessageSelectorForAsyncReceive:
@@ -2066,7 +2084,7 @@ DBトランザクション境界がJMSトランザクション境界の外側に
     * - 4.
       - \ ``sessionAcknowledgeMode``\
       - | \ ``sessionAcknowledgeMode``\ はセッションの確認応答モードを設定する。
-        | 詳細については\ `JmsTemplateのJavaDoc <https://docs.spring.io/spring/docs/5.1.4.RELEASE/javadoc-api/org/springframework/jms/core/JmsTemplate.html>`_\ を参照されたい。
+        | 詳細については\ `JmsTemplateのJavaDoc <https://docs.spring.io/spring/docs/5.2.3.RELEASE/javadoc-api/org/springframework/jms/core/JmsTemplate.html>`_\ を参照されたい。
       - \-
       - | 1
     * - 5.
@@ -2167,7 +2185,7 @@ Apache ActiveMQを利用する場合の設定について説明する。
   | JMSプロバイダによっては、固有の設定が必要な場合がある。
   | Apache ActiveMQでは、受信するメッセージのペイロードが許可されたオブジェクトで構成されていることを保障するために、環境変数をアプリケーションサーバの起動引数に追加する必要がある。
   | 詳細については、\ `ObjectMessage <http://activemq.apache.org/objectmessage.html>`_\ を参照されたい。
-  | 環境変数をApache Tomcatの起動引数に追加する例を以下に示す。JBoss Enterprise Application Platform 7.2の場合は\ `Configuring JBoss EAP to Run as a Service <https://access.redhat.com/documentation/en-us/red_hat_jboss_enterprise_application_platform/7.2/html/installation_guide/configuring_jboss_eap_to_run_as_a_service>`_\ を、JBoss Enterprise Application Platform 6.4の場合は\ `Service Configuration <https://access.redhat.com/documentation/en-US/JBoss_Enterprise_Application_Platform/6.4/html/Installation_Guide/sect-Service_Configuration.html>`_\ を、Weblogicの場合は\ `Starting Managed Servers with a Startup Script <https://docs.oracle.com/middleware/12213/wls/START/overview.htm#START120>`_\ を参照されたい。
+  | 環境変数をApache Tomcatの起動引数に追加する例を以下に示す。JBoss Enterprise Application Platform 7.2の場合は\ `Configuring JBoss EAP to Run as a Service <https://access.redhat.com/documentation/en-us/red_hat_jboss_enterprise_application_platform/7.2/html/installation_guide/configuring_jboss_eap_to_run_as_a_service>`_\ を、JBoss Enterprise Application Platform 6.4の場合は\ `Service Configuration <https://access.redhat.com/documentation/en-US/JBoss_Enterprise_Application_Platform/6.4/html/Installation_Guide/sect-Service_Configuration.html>`_\ を、Weblogicの場合は\ `Starting Managed Servers with a Startup Script <https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/12.2.1.4/start/overview.html#GUID-F619DA66-1822-4D4D-8E2E-A899ADB28B4F>`_\ を参照されたい。
 
   - :file:`$CATALINA_HOME/bin/setenv.sh`
 
@@ -2194,7 +2212,6 @@ Apache ActiveMQを利用する場合の設定について説明する。
   | \ ``spring-jms``\ ライブラリにはJMS APIが含まれない。
   | JMSプロバイダのライブラリにはJMS APIを含むことが多いが、JMSプロバイダのライブラリにJMS APIが含まれない場合は、pom.xmlにJMS APIを追加する。
 
-
   | domainプロジェクトとwebプロジェクトのpom.xmlに\ ``activemq-client``\ をビルド用のライブラリとして追加する。
   | また、アプリケーションサーバに\ ``activemq-client``\ とその依存ライブラリを追加する。
 
@@ -2205,6 +2222,15 @@ Apache ActiveMQを利用する場合の設定について説明する。
 
        <dependencies>
 
+           <dependency>
+               <groupId>org.springframework</groupId>
+               <artifactId>spring-jms</artifactId>
+           </dependency>
+           <dependency>
+               <groupId>javax.jms</groupId>
+               <artifactId>javax.jms-api</artifactId>
+               <scope>provided</scope>
+           </dependency>
            <!-- (1) -->
            <dependency>
                <groupId>org.apache.activemq</groupId>
@@ -2222,12 +2248,25 @@ Apache ActiveMQを利用する場合の設定について説明する。
        * - 項番
          - 説明
        * - | (1)
-         - | Apache ActiveMQのクライアントライブラリをビルド用としてdependenciesに追加する。\ ``activemq-client``\ のライブラリにはJMS APIも含まれているため、JMS APIをライブラリとして追加する必要はない。
+         - | Apache ActiveMQのクライアントライブラリをビルド用としてdependenciesに追加する。
+           | なお、本ライブラリの当該バージョンはJMS 1.1で動作するため、依存ライブラリにはJMS API 1.1を含む。
+           | しかし、spring-jms 5.xで必要となるJMS 2.0のAPIを含まないため、実行時はアプリケーションサーバ側で用意する必要がある。
+           | アプリケーションサーバがもともとJMS APIを含まない場合、Spring Bootで管理されるバージョンの\ ``javax.jms-api``\ を格納すれば良い。
+
+  | また、アプリケーションサーバがライブラリを参照するため、サーバ内に\ ``activemq-client``\ とその依存ライブラリを追加する。
+  | 追加するライブラリは下記になる。
+
+  - org.apache.activemq:activemq-client:5.15.11
+  - org.apache.geronimo:specs.geronimo-j2ee-management_1.1_spec:1.0.1
+  - org.apache.geronimo:specs.geronimo-jms_1.1_spec:1.1.1
+  - org.fusesource.hawtbuf:hawtbuf:1.11
+  - org.slf4j:slf4j-api:1.7.25
+  - javax.jms:javax.jms-api:2.0.1
 
  .. note::
 
    上記設定例は、依存ライブラリのバージョンを親プロジェクトである terasoluna-gfw-parent で管理する前提であるため、pom.xmlでのバージョンの指定は不要である。
-   上記の依存ライブラリはterasoluna-gfw-parentが依存している\ `Spring Boot <https://docs.spring.io/spring-boot/docs/2.1.2.RELEASE/reference/htmlsingle/#appendix-dependency-versions>`__\ で管理されている。
+   上記の依存ライブラリはterasoluna-gfw-parentが依存している\ `Spring Boot <https://docs.spring.io/spring-boot/docs/2.2.4.RELEASE/reference/htmlsingle/#dependency-versions>`__\ で管理されている。
 
 |
 

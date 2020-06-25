@@ -553,7 +553,7 @@ Repositoryインタフェースのメソッド定義
 
  .. note::
 
-     TERASOLUNA Server Framework for Java 5.5.1.RELEASEが利用するSpring Data 2.xでは\ ``CrudRepository``\ 等のメソッドシグネチャが変更されているが、
+     Macchinetta Server Framework 1.7.0.RELEASEが利用するSpring Data 2.xでは\ ``CrudRepository``\ 等のメソッドシグネチャが変更されているが、
      本章で示すメソッド名のルールはSpring Data 1.xのメソッドシグネチャに従っている。
 
      次版以降で、Spring Data 2.xのメソッドシグネチャへの移行が検討される予定である。
@@ -1244,7 +1244,7 @@ Serviceクラスを作成する際の注意点を、以下に示す。
 
     #. AOPを使う場合に、JDK標準のDynamic proxies機能が使われる。
        インタフェースがない場合はSpring Frameworkに内包されているCGLIBが使われるが、finalメソッドに対してAdviceできないなどの制約がある。
-       詳細は、\ `Spring Framework Documentation -Aspect Oriented Programming with Spring(Proxying mechanisms)- <https://docs.spring.io/spring/docs/5.1.4.RELEASE/spring-framework-reference/core.html#aop-proxying>`_\ を参照されたい。
+       詳細は、\ `Spring Framework Documentation -Proxying Mechanisms- <https://docs.spring.io/spring/docs/5.2.3.RELEASE/spring-framework-reference/core.html#aop-proxying>`_\ を参照されたい。
     #. 業務ロジックをスタブ化しやすくなる。
        アプリケーション層とドメイン層を別々の体制で並行して開発する場合は、アプリケーション層を開発するために、Serviceのスタブが必要になるケースがある。
        スタブを作成する必要がある場合は、インタフェースを設けておくことを推奨する。
@@ -1371,12 +1371,6 @@ Serviceクラスのメソッドを作成する際の注意点を、以下に示�
     JDBCドライバに対して「読み取り専用のトランザクション」のもとでSQLを実行するように指示することができる。
 
     読み取り専用のトランザクションの扱い方は、JDBCドライバの実装に依存するため、使用するJDBCドライバの仕様を確認されたい。
-
-
- .. note:: **「読み取り専用のトランザクション」を使用する際の注意点**
-
-    コネクションプールからコネクションを取得する際にヘルスチェックを行う設定にしている場合、「読み取り専用のトランザクション」が有効にならないケースがある。
-    本事象の詳細及び回避方法については、:ref:`「読み取り専用のトランザクション」が有効にならないケースについて <DomainLayerTransactionManagementWarningDisableCase>` を参照されたい。
 
 
  .. note:: **新しいトランザクションを開始する必要がある場合のトランザクション定義について**
@@ -1724,7 +1718,7 @@ ServiceおよびSharedServiceでは、アプリケーションで使用する業
 * XML(bean定義ファイル)で宣言する。
 * **アノテーション（@Transactional）で宣言する。（推奨）**
 
-Spring Frameworkから提供されている「宣言型トランザクション管理」の詳細については、\ `Spring Framework Documentation -Transaction Management(Declarative transaction management)- <https://docs.spring.io/spring/docs/5.1.4.RELEASE/spring-framework-reference/data-access.html#transaction-declarative>`_\ を参照されたい。
+Spring Frameworkから提供されている「宣言型トランザクション管理」の詳細については、\ `Spring Framework Documentation -Declarative transaction management- <https://docs.spring.io/spring/docs/5.2.3.RELEASE/spring-framework-reference/data-access.html#transaction-declarative>`_\ を参照されたい。
 \
 
  .. note:: **「アノテーションで指定する」方法を推奨する理由**
@@ -1840,7 +1834,7 @@ Spring Frameworkから提供されている「宣言型トランザクション�
 
     **クラスまたはクラスのメソッドに指定することを推奨する。**
     インタフェースまたはインタフェースのメソッドでない点が、ポイント。
-    理由は、\ `Spring Framework Documentation -Transaction Management(Using @Transactional)- <https://docs.spring.io/spring/docs/5.1.4.RELEASE/spring-framework-reference/data-access.html#transaction-declarative-annotations>`_\ の2個目のTipsを参照されたい。
+    理由は、\ `Spring Framework Documentation -Using @Transactional- <https://docs.spring.io/spring/docs/5.2.3.RELEASE/spring-framework-reference/data-access.html#transaction-declarative-annotations>`_\ の2個目のTipsを参照されたい。
 
  .. warning:: **例外発生時のrollbackとcommitのデフォルト動作**
 
@@ -1853,7 +1847,7 @@ Spring Frameworkから提供されている「宣言型トランザクション�
 
     \ ``@Transactional``\ アノテーションにはvalue属性があるが、これは複数のTransaction Managerを宣言した際に、どのTransaction Managerを使うのかを指定する属性である。
     Transaction Managerが一つの場合、指定は不要である。
-    複数のTransaction Managerを使う必要がある場合は、\ `Spring Framework Documentation -Transaction Management(Multiple Transaction Managers with @Transactional)- <https://docs.spring.io/spring/docs/5.1.4.RELEASE/spring-framework-reference/data-access.html#tx-multiple-tx-mgrs-with-attransactional>`_\ を参照されたい。
+    複数のTransaction Managerを使う必要がある場合は、\ `Spring Framework Documentation -Multiple Transaction Managers with @Transactional- <https://docs.spring.io/spring/docs/5.2.3.RELEASE/spring-framework-reference/data-access.html#tx-multiple-tx-mgrs-with-attransactional>`_\ を参照されたい。
 
  .. note:: **主要DBのisolationのデフォルトについて**
 
@@ -1877,54 +1871,6 @@ Spring Frameworkから提供されている「宣言型トランザクション�
     * クエリを発行した後のタイムアウトの挙動はJDBCドライバの実装に依存する。
     * 使用するTransaction Managerによっては、コミット時にもトランザクションタイムアウトのチェックが行われる。
 
-.. _DomainLayerTransactionManagementWarningDisableCase:
-
- .. note:: **「読み取り専用のトランザクション」が有効にならないケースについて**
-
-    \ ``readOnly = true``\ を指定することで「読み取り専用のトランザクション」のもとでSQLを実行する仕組みが提供されているが、
-    以下の条件にすべて一致する場合、「読み取り専用のトランザクション」が有効にならないJDBCドライバが存在する。
-
-    **[本事象の発生条件]**
-
-    * コネクションプールからコネクションを取得する際に、ヘルスチェックを行う。
-    * コネクションプールから取得したコネクションの自動コミットを無効にする。
-    * \ ``PlatformTransactionManager``\ として、\ ``DataSourceTransactionManager``\ 又は\ ``JpaTransactionManager``\ を使用する。(\ ``JtaTransactionManager``\ を使用する場合、本事象は発生しない)
-
-    **[本事象の発生が確認されているJDBCドライバ]**
-
-    * ``org.postgresql:postgresql:9.3-1102-jdbc41`` (PostgreSQL 9.3向けJDBC4.1互換のJDBCドライバ)
-
-    **[本事象の回避方法]**
-
-    「読み取り専用のトランザクション」が有効にならないケースに一致する場合は、
-    \ ``readOnly = true``\ を指定すると無駄な処理が行われる事になるため、
-    参照系の処理についても「更新可能なトランザクション」のもとで実行することを推奨する。
-
-    他の回避方法として、
-
-    * コネクションプールからコネクションを取得する際に、ヘルスチェックを行わない。
-    * コネクションプールから取得したコネクションの自動コミットを有効にする。(トランザクション管理が必要な時のみ自動コミットを無効にする)
-
-    という方法もあるが、本事象を回避するために、ヘルスチェックや自動コミットに対する設計を変更する事は避けるべきである。
-
-    **[備考]**
-
-    * 本事象の再現確認は、PostgreSQL 9.3及びOracle 12cで行っており、他のデータベース及びバージョンでは行っていない。
-    * PostgreSQL 9.3では、\ ``java.sql.Connection#setReadOnly(boolean)``\  メソッドを呼び出した際に\ ``SQLException``\ が発生する。
-    * \ :ref:`log4jdbc <DataAccessCommonDataSourceDebug>`\ を使用してSQLやJDBCのAPIの呼び出しをロギングしている場合、JDBCドライバから発生した\ ``SQLException``\ はERRORレベルでログに出力される。
-    * **JDBCドライバから発生するSQLExceptionはSpring Frameworkが行う例外処理によって無視されるため、アプリケーションの動作としてはエラーにはならないが、「読み取り専用のトランザクション」は有効にならない。**
-    * Oracle 12cでは、本事象の発生は確認されていない。
-
-    **[参考]**
-
-    \ :ref:`log4jdbc <DataAccessCommonDataSourceDebug>`\ を使用して以下のようなログが出力された場合は、本事象に該当するケースとなる。
-
-     .. code-block:: text
-
-        date:2015-02-20 16:11:56	thread:main	user:	X-Track:	level:ERROR	logger:jdbc.audit                                      	message:3. Connection.setReadOnly(true)
-        org.postgresql.util.PSQLException: Cannot change transaction read-only property in the middle of a transaction.
-            at org.postgresql.jdbc2.AbstractJdbc2Connection.setReadOnly(AbstractJdbc2Connection.java:741) ~[postgresql-9.3-1102-jdbc41.jar:na]
-            ...
 
 トランザクションの伝播
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -2100,7 +2046,7 @@ PlatformTransactionManagerの設定
 
     IBM DeveloperWorksに「トランザクションの落とし穴を理解する」という記事がある。
     この記事ではトランザクション管理で注意しなくてはいけないことや、Spring Frameworkの@Transactionalを使う場合の注意点がまとめられているので、ぜひ一読してほしい。
-    詳細は、\ `IBM DeveloperWorksの記事 <https://developer.ibm.com/articles/j-ts1/>`_\ を参照されたい。
+    詳細は、\ `IBM DeveloperWorksの記事 <https://www.ibm.com/developerworks/java/library/j-ts1/index.html>`_\ を参照されたい。
 
     ※IBM DeveloperWorksの記事は2009年の記事のため(古いため)、一部の内容がSpring Framework 4.1使用時の動作と異なる部分がある。
 
@@ -2115,7 +2061,7 @@ PlatformTransactionManagerの設定
  .. note:: **プログラマティックにトランザクションを管理する方法**
 
     本ガイドラインでは、「宣言型トランザクション管理」を推奨しているが、プログラマティックにトランザクションを管理することもできる。
-    詳細については、\ `Spring Framework Documentation -Transaction Management(Programmatic transaction management)- <https://docs.spring.io/spring/docs/5.1.4.RELEASE/spring-framework-reference/data-access.html#transaction-programmatic>`_\ を参照されたい。
+    詳細については、\ `Spring Framework Documentation -Programmatic Transaction Management- <https://docs.spring.io/spring/docs/5.2.3.RELEASE/spring-framework-reference/data-access.html#transaction-programmatic>`_\ を参照されたい。
 
 
 <tx:annotation-driven>要素の属性について

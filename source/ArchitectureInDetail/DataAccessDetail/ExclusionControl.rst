@@ -416,7 +416,7 @@ ANSI/ISO SQL標準では、トランザクションの分離レベル（各ト�
 
         .. code-block:: sql
 
-          Update from Stock set quantity = quantity - 5
+          Update Stock set quantity = quantity - 5
                                 where ItemId='01' and quantity >= 5
 
     * - 4.
@@ -435,7 +435,7 @@ ANSI/ISO SQL標準では、トランザクションの分離レベル（各ト�
 
         .. code-block:: sql
 
-          Update from Stock set quantity = quantity - 5
+          Update Stock set quantity = quantity - 5
                                 where ItemId='01' and quantity >= 5
 
     * - 7.

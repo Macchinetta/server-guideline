@@ -497,8 +497,8 @@ ER図
 ================================================================================
 
 | セキュリティ要件の分類ごとに、本アプリケーションにおける実装の方法とコードの説明を行う。
-| ここでは分類ごとで要件の実現のために必要最小限なコード片のみを掲載している。コード全体を確認したい場合は `GitHub <https://github.com/Macchinetta/tutorial-apps/tree/1.6.1.RELEASE/secure-login-demo>`_ を参照すること。
-| 本アプリケーションを動作させるための初期データ登録用SQLは `ここ <https://github.com/Macchinetta/tutorial-apps/tree/1.6.1.RELEASE/secure-login-demo/src/secure-login-env/src/main/resources/database>`_ に配置されている。
+| ここでは分類ごとで要件の実現のために必要最小限なコード片のみを掲載している。コード全体を確認したい場合は `GitHub <https://github.com/Macchinetta/tutorial-apps/tree/1.7.0.RELEASE/secure-login-demo>`_ を参照すること。
+| 本アプリケーションを動作させるための初期データ登録用SQLは `ここ <https://github.com/Macchinetta/tutorial-apps/tree/1.7.0.RELEASE/secure-login-demo/secure-login/secure-login-env/src/main/resources/database>`_ に配置されている。
 
 .. note::
 
@@ -896,7 +896,7 @@ ER図
      isInitialPassword および isCurrentPasswordExpired に付与されている \ ``@Cacheable``\ は Spring の Cache Abstraction 機能を使用するためのアノテーションである。
      \ ``@Cacheable`` \ アノテーションを付与することで、メソッドの引数に対する結果をキャッシュすることができる。
      ここでは、キャッシュの使用により初期パスワード判定、パスワード期限切れ判定のたびにデータベースへのアクセスが発生することを防止し、パフォーマンスの低下を防いでいる。
-     Cache Abstraction については `公式ドキュメント - Cache <https://docs.spring.io/spring/docs/5.1.4.RELEASE/spring-framework-reference/integration.html#cache>`_ を参照すること。
+     Cache Abstraction については `Spring Framework Documentation -Cache Abstraction- <https://docs.spring.io/spring/docs/5.2.3.RELEASE/spring-framework-reference/integration.html#cache>`_ を参照すること。
 
      尚、キャッシュを使用する際には、必要なタイミングでキャッシュをクリアする必要があることに注意すること。
      本アプリケーションではパスワード変更時や、ログアウト時には再度初期パスワード判定、パスワード期限切れ判定を行うためにキャッシュをクリアする。
@@ -986,7 +986,6 @@ ER図
             <mvc:exclude-mapping path="/password/**" /> <!-- (2) -->
             <mvc:exclude-mapping path="/reissue/**" /> <!-- (3) -->
             <mvc:exclude-mapping path="/resources/**" />
-            <mvc:exclude-mapping path="/**/*.html" />
             <bean
                 class="com.example.securelogin.app.common.interceptor.PasswordExpirationCheckInterceptor" /> <!-- (4) -->
         </mvc:interceptor>
@@ -1335,6 +1334,7 @@ ER図
        @Constraint(validatedBy = { StrongPasswordValidator.class }) // (1)
        @Target({ TYPE, ANNOTATION_TYPE })
        @Retention(RUNTIME)
+       @Repeatable(List.class)
        public @interface StrongPassword {
            String message() default "{com.example.securelogin.app.common.validation.StrongPassword.message}";
 
@@ -1450,6 +1450,7 @@ ER図
        @Constraint(validatedBy = { NotReusedPasswordValidator.class }) // (1)
        @Target({ TYPE, ANNOTATION_TYPE })
        @Retention(RUNTIME)
+       @Repeatable(List.class)
        public @interface NotReusedPassword {
            String message() default "{com.example.securelogin.app.common.validation.NotReusedPassword.message}";
 
@@ -2041,7 +2042,7 @@ ER図
 
   .. code-block:: java
 
-     package com.example.securelogin.domain.service.account;
+     package com.example.securelogin.domain.common.event;
 
      // omitted
 
@@ -2051,7 +2052,7 @@ ER図
          @Inject
          AuthenticationEventSharedService authenticationEventSharedService;
 
-         @EventListener // (1)
+         @EventListener(AuthenticationFailureBadCredentialsEvent.class) // (1)
          public void onApplicationEvent(
                          AuthenticationFailureBadCredentialsEvent event) {
 
@@ -2305,7 +2306,7 @@ ER図
 
     .. code-block:: java
 
-       package com.example.securelogin.domain.service.account;
+       package com.example.securelogin.domain.common.event;
 
        // omitted
 
@@ -2315,7 +2316,7 @@ ER図
            @Inject
            AuthenticationEventSharedService authenticationEventSharedService;
 
-           @EventListener // (1)
+           @EventListener(AuthenticationSuccessEvent.class) // (1)
            public void onApplicationEvent(
                            AuthenticationSuccessEvent event) {
 
@@ -2765,7 +2766,7 @@ ER図
 
   .. code-block:: java
 
-     package com.example.securelogin.domain.service.account;
+     package com.example.securelogin.domain.common.event;
 
      // omitted
 
@@ -2775,7 +2776,7 @@ ER図
          @Inject
          AuthenticationEventSharedService authenticationEventSharedService;
 
-         @EventListener // (1)
+         @EventListener(AuthenticationSuccessEvent.class) // (1)
          public void onApplicationEvent(AuthenticationSuccessEvent event) {
              LoggedInUser details = (LoggedInUser) event.getAuthentication()
                      .getPrincipal(); // (2)
@@ -3130,7 +3131,7 @@ ER図
 
            PasswordReissueInfo findOne(@Param("token") String token); // (2)
 
-           int delete(@Param("token") String token); // (3)
+           int deleteByToken(@Param("token") String token); // (3)
 
            // omitted
 
@@ -3198,7 +3199,7 @@ ER図
           ]]>
           </insert>
 
-          <delete id="delete">
+          <delete id="deleteByToken">
           <![CDATA[
               DELETE FROM
                   password_reissue_info
@@ -3285,26 +3286,28 @@ ER図
 
                String rowSecret = passwordGenerator.generatePassword(10, passwordGenerationRules); // (4)
 
-               if (!accountSharedService.exists(username)) { // (5)
-                   return rowSecret;
+               String encodeSecret = passwordEncoder.encode(rowSecret); // (5)
+
+               if (accountSharedService.exists(username)) { // (6)
+
+                   Account account= accountSharedService.findOne(username); // (7)
+
+                   String token = UUID.randomUUID().toString(); // (8)
+
+                   LocalDateTime expiryDate = dateFactory.newTimestamp().toLocalDateTime()
+                           .plusSeconds(tokenLifeTimeSeconds); // (9)
+
+                   PasswordReissueInfo info = new PasswordReissueInfo(); // (10)
+                   info.setUsername(username);
+                   info.setToken(token);
+                   info.setSecret(encodeSecret);
+                   info.setExpiryDate(expiryDate);
+
+                   passwordReissueInfoRepository.create(info); // (11)
+
+                   // omitted (Send E-Mail)
+
                }
-
-               Account account= accountSharedService.findOne(username); // (6)
-
-               String token = UUID.randomUUID().toString(); // (7)
-
-               LocalDateTime expiryDate = dateFactory.newTimestamp().toLocalDateTime()
-                       .plusSeconds(tokenLifeTimeSeconds); // (8)
-
-               PasswordReissueInfo info = new PasswordReissueInfo(); // (9)
-               info.setUsername(username);
-               info.setToken(token);
-               info.setSecret(passwordEncoder.encode(rowSecret)); // (10)
-               info.setExpiryDate(expiryDate);
-
-               passwordReissueInfoRepository.create(info); // (11)
-
-               // omitted (Send E-Mail)
 
                return rowSecret; // (12)
 
@@ -3331,21 +3334,21 @@ ER図
        * - | (4)
          - | 秘密情報として用いるために、Passayのパスワード生成機能を用いて、パスワード生成規則に従った、長さ10のランダムな文字列を生成する。
        * - | (5)
-         - | 引数として渡されてきたユーザ名のアカウントが存在するかどうか確認する。存在しなかった場合、ユーザが存在しないことを知られないためにダミーの秘密情報を返す。
+         - | 秘密情報はハッシュ化を行う。
        * - | (6)
-         - | パスワード再発行用の認証情報に含まれるユーザ名のアカウント情報を取得する。
+         - | 引数として渡されてきたユーザ名のアカウントが存在するかどうか確認する。
        * - | (7)
-         - | トークンとして用いるために、\ ``java.util.UUID`` \クラスの\ ``randomUUID`` \メソッドを用いてランダムな文字列を生成する。
+         - | パスワード再発行用の認証情報に含まれるユーザ名のアカウント情報を取得する。
        * - | (8)
-         - | 現在時刻に(3)の値を加えることにより、パスワード再発行用の認証情報の有効期限を計算する。
+         - | トークンとして用いるために、\ ``java.util.UUID`` \クラスの\ ``randomUUID`` \メソッドを用いてランダムな文字列を生成する。
        * - | (9)
-         - | パスワード再発行用の認証情報を作成し、ユーザ名、トークン、秘密情報、有効期限を設定する。
+         - | 現在時刻に(3)の値を加えることにより、パスワード再発行用の認証情報の有効期限を計算する。
        * - | (10)
-         - | 秘密情報はハッシュ化を行ってから\ ``PasswordReissueInfo`` \に設定する。
+         - | パスワード再発行用の認証情報を作成し、ユーザ名、トークン、秘密情報、有効期限を設定する。
        * - | (11)
          - | パスワード再発行用の認証情報をデータベースに登録する。
        * - | (12)
-         - | 生成した秘密情報を返す。
+         - | 生成した秘密情報を返す。アカウントが存在しなかった場合でも、ユーザが存在しないことを知られないためにダミーの秘密情報を返す。
 
     .. raw:: latex
 
@@ -4012,7 +4015,7 @@ URLに含まれるトークンと秘密情報の組が正しい場合にのみ�
                        MessageKeys.E_SL_PR_5003));
                }
                failedPasswordReissueRepository.deleteByToken(token);
-               passwordReissueInfoRepository.delete(token); // (3)
+               passwordReissueInfoRepository.deleteByToken(token); // (3)
 
                return accountSharedService.updatePassword(username, rawPassword); // (4)
 
@@ -4866,6 +4869,7 @@ URLに含まれるトークンと秘密情報の組が正しい場合にのみ�
        @Constraint(validatedBy = {})
        @Target(FIELD)
        @Retention(RUNTIME)
+       @Repeatable(List.class)
        @ReportAsSingleViolation  // (1)
        @Pattern(regexp = "^\\P{Cntrl}*$") // (2)
        public @interface NotContainControlChars {
@@ -4907,6 +4911,7 @@ URLに含まれるトークンと秘密情報の組が正しい場合にのみ�
        @Constraint(validatedBy = {})
        @Target(FIELD)
        @Retention(RUNTIME)
+       @Repeatable(List.class)
        @ReportAsSingleViolation
        @Pattern(regexp = "^[\\r\\n\\P{Cntrl}]*$") // (1)
        public @interface NotContainControlCharsExceptNewlines {
@@ -4951,7 +4956,8 @@ URLに含まれるトークンと秘密情報の組が正しい場合にのみ�
        @Documented
        @Constraint(validatedBy = { FileExtensionValidator.class })
        @Target(FIELD)
-       @Retention(RetentionPolicy.RUNTIME)
+       @Retention(RUNTIME)
+       @Repeatable(List.class)
        public @interface FileExtension {
            String message() default "{com.example.securelogin.app.common.validation.FileExtension.message}";
 
@@ -4964,7 +4970,7 @@ URLに含まれるトークンと秘密情報の組が正しい場合にのみ�
            boolean ignoreCase() default true;  // (2)
 
            @Target(FIELD)
-           @Retention(RetentionPolicy.RUNTIME)
+           @Retention(RUNTIME)
            @Documented
            @interface List {
                FileExtension[] value();
@@ -5057,7 +5063,8 @@ URLに含まれるトークンと秘密情報の組が正しい場合にのみ�
        @Documented
        @Constraint(validatedBy = { FileNamePatternValidator.class })
        @Target(FIELD)
-       @Retention(RetentionPolicy.RUNTIME)
+       @Retention(RUNTIME)
+       @Repeatable(List.class)
        public @interface FileNamePattern {
 
            String message() default "{com.example.securelogin.app.common.validation.FileNamePattern.message}";
@@ -5069,7 +5076,7 @@ URLに含まれるトークンと秘密情報の組が正しい場合にのみ�
            String pattern() default "";  // (1)
 
            @Target(FIELD)
-           @Retention(RetentionPolicy.RUNTIME)
+           @Retention(RUNTIME)
            @Documented
            @interface List {
                FileNamePattern[] value();
@@ -5148,6 +5155,7 @@ URLに含まれるトークンと秘密情報の組が正しい場合にのみ�
        @Constraint(validatedBy = { DomainRestrictedURLValidator.class })
        @Target(FIELD)
        @Retention(RUNTIME)
+       @Repeatable(List.class)
        @URL  // (1)
        public @interface DomainRestrictedURL {
 
@@ -5255,6 +5263,7 @@ URLに含まれるトークンと秘密情報の組が正しい場合にのみ�
        @Constraint(validatedBy = { DomainRestrictedEmailValidator.class })
        @Target(FIELD)
        @Retention(RUNTIME)
+       @Repeatable(List.class)
        @Email  // (1)
        public @interface DomainRestrictedEmail {
            String message() default "{com.example.securelogin.app.common.validation.DomainRestrictedEmail.message}";
@@ -5384,7 +5393,7 @@ URLに含まれるトークンと秘密情報の組が正しい場合にのみ�
          @UploadFileMaxSize
          @FileExtension(extensions = { "jpg", "png", "gif" })  // (4)
          @FileNamePattern(pattern = "[a-zA-Z0-9_-]+\\.[a-zA-Z]{3}")  // (5)
-         private MultipartFile image;
+         private transient MultipartFile image;
 
          @NotNull
          @NotContainControlCharsExceptNewlines  // (6)
@@ -5491,7 +5500,7 @@ URLに含まれるトークンと秘密情報の組が正しい場合にのみ�
 
     アドバイスとは、AOPにおいて指定されたタイミングで実行する処理のことを指す。
     また、アドバイスを織り込むことのできる箇所のことをジョインポイントと呼び、どのジョインポイントにアドバイスを織り込むかを定義したものポイントカットと呼ぶ。
-    Springが提供するAOP機能に関しては、`公式ドキュメント - AOP <https://docs.spring.io/spring/docs/5.1.4.RELEASE/spring-framework-reference/core.html#aop>`_ を参照すること。
+    Springが提供するAOP機能に関しては、`Spring Framework Documentation -Aspect Oriented Programming with Spring- <https://docs.spring.io/spring/docs/5.2.3.RELEASE/spring-framework-reference/core.html#aop>`_ を参照すること。
 
 コード解説
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -5678,7 +5687,7 @@ URLに含まれるトークンと秘密情報の組が正しい場合にのみ�
 
      SpringのAOPは、自動的に作成されたプロキシクラスがメソッド呼び出しをハンドリングする、プロキシ方式を採用している。
      プロキシ方式のAOPの制限として、可視性が\ ``public`` \以外のメソッドの呼び出しや、同一クラス内のメソッド呼び出しの際にはアドバイスが実行されない点に注意する必要がある。
-     詳細は `公式ドキュメント <https://docs.spring.io/spring/docs/5.1.4.RELEASE/spring-framework-reference/core.html#aop-understanding-aop-proxies>`_ を参照すること。
+     詳細は `Spring Framework Documentation -Understanding AOP Proxies- <https://docs.spring.io/spring/docs/5.2.3.RELEASE/spring-framework-reference/core.html#aop-understanding-aop-proxies>`_ を参照すること。
 
   ログの出力結果を以下に示す。
 

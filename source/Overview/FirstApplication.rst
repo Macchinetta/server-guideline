@@ -35,6 +35,18 @@ Spring MVCを用いたWebアプリケーションの開発に対するイメー�
     * - Web Browser
       - `Google Chrome <https://www.google.co.jp/chrome/browser/desktop/index.html>`_ 46.0.2490.80 m
 
+.. _warning_sts_4:
+.. warning:: **STS 4.x について**
+
+    STSはバージョン 4.x がリリースされているが、本ガイドラインでは開発準備の負担を減らすため 3.x の利用を推奨する。
+
+    4.x はSpring Boot アプリケーションの開発やJava Based Configurationにフィーチャーしており、
+    従来のJava EE Webアプリケーション開発向けのWeb Tools Platform (WTP)やJSPエディタなどが搭載されていない、
+    従来のSpring アプリケーション開発向けのXML形式のBean定義ファイルがサポートされていない等、
+    Macchinetta Server Framework (1.x)で解説するアプリケーション開発にはマッチしないためである。
+
+    なお、4.x を利用した場合も必要なプラグインを追加すれば、3.xと同じように開発することができる。
+
 .. note::
 
     インターネット接続するために、プロキシサーバーを介する必要がある場合、
@@ -51,7 +63,7 @@ Spring MVCを用いたWebアプリケーションの開発に対するイメー�
     mvn archetype:generate -B^
      -DarchetypeGroupId=com.github.macchinetta.blank^
      -DarchetypeArtifactId=macchinetta-web-blank-noorm-archetype^
-     -DarchetypeVersion=1.6.1.RELEASE^
+     -DarchetypeVersion=1.7.0.RELEASE^
      -DgroupId=com.example.helloworld^
      -DartifactId=helloworld^
      -Dversion=1.0.0-SNAPSHOT
@@ -63,7 +75,7 @@ Spring MVCを用いたWebアプリケーションの開発に対するイメー�
     C:\work>mvn archetype:generate -B^
     More?  -DarchetypeGroupId=com.github.macchinetta.blank^
     More?  -DarchetypeArtifactId=macchinetta-web-blank-noorm-archetype^
-    More?  -DarchetypeVersion=1.6.1.RELEASE^
+    More?  -DarchetypeVersion=1.7.0.RELEASE^
     More?  -DgroupId=com.example.helloworld^
     More?  -DartifactId=helloworld^
     More?  -Dversion=1.0.0-SNAPSHOT
@@ -73,13 +85,13 @@ Spring MVCを用いたWebアプリケーションの開発に対するイメー�
     [INFO] Building Maven Stub Project (No POM) 1
     [INFO] ------------------------------------------------------------------------
     [INFO]
-    [INFO] >>> maven-archetype-plugin:2.4:generate (default-cli) > generate-sources @ standalone-pom >>>
+    [INFO] >>> maven-archetype-plugin:3.1.2:generate (default-cli) > generate-sources @ standalone-pom >>>
     [INFO]
-    [INFO] <<< maven-archetype-plugin:2.4:generate (default-cli) < generate-sources @ standalone-pom <<<
+    [INFO] <<< maven-archetype-plugin:3.1.2:generate (default-cli) < generate-sources @ standalone-pom <<<
     [INFO]
-    [INFO] --- maven-archetype-plugin:2.4:generate (default-cli) @ standalone-pom ---
+    [INFO] --- maven-archetype-plugin:3.1.2:generate (default-cli) @ standalone-pom ---
     [INFO] Generating project in Batch mode
-    [INFO] Archetype repository not defined. Using the one from [com.github.macchinetta.blank:macchinetta-web-blank-noorm-archetype:1.6.1.RELEASE] found in catalog remote
+    [INFO] Archetype repository not defined. Using the one from [com.github.macchinetta.blank:macchinetta-web-blank-noorm-archetype:1.7.0.RELEASE] found in catalog remote
     [INFO] ----------------------------------------------------------------------------
     [INFO] Using following parameters for creating project from Archetype: macchinetta-web-blank-noorm-archetype:1.6.1.RELEASE
     [INFO] ----------------------------------------------------------------------------
@@ -131,11 +143,11 @@ Spring MVCの設定方法を理解するために、生成されたSpring MVCの
         xmlns:mvc="http://www.springframework.org/schema/mvc"
         xmlns:util="http://www.springframework.org/schema/util"
         xmlns:aop="http://www.springframework.org/schema/aop"
-        xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
-            http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-            http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
-            http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
-            http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+        xsi:schemaLocation="http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
+            http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+            http://www.springframework.org/schema/util https://www.springframework.org/schema/util/spring-util.xsd
+            http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd
+            http://www.springframework.org/schema/aop https://www.springframework.org/schema/aop/spring-aop.xsd
         ">
 
         <context:property-placeholder
@@ -164,21 +176,18 @@ Spring MVCの設定方法を理解するために、生成されたSpring MVCの
             <mvc:interceptor>
                 <mvc:mapping path="/**" />
                 <mvc:exclude-mapping path="/resources/**" />
-                <mvc:exclude-mapping path="/**/*.html" />
                 <bean
                     class="org.terasoluna.gfw.web.logging.TraceLoggingInterceptor" />
             </mvc:interceptor>
             <mvc:interceptor>
                 <mvc:mapping path="/**" />
                 <mvc:exclude-mapping path="/resources/**" />
-                <mvc:exclude-mapping path="/**/*.html" />
                 <bean
                     class="org.terasoluna.gfw.web.token.transaction.TransactionTokenInterceptor" />
             </mvc:interceptor>
             <mvc:interceptor>
                 <mvc:mapping path="/**" />
                 <mvc:exclude-mapping path="/resources/**" />
-                <mvc:exclude-mapping path="/**/*.html" />
                 <bean class="org.terasoluna.gfw.web.codelist.CodeListInterceptor">
                     <property name="codeListIdPattern" value="CL_.+" />
                 </bean>
@@ -226,6 +235,11 @@ Spring MVCの設定方法を理解するために、生成されたSpring MVCの
                     <entry key="common/error/dataAccessError" value="500" />
                 </map>
             </property>
+            <property name="excludedExceptions">
+                <array>
+                    <value>org.springframework.web.util.NestedServletException</value>
+                </array>
+            </property>
             <property name="defaultErrorView" value="common/error/systemError" />
             <property name="defaultStatusCode" value="500" />
         </bean>
@@ -250,7 +264,7 @@ Spring MVCの設定方法を理解するために、生成されたSpring MVCの
    * - 項番
      - 説明
    * - | (1)
-     - \ ``<mvc:annotation-driven>``\要素を定義することにより、Spring MVCのデフォルト設定が行われる。デフォルトの設定については、 Springの公式ページである `Enable MVC Config <https://docs.spring.io/spring/docs/5.1.4.RELEASE/spring-framework-reference/web.html#mvc-config-enable>`_ を参照されたい。
+     - \ ``<mvc:annotation-driven>``\要素を定義することにより、Spring MVCのデフォルト設定が行われる。デフォルトの設定については、`Spring Framework Documentation -Enable MVC Configuration- <https://docs.spring.io/spring/docs/5.2.3.RELEASE/spring-framework-reference/web.html#mvc-config-enable>`_ を参照されたい。
    * - | (2)
      - Spring MVCで使用するコンポーネントを探すパッケージを定義する。
    * - | (3)
@@ -536,7 +550,7 @@ JSPの作成
      - 説明
    * - | (1)
      - | タグライブラリを利用し、HTMLフォームを構築している。 ``modelAttribute`` 属性に、Controllerで用意したフォームオブジェクトの名前を指定する。
-       | タグライブラリは `こちら <https://docs.spring.io/spring/docs/5.1.4.RELEASE/spring-framework-reference/web.html#mvc-view-jsp-formtaglib-formtag>`_\を参照されたい。
+       | タグライブラリは `Spring Framework Documentation -The Form Tag- <https://docs.spring.io/spring/docs/5.2.3.RELEASE/spring-framework-reference/web.html#mvc-view-jsp-formtaglib-formtag>`_\を参照されたい。
 
 .. note::
 

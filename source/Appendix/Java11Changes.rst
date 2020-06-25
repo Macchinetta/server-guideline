@@ -83,7 +83,7 @@ Java SE 11でJAX-WSを利用する場合、以下のようにjaxws-api及びjava
     * - 項番
       - 説明
     * - | (1)
-      - | jaxws-apiのバージョンはterasoluna-gfw-parentが依存している\ `Spring Boot <https://docs.spring.io/spring-boot/docs/2.1.2.RELEASE/reference/htmlsingle/#appendix-dependency-versions>`_\ で管理されているため、pom.xmlでのバージョンの指定は不要である。
+      - | jaxws-apiのバージョンはterasoluna-gfw-parentが依存している\ `Spring Boot <https://docs.spring.io/spring-boot/docs/2.2.4.RELEASE/reference/htmlsingle/#dependency-versions>`_\ で管理されているため、pom.xmlでのバージョンの指定は不要である。
     * - | (2)
       - | 任意のバージョンを指定する。
 
@@ -119,6 +119,22 @@ Java SE 11でCommon Annotationsを利用する場合、以下のようにjavax.a
 
 なお、Common Annotationsを動作させるための実装は各APサーバによって提供される想定であり、上記ではアプリケーションのコンパイルに必要となるAPIのみを追加している。
 
+.. _conflict-deprecated-modules-from-java11:
+
+推移的に解決されるJava EE関連モジュールの競合
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Java SE 11以降での開発を円滑に行うため、
+いくつかのOSSライブラリはこれまでに説明したJava SE 11で削除されたJava EE関連モジュールを依存ライブラリとして推移的に解決してくれるよう改善されている。
+
+**不幸にも、実行環境によってはこれが原因となりアプリケーションが起動しない、処理に問題が生じるといったケースがあるため、留意されたい。**
+具体的には、本来アプリケーションサーバのモジュールを参照していたところを部分的にアプリケーションの依存ライブラリを参照してしまい、
+バージョン不整合によるリンケージエラーや\ ``NoSuchMethodException``\ が発生する、エラーにはならないが期待した挙動と異なるといった不具合が発生する。
+
+この場合は、アプリケーションのビルド時にアプリケーションサーバから提供されるモジュールを除外する、
+アプリケーションサーバのクラスローダ設定によりアプリケーションの依存ライブラリを優先するといった対策が有効である。
+
+\ `WebLogic 12cを利用する際の注意点 <https://github.com/terasolunaorg/terasoluna-gfw/wiki/WebLogic_ja>`_\ や\ `JBoss EAP 7を利用する際の注意点 <https://github.com/terasolunaorg/terasoluna-gfw/wiki/JBoss7_ja>`_\ も併せて参照されたい。
 
 .. _change-default-locale--data-from-java9:
 
@@ -157,6 +173,16 @@ APサーバを介さずに公開するサーバで使用するバージョンは
    このため、独自にopensslをコンパイルしてアップデートすることは、一般的な開発者には推奨しない。
    TLS 1.3に対応したopensslを内包したOSにアップデートして、環境を構築しなおすべきである。
 
+.. _performance-differences-between-java:
+
+Java SE 8とJava SE 11のパフォーマンスの違い
+--------------------------------------------------------------------------------
+
+Java SE 8とJava SE 11でCPUやメモリ使用率の傾向が異なる場合があることを確認している。
+同一環境、同一アプリケーションでも、Java SE 11を使用することでパフォーマンスが劣化する可能性があるため、性能試験を実施してパフォーマンスを確認されたい。
+
+また、Java SE 9よりデフォルトで使用されるGC(Garbage Collection)がParallel GCからG1 GCに変更され、CMS(Concurrent Mark Sweep) GCが非推奨となった。
+CMS GCを使用していた場合は、プロジェクトの要件から新たに使用するGCを検討し、移行することを推奨する。
 
 .. raw:: latex
 

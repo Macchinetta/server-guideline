@@ -193,7 +193,7 @@ Spring Testを使用する場合の\ ``Repository``\ のテストクラス作成
 
 .. code-block:: xml
 
-    <bean id="realDataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
+    <bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
       <property name="driverClassName" value="org.postgresql.Driver" />
       <property name="url" value="jdbc:postgresql://localhost:5432/sample" />
       <property name="username" value="sample" />
@@ -203,10 +203,6 @@ Spring Testを使用する場合の\ ``Repository``\ のテストクラス作成
       <property name="maxIdle" value="16" />
       <property name="minIdle" value="0" />
       <property name="maxWaitMillis" value="60000" />
-    </bean>
-
-    <bean id="dataSource" class="net.sf.log4jdbc.Log4jdbcProxyDataSource">
-      <constructor-arg index="0" ref="realDataSource" />
     </bean>
 
     <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
@@ -351,6 +347,18 @@ Spring Test DBUnitを利用したテスト
 また、DBUnitにSpring Test DBUnitの機能を組み合わせて使用するには、\ ``@TestExecutionListeners``\ アノテーションを使って、
 \ ``com.github.springtestdbunit.TransactionDbUnitTestExecutionListener``\ を登録する必要がある。
 登録方法ついては、\ :ref:`UsageOfLibraryForTestRegistrationOfTestExecutionListener`\ を参照されたい。
+
+.. warning:: **データ定義ファイルにExcel形式のファイルを使用する場合のApache POIについて**
+
+    本フレームワークで利用しているDBUnitはApache POI 3.17に依存しており、4.xではDBUnitが利用するいくつかのメソッドが廃止されているため、Excel形式のデータ定義ファイルを読み込む際に実行時エラーとなることが確認されている。
+
+    共通ライブラリの提供するApache POIは4.xであるため、Excel形式のファイルを使用する場合は、3.17にダウングレードする必要がある。
+    なお、テスト対象のアプリケーションが\ :ref:`excelfiledownload-label`\ に示すようにApache POIを利用している場合は、ダウングレードにより非互換が発生する可能性があることに留意されたい。
+
+    また、Apache POI 3.17では、\ `CVE-2019-12415 <https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-12415>`_\で報告されているXXEの脆弱性を含むため、使用はテスト用途のみに留め、本番では使用しないことを推奨する。
+
+    DBUnit 2.7.1においてApache POI 4.xに対応される予定であるが、Spring Test DBUnitが個人開発のライブラリで既に開発を停止していると見られることから、
+    正式に対応される見通しがついていないのが現状である。Spring Testの標準機能を利用することも併せて検討されたい。
 
 DBUnitを利用した\ ``Repository``\ の単体テストにおいて、作成するファイルを以下に示す。
 
@@ -1371,7 +1379,7 @@ Springに追加して利用する\ ``Interceptor``\ や\ ``ExceptionResolver``\ 
            - 説明
          * - | (1)
            - | セッションのモックオブジェクトを生成する。クラスの詳細については、
-               \ `MockHttpSession のJavadoc <https://docs.spring.io/spring-framework/docs/5.1.4.RELEASE/javadoc-api/org/springframework/mock/web/MockHttpSession.html>`_\
+               \ `MockHttpSession のJavadoc <https://docs.spring.io/spring/docs/5.2.3.RELEASE//javadoc-api/org/springframework/mock/web/MockHttpSession.html>`_\
                を参照されたい。
          * - | (2)
            - | 生成したセッションのモックオブジェクトに、格納したいオブジェクトをセットする。

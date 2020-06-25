@@ -350,12 +350,11 @@ DBから取得した固定の時刻を返却する
 
 .. code-block:: console
 
-    16. SELECT now FROM system_date {executed in 0 msec}
-    17. SELECT now FROM system_date {executed in 1 msec}
-    18. SELECT now FROM system_date {executed in 0 msec}
+    date:2013-10-10 14:09:18.687	thread:http-nio-8080-exec-4	X-Track:cbc6fe4ceb964bc4acc56de86abb8142	level:DEBUG	logger:org.springframework.jdbc.core.JdbcTemplate      	message:Executing SQL query [SELECT now FROM system_date]
+    date:2013-10-10 14:09:18.688	thread:http-nio-8080-exec-4	X-Track:cbc6fe4ceb964bc4acc56de86abb8142	level:DEBUG	logger:org.springframework.jdbc.core.JdbcTemplate      	message:Executing SQL query [SELECT now FROM system_date]
+    date:2013-10-10 14:09:18.689	thread:http-nio-8080-exec-4	X-Track:cbc6fe4ceb964bc4acc56de86abb8142	level:DEBUG	logger:org.springframework.jdbc.core.JdbcTemplate      	message:Executing SQL query [SELECT now FROM system_date]
 
 Date Factoryのメソッドを呼び出すと、DBへのアクセスログが出力される。
-SQLログを出力するために、 :doc:`../DataAccessDetail/DataAccessCommon` で説明した\ ``Log4jdbcProxyDataSource``\ を使用している。
 
 |
 

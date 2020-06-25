@@ -67,6 +67,10 @@
     * - Web Browser
       - `Google Chrome <https://www.google.co.jp/chrome/browser/desktop/index.html>`_ 42.0.2311.90 m
 
+.. warning::
+
+    本ガイドラインではSTS 4.xではなく、3.xの利用を推奨している。詳細は :ref:`STS 4.x について <warning_sts_4>` を参照されたい。
+
 アプリケーションの概要と要件
 ================================================================================
 
@@ -752,13 +756,16 @@ gitで取得した初期プロジェクトの構成について述べる。
                  │                   │      └── OrderRepository.java
                  │                   └── service  ... (6)
                  │                       ├── account
-                 │                       │  └── AccountService.java
+                 │                       │  ├── AccountService.java
+                 │                       │  └── AccountServiceImpl.java
                  │                       ├── goods
-                 │                       │  └── GoodsService.java
+                 │                       │  ├── GoodsService.java
+                 │                       │  └── GoodsServiceImpl.java
                  │                       ├── order
                  │                       │  ├── EmptyCartOrderException.java
                  │                       │  ├── InvalidCartOrderException.java
-                 │                       │  └── OrderService.java
+                 │                       │  ├── OrderService.java
+                 │                       │  └── OrderServiceImpl.java
                  │                       └── userdetails
                  │                           ├── AccountDetails.java
                  │                           └── AccountDetailsService.java
@@ -858,8 +865,6 @@ gitで取得した初期プロジェクトの構成について述べる。
                  │                   ├── goods
                  │                   │  ├── GoodsController.java  
                  │                   │  └── GoodsViewForm.java
-                 │                   ├── login
-                 │                   │  └── LoginController.java
                  │                   └── validation
                  │                       ├── Confirm.java
                  │                       └── ConfirmValidator.java
@@ -1241,7 +1246,7 @@ Controllerでは、入力情報を受け取るフォームを ``@SessionAttribut
 
         @PostMapping(params = "form2")
         public String showUpdateForm2(
-                @Validated((Wizard1.class)) AccountUpdateForm form,
+                @Validated(Wizard1.class) AccountUpdateForm form,
                 BindingResult result) {
 
             if (result.hasErrors()) {
@@ -1757,7 +1762,7 @@ Controllerを作成する。
 ``/session-tutorial-init-web/src/main/java/com/example/session/app/goods/GoodsController.java``
 
 .. code-block:: java
-    :emphasize-lines: 9-10, 15-16, 18-19, 30-32, 57-75
+    :emphasize-lines: 9-10, 16-17, 19-20, 31-33, 58-76
 
     package com.example.session.app.goods;
 
@@ -2172,7 +2177,7 @@ Controllerの修正
 ``/session-tutorial-init-web/src/main/java/com/example/session/app/goods/GoodsController.java``
 
 .. code-block:: java
-    :emphasize-lines: 6, 34-36, 43-73
+    :emphasize-lines: 6, 35-37, 44-74
 
     package com.example.session.app.goods;
 
@@ -2219,15 +2224,15 @@ Controllerの修正
 
         // (2)
         @GetMapping
-        String showGoods(GoodViewForm form, Model model) {
-            Pageable pageable = new PageRequest(criteria.getPage(), 3);
+        public String showGoods(GoodViewForm form, Model model) {
+            Pageable pageable = PageRequest.of(criteria.getPage(), 3);
             form.setCategoryId(criteria.getCategoryId());
             return showGoods(pageable, model);
         }
 
         // (3)
         @GetMapping(params = "categoryId")
-        String changeCategoryId(GoodViewForm form, Pageable pageable, Model model) {
+        public String changeCategoryId(GoodViewForm form, Pageable pageable, Model model) {
             criteria.setPage(pageable.getPageNumber());
             criteria.setCategoryId(form.getCategoryId());
             return showGoods(pageable, model);
@@ -2235,7 +2240,7 @@ Controllerの修正
 
         // (4)
         @GetMapping(params = "page")
-        String changePage(GoodViewForm form, Pageable pageable, Model model) {
+        public String changePage(GoodViewForm form, Pageable pageable, Model model) {
             criteria.setPage(pageable.getPageNumber());
             form.setCategoryId(criteria.getCategoryId());
             return showGoods(pageable, model);
@@ -2406,12 +2411,12 @@ Controllerを作成する。
         }
 
         @GetMapping
-        String viewCart(Model model) {
+        public String viewCart(Model model) {
             return "cart/viewCart";
         }
 
         @PostMapping
-        String removeFromCart(@Validated CartForm cartForm,
+        public String removeFromCart(@Validated CartForm cartForm,
                 BindingResult bindingResult, Model model) {
             if (bindingResult.hasErrors()) {
                 ResultMessages messages = ResultMessages.error()
@@ -2610,7 +2615,7 @@ Controllerを作成する。
         GoodsSearchCriteria criteria;
 
         @GetMapping(params = "confirm")
-        String confirm(@AuthenticationPrincipal AccountDetails userDetails,
+        public String confirm(@AuthenticationPrincipal AccountDetails userDetails,
                 Model model) {
             if (cart.isEmpty()) {
                 ResultMessages messages = ResultMessages.error()
@@ -2624,7 +2629,7 @@ Controllerを作成する。
         }
 
         @PostMapping
-        String order(@AuthenticationPrincipal AccountDetails userDetails,
+        public String order(@AuthenticationPrincipal AccountDetails userDetails,
                 @RequestParam String signature, RedirectAttributes attributes) {
             Order order = orderService.purchase(userDetails.getAccount(), cart,
                     signature); // (2)
@@ -2634,7 +2639,7 @@ Controllerを作成する。
         }
 
         @GetMapping(params = "finish")
-        String finish() {
+        public String finish() {
             return "order/finish";
         }
 

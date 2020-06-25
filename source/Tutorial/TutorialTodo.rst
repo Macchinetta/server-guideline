@@ -51,6 +51,10 @@
     * - Web Browser
       - `Google Chrome <https://www.google.co.jp/chrome/browser/desktop/index.html>`_ 46.0.2490.80 m
 
+.. warning::
+
+    本ガイドラインではSTS 4.xではなく、3.xの利用を推奨している。詳細は :ref:`STS 4.x について <warning_sts_4>` を参照されたい。
+
 |
 
 作成するアプリケーションの説明
@@ -217,7 +221,7 @@ Delete TODO
         mvn archetype:generate -B\
          -DarchetypeGroupId=com.github.macchinetta.blank\
          -DarchetypeArtifactId=macchinetta-web-blank-noorm-archetype\
-         -DarchetypeVersion=1.6.1.RELEASE\
+         -DarchetypeVersion=1.7.0.RELEASE\
          -DgroupId=com.example.todo\
          -DartifactId=todo\
          -Dversion=1.0.0-SNAPSHOT
@@ -237,7 +241,7 @@ O/R Mapperに依存しないブランクプロジェクトの作成
     mvn archetype:generate -B^
      -DarchetypeGroupId=com.github.macchinetta.blank^
      -DarchetypeArtifactId=macchinetta-web-blank-noorm-archetype^
-     -DarchetypeVersion=1.6.1.RELEASE^
+     -DarchetypeVersion=1.7.0.RELEASE^
      -DgroupId=com.example.todo^
      -DartifactId=todo^
      -Dversion=1.0.0-SNAPSHOT
@@ -255,7 +259,7 @@ MyBatis3を使用してデータベースにアクセスするRepositoryImpl用�
     mvn archetype:generate -B^
      -DarchetypeGroupId=com.github.macchinetta.blank^
      -DarchetypeArtifactId=macchinetta-web-blank-archetype^
-     -DarchetypeVersion=1.6.1.RELEASE^
+     -DarchetypeVersion=1.7.0.RELEASE^
      -DgroupId=com.example.todo^
      -DartifactId=todo^
      -Dversion=1.0.0-SNAPSHOT
@@ -327,7 +331,7 @@ Root Directoryに \ ``C:\work\todo``\ を設定し、Projectsにtodoのpom.xml�
 .. note::
  
    上記設定例は、依存ライブラリのバージョンを親プロジェクトである terasoluna-gfw-parent で管理する前提であるため、pom.xmlでのバージョンの指定は不要である。
-   上記の依存ライブラリはterasoluna-gfw-parentが依存している\ `Spring Boot <https://docs.spring.io/spring-boot/docs/2.1.2.RELEASE/reference/htmlsingle/#appendix-dependency-versions>`_\ で管理されている。
+   上記の依存ライブラリはterasoluna-gfw-parentが依存している\ `Spring Boot <https://docs.spring.io/spring-boot/docs/2.2.4.RELEASE/reference/htmlsingle/#dependency-versions>`_\ で管理されている。
 
 |
 
@@ -613,16 +617,14 @@ todoが「Configured」に含まれていることを確認して「Finish」を
 
 
 .. code-block:: console
-   :emphasize-lines: 3
+   :emphasize-lines: 3-4
 
-    date:2016-02-17 11:25:30	thread:localhost-startStop-1	X-Track:	level:INFO 	logger:o.springframework.web.servlet.DispatcherServlet 	message:FrameworkServlet 'appServlet': initialization started
-    date:2016-02-17 11:25:31	thread:localhost-startStop-1	X-Track:	level:DEBUG	logger:o.t.gfw.web.codelist.CodeListInterceptor        	message:registered codeList : []
-    date:2016-02-17 11:25:31	thread:localhost-startStop-1	X-Track:	level:INFO 	logger:o.s.w.s.m.m.a.RequestMappingHandlerMapping      	message:Mapped "{[/],methods=[GET || POST],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public java.lang.String com.example.todo.app.welcome.HelloController.home(java.util.Locale,org.springframework.ui.Model)
-    date:2016-02-17 11:25:31	thread:localhost-startStop-1	X-Track:	level:INFO 	logger:o.s.w.s.m.m.a.RequestMappingHandlerAdapter      	message:Looking for @ControllerAdvice: WebApplicationContext for namespace 'appServlet-servlet': startup date [Wed Feb 17 11:25:30 JST 2016]; parent: Root WebApplicationContext
-    date:2016-02-17 11:25:32	thread:localhost-startStop-1	X-Track:	level:INFO 	logger:o.s.w.s.m.m.a.RequestMappingHandlerAdapter      	message:Looking for @ControllerAdvice: WebApplicationContext for namespace 'appServlet-servlet': startup date [Wed Feb 17 11:25:30 JST 2016]; parent: Root WebApplicationContext
-    date:2016-02-17 11:25:32	thread:localhost-startStop-1	X-Track:	level:INFO 	logger:o.s.web.servlet.handler.SimpleUrlHandlerMapping 	message:Mapped URL path [/**] onto handler 'org.springframework.web.servlet.resource.DefaultServletHttpRequestHandler#0'
-    date:2016-02-17 11:25:32	thread:localhost-startStop-1	X-Track:	level:INFO 	logger:o.s.web.servlet.handler.SimpleUrlHandlerMapping 	message:Mapped URL path [/resources/**] onto handler 'org.springframework.web.servlet.resource.ResourceHttpRequestHandler#0'
-    date:2016-02-17 11:25:33	thread:localhost-startStop-1	X-Track:	level:INFO 	logger:o.springframework.web.servlet.DispatcherServlet 	message:FrameworkServlet 'appServlet': initialization completed in 2826 ms
+    date:2020-01-23 16:11:55	thread:main	X-Track:	level:INFO 	logger:o.springframework.web.servlet.DispatcherServlet 	message:Initializing Servlet 'appServlet'
+    date:2020-01-23 16:11:56	thread:main	X-Track:	level:TRACE	logger:o.s.w.s.m.m.a.RequestMappingHandlerMapping      	message:
+        c.e.t.a.w.HelloController:
+        {[GET, POST] /}: home(Locale,Model)
+    date:2020-01-23 16:11:56	thread:main	X-Track:	level:DEBUG	logger:o.s.w.s.m.m.a.RequestMappingHandlerMapping      	message:1 mappings in 'org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping'
+    date:2020-01-23 16:11:58	thread:main	X-Track:	level:INFO 	logger:o.springframework.web.servlet.DispatcherServlet 	message:Completed initialization in 3095 ms
 
 |
 
@@ -1346,7 +1348,7 @@ Controllerの実装
 一覧画面表示処理を\ ``TodoController``\ に追加する。
 
 .. code-block:: java
-    :emphasize-lines: 18-19, 21-22, 27, 30, 31
+    :emphasize-lines: 19-20, 22-23, 28, 31, 32
 
     package com.example.todo.app.todo;
 
@@ -1576,7 +1578,7 @@ Controllerの修正
 新規作成処理を\ ``TodoController``\ に追加する。
 
 .. code-block:: java
-    :emphasize-lines: 8,29-31,46-70
+    :emphasize-lines: 8,30-32,47-71
 
     package com.example.todo.app.todo;
 
@@ -1994,7 +1996,7 @@ Controllerの修正
 グループ化した入力チェックルールを適用するためには、\ **@Valid アノテーションの代わりに、@Validated アノテーションを使用すること**\ に注意する。
 
 .. code-block:: java
-    :emphasize-lines: 6,12,50,72-94
+    :emphasize-lines: 6,12,51,73-95
 
     package com.example.todo.app.todo;
 
@@ -2327,7 +2329,7 @@ Controllerの修正
 削除処理を\ ``TodoController``\ に追加する。完了処理とほぼ同じである。
 
 .. code-block:: java
-    :emphasize-lines: 94-114
+    :emphasize-lines: 95-115
 
     package com.example.todo.app.todo;
 
@@ -2987,31 +2989,19 @@ Package Explorer上で右クリック -> New -> File を選択し、「New File�
 Service及びアプリケーション層を作成後にAPサーバーを起動し、Todoの表示を行うと、以下のようなSQLログやトランザクションログが出力される。
 
 .. code-block:: console
-   :emphasize-lines: 2-3,6-18,20-22
+   :emphasize-lines: 2-9
 
-    date:2016-02-17 13:18:54	thread:tomcat-http--5	X-Track:390066c43aa94b6588e5bac6a54812b2	level:TRACE	logger:o.t.gfw.web.logging.TraceLoggingInterceptor     	message:[START CONTROLLER] TodoController.list(Model)
-    date:2016-02-17 13:18:54	thread:tomcat-http--5	X-Track:390066c43aa94b6588e5bac6a54812b2	level:DEBUG	logger:o.s.jdbc.datasource.DataSourceTransactionManager	message:Creating new transaction with name [com.example.todo.domain.service.todo.TodoServiceImpl.findAll]: PROPAGATION_REQUIRED,ISOLATION_DEFAULT,readOnly; ''
-    date:2016-02-17 13:18:55	thread:tomcat-http--5	X-Track:390066c43aa94b6588e5bac6a54812b2	level:DEBUG	logger:o.s.jdbc.datasource.DataSourceTransactionManager	message:Acquired Connection [net.sf.log4jdbc.ConnectionSpy@4e53de7c] for JDBC transaction
-    date:2016-02-17 13:18:55	thread:tomcat-http--5	X-Track:390066c43aa94b6588e5bac6a54812b2	level:DEBUG	logger:t.domain.repository.todo.TodoRepository.findAll 	message:==>  Preparing: SELECT todo_id, todo_title, finished, created_at FROM todo 
-    date:2016-02-17 13:18:55	thread:tomcat-http--5	X-Track:390066c43aa94b6588e5bac6a54812b2	level:DEBUG	logger:t.domain.repository.todo.TodoRepository.findAll 	message:==> Parameters: 
-    date:2016-02-17 13:18:55	thread:tomcat-http--5	X-Track:390066c43aa94b6588e5bac6a54812b2	level:DEBUG	logger:jdbc.sqltiming                                  	message: sun.reflect.NativeMethodAccessorImpl.invoke0(NativeMethodAccessorImpl.java:-2)
-    1. SELECT
-                todo_id,
-                todo_title,
-                finished,
-                created_at
-            FROM
-                todo {executed in 0 msec}
-    date:2016-02-17 13:18:55	thread:tomcat-http--5	X-Track:390066c43aa94b6588e5bac6a54812b2	level:INFO 	logger:jdbc.resultsettable                             	message:|--------|-----------|---------|-----------|
-    date:2016-02-17 13:18:55	thread:tomcat-http--5	X-Track:390066c43aa94b6588e5bac6a54812b2	level:INFO 	logger:jdbc.resultsettable                             	message:|TODO_ID |TODO_TITLE |FINISHED |CREATED_AT |
-    date:2016-02-17 13:18:55	thread:tomcat-http--5	X-Track:390066c43aa94b6588e5bac6a54812b2	level:INFO 	logger:jdbc.resultsettable                             	message:|--------|-----------|---------|-----------|
-    date:2016-02-17 13:18:55	thread:tomcat-http--5	X-Track:390066c43aa94b6588e5bac6a54812b2	level:INFO 	logger:jdbc.resultsettable                             	message:|--------|-----------|---------|-----------|
-    date:2016-02-17 13:18:55	thread:tomcat-http--5	X-Track:390066c43aa94b6588e5bac6a54812b2	level:DEBUG	logger:t.domain.repository.todo.TodoRepository.findAll 	message:<==      Total: 0
-    date:2016-02-17 13:18:55	thread:tomcat-http--5	X-Track:390066c43aa94b6588e5bac6a54812b2	level:DEBUG	logger:o.s.jdbc.datasource.DataSourceTransactionManager	message:Initiating transaction commit
-    date:2016-02-17 13:18:55	thread:tomcat-http--5	X-Track:390066c43aa94b6588e5bac6a54812b2	level:DEBUG	logger:o.s.jdbc.datasource.DataSourceTransactionManager	message:Committing JDBC transaction on Connection [net.sf.log4jdbc.ConnectionSpy@4e53de7c]
-    date:2016-02-17 13:18:55	thread:tomcat-http--5	X-Track:390066c43aa94b6588e5bac6a54812b2	level:DEBUG	logger:o.s.jdbc.datasource.DataSourceTransactionManager	message:Releasing JDBC Connection [net.sf.log4jdbc.ConnectionSpy@4e53de7c] after transaction
-    date:2016-02-17 13:18:55	thread:tomcat-http--5	X-Track:390066c43aa94b6588e5bac6a54812b2	level:TRACE	logger:o.t.gfw.web.logging.TraceLoggingInterceptor     	message:[END CONTROLLER  ] TodoController.list(Model)-> view=todo/list, model={todoForm=com.example.todo.app.todo.TodoForm@2a075f1d, todos=[], org.springframework.validation.BindingResult.todoForm=org.springframework.validation.BeanPropertyBindingResult: 0 errors}
-    date:2016-02-17 13:18:55	thread:tomcat-http--5	X-Track:390066c43aa94b6588e5bac6a54812b2	level:TRACE	logger:o.t.gfw.web.logging.TraceLoggingInterceptor     	message:[HANDLING TIME   ] TodoController.list(Model)-> 756,709,153 ns
+    date:2019-12-25 15:01:11	thread:http-nio-8080-exec-10	X-Track:4a2191e29bf340f686617d9e878b89ab	level:TRACE	logger:o.t.gfw.web.logging.TraceLoggingInterceptor     	message:[START CONTROLLER] TodoController.list(Model)
+    date:2019-12-25 15:01:11	thread:http-nio-8080-exec-10	X-Track:4a2191e29bf340f686617d9e878b89ab	level:DEBUG	logger:o.s.jdbc.datasource.DataSourceTransactionManager	message:Creating new transaction with name [com.example.todo.domain.service.todo.TodoServiceImpl.findAll]: PROPAGATION_REQUIRED,ISOLATION_DEFAULT,readOnly
+    date:2019-12-25 15:01:11	thread:http-nio-8080-exec-10	X-Track:4a2191e29bf340f686617d9e878b89ab	level:DEBUG	logger:o.s.jdbc.datasource.DataSourceTransactionManager	message:Acquired Connection [1322308529, URL=jdbc:h2:mem:todo-mybatis3, UserName=SA, H2 JDBC Driver] for JDBC transaction
+    date:2019-12-25 15:01:11	thread:http-nio-8080-exec-10	X-Track:4a2191e29bf340f686617d9e878b89ab	level:DEBUG	logger:c.e.t.d.repository.todo.TodoRepository.findAll  	message:==>  Preparing: SELECT todo_id, todo_title, finished, created_at FROM todo 
+    date:2019-12-25 15:01:11	thread:http-nio-8080-exec-10	X-Track:4a2191e29bf340f686617d9e878b89ab	level:DEBUG	logger:c.e.t.d.repository.todo.TodoRepository.findAll  	message:==> Parameters: 
+    date:2019-12-25 15:01:11	thread:http-nio-8080-exec-10	X-Track:4a2191e29bf340f686617d9e878b89ab	level:DEBUG	logger:c.e.t.d.repository.todo.TodoRepository.findAll  	message:<==      Total: 0
+    date:2019-12-25 15:01:11	thread:http-nio-8080-exec-10	X-Track:4a2191e29bf340f686617d9e878b89ab	level:DEBUG	logger:o.s.jdbc.datasource.DataSourceTransactionManager	message:Initiating transaction commit
+    date:2019-12-25 15:01:11	thread:http-nio-8080-exec-10	X-Track:4a2191e29bf340f686617d9e878b89ab	level:DEBUG	logger:o.s.jdbc.datasource.DataSourceTransactionManager	message:Committing JDBC transaction on Connection [1322308529, URL=jdbc:h2:mem:todo-mybatis3, UserName=SA, H2 JDBC Driver]
+    date:2019-12-25 15:01:11	thread:http-nio-8080-exec-10	X-Track:4a2191e29bf340f686617d9e878b89ab	level:DEBUG	logger:o.s.jdbc.datasource.DataSourceTransactionManager	message:Releasing JDBC Connection [1322308529, URL=jdbc:h2:mem:todo-mybatis3, UserName=SA, H2 JDBC Driver] after transaction
+    date:2019-12-25 15:01:11	thread:http-nio-8080-exec-10	X-Track:4a2191e29bf340f686617d9e878b89ab	level:TRACE	logger:o.t.gfw.web.logging.TraceLoggingInterceptor     	message:[END CONTROLLER  ] TodoController.list(Model)-> view=todo/list, model={todoForm=com.example.todo.app.todo.TodoForm@607e9722, todos=[], org.springframework.validation.BindingResult.todoForm=org.springframework.validation.BeanPropertyBindingResult: 0 errors}
+    date:2019-12-25 15:01:11	thread:http-nio-8080-exec-10	X-Track:4a2191e29bf340f686617d9e878b89ab	level:TRACE	logger:o.t.gfw.web.logging.TraceLoggingInterceptor     	message:[HANDLING TIME   ] TodoController.list(Model)-> 211,362,224 ns
 
 |
 
@@ -3346,15 +3336,15 @@ applicationContext.xml
 | なお、チュートリアルで使用しないコンポーネントについての説明は割愛する。
 
 .. code-block:: xml
-    :emphasize-lines: 10-11, 15-17, 19-20
+    :emphasize-lines: 10-11, 35-37, 39-40
 
     <?xml version="1.0" encoding="UTF-8"?>
     <beans xmlns="http://www.springframework.org/schema/beans"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xmlns:context="http://www.springframework.org/schema/context"
         xsi:schemaLocation="
-            http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-            http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+            http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+            http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd
         ">
 
         <!-- (1) -->
@@ -3370,7 +3360,10 @@ applicationContext.xml
                     <entry key="bcrypt">
                         <bean class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
                     </entry>
-                    <!-- When using SCryptPasswordEncoder, you need to add bcprov-jdk15on.jar to the dependency.
+                    <!-- When using commented out PasswordEncoders, you need to add bcprov-jdk15on.jar to the dependency.
+                    <entry key="argon2">
+                        <bean class="org.springframework.security.crypto.argon2.Argon2PasswordEncoder" />
+                    </entry>
                     <entry key="scrypt">
                         <bean class="org.springframework.security.crypto.scrypt.SCryptPasswordEncoder" />
                     </entry>
@@ -3479,9 +3472,9 @@ todo-domain.xml
         xmlns:context="http://www.springframework.org/schema/context"
         xmlns:aop="http://www.springframework.org/schema/aop"
         xsi:schemaLocation="
-            http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
-            http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-            http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+            http://www.springframework.org/schema/aop https://www.springframework.org/schema/aop/spring-aop.xsd
+            http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+            http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd
         ">
 
         <!-- (1) -->
@@ -3552,7 +3545,7 @@ O/R Mapperに依存しないブランクプロジェクトを作成した場合�
     <beans xmlns="http://www.springframework.org/schema/beans"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="
-            http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+            http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
         ">
 
     </beans>
@@ -3570,7 +3563,7 @@ MyBatis3用のブランクプロジェクトを作成した場合、以下のよ
         xmlns:mybatis="http://mybatis.org/schema/mybatis-spring"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="
-            http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+            http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
             http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring.xsd
         ">
 
@@ -3720,21 +3713,21 @@ todo-env.xml
 なお、データベースにアクセスしないブランクプロジェクトを作成した際は、\ :file:`todo-env.xml`\ は作成されない。
 
 .. code-block:: xml
-    :emphasize-lines: 12, 27, 32, 35, 46
+    :emphasize-lines: 12, 27, 30, 35
 
     <?xml version="1.0" encoding="UTF-8"?>
     <beans xmlns="http://www.springframework.org/schema/beans"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xmlns:jdbc="http://www.springframework.org/schema/jdbc"
         xsi:schemaLocation="
-            http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
-            http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+            http://www.springframework.org/schema/jdbc https://www.springframework.org/schema/jdbc/spring-jdbc.xsd
+            http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
         ">
 
         <bean id="dateFactory" class="org.terasoluna.gfw.common.date.jodatime.DefaultJodaTimeDateFactory" />
 
         <!-- (1) -->
-        <bean id="realDataSource" class="org.apache.commons.dbcp2.BasicDataSource"
+        <bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource"
             destroy-method="close">
             <property name="driverClassName" value="${database.driverClassName}" />
             <property name="url" value="${database.url}" />
@@ -3749,19 +3742,14 @@ todo-env.xml
 
 
         <!-- (2) -->
-        <bean id="dataSource" class="net.sf.log4jdbc.Log4jdbcProxyDataSource">
-            <constructor-arg index="0" ref="realDataSource" />
-        </bean>
-
-        <!-- (3) -->
         <jdbc:initialize-database data-source="dataSource"
             ignore-failures="ALL">
-            <!-- (4) -->
+            <!-- (3) -->
             <jdbc:script location="classpath:/database/${database}-schema.sql" encoding="UTF-8" />
             <jdbc:script location="classpath:/database/${database}-dataload.sql" encoding="UTF-8" />
         </jdbc:initialize-database>
 
-        <!-- (5) -->
+        <!-- (4) -->
         <bean id="transactionManager"
             class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
             <property name="dataSource" ref="dataSource" />
@@ -3780,20 +3768,16 @@ todo-env.xml
    * - | (1)
      - | 実データソースの設定。
    * - | (2)
-     - | データソースの設定。
-       | JDBC関連のログを出力する機能をもったデータソースを指定している。
-       | \ ``net.sf.log4jdbc.Log4jdbcProxyDataSource``\ を使用すると、SQLなどのJDBC関連のログを出力できるため、デバッグに役立つ情報を出力することができる。
-   * - | (3)
      - | データベース初期化の設定。
        | データベースを初期化するSQLファイルを実行するための設定を行っている。
        |
        | この設定は通常、開発中のみでしか使用しない(環境に依存する設定)ため、\ ``todo-env.xml`` \に定義されている。
-   * - | (4)
+   * - | (3)
      - | データベースを初期化するSQLファイルの設定。
        | データベースを初期化するための、DDL文が記載されているSQLファイルとDML文が記載されているSQLファイルを指定している。
        |
        | ブランクプロジェクトの設定では\ ``todo-infra.properties`` \に\ ``database=H2`` \と定義されているため、\ ``H2-schema.sql`` \及び\ ``H2-dataload.sql`` \が実行される。
-   * - | (5)
+   * - | (4)
      - | トランザクションマネージャの設定。
        | id属性には、\ ``transactionManager``\ を指定する。
        | 別の名前を指定する場合は、\ ``<tx:annotation-driven>``\ タグにもトランザクションマネージャ名を指定する必要がある。
@@ -3811,7 +3795,7 @@ spring-mvc.xml
 | なお、チュートリアルで使用しないコンポーネントについての説明は割愛する。
 
 .. code-block:: xml
-    :emphasize-lines: 15, 19, 31, 34, 40, 74
+    :emphasize-lines: 15, 19, 31, 34, 40, 62
 
     <?xml version="1.0" encoding="UTF-8"?>
     <beans xmlns="http://www.springframework.org/schema/beans"
@@ -3820,11 +3804,11 @@ spring-mvc.xml
         xmlns:mvc="http://www.springframework.org/schema/mvc"
         xmlns:util="http://www.springframework.org/schema/util"
         xmlns:aop="http://www.springframework.org/schema/aop"
-        xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
-            http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-            http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
-            http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
-            http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+        xsi:schemaLocation="http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
+            http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+            http://www.springframework.org/schema/util https://www.springframework.org/schema/util/spring-util.xsd
+            http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd
+            http://www.springframework.org/schema/aop https://www.springframework.org/schema/aop/spring-aop.xsd
         ">
 
         <!-- (1) -->
@@ -3856,21 +3840,18 @@ spring-mvc.xml
             <mvc:interceptor>
                 <mvc:mapping path="/**" />
                 <mvc:exclude-mapping path="/resources/**" />
-                <mvc:exclude-mapping path="/**/*.html" />
                 <bean
                     class="org.terasoluna.gfw.web.logging.TraceLoggingInterceptor" />
             </mvc:interceptor>
             <mvc:interceptor>
                 <mvc:mapping path="/**" />
                 <mvc:exclude-mapping path="/resources/**" />
-                <mvc:exclude-mapping path="/**/*.html" />
                 <bean
                     class="org.terasoluna.gfw.web.token.transaction.TransactionTokenInterceptor" />
             </mvc:interceptor>
             <mvc:interceptor>
                 <mvc:mapping path="/**" />
                 <mvc:exclude-mapping path="/resources/**" />
-                <mvc:exclude-mapping path="/**/*.html" />
                 <bean class="org.terasoluna.gfw.web.codelist.CodeListInterceptor">
                     <property name="codeListIdPattern" value="CL_.+" />
                 </bean>
@@ -3918,6 +3899,11 @@ spring-mvc.xml
                     <entry key="common/error/dataAccessError" value="500" />
                 </map>
             </property>
+            <property name="excludedExceptions">
+                <array>
+                    <value>org.springframework.web.util.NestedServletException</value>
+                </array>
+            </property>
             <property name="defaultErrorView" value="common/error/systemError" />
             <property name="defaultStatusCode" value="500" />
         </bean>
@@ -3959,7 +3945,7 @@ spring-mvc.xml
        | どこにも\ ``styles.css``\ が格納されていない場合は、404エラーを返す。
 
        | ここでは\ ``cache-period``\ 属性で静的リソースのキャッシュ時間(3600秒=60分)も設定している。
-       | \ ``cache-period="3600"``\ と設定しても良いが、60分であることを明示するために `SpEL <https://docs.spring.io/spring/docs/5.1.4.RELEASE/spring-framework-reference/core.html#expressions-beandef-xml-based>`_ を使用して \ ``cache-period="#{60 * 60}"``\  と書く方が分かりやすい。
+       | \ ``cache-period="3600"``\ と設定しても良いが、60分であることを明示するために `SpEL <https://docs.spring.io/spring/docs/5.2.3.RELEASE/spring-framework-reference/core.html#expressions-beandef-xml-based>`_ を使用して \ ``cache-period="#{60 * 60}"``\  と書く方が分かりやすい。
    * - | (5)
      - | コントローラ処理のTraceログを出力するインターセプタを設定する。
        | \ ``/resources``\ 配下を除く任意のパスに適用されるように設定する。
@@ -3989,8 +3975,8 @@ spring-security.xml
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xmlns:sec="http://www.springframework.org/schema/security"
         xsi:schemaLocation="
-            http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
-            http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+            http://www.springframework.org/schema/security https://www.springframework.org/schema/security/spring-security.xsd
+            http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
         ">
 
         <sec:http pattern="/resources/**" security="none"/>
@@ -4053,9 +4039,10 @@ logback.xml
 | なお、チュートリアルで使用しないログ設定についての説明は割愛する。
 
 .. code-block:: xml
-    :emphasize-lines: 4, 36, 45
+    :emphasize-lines: 5, 37, 46
 
     <?xml version="1.0" encoding="UTF-8"?>
+    <!DOCTYPE configuration>
     <configuration>
 
         <!-- (1) -->
@@ -4095,6 +4082,10 @@ logback.xml
             <level value="debug" />
         </logger>
 
+        <logger name="com.example.todo.domain.repository">
+            <level value="trace" />
+        </logger>
+
         <!-- TERASOLUNA -->
         <logger name="org.terasoluna.gfw">
             <level value="info" />
@@ -4120,20 +4111,19 @@ logback.xml
             <level value="info" />
         </logger>
 
+        <logger name="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping">
+            <level value="trace" />
+        </logger>
+
+        <logger name="org.springframework.jdbc.core.JdbcTemplate">
+            <level value="trace" />
+        </logger>
+
         <!--  REMOVE THIS LINE IF YOU USE MyBatis3
         <logger name="org.springframework.jdbc.datasource.DataSourceTransactionManager">
             <level value="debug" />
         </logger>
               REMOVE THIS LINE IF YOU USE MyBatis3  -->
-
-        <logger name="jdbc.sqltiming">
-            <level value="debug" />
-        </logger>
-
-        <!-- only for development -->
-        <logger name="jdbc.resultsettable">
-            <level value="debug" />
-        </logger>
 
         <root level="warn">
             <appender-ref ref="STDOUT" />
@@ -4165,6 +4155,16 @@ logback.xml
     * MyBatis3用のブランクプロジェクト
 
      .. code-block:: xml
+
+        <logger name="com.example.todo">
+            <level value="debug" />
+        </logger>
+
+        <logger name="com.example.todo.domain.repository">
+            <level value="trace" />
+        </logger>
+
+        <!-- omitted -->
 
         <logger name="org.springframework.jdbc.datasource.DataSourceTransactionManager">
             <level value="debug" />

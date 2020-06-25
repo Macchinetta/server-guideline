@@ -11,6 +11,265 @@
       - 更新箇所
       - 更新内容
 
+    * - 2020-06-29
+      - \-
+      - 1.7.0 RELEASE版公開
+
+    * -
+      - 全般
+      - ガイドラインの誤記(タイプミスや単純な記述ミスなど)の修正
+
+        記載内容の改善
+
+        記載内容の修正・追加
+
+        * 利用するミドルウェアのバージョンを更新
+
+        * Spring Framework 5.1.16より\ `XMLスキーマ処理が改善 <https://github.com/spring-projects/spring-framework/issues/22504>`_\されたため、ブランクプロジェクトにおけるBean定義ファイルのXMLスキーマファイル(.xsd)参照を\ ``http``\から\ ``https``\に変更
+        * Spring Framework 5.1より\ `ログ出力の見直し <https://github.com/spring-projects/spring-framework/issues/21437>`_\が行われたため、ブランクプロジェクトにおいてマッピングされたハンドラメソッドのログを出力するよう変更
+
+    * -
+      - :doc:`../Introduction/CriteriaBasedMapping`
+      - 記載内容の追加
+
+        * CVE-2020-5408を追加
+
+    * -
+      - :doc:`../Overview/FrameworkStack`
+      - 利用するOSSのバージョンを更新
+
+        * Spring Bootを2.2.4に更新
+        * Spring Security OAuthを2.4.0に更新
+        * MyBatisを3.5.3に更新
+        * MyBatis Springを2.0.3に更新
+        * Apache Commons BeanUtilsを1.9.4に更新
+        * Dozerを6.5.0に更新
+        * Apache POIを4.1.1に更新
+
+        Spring Boot のバージョン更新に伴い利用するOSSのバージョンを更新
+
+        * Spring Frameworkを5.2.3に更新
+        * Spring Dataを2.2.4に更新
+        * Spring Securityを5.2.1に更新
+        * AspectJを1.9.5に更新
+        * SLF4Jを1.7.30に更新
+        * Jacksonを2.10.2に更新
+        * Hibernate Validatorを6.0.18(Bean Validation 2.0)に更新
+        * Apache Commons Langを3.9に更新
+        * Joda Timeを2.10.5に更新
+        * Apache Commons DBCPを2.7.0に更新
+        * Apache HttpClientを4.5.10に更新
+        * Lombokを1.18.10に更新
+
+        単体テストで利用するOSSのバージョンを更新
+
+        * Hamcrestを2.1に更新
+        * Mockitoを3.1.0に更新
+        * Spring Testを5.2.3に更新
+
+        利用するOSSのバージョンの更新による主な変更
+
+        * Spring Security 5.2で追加された\ ``Argon2PasswordEncoder``\の記述を追加
+        * Spring Security 5.2で追加された\ ``LogoutSuccessEvent``\および\ ``LogoutSuccessEventPublishingLogoutHandler``\の記述を追加
+        * Spring Security 5.2で追加された\ ``ClearSiteDataHeaderWriter``\および\ ``HeaderWriterLogoutHandler``\の記述を追加
+        * Spring Security 5.2.1において、既存のセキュリティヘッダがある場合の挙動が変更されたこと（\ `spring-projects/spring-security#6454 <https://github.com/spring-projects/spring-security/issues/6454>`_\）への対応
+        * Spring Data 2.2において、廃止予定であった非推奨APIが削除されたことへの対応
+        * Spring Boot 2.2.0からJavaMailがJakarta Mailにバージョンアップしたことへの対応
+        * Hamcrest 2.1からHamcrestのモジュールが統合されたため、記載するOSSライブラリを変更
+
+        利用するOSSのサポートを終了
+
+        * JDBC 4.2に対応していないLog4JDBCをサポート対象外として削除
+
+        TERASOLUNA Server Framework for Java (5.x)の共通ライブラリの機能改善
+
+        * 共通ライブラリが用意する入力チェックルールのデフォルトエラーメッセージを共通ライブラリで提供
+        * \ ``<t:pagination>``\タグに、\ ``innerElementClass``\属性を追加
+        * \ ``Argon2PasswordEncoder``\のサポートに伴い、\ ``bcprov-jdk15on``\への依存関係を共通ライブラリで管理
+
+        記載内容の追加
+
+        * 共通ライブラリの構成要素に、TERASOLUNA Server Framework のバージョンについてのNoteを追加
+
+    * -
+      - :doc:`../ImplementationAtEachLayer/ApplicationLayer`
+      - 記載内容の追加
+
+        * \ ``@RequestMapping``\ の値（value属性）を省略した場合の動作についてのNoteを追加
+        * パス設計時の注意点についてのWarningを追加
+
+    * -
+      - :doc:`../ArchitectureInDetail/WebApplicationDetail/Validation`
+      - 記載内容の追加
+
+        * 日付時刻の検証（\ ``@Past``\、\ ``@Future``\、\ ``@PastOrPresent``\、\ ``@FutureOrPresent``\）に適切な型を使用する必要があることについてのWarningを追加
+
+        記載内容の修正
+
+        * 共通ライブラリが用意する入力チェックルールのデフォルトエラーメッセージを共通ライブラリで提供するように変更したことに伴う記載内容の変更
+
+    * -
+      - :doc:`../ArchitectureInDetail/WebApplicationDetail/Pagination`
+      - Spring Data 2.2対応に伴う修正
+
+        * Spring Data 2.2において、廃止予定であった非推奨APIが削除されたことに伴う実装例の修正
+
+        TERASOLUNA Server Framework for Java (5.x)の共通ライブラリの機能改善
+
+        * \ ``<t:pagination>``\タグに、\ ``innerElementClass``\属性を追加
+
+    * -
+      - :doc:`../ArchitectureInDetail/WebApplicationDetail/Internationalization`
+      - 記載内容の修正
+
+        * \ ``LocaleChangeInterceptor``\の仕様についてのNoteを修正
+
+    * -
+      - :doc:`../ArchitectureInDetail/WebApplicationDetail/Codelist`
+      - 記載内容の修正
+
+        * \ ``@ExistInCodeList``\の入力チェックエラーメッセージについての記述を\ :doc:`../ArchitectureInDetail/WebApplicationDetail/Validation`\に統合
+
+    * -
+      - :doc:`../ArchitectureInDetail/WebApplicationDetail/TagLibAndELFunctions`
+      - TERASOLUNA Server Framework for Java (5.x)の共通ライブラリのバグ改修に伴う修正
+
+        * TERASOLUNA Server Framework for Java (5.x)の共通ライブラリのバグ改修(\ `terasoluna-gfw#846 <https://github.com/terasolunaorg/terasoluna-gfw/issues/846>`_\)に伴い、\ ``f:query``\ の仕様に関する説明を修正
+
+    * -
+      - :doc:`../ArchitectureInDetail/WebServiceDetail/RestClient`
+      - 記載内容の修正
+
+        * \ ``AsyncRestTemplate``\のスレッドプールをカスタマイズする方法の誤った説明を修正
+
+    * -
+      - :doc:`../ArchitectureInDetail/DataAccessDetail/DataAccessCommon`
+      - 記載内容の削除
+
+        *  共通ライブラリの変更に伴うlog4jdbcの記載の削除
+
+    * -
+      - :doc:`../ArchitectureInDetail/GeneralFuncDetail/Dozer`
+      - 記載内容の削除
+
+        * Dozer 6.5.0よりJSR-310 Date and Time APIで使用できるはずのパターン文字が使用できない不具合が解消されたため、不具合を記述したWarningを削除
+
+        記載内容の追加
+
+        * javax.el標準APIの実装ライブラリが存在しないことにより発生する警告についての説明を追加
+
+        記載内容の修正
+
+        * Dozer 6.5.0より、Mavenを利用してJava SE 9以降でビルドする場合JAXBを利用するための設定が不要になったため、WarningをNoteに変更し説明を修正
+
+    * - 
+      - :doc:`../ArchitectureInDetail/MessagingDetail/Email`
+      - Spring Boot 2.2.4対応に伴う修正
+
+        * JavaMailからJakarta Mailにバージョンアップしたことに伴い、説明内容を修正
+
+        記載内容の修正
+
+        * JavaMail 1.4.4よりマルチバイト文字を使用する際にメール本文終端に余計な文字が付与される不具合が修正された旨を追記
+
+    * -
+      - :doc:`../ArchitectureInDetail/MessagingDetail/JMS`
+      - 記載内容の修正・追加
+
+        * Spring Framework 5.0.0より、Spring JMSの動作にJMS 2.0のAPIが必要になったことによる記載の修正
+        * ActiveMQ Clientにおいて、JMS API 2.0で動作するために必要なライブラリ一覧を追加
+        * リスナークラスを格納するパッケージ配下をcomponent-scan対象とする必要がある旨の説明を追加
+
+    * -
+      - :doc:`../Security/SpringSecurity`
+      - 記載内容の修正
+
+        * Spring Security 5.0.1, 4.2.4, 4.1.5より、デフォルトで利用される\ ``HttpFirewall``\ インタフェースの実装クラスが変更されたことに対する記述の修正
+
+    * -
+      - :doc:`../Security/Authentication`
+      - Spring Security 5.2.x対応に伴う修正
+
+        * Spring Security 5.2で追加された\ ``Argon2PasswordEncoder``\の記述を追加
+        * Spring Security 5.2で追加された\ ``LogoutSuccessEvent``\および\ ``LogoutSuccessEventPublishingLogoutHandler``\の記述を追加
+        * Spring Security 5.2で追加された\ ``ClearSiteDataHeaderWriter``\および\ ``HeaderWriterLogoutHandler``\の記述を追加
+
+        共通ライブラリの機能改善
+
+        * \ ``Argon2PasswordEncoder``\のサポートに伴い、\ ``bcprov-jdk15on``\への依存関係を共通ライブラリで管理
+
+        記載内容の追加
+
+        * PasswordEncoderに定義されているメソッドの一覧にSpring Security 5.1で追加された\ ``upgradeEncoding``\を追加
+
+        記載内容の修正
+
+        * \ ``@EventListener``\ が処理する認証イベントの指定方法を改善
+        * \ ``@EventListener``\ クラスを格納するパッケージの明示および注意点の記載
+        * Spring Securityが提供するクラスをまとめた表の見直し
+
+    * -
+      - :doc:`../Security/Authorization`
+      - 記載内容の修正
+
+        * Spring Securityが提供するクラスをまとめた表の見直し
+
+    * -
+      - :doc:`../Security/SessionManagement`
+      - 記載内容の修正
+
+        * Spring Security 5.0.1, 4.2.4, 4.1.5以降では、デフォルトの設定でURL RewritingによるセッションIDの連携を行えず、設定を変更した場合、脆弱性が発生する可能性がある旨の記述を追加
+
+    * -
+      - :doc:`../Security/LinkageWithBrowser`
+      - Spring Security 5.2.x対応に伴う修正
+
+        * Spring Security 5.2で追加された\ ``ClearSiteDataHeaderWriter``\の記述を追加
+        * Spring Security 5.2で追加されたStrict-Transport-SecurityヘッダのpreloadディレクティブについてのNoteを追加
+        * \ `spring-projects/spring-security#6454 <https://github.com/spring-projects/spring-security/issues/6454>`_\により解消されたWarning「個別に付与したセキュリティヘッダがSpring Securityにより上書き（追加）される問題」を削除
+
+        記載内容の追加
+
+        * Content Security Policyヘッダに関するIEがサポートしていないことについてのWarningを追加
+        * Content Security Policyヘッダで混在コンテンツをブロックする方法についてのNoteを追加
+
+    * -
+      - :doc:`../Security/Encryption`
+      - 記載内容の修正
+
+        * CVE-2020-5408により\ ``Encryptors#queryableText``\ メソッドを非推奨とする旨のNoteを追加し、コード例を削除
+
+    * -
+      - :doc:`../Security/SecureLoginDemo`
+      - 記載内容の修正
+
+        * \ ``@EventListener``\ が処理する認証イベントの指定方法を改善
+        * \ ``@EventListener``\ クラスを格納するパッケージの変更
+
+    * -
+      - :doc:`../UnitTest/UnitTestOverview`
+      - Spring Boot のバージョン更新に伴い利用するOSSのバージョンを更新
+
+        * Hamcrestを2.1に更新
+        * Mockitoを3.1.0に更新
+        * Spring Testを5.2.3に更新
+
+        記載内容の修正
+
+        * Hamcrest 2.1から\ ``hamcrest-core``\, \ ``hamcrest-library``\が\ ``hamcrest``\に統合されたため、記載するOSSライブラリを変更
+
+    * -
+      - :doc:`../UnitTest/ImplementsOfUnitTest/ImplementsOfTestByLayer`
+      - 記載内容の追加
+
+        * データ定義ファイルにExcel形式（.xlsx）のファイルを使用する場合のApache POIについてWarningを追加
+
+    * -
+      - :doc:`../Appendix/Java11Changes`
+      - 記載内容の追加
+
+        * 「推移的に解決されるJava EE関連モジュールの競合」節の追加
+
     * - 2019-03-26
       - \-
       - 1.6.1 RELEASE版公開
@@ -75,7 +334,9 @@
         * Spring Security 5.0.2および5.1.2で変更となったセキュリティヘッダの付与タイミングによる、リクエストパスのマッチングにおける注意事項の追加
         * Spring Security OAuth 2.2.2よりリダイレクトURIのホワイトリストチェックの仕様が変更されたことへの対応
 
-        TERASOLUNA Server Framework for Java (5.x)の共通ライブラリの新機能追加
+    * -
+      - :doc:`../Overview/FrameworkStack`
+      - TERASOLUNA Server Framework for Java (5.x)の共通ライブラリの新機能追加
 
         \ ``terasoluna-gfw-validator``\
          * バイト長チェック用Bean Validation制約アノテーション \ ``@ByteSize`` \ 
@@ -208,6 +469,7 @@
       - 記載内容の追加
 
         * \ ``Pageable`` \ を利用した検索結果のソートについての説明を追加
+        * JSR-310 Date and Time APIを使う場合の設定の記事を削除し、依存ライブラリとして別途\ ``mybatis-typehandlers-jsr310`` \を追加する必要はなくなった旨のNoteを追加
 
     * -
       - :doc:`../ArchitectureInDetail/GeneralFuncDetail/Logging`
@@ -293,6 +555,10 @@
         記載内容の修正
 
         * \ ``alias``\属性を用いた\ ``authentication-manager``\の定義に関する実装例、説明の修正
+
+        記載内容の追加
+
+        * \ `CVE-2019-3778 <https://pivotal.io/security/cve-2019-3778>`_\ (オープンリダイレクト脆弱性)に関する注意喚起を追加
 
     * -
       - :doc:`../Tutorial/TutorialTodo`
