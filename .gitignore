@@ -6,3 +6,6 @@ target
 .settings
 .idea
 *.iml
+*.doc*
+*.ppt*
+*.xls*
