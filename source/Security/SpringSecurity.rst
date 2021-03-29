@@ -16,7 +16,7 @@ Spring Securityはスタンドアロンなアプリケーションでも利用�
 .. tip:: **ガイドラインで紹介していない機能**
 
     Spring Securityは、本ガイドラインで紹介していない機能も多く提供している。
-    Spring Securityが提供するすべての機能を知りたい場合は、\ `Spring Security Reference -Servlet Applications- <https://docs.spring.io/spring-security/site/docs/5.2.1.RELEASE/reference/htmlsingle/#servlet-applications>`_\ を参照されたい。
+    Spring Securityが提供するすべての機能を知りたい場合は、\ `Spring Security Reference -Servlet Applications- <https://docs.spring.io/spring-security/site/docs/5.2.8.RELEASE/reference/htmlsingle/#servlet-applications>`_\ を参照されたい。
 
 .. _SpringSecurityFunctionalities:
 
@@ -233,7 +233,7 @@ Spring Securityは、サーブレットフィルタの仕組みを使用してWe
 |
 
 Webアプリケーション向けのフレームワーク処理を構成する主要なコンポーネントは以下の通りである。
-詳細は \ `Spring Security Reference -Authentication in a Web Application- <https://docs.spring.io/spring-security/site/docs/5.2.1.RELEASE/reference/htmlsingle/#tech-intro-web-authentication>`_\ を参照されたい。
+詳細は \ `Spring Security Reference -Authentication in a Web Application- <https://docs.spring.io/spring-security/site/docs/5.2.8.RELEASE/reference/htmlsingle/#tech-intro-web-authentication>`_\ を参照されたい。
 
 
 FilterChainProxy
@@ -260,7 +260,7 @@ HttpFirewall
     URLの正規化は脆弱性対策としては不十分であるため、従来通り\ ``DefaultHttpFirewall``\ を利用するように変更することは推奨しない。
     また、\ ``StrictHttpFirewall``\ のチェックについても、一部カスタマイズ可能なパラメータも存在するが、脆弱性の原因となりうるため変更することは推奨しない。
     
-    \ ``StrictHttpFirewall``\ の詳細については、\ `Javadoc <https://docs.spring.io/spring-security/site/docs/5.2.1.RELEASE/api/org/springframework/security/web/firewall/StrictHttpFirewall.html>`_\ を参照されたい。
+    \ ``StrictHttpFirewall``\ の詳細については、\ `Javadoc <https://docs.spring.io/spring-security/site/docs/5.2.8.RELEASE/api/org/springframework/security/web/firewall/StrictHttpFirewall.html>`_\ を参照されたい。
 
 SecurityFilterChain
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -331,7 +331,7 @@ WebアプリケーションにSpring Securityを適用するためのセット�
 
 .. note::
 
-    開発プロジェクトを\ `ブランクプロジェクト <https://github.com/Macchinetta/macchinetta-web-multi-blank>`_\ から作成すると、ここで説明する各設定はセットアップ済みの状態になっている。
+    開発プロジェクトを\ `ブランクプロジェクト <https://github.com/Macchinetta/macchinetta-web-multi-blank/tree/1.7.2.RELEASE>`_\ から作成すると、ここで説明する各設定はセットアップ済みの状態になっている。
     開発プロジェクトの作成方法については、「:doc:`../ImplementationAtEachLayer/CreateWebApplicationProject`」を参照されたい。
 
 |
@@ -385,7 +385,7 @@ Spring Securityと共通ライブラリの関連については、:ref:`framewor
 
 bean定義ファイルの作成
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-Spring Securityのコンポーネントをbean定義するため、以下のようなXMLファイルを作成する。（`ブランクプロジェクト <https://github.com/Macchinetta/macchinetta-web-multi-blank>`_\より抜粋）
+Spring Securityのコンポーネントをbean定義するため、以下のようなXMLファイルを作成する。（`ブランクプロジェクト <https://github.com/Macchinetta/macchinetta-web-multi-blank/tree/1.7.2.RELEASE>`_\より抜粋）
 
 * xxx-web/src/main/resources/META-INF/spring/spring-security.xmlの定義例
 

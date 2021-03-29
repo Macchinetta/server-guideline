@@ -178,7 +178,7 @@ Lombokが提供しているクラスを使用するために、Lombokを依存�
 .. note::
 
     上記設定例は、依存ライブラリのバージョンを親プロジェクトである terasoluna-gfw-parent で管理する前提であるため、pom.xmlでのバージョンの指定は不要である。
-    上記の依存ライブラリはterasoluna-gfw-parentが依存している\ `Spring Boot <https://docs.spring.io/spring-boot/docs/2.2.4.RELEASE/reference/htmlsingle/#dependency-versions>`_\ で管理されている。
+    上記の依存ライブラリはterasoluna-gfw-parentが依存している\ `Spring Boot <https://docs.spring.io/spring-boot/docs/2.2.12.RELEASE/reference/htmlsingle/#dependency-versions>`_\ で管理されている。
 
 |
 

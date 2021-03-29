@@ -1337,7 +1337,7 @@ Spring Security OAuthではクライアント情報を取得するためのイ�
         | \ ``authentication-manager-ref``\ 属性に(7)で定義しているクライアント認証用の\ ``AuthenticationManager``\のBeanを指定する。
     * - | (3)
       - | クライアント認証にBasic認証を適用する。
-        | 詳細については\ `Spring Security Reference -Basic and Digest Authentication- <https://docs.spring.io/spring-security/site/docs/5.2.1.RELEASE/reference/htmlsingle/#basic>`_\を参照されたい。
+        | 詳細については\ `Spring Security Reference -Basic and Digest Authentication- <https://docs.spring.io/spring-security/site/docs/5.2.8.RELEASE/reference/htmlsingle/#basic>`_\を参照されたい。
     * - | (4)
       - | \ ``/oauth/*token*/**``\ へのアクセスに対してCSRF対策機能を無効化する。
         | Spring Security OAuthでは、OAuth 2.0のCSRF対策として推奨されている、stateパラメータを使用したリクエストの正当性確認を採用している。
@@ -2184,7 +2184,7 @@ Spring Security OAuthが取り扱う情報（認可コード、認可情報、�
         | ここでは(7)で定義している\ ``oauth2AuthenticationFilter``\のBeanを指定する。
         | \ ``OAuth2AuthenticationProcessingFilter``\はリクエストに含まれるアクセストークンを利用してPre-Authenticationを行うためのフィルタであるため、
           \ ``before``\に\ ``PRE_AUTH_FILTER``\を指定し\ ``PRE_AUTH_FILTER``\の前に\ ``OAuth2AuthenticationProcessingFilter``\の処理が実行されるように設定する。
-        | Pre-Authenticationについては\ `Spring Security Reference -Pre-Authentication Scenarios- <https://docs.spring.io/spring-security/site/docs/5.2.1.RELEASE/reference/htmlsingle/#preauth>`_\を参照されたい。
+        | Pre-Authenticationについては\ `Spring Security Reference -Pre-Authentication Scenarios- <https://docs.spring.io/spring-security/site/docs/5.2.8.RELEASE/reference/htmlsingle/#preauth>`_\を参照されたい。
     * - | (5)
       - | Spring Security OAuthが提供するリソースサーバ用の\ ``AccessDeniedHandler``\を定義する。
         | \ ``OAuth2AccessDeniedHandler``\は、認可エラー時に発生する例外をハンドリングしてエラー応答を行う。

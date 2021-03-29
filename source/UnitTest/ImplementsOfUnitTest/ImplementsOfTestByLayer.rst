@@ -1025,7 +1025,7 @@ Spring MVCが作成したコンテキストが衝突しテスト実行ができ�
           セットアップの詳細については\ :ref:`UsageOfLibraryForTestSettingMockMvc`\ を参照されたい。
     * - | (3)
       - | \ ``MemberRegisterController``\ クラスの\ ``registerConfirm``\ メソッドを呼び出すため、
-          \ ``member/register``\ に対してPOSTメソッドでリクエストを送信する。リクエストパラメータには\ ``Form``\ の情報を設定する。
+          \ ``/member/register``\ に対してPOSTメソッドでリクエストを送信する。リクエストパラメータには\ ``Form``\ の情報を設定する。
           リクエストデータの設定方法については\ :ref:`UsageOfLibraryForTestSettingOfRequestData`\ を、リクエスト送信の実装方法については
           \ :ref:`UsageOfLibraryForTestExecutionOfRequest`\ を参照されたい。
     * - | (4)
@@ -1205,7 +1205,7 @@ Springに追加して利用する\ ``Interceptor``\ や\ ``ExceptionResolver``\ 
       - | サーバ側は発行したトランザクショントークンをセッションに保持するため、次のリクエストでも同じセッションを参照する必要があるが、
           \ ``MockMvc``\ では１リクエストごとに新規セッションが使われてしまうため、明示的に同じセッションを使用するよう指定する。
     * - | (6)
-      - | 再度、リクエストパス（\ ``member/register``\）に対してPOSTメソッドでリクエストを送信する。
+      - | 再度、リクエストパス（\ ``/member/register``\）に対してPOSTメソッドでリクエストを送信する。
           リクエストパラメータには\ ``Form``\ の情報、(4)で取得したトランザクショントークンを設定し、
           セッションには(5)で取得したセッションを設定する。
     * - | (7)
@@ -1379,7 +1379,7 @@ Springに追加して利用する\ ``Interceptor``\ や\ ``ExceptionResolver``\ 
            - 説明
          * - | (1)
            - | セッションのモックオブジェクトを生成する。クラスの詳細については、
-               \ `MockHttpSession のJavadoc <https://docs.spring.io/spring/docs/5.2.3.RELEASE//javadoc-api/org/springframework/mock/web/MockHttpSession.html>`_\
+               \ `MockHttpSession のJavadoc <https://docs.spring.io/spring/docs/5.2.12.RELEASE/javadoc-api/org/springframework/mock/web/MockHttpSession.html>`_\
                を参照されたい。
          * - | (2)
            - | 生成したセッションのモックオブジェクトに、格納したいオブジェクトをセットする。

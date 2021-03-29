@@ -10,7 +10,7 @@
 開発プロジェクトのビルド
 --------------------------------------------------------------------------------
 
-アプリケーションサーバにデプロイするためのwarファイル、envモジュール(ファイル環境依存ファイルを格納するモジュール)のjarファイルを作成する方法を紹介する。
+アプリケーションサーバにデプロイするためのwarファイル、envモジュール(環境依存ファイルを格納するモジュール)のjarファイルを作成する方法を紹介する。
 
 Maven Archetypeで作成したプロジェクトでは、warファイルを作成する方法として以下の２つの方法を提供している。
 
@@ -55,7 +55,7 @@ Maven Archetypeで作成したプロジェクトでは、warファイルを作�
     #. CIサーバ上ではビルドツール(maven)によるテストの実行とパッケージングを行い、必要に応じてパッケージリポジトリにartifactをdeployする。
     #. 試験サーバ、本番サーバでは、パッケージリポジトリにあらかじめ保管しているプロジェクト本体に、リリース先環境にあわせてビルドした\*-envプロジェクトを追加してリリースすることにより、アプリケーションの動作が可能になる。
 
-    詳細については\ `サンプルアプリケーション <https://github.com/terasolunaorg/terasoluna-tourreservation-mybatis3/>`_\ を参考にされたい。
+    詳細については\ `サンプルアプリケーション <https://github.com/terasolunaorg/terasoluna-tourreservation-mybatis3/tree/5.6.2.RELEASE>`_\ を参考にされたい。
 
 .. warning:: **ビルド環境について**
 
@@ -218,11 +218,11 @@ WebアプリケーションをTomcat 8.5およびTomcat 9上にリリースす�
 
 1. リリース対象のAPサーバ環境にあわせてmavenのprofileを指定し、 \*-env プロジェクトを ビルドする。
 2. 上記でビルドした\*-env-x.y.z.jarファイル をあらかじめ決定したAPサーバ上のフォルダに設置する。 ex. /etc/foo/bar/abcd-env-x.y.z.jar
-3. あらかじめパッケージリポジトリにデプロイ済みの\*.warファイルを [CATALINA_HOME]/webapps 配下で解凍(unjar)する。
+3. あらかじめパッケージリポジトリにデプロイ済みの\*.warファイルを [CATALINA_HOME]/webapps 配下にコピーする。
 4. Tomcatのリソース機能を使用して、 /etc/foo/bar/\*.jar をクラスパスに追加する。
 
- * [CATALINA_HOME]/conf/[contextPath].xml ファイルに下記の定義を追加する。
- * 詳しくは、 `The Resources Component <https://tomcat.apache.org/tomcat-9.0-doc/config/resources.html>`_\ と `terasoluna-tourreservation-envのconfigsフォルダ <https://github.com/terasolunaorg/terasoluna-tourreservation-mybatis3/tree/5.6.0.RELEASE/terasoluna-tourreservation-env/configs>`_\ を参考されたい。
+ * [CATALINA_HOME]/conf/Catalina/localhost/[contextPath].xmlファイルに下記の定義を追加する。
+ * 詳しくは、 `The Resources Component <https://tomcat.apache.org/tomcat-9.0-doc/config/resources.html>`_\ と `terasoluna-tourreservation-envのconfigsフォルダ <https://github.com/terasolunaorg/terasoluna-tourreservation-mybatis3/tree/5.6.2.RELEASE/terasoluna-tourreservation-env/configs>`_\ を参考されたい。
  * リソースの設定例：
    
   .. code-block:: xml
@@ -236,8 +236,7 @@ WebアプリケーションをTomcat 8.5およびTomcat 9上にリリースす�
 
 .. note::
 
- * [CATALINA_HOME]/conf/server.xml の Host タグ上の autoDeploy 属性を false にセットしておかなければならない。さもないとwebアプリケーションの再起動のたびに[CATALINA_HOME]/conf/[contextPath].xmlが自動的に削除されてしまう。
- * autoDeployを無効化している場合、[CATALINA_HOME]/webappsにwarファイルを置くだけではWebアプリケーションは起動しない。必ずwarファイルをunjar(unzip)すること。
+ * Catalina以外のエンジン、およびlocalhost以外のホストを利用する場合は、[contextPath].xmlを[CATALINA_HOME]/conf/[enginename]/[hostname]に配置する。
 
 |
 
@@ -245,8 +244,8 @@ WebアプリケーションをTomcat 8.5およびTomcat 9上にリリースす�
 
     Tomcat 7およびTomcat 6を使用する場合は、上記手順 4.の代わりにTomcatのVirtualWebappLoader機能を使用して /etc/foo/bar/\*.jar をクラスパスに追加する。
 
-    * [CATALINA_HOME]/conf/[contextPath].xml ファイルに下記の定義を追加する。
-    * 詳しくは、 `VirtualWebappLoader <http://tomcat.apache.org/tomcat-7.0-doc/api/org/apache/catalina/loader/VirtualWebappLoader.html>`_\ と `terasoluna-tourreservation-envのconfigsフォルダ <https://github.com/terasolunaorg/terasoluna-tourreservation-mybatis3/tree/5.6.0.RELEASE/terasoluna-tourreservation-env/configs>`_\ を参考されたい。
+    * [CATALINA_HOME]/conf/Catalina/localhost/[contextPath].xmlファイルに下記の定義を追加する。
+    * 詳しくは、 `VirtualWebappLoader <http://tomcat.apache.org/tomcat-7.0-doc/api/org/apache/catalina/loader/VirtualWebappLoader.html>`_\ と `terasoluna-tourreservation-envのconfigsフォルダ <https://github.com/terasolunaorg/terasoluna-tourreservation-mybatis3/tree/5.6.2.RELEASE/terasoluna-tourreservation-env/configs>`_\ を参考されたい。
 
     VirtualWebappLoaderの設定例：
     

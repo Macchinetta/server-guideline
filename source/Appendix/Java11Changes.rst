@@ -83,7 +83,7 @@ Java SE 11でJAX-WSを利用する場合、以下のようにjaxws-api及びjava
     * - 項番
       - 説明
     * - | (1)
-      - | jaxws-apiのバージョンはterasoluna-gfw-parentが依存している\ `Spring Boot <https://docs.spring.io/spring-boot/docs/2.2.4.RELEASE/reference/htmlsingle/#dependency-versions>`_\ で管理されているため、pom.xmlでのバージョンの指定は不要である。
+      - | jaxws-apiのバージョンはterasoluna-gfw-parentが依存している\ `Spring Boot <https://docs.spring.io/spring-boot/docs/2.2.12.RELEASE/reference/htmlsingle/#dependency-versions>`_\ で管理されているため、pom.xmlでのバージョンの指定は不要である。
     * - | (2)
       - | 任意のバージョンを指定する。
 

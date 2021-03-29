@@ -1,4 +1,4 @@
-﻿チュートリアル(Todoアプリケーション)
+チュートリアル(Todoアプリケーション)
 ********************************************************************************
 
 .. only:: html
@@ -39,21 +39,21 @@
     * - 種別
       - 名前
     * - OS
-      - Windows 7
+      - Windows 10
     * - JVM
       - `Java <http://www.oracle.com/technetwork/java/javase/downloads/index.html>`_ 1.8
     * - IDE
-      - `Spring Tool Suite <http://spring.io/tools/sts/all>`_ 3.6.4.RELEASE (以降「STS」と呼ぶ)
+      - `Spring Tool Suite <https://github.com/spring-projects/toolsuite-distribution/wiki/Spring-Tool-Suite-3>`_ 3.9.12.RELEASE (以降「STS」と呼ぶ)
     * - Build Tool
       - `Apache Maven <http://maven.apache.org/download.cgi>`_ 3.3.9 (以降「Maven」と呼ぶ)
     * - Application Server
-      - `Pivotal tc Server <https://network.pivotal.io/products/pivotal-tcserver>`_ Developer Edition v3.1 (STSに同封)
+      - `Pivotal tc Server <https://network.pivotal.io/products/pivotal-tcserver>`_ Developer Edition v4.0 (STSに同封)
     * - Web Browser
-      - `Google Chrome <https://www.google.co.jp/chrome/browser/desktop/index.html>`_ 46.0.2490.80 m
+      - `Google Chrome <https://www.google.co.jp/chrome/browser/desktop/index.html>`_ 88.0.4324.182
 
 .. warning::
 
-    本ガイドラインではSTS 4.xではなく、3.xの利用を推奨している。詳細は :ref:`STS 4.x について <warning_sts_4>` を参照されたい。
+    本ガイドラインではSTS 4.xではなく、3.xを利用している。詳細は :ref:`STS 4.x について <warning_sts_4>` を参照されたい。
 
 |
 
@@ -221,7 +221,7 @@ Delete TODO
         mvn archetype:generate -B\
          -DarchetypeGroupId=com.github.macchinetta.blank\
          -DarchetypeArtifactId=macchinetta-web-blank-noorm-archetype\
-         -DarchetypeVersion=1.7.0.RELEASE\
+         -DarchetypeVersion=1.7.2.RELEASE\
          -DgroupId=com.example.todo\
          -DartifactId=todo\
          -Dversion=1.0.0-SNAPSHOT
@@ -241,7 +241,7 @@ O/R Mapperに依存しないブランクプロジェクトの作成
     mvn archetype:generate -B^
      -DarchetypeGroupId=com.github.macchinetta.blank^
      -DarchetypeArtifactId=macchinetta-web-blank-noorm-archetype^
-     -DarchetypeVersion=1.7.0.RELEASE^
+     -DarchetypeVersion=1.7.2.RELEASE^
      -DgroupId=com.example.todo^
      -DartifactId=todo^
      -Dversion=1.0.0-SNAPSHOT
@@ -259,7 +259,7 @@ MyBatis3を使用してデータベースにアクセスするRepositoryImpl用�
     mvn archetype:generate -B^
      -DarchetypeGroupId=com.github.macchinetta.blank^
      -DarchetypeArtifactId=macchinetta-web-blank-archetype^
-     -DarchetypeVersion=1.7.0.RELEASE^
+     -DarchetypeVersion=1.7.2.RELEASE^
      -DgroupId=com.example.todo^
      -DartifactId=todo^
      -Dversion=1.0.0-SNAPSHOT
@@ -331,7 +331,7 @@ Root Directoryに \ ``C:\work\todo``\ を設定し、Projectsにtodoのpom.xml�
 .. note::
  
    上記設定例は、依存ライブラリのバージョンを親プロジェクトである terasoluna-gfw-parent で管理する前提であるため、pom.xmlでのバージョンの指定は不要である。
-   上記の依存ライブラリはterasoluna-gfw-parentが依存している\ `Spring Boot <https://docs.spring.io/spring-boot/docs/2.2.4.RELEASE/reference/htmlsingle/#dependency-versions>`_\ で管理されている。
+   上記の依存ライブラリはterasoluna-gfw-parentが依存している\ `Spring Boot <https://docs.spring.io/spring-boot/docs/2.2.12.RELEASE/reference/htmlsingle/#dependency-versions>`_\ で管理されている。
 
 |
 
@@ -1063,7 +1063,7 @@ Package Explorer上で右クリック -> New -> Class を選択し、「New Java
 .. figure:: ./images/image064.png
 
 .. code-block:: java
-    :emphasize-lines: 19, 20, 25-26, 28-29, 32-33, 37-38, 44, 57-58, 61-62
+    :emphasize-lines: 19, 20, 25-26, 29, 38-39, 43-44, 47-48, 82-83, 90-91
 
     package com.example.todo.domain.service.todo;
 
@@ -1092,23 +1092,8 @@ Package Explorer上で右クリック -> New -> Class を選択し、「New Java
         @Inject// (3)
         TodoRepository todoRepository;
 
-        // (4)
-        private Todo findOne(String todoId) {
-            Todo todo = todoRepository.findOne(todoId);
-            if (todo == null) {
-                // (5)
-                ResultMessages messages = ResultMessages.error();
-                messages.add(ResultMessage
-                        .fromText("[E404] The requested Todo is not found. (id="
-                                + todoId + ")"));
-                // (6)
-                throw new ResourceNotFoundException(messages);
-            }
-            return todo;
-        }
-
         @Override
-        @Transactional(readOnly = true) // (7)
+        @Transactional(readOnly = true) // (4)
         public Collection<Todo> findAll() {
             return todoRepository.findAll();
         }
@@ -1117,15 +1102,16 @@ Package Explorer上で右クリック -> New -> Class を選択し、「New Java
         public Todo create(Todo todo) {
             long unfinishedCount = todoRepository.countByFinished(false);
             if (unfinishedCount >= MAX_UNFINISHED_COUNT) {
+                // (5)
                 ResultMessages messages = ResultMessages.error();
                 messages.add(ResultMessage
                         .fromText("[E001] The count of un-finished Todo must not be over "
                                 + MAX_UNFINISHED_COUNT + "."));
-                // (8)
+                // (6)
                 throw new BusinessException(messages);
             }
 
-            // (9)
+            // (7)
             String todoId = UUID.randomUUID().toString();
             Date createdAt = new Date();
 
@@ -1158,6 +1144,21 @@ Package Explorer上で右クリック -> New -> Class を選択し、「New Java
             Todo todo = findOne(todoId);
             todoRepository.delete(todo);
         }
+
+
+        // (8)
+        private Todo findOne(String todoId) {
+            Todo todo = todoRepository.findOne(todoId);
+            if (todo == null) {
+                ResultMessages messages = ResultMessages.error();
+                messages.add(ResultMessage
+                        .fromText("[E404] The requested Todo is not found. (id="
+                                + todoId + ")"));
+                // (9)
+                throw new ResourceNotFoundException(messages);
+            }
+            return todo;
+        }
     }
 
 
@@ -1181,21 +1182,21 @@ Package Explorer上で右クリック -> New -> Class を選択し、「New Java
    * - | (3)
      - | \ ``@Inject``\ アノテーションで、\ ``TodoRepository``\ の実装をインジェクションする。
    * - | (4)
-     - | 1件取得は、\ ``finish``\ メソッドでも\ ``delete``\ メソッドでも使用するため、メソッドとして用意しておく(interfaceに公開しても良い)。
-   * - | (5)
-     - | 結果メッセージを格納するクラスとして、共通ライブラリで用意されている\ ``org.terasoluna.gfw.common.message.ResultMessage``\ を用いる。
-       | 今回は、エラーメッセージを例外に追加する際に、\ ``ResultMessages.error()``\ でメッセージ種別を指定して、\ ``ResultMessage``\ を追加している。
-   * - | (6)
-     - | 対象のデータが存在しない場合、共通ライブラリで用意されている\ ``org.terasoluna.gfw.common.exception.ResourceNotFoundException``\ をスローする。
-   * - | (7)
      - | 参照のみ行う処理に関しては、\ ``readOnly=true``\ をつける。
        | O/R Mapperによっては、この設定により、参照時のトランザクション制御の最適化が行われる。
        |
        | データベースを使用しない場合は、\ ``@Transactional``\ アノテーションは不要である。
-   * - | (8)
+   * - | (5)
+     - | 結果メッセージを格納するクラスとして、共通ライブラリで用意されている\ ``org.terasoluna.gfw.common.message.ResultMessage``\ を用いる。
+       | 今回は、エラーメッセージを例外に追加する際に、\ ``ResultMessages.error()``\ でメッセージ種別を指定して、\ ``ResultMessage``\ を追加している。
+   * - | (6)
      - | 業務エラーが発生した場合、共通ライブラリで用意されている\ ``org.terasoluna.gfw.common.exception.BusinessException``\ をスローする。
-   * - | (9)
+   * - | (7)
      - | 一意性のある値を生成するために、UUIDを使用している。データベースのシーケンスを用いてもよい。
+   * - | (8)
+     - | 1件取得は、\ ``finish``\ メソッドでも\ ``delete``\ メソッドでも使用するため、メソッドとして用意しておく(interfaceに公開しても良い)。
+   * - | (9)
+     - | 対象のデータが存在しない場合、共通ライブラリで用意されている\ ``org.terasoluna.gfw.common.exception.ResourceNotFoundException``\ をスローする。
 
 .. raw:: latex
 
@@ -3945,7 +3946,7 @@ spring-mvc.xml
        | どこにも\ ``styles.css``\ が格納されていない場合は、404エラーを返す。
 
        | ここでは\ ``cache-period``\ 属性で静的リソースのキャッシュ時間(3600秒=60分)も設定している。
-       | \ ``cache-period="3600"``\ と設定しても良いが、60分であることを明示するために `SpEL <https://docs.spring.io/spring/docs/5.2.3.RELEASE/spring-framework-reference/core.html#expressions-beandef-xml-based>`_ を使用して \ ``cache-period="#{60 * 60}"``\  と書く方が分かりやすい。
+       | \ ``cache-period="3600"``\ と設定しても良いが、60分であることを明示するために `SpEL <https://docs.spring.io/spring/docs/5.2.12.RELEASE/spring-framework-reference/core.html#expressions-beandef-xml-based>`_ を使用して \ ``cache-period="#{60 * 60}"``\  と書く方が分かりやすい。
    * - | (5)
      - | コントローラ処理のTraceログを出力するインターセプタを設定する。
        | \ ``/resources``\ 配下を除く任意のパスに適用されるように設定する。

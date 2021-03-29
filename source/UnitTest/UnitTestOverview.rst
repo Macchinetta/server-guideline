@@ -43,20 +43,20 @@ DIコンテナ
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 テスト用のDIコンテナとして
-\ `Spring TestのDI機能 <https://docs.spring.io/spring/docs/5.2.3.RELEASE/spring-framework-reference/testing.html#testing-fixture-di>`_\を使用する。
+\ `Spring TestのDI機能 <https://docs.spring.io/spring/docs/5.2.12.RELEASE/spring-framework-reference/testing.html#testing-fixture-di>`_\を使用する。
 
 MVCフレームワーク
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 テスト用のMVCフレームワークとして
-\ `Spring MVC Test Framework <https://docs.spring.io/spring/docs/5.2.3.RELEASE/spring-framework-reference/testing.html#spring-mvc-test-framework>`_\を使用する。
+\ `Spring MVC Test Framework <https://docs.spring.io/spring/docs/5.2.12.RELEASE/spring-framework-reference/testing.html#spring-mvc-test-framework>`_\を使用する。
 
 
 トランザクション管理
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 テスト用のトランザクション管理として
-\ `Spring Testのトランザクション管理機能 <https://docs.spring.io/spring/docs/5.2.3.RELEASE/spring-framework-reference/testing.html#testing-tx>`_\を使用する。
+\ `Spring Testのトランザクション管理機能 <https://docs.spring.io/spring/docs/5.2.12.RELEASE/spring-framework-reference/testing.html#testing-tx>`_\を使用する。
 
 
 データアクセス
@@ -64,7 +64,7 @@ MVCフレームワーク
 
 テスト用のデータアクセスとして、Spring TestまたはDBUnitとSpring Test DBUnitを使用することを想定している。
 
-* \ `Spring Test <https://docs.spring.io/spring/docs/5.2.3.RELEASE/spring-framework-reference/testing.html#testing-introduction>`_\
+* \ `Spring Test <https://docs.spring.io/spring/docs/5.2.12.RELEASE/spring-framework-reference/testing.html#testing-introduction>`_\
 
   * Spring Testは\ ``@Sql``\ アノテーションや\ ``JdbcTemplate``\ などを使用してSQLを発行する機能を提供している。
 
@@ -177,17 +177,17 @@ MVCフレームワーク
     * - 種別
       - 名前
     * - OS
-      - Windows 7
+      - Windows 10
     * - JVM
       - `Java <http://www.oracle.com/technetwork/java/javase/downloads/index.html>`_ 1.8
     * - IDE
-      - `Spring Tool Suite <http://spring.io/tools/sts/all>`_ 3.9.1.RELEASE (以降「STS」と呼ぶ)
+      - `Spring Tool Suite <https://github.com/spring-projects/toolsuite-distribution/wiki/Spring-Tool-Suite-3>`_ 3.9.12.RELEASE (以降「STS」と呼ぶ)
     * - Build Tool
       - `Apache Maven <http://maven.apache.org/download.cgi>`_ 3.3.9 (以降「Maven」と呼ぶ)
     * - RDBMS
-      - `PostgreSQL <http://www.postgresql.org/docs/9.6/static/sql-insert.html>`_ 9.6.5
+      - `PostgreSQL <https://www.postgresql.org/docs/11/sql-insert.html>`_ 11.9.1
 
 .. warning::
 
-    本ガイドラインではSTS 4.xではなく、3.xの利用を推奨している。詳細は :ref:`STS 4.x について <warning_sts_4>` を参照されたい。
+    本ガイドラインではSTS 4.xではなく、3.xを利用している。詳細は :ref:`STS 4.x について <warning_sts_4>` を参照されたい。
 

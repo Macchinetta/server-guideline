@@ -1328,7 +1328,7 @@ How to extend
 #. Task Schedulerで実現する方法
 #. Controller(Service)クラスでrefreshメソッドを呼び出す方法
 
-本ガイドラインでは、\ `Springから提供されているTask Scheduler <https://docs.spring.io/spring/docs/5.2.3.RELEASE/spring-framework-reference/integration.html#scheduling>`_\ を使用して、コードリストを定期的にリロードする方式を基本的に推奨する。
+本ガイドラインでは、\ `Springから提供されているTask Scheduler <https://docs.spring.io/spring/docs/5.2.12.RELEASE/spring-framework-reference/integration.html#scheduling>`_\ を使用して、コードリストを定期的にリロードする方式を基本的に推奨する。
 
 ただし、任意のタイミングでコードリストをリフレッシュする必要がある場合はControllerクラスでrefreshメソッドを呼び出す方法で実現すればよい。
 
@@ -1384,7 +1384,7 @@ Task Schedulerの設定例について、以下に示す。
        | 平日の9-17時の毎時実行 「0 0 9-17 \* \* MON-FRI」
        |
        | 詳細はJavaDocを参照されたい。
-       | https://docs.spring.io/spring/docs/5.2.3.RELEASE/javadoc-api/org/springframework/scheduling/support/CronSequenceGenerator.html
+       | https://docs.spring.io/spring/docs/5.2.12.RELEASE/javadoc-api/org/springframework/scheduling/support/CronSequenceGenerator.html
 
 |
 

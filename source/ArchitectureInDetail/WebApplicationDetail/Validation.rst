@@ -62,7 +62,7 @@ Webアプリケーションの入力チェックには、サーバサイドで�
    * - 相関項目チェック
      - | 複数のフィールドを比較するチェック
      - | パスワードと確認用パスワードの一致チェック
-     - | `org.springframework.validation.Validator <https://docs.spring.io/spring/docs/5.2.3.RELEASE/spring-framework-reference/core.html#validator>`_\ インタフェースを実装したValidationクラス
+     - | `org.springframework.validation.Validator <https://docs.spring.io/spring/docs/5.2.12.RELEASE/spring-framework-reference/core.html#validator>`_\ インタフェースを実装したValidationクラス
        | または Bean Validation
 
 
@@ -1287,6 +1287,7 @@ ECサイトにおける「注文」処理の例を考える。「注文」フォ
     上記に伴い、共通ライブラリで提供される\ ``@ExistInCodeList``\ 、\ ``@ConsistOf``\ 、\ ``@ByteMin``\ 、\ ``@ByteMax``\ 、\ ``@ByteSize``\ の各アノテーションは、
     TERASOLUNA Server Framework for Java 5.5.1.RELEASEよりBean Validation 2.0に準拠し、\ ``List<@ExistInCodeList String>``\ のように、デフォルトでコレクション内の各値に対して付与し、チェック出来るように変更している。
 
+    また、\ ``@Compare``\ はTERASOLUNA Server Framework for Java 5.6.2.RELEASEよりBean Validation 2.0に準拠している。
 
 |
 
@@ -1882,14 +1883,13 @@ Spring Validatorによる相関項目チェック実装
      - | ``java.lang.String``
      - | 入力必須
        | 8文字以上
-       | \ **confirmPasswordと同じ値であること**\
      - | パスワード
    * - | confirmPassword
      - | ``java.lang.String``
-     - | 特になし
+     - | \ **passwordが入力されている場合、passwordと同じ値であること**\
      - | 確認用パスワード
 
-「confirmPasswordと同じ値であること」というルールは\ ``password``\ フィールドと\ ``confirmPassword``\ フィールドの両方の情報が必要であるため、相関項目チェックルールである。
+「passwordが入力されている場合、passwordと同じ値であること」というルールは\ ``password``\ フィールドと\ ``confirmPassword``\ フィールドの両方の情報が必要であるため、相関項目チェックルールである。
 
 * フォームクラス
 
@@ -1928,7 +1928,10 @@ Spring Validatorによる相関項目チェック実装
 
     package com.example.sample.app.validation;
 
+    import java.util.Objects;
+
     import org.springframework.stereotype.Component;
+    import org.springframework.util.StringUtils;
     import org.springframework.validation.Errors;
     import org.springframework.validation.Validator;
 
@@ -1943,16 +1946,16 @@ Spring Validatorによる相関項目チェック実装
         @Override
         public void validate(Object target, Errors errors) {
 
-            if (errors.hasFieldErrors("password")) { // (3)
-                return;
-            }
-
             PasswordResetForm form = (PasswordResetForm) target;
             String password = form.getPassword();
             String confirmPassword = form.getConfirmPassword();
 
-            if (!password.equals(confirmPassword)) { // (4)
-                errors.rejectValue(/* (5) */ "password",
+            if (!StringUtils.hasLength(password)) { // (3)
+                return;
+            }
+
+            if (!Objects.equals(password, confirmPassword)) { // (4)
+                errors.rejectValue(/* (5) */ "confirmPassword",
                 /* (6) */ "PasswordEqualsValidator.passwordResetForm.password",
                 /* (7) */ "password and confirm password must be same.");
             }
@@ -1971,7 +1974,7 @@ Spring Validatorによる相関項目チェック実装
      * - | (2)
        - | このValidatorのチェック対象であるかどうかを判別する。ここでは、\ ``PasswordResetForm``\ クラスをチェック対象とする。
      * - | (3)
-       - | 単項目チェック時に対象フィールドでエラーが発生している場合は、このValidatorで相関チェックは行わない。
+       - | \ ``password``\ フィールドが未入力の場合は、このValidatorで相関チェックは行わない。
          | 相関チェックを必ず行う必要がある場合は、この判定ロジックは不要である。
      * - | (4)
        - | チェックロジックを実装する。
@@ -2107,13 +2110,16 @@ Spring Validatorによる相関項目チェック実装
 
    相関チェックエラーとなった両方のフィールドにスタイル適用したいが、エラーメッセージは1つだけ表示したいような場合は、
    エラーメッセージに空文字を設定することで実現することが可能である。
-   以下に、\ ``password``\ フィールドと\ ``confirmPassword``\ フィールドにスタイルを適用し、\ ``password``\ フィールドのみにエラーメッセージを表示する例を示す。
+   以下に、\ ``password``\ フィールドと\ ``confirmPassword``\ フィールドにスタイルを適用し、\ ``confirmPassword``\ フィールドのみにエラーメッセージを表示する例を示す。
 
      .. code-block:: java
 
        package com.example.sample.app.validation;
 
+       import java.util.Objects;
+
        import org.springframework.stereotype.Component;
+       import org.springframework.util.StringUtils;
        import org.springframework.validation.Errors;
        import org.springframework.validation.Validator;
 
@@ -2129,16 +2135,16 @@ Spring Validatorによる相関項目チェック実装
            public void validate(Object target, Errors errors) {
 
                // omitted
-               if (!password.equals(confirmPassword)) {
-                   // register a field error for password
-                   errors.rejectValue("password",
-                          "PasswordEqualsValidator.passwordResetForm.password",
-                          "password and confirm password must be same.");
-
+               if (!Objects.equals(password, confirmPassword)) {
                    // register a field error for confirmPassword
-                   errors.rejectValue("confirmPassword", // (1)
-                             "PasswordEqualsValidator.passwordResetForm.confirmPassword", // (2)
-                             ""); // (3)
+                   errors.rejectValue("confirmPassword",
+                             "PasswordEqualsValidator.passwordResetForm.confirmPassword",
+                             "password and confirm password must be same.");
+
+                   // register a field error for password
+                   errors.rejectValue("password", // (1)
+                          "PasswordEqualsValidator.passwordResetForm.password", // (2)
+                          ""); // (3)
                }
            }
        }
@@ -2152,7 +2158,7 @@ Spring Validatorによる相関項目チェック実装
         * - 項番
           - 説明
         * - | (1)
-          - | \ ``confirmPassword``\ フィールドのエラーを登録する。
+          - | \ ``password``\ フィールドのエラーを登録する。
         * - | (2)
           - | エラーメッセージのコード名を指定する。この際、対応するエラーメッセージに空文字を指定する。
             | メッセージ定義は\ :ref:`Validation_message_in_application_messages`\ を参照されたい。
@@ -2261,7 +2267,7 @@ Bean Validationによって、相関項目チェックの実装するために�
 Spring MVCによるBean Validationのエラーメッセージは、以下の順で解決される。
 
 #. | \ ``org.springframework.context.MessageSource``\ に定義されているメッセージの中に、ルールに合致するものがあればそれをエラーメッセージとして使用する (Springのルール)。
-   | Springのデフォルトのルールについては、「`DefaultMessageCodesResolverのJavaDoc <https://docs.spring.io/spring/docs/5.2.3.RELEASE/javadoc-api/org/springframework/validation/DefaultMessageCodesResolver.html>`_」を参照されたい。
+   | Springのデフォルトのルールについては、「`DefaultMessageCodesResolverのJavaDoc <https://docs.spring.io/spring/docs/5.2.12.RELEASE/javadoc-api/org/springframework/validation/DefaultMessageCodesResolver.html>`_」を参照されたい。
 #. 1.でメッセージが見つからない場合、アノテーションの\ ``message``\ 属性に、指定されたメッセージからエラーメッセージを取得する (Bean Validationのルール)
 
   #. \ ``message``\ 属性に指定されたメッセージが、"{メッセージキー}"形式でない場合、そのテキストをエラーメッセージとして使用する。
@@ -2304,7 +2310,7 @@ Spring MVCによるBean Validationのエラーメッセージは、以下の順�
     * マルチプロジェクト構成を採用する場合は、\ ``ValidationMessages.properties``\ ファイルを複数のプロジェクトに配置しないように注意すること。
     * Bean Validation用の共通部品をjarファイルとして配布する際に、\ ``ValidationMessages.properties``\ ファイルをjarファイルの中に含めないように注意すること。
 
-    なお、version 1.0.2.RELEASE以降の `ブランクプロジェクト <https://github.com/Macchinetta/macchinetta-web-multi-blank>`_ \ からプロジェクトを生成した場合は、
+    なお、version 1.0.2.RELEASE以降の `ブランクプロジェクト <https://github.com/Macchinetta/macchinetta-web-multi-blank/tree/1.7.2.RELEASE>`_ \ からプロジェクトを生成した場合は、
     \ ``xxx-web/src/main/resources``\ の直下に\ ``ValidationMessages.properties``\ が格納されている。
 
 |
@@ -2568,7 +2574,7 @@ ValidationMessages.propertiesでシステムが利用するデフォルトのメ
 * \ ``{2}``\  : \ ``min``\ 属性の値
 
 となる。
-仕様の詳細については \ `SpringValidatorAdapterのJavaDoc <https://docs.spring.io/spring/docs/5.2.3.RELEASE/javadoc-api/org/springframework/validation/beanvalidation/SpringValidatorAdapter.html#getArgumentsForConstraint-java.lang.String-java.lang.String-javax.validation.metadata.ConstraintDescriptor->`_\
+仕様の詳細については \ `SpringValidatorAdapterのJavaDoc <https://docs.spring.io/spring/docs/5.2.12.RELEASE/javadoc-api/org/springframework/validation/beanvalidation/SpringValidatorAdapter.html#getArgumentsForConstraint-java.lang.String-java.lang.String-javax.validation.metadata.ConstraintDescriptor->`_\
 を参照されたい。
 
 エラーメッセージは以下のように変更される。
@@ -2579,7 +2585,7 @@ ValidationMessages.propertiesでシステムが利用するデフォルトのメ
 
 .. note::
 
-  application-messages.propertiesのメッセージキーの形式は、\ `これ以外にも用意されている <https://docs.spring.io/spring/docs/5.2.3.RELEASE/javadoc-api/org/springframework/validation/DefaultMessageCodesResolver.html>`_\ が、
+  application-messages.propertiesのメッセージキーの形式は、\ `これ以外にも用意されている <https://docs.spring.io/spring/docs/5.2.12.RELEASE/javadoc-api/org/springframework/validation/DefaultMessageCodesResolver.html>`_\ が、
   デフォルトメッセージを一部上書きする目的で使用するのであれば、基本的に、\ ``アノテーション名.フォーム属性名.プロパティ名``\ 形式でよい。
 
 |
@@ -3047,7 +3053,7 @@ Bean Validationは標準で用意されているチェックルール以外に�
   
   \ `@Compare`\アノテーションを利用することで、このルールをより簡単に実現することができる。 詳細は\ :ref:`Validation_terasoluna_gfw_how_to_extend`\を参照されたい。
 
-ここでは、確認用フィールドの先頭に、「confirm」を付与する規約を設ける。
+ここでは、内容が一致しない場合には確認用フィールドにエラーメッセージを表示する。
 
 * アノテーション
 
@@ -3058,18 +3064,23 @@ Bean Validationは標準で用意されているチェックルール以外に�
     package com.example.common.validation;
 
     import java.lang.annotation.Documented;
+    import java.lang.annotation.Repeatable;
     import java.lang.annotation.Retention;
     import java.lang.annotation.Target;
     import javax.validation.Constraint;
     import javax.validation.Payload;
     import static java.lang.annotation.ElementType.ANNOTATION_TYPE;
     import static java.lang.annotation.ElementType.TYPE;
+    import static java.lang.annotation.ElementType.TYPE_USE;
     import static java.lang.annotation.RetentionPolicy.RUNTIME;
+
+    import com.example.common.validation.Confirm.List;
 
     @Documented
     @Constraint(validatedBy = { ConfirmValidator.class })
-    @Target({ TYPE, ANNOTATION_TYPE }) // (1)
+    @Target({ TYPE, ANNOTATION_TYPE, TYPE_USE }) // (1)
     @Retention(RUNTIME)
+    @Repeatable(List.class)
     public @interface Confirm {
         String message() default "{com.example.common.validation.Confirm.message}";
 
@@ -3082,7 +3093,12 @@ Bean Validationは標準で用意されているチェックルール以外に�
          */
         String field(); // (2)
 
-        @Target({ TYPE, ANNOTATION_TYPE })
+        /**
+         * ConfirmField name
+         */
+        String confirmField(); // (2)
+
+        @Target({ TYPE, ANNOTATION_TYPE, TYPE_USE })
         @Retention(RUNTIME)
         @Documented
         @interface List {
@@ -3109,13 +3125,13 @@ Bean Validationは標準で用意されているチェックルール以外に�
 
     package com.example.common.validation;
 
+    import java.util.Objects;
+
     import javax.validation.ConstraintValidator;
     import javax.validation.ConstraintValidatorContext;
 
     import org.springframework.beans.BeanWrapper;
     import org.springframework.beans.BeanWrapperImpl;
-    import org.springframework.util.ObjectUtils;
-    import org.springframework.util.StringUtils;
 
     public class ConfirmValidator implements ConstraintValidator<Confirm, Object> {
         private String field;
@@ -3126,7 +3142,7 @@ Bean Validationは標準で用意されているチェックルール以外に�
 
         public void initialize(Confirm constraintAnnotation) {
             field = constraintAnnotation.field();
-            confirmField = "confirm" + StringUtils.capitalize(field);
+            confirmField = constraintAnnotation.confirmField();
             message = constraintAnnotation.message();
         }
 
@@ -3134,14 +3150,13 @@ Bean Validationは標準で用意されているチェックルール以外に�
             BeanWrapper beanWrapper = new BeanWrapperImpl(value); // (1)
             Object fieldValue = beanWrapper.getPropertyValue(field); // (2)
             Object confirmFieldValue = beanWrapper.getPropertyValue(confirmField);
-            boolean matched = ObjectUtils.nullSafeEquals(fieldValue,
-                    confirmFieldValue);
+            boolean matched = Objects.equals(fieldValue, confirmFieldValue);
             if (matched) {
                 return true;
             } else {
                 context.disableDefaultConstraintViolation(); // (3)
                 context.buildConstraintViolationWithTemplate(message)
-                        .addPropertyNode(field).addConstraintViolation(); // (4)
+                        .addPropertyNode(confirmField).addConstraintViolation(); // (4)
                 return false;
             }
         }
@@ -3173,7 +3188,7 @@ Bean Validationは標準で用意されているチェックルール以外に�
    Spring Validatorによる相関項目チェックにて紹介したように、Bean Validationにおいても
    :ref:`相関チェック対象の複数フィールドに対してエラー情報を設定する<Validation_how_to_cross-field_validation_for_multi_field_highlight>` ことが可能である。
 
-   以下に、Bean Validationにて\ ``password``\ フィールドと\ ``confirmPassword``\ フィールドにスタイルを適用し、\ ``password``\ フィールドのみにエラーメッセージを表示する例を示す。
+   以下に、Bean Validationにて\ ``password``\ フィールドと\ ``confirmPassword``\ フィールドにスタイルを適用し、\ ``confirmPassword``\ フィールドのみにエラーメッセージを表示する例を示す。
 
      .. code-block:: java
 
@@ -3196,13 +3211,13 @@ Bean Validationは標準で用意されているチェックルール以外に�
                } else {
                    context.disableDefaultConstraintViolation();
 
-                   //new ConstraintViolation to be generated for field
-                   context.buildConstraintViolationWithTemplate(message)
-                           .addPropertyNode(field).addConstraintViolation();
-
                    //new ConstraintViolation to be generated for confirmField
-                   context.buildConstraintViolationWithTemplate("") // (1)
+                   context.buildConstraintViolationWithTemplate(message)
                            .addPropertyNode(confirmField).addConstraintViolation();
+
+                   //new ConstraintViolation to be generated for field
+                   context.buildConstraintViolationWithTemplate("") // (1)
+                           .addPropertyNode(field).addConstraintViolation();
 
                    return false;
                }
@@ -3218,7 +3233,7 @@ Bean Validationは標準で用意されているチェックルール以外に�
         * - 項番
           - 説明
         * - | (1)
-          - | \ ``confirmPassword``\ フィールドのエラーを登録する。この際、エラーメッセージに空文字を設定している。
+          - | \ ``password``\ フィールドのエラーを登録する。この際、エラーメッセージに空文字を設定している。
 
 
 この\ ``@Confirm``\ アノテーションを使用して、前述の「パスワードリセット」処理を再実装すると、以下のようになる。
@@ -3237,7 +3252,7 @@ Bean Validationは標準で用意されているチェックルール以外に�
 
     import com.example.common.validation.Confirm;
 
-    @Confirm(field = "password") // (1)
+    @Confirm(field = "password", confirmField = "confirmPassword") // (1)
     public class PasswordResetForm implements Serializable {
         private static final long serialVersionUID = 1L;
 
@@ -4285,7 +4300,7 @@ hibernate-validator-<version>.jar内のorg/hibernate/validatorに、ValidationMe
 terasoluna-gfw-commonのチェックルール
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-\ `terasoluna-gfw-common <https://github.com/terasolunaorg/terasoluna-gfw/tree/5.6.0.RELEASE/terasoluna-gfw-common-libraries/terasoluna-gfw-common>`_\ が提供するアノテーション(\ ``org.terasoluna.gfw.common.codelist.*``\ )を以下に示す。
+\ `terasoluna-gfw-common <https://github.com/terasolunaorg/terasoluna-gfw/tree/5.6.2.RELEASE/terasoluna-gfw-common-libraries/terasoluna-gfw-common>`_\ が提供するアノテーション(\ ``org.terasoluna.gfw.common.codelist.*``\ )を以下に示す。
 
 .. tabularcolumns:: |p{0.15\linewidth}|p{0.30\linewidth}|p{0.30\linewidth}|p{0.25\linewidth}|
 .. list-table::
@@ -4309,7 +4324,7 @@ terasoluna-gfw-commonのチェックルール
 terasoluna-gfw-codepointsのチェックルール
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-\ `terasoluna-gfw-codepoints <https://github.com/terasolunaorg/terasoluna-gfw/tree/5.6.0.RELEASE/terasoluna-gfw-common-libraries/terasoluna-gfw-codepoints>`_\ が提供するアノテーション(\ ``org.terasoluna.gfw.common.codepoints.*``\ )を以下に示す。なお、\ ``terasoluna-gfw-codepoints``\ はバージョン5.1.0.RELEASE以上で利用することができる。
+\ `terasoluna-gfw-codepoints <https://github.com/terasolunaorg/terasoluna-gfw/tree/5.6.2.RELEASE/terasoluna-gfw-common-libraries/terasoluna-gfw-codepoints>`_\ が提供するアノテーション(\ ``org.terasoluna.gfw.common.codepoints.*``\ )を以下に示す。なお、\ ``terasoluna-gfw-codepoints``\ はバージョン5.1.0.RELEASE以上で利用することができる。
 
 .. tabularcolumns:: |p{0.15\linewidth}|p{0.30\linewidth}|p{0.30\linewidth}|p{0.25\linewidth}|
 .. list-table::
@@ -4331,7 +4346,7 @@ terasoluna-gfw-codepointsのチェックルール
 terasoluna-gfw-validatorのチェックルール
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-\ `terasoluna-gfw-validator <https://github.com/terasolunaorg/terasoluna-gfw/tree/5.6.0.RELEASE/terasoluna-gfw-common-libraries/terasoluna-gfw-validator>`_\ が提供するアノテーション(\ ``org.terasoluna.gfw.common.validator.constraints.*``\ )を以下に示す。なお、\ ``terasoluna-gfw-validator``\ はバージョン5.1.0.RELEASE以上で利用することができる。
+\ `terasoluna-gfw-validator <https://github.com/terasolunaorg/terasoluna-gfw/tree/5.6.2.RELEASE/terasoluna-gfw-common-libraries/terasoluna-gfw-validator>`_\ が提供するアノテーション(\ ``org.terasoluna.gfw.common.validator.constraints.*``\ )を以下に示す。なお、\ ``terasoluna-gfw-validator``\ はバージョン5.1.0.RELEASE以上で利用することができる。
 
 .. tabularcolumns:: |p{0.15\linewidth}|p{0.30\linewidth}|p{0.30\linewidth}|p{0.25\linewidth}|
 .. list-table::
@@ -4608,40 +4623,45 @@ terasoluna-gfw-validatorのチェックルール
 
     import static java.lang.annotation.ElementType.ANNOTATION_TYPE;
     import static java.lang.annotation.ElementType.TYPE;
+    import static java.lang.annotation.ElementType.TYPE_USE;
     import static java.lang.annotation.RetentionPolicy.RUNTIME;
-    
+
     import java.lang.annotation.Documented;
+    import java.lang.annotation.Repeatable;
     import java.lang.annotation.Retention;
     import java.lang.annotation.Target;
-    
+
     import javax.validation.Constraint;
     import javax.validation.OverridesAttribute;
     import javax.validation.Payload;
-    
+
     import org.terasoluna.gfw.common.validator.constraints.Compare;
-    
+
+    import com.example.sample.domain.validation.Confirm.List;
+
     @Documented
     @Constraint(validatedBy = {})
-    @Target({ TYPE, ANNOTATION_TYPE }) // (1)
+    @Target({ TYPE, ANNOTATION_TYPE, TYPE_USE }) // (1)
     @Retention(RUNTIME)
+    @Repeatable(List.class)
     @Compare(left = "", right = "", operator = Compare.Operator.EQUAL, requireBoth = true) // (2)
     public @interface Confirm {
-    
+
         @OverridesAttribute(constraint = Compare.class, name = "message") // (3)
         String message() default "{com.example.sample.domain.validation.Confirm.message}";
-    
+
         Class<?>[] groups() default {};
-    
+
         Class<? extends Payload>[] payload() default {};
-    
-        @OverridesAttribute(constraint = Compare.class, name = "left") // (4)
+
+        @OverridesAttribute(constraint = Compare.class, name = "right") // (4)
         String field();
-    
-        @OverridesAttribute(constraint = Compare.class, name = "right") // (5)
+
+        @OverridesAttribute(constraint = Compare.class, name = "left") // (5)
         String confirmField();
-    
+
         @Documented
-        @Target({ TYPE, ANNOTATION_TYPE })
+        @Target({ TYPE, ANNOTATION_TYPE, TYPE_USE })
         @Retention(RUNTIME)
         @interface List {
             Confirm[] value();
@@ -4662,9 +4682,9 @@ terasoluna-gfw-validatorのチェックルール
     * - | (3)
       - | \ ``@Compare``\ アノテーションの\ ``message``\ 属性をオーバーライドし、エラー時に\ ``message``\ 属性に指定したメッセージが使用されるようにする。
     * - | (4)
-      - | \ ``@Compare``\ アノテーションの\ ``left``\ 属性をオーバーライドし、属性名を\ ``field``\ に変更する。
+      - | \ ``@Compare``\ アノテーションの\ `right``\ 属性をオーバーライドし、属性名を\ ``field``\ に変更する。
     * - | (5)
-      - | 同様に\ ``right``\ 属性をオーバーライドし、属性名を\ ``confirmField``\ に変更する。
+      - | 同様に\ ``left``\ 属性をオーバーライドし、属性名を\ ``confirmField``\ に変更する。
 
 .. note::
 
@@ -4782,7 +4802,7 @@ application-messages.propertiesに以下の定義を行った場合、
 
 .. tip::
 
-  メッセージキーのルールの詳細は、\ `DefaultMessageCodesResolverのJavadoc <https://docs.spring.io/spring/docs/5.2.3.RELEASE/javadoc-api/org/springframework/validation/DefaultMessageCodesResolver.html>`_\ を参照されたい。
+  メッセージキーのルールの詳細は、\ `DefaultMessageCodesResolverのJavadoc <https://docs.spring.io/spring/docs/5.2.12.RELEASE/javadoc-api/org/springframework/validation/DefaultMessageCodesResolver.html>`_\ を参照されたい。
 
 
 .. _Validation_string_trimmer_editor:

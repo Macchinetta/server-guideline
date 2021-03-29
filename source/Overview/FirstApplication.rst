@@ -23,29 +23,32 @@ Spring MVCを用いたWebアプリケーションの開発に対するイメー�
     * - 種別
       - プロダクト
     * - OS
-      - Windows 7
+      - Windows 10
     * - JVM
       - `Java <http://www.oracle.com/technetwork/java/javase/downloads/index.html>`_ 1.8
     * - IDE
-      - `Spring Tool Suite <http://spring.io/tools/sts/all>`_ 3.6.4.RELEASE (以降「STS」と呼ぶ)
+      - `Spring Tool Suite <https://github.com/spring-projects/toolsuite-distribution/wiki/Spring-Tool-Suite-3>`_ 3.9.12.RELEASE (以降「STS」と呼ぶ)
     * - Build Tool
       - `Apache Maven <http://maven.apache.org/download.cgi>`_ 3.3.9 (以降「Maven」と呼ぶ)
     * - Application Server
-      - `Pivotal tc Server <https://network.pivotal.io/products/pivotal-tcserver>`_ Developer Edition v3.1 (STSに同封)
+      - `Pivotal tc Server <https://network.pivotal.io/products/pivotal-tcserver>`_ Developer Edition v4.0 (STSに同封)
     * - Web Browser
-      - `Google Chrome <https://www.google.co.jp/chrome/browser/desktop/index.html>`_ 46.0.2490.80 m
+      - `Google Chrome <https://www.google.co.jp/chrome/browser/desktop/index.html>`_ 88.0.4324.182
 
 .. _warning_sts_4:
 .. warning:: **STS 4.x について**
 
-    STSはバージョン 4.x がリリースされているが、本ガイドラインでは開発準備の負担を減らすため 3.x の利用を推奨する。
+    STSはバージョン 4.x がリリースされており、3.x は既に非推奨となっているが、本ガイドラインでは開発準備の負担を減らすため 3.x を利用している。
+    STS 3.9.13 以降は同梱されているアプリケーションサーバがPivotal tc ServerからVMware tc Serverに変更されており、
+    VMware tc Serverは利用環境によっては設定の変更が必要になる場合があるため、設定の手間を減らすためにSTS 3.9.12 を選択している。
 
     4.x はSpring Boot アプリケーションの開発やJava Based Configurationにフィーチャーしており、
     従来のJava EE Webアプリケーション開発向けのWeb Tools Platform (WTP)やJSPエディタなどが搭載されていない、
     従来のSpring アプリケーション開発向けのXML形式のBean定義ファイルがサポートされていない等、
     Macchinetta Server Framework (1.x)で解説するアプリケーション開発にはマッチしないためである。
 
-    なお、4.x を利用した場合も必要なプラグインを追加すれば、3.xと同じように開発することができる。
+    なお、4.x を利用した場合も必要なプラグインを追加すれば、3.x と同じように開発することができる。
+    STS 4.x を利用したい場合は `こちら <https://spring.io/tools>`_ からダウンロードされたい。
 
 .. note::
 
@@ -63,7 +66,7 @@ Spring MVCを用いたWebアプリケーションの開発に対するイメー�
     mvn archetype:generate -B^
      -DarchetypeGroupId=com.github.macchinetta.blank^
      -DarchetypeArtifactId=macchinetta-web-blank-noorm-archetype^
-     -DarchetypeVersion=1.7.0.RELEASE^
+     -DarchetypeVersion=1.7.2.RELEASE^
      -DgroupId=com.example.helloworld^
      -DartifactId=helloworld^
      -Dversion=1.0.0-SNAPSHOT
@@ -75,7 +78,7 @@ Spring MVCを用いたWebアプリケーションの開発に対するイメー�
     C:\work>mvn archetype:generate -B^
     More?  -DarchetypeGroupId=com.github.macchinetta.blank^
     More?  -DarchetypeArtifactId=macchinetta-web-blank-noorm-archetype^
-    More?  -DarchetypeVersion=1.7.0.RELEASE^
+    More?  -DarchetypeVersion=1.7.2.RELEASE^
     More?  -DgroupId=com.example.helloworld^
     More?  -DartifactId=helloworld^
     More?  -Dversion=1.0.0-SNAPSHOT
@@ -91,9 +94,9 @@ Spring MVCを用いたWebアプリケーションの開発に対するイメー�
     [INFO]
     [INFO] --- maven-archetype-plugin:3.1.2:generate (default-cli) @ standalone-pom ---
     [INFO] Generating project in Batch mode
-    [INFO] Archetype repository not defined. Using the one from [com.github.macchinetta.blank:macchinetta-web-blank-noorm-archetype:1.7.0.RELEASE] found in catalog remote
+    [INFO] Archetype repository not defined. Using the one from [com.github.macchinetta.blank:macchinetta-web-blank-noorm-archetype:1.7.2.RELEASE] found in catalog remote
     [INFO] ----------------------------------------------------------------------------
-    [INFO] Using following parameters for creating project from Archetype: macchinetta-web-blank-noorm-archetype:1.6.1.RELEASE
+    [INFO] Using following parameters for creating project from Archetype: macchinetta-web-blank-noorm-archetype:1.6.2.RELEASE
     [INFO] ----------------------------------------------------------------------------
     [INFO] Parameter: groupId, Value: com.example.helloworld
     [INFO] Parameter: artifactId, Value: helloworld
@@ -264,7 +267,7 @@ Spring MVCの設定方法を理解するために、生成されたSpring MVCの
    * - 項番
      - 説明
    * - | (1)
-     - \ ``<mvc:annotation-driven>``\要素を定義することにより、Spring MVCのデフォルト設定が行われる。デフォルトの設定については、`Spring Framework Documentation -Enable MVC Configuration- <https://docs.spring.io/spring/docs/5.2.3.RELEASE/spring-framework-reference/web.html#mvc-config-enable>`_ を参照されたい。
+     - \ ``<mvc:annotation-driven>``\要素を定義することにより、Spring MVCのデフォルト設定が行われる。デフォルトの設定については、`Spring Framework Documentation -Enable MVC Configuration- <https://docs.spring.io/spring/docs/5.2.12.RELEASE/spring-framework-reference/web.html#mvc-config-enable>`_ を参照されたい。
    * - | (2)
      - Spring MVCで使用するコンポーネントを探すパッケージを定義する。
    * - | (3)
@@ -550,7 +553,7 @@ JSPの作成
      - 説明
    * - | (1)
      - | タグライブラリを利用し、HTMLフォームを構築している。 ``modelAttribute`` 属性に、Controllerで用意したフォームオブジェクトの名前を指定する。
-       | タグライブラリは `Spring Framework Documentation -The Form Tag- <https://docs.spring.io/spring/docs/5.2.3.RELEASE/spring-framework-reference/web.html#mvc-view-jsp-formtaglib-formtag>`_\を参照されたい。
+       | タグライブラリは `Spring Framework Documentation -The Form Tag- <https://docs.spring.io/spring/docs/5.2.12.RELEASE/spring-framework-reference/web.html#mvc-view-jsp-formtaglib-formtag>`_\を参照されたい。
 
 .. note::
 

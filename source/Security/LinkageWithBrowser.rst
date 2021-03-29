@@ -54,17 +54,17 @@ Spring Securityがデフォルトでサポートしているレスポンスヘ�
 
 .. note:: **Referrer-Policyヘッダ**
 
-    Spring Security 4.2より、ブラウザに\ `Referrer Policy <https://www.w3.org/TR/referrer-policy/>`_\ を指示するためのヘッダである\ `Referrer-Policyヘッダ <https://docs.spring.io/spring-security/site/docs/5.2.1.RELEASE/reference/htmlsingle/#headers-referrer>`_\ がサポートされた。
+    Spring Security 4.2より、ブラウザに\ `Referrer Policy <https://www.w3.org/TR/referrer-policy/>`_\ を指示するためのヘッダである\ `Referrer-Policyヘッダ <https://docs.spring.io/spring-security/site/docs/5.2.8.RELEASE/reference/htmlsingle/#headers-referrer>`_\ がサポートされた。
     詳細については次版以降の開発ガイドラインで記載する予定である。
 
 .. note:: **Feature-Policyヘッダ**
 
-    Spring Security 5.1より、ブラウザに\ `Feature-Policy <https://w3c.github.io/webappsec-feature-policy/>`_\ を指示するためのヘッダである\ `Feature-Policyヘッダ <https://docs.spring.io/spring-security/site/docs/5.2.1.RELEASE/reference/htmlsingle/#headers-feature>`_\ がサポートされた。
+    Spring Security 5.1より、ブラウザに\ `Feature-Policy <https://w3c.github.io/webappsec-feature-policy/>`_\ を指示するためのヘッダである\ `Feature-Policyヘッダ <https://docs.spring.io/spring-security/site/docs/5.2.8.RELEASE/reference/htmlsingle/#headers-feature>`_\ がサポートされた。
     詳細については次版以降の開発ガイドラインで記載する予定である。
 
 .. note:: **Clear-Site-Dataヘッダ**
 
-    Spring Security 5.2より、ブラウザに\ `Clear-Site-Data <https://w3c.github.io/webappsec-clear-site-data/>`_\ を指示するためのヘッダである\ `Clear-Site-Dataヘッダ <https://docs.spring.io/spring-security/site/docs/5.2.1.RELEASE/reference/htmlsingle/#headers-clearsitedata>`_\ がサポート可能となった。
+    Spring Security 5.2より、ブラウザに\ `Clear-Site-Data <https://w3c.github.io/webappsec-clear-site-data/>`_\ を指示するためのヘッダである\ `Clear-Site-Dataヘッダ <https://docs.spring.io/spring-security/site/docs/5.2.8.RELEASE/reference/htmlsingle/#headers-clear-site-data>`_\ がサポート可能となった。
 
     詳細は \ :ref:`SpringSecurityAuthenticationLogout`\ を参照されたい。
 
@@ -367,7 +367,7 @@ How to use
 
 上記の例だと、Cache-Control関連のヘッダだけが出力されなくなる。 
 
-セキュリティヘッダの詳細については\ `Spring Security Reference -Default Security Headers- <https://docs.spring.io/spring-security/site/docs/5.2.1.RELEASE/reference/htmlsingle/#default-security-headers>`_\ を参照されたい。
+セキュリティヘッダの詳細については\ `Spring Security Reference -Default Security Headers- <https://docs.spring.io/spring-security/site/docs/5.2.8.RELEASE/reference/htmlsingle/#headers-default>`_\ を参照されたい。
 
 .. note:: **Spring Securityによるセキュリティヘッダ付与の仕様変更**
 
@@ -398,7 +398,7 @@ Spring Securityのbean定義を変更することで、各要素の属性にオ�
 
     <sec:frame-options policy="SAMEORIGIN" />
 
-.. [#fSpringSecurityLinkageWithBrowser2] 各要素で指定できるオプションは\ `Spring Security Reference -The Security Namespace (<headers>)- <https://docs.spring.io/spring-security/site/docs/5.2.1.RELEASE/reference/htmlsingle/#nsa-headers>`_\ を参照されたい。
+.. [#fSpringSecurityLinkageWithBrowser2] 各要素で指定できるオプションは\ `Spring Security Reference -The Security Namespace (<headers>)- <https://docs.spring.io/spring-security/site/docs/5.2.8.RELEASE/reference/htmlsingle/#nsa-headers>`_\ を参照されたい。
 
 カスタムヘッダの出力
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

@@ -1308,7 +1308,7 @@ dozer-configration-mapping.xml
 
 .. note::
 
-   \ ``String``\ から\ ``java.utl.Date``\ など標準の日付・時刻オブジェクトへの変換については"\ :ref:`beanconverter-string-and-datetime`\"で述べる。
+   \ ``String``\ から\ ``java.util.Date``\ など標準の日付・時刻オブジェクトへの変換については"\ :ref:`beanconverter-string-and-datetime`\"で述べる。
 
 Appendix
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

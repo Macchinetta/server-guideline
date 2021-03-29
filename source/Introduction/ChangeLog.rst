@@ -11,6 +11,106 @@
       - 更新箇所
       - 更新内容
 
+    * - 2021-03-26
+      - \-
+      - 1.7.2 RELEASE版公開
+
+    * -
+      - :doc:`../Overview/FrameworkStack`
+      - 利用するOSSのバージョンを更新
+
+        * Spring Bootを2.2.12に更新
+
+        Spring Boot のバージョン更新に伴い利用するOSSのバージョンを更新
+
+        * Spring Frameworkを5.2.12に更新
+        * Spring Dataを2.2.12に更新
+        * Spring Securityを5.2.8に更新
+        * AspectJを1.9.6に更新
+        * Jacksonを2.10.5に更新
+        * Hibernate Validatorを6.0.21(Bean Validation 2.0)に更新
+        * Joda Timeを2.10.8に更新
+        * Apache HttpClientを4.5.13に更新
+        * Lombokを1.18.16に更新
+
+        単体テストで利用するOSSのバージョンを更新
+
+        * Spring Testを5.2.12に更新
+
+        共通ライブラリの機能改善
+
+        * \ ``@Compare``\がBean Validation 2.0に準拠
+
+    * -
+      - :doc:`../ImplementationAtEachLayer/CreateWebApplicationProject`
+      - 記載内容の修正
+
+        * Mavenセントラルリポジトリで公開されるOracle JDBC DriverのgroupIdが変更されたことへの対応
+        * オフライン環境でプロジェクト開発を続けるための事前作業について、一部手順に誤りがあったため修正
+
+    * -
+      - :doc:`../ImplementationAtEachLayer/ApplicationLayer`
+      - 記載内容の追加
+
+        * \ ``addAttribute``\、\ ``addFlashAttribute``\で第一引数を省略した際、\ ``Conventions#getVariableName``\の仕様に基づき属性名が決まる説明を追加
+
+    * -
+      - :doc:`../ImplementationAtEachLayer/CreateProject`
+      - 記載内容の修正
+
+        * Tomcatへデプロイする際にコンテキストXMLファイルを配置するファイルパスを修正
+
+    * -
+      - :doc:`../ArchitectureInDetail/WebApplicationDetail/Validation`
+      - 記載内容の修正
+
+        * \ ``@Compare``\がBean Validation 2.0に準拠
+        * 相関項目チェックルールのコード例において、エラーメッセージを確認用フィールドに表示するように変更
+        * Bean Validationを利用した相関項目チェックルールのコード例をBean Validation 2.0に準拠するよう変更
+
+    * -
+      - :doc:`../ArchitectureInDetail/DataAccessDetail/ExclusionControl`
+      - 記載内容の修正
+
+        * \ ``ObjectOptimisticLockingFailureException``\のFQCNの誤りを修正
+
+    * -
+      - :doc:`../Security/Authentication`
+      - 記載内容の修正・追加
+
+        * \ ``UserDetails``\実装クラスの\ ``equals``\メソッドについての説明を追加
+        * ブランクプロジェクトにおいてSpring Securityのフォーム認証を使用しない場合の注意事項を追加
+
+    * -
+      - :doc:`../UnitTest/UnitTestOverview`
+      - Spring Boot のバージョン更新に伴い利用するOSSのバージョンを更新
+
+        * Spring Testを5.2.12に更新
+
+    * -
+      - :doc:`../UnitTest/ImplementsOfUnitTest/UsageOfLibraryForTest`
+      - 記載内容の修正・追加
+
+        * Mockito 2より\ ``org.mockito.Matchers``\が非推奨となったことへの対応
+        * \ ``MockMultipartHttpServletRequestBuilder``\使用時の注意点についてのWarningを追加
+        * \ ``MockMultipartHttpServletRequestBuilder``\において、リクエストを送信する際に"/"から始まらないパスを指定した場合のエラーの説明を追加
+
+    * -
+      - :doc:`../Tutorial/TutorialREST`
+      - 記載内容の修正
+
+        * \ ``MessageConverter``\および\ ``ObjectMapper``\の定義方法を\ :doc:`../ArchitectureInDetail/WebServiceDetail/REST`\に合わせるよう変更
+
+    * - 2021-01-07
+      - \-
+      - 1.7.1 RELEASE版公開
+
+    * -
+      - :doc:`../ArchitectureInDetail/WebApplicationDetail/SessionManagement`
+      - 記載内容の追加
+
+        * 「同一セッション内のリクエストの同期化」の適用範囲についての注意事項を追加
+
     * - 2020-06-29
       - \-
       - 1.7.0 RELEASE版公開
@@ -83,13 +183,13 @@
 
         TERASOLUNA Server Framework for Java (5.x)の共通ライブラリの機能改善
 
-        * 共通ライブラリが用意する入力チェックルールのデフォルトエラーメッセージを共通ライブラリで提供
+        * TERASOLUNA Server Framework for Java (5.x)の共通ライブラリが用意する入力チェックルールのデフォルトエラーメッセージをTERASOLUNA Server Framework for Java (5.x)の共通ライブラリで提供
         * \ ``<t:pagination>``\タグに、\ ``innerElementClass``\属性を追加
-        * \ ``Argon2PasswordEncoder``\のサポートに伴い、\ ``bcprov-jdk15on``\への依存関係を共通ライブラリで管理
+        * \ ``Argon2PasswordEncoder``\のサポートに伴い、\ ``bcprov-jdk15on``\への依存関係をTERASOLUNA Server Framework for Java (5.x)の共通ライブラリで管理
 
         記載内容の追加
 
-        * 共通ライブラリの構成要素に、TERASOLUNA Server Framework のバージョンについてのNoteを追加
+        * TERASOLUNA Server Framework for Java (5.x)の共通ライブラリの構成要素に、TERASOLUNA Server Framework のバージョンについてのNoteを追加
 
     * -
       - :doc:`../ImplementationAtEachLayer/ApplicationLayer`
@@ -106,7 +206,7 @@
 
         記載内容の修正
 
-        * 共通ライブラリが用意する入力チェックルールのデフォルトエラーメッセージを共通ライブラリで提供するように変更したことに伴う記載内容の変更
+        * TERASOLUNA Server Framework for Java (5.x)の共通ライブラリが用意する入力チェックルールのデフォルトエラーメッセージをTERASOLUNA Server Framework for Java (5.x)の共通ライブラリで提供するように変更したことに伴う記載内容の変更
 
     * -
       - :doc:`../ArchitectureInDetail/WebApplicationDetail/Pagination`
@@ -146,7 +246,7 @@
       - :doc:`../ArchitectureInDetail/DataAccessDetail/DataAccessCommon`
       - 記載内容の削除
 
-        *  共通ライブラリの変更に伴うlog4jdbcの記載の削除
+        *  TERASOLUNA Server Framework for Java (5.x)の共通ライブラリの変更に伴うlog4jdbcの記載の削除
 
     * -
       - :doc:`../ArchitectureInDetail/GeneralFuncDetail/Dozer`
@@ -194,9 +294,9 @@
         * Spring Security 5.2で追加された\ ``LogoutSuccessEvent``\および\ ``LogoutSuccessEventPublishingLogoutHandler``\の記述を追加
         * Spring Security 5.2で追加された\ ``ClearSiteDataHeaderWriter``\および\ ``HeaderWriterLogoutHandler``\の記述を追加
 
-        共通ライブラリの機能改善
+        TERASOLUNA Server Framework for Java (5.x)の共通ライブラリの機能改善
 
-        * \ ``Argon2PasswordEncoder``\のサポートに伴い、\ ``bcprov-jdk15on``\への依存関係を共通ライブラリで管理
+        * \ ``Argon2PasswordEncoder``\のサポートに伴い、\ ``bcprov-jdk15on``\への依存関係をTERASOLUNA Server Framework for Java (5.x)の共通ライブラリで管理
 
         記載内容の追加
 
