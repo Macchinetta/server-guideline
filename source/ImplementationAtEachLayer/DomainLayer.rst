@@ -553,7 +553,7 @@ Repositoryインタフェースのメソッド定義
 
  .. note::
 
-     Macchinetta Server Framework 1.7.0.RELEASEが利用するSpring Data 2.xでは\ ``CrudRepository``\ 等のメソッドシグネチャが変更されているが、
+     Macchinetta Server Framework 1.8.0.RELEASEが利用するSpring Data 2.xでは\ ``CrudRepository``\ 等のメソッドシグネチャが変更されているが、
      本章で示すメソッド名のルールはSpring Data 1.xのメソッドシグネチャに従っている。
 
      次版以降で、Spring Data 2.xのメソッドシグネチャへの移行が検討される予定である。
@@ -867,7 +867,7 @@ Serviceクラスから、別のServiceクラスの呼び出しを禁止する理
           - 説明
         * - | (2)
           - | 基底クラスを作成する場合、\ `@Transactional`\ の仕様上、AOPの対象となるのは外部から実行されるメソッドもしくはメソッドを実装しているクラスであるため、トランザクション制御が必要な場合はこの基底クラスに付与する。
-            | \ `@Servicve`\ も同様に、\ `ResultMessagesLoggingInterceptor`\ のようにAOPによってServiceを対象とするような場合はこの基底クラスに付与する必要がある。
+            | \ `@Service`\ も同様に、\ `ResultMessagesLoggingInterceptor`\ のようにAOPによってServiceを対象とするような場合はこの基底クラスに付与する必要がある。
         * - | (3)
           - | 基底クラスより、業務ロジックを実行する前の、事前処理を行うメソッドを呼び出す。
             | 上記のような事前処理を行うメソッドでは、ビジネスルールのチェックなどを実装することになる。
@@ -1244,7 +1244,7 @@ Serviceクラスを作成する際の注意点を、以下に示す。
 
     #. AOPを使う場合に、JDK標準のDynamic proxies機能が使われる。
        インタフェースがない場合はSpring Frameworkに内包されているCGLIBが使われるが、finalメソッドに対してAdviceできないなどの制約がある。
-       詳細は、\ `Spring Framework Documentation -Proxying Mechanisms- <https://docs.spring.io/spring/docs/5.2.3.RELEASE/spring-framework-reference/core.html#aop-proxying>`_\ を参照されたい。
+       詳細は、\ `Spring Framework Documentation -Proxying Mechanisms- <https://docs.spring.io/spring-framework/docs/5.3.2/reference/html/core.html#aop-proxying>`_\ を参照されたい。
     #. 業務ロジックをスタブ化しやすくなる。
        アプリケーション層とドメイン層を別々の体制で並行して開発する場合は、アプリケーション層を開発するために、Serviceのスタブが必要になるケースがある。
        スタブを作成する必要がある場合は、インタフェースを設けておくことを推奨する。
@@ -1557,7 +1557,7 @@ ServiceおよびSharedServiceでは、アプリケーションで使用する業
         ResultMessages warnMessages = null;
         // (2)
         if(hasOrderProduct) {
-            warnMessages = ResultMessages.warn().add("w.xx.xx.0001");
+            warnMessages = ResultMessages.warning().add("w.xx.xx.0001");
         }
         // (3)
         OrderResult orderResult = new OrderResult();
@@ -1718,7 +1718,7 @@ ServiceおよびSharedServiceでは、アプリケーションで使用する業
 * XML(bean定義ファイル)で宣言する。
 * **アノテーション（@Transactional）で宣言する。（推奨）**
 
-Spring Frameworkから提供されている「宣言型トランザクション管理」の詳細については、\ `Spring Framework Documentation -Declarative transaction management- <https://docs.spring.io/spring/docs/5.2.3.RELEASE/spring-framework-reference/data-access.html#transaction-declarative>`_\ を参照されたい。
+Spring Frameworkから提供されている「宣言型トランザクション管理」の詳細については、\ `Spring Framework Documentation -Declarative transaction management- <https://docs.spring.io/spring-framework/docs/5.3.2/reference/html/data-access.html#transaction-declarative>`_\ を参照されたい。
 \
 
  .. note:: **「アノテーションで指定する」方法を推奨する理由**
@@ -1834,7 +1834,7 @@ Spring Frameworkから提供されている「宣言型トランザクション�
 
     **クラスまたはクラスのメソッドに指定することを推奨する。**
     インタフェースまたはインタフェースのメソッドでない点が、ポイント。
-    理由は、\ `Spring Framework Documentation -Using @Transactional- <https://docs.spring.io/spring/docs/5.2.3.RELEASE/spring-framework-reference/data-access.html#transaction-declarative-annotations>`_\ の2個目のTipsを参照されたい。
+    理由は、\ `Spring Framework Documentation -Using @Transactional- <https://docs.spring.io/spring-framework/docs/5.3.2/reference/html/data-access.html#transaction-declarative-annotations>`_\ の2個目のTipsを参照されたい。
 
  .. warning:: **例外発生時のrollbackとcommitのデフォルト動作**
 
@@ -1847,7 +1847,7 @@ Spring Frameworkから提供されている「宣言型トランザクション�
 
     \ ``@Transactional``\ アノテーションにはvalue属性があるが、これは複数のTransaction Managerを宣言した際に、どのTransaction Managerを使うのかを指定する属性である。
     Transaction Managerが一つの場合、指定は不要である。
-    複数のTransaction Managerを使う必要がある場合は、\ `Spring Framework Documentation -Multiple Transaction Managers with @Transactional- <https://docs.spring.io/spring/docs/5.2.3.RELEASE/spring-framework-reference/data-access.html#tx-multiple-tx-mgrs-with-attransactional>`_\ を参照されたい。
+    複数のTransaction Managerを使う必要がある場合は、\ `Spring Framework Documentation -Multiple Transaction Managers with @Transactional- <https://docs.spring.io/spring-framework/docs/5.3.2/reference/html/data-access.html#tx-multiple-tx-mgrs-with-attransactional>`_\ を参照されたい。
 
  .. note:: **主要DBのisolationのデフォルトについて**
 
@@ -2061,7 +2061,7 @@ PlatformTransactionManagerの設定
  .. note:: **プログラマティックにトランザクションを管理する方法**
 
     本ガイドラインでは、「宣言型トランザクション管理」を推奨しているが、プログラマティックにトランザクションを管理することもできる。
-    詳細については、\ `Spring Framework Documentation -Programmatic Transaction Management- <https://docs.spring.io/spring/docs/5.2.3.RELEASE/spring-framework-reference/data-access.html#transaction-programmatic>`_\ を参照されたい。
+    詳細については、\ `Spring Framework Documentation -Programmatic Transaction Management- <https://docs.spring.io/spring-framework/docs/5.3.2/reference/html/data-access.html#transaction-programmatic>`_\ を参照されたい。
 
 
 <tx:annotation-driven>要素の属性について
@@ -2101,8 +2101,8 @@ PlatformTransactionManagerの設定
       - proxyのターゲットをクラスに限定するかを指定するフラグ（mode="proxy"の場合のみ、有効な設定）。省略した場合「false」となる。
 
         * false の場合、対象がインタフェースを実装している場合は、JDK標準のDynamic proxies機能によってproxyされ、
-          インタフェースを実装していない場合はSpring Frameworkに内包されているGCLIBの機能によってproxyされる。
-        * true の場合、インタフェースの実装有無に関係なく、GCLIBの機能によってproxyされる。
+          インタフェースを実装していない場合はSpring Frameworkに内包されているCGLIBの機能によってproxyされる。
+        * true の場合、インタフェースの実装有無に関係なく、CGLIBの機能によってproxyされる。
 
     * - 4
       - order

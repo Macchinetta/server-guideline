@@ -49,7 +49,7 @@ Java, STS, Maven, Google Chromeについては、﻿\ :doc:`./TutorialTodo`\ を
 DHCのインストール
 --------------------------------------------------------------------------------
 
-RESTクライアントして、Chromeの拡張機能である「DHC」をインストールする。
+RESTクライアントとして、Chromeの拡張機能である「DHC」をインストールする。
 
 Chromeの「Tools」→「Extensions」を選択する。
 
@@ -540,7 +540,7 @@ spring-mvc-rest.xmlの作成
 ``src/main/resources/META-INF/spring/spring-mvc-rest.xml``
 
 .. code-block:: xml
-    :emphasize-lines: 15,20-34,37,39,49
+    :emphasize-lines: 15,19-23,26-29,32-37,39,41,51
 
     <?xml version="1.0" encoding="UTF-8"?>
     <beans xmlns="http://www.springframework.org/schema/beans"
@@ -560,21 +560,23 @@ spring-mvc-rest.xmlの作成
         <context:property-placeholder
             location="classpath*:/META-INF/spring/*.properties" />
 
+        <!-- (2) -->
+        <bean id="jsonMessageConverter"
+            class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+            <property name="objectMapper" ref="objectMapper" />
+        </bean>
+
+        <bean id="objectMapper" class="org.springframework.http.converter.json.Jackson2ObjectMapperFactoryBean">
+            <!-- (3) -->
+            <property name="dateFormat">
+                <bean class="com.fasterxml.jackson.databind.util.StdDateFormat" />
+            </property>
+        </bean>
+
+        <!-- (4) -->
         <mvc:annotation-driven>
             <mvc:message-converters register-defaults="false">
-                <!-- (2) -->
-                <bean
-                    class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
-                    <!-- (3) -->
-                    <property name="objectMapper">
-                        <bean class="com.fasterxml.jackson.databind.ObjectMapper">
-                            <property name="dateFormat">
-                                <!-- (4) -->
-                                <bean class="com.fasterxml.jackson.databind.util.StdDateFormat"/>
-                            </property>
-                        </bean>
-                    </property>
-                </bean>
+                <ref bean="jsonMessageConverter" />
             </mvc:message-converters>
         </mvc:annotation-driven>
 
@@ -613,19 +615,21 @@ spring-mvc-rest.xmlの作成
    * - | (1)
      - \ アプリケーション層のコンポーネントでプロパティファイルに定義されている値を参照する必要がある場合は、\ ``<context:property-placeholder>``\要素を使用してプロパティファイルを読み込む必要がある。
    * - | (2)
-     - \ ``<mvc:message-converters>``\ に、Controllerの引数と返り値で扱うJavaBeanをシリアライズ/デシリアライズするためのクラス(\ ``org.springframework.http.converter.HttpMessageConverter``\ )を設定する。
+     - \ Controllerの引数と返り値で扱うJavaBeanをシリアライズ/デシリアライズするためのクラス(\ ``org.springframework.http.converter.HttpMessageConverter``\ )を設定する。
+       ここではJSON形式を扱う\ ``MappingJackson2HttpMessageConverter``\ を使用する。
 
-       \ ``HttpMessageConverter``\ は複数設定する事ができるが、本チュートリアルではJSONしか使用しないため、\ ``MappingJackson2HttpMessageConverter``\ のみ指定している。
+       \ ``MappingJackson2HttpMessageConverter``\ の\ ``objectMapper``\ プロパティに、Jacksonより提供されている\ ``ObjectMapper``\ (「JSON <-> JavaBean」の変換を行うためのコンポーネント)を指定する。
+       本チュートリアルでは、日時型のフォーマットをカスタマイズしたObjectMapperを指定している。 カスタマイズする必要がない場合は\ ``objectMapper``\ プロパティは省略可能である。
+
    * - | (3)
-     - \ ``MappingJackson2HttpMessageConverter``\ の\ ``objectMapper``\ プロパティに、Jacksonより提供されている\ ``ObjectMapper``\ (「JSON <-> JavaBean」の変換を行うためのコンポーネント)を指定する。
-
-       本チュートリアルでは、日時型のフォーマットをカスタマイズした\ ``ObjectMapper``\ を指定している。
-       カスタマイズする必要がない場合は\ ``objectMapper``\ プロパティは省略可能である。
-   * - | (4)
      - \ ``ObjectMapper``\ の\ ``dateFormat``\ プロパティに、日時型フィールドの形式を指定する。
 
        本チュートリアルでは、\ ``java.util.Date``\ オブジェクトをシリアライズする際にISO-8601形式とする。
        \ ``Date``\ オブジェクトをシリアライズする際にISO-8601形式にする場合は、\ ``com.fasterxml.jackson.databind.util.StdDateFormat``\ を設定する事で実現する事ができる。
+   * - | (4)
+     - \ ``<mvc:message-converters>``\ に、\ ``MappingJackson2HttpMessageConverter``\ を登録する
+
+       Spring MVCのデフォルト設定ではアプリケーションのクラスパスに応じて使用可能な\ ``HttpMessageConverter``\ が自動的に登録されるが、ここではリソースの形式をJSONに限定したいため、register-defaults属性を\ ``false``\に設定し、上で定義した\ ``MappingJackson2HttpMessageConverter``\ のみを登録している。
    * - | (5)
      - REST API用のパッケージ配下のコンポーネントをスキャンする。
 
@@ -1087,18 +1091,18 @@ GET Todoの実装
 | ``src/main/java/com/example/todo/domain/service/todo/TodoService.java``
 
 .. code-block:: java
-    :emphasize-lines: 10
+    :emphasize-lines: 8
 
     package com.example.todo.domain.service.todo;
       
     import java.util.Collection;
       
     import com.example.todo.domain.model.Todo;
-      
+
     public interface TodoService {
-        Collection<Todo> findAll();
-          
         Todo findOne(String todoId);
+
+        Collection<Todo> findAll();
       
         Todo create(Todo todo);
       
@@ -1109,7 +1113,7 @@ GET Todoの実装
 
 |
 
-| \ ``findOne``\ メソッド呼び出し時に開始されるトランザクションを読み取り専用に設定し、アクセス修飾子を\ ``public``\ に変更する。
+| \ ``findOne``\ メソッド呼び出し時に開始されるトランザクションを読み取り専用に設定し、アクセス修飾子を\ ``public``\ に変更して\ ``findAll``\ メソッドの上に移動する。
 | ``src/main/java/com/example/todo/domain/service/todo/TodoServiceImpl.java``
 
 .. code-block:: java
@@ -1562,7 +1566,7 @@ DELETE Todoの実装
 | ``src/main/java/com/example/todo/domain/service/todo/TodoServiceImpl.java``
 
 .. code-block:: java
-    :emphasize-lines: 33, 50, 74
+    :emphasize-lines: 33, 50, 71
 
     package com.example.todo.domain.service.todo;
 

@@ -395,36 +395,40 @@ JSPタグライブラリのパラメータに値を指定することで、デ�
     * - 4.
       - innerElementClass
       - | 「Inner Element」のclass属性に設定するスタイルシートのクラス名を指定する。 **5.6.0から追加**
-        | 例) enablePageLink
+        | 例) enablePage
     * - 5.
       - disabledClass
       - | ``disabled`` 状態と判断された「Inner Element」のclass属性に設定する値を指定する。
-        | 例) hiddenPageLink
+        | 例) hiddenPage
     * - 6.
       - activeClass
       - | ``active`` 状態の「Inner Element」のclass属性に設定する値を指定する。
-        | 例) currentPageLink
+        | 例) currentPage
     * - 7.
+      - anchorClass
+      - | 「Page Link」のclass属性に設定するスタイルシートのクラス名を指定する。 **5.7.0から追加**
+        | 例) pageLink
+    * - 8.
       - firstLinkText
       - | 「最初のページに移動するためのリンク」の「Page Link Text」に設定する値を指定する。
         | ``""`` を指定すると、「最初のページに移動するためのリンク」自体が出力されなくなる。
         | 例) First
-    * - 8.
+    * - 9.
       - previousLinkText
       - | 「前のページに移動するためのリンク」の「Page Link Text」に設定する値を指定する。
         | ``""`` を指定すると、「前のページに移動するためのリンク」自体が出力されなくなる。
         | 例) Prev
-    * - 9.
+    * - 10.
       - nextLinkText
       - | 「次のページに移動するためのリンク」の「Page Link Text」に設定する値を指定する。
         | ``""`` を指定すると、「次のページに移動するためのリンク」自体が出力されなくなる。
         | 例) Next
-    * - 10.
+    * - 11.
       - lastLinkText
       - | 「最後のページに移動するためのリンク」の「Page Link Text」に設定する値を指定する。
         | ``""`` を指定すると、「次のページに移動するためのリンク」自体が出力されなくなる。
         | 例) Last
-    * - 11.
+    * - 12.
       - maxDisplayCount
       - | 「指定したページに移動するためのリンク」の最大表示数を指定する。
         | "``0``" を指定すると、「指定したページに移動するためのリンク」自体が出力されなくなる。
@@ -447,9 +451,10 @@ JSPタグライブラリのパラメータに値を指定することで、デ�
         outerElement="div"
         outerElementClass="pagination"
         innerElement="span"
-        innerElementClass="enablePageLink"
-        disabledClass="hiddenPageLink"
-        activeClass="currentPageLink"
+        innerElementClass="enablePage"
+        disabledClass="hiddenPage"
+        activeClass="currentPage"
+        anchorClass="pageLink"
         firstLinkText="First"
         previousLinkText="Prev"
         nextLinkText="Next"

@@ -523,7 +523,7 @@ Spring Validatorで実装したValidatorの単体テスト
       - | エラーメッセージの内容を確認するために、\ ``MessageSource``\ の実装クラスである
           \ ``org.springframework.context.support.ResourceBundleMessageSource``\ のオブジェクトを生成する。
           クラスの詳細については、
-          \ `ResourceBundleMessageSourceのJavadoc <https://docs.spring.io/spring/docs/5.2.3.RELEASE/javadoc-api/org/springframework/context/support/ResourceBundleMessageSource.html>`_\
+          \ `ResourceBundleMessageSourceのJavadoc <https://docs.spring.io/spring/docs/5.3.2/javadoc-api/org/springframework/context/support/ResourceBundleMessageSource.html>`_\
           を参照されたい。
     * - | (5)
       - | \ ``setBasename``\ メソッドに、メッセージが定義されたプロパティファイルを指定して読み込ませる。

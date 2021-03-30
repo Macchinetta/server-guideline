@@ -972,7 +972,7 @@ PRG(Post-Redirect-Get)パターンの適用
 - :file:`spring-mvc.xml`
 
  .. code-block:: xml
-    :emphasize-lines: 2-9,16,17
+    :emphasize-lines: 2-8,15,16
 
     <mvc:interceptors>
         <mvc:interceptor> <!-- (1) -->
@@ -1043,7 +1043,7 @@ PRG(Post-Redirect-Get)パターンの適用
 - Controller
 
  .. code-block:: java
-    :emphasize-lines: 3,12,18,24,30,32,36
+    :emphasize-lines: 3,12,18,24,30,36
 
     @Controller
     @RequestMapping("transactionTokenCheckExample")
@@ -1585,7 +1585,7 @@ How to extend
 - :file:`spring-mvc.xml`
 
  .. code-block:: xml
-    :emphasize-lines: 8
+    :emphasize-lines: 7
 
     <mvc:interceptors>
         <mvc:interceptor>

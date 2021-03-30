@@ -65,7 +65,7 @@ JAX-WSとは
 | JAX-WSとは、「\ **J**\ava \ **A**\PI for \ **X**\ML-Based \ **W**\eb \ **S**\ervices」の略であり、SOAPなどを使ったWebサービスを扱うためのJava標準APIである。
 | JAX-WSを用いることで、JavaのオブジェクトをSOAPの仕様に沿ったXMLに変換して送信することが可能である。
 | そのため、SOAP Web Serviceとしては、XMLでやり取りが行われるものの、利用者は、XMLの構造をあまり意識せずデータを扱うことができる。
-| Oracle WebLogic ServerやJBoss Enterprise Application Platformなど主要なJava EEサーバはJAX-WS実装をサーバ側で有しており、特別なライブラリを追加せずにその機能を使用して簡単にWebサービスを公開することができる。
+| Oracle WebLogic ServerやJBoss Enterprise Application Platformなど主要なJakarta EE（Java EE）サーバはJAX-WS実装をサーバ側で有しており、特別なライブラリを追加せずにその機能を使用して簡単にWebサービスを公開することができる。
 | ただし、Tomcatは、JAX-WSを実装していないため、使用する際には別途JAX-WS実装ライブラリを追加する必要がある。
 | 詳細は、「\ :ref:`SOAPAppendixTomcatWebService`\」を参照されたい。
 
@@ -140,9 +140,9 @@ Spring FrameworkのJAX-WS連携機能について
             
             また、SOAPサーバは、\ ``@Inject``\ではなく、\ ``@Autowired``\でインジェクションすることを推奨する。
 
-            \ ``@Inject``\の場合、Java EEサーバが提供するDI機能で使用されるため、Java EEサーバのDIコンテナに存在しないとエラーになってしまう。
+            \ ``@Inject``\の場合、Jakarta EE（Java EE）サーバが提供するDI機能で使用されるため、Jakarta EE（Java EE）サーバのDIコンテナに存在しないとエラーになってしまう。
 
-            上記に対して、\ ``@Autowired``\であればSpringのDI機能のみで使用されるため、意図せずJava EEサーバのDI機能でエラーになるのを防止することができる。
+            上記に対して、\ ``@Autowired``\であればSpringのDI機能のみで使用されるため、意図せずJakarta EE（Java EE）サーバのDI機能でエラーになるのを防止することができる。
 
     * - | (6)
       - | [サーバ] WebService実装クラスでは、業務処理を行うServiceを呼び出す。
@@ -161,7 +161,7 @@ Spring FrameworkのJAX-WS連携機能について
 
 .. note::
 
-    SpringでのJAX-WS実装の詳細は、\ `Spring Framework Documentation -Remoting and Web Services- <https://docs.spring.io/spring/docs/5.2.3.RELEASE/spring-framework-reference/integration.html#remoting>`_\ を参照されたい。
+    SpringでのJAX-WS実装の詳細は、\ `Spring Framework Documentation -Remoting and Web Services- <https://docs.spring.io/spring-framework/docs/5.3.2/reference/html/integration.html#remoting>`_\ を参照されたい。
 
 |
 
@@ -357,9 +357,11 @@ SOAPサーバの作成
     以下、参考資料として、APサーバのマニュアルを記述しておく。
     必ず、使用するバージョンとあっているか確認してから参照すること。
      
-    Oracle WebLogic Server 12.2.1.4: \ `Understanding WebLogic Web Services for Oracle WebLogic Server -Features and Standards Supported by WebLogic Web Services- <https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/12.2.1.4/wsovr/weblogic-web-service-stand.html#GUID-FB83E047-F696-4B96-A982-140C0C8AD7EF>`_\
+    Oracle WebLogic Server 12.2.1.4: \ `Understanding WebLogic Web Services for Oracle WebLogic Server -Features and Standards Supported by WebLogic Web Services- <https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/12.2.1.4/wsovr/weblogic-web-service-stand.html#GUID-FB83E047-F696-4B96-A982-140C0C8AD7EF>`__\
+
+    Oracle WebLogic Server 14.1.1.0: \ `Understanding WebLogic Web Services for Oracle WebLogic Server -Features and Standards Supported by WebLogic Web Services- <https://docs.oracle.com/en/middleware/standalone/weblogic-server/14.1.1.0/wsovr/weblogic-web-service-stand.html#GUID-FB83E047-F696-4B96-A982-140C0C8AD7EF>`__\
      
-    JBoss Enterprise Application Platform 7.2: \ `DEVELOPING JAX-WS WEB SERVICES <https://access.redhat.com/documentation/en-us/red_hat_jboss_enterprise_application_platform/7.2/html/developing_web_services_applications/developing_jax_ws_web_services>`_\
+    JBoss Enterprise Application Platform 7.3: \ `DEVELOPING JAX-WS WEB SERVICES <https://access.redhat.com/documentation/en-us/red_hat_jboss_enterprise_application_platform/7.3/html/developing_web_services_applications/developing_jax_ws_web_services>`_\
 
     JBoss Enterprise Application Platform 6.4: \ `DEVELOPMENT GUIDE JAX-WS WEB SERVICES <https://access.redhat.com/documentation/en-US/JBoss_Enterprise_Application_Platform/6.4/html/Development_Guide/chap-JAX-WS_Web_Services.html>`_\
     
@@ -1587,7 +1589,7 @@ WebServiceインターフェースを実装したプロキシを生成する\ ``
 
         .. Note:: **wsdlDocumentResourceへのWSDLファイルのURL以外の指定**
 
-            上記の例では、SOAPサーバがWSDLファイルを公開している前提である。\ ``classpath:``\ や\ ``file:``\ プレフィックスを使用して指定することで静的ファイルを指定することもできる。指定できる文字列は、\ `Spring Framework Documentation -The ResourceLoader- <https://docs.spring.io/spring/docs/5.2.3.RELEASE/spring-framework-reference/core.html#resources-resourceloader>`_\ を参照されたい。
+            上記の例では、SOAPサーバがWSDLファイルを公開している前提である。\ ``classpath:``\ や\ ``file:``\ プレフィックスを使用して指定することで静的ファイルを指定することもできる。指定できる文字列は、\ `Spring Framework Documentation -The ResourceLoader- <https://docs.spring.io/spring-framework/docs/5.3.2/reference/html/core.html#resources-resourceloader>`_\ を参照されたい。
 
 
 .. Note:: **エンドポイントアドレスの上書き指定**
@@ -1814,7 +1816,7 @@ WebServiceインターフェースを実装したプロキシを生成する\ ``
 *[client projectName]-domain/src/main/resources/META-INF/spring/[client projectName]-domain.xml*
 
 .. code-block:: xml
-    :emphasize-lines: 9-16
+    :emphasize-lines: 8-15
 
     <bean id="todoWebService"
         class="org.springframework.remoting.jaxws.JaxWsPortProxyFactoryBean">
@@ -2493,7 +2495,7 @@ wsimportの使い方
 
 Tomcat上でのWebサービス開発
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-| 本ガイドラインでは、Java EEサーバ上のJAX-WSを使う前提で記述されているが、Tomcatの場合、JAX-WS実装が存在しない。
+| 本ガイドラインでは、Jakarta EE（Java EE）サーバ上のJAX-WSを使う前提で記述されているが、Tomcatの場合、JAX-WS実装が存在しない。
 | そのため、ここではSOAPサーバがTomcatの場合、JAX-WSの実装プロダクトとして\ `Apache CXF <https://cxf.apache.org/>`_\ を使用する。設定を変更して\ ``CXFServlet``\ を使用する必要がある。
 | Apache CXFを使用する場合は、WebServiceクラスの実装方式は以下の2つが存在する。
 
@@ -2501,7 +2503,7 @@ Tomcat上でのWebサービス開発
 #. \ ``SpringBeanAutowiringSupport``\を継承してWebサービス実装クラスを作成する方式 (これまで説明してきた方法)
 
 | 1の場合、Webサービス実装クラスがPOJOになるため、単体試験などをしやすくなる。ただし、この方式はTomcat以外のAPサーバでは、うまく動作しないことがある。そのため、ガイドライン本体では、この方式ではなく2の方式での実現を記述しているが、Tomcatのみを使用する場合、この1の方式を使用したほうがメリットが多いのでこちらを推奨する。
-| 2の場合、他のAPサーバ同様に実装をすることができる。運用はJava EEサーバであるが、開発中はTomcatを使用せざるをえないケースではこちらの方式を利用されたい。
+| 2の場合、他のAPサーバ同様に実装をすることができる。運用はJakarta EE（Java EE）サーバであるが、開発中はTomcatを使用せざるをえないケースではこちらの方式を利用されたい。
 
 |
 
@@ -2556,7 +2558,7 @@ CXFServletを使用する場合の設定
 
    .. note::
 
-      saaj-implのバージョンはterasoluna-gfw-parentが依存している\ `Spring Boot <https://docs.spring.io/spring-boot/docs/2.2.4.RELEASE/reference/htmlsingle/#dependency-versions>`_\ で管理されているため、pom.xmlでのバージョンの指定は不要である。
+      saaj-implのバージョンはterasoluna-gfw-parentが依存している\ `Spring Boot <https://docs.spring.io/spring-boot/docs/2.4.1/reference/htmlsingle/#dependency-versions>`_\ で管理されているため、pom.xmlでのバージョンの指定は不要である。
 
 
 |

@@ -221,8 +221,8 @@ Spring Testを使用する場合の\ ``Repository``\ のテストクラス作成
 
 .. code-block:: java
 
-    import static org.hamcrest.CoreMatchers.*;
-    import static org.junit.Assert.*;
+    import static org.hamcrest.CoreMatchers.is;
+    import static org.hamcrest.MatcherAssert.assertThat;
 
     @RunWith(SpringJUnit4ClassRunner.class)
     @ContextConfiguration(locations = {
@@ -265,9 +265,8 @@ Spring Testを使用する場合の\ ``Repository``\ のテストクラス作成
 
         private Member getMemberLogin(String customerNo) {
 
-            MemberLogin memberLogin = (MemberLogin) jdbctemplate.queryForObject(
+            MemberLogin memberLogin = jdbctemplate.queryForObject(
                     "SELECT * FROM member_login WHERE customer_no=?", 
-                    new Object[] {customerNo }, 
                     new RowMapper<MemberLogin>() {
 
                         public MemberLogin mapRow(ResultSet rs,
@@ -286,7 +285,7 @@ Spring Testを使用する場合の\ ``Repository``\ のテストクラス作成
 
                                 return mapMemberLogin;
                         }
-                    });
+                    }, customerNo);
 
             return memberLogin;
         }
@@ -403,8 +402,8 @@ DBUnitを使用する場合の\ ``Repository``\ のテストクラス作成方�
 
 .. code-block:: java
 
-    import static org.hamcrest.CoreMatchers.*;
-    import static org.junit.Assert.*;
+    import static org.hamcrest.CoreMatchers.is;
+    import static org.hamcrest.MatcherAssert.assertThat;
 
     @RunWith(SpringJUnit4ClassRunner.class)
     @ContextConfiguration(locations = {
@@ -652,8 +651,8 @@ Serviceの単体テスト
 
 .. code-block:: java
 
-    import static org.hamcrest.CoreMatchers.*;
-    import static org.junit.Assert.*;
+    import static org.hamcrest.CoreMatchers.is;
+    import static org.hamcrest.MatcherAssert.assertThat;
 
     @RunWith(SpringJUnit4ClassRunner.class)
     @ContextConfiguration(locations = {
@@ -741,9 +740,10 @@ Serviceの単体テスト
 
 .. code-block:: java
 
-    import static org.hamcrest.CoreMatchers.*;
-    import static org.junit.Assert.*;
-    import static org.mockito.Mockito.*;
+    import static org.hamcrest.CoreMatchers.is;
+    import static org.hamcrest.MatcherAssert.assertThat;
+    import static org.mockito.Mockito.verify;
+    import static org.mockito.Mockito.when;
 
     public class TicketReserveServiceImplMockTest {
 
@@ -945,11 +945,13 @@ Spring MVCが作成したコンテキストが衝突しテスト実行ができ�
 
 .. code-block:: java
 
-    import static org.hamcrest.CoreMatchers.*;
-    import static org.junit.Assert.*;
-    import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-    import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
-    import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+    import static org.hamcrest.CoreMatchers.is;
+    import static org.hamcrest.MatcherAssert.assertThat;
+    import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+    import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.log;
+    import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
+    import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+    import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
     @RunWith(SpringJUnit4ClassRunner.class)
     @ContextConfiguration(locations = {
@@ -1025,7 +1027,7 @@ Spring MVCが作成したコンテキストが衝突しテスト実行ができ�
           セットアップの詳細については\ :ref:`UsageOfLibraryForTestSettingMockMvc`\ を参照されたい。
     * - | (3)
       - | \ ``MemberRegisterController``\ クラスの\ ``registerConfirm``\ メソッドを呼び出すため、
-          \ ``member/register``\ に対してPOSTメソッドでリクエストを送信する。リクエストパラメータには\ ``Form``\ の情報を設定する。
+          \ ``/member/register``\ に対してPOSTメソッドでリクエストを送信する。リクエストパラメータには\ ``Form``\ の情報を設定する。
           リクエストデータの設定方法については\ :ref:`UsageOfLibraryForTestSettingOfRequestData`\ を、リクエスト送信の実装方法については
           \ :ref:`UsageOfLibraryForTestExecutionOfRequest`\ を参照されたい。
     * - | (4)
@@ -1124,11 +1126,10 @@ Springに追加して利用する\ ``Interceptor``\ や\ ``ExceptionResolver``\ 
 
 .. code-block:: java
 
-    import static org.hamcrest.CoreMatchers.*;
-    import static org.junit.Assert.*;
-    import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-    import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
-    import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+    import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+    import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.log;
+    import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+    import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
     @RunWith(SpringJUnit4ClassRunner.class)
     @ContextHierarchy({@ContextConfiguration(                                   // (1)
@@ -1205,7 +1206,7 @@ Springに追加して利用する\ ``Interceptor``\ や\ ``ExceptionResolver``\ 
       - | サーバ側は発行したトランザクショントークンをセッションに保持するため、次のリクエストでも同じセッションを参照する必要があるが、
           \ ``MockMvc``\ では１リクエストごとに新規セッションが使われてしまうため、明示的に同じセッションを使用するよう指定する。
     * - | (6)
-      - | 再度、リクエストパス（\ ``member/register``\）に対してPOSTメソッドでリクエストを送信する。
+      - | 再度、リクエストパス（\ ``/member/register``\）に対してPOSTメソッドでリクエストを送信する。
           リクエストパラメータには\ ``Form``\ の情報、(4)で取得したトランザクショントークンを設定し、
           セッションには(5)で取得したセッションを設定する。
     * - | (7)
@@ -1252,11 +1253,12 @@ Springに追加して利用する\ ``Interceptor``\ や\ ``ExceptionResolver``\ 
 
 .. code-block:: java
 
-    import static org.hamcrest.CoreMatchers.*;
-    import static org.junit.Assert.*;
-    import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-    import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
-    import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+    import static org.hamcrest.CoreMatchers.is;
+    import static org.hamcrest.MatcherAssert.assertThat;
+    import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+    import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.log;
+    import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+    import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
     @RunWith(SpringJUnit4ClassRunner.class)
     @ContextHierarchy({@ContextConfiguration(
@@ -1379,7 +1381,7 @@ Springに追加して利用する\ ``Interceptor``\ や\ ``ExceptionResolver``\ 
            - 説明
          * - | (1)
            - | セッションのモックオブジェクトを生成する。クラスの詳細については、
-               \ `MockHttpSession のJavadoc <https://docs.spring.io/spring/docs/5.2.3.RELEASE//javadoc-api/org/springframework/mock/web/MockHttpSession.html>`_\
+               \ `MockHttpSession のJavadoc <https://docs.spring.io/spring/docs/5.3.2/javadoc-api/org/springframework/mock/web/MockHttpSession.html>`_\
                を参照されたい。
          * - | (2)
            - | 生成したセッションのモックオブジェクトに、格納したいオブジェクトをセットする。
@@ -1449,12 +1451,12 @@ Springに追加して利用する\ ``Interceptor``\ や\ ``ExceptionResolver``\ 
 
 .. code-block:: java
 
-    import static org.hamcrest.CoreMatchers.*;
-    import static org.junit.Assert.*;
-    import static org.mockito.Mockito.*;
-    import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-    import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
-    import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+    import static org.mockito.Mockito.verify;
+    import static org.mockito.Mockito.when;
+    import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+    import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.log;
+    import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+    import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
     public class TicketSearchControllerMockTest {
 

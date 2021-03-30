@@ -55,21 +55,21 @@
     * - 種別
       - プロダクト
     * - OS
-      - Windows 7
+      - Windows 10
     * - JVM
       - `Java <http://www.oracle.com/technetwork/java/javase/downloads/index.html>`_ 1.8
     * - IDE
-      - `Spring Tool Suite <http://spring.io/tools/sts/all>`_ 3.6.4.RELEASE (以降「STS」と呼ぶ)
+      - `Spring Tool Suite <https://github.com/spring-projects/toolsuite-distribution/wiki/Spring-Tool-Suite-3>`_ 3.9.12.RELEASE (以降「STS」と呼ぶ)
     * - Build Tool
-      - `Apache Maven <http://maven.apache.org/download.cgi>`_ 3.3.3 (以降「Maven」と呼ぶ)
+      - `Apache Maven <http://maven.apache.org/download.cgi>`_ 3.3.9 (以降「Maven」と呼ぶ)
     * - Application Server
-      - `Pivotal tc Server <https://network.pivotal.io/products/pivotal-tcserver>`_ Developer Edition v3.1 (STSに同封)
+      - `Pivotal tc Server <https://network.pivotal.io/products/pivotal-tcserver>`_ Developer Edition v4.0 (STSに同封)
     * - Web Browser
-      - `Google Chrome <https://www.google.co.jp/chrome/browser/desktop/index.html>`_ 42.0.2311.90 m
+      - `Google Chrome <https://www.google.co.jp/chrome/browser/desktop/index.html>`_ 88.0.4324.182
 
 .. warning::
 
-    本ガイドラインではSTS 4.xではなく、3.xの利用を推奨している。詳細は :ref:`STS 4.x について <warning_sts_4>` を参照されたい。
+    本ガイドラインではSTS 4.xではなく、3.xを利用している。詳細は :ref:`STS 4.x について <warning_sts_4>` を参照されたい。
 
 アプリケーションの概要と要件
 ================================================================================
@@ -714,7 +714,7 @@ Spring Securityの機能を利用して管理されている。
 
 作成済みのプロジェクトは次の手順で取得することができる。
 
-#. `tutorial-apps <https://github.com/Macchinetta/tutorial-apps>`_ にアクセスする。
+#. `tutorial-apps <https://github.com/Macchinetta/tutorial-apps/tree/1.8.0.RELEASE>`_ にアクセスする。
 #. 「Branch」ボタン押下して必要なバージョンのBranchを選択し、「Download ZIP」ボタンを押下してzipファイルをダウンロードする
 #. zipファイルを展開し、中のプロジェクトをインポートする。
 

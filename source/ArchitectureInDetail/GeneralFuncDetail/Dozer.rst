@@ -445,10 +445,10 @@ src/main/resources/META-INF/dozerフォルダ内に、(任意の値)-mapping.xml
 
     本ガイドラインでは解説しないが、マッピング定義XMLファイルにおいてEL式を使用することができる。
 
-    EL式の解釈にはjavax.el標準APIを用いており、デフォルトでは\ ``com.sun.el.ExpressionFactoryImpl``\ クラスが利用される。
+    EL式の解釈にはJakarta EE（Java EE）の標準APIを用いており、デフォルトでは\ ``com.sun.el.ExpressionFactoryImpl``\ クラスが利用される。
     利用する実装クラスは\ ``javax.el.ExpressionFactory``\ システムプロパティにより切り替えることが可能である。
 
-    なお、ブランクプロジェクトのデフォルト設定では依存ライブラリにjavax.el標準APIの実装ライブラリが存在しないため、
+    なお、ブランクプロジェクトのデフォルト設定では依存関係に標準APIの実装ライブラリが存在しないため
     実行環境によっては起動時ログに以下のような警告が表示されるが、EL式を利用しない場合は実行に支障はないため無視して良い。
 
     .. code-block:: console
@@ -1308,7 +1308,7 @@ dozer-configration-mapping.xml
 
 .. note::
 
-   \ ``String``\ から\ ``java.utl.Date``\ など標準の日付・時刻オブジェクトへの変換については"\ :ref:`beanconverter-string-and-datetime`\"で述べる。
+   \ ``String``\ から\ ``java.util.Date``\ など標準の日付・時刻オブジェクトへの変換については"\ :ref:`beanconverter-string-and-datetime`\"で述べる。
 
 Appendix
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

@@ -917,6 +917,11 @@ Spring Security OAuthが提供している機能を使用するために、Sprin
 
     2.3.5, 2.2.4, 2.1.4, 2.0.17で修正されており、脆弱性の影響を受けない。
 
+.. warning::
+
+    Spring Security 5よりOAuth2がサポートされ、Spring Security OAuthは非推奨となっている。
+    Spring Security OAuth 2.4.0より全てのクラスに ``@Deprecated`` が付与されており、本ガイドラインに沿って実装を行なうと大量の警告が出力される点に留意されたい。
+
 |
 
 .. _ImplementationAutorizationCodeGrant:
@@ -1337,7 +1342,7 @@ Spring Security OAuthではクライアント情報を取得するためのイ�
         | \ ``authentication-manager-ref``\ 属性に(7)で定義しているクライアント認証用の\ ``AuthenticationManager``\のBeanを指定する。
     * - | (3)
       - | クライアント認証にBasic認証を適用する。
-        | 詳細については\ `Spring Security Reference -Basic and Digest Authentication- <https://docs.spring.io/spring-security/site/docs/5.2.1.RELEASE/reference/htmlsingle/#basic>`_\を参照されたい。
+        | 詳細については\ `Spring Security Reference -Basic Authentication- <https://docs.spring.io/spring-security/site/docs/5.4.2/reference/html5/#servlet-authentication-basic>`_\を参照されたい。
     * - | (4)
       - | \ ``/oauth/*token*/**``\ へのアクセスに対してCSRF対策機能を無効化する。
         | Spring Security OAuthでは、OAuth 2.0のCSRF対策として推奨されている、stateパラメータを使用したリクエストの正当性確認を採用している。
@@ -2184,7 +2189,7 @@ Spring Security OAuthが取り扱う情報（認可コード、認可情報、�
         | ここでは(7)で定義している\ ``oauth2AuthenticationFilter``\のBeanを指定する。
         | \ ``OAuth2AuthenticationProcessingFilter``\はリクエストに含まれるアクセストークンを利用してPre-Authenticationを行うためのフィルタであるため、
           \ ``before``\に\ ``PRE_AUTH_FILTER``\を指定し\ ``PRE_AUTH_FILTER``\の前に\ ``OAuth2AuthenticationProcessingFilter``\の処理が実行されるように設定する。
-        | Pre-Authenticationについては\ `Spring Security Reference -Pre-Authentication Scenarios- <https://docs.spring.io/spring-security/site/docs/5.2.1.RELEASE/reference/htmlsingle/#preauth>`_\を参照されたい。
+        | Pre-Authenticationについては\ `Spring Security Reference -Pre-Authentication Scenarios- <https://docs.spring.io/spring-security/site/docs/5.4.2/reference/html5/#servlet-preauth>`_\を参照されたい。
     * - | (5)
       - | Spring Security OAuthが提供するリソースサーバ用の\ ``AccessDeniedHandler``\を定義する。
         | \ ``OAuth2AccessDeniedHandler``\は、認可エラー時に発生する例外をハンドリングしてエラー応答を行う。
@@ -2304,7 +2309,7 @@ Spring Security OAuthが取り扱う情報（認可コード、認可情報、�
 
 Spring Security OAuthが用意している主なExpressionを紹介する。
 
-詳細については\ ``org.springframework.security.oauth2.provider.expression.OAuth2SecurityExpressionMethods``\の\ `JavaDoc <https://docs.spring.io/spring-security/oauth/site/docs/2.4.0.RELEASE/apidocs/org/springframework/security/oauth2/provider/expression/OAuth2SecurityExpressionMethods.html>`_\を参照されたい。
+詳細については\ ``org.springframework.security.oauth2.provider.expression.OAuth2SecurityExpressionMethods``\の\ `JavaDoc <https://javadoc.io/doc/org.springframework.security.oauth/spring-security-oauth2/2.5.0.RELEASE/org/springframework/security/oauth2/provider/expression/OAuth2SecurityExpressionMethods.html>`_\を参照されたい。
 
 .. tabularcolumns:: |p{0.35\linewidth}|p{0.65\linewidth}|
 .. list-table:: **Spring Security OAuthが用意しているExpression**
@@ -3661,8 +3666,8 @@ JSON形式のデータを取得し、画面に表示させる方法を説明す�
             あくまで現状の\ ``TokenServices``\ の実装に基づいたワークアラウンド的な判定条件であり、
             今後のSpring Security OAuthの実装変更に合わせて変更が必要となる可能性がある点に留意されたい。
 
-            * `DefaultTokenServices <https://github.com/spring-projects/spring-security-oauth/blob/2.4.0.RELEASE/spring-security-oauth2/src/main/java/org/springframework/security/oauth2/provider/token/DefaultTokenServices.java#L239>`_\ ：有効期限切れを示す\ ``expired``\ という文字列とアクセストークンを返却する
-            * `RemoteTokenServices <https://github.com/spring-projects/spring-security-oauth/blob/2.4.0.RELEASE/spring-security-oauth2/src/main/java/org/springframework/security/oauth2/provider/token/RemoteTokenServices.java#L116>`_\ ：有効期限切れを明確に判断できる文字列はなくアクセストークンのみ返却する
+            * `DefaultTokenServices <https://github.com/spring-projects/spring-security-oauth/blob/2.5.0.RELEASE/spring-security-oauth2/src/main/java/org/springframework/security/oauth2/provider/token/DefaultTokenServices.java#L255>`_\ ：有効期限切れを示す\ ``expired``\ という文字列とアクセストークンを返却する
+            * `RemoteTokenServices <https://github.com/spring-projects/spring-security-oauth/blob/2.5.0.RELEASE/spring-security-oauth2/src/main/java/org/springframework/security/oauth2/provider/token/RemoteTokenServices.java#L135>`_\ ：有効期限切れを明確に判断できる文字列はなくアクセストークンのみ返却する
 
             もし、リソースサーバが\ ``RemoteTokenServices``\ を使用しない場合は、以下の条件に緩和することが出来る。
 
@@ -5047,22 +5052,33 @@ DefaultAccessTokenConverterとは
 
 .. code-block:: java
 
-        public class CustomUserAuthenticationConverter extends DefaultUserAuthenticationConverter{
+        public class CustomUserAuthenticationConverter extends DefaultUserAuthenticationConverter {
 
-            private Collection<? extends GrantedAuthority> defaultAuthorities; // (1)
+            private String userClaimName = USERNAME; // (1)
 
-            public void setDefaultAuthorities(String[] defaultAuthorities) {
-                this.defaultAuthorities = AuthorityUtils.commaSeparatedStringToAuthorityList(StringUtils
-                        .arrayToCommaDelimitedString(defaultAuthorities));
+            @Override
+            public void setUserClaimName(String claimName) {
+                this.userClaimName = claimName;
             }
 
-             // (2)
+            @Override
+            public Map<String, ?> convertUserAuthentication(
+                    Authentication authentication) {
+                Map<String, Object> response = new LinkedHashMap<String, Object>();
+                response.put(userClaimName, authentication.getName());
+                if (authentication.getAuthorities() != null && !authentication.getAuthorities().isEmpty()) {
+                    response.put(AUTHORITIES, AuthorityUtils.authorityListToSet(authentication.getAuthorities()));
+                }
+                return response;
+            }
+
+            // (2)
             @Override
             public Authentication extractAuthentication(Map<String, ?> map) {
-                if (map.containsKey(USERNAME)) {
+                if (map.containsKey(userClaimName)) {
                     Collection<? extends GrantedAuthority> authorities = getAuthorities(map);
                     OauthUser user = new OauthUser(
-                            (String) map.get(USERNAME),
+                            (String) map.get(userClaimName),
                             (String) map.get("company_id"),
                             (String) map.get("business_id"),
                             (String) map.get("client_id")); // (3)
@@ -5072,21 +5088,6 @@ DefaultAccessTokenConverterとは
                     return new UsernamePasswordAuthenticationToken(user, "N/A", authorities); // (4)
                 }
                 return null;
-            }
-
-            private Collection<? extends GrantedAuthority> getAuthorities(Map<String, ?> map) {
-                if (!map.containsKey(AUTHORITIES)) {
-                    return defaultAuthorities;
-                }
-                Object authorities = map.get(AUTHORITIES);
-                if (authorities instanceof String) {
-                    return AuthorityUtils.commaSeparatedStringToAuthorityList((String) authorities);
-                }
-                if (authorities instanceof Collection) {
-                    return AuthorityUtils.commaSeparatedStringToAuthorityList(StringUtils
-                            .collectionToCommaDelimitedString((Collection<?>) authorities));
-                }
-                throw new IllegalArgumentException("Authorities must be either a String or a Collection");
             }
         }
 
@@ -5099,7 +5100,7 @@ DefaultAccessTokenConverterとは
     * - 項番
       - 説明
     * - | (1)
-      - | \ ``DefaultUserAuthenticationConverter``\ に実装されている\ ``getAuthorities``\ メソッドがprivateで定義されているため、\ ``getAuthorities``\ メソッドで使用される\ ``defaultAuthorities``\ と\ ``getAuthorities``\ メソッドを実装する。
+      - | (2)で拡張したいメソッドで利用する\ ``DefaultUserAuthenticationConverter``\ の\ ``userClaimName``\ フィールドがprivateで定義されているため、\ ``userClaimName``\ と使用する\ ``setUserClaimName``\ と\ ``convertUserAuthentication``\ メソッドを拡張する。
     * - | (2)
       - | 認可サーバから連携された情報から認証情報を抽出するメソッド。
     * - | (3)

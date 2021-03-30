@@ -70,12 +70,15 @@ JDBC DataSourceについて
       - Oracle WebLogic Server 12c
       - \ `Oracle WebLogic Server 12.2.1.4 Documentation <https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/12.2.1.4/intro/jdbc.html#GUID-9FD5F552-B2E4-4FEC-8C10-503A08764B52>`_\ を参照されたい。
     * - 5.
+      - Oracle WebLogic Server 14c
+      - \ `Oracle WebLogic Server 14.1.1.0 Documentation <https://docs.oracle.com/en/middleware/standalone/weblogic-server/14.1.1.0/intro/jdbc.html#GUID-9FD5F552-B2E4-4FEC-8C10-503A08764B52>`_\ を参照されたい。
+    * - 6.
       - IBM WebSphere Application Server Version 9.0
       - \ `WebSphere Application Server Online information center <https://www.ibm.com/support/knowledgecenter/ja/SSEQTP_9.0.5/com.ibm.websphere.wlp.doc/ae/twlp_dep_configuring_ds.html>`_\ を参照されたい。
-    * - 6.
-      - JBoss Enterprise Application Platform 7.2
-      - \ `JBoss Enterprise Application Platform 7.2 Product Documentation <https://access.redhat.com/documentation/en-us/red_hat_jboss_enterprise_application_platform/7.2/html/configuration_guide/datasource_management>`_\ を参照されたい。
     * - 7.
+      - JBoss Enterprise Application Platform 7.3
+      - \ `JBoss Enterprise Application Platform 7.3 Product Documentation <https://access.redhat.com/documentation/en-us/red_hat_jboss_enterprise_application_platform/7.3/html/configuration_guide/datasource_management>`_\ を参照されたい。
+    * - 8.
       - JBoss Enterprise Application Platform 6.4
       - \ `JBoss Enterprise Application Platform 6.4 Product Documentation <https://access.redhat.com/documentation/en-US/JBoss_Enterprise_Application_Platform/6.4/html/Administration_and_Configuration_Guide/chap-Datasource_Management.html>`_\ を参照されたい。
 
@@ -345,7 +348,7 @@ Bean定義したDataSourceを使用する場合の設定
         | 設定項目の詳細については、\ `DBCP Configuration <http://commons.apache.org/proper/commons-dbcp/configuration.html>`_\ を参照されたい。
     * - | (8)
       - | 設定例では値を直接指定しているが、環境によって設定値がかわる項目については、Placeholder(${...})を使用して、実際の設定値はプロパティファイルに指定すること。
-        | Placeholderについては、\ `Spring Framework Documentation -Customizing Configuration Metadata with a BeanFactoryPostProcessor- <https://docs.spring.io/spring/docs/5.2.3.RELEASE/spring-framework-reference/core.html#beans-factory-extension-factory-postprocessors>`_\ の\  ``Example: The Class Name Substitution PropertySourcesPlaceholderConfigurer``\ を参照されたい。
+        | Placeholderについては、\ `Spring Framework Documentation -Customizing Configuration Metadata with a BeanFactoryPostProcessor- <https://docs.spring.io/spring-framework/docs/5.3.2/reference/html/core.html#beans-factory-extension-factory-postprocessors>`_\ の\  ``Example: The Class Name Substitution PropertySourcesPlaceholderConfigurer``\ を参照されたい。
 
 
 トランザクション管理を有効化するための設定

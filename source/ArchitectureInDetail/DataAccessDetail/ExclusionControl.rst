@@ -1054,7 +1054,7 @@ RDBMSの行ロック機能を使って排他制御を行う場合は、SQLの中
         上記例では、指定されたEntityの内容でレコードを更新するSQLを定義している。
     * - | (6)
       -  バージョンの更新(\ ``version = version + 1``\)は、SQLの中で行う。
-    * - | (4)
+    * - | (7)
       - 更新条件として、「バージョンが変わっていない事(\ ``version = #{version}``\)」を加える。
 
 |
@@ -1063,7 +1063,7 @@ RDBMSの行ロック機能を使って排他制御を行う場合は、SQLの中
 
  .. code-block:: java
 
-    // (5)
+    // (8)
     Stock stock = stockRepository.findOne(itemCode);
     if (stock == null) {
         ResultMessages messages = ResultMessages.error().add(ResultMessage
@@ -1071,13 +1071,13 @@ RDBMSの行ロック機能を使って排他制御を行う場合は、SQLの中
         throw new ResourceNotFoundException(messages);
     }
 
-    // (6)
+    // (9)
     stock.setQuantity(stock.getQuantity() + addedQuantity);
 
-    // (7)
+    // (10)
     boolean updated = stockRepository.update(stock);
     if(!updated) {
-        // (8)
+        // (11)
         throw new ObjectOptimisticLockingFailureException(Stock.class, itemCode);
     }
 
@@ -1088,16 +1088,16 @@ RDBMSの行ロック機能を使って排他制御を行う場合は、SQLの中
 
     * - 項番
       - 説明
-    * - | (5)
+    * - | (8)
       - RepositoryインタフェースのfindOneメソッドを呼び出し、Entityを取得する。
-    * - | (6)
-      - (5)で取得したEntityに対して、更新する値を指定する。
+    * - | (9)
+      - (8)で取得したEntityに対して、更新する値を指定する。
 
         上記例では、仕入れた在庫数を加算している。
-    * - | (7)
+    * - | (10)
       - Repositoryインタフェースのupdateメソッドを呼び出し、
-        (5)の処理で更新したEntityを永続層(DB)に反映する。
-    * - | (8)
+        (8)の処理で更新したEntityを永続層(DB)に反映する。
+    * - | (11)
       - 更新結果を判定し、更新結果が\ ``false``\ の場合は、
         他のトランザクションによってEntityが更新されたことになるので、
         楽観ロックエラー(\ ``org.springframework.orm.ObjectOptimisticLockingFailureException``\ )を発生させる。
@@ -1120,7 +1120,7 @@ RDBMSの行ロック機能を使って排他制御を行う場合は、SQLの中
 
     Stock stock = stockRepository.findOne(itemCode);
     if (stock == null || stock.getVersion() != version) {
-        // (9)
+        // (12)
         throw new ObjectOptimisticLockingFailureException(Stock.class, itemCode);
     }
 
@@ -1135,12 +1135,12 @@ RDBMSの行ロック機能を使って排他制御を行う場合は、SQLの中
 
     * - 項番
       - 説明
-    * - | (9)
+    * - | (12)
       - 別のデータベーストランザクションで取得したEntityのバージョンと、
-        (5)で取得したEntityのバージョンを比較する。
+        (8)で取得したEntityのバージョンを比較する。
 
         バージョンが異なる場合は、他のトランザクションによってデータが更新されているので、
-        楽観ロックエラー(\ ``org.springframework.dao.ObjectOptimisticLockingFailureException``\ )を発生させる。
+        楽観ロックエラー(\ ``org.springframework.orm.ObjectOptimisticLockingFailureException``\ )を発生させる。
 
         データが存在しない(\ ``stock == null``\)時の考慮も必要であり、
         アプリケーションの仕様に対応した実装を行う必要がある。
@@ -1172,7 +1172,7 @@ RDBMSの行ロック機能と楽観ロック機能を併用するアプリケー
             m_stock
         SET
             quantity = quantity - #{quantity},
-            /* (10) */
+            /* (13) */
             version = version + 1
         WHERE
             item_code = #{itemCode}
@@ -1188,7 +1188,7 @@ RDBMSの行ロック機能と楽観ロック機能を併用するアプリケー
 
     * - 項番
       - 説明
-    * - | (10)
+    * - | (13)
       - バージョンの更新(インクリメント)を行う。
 
 |
@@ -1286,7 +1286,7 @@ Controllerで適切にハンドリングする必要がある。
             stockService.update(...);
         } catch (OptimisticLockingFailureException e) { // (1)
             // (2)
-            ResultMessages resultMessages = ResultMessages.warn();
+            ResultMessages resultMessages = ResultMessages.warning();
             resultMessages.add(ResultMessage.fromText("Other user updated!!"));
             model.addAttribute(resultMessages);
             return updateRedo(modelMap);
@@ -1359,7 +1359,7 @@ Controllerで適切にハンドリングする必要がある。
             stockService.update(...);
         } catch (PessimisticLockingFailureException e) { // (1)
             // (2)
-            ResultMessages resultMessages = ResultMessages.warn();
+            ResultMessages resultMessages = ResultMessages.warning();
             resultMessages.add(ResultMessage.fromText("Other user updated!!"));
             model.addAttribute(resultMessages);
             return updateRedo(modelMap);

@@ -27,6 +27,11 @@ OpenID認証やシングルサインオン認証などの認証方式を利用�
 本節では、HTMLの入力フォームで入力した認証情報とリレーショナルデータベースに格納されているユーザー情報を照合して認証処理を行う実装例を紹介しながら、
 Spring Securityの認証機能の使い方を説明する。
 
+.. note::
+
+    ブランクプロジェクトではデフォルトで\ ``<sec:form-login/>``\タグと\ ``<sec:logout/>``\タグが設定されており、Spring Securityのフォーム認証が有効となっている。
+    フォーム認証を使用しない場合は、これらのタグを削除する必要がある。削除しない場合、ユーザから/login /logoutに対するリクエストがあると、想定外の認証処理が実行される可能性がある。
+
 |
 
 認証処理のアーキテクチャ
@@ -207,7 +212,7 @@ Spring Securityは、以下のような流れでフォーム認証を行う。
            - | フォーム認証処理を行うSecurity Filter(\ ``UsernamePasswordAuthenticationFilter``\ )が適用される。
          * - | \ ``<http-basic>``\
            - | RFC1945に準拠したBasic認証を行うSecurity Filter(\ ``BasicAuthenticationFilter``\ )が適用される。
-             | 詳細な利用方法は、\ `BasicAuthenticationFilterのJavaDoc <https://docs.spring.io/spring-security/site/docs/5.2.1.RELEASE/api/org/springframework/security/web/authentication/www/BasicAuthenticationFilter.html>`_\ を参照されたい。
+             | 詳細な利用方法は、\ `BasicAuthenticationFilterのJavaDoc <https://docs.spring.io/spring-security/site/docs/5.4.2/api/org/springframework/security/web/authentication/www/BasicAuthenticationFilter.html>`_\ を参照されたい。
          * - | \ ``<logout>``\
            - | ログアウト処理を行うSecurity Filter(\ ``LogoutFilter``\ )が適用される。
              | ログアウト処理の詳細については、「\ :ref:`SpringSecurityAuthenticationLogout`\ 」を参照されたい。
@@ -592,6 +597,11 @@ UserDetailsの作成
     * - | (5)
       - | 認証処理成功後の処理でアカウント情報にアクセスできるようにするために、getterメソッドを用意する。
 
+.. note:: **UserDetails実装クラスのequalsメソッドについて**
+
+    \ ``UserDetails``\ を実装する際に、\ ``equals``\ メソッドを実装しない場合は\ ``Object``\ の比較となる。
+    そのため、要件によっては\ ``equals``\ メソッドを実装する必要がある。例として、Spring Securityの提供する\ ``User``\ クラスでは、\ ``username``\ が一致するかを確認している。
+
 |
 
 Spring Securityは、\ ``UserDetails``\ の実装クラスとして\ ``User``\ クラスを提供している。
@@ -863,16 +873,16 @@ Spring Securityは、\ ``PasswordEncoder``\ インタフェースの実装クラ
     * - | \ ``Pbkdf2PasswordEncoder``\
       - | PBKDF2アルゴリズムを使用してパスワードのハッシュ化及び照合を行う実装クラス。
         | 本ガイドラインでは、このクラスを使用することを推奨している。
-        | 詳細は、\ `Pbkdf2PasswordEncoderのJavaDoc <https://docs.spring.io/spring-security/site/docs/5.2.1.RELEASE/api/org/springframework/security/crypto/password/Pbkdf2PasswordEncoder.html>`_\ を参照されたい。
+        | 詳細は、\ `Pbkdf2PasswordEncoderのJavaDoc <https://docs.spring.io/spring-security/site/docs/5.4.2/api/org/springframework/security/crypto/password/Pbkdf2PasswordEncoder.html>`_\ を参照されたい。
     * - | \ ``BCryptPasswordEncoder``\
       - | BCryptアルゴリズムを使用してパスワードのハッシュ化及び照合を行う実装クラス。
-        | 詳細は、\ `BCryptPasswordEncoderのJavaDoc <https://docs.spring.io/spring-security/site/docs/5.2.1.RELEASE/api/org/springframework/security/crypto/bcrypt/BCryptPasswordEncoder.html>`_\ を参照されたい。
+        | 詳細は、\ `BCryptPasswordEncoderのJavaDoc <https://docs.spring.io/spring-security/site/docs/5.4.2/api/org/springframework/security/crypto/bcrypt/BCryptPasswordEncoder.html>`_\ を参照されたい。
     * - | \ ``Argon2PasswordEncoder``\
       - | Argon2アルゴリズムを使用してパスワードのハッシュ化及び照合を行う実装クラス。
-        | 詳細は、\ `Argon2PasswordEncoderのJavaDoc <https://docs.spring.io/spring-security/site/docs/5.2.1.RELEASE/api/org/springframework/security/crypto/argon2/Argon2PasswordEncoder.html>`_\ を参照されたい。
+        | 詳細は、\ `Argon2PasswordEncoderのJavaDoc <https://docs.spring.io/spring-security/site/docs/5.4.2/api/org/springframework/security/crypto/argon2/Argon2PasswordEncoder.html>`_\ を参照されたい。
     * - | \ ``SCryptPasswordEncoder``\
       - | SCryptアルゴリズムを使用してパスワードのハッシュ化及び照合を行う実装クラス。
-        | 詳細は、\ `SCryptPasswordEncoderのJavaDoc <https://docs.spring.io/spring-security/site/docs/5.2.1.RELEASE/api/org/springframework/security/crypto/scrypt/SCryptPasswordEncoder.html>`_\ を参照されたい。
+        | 詳細は、\ `SCryptPasswordEncoderのJavaDoc <https://docs.spring.io/spring-security/site/docs/5.4.2/api/org/springframework/security/crypto/scrypt/SCryptPasswordEncoder.html>`_\ を参照されたい。
 
 |
 
@@ -1334,7 +1344,7 @@ Spring Securityは、以下のような流れでログアウト処理を行う�
 
 .. note:: **Clear-Site-Dataヘッダの付与**
 
-    Spring Security 5.2より、Webサイトの閲覧用データ（クッキー、ストレージ、キャッシュ）を削除するための\ `Clear-Site-Dataヘッダ <https://docs.spring.io/spring-security/site/docs/5.2.1.RELEASE/reference/htmlsingle/#headers-clearsitedata>`_\ を付与する\ ``org.springframework.security.web.header.writers.ClearSiteDataHeaderWriter``\が提供される。
+    Spring Security 5.2より、Webサイトの閲覧用データ（クッキー、ストレージ、キャッシュ）を削除するための\ `Clear-Site-Dataヘッダ <https://docs.spring.io/spring-security/site/docs/5.4.2/reference/html5/#headers-clear-site-data>`_\ を付与する\ ``org.springframework.security.web.header.writers.ClearSiteDataHeaderWriter``\が提供される。
 
     本機能は\ ``LogoutHandler``\の仕組みを用いて適用されるが、自動的には適用されない。
     適用するには\ ``LogoutFilter``\をbean定義し、同じく5.2から提供される\ ``org.springframework.security.web.authentication.logout.HeaderWriterLogoutHandler``\を用いて登録する必要がある。
@@ -1577,7 +1587,7 @@ Javaからのアクセス
     * ``org.springframework.security.web.authentication.session.SessionFixationProtectionStrategy``
 
     具体的な定義方法については、
-    `Spring Security Reference -Web Application Security (Concurrency Control)- <https://docs.spring.io/spring-security/site/docs/5.2.1.RELEASE/reference/htmlsingle/#concurrent-sessions>`_ のサンプルコードを参考にされたい。
+    `Spring Security Reference -Web Application Security (Concurrency Control)- <https://docs.spring.io/spring-security/site/docs/5.4.2/reference/html5/#concurrent-sessions>`_ のサンプルコードを参考にされたい。
 
 |
 
@@ -1645,7 +1655,7 @@ Spring Securityは、認証情報(\ ``UserDetails``\ )をSpring MVCのコント�
 
 認証情報(\ ``UserDetails``\ )をコントローラーの引数として受け取るためには、まず\ ``AuthenticationPrincipalArgumentResolver``\ をSpring MVCに適用する必要がある。
 \ ``AuthenticationPrincipalArgumentResolver``\ を適用するためのbean定義は以下の通りである。
-\ なお、`ブランクプロジェクト <https://github.com/Macchinetta/macchinetta-web-multi-blank>`_\ には\ ``AuthenticationPrincipalArgumentResolver``\ が設定済みである。
+\ なお、`ブランクプロジェクト <https://github.com/Macchinetta/macchinetta-web-multi-blank/tree/1.8.0.RELEASE>`_\ には\ ``AuthenticationPrincipalArgumentResolver``\ が設定済みである。
 
 * spring-mvc.xmlの定義例
 
@@ -2325,7 +2335,7 @@ Bean Validationに関する詳細は \ :doc:`../ArchitectureInDetail/WebApplicat
 認証処理の拡張
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Spring Securityから提供されている\ `認証プロバイダ <https://docs.spring.io/spring-security/site/docs/5.2.1.RELEASE/api/org/springframework/security/authentication/AuthenticationProvider.html>`_\ で対応できない認証要件がある場合は、
+Spring Securityから提供されている\ `認証プロバイダ <https://docs.spring.io/spring-security/site/docs/5.4.2/api/org/springframework/security/authentication/AuthenticationProvider.html>`_\ で対応できない認証要件がある場合は、
 \ ``org.springframework.security.authentication.AuthenticationProvider``\ インタフェースを実装したクラスを作成する必要がある。
 
 ここでは、ユーザー名、パスワード、\ **会社識別子(独自の認証パラメータ)**\ の3つのパラメータを使用してDB認証を行うための拡張例を示す。
@@ -2935,7 +2945,7 @@ MessageDigestPasswordEncoderの利用
     既に固定のソルトを用いてパスワードをハッシュ化していた場合も、パスワードにソルトを付与する移行処理を行うことで、
     照合することができるようになる。
 
-    パスワードデータの移行については、\ `MessageDigestPasswordEncoderのJavadoc <https://docs.spring.io/spring-security/site/docs/5.2.1.RELEASE/api/org/springframework/security/crypto/password/MessageDigestPasswordEncoder.html>`_\ を参照されたい。
+    パスワードデータの移行については、\ `MessageDigestPasswordEncoderのJavadoc <https://docs.spring.io/spring-security/site/docs/5.4.2/api/org/springframework/security/crypto/password/MessageDigestPasswordEncoder.html>`_\ を参照されたい。
 
     この場合、既存のパスワードは固定のソルトを用いて照合が行われるが、パスワードを新規に設定または変更した場合はランダムなソルトが用いられる。
 
@@ -3042,13 +3052,13 @@ Spring MVCでリクエストを受けてログインフォームを表示する�
 Remember Me認証の利用
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-「\ `Remember Me認証 <https://docs.spring.io/spring-security/site/docs/5.2.1.RELEASE/reference/htmlsingle/#ns-remember-me>`_\ 」とは、
+「\ `Remember Me認証 <https://docs.spring.io/spring-security/site/docs/5.4.2/reference/html5/#servlet-rememberme>`_\ 」とは、
 Webサイトに頻繁にアクセスするユーザーの利便性を高めるための機能の一つで、ログイン状態を通常のライフサイクルより長く保持するための機能である。
 本機能を使用すると、ブラウザを閉じた後やセッションタイムが発生した後でも、Cookieに保持しているRemember Me認証用のTokenを使用して、
 ユーザ名とパスワードを再入力することなく自動でログインすることができる。
 なお、本機能は、ユーザーがログイン状態を保持することを許可した場合のみ有効となる。
 
-Spring Securityは、「`Hash-Based Token <https://docs.spring.io/spring-security/site/docs/5.2.1.RELEASE/reference/htmlsingle/#remember-me-hash-token>`_ 方式のRemember Me認証」と「`Persistent Token <https://docs.spring.io/spring-security/site/docs/5.2.1.RELEASE/reference/htmlsingle/#remember-me-persistent-token>`_ 方式のRemember Me認証」をサポートしており、
+Spring Securityは、「`Hash-Based Token <https://docs.spring.io/spring-security/site/docs/5.4.2/reference/html5/#remember-me-hash-token>`_ 方式のRemember Me認証」と「`Persistent Token <https://docs.spring.io/spring-security/site/docs/5.4.2/reference/htmlsingle/#remember-me-persistent-token>`_ 方式のRemember Me認証」をサポートしており、
 デフォルトではHash-Based Token方式が使用される。
 
 |
@@ -3083,7 +3093,7 @@ Remember Me認証を利用する場合は、\ ``<sec:remember-me>``\ タグを�
         | 指定が無い場合、デフォルトで14日間が有効時間になる。
         | 上記例では、有効時間として30日間を設定している。
 
-上記以外の属性については、\ `Spring Security Reference -The Security Namespace (<remember-me>) - <https://docs.spring.io/spring-security/site/docs/5.2.1.RELEASE/reference/htmlsingle/#nsa-remember-me>`_\ を参照されたい。
+上記以外の属性については、\ `Spring Security Reference -The Security Namespace (<remember-me>) - <https://docs.spring.io/spring-security/site/docs/5.4.2/reference/html5/#nsa-remember-me>`_\ を参照されたい。
 
 |
 
@@ -3116,7 +3126,7 @@ Remember Me認証を利用する場合は、\ ``<sec:remember-me>``\ タグを�
 
 .. tip:: **value属性の設定値について**
 
-    \ ``value``\ 属性には、\ ``true``\を設定する旨が\ `rememberMeRequestedのJavaDoc <https://docs.spring.io/spring-security/site/docs/5.2.1.RELEASE/api/org/springframework/security/web/authentication/rememberme/AbstractRememberMeServices.html#rememberMeRequested-javax.servlet.http.HttpServletRequest-java.lang.String->`_\ に記載されているが、
+    \ ``value``\ 属性には、\ ``true``\を設定する旨が\ `rememberMeRequestedのJavaDoc <https://docs.spring.io/spring-security/site/docs/5.4.2/api/org/springframework/security/web/authentication/rememberme/AbstractRememberMeServices.html#rememberMeRequested-javax.servlet.http.HttpServletRequest-java.lang.String->`_\ に記載されているが、
     実装上は\ ``on``\ 、\ ``yes``\ 、"\ ``1``\" も設定可能である。
 
 .. raw:: latex

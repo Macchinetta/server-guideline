@@ -26,7 +26,7 @@ Webアプリケーション向け開発プロジェクトの作成
 
     * - 種別
       - 使用用途
-    * - | `マルチプロジェクト構成のブランクプロジェクト <https://github.com/Macchinetta/macchinetta-web-multi-blank>`_
+    * - | `マルチプロジェクト構成のブランクプロジェクト <https://github.com/Macchinetta/macchinetta-web-multi-blank/tree/1.8.0.RELEASE>`_
       - 商用環境にリリースするような本格的なアプリケーションを開発する際に使用する。
 
         プロジェクトの雛形は、MavenのArchetypeとして、以下の1種類を用意している。
@@ -34,7 +34,7 @@ Webアプリケーション向け開発プロジェクトの作成
         * MyBatis3用の設定が盛り込まれた雛形
 
         **本ガイドラインでは、マルチプロジェクト構成のプロジェクトを使用する事を推奨している。**
-    * - | `シングルプロジェクト構成のブランクプロジェクト <https://github.com/Macchinetta/macchinetta-web-blank>`_
+    * - | `シングルプロジェクト構成のブランクプロジェクト <https://github.com/Macchinetta/macchinetta-web-blank/tree/1.8.0.RELEASE>`_
       - POC(Proof Of Concept)、プロトタイプ、サンプルなどの簡易的なアプリケーションを作成する際に使用する。
 
         プロジェクトの雛形は、MavenのArchetypeとして、以下の2種類を用意している。
@@ -97,7 +97,7 @@ Webアプリケーション向け開発プロジェクトの作成
     mvn archetype:generate -B^
      -DarchetypeGroupId=com.github.macchinetta.blank^
      -DarchetypeArtifactId=macchinetta-multi-web-blank-archetype^
-     -DarchetypeVersion=1.7.0.RELEASE^
+     -DarchetypeVersion=1.8.0.RELEASE^
      -DgroupId=com.example.todo^
      -DartifactId=todo^
      -Dversion=1.0.0-SNAPSHOT
@@ -144,7 +144,7 @@ Webアプリケーション向け開発プロジェクトの作成
 
     (... omit)
     [INFO] ----------------------------------------------------------------------------
-    [INFO] Using following parameters for creating project from Archetype: macchinetta-multi-web-blank-archetype:1.7.0.RELEASE
+    [INFO] Using following parameters for creating project from Archetype: macchinetta-multi-web-blank-archetype:1.8.0.RELEASE
     [INFO] ----------------------------------------------------------------------------
     [INFO] Parameter: groupId, Value: com.example.todo
     [INFO] Parameter: artifactId, Value: todo
@@ -628,7 +628,7 @@ Maven Archetypeで作成したプロジェクトでは、インメモリデー�
 .. note::
 
    上記設定例は、依存ライブラリのバージョンを親プロジェクトである terasoluna-gfw-parent で管理する前提であるため、pom.xmlでのバージョンの指定は不要である。
-   上記の依存ライブラリはterasoluna-gfw-parentが依存している\ `Spring Boot <https://docs.spring.io/spring-boot/docs/2.2.4.RELEASE/reference/htmlsingle/#dependency-versions>`_\ で管理されている。
+   上記の依存ライブラリはterasoluna-gfw-parentが依存している\ `Spring Boot <https://docs.spring.io/spring-boot/docs/2.4.1/reference/htmlsingle/#dependency-versions>`_\ で管理されている。
 
 **[artifactId-infra.properties]**
 
@@ -649,7 +649,7 @@ Maven Archetypeで作成したプロジェクトでは、インメモリデー�
 
 .. code-block:: xml
 
-    <bean id="realDataSource" class="org.apache.commons.dbcp2.BasicDataSource"
+    <bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource"
         destroy-method="close">
         <property name="driverClassName" value="${database.driverClassName}" />
         <property name="url" value="${database.url}" />
@@ -745,7 +745,7 @@ Maven Archetypeで作成したプロジェクトでは、インメモリデー�
                              <version>${postgresql.version}</version>
                          </dependency>
         <!--             <dependency> -->
-        <!--                 <groupId>com.oracle.ojdbc</groupId> -->
+        <!--                 <groupId>com.oracle.database.jdbc</groupId> -->
         <!--                 <artifactId>ojdbc8</artifactId> -->
         <!--                 <version>${ojdbc.version}</version> -->
         <!--             </dependency> -->
@@ -765,7 +765,7 @@ Maven Archetypeで作成したプロジェクトでは、インメモリデー�
                          <scope>runtime</scope><!-- (1) -->
                      </dependency>
         <!--         <dependency> -->
-        <!--             <groupId>com.oracle.jdbc</groupId> -->
+        <!--             <groupId>com.oracle.database.jdbc</groupId> -->
         <!--             <artifactId>ojdbc8</artifactId> -->
         <!--             <scope>runtime</scope> -->
         <!--         </dependency> -->
@@ -1541,7 +1541,7 @@ initdbモジュールの構成
       - データベースを初期化するためのSQLファイルを格納するためのディレクトリ。
 
         作成時点では、空のディレクトリである。
-        作成例については、`サンプルアプリケーションのinitdbプロジェクト <https://github.com/terasolunaorg/terasoluna-tourreservation-mybatis3/tree/5.6.0.RELEASE/terasoluna-tourreservation-initdb/src/main/sqls>`_ を参照されたい。
+        作成例については、`サンプルアプリケーションのinitdbプロジェクト <https://github.com/terasolunaorg/terasoluna-tourreservation-mybatis3/tree/5.7.0.RELEASE/terasoluna-tourreservation-initdb/src/main/sqls>`_ を参照されたい。
 
 .. note::
 
@@ -1597,7 +1597,7 @@ Seleniumを使用したE2E(End To End)テスト用のコンポーネントを管
     * - | (2)
       - テスト用のコンポーネントと設定ファイルを格納するディレクトリ。
 
-        作成例については、`サンプルアプリケーションのseleniumプロジェクト <https://github.com/terasolunaorg/terasoluna-tourreservation-mybatis3/tree/5.6.0.RELEASE/terasoluna-tourreservation-selenium>`_ を参照されたい。
+        作成例については、`サンプルアプリケーションのseleniumプロジェクト <https://github.com/terasolunaorg/terasoluna-tourreservation-mybatis3/tree/5.7.0.RELEASE/terasoluna-tourreservation-selenium>`_ を参照されたい。
 
     * - | (3)
       - Selenium WebDriverを使用したサンプルテストクラス。
@@ -1645,8 +1645,8 @@ Maven Archetypeで作成したプロジェクトのプロジェクト階層の�
         Maven Archetypeで作成したプロジェクトはマルチモジュール構成となっており、
         親プロジェクトと各サブモジュールは相互参照の関係になっている。
 
-        version 1.7.0.RELEASE用のMaven Archetypeで作成したプロジェクトでは、
-        親プロジェクトとして「org.terasoluna.gfw:terasoluna-gfw-parent:5.6.0.RELEASE」を指定している。
+        version 1.8.0.RELEASE用のMaven Archetypeで作成したプロジェクトでは、
+        親プロジェクトとして「org.terasoluna.gfw:terasoluna-gfw-parent:5.7.0.RELEASE」を指定している。
     * - | (2)
       - TERASOLUNA Server Framework for Java (5.x) Parentプロジェクト。
 
@@ -1780,10 +1780,12 @@ Mavenはオンライン環境での動作が前提であるが、
 プロジェクト開発に必要であるライブラリやプラグイン等のファイルをコピーする。
 `Maven Archetype Plugin <http://maven.apache.org/archetype/maven-archetype-plugin/>`_ の 
 `dependency:go-offline <https://maven.apache.org/plugins/maven-dependency-plugin/go-offline-mojo.html>`_ を実行することでコピーする。
+なお、\ ``dependency:go-offline``\ のみではマルチプロジェクトの依存関係を解決できずビルドに失敗するため、\ ``package``\ を指定している。
+
 
 .. code-block:: console
 
-    mvn dependency:go-offline -Dmaven.repo.local=repository
+    mvn package dependency:go-offline -Dmaven.repo.local=repository
 
 .. tabularcolumns:: |p{0.25\linewidth}|p{0.75\linewidth}|
 .. list-table::
@@ -1796,15 +1798,6 @@ Mavenはオンライン環境での動作が前提であるが、
       - コピー先を指定する。
         コピー先が存在しない場合は新たに作成される。
         今回はコピー先をrepositoryと指定している。
-
-|
-
-成果物を配布しやすくするために、warファイルまたはjarファイルを作成する。
-この時、ビルドに必要となるライブラリやプラグイン等のファイルがコピーされる。
-
-.. code-block:: console
-
-    mvn package -Dmaven.repo.local=repository
 
 |
 

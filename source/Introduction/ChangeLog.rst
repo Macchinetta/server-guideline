@@ -11,6 +11,185 @@
       - 更新箇所
       - 更新内容
 
+    * - 2021-03-26
+      - \-
+      - 1.8.0 RELEASE版公開
+
+    * -
+      - 全般
+      - Java EEからJakarta EEへ切り替えことに伴う記述修正
+
+        記載内容の修正・追加
+
+        * 利用するミドルウェアのバージョンを更新
+
+    * -
+      - :doc:`../Overview/FrameworkStack`
+      - 利用するOSSのバージョンを更新
+
+        * Spring Bootを2.4.1に更新
+        * Spring Security OAuthを2.5.0に更新
+        * MyBatisを3.5.6に更新
+        * MyBatis Springを2.0.6に更新
+        * Joda Timeを2.10.9に更新
+
+        Spring Boot のバージョン更新に伴い利用するOSSのバージョンを更新
+
+        * Spring Frameworkを5.3.2に更新
+        * Spring Dataを2.4.2に更新
+        * Spring Securityを5.4.2に更新
+        * Hibernateを5.4.25(JPA 2.2)に更新
+        * AspectJを1.9.6に更新
+        * SLF4Jを1.7.30に更新
+        * Jacksonを2.11.3に更新
+        * Hibernate Validatorを6.1.6(Bean Validation 2.0)に更新
+        * Apache Commons Langを3.11に更新
+        * Apache Commons DBCPを2.8.0に更新
+        * Apache HttpClientを4.5.13に更新
+        * Lombokを1.18.16に更新
+
+        単体テストで利用するOSSのバージョンを更新
+
+        * Hamcrestを2.2に更新
+        * Mockitoを3.6.28に更新
+        * Spring Testを5.3.2に更新
+
+        利用するOSSのバージョンの更新による主な変更
+
+        * Spring Boot 2.3よりjoda-timeをバージョン管理しなくなったため、terasoluna-gfw-parentで管理するよう変更
+        * Spring Framework 5.3.0より\ ``@PathVariable``\でバインドされる値に拡張子が含まれるように変更されたことへの対応
+        * Spring Framework 5.3.0より\ ``HandlerInterceptor``\のパス指定におけるワイルドカードの使用方法が変更されたことへの対応
+        * Spring Framework 5.3.0より\ ``HandlerInterceptorAdapter``\が非推奨となったことへの対応
+        * Spring Framework 5.3.0より\ ``JdbcTemplate``\のメソッドのうち一部が非推奨となったことへの対応
+        * Spring Security OAuth 2.5.0より\ ``DefaultUserAuthenticationConverter#getAuthorities``\の可視性が変更されたことへの対応
+        * Hibernate Validator 6.1.0より日本語メッセージが提供されたことへの対応
+        * JUnit 4.13より\ ``org.junit.Assert#assertThat``\が非推奨となったことへの対応
+
+        TERASOLUNA Server Framework for Java (5.x)の共通ライブラリの機能改善
+
+        * TERASOLUNA Server Framework for Java (5.x)の共通ライブラリが用意する入力チェックルールの日本語メッセージを提供
+        * \ ``@Compare``\がBean Validation 2.0に準拠
+        * Bootstrap v4以降に対応するため、以下の変更
+
+          - \ ``ResultMessages``\の標準メッセージタイプに、\ ``primary``\、\ ``secondary``\、\ ``light``\、\ ``dark``\を追加
+          - \ ``<t:pagination>``\タグに、\ ``anchorClass``\属性を追加
+
+        * TERASOLUNA Server Framework for Java (5.x)の共通ライブラリの非推奨APIを削除
+
+    * -
+      - :doc:`../ImplementationAtEachLayer/CreateWebApplicationProject`
+      - 記載内容の修正
+
+        * Mavenセントラルリポジトリで公開されるOracle JDBC DriverのgroupIdが変更されたことへの対応
+        * オフライン環境でプロジェクト開発を続けるための事前作業について、一部手順に誤りがあったため修正
+
+    * -
+      - :doc:`../ImplementationAtEachLayer/ApplicationLayer`
+      - Spring Framework 5.3.0対応に伴う修正
+
+        * Spring Framework 5.3.0より\ ``@PathVariable``\でバインドされる値に拡張子が含まれるように変更されたことへの対応
+        * Spring Framework 5.3.0より\ ``HandlerInterceptor``\のパス指定におけるワイルドカードの使用方法が変更されたことへの対応
+        * Spring Framework 5.3.0より\ ``HandlerInterceptorAdapter``\が非推奨となったことへの対応
+
+        記載内容の追加
+
+        * \ ``addAttribute``\、\ ``addFlashAttribute``\で第一引数を省略した際、\ ``Conventions#getVariableName``\の仕様に基づき属性名が決まる説明を追加
+
+    * -
+      - :doc:`../ImplementationAtEachLayer/CreateProject`
+      - 記載内容の修正
+
+        * Tomcatへデプロイする際にコンテキストXMLファイルを配置するファイルパスを修正
+
+    * -
+      - :doc:`../ArchitectureInDetail/WebApplicationDetail/Validation`
+      - 記載内容の修正
+
+        * Hibernate Validator 6.1.0より日本語メッセージが提供されたことへの対応
+        * TERASOLUNA Server Framework for Java (5.x)の共通ライブラリが用意する入力チェックルールの日本語メッセージを提供
+        * \ ``@Compare``\がBean Validation 2.0に準拠
+        * 相関項目チェックルールのコード例において、エラーメッセージを確認用フィールドに表示するように変更
+        * Bean Validationを利用した相関項目チェックルールのコード例をBean Validation 2.0に準拠するよう変更
+
+    * -
+      - :doc:`../ArchitectureInDetail/WebApplicationDetail/Pagination`
+      - 記載内容の修正
+
+        * \ ``<t:pagination>``\タグに、\ ``anchorClass``\属性を追加
+
+    * -
+      - :doc:`../ArchitectureInDetail/WebApplicationDetail/MessageManagement`
+      - 記載内容の修正
+
+        * \ ``ResultMessages``\の標準メッセージタイプに、\ ``primary``\、\ ``secondary``\、\ ``light``\、\ ``dark``\を追加
+        * \ ``ResultMessages``\の標準メッセージタイプから、非推奨の\ ``warn``\を削除
+        * CSSライブラリBootstrapリンク先を最新化
+
+    * -
+      - :doc:`../ArchitectureInDetail/DataAccessDetail/ExclusionControl`
+      - 記載内容の修正
+
+        * \ ``ObjectOptimisticLockingFailureException``\のFQCNの誤りを修正
+
+    * -
+      - :doc:`../ArchitectureInDetail/GeneralFuncDetail/SystemDate`
+      - 記載内容の修正
+
+        * JUnit 4.13より\ ``org.junit.Assert#assertThat``\が非推奨となったことへの対応
+
+    * -
+      - :doc:`../Security/Authentication`
+      - 記載内容の修正・追加
+
+        * \ ``UserDetails``\実装クラスの\ ``equals``\メソッドについての説明を追加
+        * ブランクプロジェクトにおいてSpring Securityのフォーム認証を使用しない場合の注意事項を追加
+
+    * -
+      - :doc:`../Security/OAuth`
+      - 記載内容の修正・追加
+
+        * Spring Security OAuth 2.5.0より\ ``DefaultUserAuthenticationConverter#getAuthorities``\の可視性が変更されたことへの対応
+        * Spring Security OAuthが非推奨となったことへの対応
+
+    * -
+      - :doc:`../UnitTest/UnitTestOverview`
+      - Spring Boot のバージョン更新に伴い利用するOSSのバージョンを更新
+
+        * Hamcrestを2.2に更新
+        * Mockitoを3.6.28に更新
+        * Spring Testを5.3.2に更新
+
+    * -
+      - :doc:`../UnitTest/ImplementsOfUnitTest/ImplementsOfTestByLayer`
+      - 記載内容の修正
+
+        * Spring Framework 5.3.0より\ ``JdbcTemplate``\のメソッドのうち一部が非推奨となったことへの対応
+        * JUnit 4.13より\ ``org.junit.Assert#assertThat``\が非推奨となったことへの対応
+
+    * -
+      - :doc:`../UnitTest/ImplementsOfUnitTest/UsageOfLibraryForTest`
+      - 記載内容の修正・追加
+
+        * Mockito 2より\ ``org.mockito.Matchers``\が非推奨となったことへの対応
+        * \ ``MockMultipartHttpServletRequestBuilder``\の主なメソッドの説明に\ ``part``\メソッドを追加
+        * \ ``MockMultipartHttpServletRequestBuilder``\において、リクエストを送信する際に"/"から始まらないパスを指定した場合のエラーの説明を追加
+
+    * -
+      - :doc:`../Tutorial/TutorialREST`
+      - 記載内容の修正
+
+        * \ ``MessageConverter``\および\ ``ObjectMapper``\の定義方法を\ :doc:`../ArchitectureInDetail/WebServiceDetail/REST`\に合わせるよう変更
+
+    * - 2021-01-07
+      - \-
+      - 1.7.1 RELEASE版公開
+
+    * -
+      - :doc:`../ArchitectureInDetail/WebApplicationDetail/SessionManagement`
+      - 記載内容の追加
+
+        * 「同一セッション内のリクエストの同期化」の適用範囲についての注意事項を追加
+
     * - 2020-06-29
       - \-
       - 1.7.0 RELEASE版公開
@@ -83,13 +262,13 @@
 
         TERASOLUNA Server Framework for Java (5.x)の共通ライブラリの機能改善
 
-        * 共通ライブラリが用意する入力チェックルールのデフォルトエラーメッセージを共通ライブラリで提供
+        * TERASOLUNA Server Framework for Java (5.x)の共通ライブラリが用意する入力チェックルールのデフォルトエラーメッセージをTERASOLUNA Server Framework for Java (5.x)の共通ライブラリで提供
         * \ ``<t:pagination>``\タグに、\ ``innerElementClass``\属性を追加
-        * \ ``Argon2PasswordEncoder``\のサポートに伴い、\ ``bcprov-jdk15on``\への依存関係を共通ライブラリで管理
+        * \ ``Argon2PasswordEncoder``\のサポートに伴い、\ ``bcprov-jdk15on``\への依存関係をTERASOLUNA Server Framework for Java (5.x)の共通ライブラリで管理
 
         記載内容の追加
 
-        * 共通ライブラリの構成要素に、TERASOLUNA Server Framework のバージョンについてのNoteを追加
+        * TERASOLUNA Server Framework for Java (5.x)の共通ライブラリの構成要素に、TERASOLUNA Server Framework のバージョンについてのNoteを追加
 
     * -
       - :doc:`../ImplementationAtEachLayer/ApplicationLayer`
@@ -106,7 +285,7 @@
 
         記載内容の修正
 
-        * 共通ライブラリが用意する入力チェックルールのデフォルトエラーメッセージを共通ライブラリで提供するように変更したことに伴う記載内容の変更
+        * TERASOLUNA Server Framework for Java (5.x)の共通ライブラリが用意する入力チェックルールのデフォルトエラーメッセージをTERASOLUNA Server Framework for Java (5.x)の共通ライブラリで提供するように変更したことに伴う記載内容の変更
 
     * -
       - :doc:`../ArchitectureInDetail/WebApplicationDetail/Pagination`
@@ -146,7 +325,7 @@
       - :doc:`../ArchitectureInDetail/DataAccessDetail/DataAccessCommon`
       - 記載内容の削除
 
-        *  共通ライブラリの変更に伴うlog4jdbcの記載の削除
+        *  TERASOLUNA Server Framework for Java (5.x)の共通ライブラリの変更に伴うlog4jdbcの記載の削除
 
     * -
       - :doc:`../ArchitectureInDetail/GeneralFuncDetail/Dozer`
@@ -194,9 +373,9 @@
         * Spring Security 5.2で追加された\ ``LogoutSuccessEvent``\および\ ``LogoutSuccessEventPublishingLogoutHandler``\の記述を追加
         * Spring Security 5.2で追加された\ ``ClearSiteDataHeaderWriter``\および\ ``HeaderWriterLogoutHandler``\の記述を追加
 
-        共通ライブラリの機能改善
+        TERASOLUNA Server Framework for Java (5.x)の共通ライブラリの機能改善
 
-        * \ ``Argon2PasswordEncoder``\のサポートに伴い、\ ``bcprov-jdk15on``\への依存関係を共通ライブラリで管理
+        * \ ``Argon2PasswordEncoder``\のサポートに伴い、\ ``bcprov-jdk15on``\への依存関係をTERASOLUNA Server Framework for Java (5.x)の共通ライブラリで管理
 
         記載内容の追加
 

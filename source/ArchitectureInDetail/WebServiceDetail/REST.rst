@@ -381,7 +381,7 @@ REST APIの実装サンプル
       - | Todoリソースを削除する。
 
  .. code-block:: java
-    :emphasize-lines: 30-34, 42-45, 51-55, 59-63, 68-72
+    :emphasize-lines: 30-33, 42-44, 51-54, 60-63, 69-72
 
     package todo.api.todo;
 
@@ -1778,8 +1778,8 @@ RESTful Web Serviceで必要となるSpring MVCのコンポーネントを有効
     なお、\ ``ObjectMapper``\ を直接Bean定義するスタイルから\ ``Jackson2ObjectMapperFactoryBean``\ を使用するスタイルに変更する場合は、
     以下のコンフィギュレーションに対するデフォルト値がJacksonのデフォルト値と異なる(無効化されている)点に注意すること。
 
-    * `MapperFeature#DEFAULT_VIEW_INCLUSION <http://fasterxml.github.io/jackson-databind/javadoc/2.10/com/fasterxml/jackson/databind/MapperFeature.html?is-external=true#DEFAULT_VIEW_INCLUSION>`_\
-    * `DeserializationFeature#FAIL_ON_UNKNOWN_PROPERTIES <http://fasterxml.github.io/jackson-databind/javadoc/2.10/com/fasterxml/jackson/databind/DeserializationFeature.html?is-external=true#FAIL_ON_UNKNOWN_PROPERTIES>`_\
+    * `MapperFeature#DEFAULT_VIEW_INCLUSION <http://fasterxml.github.io/jackson-databind/javadoc/2.11/com/fasterxml/jackson/databind/MapperFeature.html?is-external=true#DEFAULT_VIEW_INCLUSION>`_\
+    * `DeserializationFeature#FAIL_ON_UNKNOWN_PROPERTIES <http://fasterxml.github.io/jackson-databind/javadoc/2.11/com/fasterxml/jackson/databind/DeserializationFeature.html?is-external=true#FAIL_ON_UNKNOWN_PROPERTIES>`_\
 
     \ ``ObjectMapper``\の動作をJacksonのデフォルト動作にあわせたい場合は、\ ``featuresToEnable``\ プロパティを使用して上記のコンフィギュレーションを有効化する。
 
@@ -1795,7 +1795,7 @@ RESTful Web Serviceで必要となるSpring MVCのコンポーネントを有効
             </property>
         </bean>
 
-    \ ``Jackson2ObjectMapperFactoryBean``\ の詳細については、 `Jackson2ObjectMapperFactoryBeanのJavaDoc <https://docs.spring.io/spring/docs/5.2.3.RELEASE/javadoc-api/org/springframework/http/converter/json/Jackson2ObjectMapperFactoryBean.html>`_\ を参照されたい。
+    \ ``Jackson2ObjectMapperFactoryBean``\ の詳細については、 `Jackson2ObjectMapperFactoryBeanのJavaDoc <https://docs.spring.io/spring/docs/5.3.2/javadoc-api/org/springframework/http/converter/json/Jackson2ObjectMapperFactoryBean.html>`_\ を参照されたい。
 
 
 .. _REST_note_changed_jackson_version:
@@ -1822,9 +1822,9 @@ RESTful Web Serviceで必要となるSpring MVCのコンポーネントを有効
 
     * Deprecated一覧
 
-     * http://fasterxml.github.io/jackson-core/javadoc/2.10/deprecated-list.html
-     * http://fasterxml.github.io/jackson-databind/javadoc/2.10/deprecated-list.html
-     * http://fasterxml.github.io/jackson-annotations/javadoc/2.10/deprecated-list.html
+     * http://fasterxml.github.io/jackson-core/javadoc/2.11/deprecated-list.html
+     * http://fasterxml.github.io/jackson-databind/javadoc/2.11/deprecated-list.html
+     * http://fasterxml.github.io/jackson-annotations/javadoc/2.11/deprecated-list.html
 
 |
 
@@ -2520,7 +2520,7 @@ Controllerクラスの作成
 
     \ ``@RestController``\ アノテーションの登場により、Controllerの各メソッドに\ ``@ResponseBody``\ アノテーションを付与する必要がなくなったため、
     REST API用のControllerをよりシンプルに作成出来るようになった。
-    \ ``@RestController``\ アノテーションの詳細については、\ `こちら <https://docs.spring.io/spring/docs/5.2.3.RELEASE/javadoc-api/org/springframework/web/bind/annotation/RestController.html>`_\ を参照されたい。
+    \ ``@RestController``\ アノテーションの詳細については、\ `こちら <https://docs.spring.io/spring/docs/5.3.2/javadoc-api/org/springframework/web/bind/annotation/RestController.html>`_\ を参照されたい。
 
     従来通り\ ``@Controller``\ アノテーションと\ ``@ResponseBody``\ アノテーションを組み合わせてREST API用のControllerを作成する例を以下に示す。
 
@@ -2667,7 +2667,7 @@ URIで指定されたMemberリソースのコレクションをページ検索�
                       // ...
                   }
 
-            詳細は、`Spring Framework Documentation -Request Mapping- <https://docs.spring.io/spring/docs/5.2.3.RELEASE/spring-framework-reference/web.html#mvc-ann-requestmapping>`_ を参照されたい。
+            詳細は、`Spring Framework Documentation -Request Mapping- <https://docs.spring.io/spring-framework/docs/5.3.2/reference/html/web.html#mvc-ann-requestmapping>`_ を参照されたい。
 
     * - | (4)
       - | メソッドアノテーションとして、\ ``@org.springframework.web.bind.annotation.ResponseStatus``\アノテーションを付与し、応答するステータスコードを指定する。
@@ -3727,7 +3727,7 @@ RESTful Web Serviceで発生した例外のハンドリング方法について�
 * \ ``ResponseEntityExceptionHandler``\のメソッドを拡張し、レスポンスBodyに入力チェック用のエラー情報を出力するための実装を行う。
 
  .. code-block:: java
-    :emphasize-lines: 12-14, 21-23, 29-31, 34-36, 44-45
+    :emphasize-lines: 12-14, 21-23, 29-31, 44-45
 
     @ControllerAdvice
     public class ApiGlobalExceptionHandler extends ResponseEntityExceptionHandler {
@@ -4363,7 +4363,7 @@ ExceptionCodeResolverを使ったエラーコードとメッセージの解決
     org.hibernate.validator.constraints.LuhnCheck.message               = "{0}" the check digit for ${validatedValue} is invalid, Luhn Modulo 10 checksum failed.
     org.hibernate.validator.constraints.Mod10Check.message              = "{0}" the check digit for ${validatedValue} is invalid, Modulo 10 checksum failed.
     org.hibernate.validator.constraints.Mod11Check.message              = "{0}" the check digit for ${validatedValue} is invalid, Modulo 11 checksum failed.
-    org.hibernate.validator.constraints.ModCheck.message                = "{0}" the check digit for ${validatedValue} is invalid, ${modType} checksum failed.
+    org.hibernate.validator.constraints.ModCheck.message                = "{0}" the check digit for ${validatedValue} is invalid, {modType} checksum failed.
     org.hibernate.validator.constraints.NotBlank.message                = "{0}" may not be empty.
     org.hibernate.validator.constraints.NotEmpty.message                = "{0}" may not be empty.
     org.hibernate.validator.constraints.ParametersScriptAssert.message  = "{0}" script expression "{script}" didn't evaluate to true.
@@ -5129,7 +5129,7 @@ or
 
 .. note::
     上記設定例は、依存ライブラリのバージョンを親プロジェクトである terasoluna-gfw-parent で管理する前提であるため、pom.xmlでのバージョンの指定は不要である。
-    上記のjackson-datatype-jodaはterasoluna-gfw-parentが依存している\ `Spring Boot <https://docs.spring.io/spring-boot/docs/2.2.4.RELEASE/reference/htmlsingle/#dependency-versions>`_\ で管理されている。
+    上記のjackson-datatype-jodaはterasoluna-gfw-parentが依存している\ `Spring Boot <https://docs.spring.io/spring-boot/docs/2.4.1/reference/htmlsingle/#dependency-versions>`_\ で管理されている。
 
 
 
@@ -5430,7 +5430,7 @@ JSONの中に関連リソースへのハイパーメディアリンクを含め�
         | 上記例では、リンク情報に設定するURIを組み立てるため \ ``UriComponentsBuilder``\ クラスのメソッドを呼び出し、自身のリソースにアクセスするためのURIをリソースに追加している。
         |
         | Controllerのメソッドの引数として渡された\ ``ServletUriComponentsBuilder``\ のインスタンスは、web.xmlに記載の\ ``<servlet-mapping>``\要素の情報を元に初期化されており、リソースには依存しない。
-        | そのため、Spring Frameworkから提供される `URI patterns <https://docs.spring.io/spring/docs/5.2.3.RELEASE/spring-framework-reference/web.html#mvc-ann-requestmapping-uri-templates>`_\ 等を利用し、
+        | そのため、Spring Frameworkから提供される `URI patterns <https://docs.spring.io/spring-framework/docs/5.3.2/reference/html/web.html#mvc-ann-requestmapping-uri-templates>`_\ 等を利用し、
         | リクエスト情報をベースにURIを組み立てる事により、リソースに依存しない汎用的な組み立て処理を実装することが可能となる。
         | 
         | 例えば、上記例において\ ``http://example.com/api/v1/members/M000000001``\に対してGETした場合、組み立てられるURIは、リクエストされたURIと同じ値\ ``（http://example.com/api/v1/members/M000000001）``\になる。
@@ -5554,7 +5554,7 @@ POST時のLocationヘッダの設定
         | \ ``buildAndExpand``\ メソッドを呼び出して、作成したリソースのIDをバインドすることで、作成したリソースのURIを組み立てている。
         | 
         | Controllerのメソッドの引数として渡された\ ``ServletUriComponentsBuilder``\ のインスタンスは、web.xmlに記載の\ ``<servlet-mapping>``\要素の情報を元に初期化されており、リソースには依存しない。
-        | そのため、Spring Frameworkから提供される `URI patterns <https://docs.spring.io/spring/docs/5.2.3.RELEASE/spring-framework-reference/web.html#mvc-ann-requestmapping-uri-templates>`_\ 等を利用し、
+        | そのため、Spring Frameworkから提供される `URI patterns <https://docs.spring.io/spring-framework/docs/5.3.2/reference/html/web.html#mvc-ann-requestmapping-uri-templates>`_\ 等を利用し、
         | リクエスト情報をベースにURIを組み立てる事により、リソースに依存しない汎用的な組み立て処理を実装することが可能となる。
         | 
         | 例えば、上記例において\ ``http://example.com/api/v1/members``\に対してPOSTした場合、組み立てられるURIは、「リクエストされたURI + "\ ``/``\" + 作成したリソースのID」となる。
@@ -5614,7 +5614,7 @@ RESTful Web Service向けのリクエストに対して、CSRF対策の処理が
 * :file:`spring-security.xml`
 
  .. code-block:: xml
-    :emphasize-lines: 3-10
+    :emphasize-lines: 3-9
 
     <!-- omitted -->
 
@@ -6555,7 +6555,7 @@ MemberServiceImpl.java
             // Count Members by search criteria
             long total = memberRepository.countByContainsName(name);
             if (0 < total) {
-                 RowBounds rowBounds = new RowBounds(pageable.getOffset(), pageable.getPageSize());
+                 RowBounds rowBounds = new RowBounds((int) pageable.getOffset(), pageable.getPageSize());
                  members = memberRepository.findPageByContainsName(name, rowBounds);
             } else {
                 members = new ArrayList<Member>();

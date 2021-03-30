@@ -877,7 +877,7 @@ infoメッセージを表示したい場合は、次のように\ ``ResultMessag
     - | メッセージタイプに対応して、出力されるclass名が"alert alert-**info**"に変わっている。
 
 標準では、以下のメッセージタイプが用意されている。
-
+標準のメッセージタイプはCSSフレームワークである\ `Bootstrap <https://getbootstrap.com/>`_ の\ `Alertsコンポーネント <https://getbootstrap.com/docs/5.0/components/alerts/>`_\ に対応しており、\ ``<t:messagesPanel />``\ のデフォルト設定で利用できる。
 
 .. tabularcolumns:: |p{0.15\linewidth}|p{0.30\linewidth}|p{0.25\linewidth}|p{0.30\linewidth}|
 .. list-table::
@@ -896,15 +896,10 @@ infoメッセージを表示したい場合は、次のように\ ``ResultMessag
     - | \ ``ResultMessages.info()``\
     - | alert alert-info
     - | \-
-  * - | warn
-    - | \ ``ResultMessages.warn()``\
-    - | alert alert-warn
-    - | メッセージタイプ「warning」の追加に伴い、terasoluna-gfw-common 5.0.0.RELEASEから非推奨。
-      | \ **このメッセージタイプは将来削除される可能性がある。**\
   * - | warning
     - | \ ``ResultMessages.warning()``\
     - | alert alert-warning
-    - | CSSフレームワークである\ `Bootstrap <http://getbootstrap.com/>`_ の\ `Alertsコンポーネント <https://getbootstrap.com/docs/3.3/components/#alerts>`_\ で用意されているメッセージタイプをデフォルトでサポートするために、terasoluna-gfw-common 5.0.0.RELEASEから追加。
+    - | Boostrap v3の「alert-warning」に対応するため、5.0.0から追加。
   * - | error
     - | \ ``ResultMessages.error()``\
     - | alert alert-error
@@ -913,6 +908,22 @@ infoメッセージを表示したい場合は、次のように\ ``ResultMessag
     - | \ ``ResultMessages.danger()``\
     - | alert alert-danger
     - | \-
+  * - | primary
+    - | \ ``ResultMessages.primary()``\
+    - | alert alert-primary
+    - | Boostrap v4の「alert-primary」に対応するため、5.7.0から追加。
+  * - | secondary
+    - | \ ``ResultMessages.secondary()``\
+    - | alert alert-secondary
+    - | Boostrap v4の「alert-secondary」に対応するため、5.7.0から追加。
+  * - | light
+    - | \ ``ResultMessages.light()``\
+    - | alert alert-light
+    - | Boostrap v4の「alert-light」に対応するため、5.7.0から追加。
+  * - | dark
+    - | \ ``ResultMessages.dark()``\
+    - | alert alert-dark
+    - | Boostrap v4の「alert-dark」に対応するため、5.7.0から追加。
 
 メッセージタイプに応じてCSSを定義されたい。以下に、CSSを適用した場合の例を示す。
 
@@ -960,14 +971,6 @@ infoメッセージを表示したい場合は、次のように\ ``ResultMessag
 
     .. figure:: ./images_MessageManagement/message-management-resultmessage-info.jpg
         :width: 100%
-
-    .. note::
-
-        successとdangerは、スタイルに多様性を持たせるために用意されている。本ガイドラインでは、successとinfo、errorとdangerは同義である。
-
-    .. tip::
-
-        CSSフレームワークである\ `Bootstrap <http://getbootstrap.com/>`_ の\ `Alertsコンポーネント <https://getbootstrap.com/docs/3.3/components/#alerts>`_\ は、\ ``<t:messagesPanel />``\ のデフォルト設定で利用できる。
 
     .. warning::
 
