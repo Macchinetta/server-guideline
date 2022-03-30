@@ -35,9 +35,14 @@
     * - 種別
       - プロダクト
     * - REST Client
-      - \ `DHC REST Client <https://chrome.google.com/webstore/detail/dhc-resthttp-api-client/aejoelaoggembcahagimdiliamlcdmfm>`_\  1.2.3
+      - \ `DHC REST Client <https://chrome.google.com/webstore/detail/talend-api-tester-free-ed/aejoelaoggembcahagimdiliamlcdmfm>`_\  1.2.3
     * - 上記以外のプロダクト
       - \ :doc:`./TutorialTodo`\ と同様
+
+.. note::
+
+    上記のDHC REST Clientのリンク先はTalend API Testerに置き換わっている。
+    以降の記述ではDHC REST ClientをTalend API Testerに読み替えられたい。
 
 |
 
@@ -51,26 +56,7 @@ DHCのインストール
 
 RESTクライアントとして、Chromeの拡張機能である「DHC」をインストールする。
 
-Chromeの「Tools」→「Extensions」を選択する。
-
-.. figure:: ./images_rest/install-dev-http-client1.png
-   :width: 80%
-
-|
-
-「Get more extensions」のリンクを押下する。
-
-.. figure:: ./images_rest/install-dev-http-client2.png
-
-|
-
-検索フォームに「dev http client」を入力して検索する。
-
-.. figure:: ./images_rest/install-dev-http-client3.png
-
-|
-
-DHC REST Clientの「+ ADD TO CHROME」ボタンを押下する。
+`DHC REST Client <https://chrome.google.com/webstore/detail/talend-api-tester-free-ed/aejoelaoggembcahagimdiliamlcdmfm>`_ にアクセスし、「+ ADD TO CHROME」ボタンを押下する。
 
 .. figure:: ./images_rest/install-dev-http-client4.png
    :width: 80%
@@ -83,7 +69,7 @@ DHC REST Clientの「+ ADD TO CHROME」ボタンを押下する。
 
 |
 
-Chromeのアプリケーション一覧を開く(ブラウザのアドレスバーに「chrome://apps/」を指定して開く)と、DHCが追加されている。
+Chromeの拡張機能一覧を開く(ブラウザのアドレスバーに「chrome://extensions/」を指定して開く)と、DHCが追加されている。
    
 .. figure:: ./images_rest/install-dev-http-client6.png
     :width: 40%
@@ -92,7 +78,7 @@ Chromeのアプリケーション一覧を開く(ブラウザのアドレスバ�
 
 | DHCをクリックする。
 | 以下の画面が表示されれば、インストール完了となる。
-| この画面は、ブラウザのアドレスバーに「chrome-extension://aejoelaoggembcahagimdiliamlcdmfm/dhc.html」を入力する事で開く事もできる。
+| この画面は、ブラウザのアドレスバーに「chrome-extension://aejoelaoggembcahagimdiliamlcdmfm/index.html」を入力する事で開く事もできる。
    
 .. figure:: ./images_rest/install-dev-http-client7.png
    :width: 80%
@@ -1094,20 +1080,20 @@ GET Todoの実装
     :emphasize-lines: 8
 
     package com.example.todo.domain.service.todo;
-      
+
     import java.util.Collection;
-      
+
     import com.example.todo.domain.model.Todo;
 
     public interface TodoService {
         Todo findOne(String todoId);
 
         Collection<Todo> findAll();
-      
+
         Todo create(Todo todo);
-      
+
         Todo finish(String todoId);
-      
+
         void delete(String todoId);
     }
 

@@ -26,7 +26,7 @@ Webアプリケーション向け開発プロジェクトの作成
 
     * - 種別
       - 使用用途
-    * - | `マルチプロジェクト構成のブランクプロジェクト <https://github.com/Macchinetta/macchinetta-web-multi-blank/tree/1.8.0.RELEASE>`_
+    * - | `マルチプロジェクト構成のブランクプロジェクト <https://github.com/Macchinetta/macchinetta-web-multi-blank/tree/1.8.1.RELEASE>`_
       - 商用環境にリリースするような本格的なアプリケーションを開発する際に使用する。
 
         プロジェクトの雛形は、MavenのArchetypeとして、以下の1種類を用意している。
@@ -34,7 +34,7 @@ Webアプリケーション向け開発プロジェクトの作成
         * MyBatis3用の設定が盛り込まれた雛形
 
         **本ガイドラインでは、マルチプロジェクト構成のプロジェクトを使用する事を推奨している。**
-    * - | `シングルプロジェクト構成のブランクプロジェクト <https://github.com/Macchinetta/macchinetta-web-blank/tree/1.8.0.RELEASE>`_
+    * - | `シングルプロジェクト構成のブランクプロジェクト <https://github.com/Macchinetta/macchinetta-web-blank/tree/1.8.1.RELEASE>`_
       - POC(Proof Of Concept)、プロトタイプ、サンプルなどの簡易的なアプリケーションを作成する際に使用する。
 
         プロジェクトの雛形は、MavenのArchetypeとして、以下の2種類を用意している。
@@ -50,15 +50,15 @@ Webアプリケーション向け開発プロジェクトの作成
 --------------------------------------------------------------------------------
 
 マルチプロジェクト構成の開発プロジェクトを、
-`Maven Archetype Plugin <http://maven.apache.org/archetype/maven-archetype-plugin/>`_ の `archetype:generate <http://maven.apache.org/archetype/maven-archetype-plugin/generate-mojo.html>`_ を使用して作成する。
+`Maven Archetype Plugin <https://maven.apache.org/archetype/maven-archetype-plugin/>`_ の `archetype:generate <https://maven.apache.org/archetype/maven-archetype-plugin/generate-mojo.html>`_ を使用して作成する。
 
 .. note:: **前提条件**
 
     以降の説明では、
 
-    * `Maven <http://maven.apache.org/>`_ (\ ``mvn``\ コマンド)が使用可能であること
+    * `Maven <https://maven.apache.org/>`_ (\ ``mvn``\ コマンド)が使用可能であること
     * インターネットに繋がっていること
-    * インターネットにプロキシ経由で繋ぐ場合は、`Mavenのプロキシ設定 <http://maven.apache.org/guides/mini/guide-proxies.html>`_  が行われていること
+    * インターネットにプロキシ経由で繋ぐ場合は、`Mavenのプロキシ設定 <https://maven.apache.org/guides/mini/guide-proxies.html>`_  が行われていること
 
     を前提としている。
 
@@ -90,14 +90,14 @@ Webアプリケーション向け開発プロジェクトの作成
 
 |
 
-`Maven Archetype Plugin <http://maven.apache.org/archetype/maven-archetype-plugin/>`_ の `archetype:generate <http://maven.apache.org/archetype/maven-archetype-plugin/generate-mojo.html>`_ を使用して、プロジェクトを作成する。
+`Maven Archetype Plugin <https://maven.apache.org/archetype/maven-archetype-plugin/>`_ の `archetype:generate <https://maven.apache.org/archetype/maven-archetype-plugin/generate-mojo.html>`_ を使用して、プロジェクトを作成する。
 
 .. code-block:: console
 
     mvn archetype:generate -B^
      -DarchetypeGroupId=com.github.macchinetta.blank^
      -DarchetypeArtifactId=macchinetta-multi-web-blank-archetype^
-     -DarchetypeVersion=1.8.0.RELEASE^
+     -DarchetypeVersion=1.8.1.RELEASE^
      -DgroupId=com.example.todo^
      -DartifactId=todo^
      -Dversion=1.0.0-SNAPSHOT
@@ -144,7 +144,7 @@ Webアプリケーション向け開発プロジェクトの作成
 
     (... omit)
     [INFO] ----------------------------------------------------------------------------
-    [INFO] Using following parameters for creating project from Archetype: macchinetta-multi-web-blank-archetype:1.8.0.RELEASE
+    [INFO] Using following parameters for creating project from Archetype: macchinetta-multi-web-blank-archetype:1.8.1.RELEASE
     [INFO] ----------------------------------------------------------------------------
     [INFO] Parameter: groupId, Value: com.example.todo
     [INFO] Parameter: artifactId, Value: todo
@@ -160,13 +160,12 @@ Webアプリケーション向け開発プロジェクトの作成
     [INFO] Parent element not overwritten in C:\work\todo\todo-web\pom.xml
     [INFO] Parent element not overwritten in C:\work\todo\todo-initdb\pom.xml
     [INFO] Parent element not overwritten in C:\work\todo\todo-selenium\pom.xml
-    [INFO] project created from Archetype in dir: C:\work\todo
+    [INFO] Project created from Archetype in dir: C:\work\todo
     [INFO] ------------------------------------------------------------------------
     [INFO] BUILD SUCCESS
     [INFO] ------------------------------------------------------------------------
-    [INFO] Total time: 9.929 s
-    [INFO] Finished at: 2015-07-31T12:03:21+00:00
-    [INFO] Final Memory: 10M/26M
+    [INFO] Total time:  7.508 s
+    [INFO] Finished at: 2021-07-20T14:59:11+09:00
     [INFO] ------------------------------------------------------------------------
 
 |
@@ -628,7 +627,7 @@ Maven Archetypeで作成したプロジェクトでは、インメモリデー�
 .. note::
 
    上記設定例は、依存ライブラリのバージョンを親プロジェクトである terasoluna-gfw-parent で管理する前提であるため、pom.xmlでのバージョンの指定は不要である。
-   上記の依存ライブラリはterasoluna-gfw-parentが依存している\ `Spring Boot <https://docs.spring.io/spring-boot/docs/2.4.1/reference/htmlsingle/#dependency-versions>`_\ で管理されている。
+   上記の依存ライブラリはterasoluna-gfw-parentが依存している\ `Spring Boot <https://docs.spring.io/spring-boot/docs/2.6.1/reference/htmlsingle/#dependency-versions>`_\ で管理されている。
 
 **[artifactId-infra.properties]**
 
@@ -1534,18 +1533,18 @@ initdbモジュールの構成
       - initdbモジュールの構成を定義するPOM(Project Object Model)ファイル。
         このファイルでは、以下の定義を行う。
 
-        * ビルド用プラグイン(`SQL Maven Plugin <http://www.mojohaus.org/sql-maven-plugin/>`_)の定義
+        * ビルド用プラグイン(`SQL Maven Plugin <https://www.mojohaus.org/sql-maven-plugin/>`_)の定義
 
         作成時点では、PostgreSQL用の雛形設定が定義されている。
     * - | (2)
       - データベースを初期化するためのSQLファイルを格納するためのディレクトリ。
 
         作成時点では、空のディレクトリである。
-        作成例については、`サンプルアプリケーションのinitdbプロジェクト <https://github.com/terasolunaorg/terasoluna-tourreservation-mybatis3/tree/5.7.0.RELEASE/terasoluna-tourreservation-initdb/src/main/sqls>`_ を参照されたい。
+        作成例については、`サンプルアプリケーションのinitdbプロジェクト <https://github.com/terasolunaorg/terasoluna-tourreservation-mybatis3/tree/5.7.1.RELEASE/terasoluna-tourreservation-initdb/src/main/sqls>`_ を参照されたい。
 
 .. note::
 
-    `SQL Maven Plugin <http://www.mojohaus.org/sql-maven-plugin/>`_ の `sql:execute <http://www.mojohaus.org/sql-maven-plugin/execute-mojo.html>`_ を使用して、SQLを実行できる。
+    `SQL Maven Plugin <https://www.mojohaus.org/sql-maven-plugin/>`_ の `sql:execute <https://www.mojohaus.org/sql-maven-plugin/execute-mojo.html>`_ を使用して、SQLを実行できる。
 
         .. code-block:: console
 
@@ -1597,7 +1596,7 @@ Seleniumを使用したE2E(End To End)テスト用のコンポーネントを管
     * - | (2)
       - テスト用のコンポーネントと設定ファイルを格納するディレクトリ。
 
-        作成例については、`サンプルアプリケーションのseleniumプロジェクト <https://github.com/terasolunaorg/terasoluna-tourreservation-mybatis3/tree/5.7.0.RELEASE/terasoluna-tourreservation-selenium>`_ を参照されたい。
+        作成例については、`サンプルアプリケーションのseleniumプロジェクト <https://github.com/terasolunaorg/terasoluna-tourreservation-mybatis3/tree/5.7.1.RELEASE/terasoluna-tourreservation-selenium>`_ を参照されたい。
 
     * - | (3)
       - Selenium WebDriverを使用したサンプルテストクラス。
@@ -1645,8 +1644,8 @@ Maven Archetypeで作成したプロジェクトのプロジェクト階層の�
         Maven Archetypeで作成したプロジェクトはマルチモジュール構成となっており、
         親プロジェクトと各サブモジュールは相互参照の関係になっている。
 
-        version 1.8.0.RELEASE用のMaven Archetypeで作成したプロジェクトでは、
-        親プロジェクトとして「org.terasoluna.gfw:terasoluna-gfw-parent:5.7.0.RELEASE」を指定している。
+        version 1.8.1.RELEASE用のMaven Archetypeで作成したプロジェクトでは、
+        親プロジェクトとして「org.terasoluna.gfw:terasoluna-gfw-parent:5.7.1.RELEASE」を指定している。
     * - | (2)
       - TERASOLUNA Server Framework for Java (5.x) Parentプロジェクト。
 
@@ -1757,8 +1756,8 @@ Spring Frameworkのアプリケーションコンテキスト(DIコンテナ)の
 
 「:ref:`CreateWebApplicationProject`」では、
 マルチプロジェクト構成の開発プロジェクトを、
-`Maven Archetype Plugin <http://maven.apache.org/archetype/maven-archetype-plugin/>`_ の 
-`archetype:generate <http://maven.apache.org/archetype/maven-archetype-plugin/generate-mojo.html>`_ を使用して作成する方法について述べた。
+`Maven Archetype Plugin <https://maven.apache.org/archetype/maven-archetype-plugin/>`_ の 
+`archetype:generate <https://maven.apache.org/archetype/maven-archetype-plugin/generate-mojo.html>`_ を使用して作成する方法について述べた。
 Mavenはオンライン環境での動作が前提であるが、
 以下にオフライン環境でも使用できるようにする方法について述べる。
 
@@ -1778,7 +1777,7 @@ Mavenはオンライン環境での動作が前提であるが、
 |
 
 プロジェクト開発に必要であるライブラリやプラグイン等のファイルをコピーする。
-`Maven Archetype Plugin <http://maven.apache.org/archetype/maven-archetype-plugin/>`_ の 
+`Maven Archetype Plugin <https://maven.apache.org/archetype/maven-archetype-plugin/>`_ の 
 `dependency:go-offline <https://maven.apache.org/plugins/maven-dependency-plugin/go-offline-mojo.html>`_ を実行することでコピーする。
 なお、\ ``dependency:go-offline``\ のみではマルチプロジェクトの依存関係を解決できずビルドに失敗するため、\ ``package``\ を指定している。
 
@@ -1806,22 +1805,21 @@ Mavenはオンライン環境での動作が前提であるが、
 .. code-block:: console
 
 	(... omit)    
-	[INFO] ------------------------------------------------------------------------
-	[INFO] Reactor Summary:
-	[INFO]
-	[INFO] Macchinetta Server Framework (1.x) Web Blank Multi Project SUCCESS [  0.006 s]
-	[INFO] todo-env ........................................... SUCCESS [ 46.565 s]
-	[INFO] todo-domain ........................................ SUCCESS [  0.684 s]
-	[INFO] todo-web ........................................... SUCCESS [ 12.832 s]
-	[INFO] todo-initdb ........................................ SUCCESS [  0.067 s]
-	[INFO] todo-selenium ...................................... SUCCESS [01:13 min]
-	[INFO] ------------------------------------------------------------------------
-	[INFO] BUILD SUCCESS
-	[INFO] ------------------------------------------------------------------------
-	[INFO] Total time: 02:14 min
-	[INFO] Finished at: 2015-10-01T10:32:34+09:00
-	[INFO] Final Memory: 36M/206M
-	[INFO] ------------------------------------------------------------------------
+       [INFO] ------------------------------------------------------------------------
+       [INFO] Reactor Summary for Macchinetta Server Framework (1.x) Web Blank Multi Project 1.0.0-SNAPSHOT:
+       [INFO]
+       [INFO] Macchinetta Server Framework (1.x) Web Blank Multi Project SUCCESS [08:06 min]
+       [INFO] todo-env ........................................... SUCCESS [04:33 min]
+       [INFO] todo-domain ........................................ SUCCESS [ 45.069 s]
+       [INFO] todo-web ........................................... SUCCESS [03:01 min]
+       [INFO] todo-initdb ........................................ SUCCESS [01:23 min]
+       [INFO] todo-selenium ...................................... SUCCESS [01:17 min]
+       [INFO] ------------------------------------------------------------------------
+       [INFO] BUILD SUCCESS
+       [INFO] ------------------------------------------------------------------------
+       [INFO] Total time:  20:18 min
+       [INFO] Finished at: 2021-07-20T15:23:39+09:00
+       [INFO] ------------------------------------------------------------------------
 
 |
 

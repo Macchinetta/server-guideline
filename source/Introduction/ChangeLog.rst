@@ -11,6 +11,118 @@
       - 更新箇所
       - 更新内容
 
+    * - 2022-03-30
+      - \-
+      - 1.8.1 RELEASE版公開
+
+    * -
+      - 全般
+      - ガイドラインの誤記(タイプミスや単純な記述ミスなど)の修正
+
+        記載内容の改善
+
+        記載内容の修正・追加
+
+        * ログインジェクション対策としてlogbackのフォーマットパターンを修正
+
+    * -
+      - :doc:`../Introduction/CriteriaBasedMapping`
+      - OWASP Top 10 を2017版から2021版へ変更
+
+        * OWASP(Open Web Application Security Project)による観点の更新
+
+    * -
+      - :doc:`../Overview/FrameworkStack`
+      - 利用するOSSのバージョンを更新
+
+        * Spring Bootを2.6.1に更新
+        * MyBatisを3.5.7に更新
+        * Dozerを6.5.2に更新
+        * Apache POIを4.1.2に更新
+
+        Spring Boot のバージョン更新に伴い利用するOSSのバージョンを更新
+
+        * Spring Frameworkを5.3.13に更新
+        * Spring Dataを2.6.0に更新
+        * Spring Securityを5.6.0に更新
+        * Hibernateを5.6.1(JPA 2.2)に更新
+        * AspectJを1.9.7に更新
+        * SLF4Jを1.7.32に更新
+        * Jacksonを2.13.0に更新
+        * Hibernate Validatorを6.2.0(Bean Validation 2.0)に更新
+        * Apache Commons Langを3.12.0に更新
+        * Apache Commons DBCPを2.9.0に更新
+        * Lombokを1.18.22に更新
+        * Logbackを1.2.7に更新
+
+        単体テストで利用するOSSのバージョンを更新
+
+        * DB Unitを2.7.2に更新
+        * Mockitoを4.0.0に更新
+        * Spring Testを5.3.13に更新
+
+        利用するOSSのサポートを終了
+
+        * Spring Security標準OAuthのサポートに伴い、非推奨となっているSpring Security OAuthをサポート対象外として削除
+
+        記載内容の追加
+
+        * \ `CVE-2021-42550 <https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-42550>`_\に関する説明及び注意点を追加
+
+    * -
+      - :doc:`../ImplementationAtEachLayer/CreateProject`
+      - 記載内容の修正
+
+        * warファイルのコピーに使用するmaven-dependency-pluginのバージョンを更新し、使用するゴールをcopyに変更
+
+    * -
+      - :doc:`../ArchitectureInDetail/WebServiceDetail/RestClient`
+      - 記載内容の修正
+
+        * \ ``RequestFactoryBean``\ 内の\ ``HttpClient``\ がクローズされるように修正
+
+    * -
+      - :doc:`../Security/OAuth2`
+      - 記載内容の修正
+
+        * Spring Security標準OAuthのサポートに伴い、説明内容を修正
+
+    * -
+      - :doc:`../Security/SecureLoginDemo`
+      - 記載内容の修正
+
+        * Passayを1.6.1に更新したことに伴い、説明内容を修正
+
+    * -
+      - :doc:`../Tutorial/TutorialREST`
+      - 記載内容の追加
+
+        * REST ClientがDHC REST ClientからTalend API Testerに置き換わっていることについてのNoteを追加
+
+    * -
+      - :doc:`../Tutorial/TutorialSession`
+      - 記載内容の追加
+
+        * JDK11の場合のビルド手順についてのNoteを追加
+
+    * -
+      - :doc:`../UnitTest/ImplementsOfUnitTest/ImplementsOfTestByLayer`
+      - 記載内容の削除
+
+        * DB Unitの更新に伴い、Apache POIのダウングレードに関するWarningを削除
+
+    * -
+      - :doc:`../Appendix/SpringToolSuite4`
+      - 新規追加
+
+        * STS4の設定手順を追加
+        
+    * -
+      - :doc:`../Appendix/OAuth`
+      - 新規追加
+
+        * Spring Security標準OAuthのサポートに伴い、Spring Security OAuthの説明をAppendixへ移動
+
     * - 2021-03-26
       - \-
       - 1.8.0 RELEASE版公開
@@ -67,14 +179,14 @@
 
         TERASOLUNA Server Framework for Java (5.x)の共通ライブラリの機能改善
 
-        * TERASOLUNA Server Framework for Java (5.x)の共通ライブラリが用意する入力チェックルールの日本語メッセージを提供
+        * 共通ライブラリが用意する入力チェックルールの日本語メッセージを提供
         * \ ``@Compare``\がBean Validation 2.0に準拠
         * Bootstrap v4以降に対応するため、以下の変更
 
           - \ ``ResultMessages``\の標準メッセージタイプに、\ ``primary``\、\ ``secondary``\、\ ``light``\、\ ``dark``\を追加
           - \ ``<t:pagination>``\タグに、\ ``anchorClass``\属性を追加
 
-        * TERASOLUNA Server Framework for Java (5.x)の共通ライブラリの非推奨APIを削除
+        * 共通ライブラリの非推奨APIを削除
 
     * -
       - :doc:`../ImplementationAtEachLayer/CreateWebApplicationProject`
@@ -106,7 +218,7 @@
       - 記載内容の修正
 
         * Hibernate Validator 6.1.0より日本語メッセージが提供されたことへの対応
-        * TERASOLUNA Server Framework for Java (5.x)の共通ライブラリが用意する入力チェックルールの日本語メッセージを提供
+        * 共通ライブラリが用意する入力チェックルールの日本語メッセージを提供
         * \ ``@Compare``\がBean Validation 2.0に準拠
         * 相関項目チェックルールのコード例において、エラーメッセージを確認用フィールドに表示するように変更
         * Bean Validationを利用した相関項目チェックルールのコード例をBean Validation 2.0に準拠するよう変更
@@ -145,7 +257,7 @@
         * ブランクプロジェクトにおいてSpring Securityのフォーム認証を使用しない場合の注意事項を追加
 
     * -
-      - :doc:`../Security/OAuth`
+      - :doc:`../Appendix/OAuth`
       - 記載内容の修正・追加
 
         * Spring Security OAuth 2.5.0より\ ``DefaultUserAuthenticationConverter#getAuthorities``\の可視性が変更されたことへの対応
@@ -262,13 +374,13 @@
 
         TERASOLUNA Server Framework for Java (5.x)の共通ライブラリの機能改善
 
-        * TERASOLUNA Server Framework for Java (5.x)の共通ライブラリが用意する入力チェックルールのデフォルトエラーメッセージをTERASOLUNA Server Framework for Java (5.x)の共通ライブラリで提供
+        * 共通ライブラリが用意する入力チェックルールのデフォルトエラーメッセージを共通ライブラリで提供
         * \ ``<t:pagination>``\タグに、\ ``innerElementClass``\属性を追加
-        * \ ``Argon2PasswordEncoder``\のサポートに伴い、\ ``bcprov-jdk15on``\への依存関係をTERASOLUNA Server Framework for Java (5.x)の共通ライブラリで管理
+        * \ ``Argon2PasswordEncoder``\のサポートに伴い、\ ``bcprov-jdk15on``\への依存関係を共通ライブラリで管理
 
         記載内容の追加
 
-        * TERASOLUNA Server Framework for Java (5.x)の共通ライブラリの構成要素に、TERASOLUNA Server Framework のバージョンについてのNoteを追加
+        * 共通ライブラリの構成要素に、TERASOLUNA Server Framework のバージョンについてのNoteを追加
 
     * -
       - :doc:`../ImplementationAtEachLayer/ApplicationLayer`
@@ -285,7 +397,7 @@
 
         記載内容の修正
 
-        * TERASOLUNA Server Framework for Java (5.x)の共通ライブラリが用意する入力チェックルールのデフォルトエラーメッセージをTERASOLUNA Server Framework for Java (5.x)の共通ライブラリで提供するように変更したことに伴う記載内容の変更
+        * 共通ライブラリが用意する入力チェックルールのデフォルトエラーメッセージを共通ライブラリで提供するように変更したことに伴う記載内容の変更
 
     * -
       - :doc:`../ArchitectureInDetail/WebApplicationDetail/Pagination`
@@ -313,7 +425,7 @@
       - :doc:`../ArchitectureInDetail/WebApplicationDetail/TagLibAndELFunctions`
       - TERASOLUNA Server Framework for Java (5.x)の共通ライブラリのバグ改修に伴う修正
 
-        * TERASOLUNA Server Framework for Java (5.x)の共通ライブラリのバグ改修(\ `terasoluna-gfw#846 <https://github.com/terasolunaorg/terasoluna-gfw/issues/846>`_\)に伴い、\ ``f:query``\ の仕様に関する説明を修正
+        * 共通ライブラリのバグ改修(\ `terasoluna-gfw#846 <https://github.com/terasolunaorg/terasoluna-gfw/issues/846>`_\)に伴い、\ ``f:query``\ の仕様に関する説明を修正
 
     * -
       - :doc:`../ArchitectureInDetail/WebServiceDetail/RestClient`
@@ -325,7 +437,7 @@
       - :doc:`../ArchitectureInDetail/DataAccessDetail/DataAccessCommon`
       - 記載内容の削除
 
-        *  TERASOLUNA Server Framework for Java (5.x)の共通ライブラリの変更に伴うlog4jdbcの記載の削除
+        *  共通ライブラリの変更に伴うlog4jdbcの記載の削除
 
     * -
       - :doc:`../ArchitectureInDetail/GeneralFuncDetail/Dozer`
@@ -375,7 +487,7 @@
 
         TERASOLUNA Server Framework for Java (5.x)の共通ライブラリの機能改善
 
-        * \ ``Argon2PasswordEncoder``\のサポートに伴い、\ ``bcprov-jdk15on``\への依存関係をTERASOLUNA Server Framework for Java (5.x)の共通ライブラリで管理
+        * \ ``Argon2PasswordEncoder``\のサポートに伴い、\ ``bcprov-jdk15on``\への依存関係を共通ライブラリで管理
 
         記載内容の追加
 
@@ -726,7 +838,7 @@
         * Spring Securityがサポートするセキュリティヘッダの一覧にFeature-Policyヘッダを追加
 
     * -
-      - :doc:`../Security/OAuth`
+      - :doc:`../Appendix/OAuth`
       - Spring Security OAuth 2.2.2対応に伴う修正
 
         * Spring Security OAuthのバージョン更新に伴いリダイレクトURI情報を保持するテーブルへの説明にWarningを追加
@@ -737,7 +849,7 @@
 
         記載内容の追加
 
-        * \ `CVE-2019-3778 <https://pivotal.io/security/cve-2019-3778>`_\ (オープンリダイレクト脆弱性)に関する注意喚起を追加
+        * \ `CVE-2019-3778 <https://tanzu.vmware.com/security/cve-2019-3778>`_\ (オープンリダイレクト脆弱性)に関する注意喚起を追加
 
     * -
       - :doc:`../Tutorial/TutorialTodo`
@@ -785,7 +897,7 @@
         * Spring Securityのバージョンを4.2.4に更新
 
     * -
-      - :doc:`../Security/OAuth`
+      - :doc:`../Appendix/OAuth`
       - 記載内容の修正
 
         * 認可サーバのチェックトークンエンドポイントのURL設定が反映されない不具合へのWarningを削除
@@ -883,7 +995,7 @@
         * \ ``document.write()`` \を使用する際の注意事項を追加
 
     * -
-      - :doc:`../Security/OAuth`
+      - :doc:`../Appendix/OAuth`
       - 構成見直し
 
         * How to useをグラントタイプ毎に説明する章構成に変更

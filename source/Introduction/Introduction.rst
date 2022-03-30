@@ -25,9 +25,9 @@ Spring Frameworkに関して、本ドキュメントを読むための基礎知�
 \ :doc:`../Appendix/SpringComprehensionCheck`\ を参照されたい。
 この理解度テストが4割回答できない場合は、別途以下のような入門書籍で学習することを推奨する。
 
-* `Spring徹底入門 (翔泳社) [日本語] <http://www.shoeisha.co.jp/book/detail/9784798142470>`_
-* `Spring3入門—Javaフレームワーク・より良い設計とアーキテクチャ (技術評論社) [日本語] <http://gihyo.jp/book/2012/978-4-7741-5380-3>`_
-* `Pro Spring 4th Edition (Apress) <http://www.apress.com/9781430261513>`_
+* `Spring徹底入門 (翔泳社) [日本語] <https://www.shoeisha.co.jp/book/detail/9784798142470>`_
+* `Spring3入門―Javaフレームワーク・より良い設計とアーキテクチャ (技術評論社) [日本語] <https://gihyo.jp/book/2012/978-4-7741-5380-3>`_
+* `Pro Spring 4th Edition (Apress) <https://link.springer.com/book/10.1007/978-1-4302-6152-0>`_
 
 このドキュメントの構成
 ================================================================================
