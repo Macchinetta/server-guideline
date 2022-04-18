@@ -87,7 +87,7 @@ URL一覧を以下に示す。
 プロジェクトの作成
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Mavenのアーキタイプを利用し、\ `Macchinetta Server Framework (1.x)のブランクプロジェクト <https://github.com/Macchinetta/macchinetta-web-blank/tree/1.8.1.RELEASE>`_\ を作成する。
+Mavenのアーキタイプを利用し、\ `Macchinetta Server Framework (1.x)のブランクプロジェクト <https://github.com/Macchinetta/macchinetta-web-blank/tree/1.8.1.SP1.RELEASE>`_\ を作成する。
 
 本チュートリアルでは、MyBatis3用のブランクプロジェクトを作成する。
 
@@ -99,7 +99,7 @@ Mavenのアーキタイプを利用し、\ `Macchinetta Server Framework (1.x)�
     mvn archetype:generate -B^
      -DarchetypeGroupId=com.github.macchinetta.blank^
      -DarchetypeArtifactId=macchinetta-web-blank-archetype^
-     -DarchetypeVersion=1.8.1.RELEASE^
+     -DarchetypeVersion=1.8.1.SP1.RELEASE^
      -DgroupId=com.example.security^
      -DartifactId=first-springsecurity^
      -Dversion=1.0.0-SNAPSHOT

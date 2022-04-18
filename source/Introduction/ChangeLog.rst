@@ -11,6 +11,17 @@
       - 更新箇所
       - 更新内容
 
+    * - 2022-04-20
+      - \-
+      - 1.8.1.SP1 RELEASE版公開
+
+    * -
+      - :doc:`../Overview/FrameworkStack`
+      - CVE-2022-22965への対応のため、利用するOSSのバージョンを更新
+
+        * Spring Frameworkのバージョンを5.3.18に更新
+        * Spring Testのバージョンを5.3.18に更新
+
     * - 2022-03-30
       - \-
       - 1.8.1 RELEASE版公開
