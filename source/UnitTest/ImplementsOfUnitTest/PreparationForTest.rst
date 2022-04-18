@@ -156,7 +156,7 @@ initdbプロジェクトについては、\ :ref:`CreateWebApplicationProjectCon
     * SQL解析メタデータ(\ ``config``\ に\ ``@SqlConfig``\ アノテーションを指定)
 
     また、\ ``@Sql``\ アノテーションはデフォルトで有効になっている\ ``SqlScriptsTestExecutionListener``\ によって
-    実行される。詳細は、\ `Executing SQL scripts declaratively with @Sql <https://docs.spring.io/spring/docs/5.2.12.RELEASE/spring-framework-reference/testing.html#testcontext-executing-sql-declaratively>`_\
+    実行される。詳細は、\ `Executing SQL scripts declaratively with @Sql <https://docs.spring.io/spring/docs/5.2.20.RELEASE/spring-framework-reference/testing.html#testcontext-executing-sql-declaratively>`_\
     を参照されたい。
 
     なお、\ ``@Sql``\ アノテーションと\ ``@SqlConfig``\ アノテーションによる構成は\ ``<jdbc:initialize-database>``\ 要素

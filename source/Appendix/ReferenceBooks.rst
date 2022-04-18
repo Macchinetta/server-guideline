@@ -37,7 +37,7 @@
    * - `Spring Security 3.1 <http://www.packtpub.com/spring-security-3-1/book>`_
      - Packt Publishing
      - 
-   * - `Spring3入門—Javaフレームワーク・より良い設計とアーキテクチャ <http://gihyo.jp/book/2012/978-4-7741-5380-3>`_
+   * - `Spring3入門―Javaフレームワーク・より良い設計とアーキテクチャ <http://gihyo.jp/book/2012/978-4-7741-5380-3>`_
      - 技術評論社
      - 日本語
    * - `Beginning Java EE 6 GlassFish 3で始めるエンタープライズJava <http://www.shoeisha.co.jp/book/detail/9784798124605>`_

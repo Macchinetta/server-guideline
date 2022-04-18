@@ -617,7 +617,7 @@ spring-mvc-rest.xmlの作成
    * - | (2)
      - \ Controllerの引数と返り値で扱うJavaBeanをシリアライズ/デシリアライズするためのクラス(\ ``org.springframework.http.converter.HttpMessageConverter``\ )を設定する。
        ここではJSON形式を扱う\ ``MappingJackson2HttpMessageConverter``\ を使用する。
-
+       
        \ ``MappingJackson2HttpMessageConverter``\ の\ ``objectMapper``\ プロパティに、Jacksonより提供されている\ ``ObjectMapper``\ (「JSON <-> JavaBean」の変換を行うためのコンポーネント)を指定する。
        本チュートリアルでは、日時型のフォーマットをカスタマイズしたObjectMapperを指定している。 カスタマイズする必要がない場合は\ ``objectMapper``\ プロパティは省略可能である。
 
@@ -628,7 +628,7 @@ spring-mvc-rest.xmlの作成
        \ ``Date``\ オブジェクトをシリアライズする際にISO-8601形式にする場合は、\ ``com.fasterxml.jackson.databind.util.StdDateFormat``\ を設定する事で実現する事ができる。
    * - | (4)
      - \ ``<mvc:message-converters>``\ に、\ ``MappingJackson2HttpMessageConverter``\ を登録する
-
+       
        Spring MVCのデフォルト設定ではアプリケーションのクラスパスに応じて使用可能な\ ``HttpMessageConverter``\ が自動的に登録されるが、ここではリソースの形式をJSONに限定したいため、register-defaults属性を\ ``false``\に設定し、上で定義した\ ``MappingJackson2HttpMessageConverter``\ のみを登録している。
    * - | (5)
      - REST API用のパッケージ配下のコンポーネントをスキャンする。
@@ -1098,7 +1098,7 @@ GET Todoの実装
     import java.util.Collection;
       
     import com.example.todo.domain.model.Todo;
-
+      
     public interface TodoService {
         Todo findOne(String todoId);
       

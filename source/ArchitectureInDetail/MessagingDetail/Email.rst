@@ -779,18 +779,18 @@ HTMLメールの送信
       - 例外クラス
       - 発生条件
     * - 1.
-      - `MailAuthenticationException <https://docs.spring.io/spring/docs/5.2.12.RELEASE/javadoc-api/org/springframework/mail/MailAuthenticationException.html>`_
+      - `MailAuthenticationException <https://docs.spring.io/spring/docs/5.2.20.RELEASE/javadoc-api/org/springframework/mail/MailAuthenticationException.html>`_
       - | 認証失敗時に発生する。
     * - 2.
-      - `MailParseException <https://docs.spring.io/spring/docs/5.2.12.RELEASE/javadoc-api/org/springframework/mail/MailParseException.html>`_
+      - `MailParseException <https://docs.spring.io/spring/docs/5.2.20.RELEASE/javadoc-api/org/springframework/mail/MailParseException.html>`_
       - | メールメッセージのプロパティに不正な値が設定されている場合に発生する。
     * - 3.
-      - `MailPreparationException <https://docs.spring.io/spring/docs/5.2.12.RELEASE/javadoc-api/org/springframework/mail/MailPreparationException.html>`_
+      - `MailPreparationException <https://docs.spring.io/spring/docs/5.2.20.RELEASE/javadoc-api/org/springframework/mail/MailPreparationException.html>`_
       - | メールメッセージを作成中に想定外のエラーが起きた場合に発生する。
           想定外のエラーとしては、例えばテンプレートライブラリで発生するエラーといったものがある。
         | \ ``MimeMessagePreparator``\ で発生した例外が\ ``MailPreparationException``\ にラップされてスローされる。
     * - 4.
-      - `MailSendException <https://docs.spring.io/spring/docs/5.2.12.RELEASE/javadoc-api/org/springframework/mail/MailSendException.html>`_
+      - `MailSendException <https://docs.spring.io/spring/docs/5.2.20.RELEASE/javadoc-api/org/springframework/mail/MailSendException.html>`_
       - | メールの送信エラーが起きた場合に発生する。
 
 .. note::
@@ -882,7 +882,7 @@ FreeMarkerを使用したメール本文の作成
 
     .. note::
 
-       上記以外の設定については、\ `FreeMarkerConfigurationFactoryBeanのJavaDoc <https://docs.spring.io/spring/docs/5.2.12.RELEASE/javadoc-api/org/springframework/ui/freemarker/FreeMarkerConfigurationFactoryBean.html>`_\ を参照されたい。
+       上記以外の設定については、\ `FreeMarkerConfigurationFactoryBeanのJavaDoc <https://docs.spring.io/spring/docs/5.2.20.RELEASE/javadoc-api/org/springframework/ui/freemarker/FreeMarkerConfigurationFactoryBean.html>`_\ を参照されたい。
        また、FreeMarker自体の設定については、\ `FreeMarker Manual (Programmer's Guide / The Configuration) <http://freemarker.org/docs/pgui_config.html>`_\ を参照されたい。
 
 * メール本文のテンプレートファイルを作成する。
@@ -1010,13 +1010,13 @@ MS932で入力された文字列に対し、エンコードにISO-2022-JPをは�
        | （JIS）
      - | JIS X 0208
        | 代替文字
-   * - | —（全角ハイフン）
+   * - | ―（全角ハイフン）
      - | 815D
      - | U+2015
      - | U+2014
      - | 213E
      - | —（EM ダッシュ）
-   * - | −（ハイフンマイナス）
+   * - | －（ハイフンマイナス）
      - | 817C
      - | U+FF0D
      - | U+2212
@@ -1028,25 +1028,25 @@ MS932で入力された文字列に対し、エンコードにISO-2022-JPをは�
      - | U+301C
      - | 2141
      - | 〜（波ダッシュ）
-   * - | ‖（平行記号）
+   * - | ∥（平行記号）
      - | 8161
      - | U+2225
      - | U+2016
      - | 2142
      - | ‖（双柱）
-   * - | ¢（全角セント記号）
+   * - | ￠（全角セント記号）
      - | 8191
      - | U+FFE0
      - | U+00A2
      - | 2171
      - | ¢（セント記号）
-   * - | £（全角ポンド記号）
+   * - | ￡（全角ポンド記号）
      - | 8192
      - | U+FFE1
      - | U+00A3
      - | 2172
      - | £（ポンド記号）
-   * - | ¬（全角否定記号）
+   * - | ￢（全角否定記号）
      - | 81CA
      - | U+FFE2
      - | U+00AC
@@ -1072,11 +1072,11 @@ MS932で入力された文字列に対し、エンコードにISO-2022-JPをは�
         for (int i = 0; i < ch.length; i++) {
             switch (ch[i]) {
 
-            // '—'（全角ハイフン）
+            // '―'（全角ハイフン）
             case '\u2015':
                 ch[i] = '\u2014';
                 break;
-            // '−'（全角マイナス）
+            // '－'（全角マイナス）
             case '\uff0d':
                 ch[i] = '\u2212';
                 break;
@@ -1084,19 +1084,19 @@ MS932で入力された文字列に対し、エンコードにISO-2022-JPをは�
             case '\uff5e':
                 ch[i] = '\u301c';
                 break;
-            // '‖'（双柱）
+            // '∥'（双柱）
             case '\u2225':
                 ch[i] = '\u2016';
                 break;
-            // '¢'（セント記号)
+            // '￠'（セント記号)
             case '\uffe0':
                 ch[i] = '\u00A2';
                 break;
-            // '£'（ポンド記号）
+            // '￡'（ポンド記号）
             case '\uffe1':
                 ch[i] = '\u00A3';
                 break;
-            // '¬'（否定記号）
+            // '￢'（否定記号）
             case '\uffe2':
                 ch[i] = '\u00AC';
                 break;

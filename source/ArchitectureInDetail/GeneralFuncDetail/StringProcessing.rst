@@ -173,7 +173,7 @@ How to use
 \ ``FullHalfConverter``\ クラスは、変換対象にしたい全角文字と半角文字のペア定義(\ ``org.terasoluna.gfw.common.fullhalf.FullHalfPair``\ )を事前に登録しておくスタイルを採用している。
 共通ライブラリでは、デフォルトのペア定義が登録されている\ ``FullHalfConverter``\ オブジェクトを、
 \ ``org.terasoluna.gfw.common.fullhalf.DefaultFullHalf``\ クラスの\ ``INSTANCE``\ 定数として提供している。
-デフォルトのペア定義については、`DefaultFullHalfのソース <https://github.com/terasolunaorg/terasoluna-gfw/tree/5.6.2.RELEASE/terasoluna-gfw-common-libraries/terasoluna-gfw-string/src/main/java/org/terasoluna/gfw/common/fullhalf/DefaultFullHalf.java>`_ を参照されたい。
+デフォルトのペア定義については、`DefaultFullHalfのソース <https://github.com/terasolunaorg/terasoluna-gfw/tree/5.6.2.SP1.RELEASE/terasoluna-gfw-common-libraries/terasoluna-gfw-string/src/main/java/org/terasoluna/gfw/common/fullhalf/DefaultFullHalf.java>`_ を参照されたい。
 
 .. note::
 
@@ -208,7 +208,7 @@ How to use
 
 .. code-block:: java
 
-   String fullwidth = DefaultFullHalf.INSTANCE.toFullwidth("ア゛!A8ガザ");    // (1)
+   String fullwidth = DefaultFullHalf.INSTANCE.toFullwidth("ｱﾞ!A8ｶﾞザ");    // (1)
 
 .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
 .. list-table::
@@ -229,7 +229,7 @@ How to use
 
 .. code-block:: java
 
-   String halfwidth = DefaultFullHalf.INSTANCE.toHalfwidth("Ａ！アガサ");    // (1)
+   String halfwidth = DefaultFullHalf.INSTANCE.toHalfwidth("Ａ！アガｻ");    // (1)
 
 .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
 .. list-table::
@@ -240,11 +240,11 @@ How to use
      - 説明
    * - | (1)
      - | 全角文字が含まれる文字列を\ ``toHalfwidth``\ メソッドの引数に渡し、半角文字列へ変換する。
-       | 本例では、\ ``A!アガサ``\ に変換される。なお、ペア定義されていない文字（本例の"\ ``サ``\" ）はそのまま返却される。
+       | 本例では、\ ``A!ｱｶﾞｻ``\ に変換される。なお、ペア定義されていない文字（本例の"\ ``ｻ``\" ）はそのまま返却される。
 
 .. note::
 
-    \ ``FullHalfConverter``\ は、2文字以上で1文字を表現する結合文字（例：「"\ ``シ``\" (\ ``\u30b7``\ ) + 濁点(\ ``\u3099``\ )」）を半角文字（例：\ ``ジ``\ ）へ変換することが出来ない。
+    \ ``FullHalfConverter``\ は、2文字以上で1文字を表現する結合文字（例：「"\ ``シ``\" (\ ``\u30b7``\ ) + 濁点(\ ``\u3099``\ )」）を半角文字（例：\ ``ｼﾞ``\ ）へ変換することが出来ない。
     結合文字を半角文字へ変換する場合は、テキスト正規化を行って合成文字（例："\ ``ジ``\" (\ ``\u30b8``\ )）に変換してから \ ``FullHalfConverter``\ を使用する必要がある。
     
     テキスト正規化を行う場合は、\ ``java.text.Normalizer``\ を使用する。
@@ -256,7 +256,7 @@ How to use
       .. code-block:: java
 
          String str1 = Normalizer.normalize("モジ", Normalizer.Form.NFD); // str1 = "モシ + Voiced sound mark(\u3099)"
-         String str2 = Normalizer.normalize("モジ", Normalizer.Form.NFD);  // str2 = "モジ"
+         String str2 = Normalizer.normalize("ﾓｼﾞ", Normalizer.Form.NFD);  // str2 = "ﾓｼﾞ"
 
     正規化形式としてNFC（正準等価性によって分解し、再度合成する）を使用する場合の実装例
     
@@ -264,14 +264,14 @@ How to use
 
          String mojiStr = "モシ\u3099";                                   // "モシ + Voiced sound mark(\u3099)"
          String str1 = Normalizer.normalize(mojiStr, Normalizer.Form.NFC); // str1 = "モジ（\u30b8）"
-         String str2 = Normalizer.normalize("モジ", Normalizer.Form.NFC);   // str2 = "モジ"
+         String str2 = Normalizer.normalize("ﾓｼﾞ", Normalizer.Form.NFC);   // str2 = "ﾓｼﾞ"
     
     正規化形式としてNFKD（互換等価性によって分解する）を使用する場合の実装例
     
       .. code-block:: java
 
          String str1 = Normalizer.normalize("モジ", Normalizer.Form.NFKD); // str1 = "モシ + Voiced sound mark(\u3099)"
-         String str2 = Normalizer.normalize("モジ", Normalizer.Form.NFKD);  // str2 = "モシ + Voiced sound mark(\u3099)"
+         String str2 = Normalizer.normalize("ﾓｼﾞ", Normalizer.Form.NFKD);  // str2 = "モシ + Voiced sound mark(\u3099)"
     
     正規化形式としてNFKC（互換等価性によって分解し、再度合成する）を使用する場合の実装例
     
@@ -279,7 +279,7 @@ How to use
 
          String mojiStr = "モシ\u3099";                                    // "モシ + Voiced sound mark(\u3099)"
          String str1 = Normalizer.normalize(mojiStr, Normalizer.Form.NFKC); // str1 = "モジ（\u30b8）"
-         String str2 = Normalizer.normalize("モジ", Normalizer.Form.NFKC) ;  // str2 = "モジ"
+         String str2 = Normalizer.normalize("ﾓｼﾞ", Normalizer.Form.NFKC) ;  // str2 = "モジ"
     
     
     詳細は \ `NormalizerのJavaDoc <https://docs.oracle.com/javase/8/docs/api/java/text/Normalizer.html>`_\ を参照されたい。
@@ -317,31 +317,31 @@ How to use
             }
             
             // (4)
-            builder.pair("。", "。").pair("「", "「").pair("」", "」").pair("、", "、")
-                    .pair("・", "・").pair("ァ", "ァ").pair("ィ", "ィ").pair("ゥ", "ゥ")
-                    .pair("ェ", "ェ").pair("ォ", "ォ").pair("ャ", "ャ").pair("ュ", "ュ")
-                    .pair("ョ", "ョ").pair("ッ", "ッ").pair("ア", "ア").pair("イ", "イ")
-                    .pair("ウ", "ウ").pair("エ", "エ").pair("オ", "オ").pair("カ", "カ")
-                    .pair("キ", "キ").pair("ク", "ク").pair("ケ", "ケ").pair("コ", "コ")
-                    .pair("サ", "サ").pair("シ", "シ").pair("ス", "ス").pair("セ", "セ")
-                    .pair("ソ", "ソ").pair("タ", "タ").pair("チ", "チ").pair("ツ", "ツ")
-                    .pair("テ", "テ").pair("ト", "ト").pair("ナ", "ナ").pair("ニ", "ニ")
-                    .pair("ヌ", "ヌ").pair("ネ", "ネ").pair("ノ", "ノ").pair("ハ", "ハ")
-                    .pair("ヒ", "ヒ").pair("フ", "フ").pair("ヘ", "ヘ").pair("ホ", "ホ")
-                    .pair("マ", "マ").pair("ミ", "ミ").pair("ム", "ム").pair("メ", "メ")
-                    .pair("モ", "モ").pair("ヤ", "ヤ").pair("ユ", "ユ").pair("ヨ", "ヨ")
-                    .pair("ラ", "ラ").pair("リ", "リ").pair("ル", "ル").pair("レ", "レ")
-                    .pair("ロ", "ロ").pair("ワ", "ワ").pair("ヲ", "ヲ").pair("ン", "ン")
-                    .pair("ガ", "ガ").pair("ギ", "ギ").pair("グ", "グ")
-                    .pair("ゲ", "ゲ").pair("ゴ", "ゴ").pair("ザ", "ザ")
-                    .pair("ジ", "ジ").pair("ズ", "ズ").pair("ゼ", "ゼ")
-                    .pair("ゾ", "ゾ").pair("ダ", "ダ").pair("ヂ", "ヂ")
-                    .pair("ヅ", "ヅ").pair("デ", "デ").pair("ド", "ド")
-                    .pair("バ", "バ").pair("ビ", "ビ").pair("ブ", "ブ")
-                    .pair("ベ", "ベ").pair("ボ", "ボ").pair("パ", "パ")
-                    .pair("ピ", "ピ").pair("プ", "プ").pair("ペ", "ペ")
-                    .pair("ポ", "ポ").pair("ヴ", "ヴ").pair("\u30f7", "ワ゛")
-                    .pair("\u30fa", "ヲ゛").pair("゛", "゛").pair("゜", "゜").pair("　", " ");
+            builder.pair("。", "｡").pair("「", "｢").pair("」", "｣").pair("、", "､")
+                    .pair("・", "･").pair("ァ", "ｧ").pair("ィ", "ｨ").pair("ゥ", "ｩ")
+                    .pair("ェ", "ｪ").pair("ォ", "ｫ").pair("ャ", "ｬ").pair("ュ", "ｭ")
+                    .pair("ョ", "ｮ").pair("ッ", "ｯ").pair("ア", "ｱ").pair("イ", "ｲ")
+                    .pair("ウ", "ｳ").pair("エ", "ｴ").pair("オ", "ｵ").pair("カ", "ｶ")
+                    .pair("キ", "ｷ").pair("ク", "ｸ").pair("ケ", "ｹ").pair("コ", "ｺ")
+                    .pair("サ", "ｻ").pair("シ", "ｼ").pair("ス", "ｽ").pair("セ", "ｾ")
+                    .pair("ソ", "ｿ").pair("タ", "ﾀ").pair("チ", "ﾁ").pair("ツ", "ﾂ")
+                    .pair("テ", "ﾃ").pair("ト", "ﾄ").pair("ナ", "ﾅ").pair("ニ", "ﾆ")
+                    .pair("ヌ", "ﾇ").pair("ネ", "ﾈ").pair("ノ", "ﾉ").pair("ハ", "ﾊ")
+                    .pair("ヒ", "ﾋ").pair("フ", "ﾌ").pair("ヘ", "ﾍ").pair("ホ", "ﾎ")
+                    .pair("マ", "ﾏ").pair("ミ", "ﾐ").pair("ム", "ﾑ").pair("メ", "ﾒ")
+                    .pair("モ", "ﾓ").pair("ヤ", "ﾔ").pair("ユ", "ﾕ").pair("ヨ", "ﾖ")
+                    .pair("ラ", "ﾗ").pair("リ", "ﾘ").pair("ル", "ﾙ").pair("レ", "ﾚ")
+                    .pair("ロ", "ﾛ").pair("ワ", "ﾜ").pair("ヲ", "ｦ").pair("ン", "ﾝ")
+                    .pair("ガ", "ｶﾞ").pair("ギ", "ｷﾞ").pair("グ", "ｸﾞ")
+                    .pair("ゲ", "ｹﾞ").pair("ゴ", "ｺﾞ").pair("ザ", "ｻﾞ")
+                    .pair("ジ", "ｼﾞ").pair("ズ", "ｽﾞ").pair("ゼ", "ｾﾞ")
+                    .pair("ゾ", "ｿﾞ").pair("ダ", "ﾀﾞ").pair("ヂ", "ﾁﾞ")
+                    .pair("ヅ", "ﾂﾞ").pair("デ", "ﾃﾞ").pair("ド", "ﾄﾞ")
+                    .pair("バ", "ﾊﾞ").pair("ビ", "ﾋﾞ").pair("ブ", "ﾌﾞ")
+                    .pair("ベ", "ﾍﾞ").pair("ボ", "ﾎﾞ").pair("パ", "ﾊﾟ")
+                    .pair("ピ", "ﾋﾟ").pair("プ", "ﾌﾟ").pair("ペ", "ﾍﾟ")
+                    .pair("ポ", "ﾎﾟ").pair("ヴ", "ｳﾞ").pair("\u30f7", "ﾜﾞ")
+                    .pair("\u30fa", "ｦﾞ").pair("゛", "ﾞ").pair("゜", "ﾟ").pair("　", " ");
             
             // (5)
             INSTANCE = new FullHalfConverter(builder.build());
@@ -358,7 +358,7 @@ How to use
     * - | (1)
       - | \ ``org.terasoluna.gfw.common.fullhalf.FullHalfPairsBuilder``\ を使用して、全角文字と半角文字のペア定義のセットを表現する\ ``org.terasoluna.gfw.common.fullhalf.FullHalfPairs``\ を作成する。
     * - | (2)
-      - | \ ``DefaultFullHalf``\ では、全角文字の"\ ``ー``\" に対する半角文字を"\ ``ー``\" (\ ``\uFF70``\ )に設定しているところを、本例では"\ ``-``\" (\ ``\u002D``\ )に変更している。
+      - | \ ``DefaultFullHalf``\ では、全角文字の"\ ``ー``\" に対する半角文字を"\ ``ｰ``\" (\ ``\uFF70``\ )に設定しているところを、本例では"\ ``-``\" (\ ``\u002D``\ )に変更している。
         | なお、"\ ``-``\" (\ ``\u002D``\ )は、下記(3)の処理対象にも含まれているが、先に定義したペア定義が優先される仕組みになっている。
     * - | (3)
       - | 本例では、Unicodeの全角の"\ ``！``\" から"\ ``～``\" までと半角の"\ ``!``\" から"\ ``~``\" までのコード値を、コード値の並び順が同じであるという特徴を利用して、ループ処理を使ってペア定義を行っている。
@@ -370,7 +370,7 @@ How to use
 .. note::
 
     \ ``FullHalfPairsBuilder#pair``\ メソッドの引数に指定可能な値については、
-    `FullHalfPairのコンストラクタのJavaDoc <https://github.com/terasolunaorg/terasoluna-gfw/tree/5.6.2.RELEASE/terasoluna-gfw-common-libraries/terasoluna-gfw-string/src/main/java/org/terasoluna/gfw/common/fullhalf/FullHalfPair.java>`_
+    `FullHalfPairのコンストラクタのJavaDoc <https://github.com/terasolunaorg/terasoluna-gfw/tree/5.6.2.SP1.RELEASE/terasoluna-gfw-common-libraries/terasoluna-gfw-string/src/main/java/org/terasoluna/gfw/common/fullhalf/FullHalfPair.java>`_
     を参照されたい。
 
 |
@@ -390,7 +390,7 @@ How to use
       - 説明
     * - | (1)
       - | 独自のペア定義が登録された \ ``FullHalfConverter``\ オブジェクトの\ ``toHalfwidth``\ メソッドを使用して、全角文字が含まれる文字列を半角文字列へ変換する。
-        | 本例では、\ ``ハロ-ワ-ルド!``\ に変換される。（"\ ``-``\" は \ ``\u002D``\ ）
+        | 本例では、\ ``ﾊﾛ-ﾜ-ﾙﾄﾞ!``\ に変換される。（"\ ``-``\" は \ ``\u002D``\ ）
 
 
 |
@@ -769,14 +769,14 @@ Bean Validationと連携した文字列チェック
         }
     }
 
-「記号（。「」、・）を除いた半角カタカナ」からなる差集合を用いたコードポイント集合の作成例
+「記号（｡｢｣､･）を除いた半角カタカナ」からなる差集合を用いたコードポイント集合の作成例
 
 .. code-block:: java
 
     public class HalfwidthKatakana extends CodePoints {
         public HalfwidthKatakana() {
-            super(new JIS_X_0201_Katakana().subtract(new CodePoints(0xFF61 /* 。 */, 0xFF62 /* 「 */,
-                    0xFF63 /* 」 */, 0xFF64 /* 、 */, 0xFF65 /* ・ */)));
+            super(new JIS_X_0201_Katakana().subtract(new CodePoints(0xFF61 /* ｡ */, 0xFF62 /* ｢ */,
+                    0xFF63 /* ｣ */, 0xFF64 /* ､ */, 0xFF65 /* ･ */)));
         }
     }
 
@@ -829,7 +829,7 @@ Bean Validationと連携した文字列チェック
    * - | (4)
      - | \ ``JIS_X_0201_Katakana``\
      - | JIS X 0201 のカタカナの集合。
-       | 記号(。「」、・)も含まれる。
+       | 記号(｡｢｣､･)も含まれる。
      - .. code-block:: xml
 
            <dependency>
@@ -912,7 +912,7 @@ Bean Validationと連携した文字列チェック
 .. note::
 
     \ ``JIS_X_0208_SpecialChars``\コードポイント集合クラスはJIS漢字(JIS X 0208)の01-02区に該当する特殊文字集合である。
-    JIS漢字の全角ダッシュ(—)はEM DASHであり、対応するUCS(ISO/IEC 10646-1, JIS X 0221, Unicode)のコードポイントは、一般的に\ ``U+2014``\に相当する。
+    JIS漢字の全角ダッシュ(―)はEM DASHであり、対応するUCS(ISO/IEC 10646-1, JIS X 0221, Unicode)のコードポイントは、一般的に\ ``U+2014``\に相当する。
     しかし、Unicodeコンソーシアムが提供する変換表では、Unicodeで対応する文字がEM DASHでなく\ `HORINZONTAL BAR (U+2015) <http://www.unicode.org/Public/MAPPINGS/OBSOLETE/EASTASIA/JIS/JIS0208.TXT>`_\になっている。
     実用されている一般的な変換ルールと、Unicode変換表が異なっているため、Unicode変換表通りにコードポイント集合を定義してしまうと実用上問題が出るケースが発生する可能性がある。そのため、\ ``JIS_X_0208_SpecialChars``\コードポイント集合クラスではHORINZONTAL BAR (\ ``U+2015``\)をEM DASH (\ ``U+2014``\)に変更してコードポイント集合を定義している。
 

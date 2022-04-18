@@ -714,7 +714,7 @@ Spring Securityの機能を利用して管理されている。
 
 作成済みのプロジェクトは次の手順で取得することができる。
 
-#. `tutorial-apps <https://github.com/Macchinetta/tutorial-apps/tree/1.7.2.RELEASE>`_ にアクセスする。
+#. `tutorial-apps <https://github.com/Macchinetta/tutorial-apps/tree/1.7.2.SP1.RELEASE>`_ にアクセスする。
 #. 「Branch」ボタン押下して必要なバージョンのBranchを選択し、「Download ZIP」ボタンを押下してzipファイルをダウンロードする
 #. zipファイルを展開し、中のプロジェクトをインポートする。
 
