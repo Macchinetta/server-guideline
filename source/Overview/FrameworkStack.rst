@@ -29,13 +29,13 @@ DIコンテナ
 DIコンテナとしてSpring Frameworkを利用する。
 
 
-* `Spring Framework 5.2 <https://docs.spring.io/spring/docs/5.2.3.RELEASE/spring-framework-reference/core.html#beans>`_
+* `Spring Framework 5.2 <https://docs.spring.io/spring/docs/5.2.20.RELEASE/spring-framework-reference/core.html#beans>`_
 
 MVCフレームワーク
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Web MVCフレームワークとしてSpring MVCを利用する。
 
-* `Spring MVC 5.2 <https://docs.spring.io/spring/docs/5.2.3.RELEASE/spring-framework-reference/web.html#mvc>`_
+* `Spring MVC 5.2 <https://docs.spring.io/spring/docs/5.2.20.RELEASE/spring-framework-reference/web.html#mvc>`_
 
 O/R Mapper
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -85,7 +85,7 @@ Viewのレイアウトを共通化する場合は、
 
   * 実装は、\ `Hibernate Validator 6.0 <http://docs.jboss.org/hibernate/validator/6.0/reference/en-US/html_single/>`_\ を利用する。
 
-* 相関チェックには\ `Bean Validation 2.0 <https://beanvalidation.org/2.0/spec/>`_\ 、もしくは\ `Spring Validation <https://docs.spring.io/spring/docs/5.2.3.RELEASE/spring-framework-reference/core.html#validator>`_\ を利用する。
+* 相関チェックには\ `Bean Validation 2.0 <https://beanvalidation.org/2.0/spec/>`_\ 、もしくは\ `Spring Validation <https://docs.spring.io/spring/docs/5.2.20.RELEASE/spring-framework-reference/core.html#validator>`_\ を利用する。
 
   * 使い分けについては\ :doc:`../ArchitectureInDetail/WebApplicationDetail/Validation`\ を参照されたい。
 
@@ -113,7 +113,7 @@ Viewのレイアウトを共通化する場合は、
 利用するOSSのバージョン
 --------------------------------------------------------------------------------
 
-version 1.7.0.RELEASEで利用するOSSの一覧を以下に示す。
+version 1.7.0.SP1.RELEASEで利用するOSSの一覧を以下に示す。
 
 .. note::
 
@@ -128,7 +128,7 @@ version 1.7.0.RELEASEで利用するOSSの一覧を以下に示す。
     への依存関係を解決しており、
     Macchinetta Server Framework (1.x)で使用するOSSのバージョンは、原則として、Spring Bootで管理されているバージョンに準ずる。
 
-    なお、version 1.7.0.RELEASEでは\ `Spring Boot 2.2.4.RELEASE <https://docs.spring.io/spring-boot/docs/2.2.4.RELEASE/reference/htmlsingle/>`_\ に依存しており、管理されるライブラリは\ `Spring Boot Reference Guide - Appendix F. Dependency versions <https://docs.spring.io/spring-boot/docs/2.2.4.RELEASE/reference/htmlsingle/#dependency-versions>`_\ の通りとなる。
+    なお、version 1.7.0.SP1.RELEASEでは\ `Spring Boot 2.2.4.RELEASE <https://docs.spring.io/spring-boot/docs/2.2.4.RELEASE/reference/htmlsingle/>`_\ に依存しており、管理されるライブラリは\ `Spring Boot Reference Guide - Appendix F. Dependency versions <https://docs.spring.io/spring-boot/docs/2.2.4.RELEASE/reference/htmlsingle/#dependency-versions>`_\ の通りとなる。
 
 .. tabularcolumns:: |p{0.15\linewidth}|p{0.27\linewidth}|p{0.25\linewidth}|p{0.15\linewidth}|p{0.05\linewidth}|p{0.08\linewidth}|
 .. list-table::
@@ -145,93 +145,93 @@ version 1.7.0.RELEASEで利用するOSSの一覧を以下に示す。
     * - Spring
       - org.springframework
       - spring-aop
-      - 5.2.3.RELEASE
-      - \*
+      - 5.2.20.RELEASE
       -
+      - \*3
     * - Spring
       - org.springframework
       - spring-aspects
-      - 5.2.3.RELEASE
-      - \*
+      - 5.2.20.RELEASE
       -
+      - \*3
     * - Spring
       - org.springframework
       - spring-beans
-      - 5.2.3.RELEASE
-      - \*
+      - 5.2.20.RELEASE
       -
+      - \*3
     * - Spring
       - org.springframework
       - spring-context
-      - 5.2.3.RELEASE
-      - \*
+      - 5.2.20.RELEASE
       -
+      - \*3
     * - Spring
       - org.springframework
       - spring-context-support
-      - 5.2.3.RELEASE
-      - \*
+      - 5.2.20.RELEASE
       -
+      - \*3
     * - Spring
       - org.springframework
       - spring-core
-      - 5.2.3.RELEASE
-      - \*
+      - 5.2.20.RELEASE
       -
+      - \*3
     * - Spring
       - org.springframework
       - spring-expression
-      - 5.2.3.RELEASE
-      - \*
+      - 5.2.20.RELEASE
       -
+      - \*3
     * - Spring
       - org.springframework
       - spring-jdbc
-      - 5.2.3.RELEASE
-      - \*
+      - 5.2.20.RELEASE
       -
+      - \*3
     * - Spring
       - org.springframework
       - spring-orm
-      - 5.2.3.RELEASE
-      - \*
+      - 5.2.20.RELEASE
       -
+      - \*3
     * - Spring
       - org.springframework
       - spring-oxm
-      - 5.2.3.RELEASE
-      - \*
+      - 5.2.20.RELEASE
       -
+      - \*3
     * - Spring
       - org.springframework
       - spring-tx
-      - 5.2.3.RELEASE
-      - \*
+      - 5.2.20.RELEASE
       -
+      - \*3
     * - Spring
       - org.springframework
       - spring-web
-      - 5.2.3.RELEASE
-      - \*
+      - 5.2.20.RELEASE
       -
+      - \*3
     * - Spring
       - org.springframework
       - spring-webmvc
-      - 5.2.3.RELEASE
-      - \*
+      - 5.2.20.RELEASE
       -
+      - \*3
     * - Spring
       - org.springframework
       - spring-jms
-      - 5.2.3.RELEASE
-      - \*
+      - 5.2.20.RELEASE
       -
+      - \*3
     * - Spring
       - org.springframework
       - spring-messaging
-      - 5.2.3.RELEASE
-      - \*
+      - 5.2.20.RELEASE
       -
+      - \*3
     * - Spring
       - org.springframework.data
       - spring-data-commons
@@ -457,6 +457,7 @@ version 1.7.0.RELEASEで利用するOSSの一覧を以下に示す。
 
 #. | データアクセスに、MyBatis3を使用する場合に依存するライブラリ
 #. | Spring Framework 4.xに依存するが、ガイドラインで記述している内容においては、Spring Framework 5.xで動作する事を確認しているライブラリ
+#. | Spring Bootで管理されているバージョンから、Macchinetta Server Framework (1.x)で使用するバージョンを変更しているライブラリ
 
 
 .. _frameworkstack_common_library:
@@ -637,7 +638,7 @@ Javaソースコードを含まないものは、ライブラリの依存関係�
 
 .. note::
 
-  version 1.7.0.RELEASEでは TERASOLUNA Server Framework for Java 5.6.0.RELEASE の共通ライブラリを使用している。
+  version 1.7.0.SP1.RELEASEでは TERASOLUNA Server Framework for Java 5.6.0.SP1.RELEASE の共通ライブラリを使用している。
 
 terasoluna-gfw-common
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

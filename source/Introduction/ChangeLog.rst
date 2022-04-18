@@ -11,6 +11,17 @@
       - 更新箇所
       - 更新内容
 
+    * - 2022-04-20
+      - \-
+      - 1.7.0.SP1 RELEASE版公開
+
+    * -
+      - :doc:`../Overview/FrameworkStack`
+      - CVE-2022-22965への対応のため、利用するOSSのバージョンを更新
+
+        * Spring Frameworkのバージョンを5.2.20.RELEASEに更新
+        * Spring Testのバージョンを5.2.20.RELEASEに更新
+
     * - 2020-06-29
       - \-
       - 1.7.0 RELEASE版公開

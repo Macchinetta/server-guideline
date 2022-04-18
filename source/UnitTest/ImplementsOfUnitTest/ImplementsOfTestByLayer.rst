@@ -1379,7 +1379,7 @@ Springに追加して利用する\ ``Interceptor``\ や\ ``ExceptionResolver``\ 
            - 説明
          * - | (1)
            - | セッションのモックオブジェクトを生成する。クラスの詳細については、
-               \ `MockHttpSession のJavadoc <https://docs.spring.io/spring/docs/5.2.3.RELEASE//javadoc-api/org/springframework/mock/web/MockHttpSession.html>`_\
+               \ `MockHttpSession のJavadoc <https://docs.spring.io/spring/docs/5.2.20.RELEASE//javadoc-api/org/springframework/mock/web/MockHttpSession.html>`_\
                を参照されたい。
          * - | (2)
            - | 生成したセッションのモックオブジェクトに、格納したいオブジェクトをセットする。

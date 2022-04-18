@@ -43,20 +43,20 @@ DIコンテナ
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 テスト用のDIコンテナとして
-\ `Spring TestのDI機能 <https://docs.spring.io/spring/docs/5.2.3.RELEASE/spring-framework-reference/testing.html#testing-fixture-di>`_\を使用する。
+\ `Spring TestのDI機能 <https://docs.spring.io/spring/docs/5.2.20.RELEASE/spring-framework-reference/testing.html#testing-fixture-di>`_\を使用する。
 
 MVCフレームワーク
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 テスト用のMVCフレームワークとして
-\ `Spring MVC Test Framework <https://docs.spring.io/spring/docs/5.2.3.RELEASE/spring-framework-reference/testing.html#spring-mvc-test-framework>`_\を使用する。
+\ `Spring MVC Test Framework <https://docs.spring.io/spring/docs/5.2.20.RELEASE/spring-framework-reference/testing.html#spring-mvc-test-framework>`_\を使用する。
 
 
 トランザクション管理
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 テスト用のトランザクション管理として
-\ `Spring Testのトランザクション管理機能 <https://docs.spring.io/spring/docs/5.2.3.RELEASE/spring-framework-reference/testing.html#testing-tx>`_\を使用する。
+\ `Spring Testのトランザクション管理機能 <https://docs.spring.io/spring/docs/5.2.20.RELEASE/spring-framework-reference/testing.html#testing-tx>`_\を使用する。
 
 
 データアクセス
@@ -64,7 +64,7 @@ MVCフレームワーク
 
 テスト用のデータアクセスとして、Spring TestまたはDBUnitとSpring Test DBUnitを使用することを想定している。
 
-* \ `Spring Test <https://docs.spring.io/spring/docs/5.2.3.RELEASE/spring-framework-reference/testing.html#testing-introduction>`_\
+* \ `Spring Test <https://docs.spring.io/spring/docs/5.2.20.RELEASE/spring-framework-reference/testing.html#testing-introduction>`_\
 
   * Spring Testは\ ``@Sql``\ アノテーションや\ ``JdbcTemplate``\ などを使用してSQLを発行する機能を提供している。
 
@@ -114,8 +114,8 @@ MVCフレームワーク
     * - Spring Test
       - org.springframework
       - spring-test
-      - 5.2.3.RELEASE
-      - \*
+      - 5.2.20.RELEASE
+      -
     * - DBUnit
       - org.dbunit
       - dbunit
