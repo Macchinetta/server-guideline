@@ -363,7 +363,7 @@ How to use
         * :ref:`DataAccessMyBatis3HowToUseSettingsCooperateWithMyBatis3AndSpring`
         * :ref:`DataAccessMyBatis3HowToUseSettingsMyBatis3`
         
-        `ブランクプロジェクト <https://github.com/Macchinetta/macchinetta-web-multi-blank/tree/1.8.1.SP1.RELEASE#multi-blank-project>`_ \ からプロジェクトを生成した場合は、
+        `ブランクプロジェクト <https://github.com/Macchinetta/macchinetta-web-multi-blank/tree/1.8.2.RELEASE#multi-blank-project>`_ \ からプロジェクトを生成した場合は、
         上記で説明している設定の多くが既に設定済みの状態となっているため、アプリケーションアーキテクトは、
         プロジェクト特性を判断し、必要に応じて設定の追加及び変更を行うことになる。
 
@@ -395,7 +395,7 @@ pom.xmlの設定
 | インフラストラクチャ層にMyBatis3を使用する場合は、\ :file:`pom.xml`\にterasoluna-gfw-mybatis3-dependenciesへの依存関係を追加する。
 | マルチプロジェクト構成の場合は、domainプロジェクトの\ :file:`pom.xml`\(:file:`projectName-domain/pom.xml`)に追加する。
 
-`ブランクプロジェクト <https://github.com/Macchinetta/macchinetta-web-multi-blank/tree/1.8.1.SP1.RELEASE#multi-blank-project>`_ \ からプロジェクトを生成した場合は、terasoluna-gfw-mybatis3-dependenciesへの依存関係は、設定済みの状態である。
+`ブランクプロジェクト <https://github.com/Macchinetta/macchinetta-web-multi-blank/tree/1.8.2.RELEASE#multi-blank-project>`_ \ からプロジェクトを生成した場合は、terasoluna-gfw-mybatis3-dependenciesへの依存関係は、設定済みの状態である。
 
  .. code-block:: xml
     :emphasize-lines: 22-27
@@ -465,7 +465,7 @@ MyBatis3とSpringを連携するための設定
 
 MyBatis3とSpringを連携する場合、データソースはSpringのDIコンテナで管理しているデータソースを使用する必要がある。
 
-`ブランクプロジェクト <https://github.com/Macchinetta/macchinetta-web-multi-blank/tree/1.8.1.SP1.RELEASE#multi-blank-project>`_ \ からプロジェクトを生成した場合は、Apache Commons DBCPのデータソースが設定済みの状態であるため、
+`ブランクプロジェクト <https://github.com/Macchinetta/macchinetta-web-multi-blank/tree/1.8.2.RELEASE#multi-blank-project>`_ \ からプロジェクトを生成した場合は、Apache Commons DBCPのデータソースが設定済みの状態であるため、
 プロジェクトの要件に合わせて設定を変更すること。
 
 データソースの設定方法については、共通編の「\ :ref:`data-access-common_howtouse_datasource` \」を参照されたい。
@@ -482,7 +482,7 @@ MyBatis3とSpringを連携する場合、データソースはSpringのDIコン�
 
 ローカルトランザクションを使用する場合は、JDBCのAPIを呼び出してトランザクション制御を行う\ ``DataSourceTransactionManager`` \を使用する。
 
-`ブランクプロジェクト <https://github.com/Macchinetta/macchinetta-web-multi-blank/tree/1.8.1.SP1.RELEASE#multi-blank-project>`_ \ からプロジェクトを生成した場合は、\ ``DataSourceTransactionManager`` \が設定済みの状態である。
+`ブランクプロジェクト <https://github.com/Macchinetta/macchinetta-web-multi-blank/tree/1.8.2.RELEASE#multi-blank-project>`_ \ からプロジェクトを生成した場合は、\ ``DataSourceTransactionManager`` \が設定済みの状態である。
 
 設定例は以下の通り。
 
@@ -607,7 +607,7 @@ MyBatis3とSpringを連携する場合、MyBatis-Springのコンポーネント�
 
 を行う必要がある。
 
-`ブランクプロジェクト <https://github.com/Macchinetta/macchinetta-web-multi-blank/tree/1.8.1.SP1.RELEASE#multi-blank-project>`_ \ からプロジェクトを生成した場合は、MyBatis3とSpringを連携するための設定は、
+`ブランクプロジェクト <https://github.com/Macchinetta/macchinetta-web-multi-blank/tree/1.8.2.RELEASE#multi-blank-project>`_ \ からプロジェクトを生成した場合は、MyBatis3とSpringを連携するための設定は、
 設定済みの状態である。
 
 設定例は以下の通り。
@@ -697,7 +697,7 @@ MyBatis3の設定
     本ガイドラインでは、MyBatis設定ファイルは、
     \ :file:`projectName-domain/src/main/resources/META-INF/mybatis/mybatis-config.xml`\ に格納することを推奨している。
 
-    `ブランクプロジェクト <https://github.com/Macchinetta/macchinetta-web-multi-blank/tree/1.8.1.SP1.RELEASE#multi-blank-project>`_ \ からプロジェクトを生成した場合は、上記ファイルは格納済みの状態である。
+    `ブランクプロジェクト <https://github.com/Macchinetta/macchinetta-web-multi-blank/tree/1.8.2.RELEASE#multi-blank-project>`_ \ からプロジェクトを生成した場合は、上記ファイルは格納済みの状態である。
 
 |
 
@@ -788,7 +788,7 @@ MyBatis3では、SQLを実行するモードとして以下の3種類を用意�
       - SIMPLE
       - SQL実行毎に新しい\ ``java.sql.PreparedStatement``\を作成する。
 
-        MyBatisのデフォルトの動作であり、`ブランクプロジェクト <https://github.com/Macchinetta/macchinetta-web-multi-blank/tree/1.8.1.SP1.RELEASE#multi-blank-project>`_ \ も\ ``SIMPLE``\モードとなっている。
+        MyBatisのデフォルトの動作であり、`ブランクプロジェクト <https://github.com/Macchinetta/macchinetta-web-multi-blank/tree/1.8.2.RELEASE#multi-blank-project>`_ \ も\ ``SIMPLE``\モードとなっている。
     * - (2)
       - REUSE
       - ``PreparedStatement``\をキャッシュし再利用する。
@@ -828,7 +828,7 @@ Javaクラスの完全修飾クラス名(FQCN)を指定する必要があるた�
 
 本ガイドラインでは、記述効率の向上、記述ミスの削減、マッピングファイルの可読性向上などを目的として、TypeAliasを使用することを推奨する。
 
-`ブランクプロジェクト <https://github.com/Macchinetta/macchinetta-web-multi-blank/tree/1.8.1.SP1.RELEASE#multi-blank-project>`_ \ からプロジェクトを生成した場合は、
+`ブランクプロジェクト <https://github.com/Macchinetta/macchinetta-web-multi-blank/tree/1.8.2.RELEASE#multi-blank-project>`_ \ からプロジェクトを生成した場合は、
 Entityを格納するパッケージ(\ ``${projectPackage}.domain.model``\)配下に格納されるクラスがTypeAliasの対象となっている。
 必要に応じて、設定を追加されたい。
 
@@ -889,7 +889,7 @@ TypeAliasを使用した際の、マッピングファイルの記述例は以�
             <!-- omitted -->
         </resultMap>
 
-        <select id="findOne"
+        <select id="findByUsername"
             parameterType="string"
             resultMap="accountResultMap">
             <!-- omitted -->
@@ -1167,7 +1167,7 @@ Joda-TimeのクラスとJDBC型をマッピングする\ ``TypeHandler`` \の作
                 <result property="imageData" column="image_data" typeHandler="XxxBlobInputStreamTypeHandler" />
                 <result property="createdAt" column="created_at"  />
             </resultMap>
-            <select id="findOne" parameterType="string" resultMap="resultMapImage">
+            <select id="findById" parameterType="string" resultMap="resultMapImage">
                 SELECT
                     id
                     ,image_data
@@ -1441,7 +1441,7 @@ MyBatis3では、検索結果(\ ``ResultSet``\)のカラムとJavaBeanのプロ�
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
     <mapper namespace="com.example.domain.repository.todo.TodoRepository">
     
-        <select id="findOne" parameterType="string" resultType="Todo">
+        <select id="findByTodoId" parameterType="string" resultType="Todo">
             SELECT
                 todo_id AS "todoId", /* (1) */
                 todo_title AS "todoTitle",
@@ -1586,7 +1586,7 @@ MyBatis設定ファイル(\ :file:`mybatis-config.xml`\)に以下の設定を追
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
     <mapper namespace="com.example.domain.repository.todo.TodoRepository">
     
-        <select id="findOne" parameterType="string" resultType="Todo">
+        <select id="findByTodoId" parameterType="string" resultType="Todo">
             SELECT
                 todo_id, /* (4) */
                 todo_title,
@@ -1672,7 +1672,7 @@ MyBatis3では、検索結果(\ ``ResultSet``\)のカラムとJavaBeanのプロ�
         </resultMap>
 
         <!-- (4) -->
-        <select id="findOne" parameterType="string" resultMap="todoResultMap">
+        <select id="findByTodoId" parameterType="string" resultMap="todoResultMap">
             SELECT
                 todo_id,
                 todo_title,
@@ -1773,7 +1773,7 @@ PKが単一カラムで構成されるテーブルより、PKを指定してEnti
     public interface TodoRepository {
 
         // (1)
-        Todo findOne(String todoId);
+        Todo findByTodoId(String todoId);
 
     }
 
@@ -1785,8 +1785,7 @@ PKが単一カラムで構成されるテーブルより、PKを指定してEnti
     * - 項番
       - 説明
     * - (1)
-      - 上記例では、引数に指定された\ ``todoId``\(PK)に一致するTodoオブジェクトを1件取得するためのメソッドとして、
-        \ ``findOne``\メソッドを定義している。
+      - 上記例では、引数に指定された\ ``todoId``\ (PK)に一致するTodoオブジェクトを1件取得するためのメソッドとして、\ ``findByTodoId``\ メソッドを定義している。
 
 |
 
@@ -1800,7 +1799,7 @@ PKが単一カラムで構成されるテーブルより、PKを指定してEnti
     <mapper namespace="com.example.domain.repository.todo.TodoRepository">
 
         <!-- (2) -->
-        <select id="findOne" parameterType="string" resultType="Todo">
+        <select id="findByTodoId" parameterType="string" resultType="Todo">
             /* (3) */
             SELECT
                 todo_id,
@@ -1897,7 +1896,7 @@ PKが単一カラムで構成されるテーブルより、PKを指定してEnti
         @Override
         public Todo getTodo(String todoId) {
             // (6)
-            Todo todo = todoRepository.findOne(todoId);
+            Todo todo = todoRepository.findByTodoId(todoId);
             if (todo == null) { // (7)
                 throw new ResourceNotFoundException(ResultMessages.error().add(
                         "e.ex.td.5001", todoId));
@@ -1944,7 +1943,7 @@ PKが単一カラムで構成されるテーブルより、PKを指定してEnti
     public interface OrderHistoryRepository {
     
        // (1)
-       OrderHistory findOne(@Param("orderId") String orderId,
+       OrderHistory findByIds(@Param("orderId") String orderId,
                @Param("historyId") int historyId);
     
     }
@@ -1975,7 +1974,7 @@ PKが単一カラムで構成されるテーブルより、PKを指定してEnti
             "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
         <mapper namespace="com.example.domain.repository.order.OrderHistoryRepository">
     
-            <select id="findOne" resultType="OrderHistory">
+            <select id="findByIds" resultType="OrderHistory">
                 SELECT
                     order_id,
                     history_id,
@@ -2454,7 +2453,7 @@ SQLに取得範囲の条件を記述する必要がない。
 
  .. note:: **結果セット型を明示的に指定する方法について**
 
-    結果セット型を明示的に指定する場合は、\ ``resultType``\属性に結果セット型を指定する。
+    結果セット型を明示的に指定する場合は、\ ``resultSetType``\属性に結果セット型を指定する。
     JDBCドライバのデフォルトの結果セット型が、\ ``FORWARD_ONLY``\の場合は、\ ``SCROLL_INSENSITIVE``\を指定することを推奨する。
 
      .. code-block:: xml
@@ -3463,7 +3462,7 @@ Entityを1件更新する際の実装例を以下に示す。
         public Todo update(Todo todo) {
 
             // (4)
-            Todo currentTodo = todoRepository.findOne(todo.getTodoId());
+            Todo currentTodo = todoRepository.findByTodoId(todo.getTodoId());
             if (currentTodo == null || currentTodo.getVersion() != todo.getVersion()) {
                 throw new ObjectOptimisticLockingFailureException(Todo.class, todo
                         .getTodoId());
@@ -3793,7 +3792,7 @@ Entityを1件削除する際の実装例を以下に示す。
         public Todo delete(String todoId, long version) {
 
             // (4)
-            Todo currentTodo = todoRepository.findOne(todoId);
+            Todo currentTodo = todoRepository.findByTodoId(todoId);
             if (currentTodo == null || currentTodo.getVersion() != version) {
                 throw new ObjectOptimisticLockingFailureException(Todo.class, todoId);
             }
@@ -4359,7 +4358,7 @@ foreach要素の実装例
       - \-
       - 繰り返し処理を行う対象のコレクション又は配列に対して、\ ``null``\チェックを行う。
 
-        \ ``null``\にならない事がない場合は、このチェックは実装しなくてもよい。
+        \ ``null``\になる事がない場合は、このチェックは実装しなくてもよい。
     * - (2)
       - \-
       - \ ``foreach``\要素を使用して、コレクションや配列に対して繰り返し処理を行い、動的SQLを組み立てる。
@@ -5887,7 +5886,7 @@ Repositoryのメソッドの呼び出し順番を間違えると、性能向上�
         public void storeTodos(List<Todo> todos) {
             for (Todo todo : todos) {
                 // (1)
-                Todo currentTodo = todoBatchRepository.findOne(todo.getTodoId());
+                Todo currentTodo = todoBatchRepository.findByTodoId(todo.getTodoId());
                 if (currentTodo == null) {
                     todoBatchRepository.create(todo);
                 } else{
@@ -6008,7 +6007,7 @@ MyBatis3から呼び出す方法について説明を行う。
 
     // (2)
     public interface TodoRepository extends Repository {
-        Todo findOne(String todoId);
+        Todo findByTodoId(String todoId);
     }
 
  .. tabularcolumns:: |p{0.10\linewidth}|p{0.80\linewidth}|
@@ -6033,7 +6032,7 @@ MyBatis3から呼び出す方法について説明を行う。
     <mapper namespace="com.example.domain.repository.todo.TodoRepository">
 
         <!-- (3) -->
-        <select id="findOne" parameterType="string" resultType="Todo"
+        <select id="findByTodoId" parameterType="string" resultType="Todo"
                 statementType="CALLABLE">
             <!-- (4) -->
             {call findTodo(#{todoId})}
@@ -6101,7 +6100,7 @@ Mapperインタフェースの仕組みについて
     import com.example.domain.model.Todo;
 
     public interface TodoRepository {
-        Todo findOne(String todoId);
+        Todo findByTodoId(String todoId);
     }
 
 - マッピングファイルの作成例
@@ -6124,7 +6123,7 @@ Mapperインタフェースの仕組みについて
             <result column="finished" property="finished" />
         </resultMap>
 
-        <select id="findOne" parameterType="String" resultMap="todoResultMap">
+        <select id="findByTodoId" parameterType="String" resultMap="todoResultMap">
           SELECT
             todo_id,
             title,
@@ -6156,7 +6155,7 @@ Mapperインタフェースの仕組みについて
         TodoRepository todoRepository;
 
         public Todo getTodo(String todoId){
-            Todo todo = todoRepository.findOne(todoId);
+            Todo todo = todoRepository.findByTodoId(todoId);
             if(todo == null){
                 throw new ResourceNotFoundException(
                     ResultMessages.error().add("e.ex.td.5001" ,todoId));
@@ -6946,8 +6945,8 @@ Repositoryインタフェースの実装
 
 実装例では、
 
-* Orderオブジェクトを1件取得するメソッド(\ ``findOne``\)
-* 該当ページのOrderオブジェクトを取得するメソッド(\ ``findPage``\)
+* Orderオブジェクトを1件取得するメソッド(\ ``findById``\ )
+* 該当ページのOrderオブジェクトを取得するメソッド(\ ``findPageByPageable``\ )
 
 を実装する。
 
@@ -6961,9 +6960,9 @@ Repositoryインタフェースの実装
 
     public interface OrderRepository {
 
-        Order findOne(int id);
+        Order findById(int id);
 
-        List<Order> findPage(@Param("pageable") Pageable pageable);
+        List<Order> findPageByPageable(@Param("pageable") Pageable pageable);
 
     }
 
@@ -7018,7 +7017,7 @@ SQLの実装
         </sql>
 
         <!-- (9) -->
-        <select id="findOne" parameterType="_int" resultMap="orderResultMap">
+        <select id="findById" parameterType="_int" resultMap="orderResultMap">
             <bind name="orderTable" value="'t_order'" />
             <include refid="selectFromJoin"/>
             WHERE
@@ -7030,7 +7029,7 @@ SQLの実装
         </select>
 
         <!-- (10) -->
-        <select id="findPage" resultMap="orderResultMap">
+        <select id="findPageByPageable" resultMap="orderResultMap">
             <bind name="orderTable" value="
                 '(
                   SELECT
@@ -7062,9 +7061,9 @@ SQLの実装
     * - 項番
       - 説明
     * - (1)
-      - \ ``findOne``\メソッドと\ ``findPage``\メソッド用のSELECT句、FROM句、JOIN句を実装する。
+      - \ ``findById``\ メソッドと\ ``findPageByPageable``\ メソッド用のSELECT句、FROM句、JOIN句を実装する。
 
-        上記例では、\ ``findOne``\メソッドと\ ``findPage``\メソッドの共通箇所を共通化している。
+        上記例では、\ ``findById``\ メソッドと\ ``findPageByPageable``\ メソッドの共通箇所を共通化している。
     * - (2)
       - Orderオブジェクトを生成するために必要なデータを取得する。
     * - (3)
@@ -7098,12 +7097,12 @@ SQLの実装
         クーポンを使用しない場合、t_order_couponにレコードが格納されないので外部結合にする必要がある。
         t_order_couponと結合するt_couponも同様である。
     * - (9)
-      - \ ``findOne``\メソッド用のSQLを実装する。
+      - \ ``findById``\ メソッド用のSQLを実装する。
 
         ORDER BY句には、1:Nの関連をもつEntityの並び順を指定する。
         上記例では、PKの昇順で並べ替えている。
     * - (10)
-      - \ ``findPage``\メソッド用のSQLを実装する。
+      - \ ``findPageByPageable``\メソッド用のSQLを実装する。
         ORDER BY句には、Orderと1:Nの関連をもつEntityの並び順を指定する。
         上記例では、OrderはPKの降順(新しい順)、関連EntityはPKの昇順で並べ替えている。
 
@@ -7115,8 +7114,7 @@ SQLの実装
     代替案としては、
 
     * まず主Entityのみを検索するメソッドを呼び出し、関連Entityは別途のメソッドを呼び出して取得する
-    * SQLでページ範囲内の主Entityのみ格納されている仮想テーブルを作成し、仮想テーブルのレコードとJOINする事で、
-      マッピングに必要な全てのレコードを取得する(上記例の \ ``findPage``\は、このパターンで実装している)
+    * SQLでページ範囲内の主Entityのみ格納されている仮想テーブルを作成し、仮想テーブルのレコードとJOINする事で、マッピングに必要な全てのレコードを取得する(上記例の \ ``findPageByPageable``\ は、このパターンで実装している)
 
     等の方法が考えられる。
 
@@ -7138,11 +7136,11 @@ SQLの実装
 
 
  .. figure:: images/dataaccess_sql_result.png
-    :alt: Result Set of findPage
+    :alt: Result Set of findPageByPageable
     :width: 100%
     :align: center
 
-    **Picture - Result Set of findPage**
+    **Picture - Result Set of findPageByPageable**
 
 |
 
@@ -8044,12 +8042,12 @@ MyBatis3では、"Lazy Load"を実行するタイミングを制御するため�
       .. code-block:: java
         :emphasize-lines: 2-3
 
-            Item item = itemRepository.findOne(itemCode);
+            Item item = itemRepository.findByItemCode(itemCode);
             // (1)
             String code = item.getCode();
             String name = item.getName();
             String price = item.getPrice();
-            // ...
+            // omitted
         }
 
       .. tabularcolumns:: |p{0.15\linewidth}|p{0.75\linewidth}|

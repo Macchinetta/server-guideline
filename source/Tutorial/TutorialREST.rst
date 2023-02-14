@@ -35,14 +35,9 @@
     * - 種別
       - プロダクト
     * - REST Client
-      - \ `DHC REST Client <https://chrome.google.com/webstore/detail/talend-api-tester-free-ed/aejoelaoggembcahagimdiliamlcdmfm>`_\  1.2.3
+      - \ `Talend API Tester <https://chrome.google.com/webstore/detail/talend-api-tester-free-ed/aejoelaoggembcahagimdiliamlcdmfm>`_\  25.9.0
     * - 上記以外のプロダクト
       - \ :doc:`./TutorialTodo`\ と同様
-
-.. note::
-
-    上記のDHC REST Clientのリンク先はTalend API Testerに置き換わっている。
-    以降の記述ではDHC REST ClientをTalend API Testerに読み替えられたい。
 
 |
 
@@ -51,36 +46,44 @@
 
 Java, STS, Maven, Google Chromeについては、﻿\ :doc:`./TutorialTodo`\ を実施する事でインストール済みの状態である事を前提とする。
 
-DHCのインストール
+Talend API Testerのインストール
 --------------------------------------------------------------------------------
 
-RESTクライアントとして、Chromeの拡張機能である「DHC」をインストールする。
+RESTクライアントとして、Chromeの拡張機能である「Talend API Tester」をインストールする。
 
-`DHC REST Client <https://chrome.google.com/webstore/detail/talend-api-tester-free-ed/aejoelaoggembcahagimdiliamlcdmfm>`_ にアクセスし、「+ ADD TO CHROME」ボタンを押下する。
+`Talend API Tester <https://chrome.google.com/webstore/detail/talend-api-tester-free-ed/aejoelaoggembcahagimdiliamlcdmfm>`_ にアクセスし、「Chromeに追加」を押下する。
 
+.. figure:: ./images_rest/install-dev-http-client1.png
+   :width: 80%
+
+|
+
+「拡張機能を追加」を押下する。
+
+.. figure:: ./images_rest/install-dev-http-client2.png
+    :width: 40%
+
+|
+
+Chromeの右上の拡張機能のマークを押下して拡張機能一覧を開くと、Talend API Testerが追加されている。
+   
+.. figure:: ./images_rest/install-dev-http-client3.png
+    :width: 40%
+
+|
+
+| Talend API Testerをクリックする。
+| 以下の画面が表示されるので、「Use Talend API Tester - Free Edition」を押下する。
+| この画面は、ブラウザのアドレスバーに「chrome-extension://aejoelaoggembcahagimdiliamlcdmfm/index.html」を入力する事で開く事もできる。
+   
 .. figure:: ./images_rest/install-dev-http-client4.png
    :width: 80%
 
 |
 
-「Add app」ボタンを押下する。
-
+以下の画面が表示されれば、インストール完了となる。
+   
 .. figure:: ./images_rest/install-dev-http-client5.png
-
-|
-
-Chromeの拡張機能一覧を開く(ブラウザのアドレスバーに「chrome://extensions/」を指定して開く)と、DHCが追加されている。
-   
-.. figure:: ./images_rest/install-dev-http-client6.png
-    :width: 40%
-
-|
-
-| DHCをクリックする。
-| 以下の画面が表示されれば、インストール完了となる。
-| この画面は、ブラウザのアドレスバーに「chrome-extension://aejoelaoggembcahagimdiliamlcdmfm/index.html」を入力する事で開く事もできる。
-   
-.. figure:: ./images_rest/install-dev-http-client7.png
    :width: 80%
 
 |
@@ -105,7 +108,7 @@ RESTful Webサービスを追加する手順となっている。
 REST APIの作成
 ================================================================================
 
-本チュートリアルでは、todoテーブルで管理しているデータ(以降、「Todoリソース」呼ぶ)をWeb上に公開するためのREST APIを作成する。
+本チュートリアルでは、todoテーブルで管理しているデータ(以降、「Todoリソース」と呼ぶ)をWeb上に公開するためのREST APIを作成する。
 
 .. tabularcolumns:: |p{0.20\linewidth}|p{0.10\linewidth}|p{0.30\linewidth}|p{0.15\linewidth}|p{0.25\linewidth}|
 .. list-table::
@@ -180,7 +183,7 @@ GET Todos
 
 .. code-block:: bash
 
-    < HTTP/1.1 200 OK
+    < HTTP/1.1 200
     < Content-Type: application/json;charset=UTF-8
     <
     [{"todoId":"9aef3ee3-30d4-4a7c-be4a-bc184ca1d558","todoTitle":"Hello World!","finished":false,"createdAt":"2014-02-25T02:21:48.493+0000"}]
@@ -208,7 +211,7 @@ POST Todos
 
 .. code-block:: bash
 
-    < HTTP/1.1 201 Created
+    < HTTP/1.1 201
     < Content-Type: application/json;charset=UTF-8
     <
     {"todoId":"d6101d61-b22c-48ee-9110-e106af6a1404","todoTitle":"Study Spring","finished":false,"createdAt":"2014-02-25T04:05:58.752+0000"}
@@ -234,7 +237,7 @@ GET Todo
 
 .. code-block:: bash
 
-    < HTTP/1.1 200 OK
+    < HTTP/1.1 200
     < Content-Type: application/json;charset=UTF-8
     <
     {"todoId":"9aef3ee3-30d4-4a7c-be4a-bc184ca1d558","todoTitle":"Hello World!","finished":false,"createdAt":"2014-02-25T02:21:48.493+0000"}
@@ -259,7 +262,7 @@ PUT Todo
 
 .. code-block:: bash
 
-    < HTTP/1.1 200 OK
+    < HTTP/1.1 200
     < Content-Type: application/json;charset=UTF-8
     <
     {"todoId":"9aef3ee3-30d4-4a7c-be4a-bc184ca1d558","todoTitle":"Hello World!","finished":true,"createdAt":"2014-02-25T02:21:48.493+0000"}
@@ -283,7 +286,7 @@ DELETE Todoでは、Todoリソースの削除が完了した事で返却する�
 
 .. code-block:: bash
 
-    < HTTP/1.1 204 No Content
+    < HTTP/1.1 204
 
 |
 
@@ -304,7 +307,7 @@ DELETE Todoでは、Todoリソースの削除が完了した事で返却する�
 
 .. code-block:: bash
 
-    < HTTP/1.1 400 Bad Request
+    < HTTP/1.1 400
     < Content-Type: application/json;charset=UTF-8
     <
     {"code":"E400","message":"[E400] The requested Todo contains invalid values.","details":[{"code":"NotNull","message":"todoTitle may not be null.",target:"todoTitle"}]}
@@ -313,7 +316,7 @@ DELETE Todoでは、Todoリソースの削除が完了した事で返却する�
 
 .. code-block:: bash
 
-    < HTTP/1.1 409 Conflict
+    < HTTP/1.1 409
     < Content-Type: application/json;charset=UTF-8
     <
     {"code":"E002","message":"[E002] The requested Todo is already finished. (id=353fb5db-151a-4696-9b4a-b958358a5ab3)"}
@@ -322,7 +325,7 @@ DELETE Todoでは、Todoリソースの削除が完了した事で返却する�
 
 .. code-block:: bash
 
-    < HTTP/1.1 404 Not Found
+    < HTTP/1.1 404
     < Content-Type: application/json;charset=UTF-8
     <
     {"code":"E404","message":"[E404] The requested Todo is not found. (id=353fb5db-151a-4696-9b4a-b958358a5ab2)"}
@@ -331,7 +334,7 @@ DELETE Todoでは、Todoリソースの削除が完了した事で返却する�
 
 .. code-block:: bash
 
-    < HTTP/1.1 500 Internal Server Error
+    < HTTP/1.1 500
     < Content-Type: application/json;charset=UTF-8
     <
     {"code":"E500","message":"[E500] System error occurred."}
@@ -654,7 +657,7 @@ REST API用のSpring Securityの定義追加
         <!-- (1) -->
         <sec:http pattern="/api/v1/**" security="none"/>
 
-        <sec:http>
+        <sec:http once-per-request="false">
             <sec:form-login/>
             <sec:logout/>
             <sec:access-denied-handler ref="accessDeniedHandler"/>
@@ -936,7 +939,7 @@ GET Todosの実装
 Application Serverを起動し、実装したAPIの動作確認を行う。
 
 | REST API(Get Todos)にアクセスする。
-| DHCを開いてURLに\ ``localhost:8080/todo/api/v1/todos``\ を入力し、メソッドにGETを指定して、"Send"ボタンをクリックする。
+| Talend API Testerを開いてURLに\ ``localhost:8080/todo/api/v1/todos``\ を入力し、メソッドにGETを指定して、"Send"ボタンをクリックする。
 
 .. figure:: ./images_rest/get-todos1.png
    :width: 100%
@@ -1036,8 +1039,8 @@ Todoリソースを新規作成するAPI(POST Todos)の処理を、\ ``TodoRestC
 
 |
 
-| DHCを使用して、実装したAPIの動作確認を行う。
-| DHCを開いてURLに\ ``localhost:8080/todo/api/v1/todos``\ を入力し、メソッドにPOSTを指定する。
+| Talend API Testerを使用して、実装したAPIの動作確認を行う。
+| Talend API Testerを開いてURLに\ ``localhost:8080/todo/api/v1/todos``\ を入力し、メソッドにPOSTを指定する。
 | 「REQUEST」の「BODY」に以下のJSONを入力する。
 
 .. code-block:: json
@@ -1053,7 +1056,7 @@ Todoリソースを新規作成するAPI(POST Todos)の処理を、\ ``TodoRestC
 
 |
 
-"201 Created"のHTTPステータスが返却され、「RESPONSE」の「Body」に新規作成されたTodoリソースのJSONが表示される。
+"201"のHTTPステータスが返却され、「RESPONSE」の「Body」に新規作成されたTodoリソースのJSONが表示される。
 
 .. figure:: ./images_rest/post-todos2.png
    :width: 100%
@@ -1282,11 +1285,11 @@ GET Todoの実装
 
 |
 
-| DHCを使用して、実装したAPIの動作確認を行う。
-| DHCを開いてURLに\ ``localhost:8080/todo/api/v1/todos/{todoId}``\ を入力し、メソッドにGETを指定する。
+| Talend API Testerを使用して、実装したAPIの動作確認を行う。
+| Talend API Testerを開いてURLに\ ``localhost:8080/todo/api/v1/todos/{todoId}``\ を入力し、メソッドにGETを指定する。
 | \ ``{todoId}``\ の部分は実際のIDを入れる必要があるので、POST TodosまたはGET Todosを実行してResponse中の\ ``todoId``\ をコピーして貼り付けてから、"Send"ボタンをクリックする。
 
-"200 OK"のHTTPステータスが返却され、「RESPONSE」の「Body」に指定したTodoリソースのJSONが表示される。
+"200"のHTTPステータスが返却され、「RESPONSE」の「Body」に指定したTodoリソースのJSONが表示される。
 
 .. figure:: ./images_rest/get-todo1.png
    :width: 100%
@@ -1389,8 +1392,8 @@ Todoリソースを一件更新(完了状態へ更新)するAPI(PUT Todo)の処�
 
 |
 
-| DHCを使用して、実装したAPIの動作確認を行う。
-| DHCを開いてURLに\ ``localhost:8080/todo/api/v1/todos/{todoId}``\ を入力し、メソッドにPUTを指定する。
+| Talend API Testerを使用して、実装したAPIの動作確認を行う。
+| Talend API Testerを開いてURLに\ ``localhost:8080/todo/api/v1/todos/{todoId}``\ を入力し、メソッドにPUTを指定する。
 | \ ``{todoId}``\ の部分は実際のIDを入れる必要があるので、POST TodosまたはGET Todosを実行してResponse中の\ ``todoId``\ をコピーして貼り付けてから、"Send"ボタンをクリックする。
 
 .. figure:: ./images_rest/put-todo1.png
@@ -1398,7 +1401,7 @@ Todoリソースを一件更新(完了状態へ更新)するAPI(PUT Todo)の処�
 
 |
 
-| "200 OK"のHTTPステータスが返却され、「RESPONSE」の「Body」に更新されたTodoリソースのJSONが表示される。
+| "200"のHTTPステータスが返却され、「RESPONSE」の「Body」に更新されたTodoリソースのJSONが表示される。
 | \ ``finished``\が\ ``true``\に更新されている。
 
 .. figure:: ./images_rest/put-todo2.png
@@ -1512,8 +1515,8 @@ DELETE Todoの実装
 
 |
 
-| DHCを使用して、実装したAPIの動作確認を行う。
-| DHCを開いてURLに\ ``localhost:8080/todo/api/v1/todos/{todoId}``\ を入力し、メソッドにDELETEを指定する。
+| Talend API Testerを使用して、実装したAPIの動作確認を行う。
+| Talend API Testerを開いてURLに\ ``localhost:8080/todo/api/v1/todos/{todoId}``\ を入力し、メソッドにDELETEを指定する。
 | \ ``{todoId}``\ の部分は実際のIDを入れる必要があるので、POST TodosまたはGET Todosを実行してResponse中の\ ``todoId``\ をコピーして貼り付けてから、"Send"ボタンをクリックする。
 
 .. figure:: ./images_rest/delete-todo1.png
@@ -1521,14 +1524,14 @@ DELETE Todoの実装
 
 |
 
-"204 No Content"のHTTPステータスが返却され、「RESPONSE」の「Body」は空である。
+"204"のHTTPステータスが返却され、「RESPONSE」の「Body」は空である。
 
 .. figure:: ./images_rest/delete-todo2.png
    :width: 100%
 
 |
 
-| DHCのURLに\ ``localhost:8080/todo/api/v1/todos``\ を入力し、メソッドにGETを指定してから"Send"ボタンをクリックする。
+| Talend API TesterのURLに\ ``localhost:8080/todo/api/v1/todos``\ を入力し、メソッドにGETを指定してから"Send"ボタンをクリックする。
 | Todoリソースが削除されている事が確認できる。
 
 .. figure:: ./images_rest/delete-todo3.png
@@ -1866,10 +1869,10 @@ HTTPレスポンスBODYにエラー情報を出力するための実装
 
 |
 
-| DHCを使用して、実装したエラーハンドリングの動作確認を行う。
-| DHCを開いてURLに\ ``localhost:8080/todo/api/v1/todos``\を入力し、メソッドにPUTを指定してから、"Send"ボタンをクリックする。
+| Talend API Testerを使用して、実装したエラーハンドリングの動作確認を行う。
+| Talend API Testerを開いてURLに\ ``localhost:8080/todo/api/v1/todos``\を入力し、メソッドにPUTを指定してから、"Send"ボタンをクリックする。
 
-"405 Method Not Allowed"のHTTPステータスが返却され、「RESPONSE」の「Body」には、エラー情報のJSONが表示される。
+"405"のHTTPステータスが返却され、「RESPONSE」の「Body」には、エラー情報のJSONが表示される。
 
 .. figure:: ./images_rest/exception-genericerror.png
    :width: 100%
@@ -1962,8 +1965,8 @@ HTTPレスポンスBODYにエラー情報を出力するための実装
 
 |
 
-| DHCを使用して、実装したエラーハンドリングの動作確認を行う。
-| DHCを開いてURLに\ ``localhost:8080/todo/api/v1/todos``\ を入力し、メソッドにPOSTを指定する。
+| Talend API Testerを使用して、実装したエラーハンドリングの動作確認を行う。
+| Talend API Testerを開いてURLに\ ``localhost:8080/todo/api/v1/todos``\ を入力し、メソッドにPOSTを指定する。
 | 「REQUEST」の「BODY」に以下のJSONを入力する。
 
 .. code-block:: json
@@ -1974,7 +1977,7 @@ HTTPレスポンスBODYにエラー情報を出力するための実装
 
 また、「REQUEST」の「HEADERS」の「+」ボタンでHTTPヘッダーを追加し、「\ ``Content-Type``\ 」に「\ ``application/json``\ 」を設定後、”Send”ボタンをクリックする。
 
-| "400 Bad Request"のHTTPステータスが返却され、「RESPONSE」の「Body」には、エラー情報のJSONが表示される。
+| "400"のHTTPステータスが返却され、「RESPONSE」の「Body」には、エラー情報のJSONが表示される。
 | \ ``todoTitle``\ は必須項目なので、必須エラーが発生している。
 
 .. figure:: ./images_rest/exception-inputerror.png
@@ -2080,12 +2083,12 @@ HTTPレスポンスBODYにエラー情報を出力するための実装
 
 |
 
-| DHCを使用して、実装したエラーハンドリングの動作確認を行う。
-| DHCを開いてURLに\ ``localhost:8080/todo/api/v1/todos/{todoId}``\を入力し、メソッドにPUTを指定する。
+| Talend API Testerを使用して、実装したエラーハンドリングの動作確認を行う。
+| Talend API Testerを開いてURLに\ ``localhost:8080/todo/api/v1/todos/{todoId}``\を入力し、メソッドにPUTを指定する。
 | {todoId}の部分は実際のIDを入れる必要があるので、POST TodosまたはGET Todosを実行してResponse中の\ ``todoId``\ をコピーして貼り付けてから、”Send”ボタンを2回クリックする。
 | 未完了状態のTodoの\ ``todoId``\ を指定すること。
 
-2回目のリクエストに対するレスポンスとして、"409 Conflict"のHTTPステータスが返却され、「RESPONSE」の「Body」には、エラー情報のJSONが表示される。
+2回目のリクエストに対するレスポンスとして、"409"のHTTPステータスが返却され、「RESPONSE」の「Body」には、エラー情報のJSONが表示される。
 
 .. figure:: ./images_rest/exception-businesserror.png
    :width: 100%
@@ -2198,11 +2201,11 @@ HTTPレスポンスBODYにエラー情報を出力するための実装
 
 |
 
-| DHCを使用して、実装したエラーハンドリングの動作確認を行う。
-| DHCを開いてURLに\ ``localhost:8080/todo/api/v1/todos/{todoId}``\ を入力し、メソッドにGETを指定する。
+| Talend API Testerを使用して、実装したエラーハンドリングの動作確認を行う。
+| Talend API Testerを開いてURLに\ ``localhost:8080/todo/api/v1/todos/{todoId}``\ を入力し、メソッドにGETを指定する。
 | {todoId}の部分には存在しないIDを指定して、”Send”ボタンをクリックする。
 
-"404 Not Found"のHTTPステータスが返却され、「RESPONSE」の「Body」には、エラー情報のJSONが表示される。
+"404"のHTTPステータスが返却され、「RESPONSE」の「Body」には、エラー情報のJSONが表示される。
 
 .. figure:: ./images_rest/exception-notfound.png
    :width: 100%
@@ -2322,7 +2325,7 @@ HTTPレスポンスBODYにエラー情報を出力するための実装
 
 |
     
-| DHCを使用して、実装したエラーハンドリングの動作確認を行う。
+| Talend API Testerを使用して、実装したエラーハンドリングの動作確認を行う。
 | システムエラーを発生させるために、テーブルを未作成の状態でアプリケーションを起動させる。
 
 ``src/main/resources/META-INF/spring/todo-infra.properties``
@@ -2344,9 +2347,9 @@ HTTPレスポンスBODYにエラー情報を出力するための実装
     
 |
 
-DHCを開いてURLに\ ``localhost:8080/todo/api/v1/todos``\ を入力し、メソッドにGETを指定して、”Send”ボタンをクリックする。
+Talend API Testerを開いてURLに\ ``localhost:8080/todo/api/v1/todos``\ を入力し、メソッドにGETを指定して、”Send”ボタンをクリックする。
 
-"500 Internal Server Error"のHTTPステータスが返却され、「RESPONSE」の「Body」には、エラー情報のJSONが表示される。
+"500"のHTTPステータスが返却され、「RESPONSE」の「Body」には、エラー情報のJSONが表示される。
 
 .. figure:: ./images_rest/exception-systemerror.png
    :width: 100%

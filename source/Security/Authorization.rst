@@ -26,7 +26,7 @@ Spring Securityでは、以下の3つのリソースに対してアクセスポ�
 
 本節では、「Webリソース」「Javaメソッド」「JSPの画面項目」のアクセスに対して認可処理を適用するための実装例(定義例)を紹介しながら、Spring Securityの認可機能について説明する。
 
-.. [#fSpringSecurityAuthorization1] ドメインオブジェクトのアクセスに対する認可処理については、 \ `Spring Security Reference -Domain Object Security (ACLs)- <https://docs.spring.io/spring-security/reference/5.6.0/servlet/authorization/acls.html>`_\ を参照されたい。
+.. [#fSpringSecurityAuthorization1] ドメインオブジェクトのアクセスに対する認可処理については、 \ `Spring Security Reference -Domain Object Security (ACLs)- <https://docs.spring.io/spring-security/reference/5.7.6/servlet/authorization/acls.html>`_\ を参照されたい。
 
 |
 
@@ -157,7 +157,7 @@ How to use
 
 Spring Securityは、アクセスポリシーを指定する記述方法としてSpring Expression Language(SpEL)をサポートしている。
 SpELを使わない方法もあるが、本ガイドラインではExpressionを使ってアクセスポリシーを指定する方法で説明を行う。
-SpELの使い方については本節でも紹介するが、より詳しい使い方を知りたい場合は \ `Spring Framework Documentation -Spring Expression Language (SpEL)- <https://docs.spring.io/spring-framework/docs/5.3.18/reference/html/core.html#expressions>`_\ を参照されたい。
+SpELの使い方については本節でも紹介するが、より詳しい使い方を知りたい場合は \ `Spring Framework Documentation -Spring Expression Language (SpEL)- <https://docs.spring.io/spring-framework/docs/5.3.24/reference/html/core.html#expressions>`_\ を参照されたい。
 
 |
 
@@ -243,7 +243,7 @@ Spring Securityが用意しているWebアプリケーション向けExpression�
 
   .. code-block:: xml
   
-    <sec:http>
+    <sec:http once-per-request="false">
         <sec:intercept-url pattern="/admin/**" access="hasRole('ADMIN') and hasIpAddress('192.168.10.1')"/>
         <!-- omitted -->
     </sec:http>
@@ -282,7 +282,7 @@ Webリソースに対して認可処理を適用する場合は、以下のよ�
 
 .. code-block:: xml
 
-    <sec:http>
+    <sec:http once-per-request="false">
         <!-- omitted -->
         <sec:intercept-url pattern="/**" access="isAuthenticated()" />  <!-- (1) -->
         <!-- omitted -->
@@ -329,13 +329,13 @@ bean定義ファイルを使用して、Webリソースに対してアクセス�
       - | 「http」、もしくは「https」を指定する。指定したプロトコルでのアクセスを強制するための属性。
         | 指定しない場合、どちらでもアクセス可能である。
 
-上記以外の属性については、\ `<intercept-url> <https://docs.spring.io/spring-security/reference/5.6.0/servlet/appendix/namespace/http.html#nsa-intercept-url>`_\ を参照されたい。
+上記以外の属性については、\ `<intercept-url> <https://docs.spring.io/spring-security/reference/5.7.6/servlet/appendix/namespace/http.html#nsa-intercept-url>`_\ を参照されたい。
 
 * \ ``<sec:intercept-url>``\ タグ\ ``pattern``\ 属性の定義例（spring-security.xml）
 
 .. code-block:: xml
 
-    <sec:http >
+    <sec:http once-per-request="false">
         <sec:intercept-url pattern="/admin/accounts/**" access="..."/>
         <sec:intercept-url pattern="/admin/**" access="..."/>
         <sec:intercept-url pattern="/**" access="..."/>
@@ -354,7 +354,7 @@ Spring Securityは定義した順番でリクエストとのマッチング処�
 
       .. code-block:: xml
 
-          <sec:http request-matcher="regex">
+          <sec:http request-matcher="regex" once-per-request="false">
               <sec:intercept-url pattern="/admin/accounts/.*" access="hasRole('ACCOUNT_MANAGER')" />
               <!-- omitted -->
           </sec:http>
@@ -379,7 +379,7 @@ Spring Securityは定義した順番でリクエストとのマッチング処�
 
      .. code-block:: xml 
 
-         <sec:http>
+         <sec:http once-per-request="false">
              <sec:intercept-url pattern="/Todo/List" access="isAuthenticated()" />
              <!-- omitted -->
          </sec:http>
@@ -400,7 +400,7 @@ Spring Securityは定義した順番でリクエストとのマッチング処�
 
       .. code-block:: xml
 
-          <sec:http>
+          <sec:http once-per-request="false">
               <sec:intercept-url pattern="/restrict.*" access="hasRole('ADMIN')" /> <!-- (1) --> 
               <sec:intercept-url pattern="/restrict/" access="hasRole('ADMIN')" /> <!-- (2) --> 
               <sec:intercept-url pattern="/restrict" access="hasRole('ADMIN')" /> <!-- (3) -->
@@ -432,7 +432,7 @@ Spring Securityは定義した順番でリクエストとのマッチング処�
 
   .. code-block:: xml
   
-    <sec:http>
+    <sec:http once-per-request="false">
         <sec:intercept-url pattern="/admin/accounts/**" access="hasRole('ACCOUNT_MANAGER')"/>
         <sec:intercept-url pattern="/admin/configurations/**" access="hasIpAddress('127.0.0.1') and hasRole('CONFIGURATION_MANAGER')" />
         <sec:intercept-url pattern="/admin/**" access="hasRole('ADMIN')" />
@@ -455,7 +455,7 @@ Spring Securityは定義した順番でリクエストとのマッチング処�
 
   .. code-block:: xml
   
-    <sec:http>
+    <sec:http once-per-request="false">
         <sec:intercept-url pattern="/reserve/**" access="hasAnyRole('USER','ADMIN')" /> <!-- (1) -->
         <sec:intercept-url pattern="/admin/**" access="hasRole('ADMIN')" /> <!-- (2) -->
         <sec:intercept-url pattern="/**" access="denyAll" /> <!-- (3) -->
@@ -493,7 +493,7 @@ Spring Securityは定義した順番でリクエストとのマッチング処�
 
   .. code-block:: xml
   
-    <sec:http>
+    <sec:http once-per-request="false">
         <sec:intercept-url pattern="/admin/**" access="hasRole('ADMIN')"/>  <!-- (1) -->
         <!-- omitted -->
     </sec:http>
@@ -534,7 +534,7 @@ Spring Security 4.1以降では、アクセスポリシーを適用するリソ�
 
   .. code-block:: xml
 
-    <sec:http>
+    <sec:http once-per-request="false">
         <!-- (1) -->
         <sec:intercept-url pattern="/users/{userName}.*"  access="isAuthenticated() and #userName == principal.username"/>
         <!-- (2) -->
@@ -562,7 +562,7 @@ Spring Security 4.1以降では、アクセスポリシーを適用するリソ�
 
   .. code-block:: xml
 
-    <sec:http>
+    <sec:http once-per-request="false">
         <!-- (1) -->
         <sec:intercept-url pattern="/users/{userName}.*" access="isAuthenticated() and #userName == principal.username"/>
         <!-- (2) -->
@@ -661,7 +661,7 @@ Spring Securityは、以下のアノテーションをサポートしている�
     // (1) (2)
     @PreAuthorize("hasRole('ADMIN') or (#username == principal.username)")
     public Account findOne(String username) {
-        return accountRepository.findOne(username);
+        return accountRepository.findByUsername(username);
     }
 
 .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
@@ -696,7 +696,7 @@ Expression内で「# + 引数名」形式のExpressionを指定することで�
 
           @PreAuthorize("hasRole('ADMIN') or (#username == principal.username)")
           public Account findOne(@P("username") String username) {
-              return accountRepository.findOne(username);
+              return accountRepository.findByUsername(username);
           }
     
     なお、\ ``#username``\ と、メソッドの引数である \ ``username``\ の名称が一致している場合は \ ``@P``\ を省略することが可能である。
@@ -707,7 +707,7 @@ Expression内で「# + 引数名」形式のExpressionを指定することで�
 
 .. warning::
 
-   Spring 5から、SpringのコアAPIに\ `null-safety <https://docs.spring.io/spring-framework/docs/5.3.18/reference/html/core.html#null-safety>`_\ の機能が取り入れられており、SpELが解釈される際の\ ``null``\に対する動作も変更(\ `SPR-15540 <https://jira.spring.io/browse/SPR-15540?redirect=false>`_\ )されている。
+   Spring 5から、SpringのコアAPIに\ `null-safety <https://docs.spring.io/spring-framework/docs/5.3.24/reference/html/core.html#null-safety>`_\ の機能が取り入れられており、SpELが解釈される際の\ ``null``\に対する動作も変更(\ `SPR-15540 <https://jira.spring.io/browse/SPR-15540?redirect=false>`_\ )されている。
    例えば\ ``@PreAuthorize``\ の引数(\ ``#xxx``\)や、\ ``@PostAuthorize``\ の戻り値（\ ``resultObject``\）が\ ``Map``\ を含む場合、\ ``Map``\ から値を取得するSpELでキー値に\ ``null``\ となる値を入力すると、Spring 4以前ではそのまま\ ``Map``\ に\ ``null``\ が渡され該当する値がないため\ ``null``\ が返却されていたが、Spring 5以降ではキーとなるSpELを評価した結果に対する\ ``null``\ チェックが追加されており、\ ``null``\ の場合は\ ``IllegalStateException``\ が発生する。
    そのため、キーとする値に対して事前に\ ``null``\ チェックを行うなど、\ ``null``\ を考慮した実装が必要となる。
 
@@ -727,7 +727,7 @@ Expression内で「# + 引数名」形式のExpressionを指定することで�
     @PostAuthorize("(returnObject == null) " +
             "or (returnObject.departmentCode == principal.account.departmentCode)")
     public Account findOne(String username) {
-        return accountRepository.findOne(username);
+        return accountRepository.findByUsername(username);
     }
 
 ここでポイントになるのは、Expressionの中からメソッドの返り値にアクセスしている部分である。
@@ -967,7 +967,7 @@ Spring Securityのデフォルトの設定だと、認証済みのユーザー�
 
 .. code-block:: xml
 
-    <sec:http>
+    <sec:http once-per-request="false">
         <!-- omitted -->
         <sec:access-denied-handler
             error-page="/WEB-INF/views/common/error/accessDeniedError.jsp" /> <!-- (1) -->
@@ -1073,7 +1073,7 @@ Spring Securityが提供しているデフォルトの動作をカスタマイ�
         </constructor-arg>
     </bean>
 
-    <sec:http>
+    <sec:http once-per-request="false">
         <!-- omitted -->
         <sec:access-denied-handler ref="accessDeniedHandler" />  <!-- (2) -->
         <!-- omitted -->
@@ -1130,7 +1130,7 @@ Spring Securityが提供しているデフォルトの動作をカスタマイ�
         </property>
     </bean>
 
-    <sec:http entry-point-ref="authenticationEntryPoint"> <!-- (2) -->
+    <sec:http entry-point-ref="authenticationEntryPoint" once-per-request="false"> <!-- (2) -->
         <!-- omitted -->
     </sec:http>
 
@@ -1169,7 +1169,7 @@ Spring Securityが提供しているデフォルトの動作をカスタマイ�
 
 .. code-block:: xml
 
-    <sec:http>
+    <sec:http once-per-request="false">
         <sec:intercept-url pattern="/user/**" access="hasAnyRole('USER')" />
         <!-- omitted -->
     </sec:http>
@@ -1231,7 +1231,7 @@ Webリソースの認可処理への適用
         <property name="roleHierarchy" ref="roleHierarchy"/>  <!-- (2) -->
     </bean>
   
-    <sec:http>
+    <sec:http once-per-request="false">
         <!-- omitted -->
         <sec:expression-handler ref="webExpressionHandler" />  <!-- (3) -->
     </sec:http>

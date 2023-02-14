@@ -1778,8 +1778,8 @@ RESTful Web Serviceで必要となるSpring MVCのコンポーネントを有効
     なお、\ ``ObjectMapper``\ を直接Bean定義するスタイルから\ ``Jackson2ObjectMapperFactoryBean``\ を使用するスタイルに変更する場合は、
     以下のコンフィギュレーションに対するデフォルト値がJacksonのデフォルト値と異なる(無効化されている)点に注意すること。
 
-    * `MapperFeature#DEFAULT_VIEW_INCLUSION <https://fasterxml.github.io/jackson-databind/javadoc/2.11/com/fasterxml/jackson/databind/MapperFeature.html?is-external=true#DEFAULT_VIEW_INCLUSION>`_\
-    * `DeserializationFeature#FAIL_ON_UNKNOWN_PROPERTIES <https://fasterxml.github.io/jackson-databind/javadoc/2.11/com/fasterxml/jackson/databind/DeserializationFeature.html?is-external=true#FAIL_ON_UNKNOWN_PROPERTIES>`_\
+    * `MapperFeature#DEFAULT_VIEW_INCLUSION <https://fasterxml.github.io/jackson-databind/javadoc/2.13/com/fasterxml/jackson/databind/MapperFeature.html?is-external=true#DEFAULT_VIEW_INCLUSION>`_\
+    * `DeserializationFeature#FAIL_ON_UNKNOWN_PROPERTIES <https://fasterxml.github.io/jackson-databind/javadoc/2.13/com/fasterxml/jackson/databind/DeserializationFeature.html?is-external=true#FAIL_ON_UNKNOWN_PROPERTIES>`_\
 
     \ ``ObjectMapper``\の動作をJacksonのデフォルト動作にあわせたい場合は、\ ``featuresToEnable``\ プロパティを使用して上記のコンフィギュレーションを有効化する。
 
@@ -1795,7 +1795,7 @@ RESTful Web Serviceで必要となるSpring MVCのコンポーネントを有効
             </property>
         </bean>
 
-    \ ``Jackson2ObjectMapperFactoryBean``\ の詳細については、 `Jackson2ObjectMapperFactoryBeanのJavaDoc <https://docs.spring.io/spring-framework/docs/5.3.18/javadoc-api/org/springframework/http/converter/json/Jackson2ObjectMapperFactoryBean.html>`_\ を参照されたい。
+    \ ``Jackson2ObjectMapperFactoryBean``\ の詳細については、 `Jackson2ObjectMapperFactoryBeanのJavaDoc <https://docs.spring.io/spring-framework/docs/5.3.24/javadoc-api/org/springframework/http/converter/json/Jackson2ObjectMapperFactoryBean.html>`_\ を参照されたい。
 
 
 .. _REST_note_changed_jackson_version:
@@ -1822,9 +1822,9 @@ RESTful Web Serviceで必要となるSpring MVCのコンポーネントを有効
 
     * Deprecated一覧
 
-     * http://fasterxml.github.io/jackson-core/javadoc/2.11/deprecated-list.html
-     * http://fasterxml.github.io/jackson-databind/javadoc/2.11/deprecated-list.html
-     * http://fasterxml.github.io/jackson-annotations/javadoc/2.11/deprecated-list.html
+     * http://fasterxml.github.io/jackson-core/javadoc/2.13/deprecated-list.html
+     * http://fasterxml.github.io/jackson-databind/javadoc/2.13/deprecated-list.html
+     * http://fasterxml.github.io/jackson-annotations/javadoc/2.13/deprecated-list.html
 
 |
 
@@ -2520,7 +2520,7 @@ Controllerクラスの作成
 
     \ ``@RestController``\ アノテーションの登場により、Controllerの各メソッドに\ ``@ResponseBody``\ アノテーションを付与する必要がなくなったため、
     REST API用のControllerをよりシンプルに作成出来るようになった。
-    \ ``@RestController``\ アノテーションの詳細については、\ `こちら <https://docs.spring.io/spring-framework/docs/5.3.18/javadoc-api/org/springframework/web/bind/annotation/RestController.html>`_\ を参照されたい。
+    \ ``@RestController``\ アノテーションの詳細については、\ `こちら <https://docs.spring.io/spring-framework/docs/5.3.24/javadoc-api/org/springframework/web/bind/annotation/RestController.html>`_\ を参照されたい。
 
     従来通り\ ``@Controller``\ アノテーションと\ ``@ResponseBody``\ アノテーションを組み合わせてREST API用のControllerを作成する例を以下に示す。
 
@@ -2667,7 +2667,7 @@ URIで指定されたMemberリソースのコレクションをページ検索�
                       // ...
                   }
 
-            詳細は、`Spring Framework Documentation -Request Mapping- <https://docs.spring.io/spring-framework/docs/5.3.18/reference/html/web.html#mvc-ann-requestmapping>`_ を参照されたい。
+            詳細は、`Spring Framework Documentation -Request Mapping- <https://docs.spring.io/spring-framework/docs/5.3.24/reference/html/web.html#mvc-ann-requestmapping>`_ を参照されたい。
 
     * - | (4)
       - | メソッドアノテーションとして、\ ``@org.springframework.web.bind.annotation.ResponseStatus``\アノテーションを付与し、応答するステータスコードを指定する。
@@ -3896,7 +3896,7 @@ RESTful Web Serviceで発生した例外のハンドリング方法について�
     :emphasize-lines: 4-5
 
     public Member getMember(String memberId) {
-        Member member = memberRepository.findOne(memberId);
+        Member member = memberRepository.findByMemberId(memberId);
         if (member == null) {
             throw new ResourceNotFoundException(ResultMessages.error().add(
                     "e.ex.mm.5001", memberId));
@@ -5130,7 +5130,7 @@ or
 
 .. note::
     上記設定例は、依存ライブラリのバージョンを親プロジェクトである terasoluna-gfw-parent で管理する前提であるため、pom.xmlでのバージョンの指定は不要である。
-    上記のjackson-datatype-jodaはterasoluna-gfw-parentが依存している\ `Spring Boot <https://docs.spring.io/spring-boot/docs/2.6.1/reference/htmlsingle/#dependency-versions>`_\ で管理されている。
+    上記のjackson-datatype-jodaはterasoluna-gfw-parentが依存している\ `Spring Boot <https://docs.spring.io/spring-boot/docs/2.7.7/reference/htmlsingle/#dependency-versions>`_\ で管理されている。
 
 
 
@@ -5431,7 +5431,7 @@ JSONの中に関連リソースへのハイパーメディアリンクを含め�
         | 上記例では、リンク情報に設定するURIを組み立てるため \ ``UriComponentsBuilder``\ クラスのメソッドを呼び出し、自身のリソースにアクセスするためのURIをリソースに追加している。
         |
         | Controllerのメソッドの引数として渡された\ ``ServletUriComponentsBuilder``\ のインスタンスは、web.xmlに記載の\ ``<servlet-mapping>``\要素の情報を元に初期化されており、リソースには依存しない。
-        | そのため、Spring Frameworkから提供される `URI patterns <https://docs.spring.io/spring-framework/docs/5.3.18/reference/html/web.html#mvc-ann-requestmapping-uri-templates>`_\ 等を利用し、
+        | そのため、Spring Frameworkから提供される `URI patterns <https://docs.spring.io/spring-framework/docs/5.3.24/reference/html/web.html#mvc-ann-requestmapping-uri-templates>`_\ 等を利用し、
         | リクエスト情報をベースにURIを組み立てる事により、リソースに依存しない汎用的な組み立て処理を実装することが可能となる。
         | 
         | 例えば、上記例において\ ``http://example.com/api/v1/members/M000000001``\に対してGETした場合、組み立てられるURIは、リクエストされたURIと同じ値\ ``（http://example.com/api/v1/members/M000000001）``\になる。
@@ -5555,7 +5555,7 @@ POST時のLocationヘッダの設定
         | \ ``buildAndExpand``\ メソッドを呼び出して、作成したリソースのIDをバインドすることで、作成したリソースのURIを組み立てている。
         | 
         | Controllerのメソッドの引数として渡された\ ``ServletUriComponentsBuilder``\ のインスタンスは、web.xmlに記載の\ ``<servlet-mapping>``\要素の情報を元に初期化されており、リソースには依存しない。
-        | そのため、Spring Frameworkから提供される `URI patterns <https://docs.spring.io/spring-framework/docs/5.3.18/reference/html/web.html#mvc-ann-requestmapping-uri-templates>`_\ 等を利用し、
+        | そのため、Spring Frameworkから提供される `URI patterns <https://docs.spring.io/spring-framework/docs/5.3.24/reference/html/web.html#mvc-ann-requestmapping-uri-templates>`_\ 等を利用し、
         | リクエスト情報をベースにURIを組み立てる事により、リソースに依存しない汎用的な組み立て処理を実装することが可能となる。
         | 
         | 例えば、上記例において\ ``http://example.com/api/v1/members``\に対してPOSTした場合、組み立てられるURIは、「リクエストされたURI + "\ ``/``\" + 作成したリソースのID」となる。
@@ -5622,12 +5622,13 @@ RESTful Web Service向けのリクエストに対して、CSRF対策の処理が
     <!-- (1) -->
     <sec:http
         pattern="/api/v1/**"
-        create-session="stateless">
+        create-session="stateless"
+        once-per-request="false">
         <sec:http-basic/>
         <sec:csrf disabled="true"/>
     </sec:http>
 
-    <sec:http>
+    <sec:http once-per-request="false">
         <sec:access-denied-handler ref="accessDeniedHandler"/>
         <sec:custom-filter ref="userIdMDCPutFilter" after="ANONYMOUS_FILTER"/>
         <sec:form-login/>
@@ -6438,23 +6439,25 @@ MemberRepository.java
     
     public interface MemberRepository {
     
-        Member findOne(String memberId);
+        Member findByMemberId(String memberId);
         
         List<Member> findAll();
 
         long countByContainsName(String name);
+
         List<Member> findPageByContainsName(String name, RowBounds rowBounds);
 
         void createMember(Member creatingMember);
+
         void createCredential(Member creatingMember);
 
         boolean updateMember(Member updatingMember);
 
-        void deleteMember(String memberId); 
-        void deleteCredential(String memberId);
+        void deleteMemberByMemberId(String memberId);
+
+        void deleteCredentialByMemberId(String memberId);
     
     }
-
 
 |
 
@@ -6642,9 +6645,9 @@ MemberServiceImpl.java
         public void deleteMember(String memberId) {
 
             // First Delete from credential (Child)
-            memberRepository.deleteCredential(memberId);
+            memberRepository.deleteCredentialByMemberId(memberId);
             // Delete member
-            memberRepository.deleteMember(memberId);
+            memberRepository.deleteMemberByMemberId(memberId);
         }
     
     }
@@ -6891,7 +6894,7 @@ MemberRepository.xml
             ORDER BY member_id ASC
         </select>
 
-        <select id="findOne" parameterType="string" resultMap="MemberResultMap">
+        <select id="findByMemberId" parameterType="string" resultMap="MemberResultMap">
             <include refid="selectMember" />
             WHERE
             member.member_id = #{memberId}
@@ -6997,13 +7000,13 @@ MemberRepository.xml
                 AND version = #{version}
         </update>
 
-        <delete id="deleteCredential" parameterType="string">
+        <delete id="deleteCredentialByMemberId" parameterType="string">
             DELETE FROM t_member_credential
             WHERE
             member_id = #{memberId}
         </delete>
 
-        <delete id="deleteMember" parameterType="string">
+        <delete id="deleteMemberByMemberId" parameterType="string">
             DELETE FROM t_member
             WHERE
             member_id = #{memberId}

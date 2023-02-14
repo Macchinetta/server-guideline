@@ -573,7 +573,7 @@ How to use
 
         * applicationContext.xml
 
-            .. code-block:: java
+            .. code-block:: xml
                 :emphasize-lines: 8
 
                 <bean id="messageSource"
@@ -899,7 +899,7 @@ infoメッセージを表示したい場合は、次のように\ ``ResultMessag
   * - | warning
     - | \ ``ResultMessages.warning()``\
     - | alert alert-warning
-    - | Boostrap v3の「alert-warning」に対応するため、5.0.0から追加。
+    - | Bootstrap v3の「alert-warning」に対応するため、5.0.0から追加。
   * - | error
     - | \ ``ResultMessages.error()``\
     - | alert alert-error
@@ -911,19 +911,19 @@ infoメッセージを表示したい場合は、次のように\ ``ResultMessag
   * - | primary
     - | \ ``ResultMessages.primary()``\
     - | alert alert-primary
-    - | Boostrap v4の「alert-primary」に対応するため、5.7.0から追加。
+    - | Bootstrap v4の「alert-primary」に対応するため、5.7.0から追加。
   * - | secondary
     - | \ ``ResultMessages.secondary()``\
     - | alert alert-secondary
-    - | Boostrap v4の「alert-secondary」に対応するため、5.7.0から追加。
+    - | Bootstrap v4の「alert-secondary」に対応するため、5.7.0から追加。
   * - | light
     - | \ ``ResultMessages.light()``\
     - | alert alert-light
-    - | Boostrap v4の「alert-light」に対応するため、5.7.0から追加。
+    - | Bootstrap v4の「alert-light」に対応するため、5.7.0から追加。
   * - | dark
     - | \ ``ResultMessages.dark()``\
     - | alert alert-dark
-    - | Boostrap v4の「alert-dark」に対応するため、5.7.0から追加。
+    - | Bootstrap v4の「alert-dark」に対応するため、5.7.0から追加。
 
 メッセージタイプに応じてCSSを定義されたい。以下に、CSSを適用した場合の例を示す。
 

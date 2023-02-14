@@ -86,7 +86,7 @@ Webアプリケーションでセッションを扱う場合、一般的には�
     なお、Spring Security 5.0.1, 4.2.4, 4.1.5以降では、URLにセミコロンが含まれる場合、無効なリクエストと判断される。そのため、デフォルトの設定ではURL Rewritingによるセッションの共有は行えない。
 
     セミコロンが含まれるURLを許可するように変更することも可能であるが、認証認可のバイパスやReflected File Download(RFD)攻撃に対する脆弱性が発生する可能性があるため、推奨しない。
-    詳細は、\ `StrictHttpFirewall#setAllowSemicolon <https://docs.spring.io/spring-security/site/docs/5.6.0/api/org/springframework/security/web/firewall/StrictHttpFirewall.html#setAllowSemicolon-boolean->`_\ を参照されたい。
+    詳細は、\ `StrictHttpFirewall#setAllowSemicolon <https://docs.spring.io/spring-security/site/docs/5.7.6/api/org/springframework/security/web/firewall/StrictHttpFirewall.html#setAllowSemicolon-boolean->`_\ を参照されたい。
 
 |
 
@@ -152,7 +152,7 @@ Cookieを使えないクライアントをサポートする必要がある場�
 
 .. code-block:: xml
 
-    <sec:http disable-url-rewriting="false"> <!-- falseを指定してURL Rewritingを有効化 -->
+    <sec:http disable-url-rewriting="false" once-per-request="false"> <!-- (1) -->
 
 .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
 .. list-table::
@@ -215,7 +215,7 @@ Spring Securityのセッション管理機能の処理を使用する場合は�
 
 .. code-block:: xml
 
-    <sec:http>
+    <sec:http once-per-request="false">
         <!-- ommited -->
         <sec:session-management /> <!-- (1) -->
         <!-- ommited -->
@@ -317,7 +317,7 @@ Spring Securityの処理の中でどのような方針でセッションを作�
 
 .. code-block:: xml
 
-    <sec:http create-session="stateless"> <!-- (1) -->
+    <sec:http create-session="stateless" once-per-request="false"> <!-- (1) -->
         <!-- ommited -->
     </sec:http>
 
@@ -414,12 +414,12 @@ Spring Securityは、無効なセッションを使ったリクエストを検�
 .. code-block:: xml
 
     <!-- (1) -->
-    <sec:http pattern="/"> <!-- (2) -->
+    <sec:http pattern="/" once-per-request="false"> <!-- (2) -->
         <sec:session-management />
     </sec:http>
 
     <!-- (3) -->
-    <sec:http>
+    <sec:http once-per-request="false">
         <!-- ommited -->
         <sec:session-management
                 invalid-session-url="/error/invalidSession"/>

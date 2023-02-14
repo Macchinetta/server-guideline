@@ -1467,7 +1467,7 @@ Spring MVCの、デフォルトの例外ハンドリング機能によって行�
     }
 
     // (4)
-    Customer customer = customerRepository.findOne(customerId);
+    Customer customer = customerRepository.findByCustomerId(customerId);
 
     // ...
 

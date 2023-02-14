@@ -26,7 +26,7 @@ Overview
 * JCA (Java Cryptography Architecture) を利用した公開鍵暗号化方式の暗号化と復号
 * JCAを利用したハイブリッド暗号化方式の暗号化と復号
 
-Spring Securityの暗号化機能の詳細については、\ `Spring Security Reference -Spring Security Crypto Module- <https://docs.spring.io/spring-security/reference/5.6.0/features/integrations/cryptography.html>`_\ を参照されたい。
+Spring Securityの暗号化機能の詳細については、\ `Spring Security Reference -Spring Security Crypto Module- <https://docs.spring.io/spring-security/reference/5.7.6/features/integrations/cryptography.html>`_\ を参照されたい。
 
 .. _EncryptionOverviewEncryptionScheme:
 
@@ -120,13 +120,15 @@ DSA / ECDSA
 
 javax.crypto.Cipherクラス
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-| \ ``Cipher``\ クラスは、暗号化および復号の機能を提供する。AESやRSAなどの暗号化アルゴリズム、ECBやCBCなどの暗号利用モード、PKCS1などのパディング方式の組み合わせを指定する。
+| \ ``Cipher``\ クラスは、暗号化および復号の機能を提供する。AESやRSAなどの暗号化アルゴリズム、ECBやCBCなどの暗号利用モード、OAEPWithSHA-256AndMGF1などのパディング方式の組み合わせを指定する。
 | 
 | 暗号利用モードとは、\ :ref:`EncryptionOverviewEncryptionAlgorithmAes`\ で説明したとおり、ブロック長より長いメッセージを暗号化するメカニズムである。
 | また、パディング方式とは、ブロック長に満たない暗号化対象を暗号化する場合の保管方式である。
 | 
-| Javaアプリケーションでは、\ ``<暗号化アルゴリズム>/<暗号利用モード>/<パディング方式>``\ または、\ ``<暗号化アルゴリズム>``\ という形で組み合わせを指定する。たとえば、\ ``AES/CBC/PKCS5Padding``\ または、\ ``RSA``\ となる。
-  詳細は、\ `CipherクラスのJavaDoc <https://docs.oracle.com/javase/8/docs/api/javax/crypto/Cipher.html>`_\ を参照されたい。
+| Javaアプリケーションでは、\ ``<暗号化アルゴリズム>/<暗号利用モード>/<パディング方式>``\ または、\ ``<暗号化アルゴリズム>``\ という形で組み合わせを指定する。たとえば、\ ``AES/GCM/NoPadding``\ または、\ ``AES``\ となる。
+| 詳細は、\ `CipherクラスのJavaDoc <https://docs.oracle.com/javase/8/docs/api/javax/crypto/Cipher.html>`_\ を参照されたい。
+
+|
 
 .. _EncryptionOverviewSpringSecurity:
 
@@ -536,9 +538,9 @@ Oracleなど、一部のJava製品ではAESの鍵長256ビットを扱うため�
 
     public byte[] encryptByPublicKey(String plainText, PublicKey publicKey) {
         try {
-            Cipher cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding"); // (1)
-            cipher.init(Cipher.ENCRYPT_MODE, publicKey);                       // (2)
-            return cipher.doFinal(plainText.getBytes(StandardCharsets.UTF_8)); //
+            Cipher cipher = Cipher.getInstance("RSA/ECB/OAEPWithSHA-256AndMGF1Padding"); // (1)
+            cipher.init(Cipher.ENCRYPT_MODE, publicKey, new OAEPParameterSpec("SHA-256", "MGF1", MGF1ParameterSpec.SHA256, PSource.PSpecified.DEFAULT)); // (2)
+            return cipher.doFinal(plainText.getBytes(StandardCharsets.UTF_8)); // (3)
         } catch (NoSuchAlgorithmException | NoSuchPaddingException e) {
             throw new SystemException("e.xx.xx.9002", "No Such setting error.", e);
         } catch (InvalidKeyException |
@@ -550,16 +552,17 @@ Oracleなど、一部のJava製品ではAESの鍵長256ビットを扱うため�
 
   .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
   .. list-table::
-     :header-rows: 1
-     :widths: 10 90
+    :header-rows: 1
+    :widths: 10 90
   
-     * - 項番
-       - 説明
-     * - | (1)
-       - | 暗号化アルゴリズム、暗号利用モード、パディング方式を指定して、\ ``Cipher``\ クラスのインスタンスを生成する。
-
-     * - | (2)
-       - | 暗号化処理を実行する。
+    * - 項番
+      - 説明
+    * - | (1)
+      - | 暗号化アルゴリズム、暗号利用モード、パディング方式を指定して、\ ``Cipher``\ クラスのインスタンスを生成する。
+    * - | (2)
+      - | 暗号化モード定数と公開鍵を指定してCipherクラスのインスタンスを初期化する。
+    * - | (3)
+      - | 文字列の暗号化処理を実行する。
 
 |
 
@@ -572,9 +575,9 @@ Oracleなど、一部のJava製品ではAESの鍵長256ビットを扱うため�
 
     public String decryptByPrivateKey(byte[] cipherBytes, PrivateKey privateKey) {
         try {
-            Cipher cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding"); // (1)
-            cipher.init(Cipher.DECRYPT_MODE, privateKey);           // (2)
-            byte[] plainBytes = cipher.doFinal(cipherBytes); //
+            Cipher cipher = Cipher.getInstance("RSA/ECB/OAEPWithSHA-256AndMGF1Padding"); // (1)
+            cipher.init(Cipher.DECRYPT_MODE, privateKey, new OAEPParameterSpec("SHA-256", "MGF1", MGF1ParameterSpec.SHA256, PSource.PSpecified.DEFAULT)); // (2)
+            byte[] plainBytes = cipher.doFinal(cipherBytes); // (3)
             return new String(plainBytes, StandardCharsets.UTF_8);
         } catch (NoSuchAlgorithmException | NoSuchPaddingException e) {
             throw new SystemException("e.xx.xx.9002", "No Such setting error.", e);
@@ -587,16 +590,17 @@ Oracleなど、一部のJava製品ではAESの鍵長256ビットを扱うため�
 
   .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
   .. list-table::
-     :header-rows: 1
-     :widths: 10 90
+    :header-rows: 1
+    :widths: 10 90
   
-     * - 項番
-       - 説明
-     * - | (1)
-       - | 暗号化アルゴリズム、暗号利用モード、パディング方式を指定して、\ ``Cipher``\ クラスのインスタンスを生成する。
-
-     * - | (2)
-       - | 復号処理を実行する。
+    * - 項番
+      - 説明
+    * - | (1)
+      - | 暗号化アルゴリズム、暗号利用モード、パディング方式を指定して、\ ``Cipher``\ クラスのインスタンスを生成する。
+    * - | (2)
+      - | 復号モード定数と秘密鍵を指定してCipherクラスのインスタンスを初期化する。
+    * - | (3)
+      - | バイト配列の復号処理を実行する。
 
 |
 
@@ -662,7 +666,7 @@ OpenSSL
             Files.write(Paths.get("encryptedByJCA.txt"), cipherBytes);
             System.out.println("Please execute the following command:");
             System.out
-                    .println("openssl rsautl -decrypt -inkey hoge.pem -in encryptedByJCA.txt");
+                    .println("openssl pkeyutl -decrypt -pkeyopt rsa_padding_mode:oaep -pkeyopt rsa_oaep_md:sha256 -inkey hoge.pem -in encryptedByJCA.txt");
         } catch (IOException e) {
             throw new SystemException("e.xx.xx.9001", "input/output error.", e);
         } catch (NoSuchAlgorithmException e) {
@@ -694,7 +698,7 @@ OpenSSL
 
   .. code-block:: console
 
-     $ openssl rsautl -decrypt -inkey private.pem -in encryptedByJCA.txt  # (1)
+    $ openssl pkeyutl -decrypt -pkeyopt rsa_padding_mode:oaep -pkeyopt rsa_oaep_md:sha256 -inkey private.pem -in encryptedByJCA.txt  # (1)
 
   .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
   .. list-table::
@@ -714,7 +718,7 @@ OpenSSL
 
   .. code-block:: console
 
-     $ echo Hello | openssl rsautl -encrypt -keyform DER -pubin -inkey public.der -out encryptedByOpenSSL.txt  # (1)
+    $ echo Hello | openssl pkeyutl -encrypt -pkeyopt rsa_padding_mode:oaep -pkeyopt rsa_oaep_md:sha256 -keyform DER -pubin -inkey public.der -out encryptedByOpenSSL.txt  # (1)
      
   .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
   .. list-table::
@@ -789,8 +793,9 @@ OpenSSL
                 new String(Hex.encode(random)), salt); // (2)
 
         try (ByteArrayOutputStream result = new ByteArrayOutputStream()) {
-            final Cipher cipher = Cipher.getInstance("RSA"); // (3)
-            cipher.init(Cipher.ENCRYPT_MODE, publicKey); // (4)
+            final Cipher cipher = Cipher.getInstance(
+                    "RSA/ECB/OAEPWithSHA-256AndMGF1Padding"); // (3)
+            cipher.init(Cipher.ENCRYPT_MODE, publicKey, new OAEPParameterSpec("SHA-256", "MGF1", MGF1ParameterSpec.SHA256, PSource.PSpecified.DEFAULT)); // (4)
             byte[] secret = cipher.doFinal(random); // (5)
 
             byte[] data = new byte[2]; // (6)
@@ -813,39 +818,31 @@ OpenSSL
 
   .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
   .. list-table::
-     :header-rows: 1
-     :widths: 10 90
+    :header-rows: 1
+    :widths: 10 90
   
-     * - 項番
-       - 説明
-     * - | (1)
-       - | 鍵長として32バイトを指定して\ ``KeyGenerators#secureRandom``\ メソッドを呼び出し、\ ``BytesKeyGenerator``\ クラスのインスタンスを生成する。
-         | \ ``BytesKeyGenerator#generateKey``\ メソッドを呼び出し、共通鍵を生成する。
-         | 詳細については、\ :ref:`EncryptionHowToUsePseudoRandomNumber`\ を参照されたい。
-
-     * - | (2)
-       - | 生成した共通鍵とソルトを指定して\ ``BytesEncryptor``\ クラスのインスタンスを生成する。
-
-     * - | (3)
-       - | 暗号化アルゴリズムとしてRSAを指定して、\ ``Cipher``\ クラスのインスタンスを生成する。
-
-     * - | (4)
-       - | 暗号化モード定数と公開鍵を指定して\ ``Cipher``\ クラスのインスタンスを初期化する。
-
-     * - | (5)
-       - | 共通鍵の暗号化処理を実行する。この暗号化処理は公開鍵暗号化方式となる。
-
-     * - | (6)
-       - | 暗号化した共通鍵の長さをバイト配列の暗号文に格納する。格納された共通鍵の長さは復号時に使用される。
-
-     * - | (7)
-       - | 暗号化した共通鍵をバイト配列の暗号文に格納する。
-
-     * - | (8)
-       - | 平文を暗号化してバイト配列の暗号文に格納する。この暗号化処理は共通鍵暗号化方式となる。
-
-     * - | (9)
-       - | バイト配列の暗号文を返却する。
+    * - 項番
+      - 説明
+    * - | (1)
+      - | 鍵長として32バイトを指定して\ ``KeyGenerators#secureRandom``\ メソッドを呼び出し、\ ``BytesKeyGenerator``\ クラスのインスタンスを生成する。
+        | \ ``BytesKeyGenerator#generateKey``\ メソッドを呼び出し、共通鍵を生成する。
+        | 詳細については、\ :ref:`EncryptionHowToUsePseudoRandomNumber`\ を参照されたい。
+    * - | (2)
+      - | 生成した共通鍵とソルトを指定して\ ``BytesEncryptor``\ クラスのインスタンスを生成する。
+    * - | (3)
+      - | 暗号化アルゴリズム、暗号利用モード、パディング方式を指定して、\ ``Cipher``\ クラスのインスタンスを生成する。
+    * - | (4)
+      - | 暗号化モード定数と公開鍵を指定して\ ``Cipher``\ クラスのインスタンスを初期化する。
+    * - | (5)
+      - | 共通鍵の暗号化処理を実行する。この暗号化処理は公開鍵暗号化方式となる。
+    * - | (6)
+      - | 暗号化した共通鍵の長さをバイト配列の暗号文に格納する。格納された共通鍵の長さは復号時に使用される。
+    * - | (7)
+      - | 暗号化した共通鍵をバイト配列の暗号文に格納する。
+    * - | (8)
+      - | 平文を暗号化してバイト配列の暗号文に格納する。この暗号化処理は共通鍵暗号化方式となる。
+    * - | (9)
+      - | バイト配列の暗号文を返却する。
 
 |
 
@@ -863,9 +860,10 @@ OpenSSL
             int length = ((b[0] & 0xFF) << 8) | (b[1] & 0xFF); //
 
             byte[] random = new byte[length]; // (2)
-            input.read(random); //
-            final Cipher cipher = Cipher.getInstance("RSA"); // (3)
-            cipher.init(Cipher.DECRYPT_MODE, privateKey); // (4)
+            input.read(random);
+            final Cipher cipher = Cipher.getInstance(
+                    "RSA/ECB/OAEPWithSHA-256AndMGF1Padding"); // (3)
+            cipher.init(Cipher.DECRYPT_MODE, privateKey, new OAEPParameterSpec("SHA-256", "MGF1", MGF1ParameterSpec.SHA256, PSource.PSpecified.DEFAULT)); // (4)
             String secret = new String(Hex.encode(cipher.doFinal(random))); // (5)
             byte[] buffer = new byte[cipherBytes.length - random.length - 2]; // (6)
             input.read(buffer); //
@@ -884,37 +882,29 @@ OpenSSL
 
   .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
   .. list-table::
-     :header-rows: 1
-     :widths: 10 90
+    :header-rows: 1
+    :widths: 10 90
   
-     * - 項番
-       - 説明
-     * - | (1)
-       - | 暗号化された共通鍵の長さを取得する。
-
-     * - | (2)
-       - | 暗号化された共通鍵を取得する。
-
-     * - | (3)
-       - | 暗号化アルゴリズムとしてRSAを指定して、\ ``Cipher``\ クラスのインスタンスを生成する。
-
-     * - | (4)
-       - | 復号モード定数と秘密鍵を指定して\ ``Cipher``\ クラスのインスタンスを初期化する。
-
-     * - | (5)
-       - | 共通鍵の復号処理を実行する。この復号処理は公開鍵暗号化方式となる。
-
-     * - | (6)
-       - | 復号対象を取得する。
-
-     * - | (7)
-       - | 復号した共通鍵とソルトを指定して\ ``BytesEncryptor``\ クラスのインスタンスを生成する。
-
-     * - | (8)
-       - | 復号処理を実行する。この復号処理は共通鍵暗号化方式となる。
-
-     * - | (9)
-       - | 復号したバイト配列の平文を返却する。
+    * - 項番
+      - 説明
+    * - | (1)
+      - | 暗号化された共通鍵の長さを取得する。
+    * - | (2)
+      - | 暗号化された共通鍵を取得する。
+    * - | (3)
+      - | 暗号化アルゴリズム、暗号利用モード、パディング方式を指定して、\ ``Cipher``\ クラスのインスタンスを生成する。
+    * - | (4)
+      - | 復号モード定数と秘密鍵を指定して\ ``Cipher``\ クラスのインスタンスを初期化する。
+    * - | (5)
+      - | 共通鍵の復号処理を実行する。この復号処理は公開鍵暗号化方式となる。
+    * - | (6)
+      - | 復号対象を取得する。
+    * - | (7)
+      - | 復号した共通鍵とソルトを指定して\ ``BytesEncryptor``\ クラスのインスタンスを生成する。
+    * - | (8)
+      - | 復号処理を実行する。この復号処理は共通鍵暗号化方式となる。
+    * - | (9)
+      - | 復号したバイト配列の平文を返却する。
 
 |
 

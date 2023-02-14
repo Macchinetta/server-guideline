@@ -9,7 +9,6 @@ Appendix(Know How)
    Lombok
    Java11Changes
    SpringToolSuite4
-   OAuth
    ReferenceBooks
    SpringComprehensionCheck
 

@@ -41,15 +41,15 @@
     * - OS
       - Windows 10
     * - JVM
-      - `Java <https://www.oracle.com/java/technologies/downloads/>`_ 1.8
+      - `Java <https://developers.redhat.com/products/openjdk/download>`_ 1.8
     * - IDE
-      - `Spring Tool Suite <https://spring.io/tools>`_ 4.11.0.RELEASE (以降「STS」と呼ぶ。設定方法は :doc:`../Appendix/SpringToolSuite4` を参照されたい。)
+      - `Spring Tool Suite <https://spring.io/tools>`_ 4.17.1.RELEASE (以降「STS」と呼ぶ。設定方法は :doc:`../Appendix/SpringToolSuite4` を参照されたい。)
     * - Build Tool
-      - `Apache Maven <https://maven.apache.org/download.cgi>`_ 3.8.3 (以降「Maven」と呼ぶ)
+      - `Apache Maven <https://maven.apache.org/download.cgi>`_ 3.8.6 (以降「Maven」と呼ぶ)
     * - Application Server
-      - `Apache Tomcat <https://tomcat.apache.org/tomcat-9.0-doc/index.html>`_ 9.0.55
+      - `Apache Tomcat <https://tomcat.apache.org/tomcat-9.0-doc/index.html>`_ 9.0.73
     * - Web Browser
-      - `Google Chrome <https://www.google.co.jp/chrome/>`_ 98.0.4758.82
+      - `Google Chrome <https://www.google.co.jp/chrome/>`_ 109.0.5414.120
 
 |
 
@@ -217,7 +217,7 @@ Delete TODO
         mvn archetype:generate -B\
          -DarchetypeGroupId=com.github.macchinetta.blank\
          -DarchetypeArtifactId=macchinetta-web-blank-noorm-archetype\
-         -DarchetypeVersion=1.8.1.SP1.RELEASE\
+         -DarchetypeVersion=1.8.2.RELEASE\
          -DgroupId=com.example.todo\
          -DartifactId=todo\
          -Dversion=1.0.0-SNAPSHOT
@@ -237,7 +237,7 @@ O/R Mapperに依存しないブランクプロジェクトの作成
     mvn archetype:generate -B^
      -DarchetypeGroupId=com.github.macchinetta.blank^
      -DarchetypeArtifactId=macchinetta-web-blank-noorm-archetype^
-     -DarchetypeVersion=1.8.1.SP1.RELEASE^
+     -DarchetypeVersion=1.8.2.RELEASE^
      -DgroupId=com.example.todo^
      -DartifactId=todo^
      -Dversion=1.0.0-SNAPSHOT
@@ -255,7 +255,7 @@ MyBatis3を使用してデータベースにアクセスするRepositoryImpl用�
     mvn archetype:generate -B^
      -DarchetypeGroupId=com.github.macchinetta.blank^
      -DarchetypeArtifactId=macchinetta-web-blank-archetype^
-     -DarchetypeVersion=1.8.1.SP1.RELEASE^
+     -DarchetypeVersion=1.8.2.RELEASE^
      -DgroupId=com.example.todo^
      -DartifactId=todo^
      -Dversion=1.0.0-SNAPSHOT
@@ -327,7 +327,7 @@ Root Directoryに \ ``C:\work\todo``\ を設定し、Projectsにtodoのpom.xml�
 .. note::
  
    上記設定例は、依存ライブラリのバージョンを親プロジェクトである terasoluna-gfw-parent で管理する前提であるため、pom.xmlでのバージョンの指定は不要である。
-   上記の依存ライブラリはterasoluna-gfw-parentが依存している\ `Spring Boot <https://docs.spring.io/spring-boot/docs/2.6.1/reference/htmlsingle/#dependency-versions>`_\ で管理されている。
+   上記の依存ライブラリはterasoluna-gfw-parentが依存している\ `Spring Boot <https://docs.spring.io/spring-boot/docs/2.7.7/reference/htmlsingle/#dependency-versions>`_\ で管理されている。
 
 |
 
@@ -3942,7 +3942,7 @@ spring-mvc.xml
        | どこにも\ ``styles.css``\ が格納されていない場合は、404エラーを返す。
 
        | ここでは\ ``cache-period``\ 属性で静的リソースのキャッシュ時間(3600秒=60分)も設定している。
-       | \ ``cache-period="3600"``\ と設定しても良いが、60分であることを明示するために `SpEL <https://docs.spring.io/spring-framework/docs/5.3.18/reference/html/core.html#expressions-beandef-xml-based>`_ を使用して \ ``cache-period="#{60 * 60}"``\  と書く方が分かりやすい。
+       | \ ``cache-period="3600"``\ と設定しても良いが、60分であることを明示するために `SpEL <https://docs.spring.io/spring-framework/docs/5.3.24/reference/html/core.html#expressions-beandef-xml-based>`_ を使用して \ ``cache-period="#{60 * 60}"``\  と書く方が分かりやすい。
    * - | (5)
      - | コントローラ処理のTraceログを出力するインターセプタを設定する。
        | \ ``/resources``\ 配下を除く任意のパスに適用されるように設定する。
@@ -3977,7 +3977,7 @@ spring-security.xml
         ">
 
         <sec:http pattern="/resources/**" security="none"/>
-        <sec:http>
+        <sec:http once-per-request="false">
             <sec:form-login/>
             <sec:logout/>
             <sec:access-denied-handler ref="accessDeniedHandler"/>

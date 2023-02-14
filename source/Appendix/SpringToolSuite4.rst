@@ -77,6 +77,36 @@ STS4の導入
     :align: center
     :width: 50%
 
+.. tip::
+
+   STS 4.17.1.RELEASEに対しSpring Tools 3 Add-On for Spring Tools 4をインストールする際に、以下の様なエラーが発生することを確認している。
+
+   .. code-block:: console
+
+       Cannot complete the install because one or more required items could not be found.
+         Software being installed: Spring IDE Integration, Flex and Web Services Extension (optional) 3.9.22.202204280911-RELEASE (org.springframework.ide.eclipse.integration.feature.feature.group 3.9.22.202204280911-RELEASE)
+         Missing requirement: Spring IDE Configuration Graphical Editing 3.9.22.202204280911-RELEASE (org.springframework.ide.eclipse.config.graph 3.9.22.202204280911-RELEASE) requires 'osgi.bundle; org.eclipse.mylyn.commons.ui [3.7.0,4.0.0)' but it could not be found
+         Cannot satisfy dependency:
+           From: Spring IDE Core (required) 3.9.22.202204280911-RELEASE (org.springframework.ide.eclipse.feature.feature.group 3.9.22.202204280911-RELEASE)
+           To: org.eclipse.equinox.p2.iu; org.springframework.ide.eclipse.config.graph [3.9.22.202204280911-RELEASE,3.9.22.202204280911-RELEASE]
+         Cannot satisfy dependency:
+           From: Spring IDE Integration, Flex and Web Services Extension (optional) 3.9.22.202204280911-RELEASE (org.springframework.ide.eclipse.integration.feature.feature.group 3.9.22.202204280911-RELEASE)
+           To: org.eclipse.equinox.p2.iu; org.springframework.ide.eclipse.feature.feature.group 0.0.0
+
+   これは、Eclipse IDEからEclipse Mylyn Task UIが削除されたことが原因であるため、個別にMylynをインストールする必要がある。
+
+   * Eclipse Mylyn
+
+     タスク指向UIを提供するプラグイン。
+
+     1. STSのメニューから、Help > Install New Softwareを選択し、Work withに「https://download.eclipse.org/mylyn/releases/latest」を入力する。
+     2. Mylyn Featuresを選択し、インストールを行う。
+
+   .. figure:: ./images_SpringToolSuite4/SpringToolSuite4mylyn.png
+       :alt: Eclipse Mylyn Settings
+       :align: center
+       :width: 50%
+
 .. note::
 
    プロキシ環境下でプラグインを導入する場合、プロキシ設定を行わないとEclipse MarketPlaceに接続できずプラグインを導入することができない。

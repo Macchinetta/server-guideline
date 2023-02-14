@@ -164,7 +164,7 @@ pom.xmlの設定
 | terasoluna-gfw-jodatimeへの依存関係を追加する。
 | マルチプロジェクト構成の場合は、domainプロジェクトの\ :file:`pom.xml`\(:file:`projectName-domain/pom.xml`)に追加する。
 
-`ブランクプロジェクト <https://github.com/Macchinetta/macchinetta-web-multi-blank/tree/1.8.1.SP1.RELEASE>`_ \ からプロジェクトを生成した場合は、terasoluna-gfw-jodatimeへの依存関係は、設定済みの状態である。
+`ブランクプロジェクト <https://github.com/Macchinetta/macchinetta-web-multi-blank/tree/1.8.2.RELEASE>`_ \ からプロジェクトを生成した場合は、terasoluna-gfw-jodatimeへの依存関係は、設定済みの状態である。
 
 .. code-block:: xml
 
@@ -636,7 +636,7 @@ Unit Testでは、時刻を登録してその時刻が想定通りに更新さ�
     public Staff staffUpdateTel(String staffId, String tel) {
 
         // ex staffId=0001
-        Staff staff = staffRepository.findOne(staffId);
+        Staff staff = staffRepository.findByStaffId(staffId);
 
         // ex tel = "0123456789"
         staff.setTel(tel);
@@ -783,7 +783,7 @@ Unit Testでは、時刻を登録してその時刻が想定通りに更新さ�
 
       Reserve reserveResult = new Reserve();
       reserveResult.setDepDay(new LocalDate(2012, 10, 10)); // (5)
-      when(reserveRepository.findOne((String) anyObject())).thenReturn(
+      when(reserveRepository.findByStaffId((String) anyObject())).thenReturn(
               reserveResult);
       dateFactory = mock(JodaTimeDateFactory.class);
       service.dateFactory = dateFactory;

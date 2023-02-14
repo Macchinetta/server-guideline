@@ -161,7 +161,7 @@ Spring FrameworkのJAX-WS連携機能について
 
 .. note::
 
-    SpringでのJAX-WS実装の詳細は、\ `Spring Framework Documentation -Remoting and Web Services- <https://docs.spring.io/spring-framework/docs/5.3.18/reference/html/integration.html#remoting>`_\ を参照されたい。
+    SpringでのJAX-WS実装の詳細は、\ `Spring Framework Documentation -Remoting and Web Services- <https://docs.spring.io/spring-framework/docs/5.3.24/reference/html/integration.html#remoting>`_\ を参照されたい。
 
 |
 
@@ -792,7 +792,8 @@ webプロジェクト内にWebServiceインターフェースの実装クラス�
 
     <!-- (1) -->
     <sec:http pattern="/ws/**"
-              create-session="stateless">
+              create-session="stateless"
+              once-per-request="false">
        <sec:csrf disabled="true" />
        <sec:http-basic />
     </sec:http>
@@ -890,7 +891,8 @@ webプロジェクト内にWebServiceインターフェースの実装クラス�
 
     <!-- (1) -->
     <sec:http pattern="/ws/**"
-        create-session="stateless">
+        create-session="stateless"
+        once-per-request="false">
         <sec:http-basic />
         <sec:csrf disabled="true" />
     </sec:http>
@@ -1589,7 +1591,7 @@ WebServiceインターフェースを実装したプロキシを生成する\ ``
 
         .. Note:: **wsdlDocumentResourceへのWSDLファイルのURL以外の指定**
 
-            上記の例では、SOAPサーバがWSDLファイルを公開している前提である。\ ``classpath:``\ や\ ``file:``\ プレフィックスを使用して指定することで静的ファイルを指定することもできる。指定できる文字列は、\ `Spring Framework Documentation -The ResourceLoader- <https://docs.spring.io/spring-framework/docs/5.3.18/reference/html/core.html#resources-resourceloader>`_\ を参照されたい。
+            上記の例では、SOAPサーバがWSDLファイルを公開している前提である。\ ``classpath:``\ や\ ``file:``\ プレフィックスを使用して指定することで静的ファイルを指定することもできる。指定できる文字列は、\ `Spring Framework Documentation -The ResourceLoader- <https://docs.spring.io/spring-framework/docs/5.3.24/reference/html/core.html#resources-resourceloader>`_\ を参照されたい。
 
 
 .. Note:: **エンドポイントアドレスの上書き指定**
@@ -2558,7 +2560,7 @@ CXFServletを使用する場合の設定
 
    .. note::
 
-      saaj-implのバージョンはterasoluna-gfw-parentが依存している\ `Spring Boot <https://docs.spring.io/spring-boot/docs/2.6.1/reference/htmlsingle/#dependency-versions>`_\ で管理されているため、pom.xmlでのバージョンの指定は不要である。
+      saaj-implのバージョンはterasoluna-gfw-parentが依存している\ `Spring Boot <https://docs.spring.io/spring-boot/docs/2.7.7/reference/htmlsingle/#dependency-versions>`_\ で管理されているため、pom.xmlでのバージョンの指定は不要である。
 
 
 |

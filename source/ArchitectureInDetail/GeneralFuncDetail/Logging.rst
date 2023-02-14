@@ -217,13 +217,13 @@ Logbackの設定
 
 .. note::
 
-     Logbackの設定は、以下のルールによる自動で読み込まれる。
+     Logbackの設定は、以下のルールにより自動で読み込まれる。
 
-     #. クラスパス上のlogback.grovy
-     #. 「1」のファイルが見つからない場合、クラスパス上のlogback-test.xml
-     #. 「2」のファイルが見つからない場合、クラスパス上のlogback.xml
-     #. 「3」のファイルが見つからない場合、\ ``com.qos.logback.classic.spi.Configurator``\ インタフェースの実装クラスの設定内容 (\ `ServiceLoader <https://docs.oracle.com/javase/8/docs/api/java/util/ServiceLoader.html>`_\ の仕組みを使用して実装クラスを指定)
-     #. \ ``Configurator``\ インタフェースの実装クラスが見つからない場合、BasicConfiguratorクラスの設定内容(コンソール出力)
+     #. \ ``com.qos.logback.classic.spi.Configurator``\ インタフェースの実装クラスの設定内容 (\ `ServiceLoader <https://docs.oracle.com/javase/8/docs/api/java/util/ServiceLoader.html>`_\ の仕組みを使用して実装クラスを指定)
+     #.  \ ``Configurator``\ インタフェースの実装クラスが見つからない場合、\ ``ch.qos.logback.classic.util.DefaultJoranConfigurator``\ を使用し、クラスパス上の\ ``META-INF/services/ch.qos.logback.classic.spi.Configurator``\ を検索することにより\ ``Configurator``\ インタフェースの実装を解決する。\ ``META-INF/services/ch.qos.logback.classic.spi.Configurator``\ には、期待する\ ``Configurator``\ インタフェースの実装クラスの完全修飾クラス名を指定する必要がある。
+     #. 「2」のファイルが見つからない場合、クラスパス上のlogback-test.xml
+     #. 「3」のファイルが見つからない場合、クラスパス上のlogback.xml
+     #. 「4」のファイルが見つからない場合、BasicConfiguratorクラスの設定内容(コンソール出力)
 
      本ガイドラインでは、logback.xmlをクラスパス上に配置することを推奨する。
      このほか、自動読み込み以外にも、\ `APIによってプログラマティックに読み込んだり <https://logback.qos.ch/manual/configuration.html#joranDirectly>`_\ 、
@@ -782,7 +782,7 @@ How to extend
        | 詳細は、\ :doc:`../../ArchitectureInDetail/WebApplicationDetail/MessageManagement`\ の\ :ref:`properties-display`\ を参照されたい。
    * - | (5)
      - | 国際化を考慮し\ ``setBasenames``\ メソッドを使用してプロパティファイルを指定する。
-       | \ ``setBasenames``\ の詳細は\ ``ResourceBundleMessageSource``\ が継承する\ ``AbstractResourceBasedMessageSource``\ クラスの\ `JavaDoc <https://docs.spring.io/spring-framework/docs/5.3.18/javadoc-api/org/springframework/context/support/AbstractResourceBasedMessageSource.html#setBasenames-java.lang.String...->`_\を参照されたい。
+       | \ ``setBasenames``\ の詳細は\ ``ResourceBundleMessageSource``\ が継承する\ ``AbstractResourceBasedMessageSource``\ クラスの\ `JavaDoc <https://docs.spring.io/spring-framework/docs/5.3.24/javadoc-api/org/springframework/context/support/AbstractResourceBasedMessageSource.html#setBasenames-java.lang.String...->`_\を参照されたい。
    * - | (6)
      - | Loggerラッパークラスにおいても、SLF4Jを使用する。ロギングライブラリの実装を直接使用しない。
    * - | (7)
@@ -1248,7 +1248,7 @@ logback.xmlの\ ``<pattern>``\ に\ ``%X{X-Track}``\ および、\ ``%X{USER}``\
 
          .. code-block:: xml
 
-             <sec:http>
+             <sec:http once-per-request="false">
                  <!-- omitted -->
                  <sec:custom-filter ref="userIdMDCPutFilter" after="ANONYMOUS_FILTER"/> <!-- (1) -->
                  <!-- omitted -->

@@ -25,15 +25,15 @@ Spring MVCを用いたWebアプリケーションの開発に対するイメー�
     * - OS
       - Windows 10
     * - JVM
-      - `Java <https://www.oracle.com/java/technologies/downloads/>`_ 1.8
+      - `Java <https://developers.redhat.com/products/openjdk/download>`_ 1.8
     * - IDE
-      - `Spring Tool Suite <https://spring.io/tools>`_ 4.11.0.RELEASE (以降「STS」と呼ぶ。設定方法は :doc:`../Appendix/SpringToolSuite4` を参照されたい。)
+      - `Spring Tool Suite <https://spring.io/tools>`_ 4.17.1.RELEASE (以降「STS」と呼ぶ。設定方法は :doc:`../Appendix/SpringToolSuite4` を参照されたい。)
     * - Build Tool
-      - `Apache Maven <https://maven.apache.org/download.cgi>`_ 3.8.3 (以降「Maven」と呼ぶ)
+      - `Apache Maven <https://maven.apache.org/download.cgi>`_ 3.8.6 (以降「Maven」と呼ぶ)
     * - Application Server
-      - `Apache Tomcat <https://tomcat.apache.org/tomcat-9.0-doc/index.html>`_ 9.0.55
+      - `Apache Tomcat <https://tomcat.apache.org/tomcat-9.0-doc/index.html>`_ 9.0.73
     * - Web Browser
-      - `Google Chrome <https://www.google.co.jp/chrome/>`_ 98.0.4758.82
+      - `Google Chrome <https://www.google.co.jp/chrome/>`_ 109.0.5414.120
 
 .. note::
 
@@ -51,7 +51,7 @@ Spring MVCを用いたWebアプリケーションの開発に対するイメー�
     mvn archetype:generate -B^
      -DarchetypeGroupId=com.github.macchinetta.blank^
      -DarchetypeArtifactId=macchinetta-web-blank-noorm-archetype^
-     -DarchetypeVersion=1.8.1.SP1.RELEASE^
+     -DarchetypeVersion=1.8.2.RELEASE^
      -DgroupId=com.example.helloworld^
      -DartifactId=helloworld^
      -Dversion=1.0.0-SNAPSHOT
@@ -63,7 +63,7 @@ Spring MVCを用いたWebアプリケーションの開発に対するイメー�
     C:\work>mvn archetype:generate -B^
     More?  -DarchetypeGroupId=com.github.macchinetta.blank^
     More?  -DarchetypeArtifactId=macchinetta-web-blank-noorm-archetype^
-    More?  -DarchetypeVersion=1.8.1.SP1.RELEASE^
+    More?  -DarchetypeVersion=1.8.2.RELEASE^
     More?  -DgroupId=com.example.helloworld^
     More?  -DartifactId=helloworld^
     More?  -Dversion=1.0.0-SNAPSHOT
@@ -80,9 +80,9 @@ Spring MVCを用いたWebアプリケーションの開発に対するイメー�
     [INFO]
     [INFO] --- maven-archetype-plugin:3.1.2:generate (default-cli) @ standalone-pom ---
     [INFO] Generating project in Batch mode
-    [INFO] Archetype repository not defined. Using the one from [com.github.macchinetta.blank:macchinetta-web-blank-noorm-archetype:1.8.1.SP1.RELEASE] found in catalog remote
+    [INFO] Archetype repository not defined. Using the one from [com.github.macchinetta.blank:macchinetta-web-blank-noorm-archetype:1.8.2.RELEASE] found in catalog remote
     [INFO] ----------------------------------------------------------------------------
-    [INFO] Using following parameters for creating project from Archetype: macchinetta-web-blank-noorm-archetype:1.8.1.SP1.RELEASE
+    [INFO] Using following parameters for creating project from Archetype: macchinetta-web-blank-noorm-archetype:1.8.2.RELEASE
     [INFO] ----------------------------------------------------------------------------
     [INFO] Parameter: groupId, Value: com.example.helloworld
     [INFO] Parameter: artifactId, Value: helloworld
@@ -252,7 +252,7 @@ Spring MVCの設定方法を理解するために、生成されたSpring MVCの
    * - 項番
      - 説明
    * - | (1)
-     - \ ``<mvc:annotation-driven>``\要素を定義することにより、Spring MVCのデフォルト設定が行われる。デフォルトの設定については、`Spring Framework Documentation -Enable MVC Configuration- <https://docs.spring.io/spring-framework/docs/5.3.18/reference/html/web.html#mvc-config-enable>`_ を参照されたい。
+     - \ ``<mvc:annotation-driven>``\要素を定義することにより、Spring MVCのデフォルト設定が行われる。デフォルトの設定については、`Spring Framework Documentation -Enable MVC Configuration- <https://docs.spring.io/spring-framework/docs/5.3.24/reference/html/web.html#mvc-config-enable>`_ を参照されたい。
    * - | (2)
      - Spring MVCで使用するコンポーネントを探すパッケージを定義する。
    * - | (3)
@@ -523,7 +523,7 @@ JSPの作成
      - 説明
    * - | (1)
      - | タグライブラリを利用し、HTMLフォームを構築している。 ``modelAttribute`` 属性に、Controllerで用意したフォームオブジェクトの名前を指定する。
-       | タグライブラリは `Spring Framework Documentation -The Form Tag- <https://docs.spring.io/spring-framework/docs/5.3.18/reference/html/web.html#mvc-view-jsp-formtaglib-formtag>`_\を参照されたい。
+       | タグライブラリは `Spring Framework Documentation -The Form Tag- <https://docs.spring.io/spring-framework/docs/5.3.24/reference/html/web.html#mvc-view-jsp-formtaglib-formtag>`_\を参照されたい。
 
 .. note::
 

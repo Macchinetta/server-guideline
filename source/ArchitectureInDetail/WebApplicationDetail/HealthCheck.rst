@@ -316,7 +316,7 @@ JSPファイル
 
 .. code-block:: xml
 
-   <sec:http>
+   <sec:http once-per-request="false">
       <sec:intercept-url pattern="/healthcheck/**" access="permitAll"/>
       <!-- omitted -->
    </sec:http>

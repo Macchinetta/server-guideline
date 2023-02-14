@@ -984,9 +984,9 @@ RDBMSの行ロック機能を使って排他制御を行う場合は、SQLの中
 
     public interface StockRepository {
         // (2)
-        Stock findOne(String itemCode);
+        Stock findByItemCode(String itemCode);
         // (3)
-        boolean update(Stock stock);
+        boolean updateQuantity(Stock stock);
     }
 
  .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
@@ -1011,7 +1011,7 @@ RDBMSの行ロック機能を使って排他制御を行う場合は、SQLの中
  .. code-block:: xml
 
     <!-- (4) -->
-    <select id="findOne" parameterType="string" resultType="Stock">
+    <select id="findByItemCode" parameterType="string" resultType="Stock">
         SELECT
             item_code,
             quantity,
@@ -1023,7 +1023,7 @@ RDBMSの行ロック機能を使って排他制御を行う場合は、SQLの中
     </select>
 
     <!-- (5) -->
-    <update id="update" parameterType="Stock">
+    <update id="updateQuantity" parameterType="Stock">
         UPDATE
             m_stock
         SET
@@ -1064,7 +1064,7 @@ RDBMSの行ロック機能を使って排他制御を行う場合は、SQLの中
  .. code-block:: java
 
     // (8)
-    Stock stock = stockRepository.findOne(itemCode);
+    Stock stock = stockRepository.findByItemCode(itemCode);
     if (stock == null) {
         ResultMessages messages = ResultMessages.error().add(ResultMessage
                 .fromText("Stock not found. itemCode : " + itemCode));
@@ -1075,7 +1075,7 @@ RDBMSの行ロック機能を使って排他制御を行う場合は、SQLの中
     stock.setQuantity(stock.getQuantity() + addedQuantity);
 
     // (10)
-    boolean updated = stockRepository.update(stock);
+    boolean updated = stockRepository.updateQuantity(stock);
     if(!updated) {
         // (11)
         throw new ObjectOptimisticLockingFailureException(Stock.class, itemCode);
@@ -1089,13 +1089,13 @@ RDBMSの行ロック機能を使って排他制御を行う場合は、SQLの中
     * - 項番
       - 説明
     * - | (8)
-      - RepositoryインタフェースのfindOneメソッドを呼び出し、Entityを取得する。
+      - RepositoryインタフェースのfindByItemCodeメソッドを呼び出し、Entityを取得する。
     * - | (9)
       - (8)で取得したEntityに対して、更新する値を指定する。
 
         上記例では、仕入れた在庫数を加算している。
     * - | (10)
-      - Repositoryインタフェースのupdateメソッドを呼び出し、
+      - RepositoryインタフェースのupdateQuantityメソッドを呼び出し、
         (8)の処理で更新したEntityを永続層(DB)に反映する。
     * - | (11)
       - 更新結果を判定し、更新結果が\ ``false``\ の場合は、
@@ -1111,22 +1111,21 @@ RDBMSの行ロック機能を使って排他制御を行う場合は、SQLの中
     ロングトランザクションに対して楽観ロックを行う場合は、更新時のチェックとは別に、
     データ取得時にもバージョンのチェックを行うこと。
 
-
 以下に、実装例を示す。
 
 - データ取得時にもバージョンのチェックを行う。
 
  .. code-block:: java
 
-    Stock stock = stockRepository.findOne(itemCode);
+    Stock stock = stockRepository.findByItemCode(itemCode);
     if (stock == null || stock.getVersion() != version) {
         // (12)
         throw new ObjectOptimisticLockingFailureException(Stock.class, itemCode);
     }
 
     stock.setQuantity(stock.getQuantity() + addedQuantity);
-    boolean updated = stockRepository.update(stock);
-    // ...
+    boolean updated = stockRepository.updateQuantity(stock);
+    // omitted
 
  .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
  .. list-table::
@@ -1136,16 +1135,11 @@ RDBMSの行ロック機能を使って排他制御を行う場合は、SQLの中
     * - 項番
       - 説明
     * - | (12)
-      - 別のデータベーストランザクションで取得したEntityのバージョンと、
-        (8)で取得したEntityのバージョンを比較する。
+      - 別のデータベーストランザクションで取得したEntityのバージョンと、(8)で取得したEntityのバージョンを比較する。
 
-        バージョンが異なる場合は、他のトランザクションによってデータが更新されているので、
-        楽観ロックエラー(\ ``org.springframework.orm.ObjectOptimisticLockingFailureException``\ )を発生させる。
+        バージョンが異なる場合は、他のトランザクションによってデータが更新されているので、楽観ロックエラー(\ ``org.springframework.orm.ObjectOptimisticLockingFailureException``\ )を発生させる。
 
-        データが存在しない(\ ``stock == null``\)時の考慮も必要であり、
-        アプリケーションの仕様に対応した実装を行う必要がある。
-        上記例では、楽観ロックエラーとしている。
-
+        データが存在しない(\ ``stock == null``\)時の考慮も必要であり、アプリケーションの仕様に対応した実装を行う必要がある。上記例では、楽観ロックエラーとしている。
 
 |
 
@@ -1202,7 +1196,7 @@ RDBMSの行ロック機能と楽観ロック機能を併用するアプリケー
 
  .. code-block:: xml
 
-    <select id="findOneForUpdate" parameterType="string" resultType="Stock">
+    <select id="findByItemCodeWithPessimisticLock" parameterType="string" resultType="Stock">
         SELECT
             item_code,
             quantity,

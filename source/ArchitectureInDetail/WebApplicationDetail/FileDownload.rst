@@ -42,7 +42,7 @@ Overview
 | クラスは、modelの情報を用いてExcelファイルをレンダリングするときに、サブクラスとして利用するクラスである。
 |
 | Spring では上記以外にも、いろいろなViewの実装を提供している。
-| Viewの技術詳細は、\ `Spring Framework Documentation -View Technologies- <https://docs.spring.io/spring-framework/docs/5.3.18/reference/html/web.html#mvc-view>`_\ を参照されたい。
+| Viewの技術詳細は、\ `Spring Framework Documentation -View Technologies- <https://docs.spring.io/spring-framework/docs/5.3.24/reference/html/web.html#mvc-view>`_\ を参照されたい。
 
 | 共通ライブラリから提供している、\ ``org.terasoluna.gfw.web.download.AbstractFileDownloadView``\ は、
 | 任意のファイルをダウンロードするために使用する抽象クラスである。
@@ -80,7 +80,7 @@ PDFファイルのダウンロード
                 Document document, PdfWriter writer, HttpServletRequest request,
                 HttpServletResponse response) throws Exception {  // (3)
 
-            document.add(new Paragraph((Date) model.get("serverTime")).toString());
+            document.add(new Paragraph(model.get("serverTime").toString()));
         }
       }
 
@@ -245,7 +245,7 @@ Excelファイルのダウンロード
                 setText(cell, "Spring-Excel test");
 
                 cell = getCell(sheet, 2, 0);
-                setText(cell, ((Date) model.get("serverTime")).toString());
+                setText(cell, model.get("serverTime").toString());
             }
 
             private Cell getCell(Sheet sheet, int rowNumber, int cellNumber) {
@@ -286,14 +286,43 @@ Excelファイルのダウンロード
       </dependency>
   </dependencies>
   
-\
-    .. note::
-        上記設定例は、依存ライブラリのバージョンを親プロジェクトである terasoluna-gfw-parent で管理する前提であるため、pom.xmlでのバージョンの指定は不要である。
+.. note::
 
-\
-    .. note::
-        xlsファイル形式をサポートしたい場合は \ ``AbstractXlsView``\を使用されたい。
-        詳細は、\ `AbstractXlsViewのJavaDoc <https://docs.spring.io/spring-framework/docs/5.3.18/javadoc-api/org/springframework/web/servlet/view/document/AbstractXlsView.html>`_\ を参照されたい。
+  上記設定例は、依存ライブラリのバージョンを親プロジェクトである terasoluna-gfw-parent で管理する前提であるため、pom.xmlでのバージョンの指定は不要である。
+
+.. note::
+
+  xlsファイル形式をサポートしたい場合は \ ``AbstractXlsView``\ を使用されたい。
+
+  詳細は、\ `AbstractXlsViewのJavaDoc <https://docs.spring.io/spring-framework/docs/5.3.24/javadoc-api/org/springframework/web/servlet/view/document/AbstractXlsView.html>`_\ を参照されたい。
+
+.. note::
+
+  POI 5.1.0 以降のバージョンでは\ `Apache Log4j v2 <https://logging.apache.org/log4j/2.x/>`_\ を依存関係に含んでおり、POIがLog4j 2を直接使用するようになった。
+
+  Macchinetta Server Framework (1.x)ではロガーのAPIに\ `SLF4J <https://www.slf4j.org/>`_\ を使用しているが、APIの優先順位の関係でLog4j 2が有効になる可能性がある。
+
+  これを回避するため、\ ``log4j-to-slf4j``\ を依存関係に含むことでSLF4Jへブリッジされるようになる。
+
+    .. code-block:: xml
+
+      <dependencies>
+          <!-- omitted -->
+          <dependency>
+              <groupId>org.apache.logging.log4j</groupId>
+              <artifactId>log4j-to-slf4j</artifactId>
+          </dependency>
+      </dependencies>
+  
+  上記設定例は、依存ライブラリのバージョンを親プロジェクトである terasoluna-gfw-parent で管理する前提であるため、pom.xmlでのバージョンの指定は不要である。
+    
+    .. warning:: 
+
+      SLF4J adapter (log4j-to-slf4j-2.0.jar) とSLF4J bridge (log4j-slf4j-impl-2.0.jar) を一緒に使用すると、SLF4J と Log4j 2の間でイベントが際限なくルーティングされてしまうため注意すること。
+
+      詳しくは、\ `Log4j 2 to SLF4J Adapter <https://logging.apache.org/log4j/log4j-2.2/log4j-to-slf4j/index.html>`_\ を参照されたい。
+
+|
 
 ViewResolverの定義
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -430,7 +459,7 @@ ViewResolverの定義
 
         前述してきたように、SpringはModelの情報をいろいろなViewにレンダリングすることができる。
         Springでは、複数のレンダリングエンジンをサポートしており、さまざまなViewを返却することが可能である。
-        詳細は、Spring の公式ドキュメント\ `Spring Framework Documentation -View Technologies- <https://docs.spring.io/spring-framework/docs/5.3.18/reference/html/web.html#mvc-view>`_\ を参照されたい。
+        詳細は、Spring の公式ドキュメント\ `Spring Framework Documentation -View Technologies- <https://docs.spring.io/spring-framework/docs/5.3.24/reference/html/web.html#mvc-view>`_\ を参照されたい。
 
 .. raw:: latex
 

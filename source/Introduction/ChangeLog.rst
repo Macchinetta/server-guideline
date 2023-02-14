@@ -11,16 +11,87 @@
       - 更新箇所
       - 更新内容
 
-    * - 2022-04-20
+    * - 2023-03-30
       - \-
-      - 1.8.1.SP1 RELEASE版公開
+      - 1.8.2 RELEASE版公開
 
     * -
       - :doc:`../Overview/FrameworkStack`
-      - CVE-2022-22965への対応のため、利用するOSSのバージョンを更新
+      - 利用するOSSのバージョンを更新
 
-        * Spring Frameworkのバージョンを5.3.18に更新
-        * Spring Testのバージョンを5.3.18に更新
+        * Spring Bootを2.7.7に更新
+        * MyBatisを3.5.11に更新
+        * MyBatis Springを2.1.0に更新
+        * Joda Timeを2.12.2に更新
+        * Apache POIを5.2.3に更新
+        * Guavaを31.1-jreに更新
+
+        Spring Boot のバージョン更新に伴い利用するOSSのバージョンを更新
+
+        * Spring Frameworkを5.3.24に更新
+        * Spring Dataを2.7.6に更新
+        * Spring Securityを5.7.6に更新
+        * SLF4Jを1.7.36に更新
+        * Jacksonを2.13.4.2に更新
+        * Hibernate Validatorを6.2.5(Bean Validation 2.0)に更新
+        * Lombokを1.18.24に更新
+        * Logbackを1.2.11に更新
+
+        単体テストで利用するOSSのバージョンを更新
+
+        * Mockitoを4.5.1に更新
+        * Spring Testを5.3.24に更新
+
+        記載内容の修正
+
+        * LogbackについてのTipを修正
+
+    * -
+      - :doc:`../ArchitectureInDetail/WebApplicationDetail/FileDownload`
+      - 記載内容の修正
+
+        * AbstractPdfViewを継承したクラスの実装例で使用しているParagraphに渡す型を修正
+
+    * -
+      - :doc:`../ArchitectureInDetail/GeneralFuncDetail/Logging`
+      - 記載内容の修正
+
+        * Logbackの設定の読み込みについてのNoteを修正
+
+    * -
+      - :doc:`../Security/SpringSecurity`
+      - 記載内容の修正
+
+        * Spring Security 5.7.0よりSecurityContextPersistenceFilterが非推奨となり、SecurityContextHolderFilterが推奨となったことへの対応
+        * FilterSecurityInterceptorの設定に関するWarningを追加
+
+    * -
+      - :doc:`../Security/Authentication`
+      - 記載内容の修正
+
+        * Spring Security 5.7.0よりSecurityContextPersistenceFilterが非推奨となり、SecurityContextHolderFilterが推奨となったことへの対応
+
+    * -
+      - :doc:`../Security/OAuth2`
+      - 記載内容の修正
+
+        * OAuth(org.springframework.security.oauth)へのリンクを削除
+        * 認可コードグラントの認可フローの修正
+        * Spring Securityより提供されるOAuth2のアーキテクチャのフローを修正
+        * クライアント認可処理のフローを修正
+        * How to useの修正
+
+    * -
+      - :doc:`../Tutorial/TutorialREST`
+      - 記載内容の追加
+
+        * DHC REST ClientのキャプチャをTalend API Testerのものに修正
+
+    * -
+      - OAuth(org.springframework.security.oauth)
+      - 削除
+
+        * org.springframework.security.oauthがEOLしたことに伴い該当ページを削除
 
     * - 2022-03-30
       - \-
@@ -129,7 +200,7 @@
         * STS4の設定手順を追加
         
     * -
-      - :doc:`../Appendix/OAuth`
+      - OAuth(org.springframework.security.oauth)
       - 新規追加
 
         * Spring Security標準OAuthのサポートに伴い、Spring Security OAuthの説明をAppendixへ移動
@@ -268,7 +339,7 @@
         * ブランクプロジェクトにおいてSpring Securityのフォーム認証を使用しない場合の注意事項を追加
 
     * -
-      - :doc:`../Appendix/OAuth`
+      - OAuth(org.springframework.security.oauth)
       - 記載内容の修正・追加
 
         * Spring Security OAuth 2.5.0より\ ``DefaultUserAuthenticationConverter#getAuthorities``\の可視性が変更されたことへの対応
@@ -849,7 +920,7 @@
         * Spring Securityがサポートするセキュリティヘッダの一覧にFeature-Policyヘッダを追加
 
     * -
-      - :doc:`../Appendix/OAuth`
+      - OAuth(org.springframework.security.oauth)
       - Spring Security OAuth 2.2.2対応に伴う修正
 
         * Spring Security OAuthのバージョン更新に伴いリダイレクトURI情報を保持するテーブルへの説明にWarningを追加
@@ -908,7 +979,7 @@
         * Spring Securityのバージョンを4.2.4に更新
 
     * -
-      - :doc:`../Appendix/OAuth`
+      - OAuth(org.springframework.security.oauth)
       - 記載内容の修正
 
         * 認可サーバのチェックトークンエンドポイントのURL設定が反映されない不具合へのWarningを削除
@@ -1006,7 +1077,7 @@
         * \ ``document.write()`` \を使用する際の注意事項を追加
 
     * -
-      - :doc:`../Appendix/OAuth`
+      - OAuth(org.springframework.security.oauth)
       - 構成見直し
 
         * How to useをグラントタイプ毎に説明する章構成に変更

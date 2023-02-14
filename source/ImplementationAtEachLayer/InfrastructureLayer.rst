@@ -54,7 +54,7 @@ MyBatis3を使用する場合、アプリケーション開発者は、
     // (1)
     public interface TodoRepository {
         // (2)
-        Todo findOne(String todoId);
+        Todo findByTodoId(String todoId);
     }
 
  .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
@@ -86,7 +86,7 @@ MyBatis3を使用する場合、アプリケーション開発者は、
     <mapper namespace="com.example.domain.repository.todo.TodoRepository">
 
         <!-- (4) -->
-        <select id="findOne" parameterType="string" resultMap="todoResultMap">
+        <select id="findByTodoId" parameterType="string" resultMap="todoResultMap">
           SELECT
               todo_id,
               title,

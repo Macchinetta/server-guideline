@@ -25,11 +25,11 @@ Overview
 Jakarta Mailについて
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-\ `Jakarta Mail <https://eclipse-ee4j.github.io/mail/>`_\ は、Javaでメールの送受信を行うためのAPIを提供している。
+\ `Jakarta Mail <https://jakartaee.github.io/mail-api/>`_\ は、Javaでメールの送受信を行うためのAPIを提供している。
 Jakarta Mailを利用することで、メール機能を容易にJavaアプリケーションに組み込むことができる。
 
 なお、本ガイドラインでは、Spring FrameworkのMail連携用コンポーネントを利用する前提であるため、Jakarta MailのAPIについての詳細には触れていない。
-Jakarta MailのAPI仕様については、\ `API Documentation <https://eclipse-ee4j.github.io/mail/#API_Documentation>`_\ を参照されたい。
+Jakarta MailのAPI仕様については、\ `API Documentation <https://jakartaee.github.io/mail-api/#API_Documentation>`_\ を参照されたい。
 
 .. note:: **メールセッション**
 
@@ -140,7 +140,7 @@ How to use
 
 Spring FrameworkのMail連携用コンポーネントを利用する場合、以下のライブラリが追加で必要となる。
 
-* `Jakarta Mail <https://eclipse-ee4j.github.io/mail/>`_
+* `Jakarta Mail <https://jakartaee.github.io/mail-api/>`_
 
 | 上記ライブラリに対する依存関係を\ :file:`pom.xml`\ に追加する。
 | マルチプロジェクト構成の場合は、domainプロジェクトの\ :file:`pom.xml`\ (:file:`projectName-domain/pom.xml`)に追加する。
@@ -171,7 +171,7 @@ Spring FrameworkのMail連携用コンポーネントを利用する場合、以
 .. note::
 
     上記設定例は、依存ライブラリのバージョンを親プロジェクトである terasoluna-gfw-parent で管理する前提であるため、pom.xmlでのバージョンの指定は不要である。
-    上記の依存ライブラリはterasoluna-gfw-parentが依存している\ `Spring Boot <https://docs.spring.io/spring-boot/docs/2.6.1/reference/htmlsingle/#dependency-versions>`_\ で管理されている。
+    上記の依存ライブラリはterasoluna-gfw-parentが依存している\ `Spring Boot <https://docs.spring.io/spring-boot/docs/2.7.7/reference/htmlsingle/#dependency-versions>`_\ で管理されている。
 
 |
 
@@ -782,18 +782,18 @@ HTMLメールの送信
       - 例外クラス
       - 発生条件
     * - 1.
-      - `MailAuthenticationException <https://docs.spring.io/spring-framework/docs/5.3.18/javadoc-api/org/springframework/mail/MailAuthenticationException.html>`_
+      - `MailAuthenticationException <https://docs.spring.io/spring-framework/docs/5.3.24/javadoc-api/org/springframework/mail/MailAuthenticationException.html>`_
       - | 認証失敗時に発生する。
     * - 2.
-      - `MailParseException <https://docs.spring.io/spring-framework/docs/5.3.18/javadoc-api/org/springframework/mail/MailParseException.html>`_
+      - `MailParseException <https://docs.spring.io/spring-framework/docs/5.3.24/javadoc-api/org/springframework/mail/MailParseException.html>`_
       - | メールメッセージのプロパティに不正な値が設定されている場合に発生する。
     * - 3.
-      - `MailPreparationException <https://docs.spring.io/spring-framework/docs/5.3.18/javadoc-api/org/springframework/mail/MailPreparationException.html>`_
+      - `MailPreparationException <https://docs.spring.io/spring-framework/docs/5.3.24/javadoc-api/org/springframework/mail/MailPreparationException.html>`_
       - | メールメッセージを作成中に想定外のエラーが起きた場合に発生する。
           想定外のエラーとしては、例えばテンプレートライブラリで発生するエラーといったものがある。
         | \ ``MimeMessagePreparator``\ で発生した例外が\ ``MailPreparationException``\ にラップされてスローされる。
     * - 4.
-      - `MailSendException <https://docs.spring.io/spring-framework/docs/5.3.18/javadoc-api/org/springframework/mail/MailSendException.html>`_
+      - `MailSendException <https://docs.spring.io/spring-framework/docs/5.3.24/javadoc-api/org/springframework/mail/MailSendException.html>`_
       - | メールの送信エラーが起きた場合に発生する。
 
 .. note::
@@ -851,7 +851,7 @@ FreeMarkerを使用したメール本文の作成
     .. note::
 
        上記設定例は、依存ライブラリのバージョンを親プロジェクトである terasoluna-gfw-parent で管理する前提であるため、pom.xmlでのバージョンの指定は不要である。
-       上記の依存ライブラリはterasoluna-gfw-parentが依存している\ `Spring Boot <https://docs.spring.io/spring-boot/docs/2.6.1/reference/htmlsingle/#dependency-versions>`_\ で管理されている。
+       上記の依存ライブラリはterasoluna-gfw-parentが依存している\ `Spring Boot <https://docs.spring.io/spring-boot/docs/2.7.7/reference/htmlsingle/#dependency-versions>`_\ で管理されている。
 
 
 * \ ``freemarker.template.Configuration``\ を生成するためのFactoryBeanをBean定義する。
@@ -885,7 +885,7 @@ FreeMarkerを使用したメール本文の作成
 
     .. note::
 
-       上記以外の設定については、\ `FreeMarkerConfigurationFactoryBeanのJavaDoc <https://docs.spring.io/spring-framework/docs/5.3.18/javadoc-api/org/springframework/ui/freemarker/FreeMarkerConfigurationFactoryBean.html>`_\ を参照されたい。
+       上記以外の設定については、\ `FreeMarkerConfigurationFactoryBeanのJavaDoc <https://docs.spring.io/spring-framework/docs/5.3.24/javadoc-api/org/springframework/ui/freemarker/FreeMarkerConfigurationFactoryBean.html>`_\ を参照されたい。
        また、FreeMarker自体の設定については、\ `FreeMarker Manual (Programmer's Guide / The Configuration) <https://freemarker.apache.org/docs/pgui_config.html>`_\ を参照されたい。
 
 * メール本文のテンプレートファイルを作成する。

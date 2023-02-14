@@ -62,7 +62,7 @@ Webアプリケーションの入力チェックには、サーバサイドで�
    * - 相関項目チェック
      - | 複数のフィールドを比較するチェック
      - | パスワードと確認用パスワードの一致チェック
-     - | `org.springframework.validation.Validator <https://docs.spring.io/spring-framework/docs/5.3.18/reference/html/core.html#validator>`_\ インタフェースを実装したValidationクラス
+     - | `org.springframework.validation.Validator <https://docs.spring.io/spring-framework/docs/5.3.24/reference/html/core.html#validator>`_\ インタフェースを実装したValidationクラス
        | または Bean Validation
 
 
@@ -603,7 +603,7 @@ NameとEmailが空文字であることに対するエラーメッセージと�
 
 .. note:: **@GroupSequenceアノテーションについて**
 
-   チェック順番を制御するための仕組みとして\ `@GroupSequenceアノテーション <https://docs.jboss.org/hibernate/validator/6.0/reference/en-US/html_single/#_code_groupsequence_code>`_\ が提供されているが、
+   チェック順番を制御するための仕組みとして\ `@GroupSequenceアノテーション <https://docs.jboss.org/hibernate/validator/6.2/reference/en-US/html_single/#_code_groupsequence_code>`_\ が提供されているが、
    この仕組みは以下のような動作になるため、エラーメッセージの出力順序を制御するための仕組みではないという点を補足しておく。
 
    * エラーが発生した場合に後続のグループのチェックが実行されない。
@@ -2267,7 +2267,7 @@ Bean Validationによって、相関項目チェックの実装するために�
 Spring MVCによるBean Validationのエラーメッセージは、以下の順で解決される。
 
 #. | \ ``org.springframework.context.MessageSource``\ に定義されているメッセージの中に、ルールに合致するものがあればそれをエラーメッセージとして使用する (Springのルール)。
-   | Springのデフォルトのルールについては、「`DefaultMessageCodesResolverのJavaDoc <https://docs.spring.io/spring-framework/docs/5.3.18/javadoc-api/org/springframework/validation/DefaultMessageCodesResolver.html>`_」を参照されたい。
+   | Springのデフォルトのルールについては、「`DefaultMessageCodesResolverのJavaDoc <https://docs.spring.io/spring-framework/docs/5.3.24/javadoc-api/org/springframework/validation/DefaultMessageCodesResolver.html>`_」を参照されたい。
 #. 1.でメッセージが見つからない場合、アノテーションの\ ``message``\ 属性に、指定されたメッセージからエラーメッセージを取得する (Bean Validationのルール)
 
   #. \ ``message``\ 属性に指定されたメッセージが、"{メッセージキー}"形式でない場合、そのテキストをエラーメッセージとして使用する。
@@ -2310,7 +2310,7 @@ Spring MVCによるBean Validationのエラーメッセージは、以下の順�
     * マルチプロジェクト構成を採用する場合は、\ ``ValidationMessages.properties``\ ファイルを複数のプロジェクトに配置しないように注意すること。
     * Bean Validation用の共通部品をjarファイルとして配布する際に、\ ``ValidationMessages.properties``\ ファイルをjarファイルの中に含めないように注意すること。
 
-    なお、version 1.0.2.RELEASE以降の `ブランクプロジェクト <https://github.com/Macchinetta/macchinetta-web-multi-blank/tree/1.8.1.SP1.RELEASE>`_ \ からプロジェクトを生成した場合は、
+    なお、version 1.0.2.RELEASE以降の `ブランクプロジェクト <https://github.com/Macchinetta/macchinetta-web-multi-blank/tree/1.8.2.RELEASE>`_ \ からプロジェクトを生成した場合は、
     \ ``xxx-web/src/main/resources``\ の直下に\ ``ValidationMessages.properties``\ が格納されている。
 
 |
@@ -2500,7 +2500,7 @@ Bean Validationのアノテーションの\ ``message``\ 属性に指定され�
             後者は\ ``@DecimalMax``\ アノテーションの \ ``inclusive``\ 属性に \ ``false``\ を指定した場合に生成される。
 
             Bean ValidationにおけるEL式の扱いについては、
-            \ `Hibernate Validator Reference Guide(Interpolation with message expressions) <https://docs.jboss.org/hibernate/validator/6.0/reference/en-US/html_single/#section-interpolation-with-message-expressions>`_\ を参照されたい。
+            \ `Hibernate Validator Reference Guide(Interpolation with message expressions) <https://docs.jboss.org/hibernate/validator/6.2/reference/en-US/html_single/#section-interpolation-with-message-expressions>`_\ を参照されたい。
 
     また、:file:`ValidationMessages.properties` に指定するメッセージに \ ``${validatedValue}``\ を使用することで、エラーメッセージにチェック対象の値を含むことができる。
 
@@ -2527,7 +2527,7 @@ Bean Validationのアノテーションの\ ``message``\ 属性に指定され�
           - 上記のメッセージ定義から実際に生成されるメッセージは、 \ ``${validatedValue}``\ の部分にフォームに入力した値が埋め込まれる。
             入力値に機密情報を含む場合、機密情報がメッセージに表示されないようにするため、 \ ``${validatedValue}``\ を使用しないように注意すること。
 
-            詳細については、\ `Hibernate Validator Reference Guide(Interpolation with message expressions) <https://docs.jboss.org/hibernate/validator/6.0/reference/en-US/html_single/#section-interpolation-with-message-expressions>`_\ を参照されたい。
+            詳細については、\ `Hibernate Validator Reference Guide(Interpolation with message expressions) <https://docs.jboss.org/hibernate/validator/6.2/reference/en-US/html_single/#section-interpolation-with-message-expressions>`_\ を参照されたい。
 
 
 .. _Validation_message_in_application_messages:
@@ -2574,7 +2574,7 @@ ValidationMessages.propertiesでシステムが利用するデフォルトのメ
 * \ ``{2}``\  : \ ``min``\ 属性の値
 
 となる。
-仕様の詳細については \ `SpringValidatorAdapterのJavaDoc <https://docs.spring.io/spring-framework/docs/5.3.18/javadoc-api/org/springframework/validation/beanvalidation/SpringValidatorAdapter.html#getArgumentsForConstraint-java.lang.String-java.lang.String-javax.validation.metadata.ConstraintDescriptor->`_\
+仕様の詳細については \ `SpringValidatorAdapterのJavaDoc <https://docs.spring.io/spring-framework/docs/5.3.24/javadoc-api/org/springframework/validation/beanvalidation/SpringValidatorAdapter.html#getArgumentsForConstraint-java.lang.String-java.lang.String-javax.validation.metadata.ConstraintDescriptor->`_\
 を参照されたい。
 
 エラーメッセージは以下のように変更される。
@@ -2585,7 +2585,7 @@ ValidationMessages.propertiesでシステムが利用するデフォルトのメ
 
 .. note::
 
-  application-messages.propertiesのメッセージキーの形式は、\ `これ以外にも用意されている <https://docs.spring.io/spring-framework/docs/5.3.18/javadoc-api/org/springframework/validation/DefaultMessageCodesResolver.html>`_\ が、
+  application-messages.propertiesのメッセージキーの形式は、\ `これ以外にも用意されている <https://docs.spring.io/spring-framework/docs/5.3.24/javadoc-api/org/springframework/validation/DefaultMessageCodesResolver.html>`_\ が、
   デフォルトメッセージを一部上書きする目的で使用するのであれば、基本的に、\ ``アノテーション名.フォーム属性名.プロパティ名``\ 形式でよい。
 
 |
@@ -4210,14 +4210,14 @@ Hibernate Validatorの代表的なアノテーション(\ ``org.hibernate.valida
      \ ``@URL``\ にて、JVMがサポートしていないプロトコルについても妥当として検証したい場合、Hibernateから提供されている\ ``org.hibernate.validator.constraintvalidators.RegexpURLValidator``\ を使用する。
      当該クラスは\ ``@URL``\ アノテーションに対応するValidatorクラスで、URL形式であるかを正規表現で検証しており、JVMがサポートしていないプロトコルについても妥当として検証可能である。
 
-     * アプリケーション全体の\ ``@URL``\ のチェックルールを変更してもよい場合には、\ `JavaDoc <https://docs.jboss.org/hibernate/validator/6.0/api/org/hibernate/validator/constraints/URL.html>`_\ に記載されているように、
+     * アプリケーション全体の\ ``@URL``\ のチェックルールを変更してもよい場合には、\ `JavaDoc <https://docs.jboss.org/hibernate/validator/6.2/api/org/hibernate/validator/constraints/URL.html>`_\ に記載されているように、
        XMLにてValidatorクラスを\ ``RegexpURLValidator``\ に変更する。
      * 一部の項目だけに正規表現による検証を適用し、\ ``@URL``\ はデフォルトのルールを使用したい場合には、新規アノテーション、および\ ``RegexpURLValidator``\ と同様の検証を行う\ ``javax.validation.ConstraintValidator``\ 実装クラスを作成し、
        必要な項目に作成したアノテーションによる検証を適用する。
 
      など、用途に応じた適用を行えばよい。
 
-     XMLによるチェックルール変更の詳細については\ `Hibernateのリファレンス <https://docs.jboss.org/hibernate/validator/6.0/reference/en-US/html_single/#section-configuration-validation-xml>`_\ を、
+     XMLによるチェックルール変更の詳細については\ `Hibernateのリファレンス <https://docs.jboss.org/hibernate/validator/6.2/reference/en-US/html_single/#section-configuration-validation-xml>`_\ を、
      新規アノテーションの作成方法については、\ :ref:`Validation_implement_new_constraint`\ をそれぞれ参照されたい。
 
 .. note::
@@ -4232,7 +4232,7 @@ Hibernate Validatorが用意するデフォルトメッセージ
 hibernate-validator-<version>.jar内のorg/hibernate/validatorに、ValidationMessages.propertiesのデフォルト値が定義されている。
 
 各言語に対応したValidationMessages.propertiesが定義されており、\ :doc:`../WebApplicationDetail/Internationalization`\ の仕組みによりメッセージが決定される。
-対応する言語については \ `org/hibernate/validator <https://github.com/hibernate/hibernate-validator/tree/6.1.5.Final/engine/src/main/resources/org/hibernate/validator>`_\ を参照されたい。
+対応する言語については \ `org/hibernate/validator <https://github.com/hibernate/hibernate-validator/tree/6.2.5.Final/engine/src/main/resources/org/hibernate/validator>`_\ を参照されたい。
 
 .. code-block:: properties
 
@@ -4307,7 +4307,7 @@ hibernate-validator-<version>.jar内のorg/hibernate/validatorに、ValidationMe
 terasoluna-gfw-commonのチェックルール
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-\ `terasoluna-gfw-common <https://github.com/terasolunaorg/terasoluna-gfw/tree/5.7.1.SP1.RELEASE/terasoluna-gfw-common-libraries/terasoluna-gfw-common>`_\ が提供するアノテーション(\ ``org.terasoluna.gfw.common.codelist.*``\ )を以下に示す。
+\ `terasoluna-gfw-common <https://github.com/terasolunaorg/terasoluna-gfw/tree/5.7.2.RELEASE/terasoluna-gfw-common-libraries/terasoluna-gfw-common>`_\ が提供するアノテーション(\ ``org.terasoluna.gfw.common.codelist.*``\ )を以下に示す。
 
 .. tabularcolumns:: |p{0.15\linewidth}|p{0.30\linewidth}|p{0.30\linewidth}|p{0.25\linewidth}|
 .. list-table::
@@ -4331,7 +4331,7 @@ terasoluna-gfw-commonのチェックルール
 terasoluna-gfw-codepointsのチェックルール
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-\ `terasoluna-gfw-codepoints <https://github.com/terasolunaorg/terasoluna-gfw/tree/5.7.1.SP1.RELEASE/terasoluna-gfw-common-libraries/terasoluna-gfw-codepoints>`_\ が提供するアノテーション(\ ``org.terasoluna.gfw.common.codepoints.*``\ )を以下に示す。なお、\ ``terasoluna-gfw-codepoints``\ はバージョン5.1.0.RELEASE以上で利用することができる。
+\ `terasoluna-gfw-codepoints <https://github.com/terasolunaorg/terasoluna-gfw/tree/5.7.2.RELEASE/terasoluna-gfw-common-libraries/terasoluna-gfw-codepoints>`_\ が提供するアノテーション(\ ``org.terasoluna.gfw.common.codepoints.*``\ )を以下に示す。なお、\ ``terasoluna-gfw-codepoints``\ はバージョン5.1.0.RELEASE以上で利用することができる。
 
 .. tabularcolumns:: |p{0.15\linewidth}|p{0.30\linewidth}|p{0.30\linewidth}|p{0.25\linewidth}|
 .. list-table::
@@ -4353,7 +4353,7 @@ terasoluna-gfw-codepointsのチェックルール
 terasoluna-gfw-validatorのチェックルール
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-\ `terasoluna-gfw-validator <https://github.com/terasolunaorg/terasoluna-gfw/tree/5.7.1.SP1.RELEASE/terasoluna-gfw-common-libraries/terasoluna-gfw-validator>`_\ が提供するアノテーション(\ ``org.terasoluna.gfw.common.validator.constraints.*``\ )を以下に示す。なお、\ ``terasoluna-gfw-validator``\ はバージョン5.1.0.RELEASE以上で利用することができる。
+\ `terasoluna-gfw-validator <https://github.com/terasolunaorg/terasoluna-gfw/tree/5.7.2.RELEASE/terasoluna-gfw-common-libraries/terasoluna-gfw-validator>`_\ が提供するアノテーション(\ ``org.terasoluna.gfw.common.validator.constraints.*``\ )を以下に示す。なお、\ ``terasoluna-gfw-validator``\ はバージョン5.1.0.RELEASE以上で利用することができる。
 
 .. tabularcolumns:: |p{0.15\linewidth}|p{0.30\linewidth}|p{0.30\linewidth}|p{0.25\linewidth}|
 .. list-table::
@@ -4543,9 +4543,9 @@ terasoluna-gfw-validatorのチェックルール
 
 各言語に対応したValidationMessages.propertiesが定義されており、\ :doc:`../WebApplicationDetail/Internationalization`\ の仕組みによりメッセージが決定される。
 対応する言語については各ライブラリ（
-\ `terasoluna-gfw-commonのJar <https://github.com/terasolunaorg/terasoluna-gfw/tree/5.7.1.SP1.RELEASE/terasoluna-gfw-common-libraries/terasoluna-gfw-common/src/main/resources>`_\ 、
-\ `terasoluna-gfw-codepointsのJar <https://github.com/terasolunaorg/terasoluna-gfw/tree/5.7.1.SP1.RELEASE/terasoluna-gfw-common-libraries/terasoluna-gfw-codepoints/src/main/resources>`_\ 、
-\ `terasoluna-gfw-validatorのJar <https://github.com/terasolunaorg/terasoluna-gfw/tree/5.7.1.SP1.RELEASE/terasoluna-gfw-common-libraries/terasoluna-gfw-validator/src/main/resources>`_\ ）を参照されたい。
+\ `terasoluna-gfw-commonのJar <https://github.com/terasolunaorg/terasoluna-gfw/tree/5.7.2.RELEASE/terasoluna-gfw-common-libraries/terasoluna-gfw-common/src/main/resources>`_\ 、
+\ `terasoluna-gfw-codepointsのJar <https://github.com/terasolunaorg/terasoluna-gfw/tree/5.7.2.RELEASE/terasoluna-gfw-common-libraries/terasoluna-gfw-codepoints/src/main/resources>`_\ 、
+\ `terasoluna-gfw-validatorのJar <https://github.com/terasolunaorg/terasoluna-gfw/tree/5.7.2.RELEASE/terasoluna-gfw-common-libraries/terasoluna-gfw-validator/src/main/resources>`_\ ）を参照されたい。
 
 .. code-block:: properties
 
@@ -4819,7 +4819,7 @@ application-messages.propertiesに以下の定義を行った場合、
 
 .. tip::
 
-  メッセージキーのルールの詳細は、\ `DefaultMessageCodesResolverのJavadoc <https://docs.spring.io/spring-framework/docs/5.3.18/javadoc-api/org/springframework/validation/DefaultMessageCodesResolver.html>`_\ を参照されたい。
+  メッセージキーのルールの詳細は、\ `DefaultMessageCodesResolverのJavadoc <https://docs.spring.io/spring-framework/docs/5.3.24/javadoc-api/org/springframework/validation/DefaultMessageCodesResolver.html>`_\ を参照されたい。
 
 
 .. _Validation_string_trimmer_editor:

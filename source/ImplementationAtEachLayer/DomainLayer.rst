@@ -476,9 +476,9 @@ Repositoryインタフェースの作成
 
      public interface SimpleCrudRepository<T, ID extends Serializable> {
          // (1)
-         T findOne(ID id);
+         T findById(ID id);
          // (2)
-         boolean exists(ID id);
+         boolean existsById(ID id);
          // (3)
          List<T> findAll();
          // (4)
@@ -510,7 +510,7 @@ Repositoryインタフェースの作成
     * - | (5)
       - | Entityの総件数を取得するためのメソッド。
     * - | (6)
-      - | 指定されたEntityのコレクションを保存（作成、更新）するためのメソッド。
+      - | 指定されたEntityを保存（作成、更新）するためのメソッド。
     * - | (7)
       - | 指定したEntityを、削除するためのメソッド。
 
@@ -553,7 +553,7 @@ Repositoryインタフェースのメソッド定義
 
  .. note::
 
-     Macchinetta Server Framework 1.8.1.SP1.RELEASEが利用するSpring Data 2.xでは\ ``CrudRepository``\ 等のメソッドシグネチャが変更されているが、
+     Macchinetta Server Framework 1.8.2.RELEASEが利用するSpring Data 2.xでは\ ``CrudRepository``\ 等のメソッドシグネチャが変更されているが、
      本章で示すメソッド名のルールはSpring Data 1.xのメソッドシグネチャに従っている。
 
      次版以降で、Spring Data 2.xのメソッドシグネチャへの移行が検討される予定である。
@@ -569,8 +569,8 @@ Repositoryインタフェースのメソッド定義
       - ルール
     * - 1.
       - 1件検索系のメソッド
-      - #. メソッド名は、条件に一致するEntityを、1件取得するためのメソッドであることを明示するために、\ **findOneBy**\ で始める。
-        #. メソッド名のfindOneBy以降は、検索条件となるフィールドの物理名、または、論理的な条件名などを指定し、どのような状態のEntityが取得されるのか、推測できる名前とする。
+      - #. メソッド名は、条件に一致するEntityを1件取得するためのメソッドであることを明示するために、\ **findBy**\ で始める。
+        #. メソッド名のfindBy以降は、検索条件となるフィールドの物理名、または、論理的な条件名などを指定し、どのような状態のEntityが取得されるのか、推測できる名前とする。
         #. 引数は、条件となるフィールド毎に用意する。ただし、条件が多い場合は、条件をまとめたDTOを用意してもよい。
         #. 返り値は、Entityクラスを指定する。
     * - 2.
@@ -628,7 +628,7 @@ Repositoryインタフェースのメソッド定義
 
       public interface TodoRepository extends SimpleCrudRepository<Todo, String> {
           // (1)
-          Todo findOneByTodoTitle(String todoTitle);
+          Todo findByTodoTitle(String todoTitle);
           // (2)
           List<Todo> findAllByUnfinished();
           // (3)
@@ -648,7 +648,7 @@ Repositoryインタフェースのメソッド定義
       - 説明
     * - | (1)
       - | タイトルが一致するTODO(todoTitle=引数で指定した値のTODO)を取得するメソッドの定義例。
-        | findOneBy以降に、条件となるフィールドの物理名(todoTitle)を指定している。
+        | findBy以降に、条件となるフィールドの物理名(todoTitle)を指定している。
     * - | (2)
       - | 未完了のTODO(finished=falseのTODO)を全件取得するメソッドの定義例。
         | findAllBy以降に、論理的な条件名を指定している。
@@ -910,7 +910,7 @@ Serviceクラスから、別のServiceクラスの呼び出しを禁止する理
             protected void preExecute(XxxInput input) {
 
                 // omitted
-                Tour tour = tourRepository.findOne(input.getTourId());
+                Tour tour = tourRepository.findById(input.getTourId());
                 Date reservationLimitDate = tour.reservationLimitDate();
                 if(input.getReservationDate().after(reservationLimitDate)){
                     throw new BusinessException(ResultMessages.error().add("e.xx.xx.0001"));
@@ -1244,7 +1244,7 @@ Serviceクラスを作成する際の注意点を、以下に示す。
 
     #. AOPを使う場合に、JDK標準のDynamic proxies機能が使われる。
        インタフェースがない場合はSpring Frameworkに内包されているCGLIBが使われるが、finalメソッドに対してAdviceできないなどの制約がある。
-       詳細は、\ `Spring Framework Documentation -Proxying Mechanisms- <https://docs.spring.io/spring-framework/docs/5.3.18/reference/html/core.html#aop-proxying>`_\ を参照されたい。
+       詳細は、\ `Spring Framework Documentation -Proxying Mechanisms- <https://docs.spring.io/spring-framework/docs/5.3.24/reference/html/core.html#aop-proxying>`_\ を参照されたい。
     #. 業務ロジックをスタブ化しやすくなる。
        アプリケーション層とドメイン層を別々の体制で並行して開発する場合は、アプリケーション層を開発するために、Serviceのスタブが必要になるケースがある。
        スタブを作成する必要がある場合は、インタフェースを設けておくことを推奨する。
@@ -1650,7 +1650,7 @@ ServiceおよびSharedServiceでは、アプリケーションで使用する業
 
  .. code-block:: java
 
-    ItemMaster itemMaster = itemMasterRepository.findOne(itemCode);
+    ItemMaster itemMaster = itemMasterRepository.findById(itemCode);
     if(itemMaster == null) { // (1)
         throw new SystemException("e.xx.fw.0001",
             "Item master data is not found. item code is " + itemCode + ".");
@@ -1718,7 +1718,7 @@ ServiceおよびSharedServiceでは、アプリケーションで使用する業
 * XML(bean定義ファイル)で宣言する。
 * **アノテーション（@Transactional）で宣言する。（推奨）**
 
-Spring Frameworkから提供されている「宣言型トランザクション管理」の詳細については、\ `Spring Framework Documentation -Declarative transaction management- <https://docs.spring.io/spring-framework/docs/5.3.18/reference/html/data-access.html#transaction-declarative>`_\ を参照されたい。
+Spring Frameworkから提供されている「宣言型トランザクション管理」の詳細については、\ `Spring Framework Documentation -Declarative transaction management- <https://docs.spring.io/spring-framework/docs/5.3.24/reference/html/data-access.html#transaction-declarative>`_\ を参照されたい。
 \
 
  .. note:: **「アノテーションで指定する」方法を推奨する理由**
@@ -1834,7 +1834,7 @@ Spring Frameworkから提供されている「宣言型トランザクション�
 
     **クラスまたはクラスのメソッドに指定することを推奨する。**
     インタフェースまたはインタフェースのメソッドでない点が、ポイント。
-    理由は、\ `Spring Framework Documentation -Using @Transactional- <https://docs.spring.io/spring-framework/docs/5.3.18/reference/html/data-access.html#transaction-declarative-annotations>`_\ の2個目のTipsを参照されたい。
+    理由は、\ `Spring Framework Documentation -Using @Transactional- <https://docs.spring.io/spring-framework/docs/5.3.24/reference/html/data-access.html#transaction-declarative-annotations>`_\ の2個目のTipsを参照されたい。
 
  .. warning:: **例外発生時のrollbackとcommitのデフォルト動作**
 
@@ -1847,7 +1847,7 @@ Spring Frameworkから提供されている「宣言型トランザクション�
 
     \ ``@Transactional``\ アノテーションにはvalue属性があるが、これは複数のTransaction Managerを宣言した際に、どのTransaction Managerを使うのかを指定する属性である。
     Transaction Managerが一つの場合、指定は不要である。
-    複数のTransaction Managerを使う必要がある場合は、\ `Spring Framework Documentation -Multiple Transaction Managers with @Transactional- <https://docs.spring.io/spring-framework/docs/5.3.18/reference/html/data-access.html#tx-multiple-tx-mgrs-with-attransactional>`_\ を参照されたい。
+    複数のTransaction Managerを使う必要がある場合は、\ `Spring Framework Documentation -Multiple Transaction Managers with @Transactional- <https://docs.spring.io/spring-framework/docs/5.3.24/reference/html/data-access.html#tx-multiple-tx-mgrs-with-attransactional>`_\ を参照されたい。
 
  .. note:: **主要DBのisolationのデフォルトについて**
 
@@ -2061,7 +2061,7 @@ PlatformTransactionManagerの設定
  .. note:: **プログラマティックにトランザクションを管理する方法**
 
     本ガイドラインでは、「宣言型トランザクション管理」を推奨しているが、プログラマティックにトランザクションを管理することもできる。
-    詳細については、\ `Spring Framework Documentation -Programmatic Transaction Management- <https://docs.spring.io/spring-framework/docs/5.3.18/reference/html/data-access.html#transaction-programmatic>`_\ を参照されたい。
+    詳細については、\ `Spring Framework Documentation -Programmatic Transaction Management- <https://docs.spring.io/spring-framework/docs/5.3.24/reference/html/data-access.html#transaction-programmatic>`_\ を参照されたい。
 
 
 <tx:annotation-driven>要素の属性について

@@ -57,15 +57,15 @@
     * - OS
       - Windows 10
     * - JVM
-      - `Java <https://www.oracle.com/java/technologies/downloads/>`_ 1.8
+      - `Java <https://developers.redhat.com/products/openjdk/download>`_ 1.8
     * - IDE
-      - `Spring Tool Suite <https://spring.io/tools>`_ 4.11.0.RELEASE (以降「STS」と呼ぶ。設定方法は :doc:`../Appendix/SpringToolSuite4` を参照されたい。)
+      - `Spring Tool Suite <https://spring.io/tools>`_ 4.17.1.RELEASE (以降「STS」と呼ぶ。設定方法は :doc:`../Appendix/SpringToolSuite4` を参照されたい。)
     * - Build Tool
-      - `Apache Maven <https://maven.apache.org/download.cgi>`_ 3.8.3 (以降「Maven」と呼ぶ)
+      - `Apache Maven <https://maven.apache.org/download.cgi>`_ 3.8.6 (以降「Maven」と呼ぶ)
     * - Application Server
-      - `Apache Tomcat <https://tomcat.apache.org/tomcat-9.0-doc/index.html>`_ 9.0.55
+      - `Apache Tomcat <https://tomcat.apache.org/tomcat-9.0-doc/index.html>`_ 9.0.73
     * - Web Browser
-      - `Google Chrome <https://www.google.co.jp/chrome/>`_ 98.0.4758.82
+      - `Google Chrome <https://www.google.co.jp/chrome/>`_ 109.0.5414.120
 
 アプリケーションの概要と要件
 ================================================================================
@@ -710,7 +710,7 @@ Spring Securityの機能を利用して管理されている。
 
 作成済みのプロジェクトは次の手順で取得することができる。
 
-#. `tutorial-apps <https://github.com/Macchinetta/tutorial-apps/tree/1.8.1.SP1.RELEASE>`_ にアクセスする。
+#. `tutorial-apps <https://github.com/Macchinetta/tutorial-apps/tree/1.8.2.RELEASE>`_ にアクセスする。
 #. 「Branch」ボタン押下して必要なバージョンのBranchを選択し、「Download ZIP」ボタンを押下してzipファイルをダウンロードする
 #. zipファイルを展開し、中のプロジェクトをインポートする。
 

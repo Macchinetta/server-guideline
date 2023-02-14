@@ -517,7 +517,7 @@ JSPの実装
 
 .. code-block:: xml
 
-    <sec:http>
+    <sec:http once-per-request="false">
         <!-- omitted -->
         <sec:access-denied-handler
             error-page="/WEB-INF/views/common/error/accessDeniedError.jsp" /> <!-- (1) -->
@@ -542,7 +542,7 @@ JSPの実装
 
 .. code-block:: xml
 
-    <sec:http>
+    <sec:http once-per-request="false">
         <!-- omitted -->
         <sec:access-denied-handler
             error-page="/common/error/accessDeniedError" /> <!-- (1) -->
