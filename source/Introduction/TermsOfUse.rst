@@ -20,5 +20,5 @@ Macchinetta 利用規約
 
 .. raw:: latex
 
-   \newpage
+  \newpage
 

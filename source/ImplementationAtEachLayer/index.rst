@@ -5,17 +5,16 @@ Macchinetta Server Framework (1.x)を使用する上での各種ルールや推�
 本ガイドラインでは以下のような開発の流れを想定している。
 
 .. toctree::
-   :maxdepth: 1
+  :maxdepth: 1
 
-   CreateWebApplicationProject
-   DomainLayer
-   InfrastructureLayer
-   ApplicationLayer
-   CreateProject
+  CreateWebApplicationProject
+  DomainLayer
+  InfrastructureLayer
+  ApplicationLayer
+  CreateProject
 
-レイヤ定義については、 :doc:`アプリケーションのレイヤ化 <../Overview/ApplicationLayering>` を参照。
+レイヤ定義については、\ :doc:`アプリケーションのレイヤ化 <../Overview/ApplicationLayering>`\ を参照。
 
 .. raw:: latex
 
-   \newpage
-
+  \newpage

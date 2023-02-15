@@ -1,0 +1,30 @@
+@startuml SystemDate
+title terasaluna-gfw-common
+
+package org.terasoluna.gfw.common {
+    package org.terasoluna.gfw.common.date {
+        interface ClassicDateFactory
+        class DefaultClassicDateFactory
+        class DateConvertUtils
+    }
+    
+    package org.terasoluna.gfw.common.time {
+        interface ClockFactory
+        class DefaultClockFactory
+        class ConfigurableClockFactory
+        class ConfigurableAdjustClockFactory
+        class JdbcClockFactory
+        class JdbcAdjustClockFactory
+    }
+
+    interface ClassicDateFactory
+    class DefaultClassicDateFactory implements ClassicDateFactory
+    interface ClockFactory
+    class DefaultClockFactory implements ClockFactory
+    class ConfigurableClockFactory implements ClockFactory
+    class ConfigurableAdjustClockFactory implements ClockFactory
+    class JdbcClockFactory implements ClockFactory
+    class JdbcAdjustClockFactory implements ClockFactory
+}
+
+@enduml
