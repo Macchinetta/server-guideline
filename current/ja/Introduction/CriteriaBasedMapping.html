@@ -4,7 +4,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>1.7. ガイドラインの観点別マッピング &#8212; Macchinetta Server Framework (1.x) Development Guideline 1.9.0.RELEASE documentation</title>
+    <title>1.7. ガイドラインの観点別マッピング &#8212; Macchinetta Server Framework (1.x) Development Guideline 1.8.2.RELEASE documentation</title>
     
     <link rel="stylesheet" href="../_static/solar.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -12,7 +12,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '1.9.0.RELEASE',
+        VERSION:     '1.8.2.RELEASE',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true,
@@ -43,7 +43,7 @@
         <li class="right" >
           <a href="Introduction.html" title="1.2. このドキュメントが示すこと"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Macchinetta Server Framework (1.x) Development Guideline 1.9.0.RELEASE documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Macchinetta Server Framework (1.x) Development Guideline 1.8.2.RELEASE documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">1. はじめに</a> &#187;</li> 
       </ul>
     </div>
@@ -96,15 +96,13 @@
             
   <div class="section" id="id1">
 <h1>1.7. ガイドラインの観点別マッピング<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
-<div class="line-block">
-<div class="line">ガイドラインの4章以降は機能別に説明されているが、機能面とは別の観点で、どの節にどの内容が含まれているかのマッピングを示す。</div>
-<div class="line"><br /></div>
-</div>
+<p>ガイドラインの4章以降は機能別に説明されているが、機能面とは別の観点で、どの節にどの内容が含まれているかのマッピングを示す。</p>
 <div class="section" id="id2">
 <h2>1.7.1. セキュリティ対策に関するマッピング<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="owasp-open-web-application-security-project">
 <h3>1.7.1.1. OWASP(Open Web Application Security Project)による観点<a class="headerlink" href="#owasp-open-web-application-security-project" title="Permalink to this headline">¶</a></h3>
-<p><a class="reference external" href="https://owasp.org/www-project-top-ten/">OWASP Top 10 for 2021</a>を軸として、セキュリティに関連するガイドライン内の説明へのリンクを記載する。</p>
+<p><a class="reference external" href="https://owasp.org/www-project-top-ten/">OWASP Top 10 for 2021</a>を軸として、
+セキュリティに関連するガイドライン内の説明へのリンクを記載する。</p>
 <table border="1" class="colwidths-given longtable docutils">
 <colgroup>
 <col width="10%" />
@@ -228,16 +226,11 @@
 </tr>
 </tbody>
 </table>
-<div class="line-block">
-<div class="line"><br /></div>
-</div>
 </div>
 <div class="section" id="cve-common-vulnerabilities-and-exposures">
 <h3>1.7.1.2. CVE(Common Vulnerabilities and Exposures)による観点<a class="headerlink" href="#cve-common-vulnerabilities-and-exposures" title="Permalink to this headline">¶</a></h3>
-<div class="line-block">
-<div class="line">ガイドラインで言及しているCVEごとにその説明とガイドラインへのリンクを記載する。</div>
-<div class="line">ガイドラインで言及していないCVEについては、<a class="reference external" href="https://tanzu.vmware.com/security">Pivotal Product Vulnerability Reports</a>を参照されたい。</div>
-</div>
+<p>ガイドラインで言及しているCVEごとにその説明とガイドラインへのリンクを記載する。
+ガイドラインで言及していないCVEについては、<a class="reference external" href="https://tanzu.vmware.com/security">Pivotal Product Vulnerability Reports</a>を参照されたい。</p>
 <table border="1" class="colwidths-given docutils">
 <colgroup>
 <col width="10%" />
@@ -251,14 +244,24 @@
 </tr>
 </thead>
 <tbody valign="top">
-<tr class="row-even"><td><a class="reference external" href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-1904">CVE-2014-1904</a></td>
+<tr class="row-even"><td><p class="first"><a class="reference external" href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-0050">CVE-2014-0050</a></p>
+<p class="last"><a class="reference external" href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2016-3092">CVE-2016-3092</a></p>
+</td>
+<td>Apache Commons FileUploadを使用するとファイルをアップロードする処理で細工されたリクエストによるDoS攻撃を受ける可能性がある</td>
+<td><ul class="first last simple">
+<li><a class="reference internal" href="../ArchitectureInDetail/WebApplicationDetail/FileUpload.html#fileuploadoverview"><span class="std std-ref">Overview</span></a></li>
+<li><a class="reference internal" href="../ArchitectureInDetail/WebApplicationDetail/FileUpload.html#file-upload-usage-commons-fileupload"><span class="std std-ref">Commons FileUpload を使用したファイルのアップロード</span></a></li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td><a class="reference external" href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-1904">CVE-2014-1904</a></td>
 <td><code class="docutils literal"><span class="pre">&lt;form:form&gt;</span></code>タグの <code class="docutils literal"><span class="pre">action</span></code>属性を省略するとXSS攻撃を受ける可能性がある</td>
 <td><ul class="first last simple">
 <li><a class="reference internal" href="../ImplementationAtEachLayer/ApplicationLayer.html#applicationlayerimplementofjsp"><span class="std std-ref">JSPの実装</span></a></li>
 </ul>
 </td>
 </tr>
-<tr class="row-odd"><td><a class="reference external" href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-3192">CVE-2015-3192</a></td>
+<tr class="row-even"><td><a class="reference external" href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-3192">CVE-2015-3192</a></td>
 <td>DTDを使用したDoS攻撃が可能となる</td>
 <td><ul class="first last simple">
 <li><a class="reference internal" href="../ArchitectureInDetail/WebApplicationDetail/Ajax.html#ajax-how-to-use"><span class="std std-ref">How to use</span></a></li>
@@ -266,21 +269,21 @@
 </ul>
 </td>
 </tr>
-<tr class="row-even"><td><a class="reference external" href="https://tanzu.vmware.com/jp/security/cve-2016-5007">CVE-2016-5007</a></td>
+<tr class="row-odd"><td><a class="reference external" href="https://tanzu.vmware.com/jp/security/cve-2016-5007">CVE-2016-5007</a></td>
 <td>Spring SecurityとSpring MVCのパス比較方法の差異を利用して認可のすり抜けが可能となる</td>
 <td><ul class="first last simple">
 <li><a class="reference internal" href="../Security/Authorization.html#access-policy-designate-web-resource"><span class="std std-ref">アクセスポリシーを適用するWebリソースの指定</span></a></li>
 </ul>
 </td>
 </tr>
-<tr class="row-odd"><td><a class="reference external" href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-12415">CVE-2019-12415</a></td>
+<tr class="row-even"><td><a class="reference external" href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-12415">CVE-2019-12415</a></td>
 <td>Apache POI 4.1.0以前を利用したEXCELファイルからXMLへの変換において、細工されたEXCELファイルによるXXE攻撃を受ける可能性がある</td>
 <td><ul class="first last simple">
 <li><a class="reference internal" href="../UnitTest/ImplementsOfUnitTest/ImplementsOfTestByLayer.html#implementsoftestbylayertestingrepositorywithspringtestdbunit"><span class="std std-ref">Spring Test DBUnitを利用したテスト</span></a></li>
 </ul>
 </td>
 </tr>
-<tr class="row-even"><td><a class="reference external" href="https://tanzu.vmware.com/security/cve-2020-5408">CVE-2020-5408</a></td>
+<tr class="row-odd"><td><a class="reference external" href="https://tanzu.vmware.com/security/cve-2020-5408">CVE-2020-5408</a></td>
 <td>暗号化の結果が毎回同一となることを利用した辞書攻撃により、暗号化前の平文を取得されてしまう可能性がある</td>
 <td><ul class="first last simple">
 <li><a class="reference internal" href="../Security/Encryption.html#encryptionencrypttext"><span class="std std-ref">文字列の暗号化</span></a></li>
@@ -311,7 +314,7 @@
         <li class="right" >
           <a href="Introduction.html" title="1.2. このドキュメントが示すこと"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Macchinetta Server Framework (1.x) Development Guideline 1.9.0.RELEASE documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Macchinetta Server Framework (1.x) Development Guideline 1.8.2.RELEASE documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="index.html" >1. はじめに</a> &#187;</li> 
       </ul>
     </div>

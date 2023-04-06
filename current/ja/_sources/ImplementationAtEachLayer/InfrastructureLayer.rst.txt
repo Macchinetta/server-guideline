@@ -3,15 +3,14 @@
 
 .. only:: html
 
-.. contents:: 目次
-  :depth: 3
-  :local:
+ .. contents:: 目次
+    :depth: 3
+    :local:
 
 インフラストラクチャ層では、\ :ref:`repository-class-label`\ を行う。
 
 RepositoryImplは、Repositoryインタフェースで定義したメソッドの実装を行う。
 
-|
 
 .. _repository-class-label:
 
@@ -20,16 +19,17 @@ RepositoryImplの実装
 
 以下に、MyBatis3を使って、リレーショナルデータベース用のRepositoryを作成する方法を紹介する。
 
-* \ :ref:`repository-mybatis3-label`\
+* :ref:`repository-mybatis3-label`
 
-|
 
 .. _repository-mybatis3-label:
 
 MyBatis3を使ってRepositoryを実装
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-リレーショナルデータベースとの永続APIとしてMyBatis3を使う場合、MyBatis3から提供されている「\ :ref:`DataAccessMyBatis3AppendixAboutMapperMechanism`\ 」を利用してRepositoryインタフェースを作成すると、基本的にはRepositoryImplを実装する必要はない。
+リレーショナルデータベースとの永続APIとしてMyBatis3を使う場合、
+MyBatis3から提供されている「:ref:`DataAccessMyBatis3AppendixAboutMapperMechanism`」を利用してRepositoryインタフェースを作成すると、
+基本的にはRepositoryImplを実装する必要はない。
 
 これは、MyBatis3が、Mapperインタフェースのメソッドと呼び出すステートメント(SQL)のマッピングを自動で行う仕組みになっているためである。
 
@@ -45,7 +45,7 @@ MyBatis3を使用する場合、アプリケーション開発者は、
 
 - Repositoryインタフェース(Mapperインタフェース)の作成例
 
-  .. code-block:: java
+ .. code-block:: java
 
     package com.example.domain.repository.todo;
 
@@ -57,8 +57,8 @@ MyBatis3を使用する場合、アプリケーション開発者は、
         Todo findByTodoId(String todoId);
     }
 
-  .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
-  .. list-table::
+ .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
+ .. list-table::
     :header-rows: 1
     :widths: 10 90
 
@@ -71,11 +71,13 @@ MyBatis3を使用する場合、アプリケーション開発者は、
     * - | (2)
       - Repositoryのメソッドを定義する。
 
-        基本的には、MyBatis3のアノテーションを付与する必要はないが、一部のケースでアノテーションを指定する事もある。
+        基本的には、MyBatis3のアノテーションを付与する必要はないが、
+        一部のケースでアノテーションを指定する事もある。
+
 
 - マッピングファイルの作成例
 
-  .. code-block:: xml
+ .. code-block:: xml
 
     <?xml version="1.0" encoding="UTF-8"?>
     <!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
@@ -105,8 +107,8 @@ MyBatis3を使用する場合、アプリケーション開発者は、
     </mapper>
 
 
-  .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
-  .. list-table::
+ .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
+ .. list-table::
     :header-rows: 1
     :widths: 10 90
 
@@ -115,21 +117,24 @@ MyBatis3を使用する場合、アプリケーション開発者は、
     * - | (3)
       - Repositoryインタフェース毎にマッピングファイルを作成する。
 
-        マッピングファイルのネームスペース(\ ``mapper``\ 要素の\ ``namespace``\ 属性)には、RepositoryインタフェースのFQCN(Fully Qualified Class Name)を指定する。
+        マッピングファイルのネームスペース(\ ``mapper``\ 要素の\ ``namespace``\ 属性)には、
+        RepositoryインタフェースのFQCN(Fully Qualified Class Name)を指定する。
     * - | (4)
       - Repositoryインタフェースに定義したメソッド毎に実行するステートメント(SQL)の定義を行う。
 
-        ステートメントID(各ステートメント要素(\ ``select``\ /\ ``insert``\ /\ ``update``\ /\ ``delete``\ 要素の\ ``id``\ 属性)には、Repositoryインタフェースのメソッド名を指定する。
+        ステートメントID(各ステートメント要素(\ ``select``\/\ ``insert``\/\ ``update``\/\ ``delete``\ 要素の\ ``id``\ 属性)には、
+        Repositoryインタフェースのメソッド名を指定する。
     * - | (5)
       - クエリを発行する場合は、必要に応じてO/Rマッピングの定義を行う。
 
-        シンプルなO/Rマッピングであれば自動マッピングを利用する事ができるが、複雑なO/Rマッピングを行う場合は、個別にマッピングの定義が必要となる。
+        シンプルなO/Rマッピングであれば自動マッピングを利用する事ができるが、複雑なO/Rマッピングを行う場合は、
+        個別にマッピングの定義が必要となる。
 
         上記例のマッピング定義は、シンプルなO/Rマッピングなので自動マッピングを利用する事もできる。
 
-|
+
 
 .. raw:: latex
 
-  \newpage
+   \newpage
 
