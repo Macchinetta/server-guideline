@@ -92,7 +92,7 @@ URL一覧を以下に示す。
 プロジェクトの作成
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Mavenのアーキタイプを利用し、\ `Macchinetta Server Framework (1.x)のブランクプロジェクト <https://github.com/Macchinetta/macchinetta-web-blank/tree/1.9.0.RELEASE>`_\ を作成する。
+Mavenのアーキタイプを利用し、\ `Macchinetta Server Framework (1.x)のブランクプロジェクト <https://github.com/Macchinetta/macchinetta-web-blank/tree/1.9.1.RELEASE>`_\ を作成する。
 
 本チュートリアルでは、MyBatis3用のブランクプロジェクトを作成する。
 
@@ -103,7 +103,7 @@ Mavenのアーキタイプを利用し、\ `Macchinetta Server Framework (1.x)�
   mvn archetype:generate -B^
    -DarchetypeGroupId=com.github.macchinetta.blank^
    -DarchetypeArtifactId=macchinetta-web-blank-archetype^
-   -DarchetypeVersion=1.9.0.RELEASE^
+   -DarchetypeVersion=1.9.1.RELEASE^
    -DgroupId=com.example.security^
    -DartifactId=first-springsecurity^
    -Dversion=1.0.0-SNAPSHOT
@@ -572,8 +572,8 @@ Spring Securityの設定
           http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
       ">
 
-      <sec:http pattern="/resources/**" security="none"/>
-      <sec:http>
+      <sec:http pattern="/resources/**" request-matcher="ant" security="none"/>
+      <sec:http request-matcher="ant">
 
           <!-- (1) -->
           <sec:form-login login-page="/login/loginForm"
@@ -632,8 +632,6 @@ Spring Securityの設定
               </bean>
           </constructor-arg>
       </bean>
-
-      <bean id="mvcHandlerMappingIntrospector" class="org.springframework.web.servlet.handler.HandlerMappingIntrospector" />
 
       <bean id="webSecurityExpressionHandler" class="org.springframework.security.web.access.expression.DefaultWebSecurityExpressionHandler" />
 
@@ -1114,8 +1112,8 @@ spring-security.xml
       ">
 
       <!-- (1) -->
-      <sec:http pattern="/resources/**" security="none"/>
-      <sec:http>
+      <sec:http pattern="/resources/**" request-matcher="ant" security="none"/>
+      <sec:http request-matcher="ant">
           <!-- (2) -->
           <sec:form-login/>
           <!-- (3) -->
@@ -1164,8 +1162,6 @@ spring-security.xml
               </bean>
           </constructor-arg>
       </bean>
-
-      <bean id="mvcHandlerMappingIntrospector" class="org.springframework.web.servlet.handler.HandlerMappingIntrospector" />
 
       <bean id="webSecurityExpressionHandler" class="org.springframework.security.web.access.expression.DefaultWebSecurityExpressionHandler" />
 

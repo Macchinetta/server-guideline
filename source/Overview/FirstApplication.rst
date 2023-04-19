@@ -52,7 +52,7 @@ Spring MVCの、詳細な使い方の解説に入る前に、実際にSpring MVC
   mvn archetype:generate -B^
    -DarchetypeGroupId=com.github.macchinetta.blank^
    -DarchetypeArtifactId=macchinetta-web-blank-noorm-archetype^
-   -DarchetypeVersion=1.9.0.RELEASE^
+   -DarchetypeVersion=1.9.1.RELEASE^
    -DgroupId=com.example.helloworld^
    -DartifactId=helloworld^
    -Dversion=1.0.0-SNAPSHOT
@@ -64,7 +64,7 @@ Spring MVCの、詳細な使い方の解説に入る前に、実際にSpring MVC
   C:\work>mvn archetype:generate -B^
   More?  -DarchetypeGroupId=com.github.macchinetta.blank^
   More?  -DarchetypeArtifactId=macchinetta-web-blank-noorm-archetype^
-  More?  -DarchetypeVersion=1.9.0.RELEASE^
+  More?  -DarchetypeVersion=1.9.1.RELEASE^
   More?  -DgroupId=com.example.helloworld^
   More?  -DartifactId=helloworld^
   More?  -Dversion=1.0.0-SNAPSHOT
@@ -81,9 +81,9 @@ Spring MVCの、詳細な使い方の解説に入る前に、実際にSpring MVC
   [INFO]
   [INFO] --- maven-archetype-plugin:3.1.2:generate (default-cli) @ standalone-pom ---
   [INFO] Generating project in Batch mode
-  [INFO] Archetype repository not defined. Using the one from [com.github.macchinetta.blank:macchinetta-web-blank-noorm-archetype:1.9.0.RELEASE] found in catalog remote
+  [INFO] Archetype repository not defined. Using the one from [com.github.macchinetta.blank:macchinetta-web-blank-noorm-archetype:1.9.1.RELEASE] found in catalog remote
   [INFO] ----------------------------------------------------------------------------
-  [INFO] Using following parameters for creating project from Archetype: macchinetta-web-blank-noorm-archetype:1.9.0.RELEASE
+  [INFO] Using following parameters for creating project from Archetype: macchinetta-web-blank-noorm-archetype:1.9.1.RELEASE
   [INFO] ----------------------------------------------------------------------------
   [INFO] Parameter: groupId, Value: com.example.helloworld
   [INFO] Parameter: artifactId, Value: helloworld

@@ -516,8 +516,8 @@ ER図
 ================================================================================
 
 | セキュリティ要件の分類ごとに、本アプリケーションにおける実装の方法とコードの説明を行う。
-| ここでは分類ごとで要件の実現のために必要最小限なコード片のみを掲載している。コード全体を確認したい場合は\ `GitHub <https://github.com/Macchinetta/tutorial-apps/tree/1.9.0.RELEASE/secure-login-demo>`_\ を参照すること。
-| 本アプリケーションを動作させるための初期データ登録用SQLは\ `ここ <https://github.com/Macchinetta/tutorial-apps/tree/1.9.0.RELEASE/secure-login-demo/secure-login/secure-login-env/src/main/resources/database>`_\ に配置されている。
+| ここでは分類ごとで要件の実現のために必要最小限なコード片のみを掲載している。コード全体を確認したい場合は\ `GitHub <https://github.com/Macchinetta/tutorial-apps/tree/1.9.1.RELEASE/secure-login-demo>`_\ を参照すること。
+| 本アプリケーションを動作させるための初期データ登録用SQLは\ `ここ <https://github.com/Macchinetta/tutorial-apps/tree/1.9.1.RELEASE/secure-login-demo/secure-login/secure-login-env/src/main/resources/database>`_\ に配置されている。
 
 .. note::
 
@@ -2409,8 +2409,8 @@ ER図
 
         <!-- omitted -->
 
-          <sec:http pattern="/resources/**" security="none" />
-          <sec:http>
+          <sec:http pattern="/resources/**" request-matcher="ant" security="none"/>
+          <sec:http request-matcher="ant">
 
               <!-- omitted -->
 
@@ -5593,7 +5593,7 @@ ER図
 * 操作結果：メソッドの処理を実行した結果例外が発生したか否か
 
 | すべてのサービスクラスのメソッド呼び出しに対してログ出力を行うといった、横断的な機能を実現するためには、Springが提供するAOP(Aspect Oriented Programming)の機能を利用することができる。
-| Springが提供しているAOPの実装方法は複数あるが、本アプリケーションでは\ `共通ライブラリ <https://github.com/terasolunaorg/terasoluna-gfw/tree/5.8.0.RELEASE>`_\ で提供しているロギング関連の部品の実装と合わせることを重視し、\ ``org.aopalliance.intercept.MethodInterceptor``\を実装する方式を採用する。
+| Springが提供しているAOPの実装方法は複数あるが、本アプリケーションでは\ `共通ライブラリ <https://github.com/terasolunaorg/terasoluna-gfw/tree/5.8.1.RELEASE>`_\ で提供しているロギング関連の部品の実装と合わせることを重視し、\ ``org.aopalliance.intercept.MethodInterceptor``\を実装する方式を採用する。
 | 具体的には以下の実装・設定を行うことで要件を実現する。
 
 * \ ``UserIdMDCPutFilter``\ を設定する
@@ -5627,7 +5627,7 @@ ER図
 
     <!-- omitted -->
 
-    <sec:http>
+    <sec:http request-matcher="ant">
         <!-- omitted -->
         <sec:custom-filter ref="userIdMDCPutFilter" after="ANONYMOUS_FILTER" />
         <!-- omitted -->

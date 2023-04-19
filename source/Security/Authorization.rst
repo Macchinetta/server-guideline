@@ -211,7 +211,7 @@ Spring Securityが用意しているWebアプリケーション向けExpression�
 
   .. code-block:: xml
 
-    <sec:http>
+    <sec:http request-matcher="ant">
         <sec:intercept-url pattern="/admin/**" access="hasRole('ADMIN') and hasIpAddress('192.168.10.1')"/>
         <!-- omitted -->
     </sec:http>
@@ -252,7 +252,7 @@ Webリソースに対して認可処理を適用する場合は、以下のよ�
 
 .. code-block:: xml
 
-  <sec:http>
+  <sec:http request-matcher="ant">
       <!-- omitted -->
       <sec:intercept-url pattern="/**" access="isAuthenticated()" />  <!-- (1) -->
       <!-- omitted -->
@@ -307,7 +307,7 @@ bean定義ファイルを使用して、Webリソースに対してアクセス�
 
 .. code-block:: xml
 
-  <sec:http>
+  <sec:http request-matcher="ant">
       <sec:intercept-url pattern="/admin/accounts/**" access="..."/>
       <sec:intercept-url pattern="/admin/**" access="..."/>
       <sec:intercept-url pattern="/**" access="..."/>
@@ -317,19 +317,6 @@ bean定義ファイルを使用して、Webリソースに対してアクセス�
 
 | Spring Securityは定義した順番でリクエストとのマッチング処理を行い、最初にマッチした定義を適用する。
 | そのため、bean定義ファイルを使用してアクセスポリシーを指定する場合も定義順番には注意が必要である。
-
-.. tip:: **パスパターンの解釈**
-
-  Spring SecurityはSpring MVCと同時に使用する場合、パスパターンをMVC形式で解釈する。
-
-  パスパターンを変更したい場合は、\ ``<sec:http>``\ タグの\ ``request-matcher``\ 属性の値を変更する。
-
-    .. code-block:: xml
-
-      <sec:http  pattern="/athr/**" request-matcher="ant">
-          <sec:intercept-url pattern="/athr/**" access="hasRole('ACCOUNT_MANAGER')" />
-          <!-- omitted -->
-      </sec:http>
 
 .. warning::
 
@@ -350,12 +337,12 @@ bean定義ファイルを使用して、Webリソースに対してアクセス�
 
     * アクセスポリシーの定義例
 
-     .. code-block:: xml
+      .. code-block:: xml
 
-      <sec:http>
-          <sec:intercept-url pattern="/Todo/List" access="isAuthenticated()" />
-          <!-- omitted -->
-      </sec:http>
+        <sec:http request-matcher="ant">
+            <sec:intercept-url pattern="/Todo/List" access="isAuthenticated()" />
+            <!-- omitted -->
+        </sec:http>
 
 .. note::
 
@@ -375,7 +362,7 @@ bean定義ファイルを使用して、Webリソースに対してアクセス�
 
     .. code-block:: xml
 
-      <sec:http>
+      <sec:http request-matcher="ant">
           <sec:intercept-url pattern="/restrict.*" access="hasRole('ADMIN')" /> <!-- (1) -->
           <sec:intercept-url pattern="/restrict/" access="hasRole('ADMIN')" /> <!-- (2) -->
           <sec:intercept-url pattern="/restrict" access="hasRole('ADMIN')" /> <!-- (3) -->
@@ -409,7 +396,7 @@ bean定義ファイルを使用して、Webリソースに対してアクセス�
 
   .. code-block:: xml
 
-    <sec:http>
+    <sec:http request-matcher="ant">
         <sec:intercept-url pattern="/admin/accounts/**" access="hasRole('ACCOUNT_MANAGER')"/>
         <sec:intercept-url pattern="/admin/configurations/**" access="hasIpAddress('127.0.0.1') and hasRole('CONFIGURATION_MANAGER')" />
         <sec:intercept-url pattern="/admin/**" access="hasRole('ADMIN')" />
@@ -432,7 +419,7 @@ bean定義ファイルを使用して、Webリソースに対してアクセス�
 
   .. code-block:: xml
 
-    <sec:http>
+    <sec:http request-matcher="ant">
         <sec:intercept-url pattern="/reserve/**" access="hasAnyRole('USER','ADMIN')" /> <!-- (1) -->
         <sec:intercept-url pattern="/admin/**" access="hasRole('ADMIN')" /> <!-- (2) -->
         <sec:intercept-url pattern="/**" access="denyAll" /> <!-- (3) -->
@@ -471,7 +458,7 @@ bean定義ファイルを使用して、Webリソースに対してアクセス�
 
   .. code-block:: xml
 
-    <sec:http>
+    <sec:http request-matcher="ant">
         <sec:intercept-url pattern="/admin/**" access="hasRole('ADMIN')"/>  <!-- (1) -->
         <!-- omitted -->
     </sec:http>
@@ -509,7 +496,7 @@ Spring Security 4.1以降では、アクセスポリシーを適用するリソ�
 
   .. code-block:: xml
 
-    <sec:http>
+    <sec:http request-matcher="ant">
         <!-- (1) -->
         <sec:intercept-url pattern="/users/{userName}.*"  access="isAuthenticated() and #userName == principal.username"/>
         <!-- (2) -->
@@ -537,7 +524,7 @@ Spring Security 4.1以降では、アクセスポリシーを適用するリソ�
 
   .. code-block:: xml
 
-    <sec:http>
+    <sec:http request-matcher="ant">
         <!-- (1) -->
         <sec:intercept-url pattern="/users/{userName}.*" access="isAuthenticated() and #userName == principal.username"/>
         <!-- (2) -->
@@ -943,7 +930,7 @@ Spring Securityのデフォルトの設定では、認証方式に対応する\ 
 
 .. code-block:: xml
 
-  <sec:http>
+  <sec:http request-matcher="ant">
       <!-- omitted -->
       <sec:access-denied-handler
           error-page="/WEB-INF/views/common/error/accessDeniedError.jsp" /> <!-- (1) -->
@@ -1054,7 +1041,7 @@ Spring Securityが提供しているデフォルトの動作をカスタマイ�
       </constructor-arg>
   </bean>
 
-  <sec:http>
+  <sec:http request-matcher="ant">
       <!-- omitted -->
       <sec:access-denied-handler ref="accessDeniedHandler" />  <!-- (2) -->
       <!-- omitted -->
@@ -1113,7 +1100,7 @@ Spring Securityが提供しているデフォルトの動作をカスタマイ�
       </property>
   </bean>
 
-  <sec:http entry-point-ref="authenticationEntryPoint"> <!-- (2) -->
+  <sec:http request-matcher="ant" entry-point-ref="authenticationEntryPoint"> <!-- (2) -->
       <!-- omitted -->
   </sec:http>
 
@@ -1151,7 +1138,7 @@ Spring Securityが提供しているデフォルトの動作をカスタマイ�
 
 .. code-block:: xml
 
-  <sec:http>
+  <sec:http request-matcher="ant">
       <sec:intercept-url pattern="/user/**" access="hasAnyRole('USER')" />
       <!-- omitted -->
   </sec:http>
@@ -1213,7 +1200,7 @@ Webリソースの認可処理への適用
       <property name="roleHierarchy" ref="roleHierarchy"/>  <!-- (2) -->
   </bean>
 
-  <sec:http>
+  <sec:http request-matcher="ant">
       <!-- omitted -->
       <sec:expression-handler ref="webExpressionHandler" />  <!-- (3) -->
   </sec:http>

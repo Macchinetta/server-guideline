@@ -2266,7 +2266,7 @@ Spring MVCによるBean Validationのエラーメッセージは、以下の順�
     * マルチプロジェクト構成を採用する場合は、\ ``ValidationMessages.properties``\ ファイルを複数のプロジェクトに配置しないように注意すること。
     * Bean Validation用の共通部品をjarファイルとして配布する際に、\ ``ValidationMessages.properties``\ ファイルをjarファイルの中に含めないように注意すること。
 
-    \ `ブランクプロジェクト <https://github.com/Macchinetta/macchinetta-web-multi-blank/tree/1.9.0.RELEASE>`_ \ からプロジェクトを生成した場合は、
+    \ `ブランクプロジェクト <https://github.com/Macchinetta/macchinetta-web-multi-blank/tree/1.9.1.RELEASE>`_ \ からプロジェクトを生成した場合は、
     \ ``xxx-web/src/main/resources``\ の直下に\ ``ValidationMessages.properties``\ が格納されている。
 
 |
@@ -4259,7 +4259,7 @@ hibernate-validator-<version>.jar内のorg/hibernate/validatorに、ValidationMe
 terasoluna-gfw-commonのチェックルール
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-\ `terasoluna-gfw-common <https://github.com/terasolunaorg/terasoluna-gfw/tree/5.8.0.RELEASE/terasoluna-gfw-common-libraries/terasoluna-gfw-common>`_\ が提供するアノテーション(\ ``org.terasoluna.gfw.common.codelist.*``\ )を以下に示す。
+\ `terasoluna-gfw-common <https://github.com/terasolunaorg/terasoluna-gfw/tree/5.8.1.RELEASE/terasoluna-gfw-common-libraries/terasoluna-gfw-common>`_\ が提供するアノテーション(\ ``org.terasoluna.gfw.common.codelist.*``\ )を以下に示す。
 
 .. tabularcolumns:: |p{0.15\linewidth}|p{0.30\linewidth}|p{0.30\linewidth}|p{0.25\linewidth}|
 .. list-table::
@@ -4283,7 +4283,7 @@ terasoluna-gfw-commonのチェックルール
 terasoluna-gfw-codepointsのチェックルール
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-\ `terasoluna-gfw-codepoints <https://github.com/terasolunaorg/terasoluna-gfw/tree/5.8.0.RELEASE/terasoluna-gfw-common-libraries/terasoluna-gfw-codepoints>`_\ が提供するアノテーション(\ ``org.terasoluna.gfw.common.codepoints.*``\ )を以下に示す。なお、\ ``terasoluna-gfw-codepoints``\ はバージョン5.1.0.RELEASE以上で利用することができる。
+\ `terasoluna-gfw-codepoints <https://github.com/terasolunaorg/terasoluna-gfw/tree/5.8.1.RELEASE/terasoluna-gfw-common-libraries/terasoluna-gfw-codepoints>`_\ が提供するアノテーション(\ ``org.terasoluna.gfw.common.codepoints.*``\ )を以下に示す。なお、\ ``terasoluna-gfw-codepoints``\ はバージョン5.1.0.RELEASE以上で利用することができる。
 
 .. tabularcolumns:: |p{0.15\linewidth}|p{0.30\linewidth}|p{0.30\linewidth}|p{0.25\linewidth}|
 .. list-table::
@@ -4305,7 +4305,7 @@ terasoluna-gfw-codepointsのチェックルール
 terasoluna-gfw-validatorのチェックルール
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-\ `terasoluna-gfw-validator <https://github.com/terasolunaorg/terasoluna-gfw/tree/5.8.0.RELEASE/terasoluna-gfw-common-libraries/terasoluna-gfw-validator>`_\ が提供するアノテーション(\ ``org.terasoluna.gfw.common.validator.constraints.*``\ )を以下に示す。なお、\ ``terasoluna-gfw-validator``\ はバージョン5.1.0.RELEASE以上で利用することができる。
+\ `terasoluna-gfw-validator <https://github.com/terasolunaorg/terasoluna-gfw/tree/5.8.1.RELEASE/terasoluna-gfw-common-libraries/terasoluna-gfw-validator>`_\ が提供するアノテーション(\ ``org.terasoluna.gfw.common.validator.constraints.*``\ )を以下に示す。なお、\ ``terasoluna-gfw-validator``\ はバージョン5.1.0.RELEASE以上で利用することができる。
 
 .. tabularcolumns:: |p{0.15\linewidth}|p{0.30\linewidth}|p{0.30\linewidth}|p{0.25\linewidth}|
 .. list-table::
@@ -4487,7 +4487,7 @@ terasoluna-gfw-validatorのチェックルール
 共通ライブラリの各Jar内のContributorValidationMessages.propertiesファイルに、ValidationMessages.propertiesのデフォルト値が定義されている。
 
 | 各言語に対応したValidationMessages.propertiesが定義されており、\ :doc:`../WebApplicationDetail/Internationalization`\ の仕組みによりメッセージが決定される。
-| 対応する言語については各ライブラリ（\ `terasoluna-gfw-commonのjar <https://github.com/terasolunaorg/terasoluna-gfw/tree/5.8.0.RELEASE/terasoluna-gfw-common-libraries/terasoluna-gfw-common/src/main/resources>`_\ 、\ `terasoluna-gfw-codepointsのjar <https://github.com/terasolunaorg/terasoluna-gfw/tree/5.8.0.RELEASE/terasoluna-gfw-common-libraries/terasoluna-gfw-codepoints/src/main/resources>`_\ 、\ `terasoluna-gfw-validatorのjar <https://github.com/terasolunaorg/terasoluna-gfw/tree/5.8.0.RELEASE/terasoluna-gfw-common-libraries/terasoluna-gfw-validator/src/main/resources>`_\ ）を参照されたい。
+| 対応する言語については各ライブラリ（\ `terasoluna-gfw-commonのjar <https://github.com/terasolunaorg/terasoluna-gfw/tree/5.8.1.RELEASE/terasoluna-gfw-common-libraries/terasoluna-gfw-common/src/main/resources>`_\ 、\ `terasoluna-gfw-codepointsのjar <https://github.com/terasolunaorg/terasoluna-gfw/tree/5.8.1.RELEASE/terasoluna-gfw-common-libraries/terasoluna-gfw-codepoints/src/main/resources>`_\ 、\ `terasoluna-gfw-validatorのjar <https://github.com/terasolunaorg/terasoluna-gfw/tree/5.8.1.RELEASE/terasoluna-gfw-common-libraries/terasoluna-gfw-validator/src/main/resources>`_\ ）を参照されたい。
 
 .. code-block:: properties
 

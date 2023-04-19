@@ -1218,7 +1218,7 @@ logback.xmlの\ ``<pattern>``\ に\ ``%X{X-Track}``\ および、\ ``%X{USER}``\
 
     .. code-block:: xml
 
-      <sec:http>
+      <sec:http request-matcher="ant" >
           <!-- omitted -->
           <sec:custom-filter ref="userIdMDCPutFilter" after="ANONYMOUS_FILTER"/> <!-- (1) -->
           <!-- omitted -->

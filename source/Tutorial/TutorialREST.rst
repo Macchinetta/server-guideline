@@ -662,12 +662,12 @@ REST API用のSpring Securityの定義追加
           http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
       ">
 
-      <sec:http pattern="/resources/**" security="none" />
+      <sec:http pattern="/resources/**" request-matcher="ant" security="none"/>
 
       <!-- (1) -->
       <sec:http pattern="/api/v1/**" request-matcher="ant" security="none"/>
 
-      <sec:http>
+      <sec:http request-matcher="ant">
           <sec:form-login/>
           <sec:logout/>
           <sec:access-denied-handler ref="accessDeniedHandler"/>
@@ -709,8 +709,6 @@ REST API用のSpring Securityの定義追加
               </bean>
           </constructor-arg>
       </bean>
-
-      <bean id="mvcHandlerMappingIntrospector" class="org.springframework.web.servlet.handler.HandlerMappingIntrospector" />
 
       <bean id="webSecurityExpressionHandler" class="org.springframework.security.web.access.expression.DefaultWebSecurityExpressionHandler" />
 

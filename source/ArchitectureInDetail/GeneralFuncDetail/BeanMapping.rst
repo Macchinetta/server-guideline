@@ -119,7 +119,7 @@ MapStructを使用するための設定
 
 .. note::
 
-  開発プロジェクトを\ `ブランクプロジェクト <https://github.com/Macchinetta/macchinetta-web-multi-blank/tree/1.9.0.RELEASE>`_\ から作成すると、上記の設定はpom.xmlに記載されている。
+  開発プロジェクトを\ `ブランクプロジェクト <https://github.com/Macchinetta/macchinetta-web-multi-blank/tree/1.9.1.RELEASE>`_\ から作成すると、上記の設定はpom.xmlに記載されている。
 
   開発プロジェクトの作成方法については、「\ :doc:`../../ImplementationAtEachLayer/CreateWebApplicationProject`\ 」を参照されたい。
 
@@ -2103,7 +2103,7 @@ Lombokを使用する際の設定
 
 .. note::
 
-  開発プロジェクトを\ `ブランクプロジェクト <https://github.com/Macchinetta/macchinetta-web-multi-blank/tree/1.9.0.RELEASE>`_\ から作成すると、上記のLombokの設定はコメントアウトされた状態でpom.xmlに記載されている。
+  開発プロジェクトを\ `ブランクプロジェクト <https://github.com/Macchinetta/macchinetta-web-multi-blank/tree/1.9.1.RELEASE>`_\ から作成すると、上記のLombokの設定はコメントアウトされた状態でpom.xmlに記載されている。
 
 .. raw:: latex
 

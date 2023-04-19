@@ -231,7 +231,7 @@ Delete TODO
       mvn archetype:generate -B\
        -DarchetypeGroupId=com.github.macchinetta.blank\
        -DarchetypeArtifactId=macchinetta-web-blank-noorm-archetype\
-       -DarchetypeVersion=1.9.0.RELEASE\
+       -DarchetypeVersion=1.9.1.RELEASE\
        -DgroupId=com.example.todo\
        -DartifactId=todo\
        -Dversion=1.0.0-SNAPSHOT
@@ -250,7 +250,7 @@ O/R Mapperに依存しないブランクプロジェクトの作成
   mvn archetype:generate -B^
    -DarchetypeGroupId=com.github.macchinetta.blank^
    -DarchetypeArtifactId=macchinetta-web-blank-noorm-archetype^
-   -DarchetypeVersion=1.9.0.RELEASE^
+   -DarchetypeVersion=1.9.1.RELEASE^
    -DgroupId=com.example.todo^
    -DartifactId=todo^
    -Dversion=1.0.0-SNAPSHOT
@@ -267,7 +267,7 @@ MyBatis3を使用してデータベースにアクセスするRepositoryImpl用�
   mvn archetype:generate -B^
    -DarchetypeGroupId=com.github.macchinetta.blank^
    -DarchetypeArtifactId=macchinetta-web-blank-archetype^
-   -DarchetypeVersion=1.9.0.RELEASE^
+   -DarchetypeVersion=1.9.1.RELEASE^
    -DgroupId=com.example.todo^
    -DartifactId=todo^
    -Dversion=1.0.0-SNAPSHOT
@@ -4066,8 +4066,8 @@ spring-security.xml
           http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
       ">
 
-      <sec:http pattern="/resources/**" security="none"/>
-      <sec:http>
+      <sec:http pattern="/resources/**" request-matcher="ant" security="none"/>
+      <sec:http request-matcher="ant">
           <sec:form-login/>
           <sec:logout/>
           <sec:access-denied-handler ref="accessDeniedHandler"/>
@@ -4109,8 +4109,6 @@ spring-security.xml
               </bean>
           </constructor-arg>
       </bean>
-
-      <bean id="mvcHandlerMappingIntrospector" class="org.springframework.web.servlet.handler.HandlerMappingIntrospector" />
 
       <bean id="webSecurityExpressionHandler" class="org.springframework.security.web.access.expression.DefaultWebSecurityExpressionHandler" />
 

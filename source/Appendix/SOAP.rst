@@ -788,8 +788,7 @@ webプロジェクト内にWebServiceインターフェースの実装クラス�
 .. code-block:: xml
 
     <!-- (1) -->
-    <sec:http pattern="/ws/**"
-              create-session="stateless">
+    <sec:http pattern="/ws/**" request-matcher="ant" create-session="stateless" >
        <sec:csrf disabled="true" />
        <sec:http-basic />
     </sec:http>
@@ -886,8 +885,7 @@ webプロジェクト内にWebServiceインターフェースの実装クラス�
 .. code-block:: xml
 
     <!-- (1) -->
-    <sec:http pattern="/ws/**"
-        create-session="stateless">
+    <sec:http pattern="/ws/**" request-matcher="ant" create-session="stateless">
         <sec:http-basic />
         <sec:csrf disabled="true" />
     </sec:http>

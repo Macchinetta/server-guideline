@@ -161,7 +161,7 @@ Spring SecurityによるURL Rewriting機能の無効化
 
 .. code-block:: xml
 
-  <sec:http disable-url-rewriting="false"> <!-- falseを指定してURL Rewritingを有効化 -->
+  <sec:http request-matcher="ant" disable-url-rewriting="false"> <!-- falseを指定してURL Rewritingを有効化 -->
 
 .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
 .. list-table::
@@ -226,7 +226,7 @@ Servletの標準仕様の仕組みを使ってセッションをセキュアに�
 
 .. code-block:: xml
 
-  <sec:http>
+  <sec:http request-matcher="ant">
       <!-- ommited -->
       <sec:session-management /> <!-- (1) -->
       <!-- ommited -->
@@ -332,7 +332,7 @@ Spring Securityの処理の中でどのような方針でセッションを作�
 
 .. code-block:: xml
 
-  <sec:http create-session="stateless"> <!-- (1) -->
+  <sec:http request-matcher="ant" create-session="stateless"> <!-- (1) -->
       <!-- ommited -->
   </sec:http>
 
@@ -438,12 +438,12 @@ Spring Securityは、以下のタイミングでセッションを破棄する�
 .. code-block:: xml
 
   <!-- (1) -->
-  <sec:http pattern="/"> <!-- (2) -->
+  <sec:http pattern="/" request-matcher="ant">
       <sec:session-management />
   </sec:http>
 
-  <!-- (3) -->
-  <sec:http>
+  <!-- (2) -->
+  <sec:http request-matcher="ant">
       <!-- ommited -->
       <sec:session-management
               invalid-session-url="/error/invalidSession"/>
@@ -458,12 +458,8 @@ Spring Securityは、以下のタイミングでセッションを破棄する�
   * - 項番
     - 説明
   * - | (1)
-    - | トップページを開くためのパス("\ ``/``\" )に適用する\ ``SecurityFilterChain``\ を作成するための\ ``<sec:http>``\ 要素を新たに追加する。
+    - | トップページを開くためのパス("\ ``/``\ ")に適用する\ ``SecurityFilterChain``\ を作成するための\ ``<sec:http>``\ 要素を新たに追加する。
   * - | (2)
-    - | (1)の\ ``<sec:http>``\ 要素を使って生成した\ ``SecurityFilterChain``\ を適用するパスパターンを指定する。
-      | 指定可能なパスパターンはAnt形式のパス表記と正規表現の2つの形式であり、デフォルトではMVC形式のパスとして扱われる。
-      | また、パスパターンではなく\ ``RequestMatcher``\ オブジェクトを直接指定することも可能である。
-  * - | (3)
     - | 個別定義していないパスに適用する\ ``SecurityFilterChain``\ を作成するための\ ``<sec:http>``\ 要素を定義する。
       | この定義は、個別定義用の\ ``<sec:http>``\ 要素より下に定義すること。
       | これは\ ``<sec:http>``\ 要素の定義順番が\ ``SecurityFilterChain``\ の優先順位となるためである。

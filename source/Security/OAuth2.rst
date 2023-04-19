@@ -776,7 +776,7 @@ How to Useの構成
             http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
         ">
 
-        <sec:http pattern="/api/v1/todos/**">  <!-- (1) -->
+        <sec:http pattern="/api/v1/todos/**" request-matcher="ant">  <!-- (1) -->
             <!-- omitted -->
             <sec:oauth2-resource-server>
                 <sec:jwt jwk-set-uri="https://idp.example.org/.well-known/jwks.json" /> <!-- (2) -->
@@ -849,7 +849,7 @@ How to Useの構成
             http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
         ">
 
-        <sec:http pattern="/api/v1/todos/**">
+        <sec:http pattern="/api/v1/todos/**" request-matcher="ant">
             <!-- omitted -->
             <sec:intercept-url pattern="/api/v1/todos/**" method="GET" access="hasAuthority('SCOPE_READ')" />  <!-- (1) -->
             <sec:intercept-url pattern="/api/v1/todos/**" method="POST" access="hasAuthority('SCOPE_CREATE')" />  <!-- (1) -->
@@ -967,7 +967,7 @@ Spring Security のOAuth2.0クライアント機能を使用するため、\ ``p
             http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
             http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
 
-        <sec:http pattern="/api/v1/todos/**">
+        <sec:http pattern="/api/v1/todos/**" request-matcher="ant">
           <!-- omitted -->
           <sec:oauth2-client /> <!-- (1) -->
         </sec:http>

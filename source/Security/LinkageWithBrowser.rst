@@ -304,7 +304,7 @@ How to use
 
 .. code-block:: xml
 
-  <sec:http>
+  <sec:http request-matcher="ant">
       <!-- omitted -->
       <sec:headers disabled="true"/> <!-- disabled属性にtrueを設定して無効化 -->
       <!-- omitted -->
@@ -470,7 +470,7 @@ Spring Securityは、\ ``RequestMatcher``\ インタフェースの仕組みを�
       </constructor-arg>
   </bean>
 
-  <sec:http>
+  <sec:http request-matcher="ant">
       <!-- omitted -->
       <sec:headers>
           <sec:header ref="secureCacheControlHeadersWriter"/> <!-- (2) -->

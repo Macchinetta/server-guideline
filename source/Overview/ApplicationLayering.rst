@@ -476,7 +476,7 @@ Repositoryを使用しない時の処理の流れ
 
 .. tip::
 
-  マルチプロジェクト構成の例として、\ `サンプルアプリケーション <https://github.com/terasolunaorg/terasoluna-tourreservation-mybatis3/tree/5.8.0.RELEASE>`_\ や\ `共通ライブラリのテストアプリケーション <https://github.com/terasolunaorg/terasoluna-gfw-functionaltest/tree/5.8.0.RELEASE>`_\ を参照されたい。
+  マルチプロジェクト構成の例として、\ `サンプルアプリケーション <https://github.com/terasolunaorg/terasoluna-tourreservation-mybatis3/tree/5.8.1.RELEASE>`_\ や\ `共通ライブラリのテストアプリケーション <https://github.com/terasolunaorg/terasoluna-gfw-functionaltest/tree/5.8.1.RELEASE>`_\ を参照されたい。
 
 |
 

@@ -5408,12 +5408,12 @@ Blankプロジェクトのデフォルトの設定では、CSRF対策が有効�
     <!-- omitted -->
 
     <!-- (1) -->
-    <sec:http pattern="/api/v1/**" create-session="stateless" request-matcher="ant">
+    <sec:http pattern="/api/v1/**" request-matcher="ant" create-session="stateless">
         <sec:http-basic/>
         <sec:csrf disabled="true"/>
     </sec:http>
 
-    <sec:http>
+    <sec:http request-matcher="ant">
         <sec:access-denied-handler ref="accessDeniedHandler"/>
         <sec:custom-filter ref="userIdMDCPutFilter" after="ANONYMOUS_FILTER"/>
         <sec:form-login/>
@@ -5437,10 +5437,6 @@ Blankプロジェクトのデフォルトの設定では、CSRF対策が有効�
        | また、\ ``create-session``\ 属性を\ ``stateless``\ とする事で、Spring Securityの処理でセッションが使用されなくなる。
        |
        | CSRF対策を無効化するために、\ ``<sec:csrf>``\ 要素に \ ``disabled="true"``\ を指定している。
-
-.. **TBD**
-   web.xmlでRest API用のservletを作成している関係で、\ ``/api/v1/**``\ へのマッピングは\ ``ant``\ を期待することになる。
-   web.xmlの設定と合わせてここで説明する。
 
 |
 

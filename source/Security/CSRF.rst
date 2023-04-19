@@ -152,7 +152,7 @@ CSRF対策機能を使用しない場合は、以下のようなbean定義を行
 
 .. code-block:: xml
 
-  <sec:http>
+  <sec:http request-matcher="ant">
       <!-- omitted -->
       <sec:csrf disabled="true"/> <!-- disabled属性にtrueを設定して無効化 -->
       <!-- omitted -->
@@ -391,13 +391,13 @@ CSRFのトークンチェックエラー時に発生する例外は以下の通�
 
 \ ``DelegatingAccessDeniedHandler``\ クラスを使用して上記の例外をハンドリングし、それぞれに \ ``AccessDeniedHandler``\ インタフェースの実装クラスを割り当てることで、例外毎の遷移先を設定することが可能である。
 
-CSRFトークンチェックエラー時に専用のエラー画面（JSP）に遷移させたい場合は、以下のようなBean定義を行う。(以下の定義例は、`ブランクプロジェクト <https://github.com/Macchinetta/macchinetta-web-multi-blank/tree/1.9.0.RELEASE>`_\ からの抜粋である)
+CSRFトークンチェックエラー時に専用のエラー画面（JSP）に遷移させたい場合は、以下のようなBean定義を行う。(以下の定義例は、`ブランクプロジェクト <https://github.com/Macchinetta/macchinetta-web-multi-blank/tree/1.9.1.RELEASE>`_\ からの抜粋である)
 
 * spring-security.xmlの定義例
 
 .. code-block:: xml
 
-  <sec:http>
+  <sec:http request-matcher="ant">
       <!-- omitted -->
       <sec:access-denied-handler ref="accessDeniedHandler"/>  <!-- (1) -->
       <!-- omitted -->

@@ -240,6 +240,8 @@ HttpFirewall
 
 |
 
+.. _SpringSecuritySecurityFilterChain:
+
 SecurityFilterChain
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
@@ -252,13 +254,38 @@ SecurityFilterChain
 
 .. code-block:: xml
 
-    <sec:http pattern="/api/**">
+    <sec:http pattern="/api/**" request-matcher="ant"> <!-- (1) (2) -->
         <!-- omitted -->
     </sec:http>
 
-    <sec:http pattern="/ui/**">
+    <sec:http pattern="/ui/**" request-matcher="ant">
         <!-- omitted -->
     </sec:http>
+
+.. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
+.. list-table::
+  :header-rows: 1
+  :widths: 10 90
+
+  * - 項番
+    - 説明
+  * - | (1)
+    - | \ ``pattern``\ 属性を設定し、SecurityFilterChainを適用するパスパターンを指定する。\ ``pattern``\ 属性を指定しない場合は、"\ ``/**``\ "がパスパターンとして使用される。
+      | 指定可能なパスパターンはRequestMatcherに依存しており、\ `ブランクプロジェクトのデフォルト設定 <https://github.com/Macchinetta/macchinetta-web-multi-blank/tree/1.9.1.RELEASE/parts/XMLConfig-JSP/projectName-web/src/main/resources/META-INF/spring/spring-security.xml#L11>`_\ で使用される\ ``AntPathRequestMatcher``\ では\ `Ant形式の記述 <https://docs.spring.io/spring-framework/docs/6.0.3/javadoc-api/org/springframework/util/AntPathMatcher.html>`_\ が利用できる。
+      | また、\ ``pattern``\ と\ ``request-matcher``\ の代わりに\ ``request-matcher-ref``\ 属性を設定し、RequestMatcherオブジェクトを直接指定することも可能である。
+  * - | (2)
+    - | \ ``request-matcher``\ 属性で\ ``ant``\ を指定し、\ ``AntPathRequestMatcher``\ を使用するように設定する。詳しくは\ :ref:`パスパターンの解析に利用する仕組みの設定について <SpringSecurityPathPattern>`\ を参照されたい。
+
+.. _SpringSecurityPathPattern:
+
+.. tip:: \ **パスパターンの解析に利用する仕組みの設定について**\
+
+  Spring SecurityはSpring MVCと同時に使用する場合、パス解析にはデフォルトで\ ``MvcRequestMatcher``\ が使用される。ただし、\ ``MvcRequestMatcher``\ を使用するためには\ `Spring Securityが案内する方法 <https://docs.spring.io/spring-security/reference/6.0.1/servlet/integrations/mvc.html#mvc-requestmatcher>`_\ に従い、Spring MVCとSpring Securityを同一コンテキスト(DIコンテナ)内に設定する必要がある。
+  
+  Macchinetta Server Framework (1.x)では以下のような懸念から\ ``AntPathRequestMatcher``\ (必要に応じて\ ``RegexRequestMatcher``\ )の使用を前提としている。これに伴い、\ `ブランクプロジェクトのデフォルト設定 <https://github.com/Macchinetta/macchinetta-web-multi-blank/tree/1.9.1.RELEASE/parts/XMLConfig-JSP/projectName-web/src/main/resources/META-INF/spring/spring-security.xml#L11>`_\ では\ ``<sec:http>``\ タグに\ ``request-matcher="ant"``\ を設定している。
+
+  - \ :ref:`RESTHowToUseApplicationSettingsOfSpringMVC`\ の\ ``spring-mvc-rest.xml``\ のように、\ ``spring-mvc.xml``\ の設定バリエーションを1つのアプリケーション内に複数持つ必要がある場合、\ ``spring-mvc.xml``\ に相当するファイルごとにアプリケーションコンテキスト(DIコンテナ)を分け、複数のServletにそれぞれを割り当てる必要があり、 \ ``MvcRequestMatcher``\ を使用できる条件を満たさない。また、設定方法によっては、\ ``MvcRequestMatcher``\ を利用するとSpring MVCと連携せずに動作するという意図しない動作となり、脆弱性に繋がる。
+  - \ ``MvcRequestMatcher``\ では、Spring MVCがHandlerMappingやハンドラ(ハンドラメソッド等)を決定する時と同じ処理をパターンマッチングの度に行う(\ ``spring-security.xml``\ に記載したpattern毎に実施される)ため、1リクエストあたりの処理コストが増加しやすいと推測される。特に、RESTで使用するパス変数のように、パスの条件にワイルドカードを持つハンドラメソッドを呼び出す際は、「Spring MVCがHandlerMappingやハンドラ(ハンドラメソッド等)を決定する」部分の処理コストがアプリケーションコンテキスト(DIコンテナ)内のハンドラメソッドの定義量に大きく依存するため、アプリケーションコンテキスト(DIコンテナ)を1つにまとめる構造では、性能上の懸念がある。
 
 |
 
@@ -321,7 +348,7 @@ WebアプリケーションにSpring Securityを適用するためのセット�
 
 .. note::
 
-  開発プロジェクトを\ `ブランクプロジェクト <https://github.com/Macchinetta/macchinetta-web-multi-blank/tree/1.9.0.RELEASE>`_\ から作成すると、ここで説明する各設定はセットアップ済みの状態になっている。
+  開発プロジェクトを\ `ブランクプロジェクト <https://github.com/Macchinetta/macchinetta-web-multi-blank/tree/1.9.1.RELEASE>`_\ から作成すると、ここで説明する各設定はセットアップ済みの状態になっている。
 
   開発プロジェクトの作成方法については、「\ :doc:`../ImplementationAtEachLayer/CreateWebApplicationProject`\ 」を参照されたい。
 
@@ -375,7 +402,7 @@ WebアプリケーションにSpring Securityを適用するためのセット�
 
 bean定義ファイルの作成
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-Spring Securityのコンポーネントをbean定義するため、以下のようなXMLファイルを作成する。（\ `ブランクプロジェクト <https://github.com/Macchinetta/macchinetta-web-multi-blank/tree/1.9.0.RELEASE>`_\ より抜粋）
+Spring Securityのコンポーネントをbean定義するため、以下のようなXMLファイルを作成する。（\ `ブランクプロジェクト <https://github.com/Macchinetta/macchinetta-web-multi-blank/tree/1.9.1.RELEASE>`_\ より抜粋）
 
 * xxx-web/src/main/resources/META-INF/spring/spring-security.xmlの定義例
 
@@ -390,8 +417,8 @@ Spring Securityのコンポーネントをbean定義するため、以下のよ�
           http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
       "> <!-- (1) -->
 
-      <sec:http pattern="/resources/**" security="none"/> <!-- (2) -->
-      <sec:http> <!-- (3) -->
+      <sec:http pattern="/resources/**" request-matcher="ant" security="none"/> <!-- (2) -->
+      <sec:http request-matcher="ant"> <!-- (3) -->
           <sec:form-login /> <!-- (4) -->
           <sec:logout /> <!-- (5) -->
           <sec:access-denied-handler ref="accessDeniedHandler"/> <!-- (6) -->
@@ -408,12 +435,10 @@ Spring Securityのコンポーネントをbean定義するため、以下のよ�
           <!-- omitted -->
       </bean>
 
-      <bean id="mvcHandlerMappingIntrospector" class="org.springframework.web.servlet.handler.HandlerMappingIntrospector" /> <!-- (12) -->
-
-      <bean id="webSecurityExpressionHandler" class="org.springframework.security.web.access.expression.DefaultWebSecurityExpressionHandler" /> <!-- (13) -->
+      <bean id="webSecurityExpressionHandler" class="org.springframework.security.web.access.expression.DefaultWebSecurityExpressionHandler" /> <!-- (12) -->
 
       <!-- Put UserID into MDC -->
-      <bean id="userIdMDCPutFilter" class="org.terasoluna.gfw.security.web.logging.UserIdMDCPutFilter"> <!-- (14) -->
+      <bean id="userIdMDCPutFilter" class="org.terasoluna.gfw.security.web.logging.UserIdMDCPutFilter"> <!-- (13) -->
       </bean>
 
   </beans>
@@ -460,17 +485,8 @@ Spring Securityのコンポーネントをbean定義するため、以下のよ�
   * - | (11)
     - | アクセスエラー時のエラーハンドリングを行うコンポーネントをbean定義する。
   * - | (12)
-    - | \ ``mvcHandlerMappingIntrospector``\ というbean名で\ ``HandlerMappingIntrospector``\ をbean定義する。
-
-      .. Note::
-
-        \ `Spring Security <https://docs.spring.io/spring-security/reference/6.0.1/servlet/integrations/mvc.html#mvc-requestmatcher>`_\ では、\ ``spring-mvc.xml``\ と\ ``spring-security.xml``\ を同一のApplicationContextに登録するように案内している。
-
-        しかし、Macchinetta Server Framework (1.x)ではパスごとに設定を振り分けられるように、DispatcherServletに\ ``spring-mvc.xml``\ を設定する指針である。このため、Spring Securityが案内している方法では解決できないため、ここでは\ ``HandlerMappingIntrospector``\ をbean定義する方法を紹介している。
-
-  * - | (13)
     - | 画面項目で認可処理を行うハンドラをbean定義する。
-  * - | (14)
+  * - | (13)
     - | ログ出力するユーザ情報をMDCにする共通ライブラリのコンポーネントをbean定義する。
 
 |
@@ -560,8 +576,8 @@ Spring Securityのコンポーネントをbean定義するため、以下のよ�
 
 .. code-block:: xml
   
-  <sec:http pattern="/resources/**" security="none"/>  <!-- (1) (2) -->
-  <sec:http>
+  <sec:http pattern="/resources/**" request-matcher="ant" security="none"/>  <!-- (1) (2) -->
+  <sec:http request-matcher="ant">
       <!-- omitted -->
   </sec:http>
   

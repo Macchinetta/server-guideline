@@ -6,14 +6,14 @@
   :header-rows: 1
   :widths: 15 25 60
   :class: longtable
-
+  
   * - 更新日付
     - 更新箇所
     - 更新内容
 
-  * - 2023-03-30
+  * - 2023-04-28
     - \-
-    - 1.9.0 RELEASE版公開
+    - 1.9.1 RELEASE版公開
 
   * -
     - 全般
@@ -29,6 +29,7 @@
       * Tilesに関する記述を削除
       * Dozerに関する記述を削除
       * リクエストのハンドラメソッドに@RequestMapping合成アノテーションを使用するように修正
+      * Spring Securityのパス解析で使用されるMatcherがAntPathRequestMatcherとなるように修正
 
   * -
     - \ :doc:`../Introduction/Introduction`\
@@ -176,6 +177,7 @@
       * Spring Security 5.7.0よりSecurityContextPersistenceFilterが非推奨となり、SecurityContextHolderFilterが推奨となったことへの対応
       * 認可処理のフィルターがFilterSecurityInterceptorからAuthorizationFilterへ変更になったことに伴う修正
       * AuthorizationFilterに関するWarningを追加
+      * Spring Securityのパスパターン解析がデフォルトでMVC形式となったことに対するTipを追加
 
   * -
     - \ :doc:`../Security/Authentication`\
@@ -188,7 +190,6 @@
     - \ :doc:`../Security/Authorization`\
     - 記載内容の修正・追加
 
-      * Spring Securityのパスパターン解析がデフォルトでMVC形式となったことに対するTipを追加
       * 認可処理のデフォルト値がdenyAllになったことに伴う修正
       * 認可処理のフィルターがFilterSecurityInterceptorからAuthorizationFilterへ変更になったことに伴う修正
 
