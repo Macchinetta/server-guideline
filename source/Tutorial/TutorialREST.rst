@@ -583,6 +583,7 @@ spring-mvc-rest.xmlの作成
 
         <!-- (7) -->
         <!-- Setting AOP. -->
+        <aop:aspectj-autoproxy />
         <bean id="handlerExceptionResolverLoggingInterceptor"
             class="org.terasoluna.gfw.web.exception.HandlerExceptionResolverLoggingInterceptor">
             <property name="exceptionLogger" ref="exceptionLogger" />

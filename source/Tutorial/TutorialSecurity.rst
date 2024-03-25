@@ -87,7 +87,7 @@ URL一覧を以下に示す。
 プロジェクトの作成
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Mavenのアーキタイプを利用し、\ `Macchinetta Server Framework (1.x)のブランクプロジェクト <https://github.com/Macchinetta/macchinetta-web-blank/tree/1.8.2.RELEASE>`_\ を作成する。
+Mavenのアーキタイプを利用し、\ `Macchinetta Server Framework (1.x)のブランクプロジェクト <https://github.com/Macchinetta/macchinetta-web-blank/tree/1.8.3.RELEASE>`_\ を作成する。
 
 本チュートリアルでは、MyBatis3用のブランクプロジェクトを作成する。
 
@@ -99,7 +99,7 @@ Mavenのアーキタイプを利用し、\ `Macchinetta Server Framework (1.x)�
     mvn archetype:generate -B^
      -DarchetypeGroupId=com.github.macchinetta.blank^
      -DarchetypeArtifactId=macchinetta-web-blank-archetype^
-     -DarchetypeVersion=1.8.2.RELEASE^
+     -DarchetypeVersion=1.8.3.RELEASE^
      -DgroupId=com.example.security^
      -DartifactId=first-springsecurity^
      -Dversion=1.0.0-SNAPSHOT
@@ -313,7 +313,7 @@ AccountSharedServiceの作成
         @Inject
         AccountRepository accountRepository;
 
-        @Transactional(readOnly=true)
+        @Transactional(readOnly = true)
         @Override
         public Account findOne(String username) {
             // (1)
@@ -424,7 +424,7 @@ AccountSharedServiceの作成
         @Inject
         AccountSharedService accountSharedService; // (2)
 
-        @Transactional(readOnly=true)
+        @Transactional(readOnly = true)
         @Override
         public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
             try {
@@ -577,19 +577,17 @@ Spring Securityの設定
         <sec:http pattern="/resources/**" security="none"/>
         <sec:http once-per-request="false">
             <!-- (1) -->
-            <sec:form-login
-                login-page="/login/loginForm"
+            <sec:form-login login-page="/login/loginForm"
                 authentication-failure-url="/login/loginForm?error=true" />
             <!-- (2) -->
-            <sec:logout
-                logout-success-url="/"
-                delete-cookies="JSESSIONID" />
+            <sec:logout logout-success-url="/" delete-cookies="JSESSIONID" />
+            <!-- (3) -->
+            <sec:intercept-url pattern="/login/**"
+                access="permitAll" />
+            <sec:intercept-url pattern="/**" access="isAuthenticated()" />
             <sec:access-denied-handler ref="accessDeniedHandler"/>
             <sec:custom-filter ref="userIdMDCPutFilter" after="ANONYMOUS_FILTER"/>
             <sec:session-management />
-            <!-- (3) -->
-            <sec:intercept-url pattern="/login/**" access="permitAll" />
-            <sec:intercept-url pattern="/**" access="isAuthenticated()" />
         </sec:http>
 
         <sec:authentication-manager>
@@ -597,6 +595,11 @@ Spring Securityの設定
               is scanned by component scan with @Service -->
             <!-- (4) -->
             <sec:authentication-provider user-service-ref="sampleUserDetailsService" />
+            <sec:authentication-provider
+                user-service-ref="sampleUserDetailsService">
+                <!-- (5) -->
+                <sec:password-encoder ref="passwordEncoder" />
+            </sec:authentication-provider>
         </sec:authentication-manager>
 
         <!-- CSRF Protection -->
@@ -679,6 +682,12 @@ Spring Securityの設定
         デフォルトでは、\ ``UserDetailsService``\ を使用して\ ``UserDetails``\ を取得し、その\ ``UserDetails``\ が持つハッシュ化済みパスワードと、ログインフォームで指定されたパスワードを比較してユーザー認証を行うクラス(\ ``org.springframework.security.authentication.dao.DaoAuthenticationProvider``\ )が使用される。
 
         \ ``user-service-ref``\ 属性に\ ``UserDetailsService``\ インタフェースを実装しているコンポーネントのbean名を指定する。本チュートリアルでは、ドメイン層に作成した\ ``SampleUserDetailsService``\ クラスを設定する。
+
+    * - | (5)
+      - \ ``<sec:password-encoder>``\ タグを使用して、ログインフォームで指定されたパスワードをハッシュ化するためのクラス(PasswordEncoder)の設定を行う。
+
+        本チュートリアルでは、\ ``applicationContext.xml``\ に定義されている\
+        \ ``org.springframework.security.crypto.password.DelegatingPasswordEncoder``\ を利用する。\
 
 |
 
@@ -1315,6 +1324,7 @@ Spring Securityと関係のない設定については、説明を割愛する�
             <property name="defaultStatusCode" value="500" />
         </bean>
         <!-- Setting AOP. -->
+        <aop:aspectj-autoproxy />
         <bean id="handlerExceptionResolverLoggingInterceptor"
             class="org.terasoluna.gfw.web.exception.HandlerExceptionResolverLoggingInterceptor">
             <property name="exceptionLogger" ref="exceptionLogger" />

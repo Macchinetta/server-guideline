@@ -34,7 +34,7 @@ Maven Archetypeで作成したプロジェクトでは、warファイルを作�
     1. 必ずマルチプロジェクト構成にする。
     2. 一つのプロジェクトに環境依存性のある設定ファイル（ex. logback.xml, jdbc.properties）をできるだけ集約する。 **以降、このプロジェクトを \*-env と表現する。**
     
-      * ex. terasoluna-tourreservation-env
+      * ex. secure-login-env
 
     3. \*-env以外のプロジェクトには環境依存性のある設定値を一切持たせない。
 
@@ -55,7 +55,7 @@ Maven Archetypeで作成したプロジェクトでは、warファイルを作�
     #. CIサーバ上ではビルドツール(maven)によるテストの実行とパッケージングを行い、必要に応じてパッケージリポジトリにartifactをdeployする。
     #. 試験サーバ、本番サーバでは、パッケージリポジトリにあらかじめ保管しているプロジェクト本体に、リリース先環境にあわせてビルドした\*-envプロジェクトを追加してリリースすることにより、アプリケーションの動作が可能になる。
 
-    詳細については\ `サンプルアプリケーション <https://github.com/terasolunaorg/terasoluna-tourreservation-mybatis3/tree/5.7.2.RELEASE>`_\ を参考にされたい。
+    詳細については\ `チュートリアル <https://github.com/Macchinetta/tutorial-apps/tree/1.8.3.RELEASE/secure-login-demo/secure-login>`_\ を参考にされたい。
 
 .. warning:: **ビルド環境について**
 
@@ -222,7 +222,7 @@ WebアプリケーションをTomcat 8.5およびTomcat 9上にリリースす�
 4. Tomcatのリソース機能を使用して、 /etc/foo/bar/\*.jar をクラスパスに追加する。
 
  * [CATALINA_HOME]/conf/Catalina/localhost/[contextPath].xmlファイルに下記の定義を追加する。
- * 詳しくは、 `The Resources Component <https://tomcat.apache.org/tomcat-9.0-doc/config/resources.html>`_\ と `terasoluna-tourreservation-envのconfigsフォルダ <https://github.com/terasolunaorg/terasoluna-tourreservation-mybatis3/tree/5.7.2.RELEASE/terasoluna-tourreservation-env/configs>`_\ を参考されたい。
+ * 詳しくは、 `The Resources Component <https://tomcat.apache.org/tomcat-9.0-doc/config/resources.html>`_\ と `atrs-envのconfigsフォルダ <https://github.com/Macchinetta/atrs/tree/1.8.3.RELEASE/atrs-env/configs>`_\ を参考されたい。
  * リソースの設定例：
    
   .. code-block:: xml
@@ -239,100 +239,6 @@ WebアプリケーションをTomcat 8.5およびTomcat 9上にリリースす�
  * Catalina以外のエンジン、およびlocalhost以外のホストを利用する場合は、[contextPath].xmlを[CATALINA_HOME]/conf/[enginename]/[hostname]に配置する。
 
 |
-
-.. note:: **Tomcat 7およびTomcat 6を使用する場合**
-
-    Tomcat 7およびTomcat 6を使用する場合は、上記手順 4.の代わりにTomcatのVirtualWebappLoader機能を使用して /etc/foo/bar/\*.jar をクラスパスに追加する。
-
-    * [CATALINA_HOME]/conf/Catalina/localhost/[contextPath].xmlファイルに下記の定義を追加する。
-    * 詳しくは、 `VirtualWebappLoader <https://tomcat.apache.org/tomcat-7.0-doc/api/org/apache/catalina/loader/VirtualWebappLoader.html>`_\ と `terasoluna-tourreservation-envのconfigsフォルダ <https://github.com/terasolunaorg/terasoluna-tourreservation-mybatis3/tree/5.7.2.RELEASE/terasoluna-tourreservation-env/configs>`_\ を参考されたい。
-
-    VirtualWebappLoaderの設定例：
-    
-        .. code-block:: xml
-
-           <Loader className="org.apache.catalina.loader.VirtualWebappLoader"
-                   virtualClasspath="/etc/foo/bar/*.jar" />
-
-.. _CreateWebApplicationProjectBuildDeployToOtherServer:
-
-Tomcat以外のアプリケーションサーバへのデプロイ
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-アプリケーションサーバとしてTomcat以外のサーバを使用する際のデプロイ方法(手順)を紹介する。
-
-TomcatのVirtualWebappLoaderのように、Webアプリケーションごとにクラスパスを追加する手段が提供されていない
-アプリケーションサーバ（例： WebSphere,WebLogic,JBoss）にリリースする場合には、
-\*-env-x.y.z.jarファイルをwarファイル内の WEB-INF/lib 配下に追加してからリリースする方法が最も簡単である。
-
-1. リリース対象のAPサーバ環境にあわせてmavenのprofileを指定し、 \*-env プロジェクトを ビルドする。
-2. あらかじめパッケージリポジトリにデプロイ済みの\*.warファイルを 作業ディレクトリにコピーする。
-3. 下のように、ｊａｒコマンドの追加オプションを利用して、warファイル内の WEB-INF/lib の配下に追加する。
-4. foo-x.y.z.warをAPサーバにリリースする。
-
-.. note::
-
-    warファイルをアプリケーションサーバへデプロイする方法は、使用するアプリケーションサーバのマニュアルを参照されたい。
-
-|
-
-ここでは、jarコマンドを使用して、envモジュールのjarファイルをwarファイルに組み込む方法(手順)を紹介する。
-
-| 作業ディレクトリへ移動する。
-| ここでは、envプロジェクトで作業を行う例になっている。
-
-.. code-block:: console
-
-    cd C:\work\todo\todo-env
-
-|
-
-| 作成したwarファイルを作業ディレクトリへコピーする。
-| ここでは、Mavenリポジトリからwarファイルを取得する例になっている。(warファイルを\ ``install``\ または\ ``deploy``\ している前提とする)
-
-.. code-block:: console
-
-    mvn org.apache.maven.plugins:maven-dependency-plugin:3.2.0:copy^
-     -Dartifact=com.example.todo:todo-web:1.0.0-SNAPSHOT:war^
-     -DoutputDirectory=target
-
-| コマンドの実行が成功すると、envモジュールのtargetディレクトリの中に、指定したwarファイルがコピーされる。
-| (例：\ ``C:\work\todo\todo-env\target\todo-web-1.0.0-SNAPSHOT.war``\ )
-
-.. note::
-
-    * \ ``-DgroupId``\ 、\ ``-DartifactId``\ 、\ ``-Dversion``\ 、\ ``-Ddest``\ には、適切な値を指定すること。
-    * Linux系で実行する場合は、行末の "\ ``^``\"  を "\ ``\``\"  に読み替えること。
-
-|
-
-作成したjarファイルを作業ディレクト(\ ``target\WEB-INF\lib``\ )へ一旦コピーし、warファイルの中に追加する。
-
-**[Windowsの場合]**
-
-.. code-block:: console
-
-    mkdir target\WEB-INF\lib
-    copy target\todo-env-1.0.0-SNAPSHOT-test-server.jar target\WEB-INF\lib\.
-    cd target
-    jar -uvf todo-web-1.0.0-SNAPSHOT.war WEB-INF\lib
-
-**[Linux系の場合]**
-
-.. code-block:: console
-
-    mkdir -p target/WEB-INF/lib
-    cp target/todo-env-1.0.0-SNAPSHOT-test-server.jar target/WEB-INF/lib/.
-    cd target
-    jar -uvf todo-web-1.0.0-SNAPSHOT.war WEB-INF/lib
-
-.. note:: **jarコマンドが見つからない場合の対処**
-
-    jarコマンドが見つからない場合は、以下のいずれかの対処を行うことで解決することができる。
-
-    * \ ``JAVA_HOME/bin``\ を環境変数「PATH」に追加する。
-    * jarコマンドをフルパスで指定する。Windowの場合は\ ``%JAVA_HOME%\bin\jar``\ 、Linux系の場合は\ ``${JAVA_HOME}/bin/jar``\ を指定すればよい。
-
 
 .. _CreateWebApplicationProjectBuildDeployContinuedDeployment:
 

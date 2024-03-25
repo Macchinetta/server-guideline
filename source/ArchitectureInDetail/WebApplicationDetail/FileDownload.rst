@@ -42,7 +42,7 @@ Overview
 | クラスは、modelの情報を用いてExcelファイルをレンダリングするときに、サブクラスとして利用するクラスである。
 |
 | Spring では上記以外にも、いろいろなViewの実装を提供している。
-| Viewの技術詳細は、\ `Spring Framework Documentation -View Technologies- <https://docs.spring.io/spring-framework/docs/5.3.24/reference/html/web.html#mvc-view>`_\ を参照されたい。
+| Viewの技術詳細は、\ `Spring Framework Documentation -View Technologies- <https://docs.spring.io/spring-framework/docs/5.3.31/reference/html/web.html#mvc-view>`_\ を参照されたい。
 
 | 共通ライブラリから提供している、\ ``org.terasoluna.gfw.web.download.AbstractFileDownloadView``\ は、
 | 任意のファイルをダウンロードするために使用する抽象クラスである。
@@ -294,7 +294,7 @@ Excelファイルのダウンロード
 
   xlsファイル形式をサポートしたい場合は \ ``AbstractXlsView``\ を使用されたい。
 
-  詳細は、\ `AbstractXlsViewのJavaDoc <https://docs.spring.io/spring-framework/docs/5.3.24/javadoc-api/org/springframework/web/servlet/view/document/AbstractXlsView.html>`_\ を参照されたい。
+  詳細は、\ `AbstractXlsViewのJavaDoc <https://docs.spring.io/spring-framework/docs/5.3.31/javadoc-api/org/springframework/web/servlet/view/document/AbstractXlsView.html>`_\ を参照されたい。
 
 .. note::
 
@@ -459,7 +459,7 @@ ViewResolverの定義
 
         前述してきたように、SpringはModelの情報をいろいろなViewにレンダリングすることができる。
         Springでは、複数のレンダリングエンジンをサポートしており、さまざまなViewを返却することが可能である。
-        詳細は、Spring の公式ドキュメント\ `Spring Framework Documentation -View Technologies- <https://docs.spring.io/spring-framework/docs/5.3.24/reference/html/web.html#mvc-view>`_\ を参照されたい。
+        詳細は、Spring の公式ドキュメント\ `Spring Framework Documentation -View Technologies- <https://docs.spring.io/spring-framework/docs/5.3.31/reference/html/web.html#mvc-view>`_\ を参照されたい。
 
 .. raw:: latex
 

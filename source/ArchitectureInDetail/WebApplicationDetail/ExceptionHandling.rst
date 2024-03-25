@@ -1021,16 +1021,17 @@ ResultMessagesを保持する例外(BisinessException,ResourceNotFoundException)
 - **spring-mvc.xml**
 
  .. code-block:: xml
-    :emphasize-lines: 3,4,8
+    :emphasize-lines: 2,4,5,9
 
     <!-- Setting AOP. -->
+    <aop:aspectj-autoproxy /> <!-- (1) -->
     <bean id="handlerExceptionResolverLoggingInterceptor"
-        class="org.terasoluna.gfw.web.exception.HandlerExceptionResolverLoggingInterceptor"> <!-- (1) -->
-        <property name="exceptionLogger" ref="exceptionLogger" /> <!-- (2) -->
+        class="org.terasoluna.gfw.web.exception.HandlerExceptionResolverLoggingInterceptor"> <!-- (2) -->
+        <property name="exceptionLogger" ref="exceptionLogger" /> <!-- (3) -->
     </bean>
     <aop:config>
         <aop:advisor advice-ref="handlerExceptionResolverLoggingInterceptor"
-            pointcut="execution(* org.springframework.web.servlet.HandlerExceptionResolver.resolveException(..))" /> <!-- (3) -->
+            pointcut="execution(* org.springframework.web.servlet.HandlerExceptionResolver.resolveException(..))" /> <!-- (4) -->
     </aop:config>
 
  .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
@@ -1041,10 +1042,21 @@ ResultMessagesを保持する例外(BisinessException,ResourceNotFoundException)
     * - 項番
       - 説明
     * - | (1)
-      - | \ ``HandlerExceptionResolverLoggingInterceptor``\ を、bean定義に追加する。
+      - | \ ``<aop:aspectj-autoproxy />``\ 要素を定義することにより、AspectJサポートを有効化する。
+
+        .. Note:: \ **AspectJサポートの有効化について**\
+
+          アノテーションベースのAOP設定を有効化する設定となるので、Java-based configurationで定義する場合や、AspectJが提供しているアノテーションを利用したインターセプタクラスを追加する場合は必要となる。
+
+          XML-based configurationでは任意設定となるが、冗長で定義していてもアノテーションベースのAOP設定が有効化されるだけで、AOP自体の動作には影響はない。
+
+          なお、AspectJサポートを有効化する場合は、アプリケーションコンテキスト単位で設定する必要があるため、\ ``applicationContext.xml``\、\ ``spring-mvc.xml``\ それぞれに定義する必要がある。
+
     * - | (2)
-      - | 例外のログ出力を行うロガーオブジェクトを、DIする。\ ``applicationContext.xml``\ に定義している\ "exceptionLogger"\ を指定する。
+      - | \ ``HandlerExceptionResolverLoggingInterceptor``\ を、bean定義に追加する。
     * - | (3)
+      - | 例外のログ出力を行うロガーオブジェクトを、DIする。\ ``applicationContext.xml``\ に定義している\ "exceptionLogger"\ を指定する。
+    * - | (4)
       - | \ ``HandlerExceptionResolver``\ インタフェースのresolveExceptionメソッドに対して、\ ``HandlerExceptionResolverLoggingInterceptor``\ を適用する。
         |
         | デフォルトの設定では、共通ライブラリから提供している ``org.terasoluna.gfw.common.exception.ResultMessagesNotificationException`` のサブクラスの例外は、このクラスで行われるログ出力の対象外となっている。
@@ -1388,7 +1400,7 @@ Spring MVCの、デフォルトの例外ハンドリング機能によって行�
   date:2013-09-19 21:03:06	thread:tomcat-http--3	X-Track:c19eec546b054d54a13658f94292b24f	level:DEBUG	logger:o.t.gfw.web.exception.SystemExceptionResolver   	message:Exposing Exception as model attribute 'exception'
   date:2013-09-19 21:03:06	thread:tomcat-http--3	X-Track:c19eec546b054d54a13658f94292b24f	level:ERROR	logger:o.t.gfw.common.exception.ExceptionLogger        	message:[e.ad.od.9012] not found item entity. item code [10-123456].
   org.terasoluna.gfw.common.exception.SystemException: not found item entity. item code [10-123456].
-  	at org.terasoluna.exception.domain.service.ExampleExceptionServiceImpl.throwSystemException(ExampleExceptionServiceImpl.java:14) ~[ExampleExceptionServiceImpl.class:na]
+  	at macchinetta.exception.domain.service.ExampleExceptionServiceImpl.throwSystemException(ExampleExceptionServiceImpl.java:14) ~[ExampleExceptionServiceImpl.class:na]
   ...
   // stackTarace omitted
 

@@ -63,9 +63,9 @@
     * - Build Tool
       - `Apache Maven <https://maven.apache.org/download.cgi>`_ 3.8.6 (以降「Maven」と呼ぶ)
     * - Application Server
-      - `Apache Tomcat <https://tomcat.apache.org/tomcat-9.0-doc/index.html>`_ 9.0.73
+      - `Apache Tomcat <https://tomcat.apache.org/tomcat-9.0-doc/index.html>`_ 9.0.82
     * - Web Browser
-      - `Google Chrome <https://www.google.co.jp/chrome/>`_ 109.0.5414.120
+      - `Google Chrome <https://www.google.co.jp/chrome/>`_ 117
 
 アプリケーションの概要と要件
 ================================================================================
@@ -710,7 +710,7 @@ Spring Securityの機能を利用して管理されている。
 
 作成済みのプロジェクトは次の手順で取得することができる。
 
-#. `tutorial-apps <https://github.com/Macchinetta/tutorial-apps/tree/1.8.2.RELEASE>`_ にアクセスする。
+#. `tutorial-apps <https://github.com/Macchinetta/tutorial-apps/tree/1.8.3.RELEASE>`_ にアクセスする。
 #. 「Branch」ボタン押下して必要なバージョンのBranchを選択し、「Download ZIP」ボタンを押下してzipファイルをダウンロードする
 #. zipファイルを展開し、中のプロジェクトをインポートする。
 
@@ -861,6 +861,8 @@ gitで取得した初期プロジェクトの構成について述べる。
                  │                   ├── goods
                  │                   │  ├── GoodsController.java  
                  │                   │  └── GoodsViewForm.java
+                 │                   ├── login
+                 │                   │  └── LoginController.java
                  │                   └── validation
                  │                       ├── Confirm.java
                  │                       └── ConfirmValidator.java
@@ -928,17 +930,19 @@ STSにインポートしたプロジェクトを対象として、アプリケ�
 で説明済みのため、本チュートリアルでは説明を割愛する。
 
 
-.. note::
+.. tip:: 
 
-     JDK11でアプリケーションサーバを起動するとClassNotFoundExceptionが発生する。
-     その原因は、デフォルトでlocalというプロファイルを設定しているがJDK11ではプロファイルを切り替えていて依存関係が不足しているためである。
-     この問題を解消するには以下のようにする。
+  JDK11以降のバージョンを使用した場合、アプリケーションの起動に必要なライブラリが不足し起動に失敗する。
 
-     #. プロジェクト名を右クリックし「Run As」 -> 「2 Maven build\.\..\」をクリックして表示されるダイアログでProfilesに「local」と入力して「Close」ボタンを押下する。
-     #. プロジェクト名を右クリックし「Maven」 -> 「Update Project\.\.\.」をクリックし「OK」ボタンを押下する。
+  これは、JDK8を使用している場合デフォルトプロファイルの「local」を使用しているのに対し、JDK11以降の場合はアクティブプロファイルによりJDKバージョンに必要なプロファイルを読み込もうとした結果、デフォルトプロファイルの「local」が外れてしまったためである。
 
-     .. figure:: ./images_Session/config-maven.png
+  以下の様に設定することで、必要なライブラリを引き込むことが可能となる。
 
+  - 「Maven」->「Select Maven Profiles…」をクリックし「local」にチェックを入れて「OK」ボタンを押下する。
+
+    .. figure:: ./images_Session/MavenProfile.png
+      :alt: Maven Profile
+      :width: 75%
 
 アプリケーションサーバ起動後、 `<http://localhost:8080/session-tutorial-init-web/loginForm>`_ にアクセスすると以下の画面が表示される。
 
@@ -952,7 +956,7 @@ STSにインポートしたプロジェクトを対象として、アプリケ�
    :alt: Account Create Pages
    :width: 95%
 
-ログイン画面にて、(E-mail="a@b.com"、Password="demo")をフォーム入力するとログインすることができる。
+ログイン画面にて、(E-mail="\ ``a@b.com``\ "、Password="demo")をフォーム入力するとログインすることができる。
 ログイン後は商品一覧が表示される。
 商品名を選択すると商品詳細を表示できる。
 

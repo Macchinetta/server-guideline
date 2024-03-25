@@ -431,7 +431,7 @@ How to use
  .. note::
 
    上記設定例は、依存ライブラリのバージョンを親プロジェクトである terasoluna-gfw-parent で管理する前提であるため、pom.xmlでのバージョンの指定は不要である。
-   上記の依存ライブラリはterasoluna-gfw-parentが依存している\ `Spring Boot <https://docs.spring.io/spring-boot/docs/2.7.7/reference/htmlsingle/#dependency-versions>`__\ で管理されている。
+   上記の依存ライブラリはterasoluna-gfw-parentが依存している\ `Spring Boot <https://docs.spring.io/spring-boot/docs/2.7.18/reference/htmlsingle/#dependency-versions>`__\ で管理されている。
 
  .. note::
 
@@ -786,7 +786,7 @@ How to use
 
  .. note:: **業務ロジック内でJMSの例外ハンドリング**
 
-    \ `JMS (Java Message Service)のIntroduction <https://docs.spring.io/spring-framework/docs/5.3.24/javadoc-api/org/springframework/jms/core/JmsTemplate.html>`_\ で触れられているように、Spring Frameworkでは検査例外を非検査例外に変換している。
+    \ `JMS (Java Message Service)のIntroduction <https://docs.spring.io/spring-framework/docs/5.3.31/javadoc-api/org/springframework/jms/core/JmsTemplate.html>`_\ で触れられているように、Spring Frameworkでは検査例外を非検査例外に変換している。
     そのため、業務ロジック内でJMSの例外をハンドリングする場合は、非検査例外を扱う必要がある。
 
      .. tabularcolumns:: |p{0.20\linewidth}|p{0.60\linewidth}|p{0.20\linewidth}|
@@ -1139,7 +1139,7 @@ DBのトランザクション管理を行う必要があるアプリケーショ
       - xmlns:jms
       - | JMS Namespaceを定義する。
         | 値として\ ``http://www.springframework.org/schema/jms``\ を指定する。
-        | JMS Namespaceの詳細については、\ `Spring Framework Documentation -JMS Namespace Support- <https://docs.spring.io/spring-framework/docs/5.3.24/reference/html/integration.html#jms-namespace>`_\ を参照されたい。
+        | JMS Namespaceの詳細については、\ `Spring Framework Documentation -JMS Namespace Support- <https://docs.spring.io/spring-framework/docs/5.3.31/reference/html/integration.html#jms-namespace>`_\ を参照されたい。
     * -
       - xsi:schemaLocation
       - | スキーマのURLを指定する。
@@ -1156,12 +1156,12 @@ DBのトランザクション管理を行う必要があるアプリケーショ
         | \ ``<jms:listener-container/>``\ の属性には、利用したい\ ``ConnectionFactory``\ のBeanを指定できる\ ``connection-factory``\ 属性が存在する。\ ``connection-factory``\ 属性のデフォルト値は\ ``connectionFactory``\ である。
         | この例では、\ :ref:`JMSHowToUseConnectionFactory`\ で示した\ ``ConnectionFactory``\ のBean(Bean名は\ ``connectionFactory``\ )を利用するため、\ ``connection-factory``\ 属性を省略している。
         | \ ``<jms:listener-container/>``\ には、ここで紹介した以外の属性も存在する。
-        | 詳細については、\ `Spring Framework Documentation -Attributes of the JMS <listener-container> element- <https://docs.spring.io/spring-framework/docs/5.3.24/reference/html/integration.html#jms-namespace-listener-container-tbl>`_\ を参照されたい。
+        | 詳細については、\ `Spring Framework Documentation -Attributes of the JMS <listener-container> element- <https://docs.spring.io/spring-framework/docs/5.3.31/reference/html/integration.html#jms-namespace-listener-container-tbl>`_\ を参照されたい。
 
         .. warning::
 
             \ ``DefaultMessageListenerContainer``\ 内部には独自のキャッシュ機能が備わっている。一方で、APサーバ製品やMOM製品によって関連リソースをキャッシュする場合もある。両者の管理に不整合が生じないように\ ``cache``\ 属性でキャッシュレベルを指定すること。
-            詳細については、\ `DefaultMessageListenerContainerのJavadoc <https://docs.spring.io/spring-framework/docs/5.3.24/javadoc-api/org/springframework/jms/listener/DefaultMessageListenerContainer.html>`_\ を参照されたい。
+            詳細については、\ `DefaultMessageListenerContainerのJavadoc <https://docs.spring.io/spring-framework/docs/5.3.31/javadoc-api/org/springframework/jms/listener/DefaultMessageListenerContainer.html>`_\ を参照されたい。
             本ガイドラインでは、\ ``<jms:listener-container/>``\ の\ ``connection-factory``\ 属性には、\ :ref:`JMSHowToUseConnectionFactory`\ で定義した\ ``ConnectionFactory``\ を指定する。
 
     * -
@@ -1240,7 +1240,7 @@ DBのトランザクション管理を行う必要があるアプリケーショ
 
 
  \ ``@JmsListener``\ アノテーションの主な属性の一覧を以下に示す。
- 詳細やその他の属性については、\ `@JmsListenerアノテーションのJavadoc <https://docs.spring.io/spring-framework/docs/5.3.24/javadoc-api/org/springframework/jms/annotation/JmsListener.html#destination-->`_\ を参照されたい。
+ 詳細やその他の属性については、\ `@JmsListenerアノテーションのJavadoc <https://docs.spring.io/spring-framework/docs/5.3.31/javadoc-api/org/springframework/jms/annotation/JmsListener.html#destination-->`_\ を参照されたい。
 
 
  .. tabularcolumns:: |p{0.10\linewidth}|p{0.20\linewidth}|p{0.70\linewidth}|
@@ -1301,7 +1301,7 @@ DBのトランザクション管理を行う必要があるアプリケーショ
       - 説明
     * - | (1)
       - | 受信メッセージのヘッダ属性\ ``JMSReplyTo``\ の値を取得するために、\ ``@Header``\ アノテーションを指定する。
-        | JMSの標準ヘッダ属性を取得する場合に指定するキーの値については、\ `JmsHeadersの定数の定義 <https://docs.spring.io/spring-framework/docs/5.3.24/javadoc-api/constant-values.html#org.springframework.jms.support.JmsHeaders.CORRELATION_ID>`_\ を参照されたい。
+        | JMSの標準ヘッダ属性を取得する場合に指定するキーの値については、\ `JmsHeadersの定数の定義 <https://docs.spring.io/spring-framework/docs/5.3.31/javadoc-api/constant-values.html#org.springframework.jms.support.JmsHeaders.CORRELATION_ID>`_\ を参照されたい。
 
 
 .. _JMSHowToUseListenerContainerReSendMessage:
@@ -1408,7 +1408,7 @@ DBのトランザクション管理を行う必要があるアプリケーショ
          - | メッセージ送信するオブジェクトを返却する。
 
    ヘッダ属性\ ``JMSReplyTo``\ はConsumer側で指定したデフォルトのDestinationよりも優先される。
-   詳細については、\ `Spring Framework Documentation -Response Management- <https://docs.spring.io/spring-framework/docs/5.3.24/reference/html/integration.html#jms-annotated-response>`_\ を参照されたい。
+   詳細については、\ `Spring Framework Documentation -Response Management- <https://docs.spring.io/spring-framework/docs/5.3.31/reference/html/integration.html#jms-annotated-response>`_\ を参照されたい。
 
 
 .. _JMSHowToUseMessageSelectorForAsyncReceive:
@@ -2084,7 +2084,7 @@ DBトランザクション境界がJMSトランザクション境界の外側に
     * - 4.
       - \ ``sessionAcknowledgeMode``\
       - | \ ``sessionAcknowledgeMode``\ はセッションの確認応答モードを設定する。
-        | 詳細については\ `JmsTemplateのJavaDoc <https://docs.spring.io/spring-framework/docs/5.3.24/javadoc-api/org/springframework/jms/core/JmsTemplate.html>`_\ を参照されたい。
+        | 詳細については\ `JmsTemplateのJavaDoc <https://docs.spring.io/spring-framework/docs/5.3.31/javadoc-api/org/springframework/jms/core/JmsTemplate.html>`_\ を参照されたい。
       - \-
       - | 1
     * - 5.
@@ -2185,7 +2185,7 @@ Apache ActiveMQを利用する場合の設定について説明する。
   | JMSプロバイダによっては、固有の設定が必要な場合がある。
   | Apache ActiveMQでは、受信するメッセージのペイロードが許可されたオブジェクトで構成されていることを保障するために、環境変数をアプリケーションサーバの起動引数に追加する必要がある。
   | 詳細については、\ `ObjectMessage <https://activemq.apache.org/objectmessage.html>`_\ を参照されたい。
-  | 環境変数をApache Tomcatの起動引数に追加する例を以下に示す。JBoss Enterprise Application Platform 7.3の場合は\ `Configuring JBoss EAP to Run as a Service <https://access.redhat.com/documentation/en-us/red_hat_jboss_enterprise_application_platform/7.3/html/installation_guide/configuring_jboss_eap_to_run_as_a_service>`_\ を、JBoss Enterprise Application Platform 6.4の場合は\ `Service Configuration <https://access.redhat.com/documentation/en-us/red_hat_jboss_enterprise_application_platform/6.4/html/installation_guide/sect-service_configuration>`_\ を、Weblogicの場合は\ `Starting Managed Servers with a Startup Script <https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/12.2.1.4/start/overview.html#GUID-F619DA66-1822-4D4D-8E2E-A899ADB28B4F>`_\ を参照されたい。
+  | 環境変数をApache Tomcatの起動引数に追加する例を以下に示す。
 
   - :file:`$CATALINA_HOME/bin/setenv.sh`
 
@@ -2266,7 +2266,7 @@ Apache ActiveMQを利用する場合の設定について説明する。
  .. note::
 
    上記設定例は、依存ライブラリのバージョンを親プロジェクトである terasoluna-gfw-parent で管理する前提であるため、pom.xmlでのバージョンの指定は不要である。
-   上記の依存ライブラリはterasoluna-gfw-parentが依存している\ `Spring Boot <https://docs.spring.io/spring-boot/docs/2.7.7/reference/htmlsingle/#dependency-versions>`__\ で管理されている。
+   上記の依存ライブラリはterasoluna-gfw-parentが依存している\ `Spring Boot <https://docs.spring.io/spring-boot/docs/2.7.18/reference/htmlsingle/#dependency-versions>`__\ で管理されている。
 
 |
 

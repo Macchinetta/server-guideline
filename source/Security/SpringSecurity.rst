@@ -16,7 +16,7 @@ Spring Securityはスタンドアロンなアプリケーションでも利用�
 .. tip:: **ガイドラインで紹介していない機能**
 
     Spring Securityは、本ガイドラインで紹介していない機能も多く提供している。
-    Spring Securityが提供するすべての機能を知りたい場合は、\ `Spring Security Reference -Servlet Applications- <https://docs.spring.io/spring-security/reference/5.7.6/servlet/index.html>`_\ を参照されたい。
+    Spring Securityが提供するすべての機能を知りたい場合は、\ `Spring Security Reference -Servlet Applications- <https://docs.spring.io/spring-security/reference/5.7.11/servlet/index.html>`_\ を参照されたい。
 
 .. _SpringSecurityFunctionalities:
 
@@ -233,7 +233,7 @@ Spring Securityは、サーブレットフィルタの仕組みを使用してWe
 |
 
 Webアプリケーション向けのフレームワーク処理を構成する主要なコンポーネントは以下の通りである。
-詳細は \ `Spring Security Reference -Servlet Applications:Architecture- <https://docs.spring.io/spring-security/reference/5.7.6/servlet/architecture.html>`_\ を参照されたい。
+詳細は \ `Spring Security Reference -Servlet Applications:Architecture- <https://docs.spring.io/spring-security/reference/5.7.11/servlet/architecture.html>`_\ を参照されたい。
 
 
 FilterChainProxy
@@ -260,7 +260,7 @@ HttpFirewall
     URLの正規化は脆弱性対策としては不十分であるため、従来通り\ ``DefaultHttpFirewall``\ を利用するように変更することは推奨しない。
     また、\ ``StrictHttpFirewall``\ のチェックについても、一部カスタマイズ可能なパラメータも存在するが、脆弱性の原因となりうるため変更することは推奨しない。
     
-    \ ``StrictHttpFirewall``\ の詳細については、\ `Javadoc <https://docs.spring.io/spring-security/site/docs/5.7.6/api/org/springframework/security/web/firewall/StrictHttpFirewall.html>`_\ を参照されたい。
+    \ ``StrictHttpFirewall``\ の詳細については、\ `Javadoc <https://docs.spring.io/spring-security/site/docs/5.7.11/api/org/springframework/security/web/firewall/StrictHttpFirewall.html>`_\ を参照されたい。
 
 SecurityFilterChain
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -286,9 +286,9 @@ SecurityFilterChain
 
   web.xmlの\ ``<filter-mapping>``\ で業務要件に応じて\ ``REQUEST``\ + \ ``FORWARD``\ 等、ディスパッチ先でもFilterを動作させて認可処理を行う必要があるケースでは、web.xmlの\ ``<filter-mapping>/<dispatcher>``\ で\ `DispatcherType <https://jakarta.ee/specifications/platform/10/apidocs/jakarta/servlet/dispatchertype>`_\ を設定するだけではなく、spring-security.xmlで\ ``<sec:http>``\ タグの\ ``once-per-request``\ 属性を\ ``false``\ に設定する必要がある。\ ``once-per-request``\ 属性を設定しない場合、Spring Security 5.7.5のデフォルト設定では\ ``once-per-request``\ 属性が\ ``true``\ となっているため、リクエストがservletによってディスパッチされた先では認可処理が実施されず、ディスパッチ先がディスパッチ元よりも上位の権限を必要とする場合に認可処理がバイパスされてしまう。
   
-  この問題は、\ `AuthorizationFilter <https://docs.spring.io/spring-security/reference/5.7.5/servlet/authorization/authorize-http-requests.html>`_\ の脆弱性\ `CVE-2022-31692 <https://spring.io/security/cve-2022-31692>`_\で説明されている内容と同様の問題となるため、詳しくは\ `CVE-2022-31692 <https://spring.io/security/cve-2022-31692>`_\ を参照されたい。
+  この問題は、\ `AuthorizationFilter <https://docs.spring.io/spring-security/reference/5.7.11/servlet/authorization/authorize-http-requests.html>`_\ の脆弱性\ `CVE-2022-31692 <https://spring.io/security/cve-2022-31692>`_\で説明されている内容と同様の問題となるため、詳しくは\ `CVE-2022-31692 <https://spring.io/security/cve-2022-31692>`_\ を参照されたい。
  
-  上記のような認可処理のバイパスを防ぐため、\ `ブランクプロジェクトのデフォルト設定 <https://github.com/Macchinetta/macchinetta-web-multi-blank/tree/1.8.2.RELEASE/projectName-web/src/main/resources/META-INF/spring/spring-security.xml#L11>`_\ では、\ ``<sec:http>``\ タグの\ ``once-per-request``\ 属性を\ ``false``\ に設定している。
+  上記のような認可処理のバイパスを防ぐため、\ `ブランクプロジェクトのデフォルト設定 <https://github.com/Macchinetta/macchinetta-web-multi-blank/tree/1.8.3.RELEASE/projectName-web/src/main/resources/META-INF/spring/spring-security.xml#L11>`_\ では、\ ``<sec:http>``\ タグの\ ``once-per-request``\ 属性を\ ``false``\ に設定している。
   
   なお、ブランクプロジェクトのデフォルト設定では、web.xmlの\ ``<filter-mapping>/<dispatcher>``\ には明示的に設定を行っていないため、デフォルト設定である\ ``REQUEST``\ のみを対象として認可処理が実行される。業務要件に応じてweb.xmlの\ ``<filter-mapping>/<dispatcher>``\ で\ ``REQUEST``\ + \ ``FORWARD``\ 等、ディスパッチ先でもFilterが動作するように設定するように留意すること。なお、\ ``<filter-mapping>/<dispatcher>``\ を設定するとデフォルト設定の上書きになるため、\ ``REQUEST``\ も含めて動作することを期待する場合は \ ``REQUEST``\ も含めて設定する必要があることに注意すること。
 
@@ -312,14 +312,9 @@ Security Filterクラスは、フレームワーク機能やセキュリティ�
 
     * - クラス名
       - 説明
-    * - \ ``SecurityContextHolderFilter``\
+    * - \ ``SecurityContextPersistenceFilter``\
       - 認証情報についてリクエストを跨いで共有するための処理を提供するクラス。
-      
-        .. note:: 
-
-            `Spring Security Reference -Security Filters- <https://docs.spring.io/spring-security/reference/5.7/servlet/architecture.html#servlet-security-filters>`_\ には記載がないが、
-            Spring Security 5.7.0より非推奨となった\ ``SecurityContextPersistenceFilter``\の代替クラスである。
-
+        デフォルトの実装では、\ ``HttpSession``\ に認証情報を格納することで、リクエストをまたいで認証情報を共有している。
     * - \ ``UsernamePasswordAuthenticationFilter``\
       - リクエストパラメータで指定されたユーザー名とパスワードを使用して認証処理を行うクラス。
         \ ``HttpSessionSecurityContextRepository``\に認証情報を格納することで、リクエストをまたいで認証情報を共有している。
@@ -353,7 +348,7 @@ WebアプリケーションにSpring Securityを適用するためのセット�
 
 .. note::
 
-    開発プロジェクトを\ `ブランクプロジェクト <https://github.com/Macchinetta/macchinetta-web-multi-blank/tree/1.8.2.RELEASE>`_\ から作成すると、ここで説明する各設定はセットアップ済みの状態になっている。
+    開発プロジェクトを\ `ブランクプロジェクト <https://github.com/Macchinetta/macchinetta-web-multi-blank/tree/1.8.3.RELEASE>`_\ から作成すると、ここで説明する各設定はセットアップ済みの状態になっている。
     開発プロジェクトの作成方法については、「:doc:`../ImplementationAtEachLayer/CreateWebApplicationProject`」を参照されたい。
 
 |
@@ -407,7 +402,7 @@ Spring Securityと共通ライブラリの関連については、:ref:`framewor
 
 bean定義ファイルの作成
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-Spring Securityのコンポーネントをbean定義するため、以下のようなXMLファイルを作成する。（`ブランクプロジェクト <https://github.com/Macchinetta/macchinetta-web-multi-blank/tree/1.8.2.RELEASE>`_\より抜粋）
+Spring Securityのコンポーネントをbean定義するため、以下のようなXMLファイルを作成する。（`ブランクプロジェクト <https://github.com/Macchinetta/macchinetta-web-multi-blank/tree/1.8.3.RELEASE>`_\より抜粋）
 
 * xxx-web/src/main/resources/META-INF/spring/spring-security.xmlの定義例
 

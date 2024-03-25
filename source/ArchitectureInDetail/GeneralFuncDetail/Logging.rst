@@ -782,7 +782,7 @@ How to extend
        | 詳細は、\ :doc:`../../ArchitectureInDetail/WebApplicationDetail/MessageManagement`\ の\ :ref:`properties-display`\ を参照されたい。
    * - | (5)
      - | 国際化を考慮し\ ``setBasenames``\ メソッドを使用してプロパティファイルを指定する。
-       | \ ``setBasenames``\ の詳細は\ ``ResourceBundleMessageSource``\ が継承する\ ``AbstractResourceBasedMessageSource``\ クラスの\ `JavaDoc <https://docs.spring.io/spring-framework/docs/5.3.24/javadoc-api/org/springframework/context/support/AbstractResourceBasedMessageSource.html#setBasenames-java.lang.String...->`_\を参照されたい。
+       | \ ``setBasenames``\ の詳細は\ ``ResourceBundleMessageSource``\ が継承する\ ``AbstractResourceBasedMessageSource``\ クラスの\ `JavaDoc <https://docs.spring.io/spring-framework/docs/5.3.31/javadoc-api/org/springframework/context/support/AbstractResourceBasedMessageSource.html#setBasenames-java.lang.String...->`_\を参照されたい。
    * - | (6)
      - | Loggerラッパークラスにおいても、SLF4Jを使用する。ロギングライブラリの実装を直接使用しない。
    * - | (7)
@@ -1231,7 +1231,7 @@ logback.xmlの\ ``<pattern>``\ に\ ``%X{X-Track}``\ および、\ ``%X{USER}``\
 
     date:2013-09-06 23:05:22  thread:tomcat-http--3   USER:   X-Track:97988cc077f94f9d9d435f6f76027428    level:DEBUG logger:o.t.g.w.logging.HttpSessionEventLoggingListener  message:SESSIONID#D7AD1D42D3E77D61DB64E7C8C65CB488 sessionCreated : org.apache.catalina.session.StandardSessionFacade@e51960
     date:2013-09-06 23:05:22  thread:tomcat-http--3   USER:anonymousUser  X-Track:97988cc077f94f9d9d435f6f76027428    logger:o.t.gfw.web.logging.TraceLoggingInterceptor      message:[START CONTROLLER] HomeController.home(Locale,Model)
-    date:2013-09-06 23:05:22  thread:tomcat-http--3   USER:anonymousUser  X-Track:97988cc077f94f9d9d435f6f76027428    level:INFO  logger:c.terasoluna.logging.app.welcome.HomeController  message:Welcome home! The client locale is ja.
+    date:2013-09-06 23:05:22  thread:tomcat-http--3   USER:anonymousUser  X-Track:97988cc077f94f9d9d435f6f76027428    level:INFO  logger:macchinetta.logging.app.welcome.HomeController  message:Welcome home! The client locale is ja.
     date:2013-09-06 23:05:22  thread:tomcat-http--3   USER:anonymousUser  X-Track:97988cc077f94f9d9d435f6f76027428    logger:o.t.gfw.web.logging.TraceLoggingInterceptor      message:[END CONTROLLER  ] HomeController.home(Locale,Model)-> view=home, model={serverTime=2013/09/06 23:05:22 JST}
     date:2013-09-06 23:05:22  thread:tomcat-http--3   USER:anonymousUser  X-Track:97988cc077f94f9d9d435f6f76027428    logger:o.t.gfw.web.logging.TraceLoggingInterceptor      message:[HANDLING TIME   ] HomeController.home(Locale,Model)-> 36,508,860 ns
 

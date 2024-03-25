@@ -363,7 +363,7 @@ How to use
         * :ref:`DataAccessMyBatis3HowToUseSettingsCooperateWithMyBatis3AndSpring`
         * :ref:`DataAccessMyBatis3HowToUseSettingsMyBatis3`
         
-        `ブランクプロジェクト <https://github.com/Macchinetta/macchinetta-web-multi-blank/tree/1.8.2.RELEASE#multi-blank-project>`_ \ からプロジェクトを生成した場合は、
+        `ブランクプロジェクト <https://github.com/Macchinetta/macchinetta-web-multi-blank/tree/1.8.3.RELEASE#multi-blank-project>`_ \ からプロジェクトを生成した場合は、
         上記で説明している設定の多くが既に設定済みの状態となっているため、アプリケーションアーキテクトは、
         プロジェクト特性を判断し、必要に応じて設定の追加及び変更を行うことになる。
 
@@ -395,7 +395,7 @@ pom.xmlの設定
 | インフラストラクチャ層にMyBatis3を使用する場合は、\ :file:`pom.xml`\にterasoluna-gfw-mybatis3-dependenciesへの依存関係を追加する。
 | マルチプロジェクト構成の場合は、domainプロジェクトの\ :file:`pom.xml`\(:file:`projectName-domain/pom.xml`)に追加する。
 
-`ブランクプロジェクト <https://github.com/Macchinetta/macchinetta-web-multi-blank/tree/1.8.2.RELEASE#multi-blank-project>`_ \ からプロジェクトを生成した場合は、terasoluna-gfw-mybatis3-dependenciesへの依存関係は、設定済みの状態である。
+`ブランクプロジェクト <https://github.com/Macchinetta/macchinetta-web-multi-blank/tree/1.8.3.RELEASE#multi-blank-project>`_ \ からプロジェクトを生成した場合は、terasoluna-gfw-mybatis3-dependenciesへの依存関係は、設定済みの状態である。
 
  .. code-block:: xml
     :emphasize-lines: 22-27
@@ -465,7 +465,7 @@ MyBatis3とSpringを連携するための設定
 
 MyBatis3とSpringを連携する場合、データソースはSpringのDIコンテナで管理しているデータソースを使用する必要がある。
 
-`ブランクプロジェクト <https://github.com/Macchinetta/macchinetta-web-multi-blank/tree/1.8.2.RELEASE#multi-blank-project>`_ \ からプロジェクトを生成した場合は、Apache Commons DBCPのデータソースが設定済みの状態であるため、
+`ブランクプロジェクト <https://github.com/Macchinetta/macchinetta-web-multi-blank/tree/1.8.3.RELEASE#multi-blank-project>`_ \ からプロジェクトを生成した場合は、Apache Commons DBCPのデータソースが設定済みの状態であるため、
 プロジェクトの要件に合わせて設定を変更すること。
 
 データソースの設定方法については、共通編の「\ :ref:`data-access-common_howtouse_datasource` \」を参照されたい。
@@ -482,7 +482,7 @@ MyBatis3とSpringを連携する場合、データソースはSpringのDIコン�
 
 ローカルトランザクションを使用する場合は、JDBCのAPIを呼び出してトランザクション制御を行う\ ``DataSourceTransactionManager`` \を使用する。
 
-`ブランクプロジェクト <https://github.com/Macchinetta/macchinetta-web-multi-blank/tree/1.8.2.RELEASE#multi-blank-project>`_ \ からプロジェクトを生成した場合は、\ ``DataSourceTransactionManager`` \が設定済みの状態である。
+`ブランクプロジェクト <https://github.com/Macchinetta/macchinetta-web-multi-blank/tree/1.8.3.RELEASE#multi-blank-project>`_ \ からプロジェクトを生成した場合は、\ ``DataSourceTransactionManager`` \が設定済みの状態である。
 
 設定例は以下の通り。
 
@@ -545,54 +545,6 @@ MyBatis3とSpringを連携する場合、データソースはSpringのDIコン�
     \ ``transactionManager`` \以外の値を指定すると、
     \ ``<tx:annotation-driven>`` \タグのtransaction-manager属性に同じ値を設定する必要がある。
     
-
-|
-
-アプリケーションサーバから提供されているトランザクションマネージャを使用する場合は、JTAのAPIを呼び出してトランザクション制御を行う
-\ ``org.springframework.transaction.jta.JtaTransactionManager`` \を使用する。
-
-設定例は以下の通り。
-
-- :file:`projectName-env/src/main/resources/META-INF/spring/projectName-env.xml`
-
- .. code-block:: xml
-    :emphasize-lines: 6,13-14,18-19
-
-    <?xml version="1.0" encoding="UTF-8"?>
-    <beans xmlns="http://www.springframework.org/schema/beans"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xmlns:jee="http://www.springframework.org/schema/jee"
-        xmlns:jdbc="http://www.springframework.org/schema/jdbc"
-        xmlns:tx="http://www.springframework.org/schema/tx"
-        xsi:schemaLocation="http://www.springframework.org/schema/jdbc
-            https://www.springframework.org/schema/jdbc/spring-jdbc.xsd
-            http://www.springframework.org/schema/jee
-            https://www.springframework.org/schema/jee/spring-jee.xsd
-            http://www.springframework.org/schema/beans
-            https://www.springframework.org/schema/beans/spring-beans.xsd
-            http://www.springframework.org/schema/tx
-            https://www.springframework.org/schema/tx/spring-tx.xsd">
-
-        <!-- omitted -->
-
-        <!-- (1) -->
-        <tx:jta-transaction-manager />
-
-        <!-- omitted -->
-
-    </beans>
-
- .. tabularcolumns:: |p{0.10\linewidth}|p{0.80\linewidth}|
- .. list-table::
-    :header-rows: 1
-    :widths: 10 80
-
-    * - 項番
-      - 説明
-    * - (1)
-      - \ ``<tx:jta-transaction-manager />`` \を指定すると、
-        アプリケーションサーバに対して最適な \ ``JtaTransactionManager`` \がbean定義される。
-
 |
 
 .. _DataAccessMyBatis3HowToUseSettingsMyBatis-Spring:
@@ -607,7 +559,7 @@ MyBatis3とSpringを連携する場合、MyBatis-Springのコンポーネント�
 
 を行う必要がある。
 
-`ブランクプロジェクト <https://github.com/Macchinetta/macchinetta-web-multi-blank/tree/1.8.2.RELEASE#multi-blank-project>`_ \ からプロジェクトを生成した場合は、MyBatis3とSpringを連携するための設定は、
+`ブランクプロジェクト <https://github.com/Macchinetta/macchinetta-web-multi-blank/tree/1.8.3.RELEASE#multi-blank-project>`_ \ からプロジェクトを生成した場合は、MyBatis3とSpringを連携するための設定は、
 設定済みの状態である。
 
 設定例は以下の通り。
@@ -697,7 +649,7 @@ MyBatis3の設定
     本ガイドラインでは、MyBatis設定ファイルは、
     \ :file:`projectName-domain/src/main/resources/META-INF/mybatis/mybatis-config.xml`\ に格納することを推奨している。
 
-    `ブランクプロジェクト <https://github.com/Macchinetta/macchinetta-web-multi-blank/tree/1.8.2.RELEASE#multi-blank-project>`_ \ からプロジェクトを生成した場合は、上記ファイルは格納済みの状態である。
+    `ブランクプロジェクト <https://github.com/Macchinetta/macchinetta-web-multi-blank/tree/1.8.3.RELEASE#multi-blank-project>`_ \ からプロジェクトを生成した場合は、上記ファイルは格納済みの状態である。
 
 |
 
@@ -788,7 +740,7 @@ MyBatis3では、SQLを実行するモードとして以下の3種類を用意�
       - SIMPLE
       - SQL実行毎に新しい\ ``java.sql.PreparedStatement``\を作成する。
 
-        MyBatisのデフォルトの動作であり、`ブランクプロジェクト <https://github.com/Macchinetta/macchinetta-web-multi-blank/tree/1.8.2.RELEASE#multi-blank-project>`_ \ も\ ``SIMPLE``\モードとなっている。
+        MyBatisのデフォルトの動作であり、`ブランクプロジェクト <https://github.com/Macchinetta/macchinetta-web-multi-blank/tree/1.8.3.RELEASE#multi-blank-project>`_ \ も\ ``SIMPLE``\モードとなっている。
     * - (2)
       - REUSE
       - ``PreparedStatement``\をキャッシュし再利用する。
@@ -828,7 +780,7 @@ Javaクラスの完全修飾クラス名(FQCN)を指定する必要があるた�
 
 本ガイドラインでは、記述効率の向上、記述ミスの削減、マッピングファイルの可読性向上などを目的として、TypeAliasを使用することを推奨する。
 
-`ブランクプロジェクト <https://github.com/Macchinetta/macchinetta-web-multi-blank/tree/1.8.2.RELEASE#multi-blank-project>`_ \ からプロジェクトを生成した場合は、
+`ブランクプロジェクト <https://github.com/Macchinetta/macchinetta-web-multi-blank/tree/1.8.3.RELEASE#multi-blank-project>`_ \ からプロジェクトを生成した場合は、
 Entityを格納するパッケージ(\ ``${projectPackage}.domain.model``\)配下に格納されるクラスがTypeAliasの対象となっている。
 必要に応じて、設定を追加されたい。
 
@@ -3316,10 +3268,10 @@ JDBCのバッチ更新機能を使用する方法については、「:ref:`Data
     一括登録するためのSQLは、データベースやバージョンによりサポート状況や文法が異なる。
     以下に主要なデータベースのリファレンスページへのリンクを記載しておく。
 
-    * `Oracle 19c <https://docs.oracle.com/en/database/oracle/oracle-database/19/sqlrf/GRANT.html>`_
+    * `Oracle 21c <https://docs.oracle.com/en/database/oracle/oracle-database/21/sqlrf/GRANT.html#GUID-20B4E2C0-A7F8-4BC8-A5E8-BE61BDC41AC3>`_
     * `DB2 11.5 <https://www.ibm.com/docs/en/db2/11.5?topic=statements-insert>`_
-    * `PostgreSQL 13 <https://www.postgresql.org/docs/13/sql-insert.html>`_
-    * `MySQL 8.0 <https://dev.mysql.com/doc/refman/8.0/en/insert.html>`_
+    * `PostgreSQL 15 <https://www.postgresql.org/docs/15/sql-insert.html>`_
+    * `MySQL 8.3 <https://dev.mysql.com/doc/refman/8.3/en/insert.html>`_
 
 |
 
@@ -5682,7 +5634,7 @@ RepositoryのBean定義を行えばよい。
 
 バッチモードを使用する場合、Mapperインタフェースのメソッドから返却される更新結果は、
 
-* 返り値が数値(\ ``int``\や\ ``long``\)の場合は、\ `固定値 <https://mybatis.org/mybatis-3/apidocs/reference/org/apache/ibatis/executor/BatchExecutor.html#BATCH_UPDATE_RETURN_VALUE>`_\ (\ ``org.apache.ibatis.executor.BatchExecutor#BATCH_UPDATE_RETURN_VALUE``\ )
+* 返り値が数値(\ ``int``\や\ ``long``\)の場合は、\ `固定値 <https://mybatis.org/mybatis-3/apidocs/org/apache/ibatis/executor/BatchExecutor.html#BATCH_UPDATE_RETURN_VALUE>`_\ (\ ``org.apache.ibatis.executor.BatchExecutor#BATCH_UPDATE_RETURN_VALUE``\ )
 * 返り値が\ ``boolean``\の場合は、\ ``false``\
 
 が返却される。

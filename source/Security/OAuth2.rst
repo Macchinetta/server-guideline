@@ -16,7 +16,7 @@ Overview
 
 .. tip:: \ **Spring Security が提供するOAuth 2.0のリファレンス**\
 
-  Spring Security が提供するOAuth 2.0は、本ガイドラインで紹介していない機能も提供している。Spring Security が提供するOAuth 2.0について詳しく知りたい場合は、\ `OAuth2 <https://docs.spring.io/spring-security/reference/5.7.6/servlet/oauth2/index.html>`__\ を参照されたい。
+  Spring Security が提供するOAuth 2.0は、本ガイドラインで紹介していない機能も提供している。Spring Security が提供するOAuth 2.0について詳しく知りたい場合は、\ `OAuth2 <https://docs.spring.io/spring-security/reference/5.7.11/servlet/oauth2/index.html>`__\ を参照されたい。
 
 |
 
@@ -600,7 +600,7 @@ Spring Securityでは、アクセストークンが付与されていないリ�
           
         \ ``AuthenticationManager``\ はリソースサーバの構成によって、JWT認証、Opaqueトークン認証のどちらかの処理が行われる。本ガイドラインではJWT認証を用いた認証方法で説明を行う。
              
-        それぞれの認証方法の詳細は\ `JWT <https://docs.spring.io/spring-security/reference/5.7.6/servlet/oauth2/resource-server/jwt.html>`_\ 及び\ `Opaqueトークン <https://docs.spring.io/spring-security/reference/5.7.6/servlet/oauth2/resource-server/opaque-token.html>`_\ を参照されたい。
+        それぞれの認証方法の詳細は\ `JWT <https://docs.spring.io/spring-security/reference/5.7.11/servlet/oauth2/resource-server/jwt.html>`_\ 及び\ `Opaqueトークン <https://docs.spring.io/spring-security/reference/5.7.11/servlet/oauth2/resource-server/opaque-token.html>`_\ を参照されたい。
         
   * - | (4)
     - | (3)の検証結果より、クライアントから受け取ったアクセストークンでの認証が成功した場合、認証情報を\ ``SecurityContextHolder``\ に保存する。
@@ -641,7 +641,7 @@ Spring Securityは、アクセストークンを取得してリソースサー�
   * - 項番
     - 説明
   * - | (1)
-    - | ユーザエージェントがクライアントのServiceの呼び出しが行われるよう、\ `Security Filter <https://docs.spring.io/spring-security/reference/5.7.6/servlet/architecture.html#servlet-security-filters>`_\ の処理を実施後にControllerへアクセスする。
+    - | ユーザエージェントがクライアントのServiceの呼び出しが行われるよう、\ `Security Filter <https://docs.spring.io/spring-security/reference/5.7.11/servlet/architecture.html#servlet-security-filters>`_\ の処理を実施後にControllerへアクセスする。
   * - | (2)
     - | Serviceより\ ``OAuth2AuthorizedClientManager``\ を呼び出し、\ ``OAuth2AuthorizedClient``\ を要求する。
   * - | (3)
@@ -680,7 +680,7 @@ Spring Securityは、アクセストークンを取得してリソースサー�
   * - 項番
     - 説明
   * - | (1)
-    - | ユーザエージェントがクライアントのServiceの呼び出しが行われるよう、\ `Security Filter <https://docs.spring.io/spring-security/reference/5.7.6/servlet/architecture.html#servlet-security-filters>`_\ の処理を実施後にControllerへアクセスする。
+    - | ユーザエージェントがクライアントのServiceの呼び出しが行われるよう、\ `Security Filter <https://docs.spring.io/spring-security/reference/5.7.11/servlet/architecture.html#servlet-security-filters>`_\ の処理を実施後にControllerへアクセスする。
   * - | (2)
     - | Serviceより\ ``OAuth2AuthorizedClientManager``\ を呼び出し、\ ``OAuth2AuthorizedClient``\ を要求する。
   * - | (3)
@@ -988,7 +988,7 @@ Spring Security のOAuth2.0クライアント機能を使用するため、\ ``p
 
     本ガイドラインではOAuth 2.0 クライアント機能をデフォルトの状態で使用している。\ ``OAuth2AuthorizedClient``\ を管理するための\ ``ClientRegistrationRepository``\ 及び\ ``OAuth2AuthorizedClientRepository``\ が自動的にBean定義されるが、要件に応じ適切にカスタマイズされたい。
   
-    カスタマイズ可能な構成オプションについては\ `OAuth 2.0 Client <https://docs.spring.io/spring-security/reference/5.7.6/servlet/oauth2/client/index.html>`_\ を参照されたい。
+    カスタマイズ可能な構成オプションについては\ `OAuth 2.0 Client <https://docs.spring.io/spring-security/reference/5.7.11/servlet/oauth2/client/index.html>`_\ を参照されたい。
 
 |
 
@@ -1105,7 +1105,7 @@ Spring Security のOAuth2.0クライアント機能を使用するため、\ ``p
 
           URIテンプレートを使用することで、展開時に\ ``X-Forwarded-*``\ ヘッダが使用される。これにより、User agentとクライアントがProxy Serverを経由して通信している場合であっても、クライアント側のURIを取得することが可能となる。
 
-          詳しくは、\ `Initiating the Authorization Request <https://docs.spring.io/spring-security/reference/5.7.6/reactive/oauth2/client/authorization-grants.html#_initiating_the_authorization_request>`_\ を参照されたい。
+          詳しくは、\ `Initiating the Authorization Request <https://docs.spring.io/spring-security/reference/5.7.11/reactive/oauth2/client/authorization-grants.html#_initiating_the_authorization_request>`_\ を参照されたい。
             
         .. note::
 
@@ -1143,7 +1143,7 @@ OAuth2AuthorizedClientManagerの実装
 ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 
 | \ ``OAuth2AuthorizedClient``\ を管理するための、\ ``OAuth2AuthorizedClientManager``\ をBean定義する。
-| \ ``OAuth2AuthorizedClientManager``\ が管理する内容及び処理については\ `OAuth2AuthorizedClientManager/OAuth2AuthorizedClientProvider <https://docs.spring.io/spring-security/reference/5.7.6/servlet/oauth2/client/core.html#oauth2Client-authorized-manager-provider>`_\ を参照されたい。
+| \ ``OAuth2AuthorizedClientManager``\ が管理する内容及び処理については\ `OAuth2AuthorizedClientManager/OAuth2AuthorizedClientProvider <https://docs.spring.io/spring-security/reference/5.7.11/servlet/oauth2/client/core.html#oauth2Client-authorized-manager-provider>`_\ を参照されたい。
 
 以下にJavaConfigクラスを用いたBean定義の実装例を示す。
 
@@ -1151,7 +1151,7 @@ OAuth2AuthorizedClientManagerの実装
 
   本ガイドラインのBean定義は基本的にXML-based configurationを用いているが、\ ``OAuth2AuthorizedClientManager``\ のBean定義に関してはJava-based configurationを用いている。
   
-  \ ``OAuth2AuthorizedClientManager``\ に設定する\ ``OAuth2AuthorizedClientProvider``\ がBuilderパターンを使用していることに加え、Spring Securityが\ ``OAuth2AuthorizedClientManager``\ に対するXML DLSを提供していないため、\ `OAuth2AuthorizedClientManager/OAuth2AuthorizedClientProvider <https://docs.spring.io/spring-security/reference/5.7.6/servlet/oauth2/client/core.html#oauth2Client-authorized-manager-provider>`_\ の実装例に従いJava-based configurationで実装している。Java-based configurationで定義するクラスは、コンポーネントスキャンが有効となるパッケージ配下に配置されたい。詳しくは\ `Java-based configuration <https://docs.spring.io/spring-framework/docs/5.3.24/reference/html/core.html#beans-java>`_\ を参照されたい。
+  \ ``OAuth2AuthorizedClientManager``\ に設定する\ ``OAuth2AuthorizedClientProvider``\ がBuilderパターンを使用していることに加え、Spring Securityが\ ``OAuth2AuthorizedClientManager``\ に対するXML DLSを提供していないため、\ `OAuth2AuthorizedClientManager/OAuth2AuthorizedClientProvider <https://docs.spring.io/spring-security/reference/5.7.11/servlet/oauth2/client/core.html#oauth2Client-authorized-manager-provider>`_\ の実装例に従いJava-based configurationで実装している。Java-based configurationで定義するクラスは、コンポーネントスキャンが有効となるパッケージ配下に配置されたい。詳しくは\ `Java-based configuration <https://docs.spring.io/spring-framework/docs/5.3.31/reference/html/core.html#beans-java>`_\ を参照されたい。
 
 * \ ``SecurityConfig.java``\
 

@@ -553,7 +553,7 @@ Repositoryインタフェースのメソッド定義
 
  .. note::
 
-     Macchinetta Server Framework 1.8.2.RELEASEが利用するSpring Data 2.xでは\ ``CrudRepository``\ 等のメソッドシグネチャが変更されているが、
+     Macchinetta Server Framework 1.8.3.RELEASEが利用するSpring Data 2.xでは\ ``CrudRepository``\ 等のメソッドシグネチャが変更されているが、
      本章で示すメソッド名のルールはSpring Data 1.xのメソッドシグネチャに従っている。
 
      次版以降で、Spring Data 2.xのメソッドシグネチャへの移行が検討される予定である。
@@ -1244,7 +1244,7 @@ Serviceクラスを作成する際の注意点を、以下に示す。
 
     #. AOPを使う場合に、JDK標準のDynamic proxies機能が使われる。
        インタフェースがない場合はSpring Frameworkに内包されているCGLIBが使われるが、finalメソッドに対してAdviceできないなどの制約がある。
-       詳細は、\ `Spring Framework Documentation -Proxying Mechanisms- <https://docs.spring.io/spring-framework/docs/5.3.24/reference/html/core.html#aop-proxying>`_\ を参照されたい。
+       詳細は、\ `Spring Framework Documentation -Proxying Mechanisms- <https://docs.spring.io/spring-framework/docs/5.3.31/reference/html/core.html#aop-proxying>`_\ を参照されたい。
     #. 業務ロジックをスタブ化しやすくなる。
        アプリケーション層とドメイン層を別々の体制で並行して開発する場合は、アプリケーション層を開発するために、Serviceのスタブが必要になるケースがある。
        スタブを作成する必要がある場合は、インタフェースを設けておくことを推奨する。
@@ -1718,7 +1718,7 @@ ServiceおよびSharedServiceでは、アプリケーションで使用する業
 * XML(bean定義ファイル)で宣言する。
 * **アノテーション（@Transactional）で宣言する。（推奨）**
 
-Spring Frameworkから提供されている「宣言型トランザクション管理」の詳細については、\ `Spring Framework Documentation -Declarative transaction management- <https://docs.spring.io/spring-framework/docs/5.3.24/reference/html/data-access.html#transaction-declarative>`_\ を参照されたい。
+Spring Frameworkから提供されている「宣言型トランザクション管理」の詳細については、\ `Spring Framework Documentation -Declarative transaction management- <https://docs.spring.io/spring-framework/docs/5.3.31/reference/html/data-access.html#transaction-declarative>`_\ を参照されたい。
 \
 
  .. note:: **「アノテーションで指定する」方法を推奨する理由**
@@ -1834,7 +1834,7 @@ Spring Frameworkから提供されている「宣言型トランザクション�
 
     **クラスまたはクラスのメソッドに指定することを推奨する。**
     インタフェースまたはインタフェースのメソッドでない点が、ポイント。
-    理由は、\ `Spring Framework Documentation -Using @Transactional- <https://docs.spring.io/spring-framework/docs/5.3.24/reference/html/data-access.html#transaction-declarative-annotations>`_\ の2個目のTipsを参照されたい。
+    理由は、\ `Spring Framework Documentation -Using @Transactional- <https://docs.spring.io/spring-framework/docs/5.3.31/reference/html/data-access.html#transaction-declarative-annotations>`_\ の2個目のTipsを参照されたい。
 
  .. warning:: **例外発生時のrollbackとcommitのデフォルト動作**
 
@@ -1847,7 +1847,7 @@ Spring Frameworkから提供されている「宣言型トランザクション�
 
     \ ``@Transactional``\ アノテーションにはvalue属性があるが、これは複数のTransaction Managerを宣言した際に、どのTransaction Managerを使うのかを指定する属性である。
     Transaction Managerが一つの場合、指定は不要である。
-    複数のTransaction Managerを使う必要がある場合は、\ `Spring Framework Documentation -Multiple Transaction Managers with @Transactional- <https://docs.spring.io/spring-framework/docs/5.3.24/reference/html/data-access.html#tx-multiple-tx-mgrs-with-attransactional>`_\ を参照されたい。
+    複数のTransaction Managerを使う必要がある場合は、\ `Spring Framework Documentation -Multiple Transaction Managers with @Transactional- <https://docs.spring.io/spring-framework/docs/5.3.31/reference/html/data-access.html#tx-multiple-tx-mgrs-with-attransactional>`_\ を参照されたい。
 
  .. note:: **主要DBのisolationのデフォルトについて**
 
@@ -1986,14 +1986,6 @@ PlatformTransactionManagerの設定
       - | 用途にあった\ ``PlatformTransactionManager``\ の実装クラスを指定する。
         | idは「transactionManager」としておくことを推奨する。
 
-\
-
- .. note:: **複数DB（複数リソース）に対するトランザクション管理（グローバルトランザクションの管理）が必要な場合**
-
-     * \ ``org.springframework.transaction.jta.JtaTransactionManager``\ を利用し、アプリケーションサーバから提供されているJTAの機能を使って、トランザクション管理を行う必要がある。
-     * WebSphere、Oracle WebLogic ServerでJTAを使う場合、<tx:jta-transaction-manager/> を指定することで、
-       アプリケーションサーバ用に拡張された\ ``JtaTransactionManager``\ が、自動的で設定される。
-
  .. tabularcolumns:: |p{0.10\linewidth}|p{0.35\linewidth}|p{0.55\linewidth}|
  .. list-table:: **Spring Frameworkから提供されているPlatformTransactionManagerの実装クラス**
     :header-rows: 1
@@ -2012,12 +2004,6 @@ PlatformTransactionManagerの設定
         | JpaTransactionManager
       - | JPA(\ ``javax.persistence.EntityTransaction``\ )のAPIを呼び出して、トランザクションを管理するための実装クラス。
         | JPAを使う場合は、本クラスを使用する。
-    * - 3.
-      - | org.springframework.transaction.jta.
-        | JtaTransactionManager
-      - | JTA(\ ``javax.transaction.UserTransaction``\ )のAPIを呼び出してトランザクションを管理するための実装クラス。
-        | アプリケーションサーバから提供されているJTS(Java Transaction Service)を利用して、リソース(データベース/メッセージングサービス/汎用EIS(Enterprise Information System)など)とのトランザクションを管理する場合は、本クラスを使用する。
-        | 複数のリソースに対する操作を同一トランザクションで行う必要がある場合は、JTAを利用して、リソースとのトランザクションを管理する必要がある。
 
 @Transactionalを有効化するための設定
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -2061,7 +2047,7 @@ PlatformTransactionManagerの設定
  .. note:: **プログラマティックにトランザクションを管理する方法**
 
     本ガイドラインでは、「宣言型トランザクション管理」を推奨しているが、プログラマティックにトランザクションを管理することもできる。
-    詳細については、\ `Spring Framework Documentation -Programmatic Transaction Management- <https://docs.spring.io/spring-framework/docs/5.3.24/reference/html/data-access.html#transaction-programmatic>`_\ を参照されたい。
+    詳細については、\ `Spring Framework Documentation -Programmatic Transaction Management- <https://docs.spring.io/spring-framework/docs/5.3.31/reference/html/data-access.html#transaction-programmatic>`_\ を参照されたい。
 
 
 <tx:annotation-driven>要素の属性について

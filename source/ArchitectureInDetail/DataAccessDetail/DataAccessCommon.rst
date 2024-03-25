@@ -58,30 +58,6 @@ JDBC DataSourceについて
       - Apache Tomcat 9.0
       - | \ `Apache Tomcat 9.0 User Guide(The Tomcat JDBC Connection Pool) <https://tomcat.apache.org/tomcat-9.0-doc/jdbc-pool.html>`_\ を参照されたい。
         | \ `Apache Tomcat 9.0 User Guide(JNDI Datasource HOW-TO) <https://tomcat.apache.org/tomcat-9.0-doc/jndi-datasource-examples-howto.html>`_\ (Apache Commons DBCP 2)を参照されたい。
-    * - 2.
-      - Apache Tomcat 8.5
-      - | \ `Apache Tomcat 8.5 User Guide(The Tomcat JDBC Connection Pool) <https://tomcat.apache.org/tomcat-8.5-doc/jdbc-pool.html>`_\ を参照されたい。
-        | \ `Apache Tomcat 8.5 User Guide(JNDI Datasource HOW-TO) <https://tomcat.apache.org/tomcat-8.5-doc/jndi-datasource-examples-howto.html>`_\ (Apache Commons DBCP 2)を参照されたい。
-    * - 3.
-      - Apache Tomcat 7
-      - | \ `Apache Tomcat 7 User Guide(The Tomcat JDBC Connection Pool) <https://tomcat.apache.org/tomcat-7.0-doc/jdbc-pool.html>`_\ を参照されたい。
-        | \ `Apache Tomcat 7 User Guide(JNDI Datasource HOW-TO) <https://tomcat.apache.org/tomcat-7.0-doc/jndi-datasource-examples-howto.html>`_\ (Apache Commons DBCP)を参照されたい。
-    * - 4.
-      - Oracle WebLogic Server 12c
-      - \ `Oracle WebLogic Server 12.2.1.4 Documentation <https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/12.2.1.4/intro/jdbc.html#GUID-9FD5F552-B2E4-4FEC-8C10-503A08764B52>`_\ を参照されたい。
-    * - 5.
-      - Oracle WebLogic Server 14c
-      - \ `Oracle WebLogic Server 14.1.1.0 Documentation <https://docs.oracle.com/en/middleware/standalone/weblogic-server/14.1.1.0/intro/jdbc.html#GUID-9FD5F552-B2E4-4FEC-8C10-503A08764B52>`_\ を参照されたい。
-    * - 6.
-      - IBM WebSphere Application Server Version 9.0
-      - \ `WebSphere Application Server Online information center <https://www.ibm.com/docs/ja/was/9.0.5?topic=SSEQTP_9.0.5/com.ibm.websphere.wlp.doc/ae/twlp_dep_configuring_ds.html>`_\ を参照されたい。
-    * - 7.
-      - JBoss Enterprise Application Platform 7.3
-      - \ `JBoss Enterprise Application Platform 7.3 Product Documentation <https://access.redhat.com/documentation/en-us/red_hat_jboss_enterprise_application_platform/7.3/html/configuration_guide/datasource_management>`_\ を参照されたい。
-    * - 8.
-      - JBoss Enterprise Application Platform 6.4
-      - \ `JBoss Enterprise Application Platform 6.4 Product Documentation <https://access.redhat.com/documentation/en-us/red_hat_jboss_enterprise_application_platform/6.4/html/administration_and_configuration_guide/chap-datasource_management>`_\ を参照されたい。
-
 
 .. _datasource_oss_thirdparty-label:
 
@@ -100,7 +76,7 @@ OSS/Third-Partyライブラリ提供のJDBCデータソース
       - 説明
     * - 1.
       - Apache Commons DBCP
-      - \ `Apache Commons DBCP <https://commons.apache.org/proper/commons-dbcp/index.html>`_\ を参照されたい。
+      - \ `Apache Commons DBCP <https://commons.apache.org/proper/commons-dbcp/>`_\ を参照されたい。
 
 
 .. _datasource_spring_framework-label:
@@ -251,7 +227,7 @@ How to use
        type="javax.sql.DataSource"
        name="jdbc/SampleDataSource"
        driverClassName="org.postgresql.Driver"
-       url="jdbc:postgresql://localhost:5432/terasoluna"
+       url="jdbc:postgresql://localhost:5432/macchinetta"
        username="postgres"
        password="postgres"
        defaultAutoCommit="false"
@@ -297,8 +273,8 @@ How to use
       - 自動コミットフラグのデフォルト値を指定する。falseを指定する。トランザクション管理下であれば強制的にfalseになる。
     * - | (2)
       - \-
-      - | Tomcat9の場合、factory属性を省略するとtomcat-jdbc-poolが使用される。
-        | 設定項目の詳細については、\ `Attributes of The Tomcat JDBC Connection Pool <https://tomcat.apache.org/tomcat-9.0-doc/jdbc-pool.html#Attributes>`_\ を参照されたい。
+      - | Tomcat9の場合、factory属性を省略すると\ `Apache Commons DBCP <https://commons.apache.org/proper/commons-dbcp/>`_\ が使用される。
+        | 設定項目の詳細については、\ `DBCP Configuration <https://commons.apache.org/proper/commons-dbcp/configuration.html>`_\ を参照されたい。
     * - | (3)
       - \-
       - データソースのJNDI名を指定する。Tomcatの場合は、データソース定義時のリソース名「(1)-name」に指定した値を指定する。
@@ -317,7 +293,7 @@ Bean定義したDataSourceを使用する場合の設定
     <bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource"
         destroy-method="close">                                           <!-- (1) (8) -->
         <property name="driverClassName" value="org.postgresql.Driver" /> <!-- (2) -->
-        <property name="url" value="jdbc:postgresql://localhost:5432/terasoluna" /> <!-- (3) -->
+        <property name="url" value="jdbc:postgresql://localhost:5432/macchinetta" /> <!-- (3) -->
         <property name="username" value="postgres" />                     <!-- (4) -->
         <property name="password" value="postgres" />                     <!-- (5) -->
         <property name="defaultAutoCommit" value="false"/>               <!-- (6) -->
@@ -348,7 +324,7 @@ Bean定義したDataSourceを使用する場合の設定
         | 設定項目の詳細については、\ `DBCP Configuration <https://commons.apache.org/proper/commons-dbcp/configuration.html>`_\ を参照されたい。
     * - | (8)
       - | 設定例では値を直接指定しているが、環境によって設定値がかわる項目については、Placeholder(${...})を使用して、実際の設定値はプロパティファイルに指定すること。
-        | Placeholderについては、\ `Spring Framework Documentation -Customizing Configuration Metadata with a BeanFactoryPostProcessor- <https://docs.spring.io/spring-framework/docs/5.3.24/reference/html/core.html#beans-factory-extension-factory-postprocessors>`_\ の\  ``Example: The Class Name Substitution PropertySourcesPlaceholderConfigurer``\ を参照されたい。
+        | Placeholderについては、\ `Spring Framework Documentation -Customizing Configuration Metadata with a BeanFactoryPostProcessor- <https://docs.spring.io/spring-framework/docs/5.3.31/reference/html/core.html#beans-factory-extension-factory-postprocessors>`_\ の\  ``Example: The Class Name Substitution PropertySourcesPlaceholderConfigurer``\ を参照されたい。
 
 
 トランザクション管理を有効化するための設定
@@ -396,7 +372,7 @@ AbstractRoutingDataSourceの実装
 | \ ``AbstractRoutingDataSource``\ を拡張して作成した\ ``DataSource``\ を、通常のデータソースと同じように使用することでデータソースの動的な切り替えが実現できる。
 | 以下に、時間によってデータソースを切り替える例を示す。
 
-- \ ``AbstractRoutingDataSource``\ を継承したクラスの実装例`
+- \ ``AbstractRoutingDataSource``\ を継承したクラスの実装例
 
  .. code-block:: java
 

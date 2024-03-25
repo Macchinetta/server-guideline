@@ -83,7 +83,7 @@ Java SE 11でJAX-WSを利用する場合、以下のようにjakarta.xml.ws-api�
     * - 項番
       - 説明
     * - | (1)
-      - | jakarta.xml.ws-apiのバージョンはterasoluna-gfw-parentが依存している\ `Spring Boot <https://docs.spring.io/spring-boot/docs/2.7.7/reference/htmlsingle/#dependency-versions>`_\ で管理されているため、pom.xmlでのバージョンの指定は不要である。
+      - | jakarta.xml.ws-apiのバージョンはterasoluna-gfw-parentが依存している\ `Spring Boot <https://docs.spring.io/spring-boot/docs/2.7.18/reference/htmlsingle/#dependency-versions>`_\ で管理されているため、pom.xmlでのバージョンの指定は不要である。
     * - | (2)
       - | Jakarta EE 8に準拠した任意のバージョンを指定する。
 
@@ -114,7 +114,7 @@ Java SE 11でCommon Annotationsを利用する場合、以下のようにjakarta
     * - 項番
       - 説明
     * - | (1)
-      - | jakarta.annotation-apiのバージョンはterasoluna-gfw-parentが依存している\ `Spring Boot <https://docs.spring.io/spring-boot/docs/2.7.7/reference/htmlsingle/#dependency-versions>`_\ で管理されているため、pom.xmlでのバージョンの指定は不要である。
+      - | jakarta.annotation-apiのバージョンはterasoluna-gfw-parentが依存している\ `Spring Boot <https://docs.spring.io/spring-boot/docs/2.7.18/reference/htmlsingle/#dependency-versions>`_\ で管理されているため、pom.xmlでのバージョンの指定は不要である。
 
 なお、Common Annotationsを動作させるための実装は各APサーバによって提供される想定であり、上記ではアプリケーションのコンパイルに必要となるAPIのみを追加している。
 
@@ -132,8 +132,6 @@ Java SE 11以降での開発を円滑に行うため、
 
 この場合は、アプリケーションのビルド時にアプリケーションサーバから提供されるモジュールを除外する、
 アプリケーションサーバのクラスローダ設定によりアプリケーションの依存ライブラリを優先するといった対策が有効である。
-
-\ `WebLogic 12cを利用する際の注意点 <https://github.com/terasolunaorg/terasoluna-gfw/wiki/WebLogic_ja>`_\ や\ `JBoss EAP 7を利用する際の注意点 <https://github.com/terasolunaorg/terasoluna-gfw/wiki/JBoss7_ja>`_\ も併せて参照されたい。
 
 .. _change-default-locale--data-from-java9:
 

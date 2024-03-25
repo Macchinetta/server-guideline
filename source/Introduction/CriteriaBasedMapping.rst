@@ -98,14 +98,6 @@ CVE(Common Vulnerabilities and Exposures)による観点
    * - CVE
      - 概要
      - ガイドラインでの言及箇所
-   * - \ `CVE-2014-0050 <https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-0050>`_\
-
-       \ `CVE-2016-3092 <https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2016-3092>`_\
-     - Apache Commons FileUploadを使用するとファイルをアップロードする処理で細工されたリクエストによるDoS攻撃を受ける可能性がある
-
-     - * :ref:`FileUploadOverview`
-
-       * :ref:`file-upload_usage_commons_fileupload`
    * - \ `CVE-2014-1904 <https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-1904>`_\
      - \ ``<form:form>``\タグの \ ``action``\属性を省略するとXSS攻撃を受ける可能性がある
      - * :ref:`ApplicationLayerImplementOfJsp`

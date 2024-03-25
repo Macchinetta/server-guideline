@@ -171,7 +171,7 @@ Spring FrameworkのMail連携用コンポーネントを利用する場合、以
 .. note::
 
     上記設定例は、依存ライブラリのバージョンを親プロジェクトである terasoluna-gfw-parent で管理する前提であるため、pom.xmlでのバージョンの指定は不要である。
-    上記の依存ライブラリはterasoluna-gfw-parentが依存している\ `Spring Boot <https://docs.spring.io/spring-boot/docs/2.7.7/reference/htmlsingle/#dependency-versions>`_\ で管理されている。
+    上記の依存ライブラリはterasoluna-gfw-parentが依存している\ `Spring Boot <https://docs.spring.io/spring-boot/docs/2.7.18/reference/htmlsingle/#dependency-versions>`_\ で管理されている。
 
 |
 
@@ -202,25 +202,6 @@ JavaMailSenderの設定方法
     * - 1.
       - Apache Tomcat 9.0
       - | \ `Apache Tomcat 9.0 User Guide(JNDI Resources HOW-TO) <https://tomcat.apache.org/tomcat-9.0-doc/jndi-resources-howto.html#JavaMail_Sessions>`_\ (JavaMail Sessions)を参照されたい。
-    * - 2.
-      - Apache Tomcat 8.5
-      - | \ `Apache Tomcat 8.5 User Guide(JNDI Resources HOW-TO) <https://tomcat.apache.org/tomcat-8.5-doc/jndi-resources-howto.html#JavaMail_Sessions>`_\ (JavaMail Sessions)を参照されたい。
-    * - 3.
-      - Oracle WebLogic Server 12c
-      - \ `Oracle WebLogic Server 12.2.1.4 Documentation <https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/12.2.1.4/wlach/taskhelp/mail/CreateMailSessions.html>`_\ を参照されたい。
-    * - 4.
-      - Oracle WebLogic Server 14c
-      - \ `Oracle WebLogic Server 14.1.1.0 Documentation <https://docs.oracle.com/en/middleware/standalone/weblogic-server/14.1.1.0/wlach/taskhelp/mail/CreateMailSessions.html>`_\ を参照されたい。
-    * - 5.
-      - IBM WebSphere Application Server Version 9.0
-      - \ `WebSphere Application Server Version 9.0.5 documentation <https://www.ibm.com/docs/en/was/9.0.5?topic=sessions-mail-session-configuration-settings>`_\ を参照されたい。
-    * - 6.
-      - Red Hat JBoss Enterprise Application Platform Version 7.3
-      - \ `JBoss Enterprise Application Platform 7.3 Product Documentation <https://access.redhat.com/documentation/en-us/red_hat_jboss_enterprise_application_platform/7.3/html/configuration_guide/mail_subsystem>`_\ を参照されたい。
-    * - 7.
-      - Red Hat JBoss Enterprise Application Platform Version 6.4
-      - \ `JBoss Enterprise Application Platform 6.4 Product Documentation <https://access.redhat.com/documentation/en-us/red_hat_jboss_enterprise_application_platform/6.4/html/administration_and_configuration_guide/chap-mail_subsystem>`_\ を参照されたい。
-
 
 JNDI経由で取得したメールセッションをBeanとして登録するための設定を行う。
 
@@ -782,18 +763,18 @@ HTMLメールの送信
       - 例外クラス
       - 発生条件
     * - 1.
-      - `MailAuthenticationException <https://docs.spring.io/spring-framework/docs/5.3.24/javadoc-api/org/springframework/mail/MailAuthenticationException.html>`_
+      - `MailAuthenticationException <https://docs.spring.io/spring-framework/docs/5.3.31/javadoc-api/org/springframework/mail/MailAuthenticationException.html>`_
       - | 認証失敗時に発生する。
     * - 2.
-      - `MailParseException <https://docs.spring.io/spring-framework/docs/5.3.24/javadoc-api/org/springframework/mail/MailParseException.html>`_
+      - `MailParseException <https://docs.spring.io/spring-framework/docs/5.3.31/javadoc-api/org/springframework/mail/MailParseException.html>`_
       - | メールメッセージのプロパティに不正な値が設定されている場合に発生する。
     * - 3.
-      - `MailPreparationException <https://docs.spring.io/spring-framework/docs/5.3.24/javadoc-api/org/springframework/mail/MailPreparationException.html>`_
+      - `MailPreparationException <https://docs.spring.io/spring-framework/docs/5.3.31/javadoc-api/org/springframework/mail/MailPreparationException.html>`_
       - | メールメッセージを作成中に想定外のエラーが起きた場合に発生する。
           想定外のエラーとしては、例えばテンプレートライブラリで発生するエラーといったものがある。
         | \ ``MimeMessagePreparator``\ で発生した例外が\ ``MailPreparationException``\ にラップされてスローされる。
     * - 4.
-      - `MailSendException <https://docs.spring.io/spring-framework/docs/5.3.24/javadoc-api/org/springframework/mail/MailSendException.html>`_
+      - `MailSendException <https://docs.spring.io/spring-framework/docs/5.3.31/javadoc-api/org/springframework/mail/MailSendException.html>`_
       - | メールの送信エラーが起きた場合に発生する。
 
 .. note::
@@ -851,7 +832,7 @@ FreeMarkerを使用したメール本文の作成
     .. note::
 
        上記設定例は、依存ライブラリのバージョンを親プロジェクトである terasoluna-gfw-parent で管理する前提であるため、pom.xmlでのバージョンの指定は不要である。
-       上記の依存ライブラリはterasoluna-gfw-parentが依存している\ `Spring Boot <https://docs.spring.io/spring-boot/docs/2.7.7/reference/htmlsingle/#dependency-versions>`_\ で管理されている。
+       上記の依存ライブラリはterasoluna-gfw-parentが依存している\ `Spring Boot <https://docs.spring.io/spring-boot/docs/2.7.18/reference/htmlsingle/#dependency-versions>`_\ で管理されている。
 
 
 * \ ``freemarker.template.Configuration``\ を生成するためのFactoryBeanをBean定義する。
@@ -885,7 +866,7 @@ FreeMarkerを使用したメール本文の作成
 
     .. note::
 
-       上記以外の設定については、\ `FreeMarkerConfigurationFactoryBeanのJavaDoc <https://docs.spring.io/spring-framework/docs/5.3.24/javadoc-api/org/springframework/ui/freemarker/FreeMarkerConfigurationFactoryBean.html>`_\ を参照されたい。
+       上記以外の設定については、\ `FreeMarkerConfigurationFactoryBeanのJavaDoc <https://docs.spring.io/spring-framework/docs/5.3.31/javadoc-api/org/springframework/ui/freemarker/FreeMarkerConfigurationFactoryBean.html>`_\ を参照されたい。
        また、FreeMarker自体の設定については、\ `FreeMarker Manual (Programmer's Guide / The Configuration) <https://freemarker.apache.org/docs/pgui_config.html>`_\ を参照されたい。
 
 * メール本文のテンプレートファイルを作成する。

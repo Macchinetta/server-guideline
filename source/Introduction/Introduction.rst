@@ -86,7 +86,6 @@ Spring Frameworkに関して、本ドキュメントを読むための基礎知�
     
     #. \ :doc:`../Overview/FirstApplication`\ 
     #. \ :doc:`../Overview/ApplicationLayering`\ 
-    #. \ :doc:`../Tutorial/TutorialTodo`\ 
     #. \ :doc:`../ImplementationAtEachLayer/index`\ 
     #. \ :doc:`../Tutorial/TutorialTodo`\ 
     #. \ :doc:`../ArchitectureInDetail/WebApplicationDetail/Validation`\ 

@@ -11,6 +11,72 @@
       - 更新箇所
       - 更新内容
 
+    * - 2024-03-28
+      - \-
+      - 1.8.3 RELEASE版公開
+
+    * -
+      - 全般
+      - ガイドラインの誤記(タイプミスや単純な記述ミスなど)の修正
+
+        記載内容の改善
+
+        記載内容の修正・追加
+
+        * アプリケーションサーバに依存する記述について、動作検証環境と合わせて、Apache Tomcatを前提とした記述に統一
+
+    * -
+      - :doc:`../Overview/FrameworkStack`
+      - 利用するOSSのバージョンを更新
+
+        * Spring Bootを2.7.18に更新
+        * MyBatisを3.5.15に更新
+        * MyBatis Springを2.1.2に更新
+        * Logback Coreを1.3.14に更新
+        * Logback Classicを1.3.14に更新
+        * SLF4Jを2.0.12に更新
+        * Joda Timeを2.12.5に更新
+        * Apache POIを5.2.5に更新
+        * OpenPDFを1.3.35に更新
+        * Guavaを33.0.0-jreに更新
+
+        Spring Boot のバージョン更新に伴い利用するOSSのバージョンを更新
+
+        * Spring Frameworkを5.3.31に更新
+        * Spring Dataを2.7.18に更新
+        * Spring Securityを5.7.11に更新
+        * Jacksonを2.13.5に更新
+        * Lombokを1.18.30に更新
+
+        単体テストで利用するOSSのバージョンを更新
+
+        * Spring Testを5.3.31に更新
+
+    * -
+      - \ :doc:`../ArchitectureInDetail/WebServiceDetail/REST`\
+      - 記載内容の修正
+
+        * \ ``ServletUriComponentsBuilder``\ に関するTipを修正
+
+    * -
+      - \ :doc:`../ArchitectureInDetail/DataAccessDetail/DataAccessCommon`\
+      - 記載内容の修正
+
+        * factory属性省略時に使用されるコネクションプールに関する説明を修正
+
+    * -
+      - \ :doc:`../Security/SpringSecurity`\
+      - 記載内容の修正
+
+        * Spring Securityのデフォルト実装で使用されるFilterの説明を \ ``SecurityContextHolderFilter``\ から\ ``SecurityContextPersistenceFilter``\ に修正
+
+    * -
+      - \ :doc:`../Security/Authentication`\
+      - 記載内容の修正
+
+        * \ ``UserDetails``\ を実装した\ ``AccountUserDetails``\ の実装例を修正
+        * Spring Securityのデフォルト実装で使用されるFilterの説明を \ ``SecurityContextHolderFilter``\ から\ ``SecurityContextPersistenceFilter``\ に修正
+
     * - 2023-03-30
       - \-
       - 1.8.2 RELEASE版公開

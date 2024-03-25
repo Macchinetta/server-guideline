@@ -156,7 +156,7 @@ initdbプロジェクトについては、\ :ref:`CreateWebApplicationProjectCon
     * SQL解析メタデータ(\ ``config``\ に\ ``@SqlConfig``\ アノテーションを指定)
 
     また、\ ``@Sql``\ アノテーションはデフォルトで有効になっている\ ``SqlScriptsTestExecutionListener``\ によって
-    実行される。詳細は、\ `Executing SQL scripts declaratively with @Sql <https://docs.spring.io/spring-framework/docs/5.3.24/reference/html/testing.html#testcontext-executing-sql-declaratively>`_\
+    実行される。詳細は、\ `Executing SQL scripts declaratively with @Sql <https://docs.spring.io/spring-framework/docs/5.3.31/reference/html/testing.html#testcontext-executing-sql-declaratively>`_\
     を参照されたい。
 
     なお、\ ``@Sql``\ アノテーションと\ ``@SqlConfig``\ アノテーションによる構成は\ ``<jdbc:initialize-database>``\ 要素
@@ -341,13 +341,15 @@ Spring Testの DI機能を使用することでテストで使用するBeanを�
     <beans xmlns="http://www.springframework.org/schema/beans"
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xmlns:context="http://www.springframework.org/schema/context"
-      xsi:schemaLocation="http://www.springframework.org/schema/beans
-        https://www.springframework.org/schema/beans/spring-beans.xsd
-        https://www.springframework.org/schema/context/spring-context.xsd">
+      xmlns:aop="http://www.springframework.org/schema/aop"
+      xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/aop https://www.springframework.org/schema/aop/spring-aop.xsd">
 
       <context:property-placeholder
         location="classpath*:/META-INF/spring/*.properties" />
 
+      <!-- Add Bean definition according to business. -->
       <!-- (1) -->
       <bean id="exceptionLogger" class="org.terasoluna.gfw.common.exception.ExceptionLogger" />
 
@@ -377,6 +379,9 @@ Spring Testの DI機能を使用することでテストで使用するBeanを�
           </map>
         </constructor-arg>
       </bean>
+      <!-- Add Bean definition according to business. -->
+
+      <aop:aspectj-autoproxy />
 
     </beans>
 

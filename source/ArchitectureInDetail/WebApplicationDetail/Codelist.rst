@@ -883,11 +883,11 @@ I18nCodeListの使用方法
         <property name="map">
             <util:map>
                 <entry key="0" value="unlimited" />
-                <entry key="10000" value="Less than \\10,000" />
-                <entry key="20000" value="Less than \\20,000" />
-                <entry key="30000" value="Less than \\30,000" />
-                <entry key="40000" value="Less than \\40,000" />
-                <entry key="50000" value="Less than \\50,000" />
+                <entry key="10000" value="Less than \10,000" />
+                <entry key="20000" value="Less than \20,000" />
+                <entry key="30000" value="Less than \30,000" />
+                <entry key="40000" value="Less than \40,000" />
+                <entry key="50000" value="Less than \50,000" />
             </util:map>
         </property>
     </bean>
@@ -1091,11 +1091,11 @@ JSPでコードリストを使用する方法については、前述した :ref
 
   <select id="basePrice" name="basePrice">
     <option value="0">unlimited</option>
-    <option value="1">Less than \\10,000</option>
-    <option value="2">Less than \\20,000</option>
-    <option value="3">Less than \\30,000</option>
-    <option value="4">Less than \\40,000</option>
-    <option value="5">Less than \\50,000</option>
+    <option value="1">Less than \10,000</option>
+    <option value="2">Less than \20,000</option>
+    <option value="3">Less than \30,000</option>
+    <option value="4">Less than \40,000</option>
+    <option value="5">Less than \50,000</option>
   </select>
 
 **出力HTML lang=ja**
@@ -1328,7 +1328,7 @@ How to extend
 #. Task Schedulerで実現する方法
 #. Controller(Service)クラスでrefreshメソッドを呼び出す方法
 
-本ガイドラインでは、\ `Springから提供されているTask Scheduler <https://docs.spring.io/spring-framework/docs/5.3.24/reference/html/integration.html#scheduling>`_\ を使用して、コードリストを定期的にリロードする方式を基本的に推奨する。
+本ガイドラインでは、\ `Springから提供されているTask Scheduler <https://docs.spring.io/spring-framework/docs/5.3.31/reference/html/integration.html#scheduling>`_\ を使用して、コードリストを定期的にリロードする方式を基本的に推奨する。
 
 ただし、任意のタイミングでコードリストをリフレッシュする必要がある場合はControllerクラスでrefreshメソッドを呼び出す方法で実現すればよい。
 
@@ -1383,7 +1383,7 @@ Task Schedulerの設定例について、以下に示す。
        | 毎時実行               「0 0 \* \* \* \*」
        | 平日の9-17時の毎時実行 「0 0 9-17 \* \* MON-FRI」
        |
-       | cronの指定値の詳細については、\ `CronExpressionのJavaDoc <https://docs.spring.io/spring-framework/docs/5.3.24/javadoc-api/org/springframework/scheduling/support/CronExpression.html#parse-java.lang.String->`_\ を参照されたい。
+       | cronの指定値の詳細については、\ `CronExpressionのJavaDoc <https://docs.spring.io/spring-framework/docs/5.3.31/javadoc-api/org/springframework/scheduling/support/CronExpression.html#parse-java.lang.String->`_\ を参照されたい。
 
 |
 
@@ -1658,11 +1658,11 @@ SimpleI18nCodeListのコードリスト設定について、 :ref:`codelisti18n`
                 <entry key="en">
                     <util:map>
                         <entry key="0" value="unlimited" />
-                        <entry key="10000" value="Less than \\10,000" />
-                        <entry key="20000" value="Less than \\20,000" />
-                        <entry key="30000" value="Less than \\30,000" />
-                        <entry key="40000" value="Less than \\40,000" />
-                        <entry key="50000" value="Less than \\50,000" />
+                        <entry key="10000" value="Less than \10,000" />
+                        <entry key="20000" value="Less than \20,000" />
+                        <entry key="30000" value="Less than \30,000" />
+                        <entry key="40000" value="Less than \40,000" />
+                        <entry key="50000" value="Less than \50,000" />
                     </util:map>
                 </entry>
                 <entry key="ja">
@@ -1711,31 +1711,31 @@ SimpleI18nCodeListのコードリスト設定について、 :ref:`codelisti18n`
                 </entry>
                 <entry key="10000">
                     <util:map>
-                        <entry key="en" value="Less than \\10,000" />
+                        <entry key="en" value="Less than \10,000" />
                         <entry key="ja" value="10,000円以下" />
                     </util:map>
                 </entry>
                 <entry key="20000">
                     <util:map>
-                        <entry key="en" value="Less than \\20,000" />
+                        <entry key="en" value="Less than \20,000" />
                         <entry key="ja" value="20,000円以下" />
                     </util:map>
                 </entry>
                 <entry key="30000">
                     <util:map>
-                        <entry key="en" value="Less than \\30,000" />
+                        <entry key="en" value="Less than \30,000" />
                         <entry key="ja" value="30,000円以下" />
                     </util:map>
                 </entry>
                 <entry key="40000">
                     <util:map>
-                        <entry key="en" value="Less than \\40,000" />
+                        <entry key="en" value="Less than \40,000" />
                         <entry key="ja" value="40,000円以下" />
                     </util:map>
                 </entry>
                 <entry key="50000">
                     <util:map>
-                        <entry key="en" value="Less than \\50,000" />
+                        <entry key="en" value="Less than \50,000" />
                         <entry key="ja" value="50,000円以下" />
                     </util:map>
                 </entry>
