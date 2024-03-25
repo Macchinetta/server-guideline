@@ -7,6 +7,8 @@ Macchinetta Server Framework (1.x)のスタック
   :depth: 3
   :local:
 
+|
+
 Macchinetta Server Framework (1.x)のSoftware Framework概要
 --------------------------------------------------------------------------------
 
@@ -31,7 +33,7 @@ DIコンテナ
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 DIコンテナとしてSpring Frameworkを利用する。
 
-* \ `Spring Framework 6.0 <https://docs.spring.io/spring-framework/docs/6.0.3/reference/html/core.html#beans>`_\
+* \ `Spring Framework 6.1 <https://docs.spring.io/spring-framework/docs/6.1.3/reference/html/core.html#beans>`_\
 
 |
 
@@ -39,7 +41,7 @@ MVCフレームワーク
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Web MVCフレームワークとしてSpring MVCを利用する。
 
-* \ `Spring MVC 6.0 <https://docs.spring.io/spring-framework/docs/6.0.3/reference/html/web.html#mvc>`_\
+* \ `Spring MVC 6.1 <https://docs.spring.io/spring-framework/docs/6.1.3/reference/html/web.html#mvc>`_\
 
 |
 
@@ -50,7 +52,7 @@ O/R Mapper
 
 * \ `MyBatis 3.5 <https://mybatis.org/mybatis-3/>`_\
 
-  * Spring Frameworkとの連携ライブラリとして、\ `MyBatis-Spring <https://mybatis.org/spring/>`_\ を使用する。
+  * Spring Frameworkとの連携ライブラリとして、\ `MyBatis-Spring <https://mybatis.org/spring/index.html>`_\ を使用する。
 
 .. note::
 
@@ -60,13 +62,18 @@ O/R Mapper
 
 View
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-ViewにはJSPを利用する。
 
-.. tip::
+本ガイドラインでは、以下の\ **いずれか**\ を想定している。
+
+* JSP
+* Thymeleaf
+
+.. tip:: 
 
   Macchinetta Server Framework (1.x) 1.8 まではViewのレイアウトの共通化として\ `Apache Tiles <https://tiles.apache.org/framework/index.html>`_\ を利用していたが、Jakarta EE 9 以降のライブラリバージョンが存在しておらず、代替ライブラリも存在していない。そのため、Macchinetta Server Framework (1.x) 1.8以降では、JSPのレイアウトの共通化は行っていない。
 
-  画面レイアウトの共通化を行いたい場合は、\ `Macchinetta Server Framework (1.x)(Thymeleaf版) <https://macchinetta.github.io/server-guideline-thymeleaf/1.9.1.RELEASE/ja/>`_\ を参照し、Thymeleafの使用を検討されたい。
+  画面レイアウトを行いたい場合は、Thymeleafの使用を検討されたい。
+
 
 |
 
@@ -96,7 +103,7 @@ ViewにはJSPを利用する。
 
   * 実装は、\ `Hibernate Validator 8.0 <https://docs.jboss.org/hibernate/validator/8.0/reference/en-US/html_single/>`_\ を利用する。
 
-* 相関チェックには\ `Bean Validation 3.0 <https://jakarta.ee/specifications/bean-validation/3.0/jakarta-bean-validation-spec-3.0.html>`_\ 、もしくは\ `Spring Validation <https://docs.spring.io/spring-framework/docs/6.0.3/reference/html/core.html#validator>`_\ を利用する。
+* 相関チェックには\ `Bean Validation 3.0 <https://jakarta.ee/specifications/bean-validation/3.0/jakarta-bean-validation-spec-3.0.html>`_\ 、もしくは\ `Spring Validation <https://docs.spring.io/spring-framework/docs/6.1.3/reference/html/core.html#validator>`_\ を利用する。
 
   * 使い分けについては\ :doc:`../ArchitectureInDetail/WebApplicationDetail/Validation`\ を参照されたい。
 
@@ -122,7 +129,7 @@ ViewにはJSPを利用する。
 
 共通ライブラリ
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-* \ `https://github.com/terasolunaorg/terasoluna-gfw/tree/5.8.1.RELEASE <https://github.com/terasolunaorg/terasoluna-gfw/tree/5.8.1.RELEASE>`_\
+* \ `https://github.com/terasolunaorg/terasoluna-gfw/tree/5.9.0.RELEASE <https://github.com/terasolunaorg/terasoluna-gfw/tree/5.9.0.RELEASE>`_\
 * 詳細は\ :ref:`frameworkstack_common_library`\ を参照されたい。
 
 .. note::
@@ -136,7 +143,7 @@ ViewにはJSPを利用する。
 利用するOSSのバージョン
 --------------------------------------------------------------------------------
 
-version 1.9.1.RELEASEで利用するOSSの一覧を以下に示す。
+version 1.10.0.RELEASEで利用するOSSの一覧を以下に示す。
 
 .. note::
 
@@ -150,7 +157,7 @@ version 1.9.1.RELEASEで利用するOSSの一覧を以下に示す。
 
   への依存関係を解決しており、Macchinetta Server Framework (1.x)で使用するOSSのバージョンは、原則として、Spring Bootで管理されているバージョンに準ずる。
 
-  なお、version 1.9.1.RELEASEでは\ `Spring Boot 3.0.1 <https://docs.spring.io/spring-boot/docs/3.0.1/reference/htmlsingle/>`_\ に依存しており、管理されるライブラリは\ `Spring Boot Reference Guide - Appendix F. Dependency versions <https://docs.spring.io/spring-boot/docs/3.0.1/reference/htmlsingle/#dependency-versions>`_\ の通りとなる。
+  なお、version 1.10.0.RELEASEでは\ `Spring Boot 3.2.2 <https://docs.spring.io/spring-boot/docs/3.2.2/reference/htmlsingle/>`_\ に依存しており、管理されるライブラリは\ `Spring Boot Reference Guide - Appendix F. Dependency versions <https://docs.spring.io/spring-boot/docs/3.2.2/reference/htmlsingle/#dependency-versions>`_\ の通りとなる。
 
 .. tabularcolumns:: |p{0.15\linewidth}|p{0.27\linewidth}|p{0.25\linewidth}|p{0.15\linewidth}|p{0.05\linewidth}|p{0.08\linewidth}|
 .. list-table::
@@ -167,159 +174,159 @@ version 1.9.1.RELEASEで利用するOSSの一覧を以下に示す。
   * - Spring
     - org.springframework
     - spring-aop
-    - 6.0.3
+    - 6.1.3
     - \*
     -
   * - Spring
     - org.springframework
     - spring-aspects
-    - 6.0.3
+    - 6.1.3
     - \*
     -
   * - Spring
     - org.springframework
     - spring-beans
-    - 6.0.3
+    - 6.1.3
     - \*
     -
   * - Spring
     - org.springframework
     - spring-context
-    - 6.0.3
+    - 6.1.3
     - \*
     -
   * - Spring
     - org.springframework
     - spring-context-support
-    - 6.0.3
+    - 6.1.3
     - \*
     -
   * - Spring
     - org.springframework
     - spring-core
-    - 6.0.3
+    - 6.1.3
     - \*
     -
   * - Spring
     - org.springframework
     - spring-expression
-    - 6.0.3
+    - 6.1.3
     - \*
     -
   * - Spring
     - org.springframework
     - spring-jdbc
-    - 6.0.3
+    - 6.1.3
     - \*
     -
   * - Spring
     - org.springframework
     - spring-orm
-    - 6.0.3
+    - 6.1.3
     - \*
     -
   * - Spring
     - org.springframework
     - spring-oxm
-    - 6.0.3
+    - 6.1.3
     - \*
     -
   * - Spring
     - org.springframework
     - spring-tx
-    - 6.0.3
+    - 6.1.3
     - \*
     -
   * - Spring
     - org.springframework
     - spring-web
-    - 6.0.3
+    - 6.1.3
     - \*
     -
   * - Spring
     - org.springframework
     - spring-webmvc
-    - 6.0.3
+    - 6.1.3
     - \*
     -
   * - Spring
     - org.springframework
     - spring-jms
-    - 6.0.3
+    - 6.1.3
     - \*
     -
   * - Spring
     - org.springframework
     - spring-messaging
-    - 6.0.3
+    - 6.1.3
     - \*
     -
   * - Spring
     - org.springframework.data
     - spring-data-commons
-    - 3.0.0
+    - 3.2.2
     - \*
     -
   * - Spring
     - org.springframework.security
     - spring-security-acl
-    - 6.0.1
+    - 6.2.1
     - \*
     -
   * - Spring
     - org.springframework.security
     - spring-security-config
-    - 6.0.1
+    - 6.2.1
     - \*
     -
   * - Spring
     - org.springframework.security
     - spring-security-core
-    - 6.0.1
+    - 6.2.1
     - \*
     -
   * - Spring
     - org.springframework.security
     - spring-security-taglibs
-    - 6.0.1
+    - 6.2.1
     - \*
-    -
+    - \*1
   * - Spring
     - org.springframework.security
     - spring-security-web
-    - 6.0.1
+    - 6.2.1
     - \*
     -
   * - Spring
     - org.springframework.security
     - spring-security-oauth2-client
-    - 6.0.1
+    - 6.2.1
     - \*
     -
   * - Spring
     - org.springframework.security
     - spring-security-oauth2-resource-server
-    - 6.0.1
+    - 6.2.1
     - \*
     -
   * - Spring
     - org.springframework.security
     - spring-security-oauth2-jose
-    - 6.0.1
+    - 6.2.1
     - \*
     -
   * - MyBatis3
     - org.mybatis
     - mybatis
-    - 3.5.11
+    - 3.5.15
     -
-    - \*1
+    - \*3
   * - MyBatis3
     - org.mybatis
     - mybatis-spring
-    - 3.0.1
+    - 3.0.3
     -
-    - \*1
+    - \*3
   * - DI
     - jakarta.inject
     - jakarta.inject-api
@@ -329,43 +336,61 @@ version 1.9.1.RELEASEで利用するOSSの一覧を以下に示す。
   * - AOP
     - org.aspectj
     - aspectjrt
-    - 1.9.19
+    - 1.9.21
     - \*
     -
   * - AOP
     - org.aspectj
     - aspectjweaver
-    - 1.9.19
+    - 1.9.21
     - \*
     -
   * - ログ出力
     - ch.qos.logback
     - logback-classic
-    - 1.4.5
+    - 1.4.14
     - \*
     -
   * - ログ出力
     - org.slf4j
     - slf4j-api
-    - 2.0.6
-    - \*
+    - 2.0.12
     -
+    - \*4
   * - JSON
     - com.fasterxml.jackson.core
     - jackson-databind
-    - 2.14.1
+    - 2.15.3
     - \*
     -
   * - JSON
     - com.fasterxml.jackson.datatype
     - jackson-datatype-jsr310
-    - 2.14.1
+    - 2.15.3
     - \*
     -
+  * - Thymeleaf
+    - org.thymeleaf
+    - thymeleaf
+    - 3.1.2.RELEASE
+    - \*
+    - \*2
+  * - Thymeleaf
+    - org.thymeleaf
+    - thymeleaf-spring6
+    - 3.1.2.RELEASE
+    - \*
+    - \*2
+  * - Thymeleaf
+    - org.thymeleaf.extras
+    - thymeleaf-extras-springsecurity6
+    - 3.1.2.RELEASE
+    - \*
+    - \*2
   * - 入力チェック
     - org.hibernate.validator
     - hibernate-validator
-    - 8.0.0.Final
+    - 8.0.1.Final
     - \*
     -
   * - Bean変換
@@ -377,13 +402,13 @@ version 1.9.1.RELEASEで利用するOSSの一覧を以下に示す。
   * - Bean変換
     - org.mapstruct
     - mapstruct
-    - 1.5.3.Final
+    - 1.5.5.Final
     -
     -
   * - Bean変換
     - org.apache.commons
     - commons-lang3
-    - 3.12.0
+    - 3.13.0
     - \*
     -
   * - 日付操作
@@ -395,37 +420,37 @@ version 1.9.1.RELEASEで利用するOSSの一覧を以下に示す。
   * - コネクションプール
     - org.apache.commons
     - commons-dbcp2
-    - 2.9.0
+    - 2.10.0
     - \*
     -
   * - ファイルダウンロード
     - com.github.librepdf
     - openpdf
-    - 1.3.30
+    - 1.3.35
     -
     -
   * - ファイルダウンロード
     - org.apache.poi
     - poi-ooxml
-    - 5.2.3
+    - 5.2.5
     -
     -
   * - E-mail送信(SMTP)
     - org.eclipse.angus
     - jakarta.mail
-    - 1.0.0
+    - 2.0.2
     - \*
     -
   * - HTTP通信
     - org.apache.httpcomponents.client5
     - httpclient5
-    - 5.1.4
+    - 5.2.3
     - \*
     -
   * - ユーティリティ
     - com.google.guava
     - guava
-    - 31.1-jre
+    - 33.0.0-jre
     -
     -
   * - ユーティリティ
@@ -437,7 +462,7 @@ version 1.9.1.RELEASEで利用するOSSの一覧を以下に示す。
   * - ユーティリティ
     - commons-io
     - commons-io
-    - 2.11.0
+    - 2.15.1
     -
     -
   * - サーブレット
@@ -445,15 +470,18 @@ version 1.9.1.RELEASEで利用するOSSの一覧を以下に示す。
     - jakarta.servlet.jsp.jstl
     - 3.0.1
     - \*
-    -
+    - \*1
   * - コーディングサポート
     - org.projectlombok
     - lombok
-    - 1.18.24
+    - 1.18.30
     - \*
     -
 
+#. | Viewに、JSPを使用する場合に依存するライブラリ
+#. | VIEWに、Thymeleafを使用する場合に依存するライブラリ
 #. | データアクセスに、MyBatis3を使用する場合に依存するライブラリ
+#. | Spring Bootで管理されているバージョンから、Macchinetta Server Framework (1.x)で使用するバージョンを変更しているライブラリ
 
 |
 
@@ -462,10 +490,10 @@ version 1.9.1.RELEASEで利用するOSSの一覧を以下に示す。
 共通ライブラリの構成要素
 --------------------------------------------------------------------------------
 
-| Macchinetta Server Framework (1.x)では、\ `TERASOLUNA Server Framework for Java (5.x) <https://github.com/terasolunaorg>`_\ が提供する\ `共通ライブラリ <https://github.com/terasolunaorg/terasoluna-gfw/tree/5.8.1.RELEASE>`_\ を使用する。（以降「共通ライブラリ」と記載する。）
+| Macchinetta Server Framework (1.x)では、\ `TERASOLUNA Server Framework for Java (5.x) <https://github.com/terasolunaorg>`_\ が提供する\ `共通ライブラリ <https://github.com/terasolunaorg/terasoluna-gfw/tree/5.9.0.RELEASE>`_\ を使用する。（以降「共通ライブラリ」と記載する。）
 | 共通ライブラリは、Macchinetta Server Framework (1.x)やTERASOLUNA Server Framework for Java (5.x)が含むSpring Ecosystem や、その他依存ライブラリでは足りない+αな機能を提供するライブラリである。
 | 基本的には、このライブラリがなくてもMacchinetta Server Framework (1.x)によるアプリケーション開発は可能であるが、"あると便利"な存在である。
-| また、提供している2種類の \ `マルチプロジェクト構成のブランクプロジェクト <https://github.com/Macchinetta/macchinetta-web-multi-blank/tree/1.9.1.RELEASE>`_\ および \ `シングルプロジェクト構成のブランクプロジェクト <https://github.com/Macchinetta/macchinetta-web-blank/tree/1.9.1.RELEASE>`_\ の共通ライブラリの標準の組込状況は以下の通りである。
+| また、提供している2種類の \ `マルチプロジェクト構成のブランクプロジェクト <https://github.com/Macchinetta/macchinetta-web-multi-blank-thymeleaf/tree/1.10.0.RELEASE>`_\ および \ `シングルプロジェクト構成のブランクプロジェクト <https://github.com/Macchinetta/macchinetta-web-blank-thymeleaf/tree/1.10.0.RELEASE>`_\ の共通ライブラリの標準の組込状況は以下の通りである。なお、マルチプロジェクト構成およびシングルプロジェクト構成の共通ライブラリの標準の組込状況は同じである。
 
 .. tabularcolumns:: |p{0.05\linewidth}|p{0.15\linewidth}|p{0.40\linewidth}|p{0.10\linewidth}|p{0.10\linewidth}|p{0.10\linewidth}|
 .. list-table::
@@ -477,8 +505,8 @@ version 1.9.1.RELEASEで利用するOSSの一覧を以下に示す。
     - プロジェクト名
     - 概要
     - Javaソースコード有無
-    - マルチプロジェクト構成のブランクプロジェクト組込
-    - シングルプロジェクト構成のブランクプロジェクト組込
+    - ViewにJSPを使用したブランクプロジェクトの組込
+    - ViewにThymeleafを使用したブランクプロジェクトの組込
   * - \ (1)
     - terasoluna-gfw-parent
     - 依存ライブラリの管理とビルド用プラグインの推奨設定を提供する。
@@ -525,7 +553,7 @@ version 1.9.1.RELEASEで利用するOSSの一覧を以下に示す。
     - 無
   * - \ (8)
     - terasoluna-gfw-web
-    - Webアプリケーションを作成する場合に使用する機能を提供する。Viewに依存しない機能を集約している。本ライブラリを利用する場合は、依存関係としてterasoluna-gfw-web-dependenciesをpom.xmlに追加。
+    - Webアプリケーションを作成する場合に使用する機能を提供する。Viewに依存しない機能を集約している。本ライブラリを利用する場合は、依存関係としてterasoluna-gfw-web-dependenciesをpom.xmlに追加する。
     - 有
     - 有*2
     - 有*2
@@ -540,13 +568,13 @@ version 1.9.1.RELEASEで利用するOSSの一覧を以下に示す。
     - ViewにJSPを採用するWebアプリケーションを作成する場合に使用する機能を提供する。本ライブラリを利用する場合は、依存関係としてterasoluna-gfw-web-jsp-dependenciesをpom.xmlに追加する。
     - 有
     - 有*2
-    - 有*2
+    - 無
   * - \ (11)
     - terasoluna-gfw-web-jsp-dependencies
     - terasoluna-gfw-web-jspプロジェクトが提供する機能を使用する場合の依存関係定義を提供する。
     - 無
     - 有
-    - 有
+    - 無
   * - \ (12)
     - terasoluna-gfw-security-web
     - Spring Securityの拡張部品を提供する。本ライブラリを利用する場合は、依存関係としてterasoluna-gfw-security-web-dependenciesをpom.xmlに追加する。
@@ -630,7 +658,7 @@ Javaソースコードを含まないものは、ライブラリの依存関係�
 
 .. note::
 
-  version 1.9.1.RELEASEでは TERASOLUNA Server Framework for Java 5.8.1.RELEASE の共通ライブラリを使用している。
+  version 1.10.0.RELEASEでは TERASOLUNA Server Framework for Java 5.9.0.RELEASE の共通ライブラリを使用している。
 
 |
 

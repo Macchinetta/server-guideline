@@ -7,6 +7,8 @@ RESTful Web Service
   :depth: 3
   :local:
 
+|
+
 .. _RESTOverview:
 
 Overview
@@ -163,34 +165,34 @@ RESTful Web Serviceのモジュールの構成
 
   .. tabularcolumns:: |p{0.10\linewidth}|p{0.20\linewidth}|p{0.70\linewidth}|
   .. list-table::
-     :header-rows: 1
-     :widths: 10 20 70
+    :header-rows: 1
+    :widths: 10 20 70
     
-     * - 項番
-       - モジュール名
-       - 説明
-     * - | (1)
-       - | Controllerクラス
-       - | REST APIを提供するクラス。
-         | Controllerクラスはリソース単位に作成し、リソース毎のREST APIのエンドポイント(URI)の指定を行う。
-         | リソースに対するCRUD処理は、ドメイン層のServiceに委譲する事で実現する。
-     * - | (2)
-       - | Resourceクラス
-       - | REST APIの入出力となるJSON(またはXML)を表現するJava Bean。
-         | このクラスには、Bean Validationのアノテーションの指定や、JSONやXMLのフォーマットを制御するためのアノテーションの指定を行う。
-     * - | (3)
-       - | Validatorクラス
-         | (Optional)
-       - | 入力値の相関チェックを実装するクラス。
-         | 入力値の相関チェックが不要な場合は、本クラスを作成する必要はないため、オプションの扱いとしている。
-         | 入力値の相関チェックについては、「\ :doc:`../WebApplicationDetail/Validation`\ 」を参照されたい。
-     * - | (4)
-       - | Helperクラス
-         | (Optional)
-       - | Controllerで行う処理を補助するための処理を実装するクラス。
-         | 本クラスは、Controllerの処理をシンプルに保つことを目的として作成するクラスである。
-         | 具体的には、ResourceオブジェクトとDomainObjectのモデル変換処理などを行うメソッドを実装する。
-         | モデル変換が単純な値のコピーのみで済む場合は、Helperクラスは作成せずに「\ :doc:`../GeneralFuncDetail/BeanMapping`\ 」を使用すればよいため、オプションの扱いにしている。
+    * - 項番
+      - モジュール名
+      - 説明
+    * - | (1)
+      - | Controllerクラス
+      - | REST APIを提供するクラス。
+        | Controllerクラスはリソース単位に作成し、リソース毎のREST APIのエンドポイント(URI)の指定を行う。
+        | リソースに対するCRUD処理は、ドメイン層のServiceに委譲する事で実現する。
+    * - | (2)
+      - | Resourceクラス
+      - | REST APIの入出力となるJSON(またはXML)を表現するJava Bean。
+        | このクラスには、Bean Validationのアノテーションの指定や、JSONやXMLのフォーマットを制御するためのアノテーションの指定を行う。
+    * - | (3)
+      - | Validatorクラス
+        | (Optional)
+      - | 入力値の相関チェックを実装するクラス。
+        | 入力値の相関チェックが不要な場合は、本クラスを作成する必要はないため、オプションの扱いとしている。
+        | 入力値の相関チェックについては、「\ :doc:`../WebApplicationDetail/Validation`\ 」を参照されたい。
+    * - | (4)
+      - | Helperクラス
+        | (Optional)
+      - | Controllerで行う処理を補助するための処理を実装するクラス。
+        | 本クラスは、Controllerの処理をシンプルに保つことを目的として作成するクラスである。
+        | 具体的には、ResourceオブジェクトとDomainObjectのモデル変換処理などを行うメソッドを実装する。
+        | モデル変換が単純な値のコピーのみで済む場合は、Helperクラスは作成せずに「\ :doc:`../GeneralFuncDetail/BeanMapping`\ 」を使用すればよいため、オプションの扱いにしている。
 
 |
 
@@ -198,14 +200,14 @@ RESTful Web Serviceのモジュールの構成
 
   .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
   .. list-table::
-     :header-rows: 1
-     :widths: 10 90
+    :header-rows: 1
+    :widths: 10 90
 
-     * - 項番
-       - 説明
-     * - | (5)
-       - | ドメイン層で実装するモジュールは、アプリケーションの種類に依存しないため、本節での説明は割愛する。
-         | 各モジュールの役割については「\ :doc:`../../Overview/ApplicationLayering`\ 」を、ドメイン層の開発については「\ :doc:`../../ImplementationAtEachLayer/DomainLayer`\ 」を参照されたい。
+    * - 項番
+      - 説明
+    * - | (5)
+      - | ドメイン層で実装するモジュールは、アプリケーションの種類に依存しないため、本節での説明は割愛する。
+        | 各モジュールの役割については「\ :doc:`../../Overview/ApplicationLayering`\ 」を、ドメイン層の開発については「\ :doc:`../../ImplementationAtEachLayer/DomainLayer`\ 」を参照されたい。
 
 |
 
@@ -213,14 +215,14 @@ RESTful Web Serviceのモジュールの構成
 
   .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
   .. list-table::
-     :header-rows: 1
-     :widths: 10 90
+    :header-rows: 1
+    :widths: 10 90
  
-     * - 項番
-       - 説明
-     * - | (6)
-       - | インフラストラクチャ層で実装するモジュールは、アプリケーションの種類に依存しないため、本節での説明は割愛する。
-         | 各モジュールの役割については「\ :doc:`../../Overview/ApplicationLayering`\ 」を、インフラストラクチャ層の開発については「\ :doc:`../../ImplementationAtEachLayer/InfrastructureLayer`\ 」を参照されたい。
+    * - 項番
+      - 説明
+    * - | (6)
+      - | インフラストラクチャ層で実装するモジュールは、アプリケーションの種類に依存しないため、本節での説明は割愛する。
+        | 各モジュールの役割については「\ :doc:`../../Overview/ApplicationLayering`\ 」を、インフラストラクチャ層の開発については「\ :doc:`../../ImplementationAtEachLayer/InfrastructureLayer`\ 」を参照されたい。
 
 |
 
@@ -236,7 +238,7 @@ REST APIの実装サンプル
     チュートリアルでは”習うより慣れろ”を目的としており、 詳細な説明の前に実際に手を動かすことでMacchinetta Server Framework (1.x)によるRESTful Web Serviceの開発を体感する事が出来る。
 
     RESTful Web Serviceの開発を体感した後に、詳細な説明を読むことで、RESTful Web Serviceの開発に対する理解度がより深まる事が期待できる。
-
+    
     特にRESTful Web Serviceの開発経験がない場合は、「チュートリアルの実践」 → 「アーキテクチャ、設計、開発に関する詳細な説明(次節以降で説明)」 → 「チュートリアルの振り返り(再実践)」というプロセスを踏むことを推奨する。
 
 |
@@ -374,7 +376,6 @@ REST APIの実装サンプル
       - | Todoリソースを削除する。
 
   .. code-block:: java
-    :emphasize-lines: 33-36, 45-48, 54-57, 63-66, 72-75
 
     package todo.api.todo;
 
@@ -564,14 +565,14 @@ URIによるリソースの識別
 
 .. warning::
  
-    RESTful Web Serviceに割り当てるURIには、下記で示すような\ **操作を表す動詞を含んではいけない。**\
+  RESTful Web Serviceに割り当てるURIには、下記で示すような\ **操作を表す動詞を含んではいけない。**\
     
-    * \ `http://example.com/api/v1/items?get&itemId=I312-535-01216`\
-    * \ `http://example.com/api/v1/items?delete&itemId=I312-535-01216`\
+  * \ `http://example.com/api/v1/items?get&itemId=I312-535-01216`\
+  * \ `http://example.com/api/v1/items?delete&itemId=I312-535-01216`\
     
-    上記例では、 URIの中に\ **get**\ や\ **delete**\ という動詞を含んでいるため、RESTful Web Serviceに割り当てるURIとして適切ではない。
+  上記例では、 URIの中に\ **get**\ や\ **delete**\ という動詞を含んでいるため、RESTful Web Serviceに割り当てるURIとして適切ではない。
     
-    RESTful Web Serviceでは、\ **リソースに対する操作はHTTPメソッド(GET,POST,PUT,DELETE)を使用して表現する。**\
+  RESTful Web Serviceでは、\ **リソースに対する操作はHTTPメソッド(GET,POST,PUT,DELETE)を使用して表現する。**\
 
 |
 
@@ -708,7 +709,6 @@ HTTPメソッドによるリソースの操作
 
 | リソースのフォーマットとして、複数のフォーマットをサポートする場合は、以下のどちらかの方法で切り替えを行う。
 
-
 * \ **拡張子によって切り替えを行う。**\
 
   | レスポンスのフォーマットは、拡張子を指定する事で切り替える事ができる。
@@ -754,7 +754,7 @@ HTTPメソッドによるリソースの操作
 | HTTPステータスコードには、クライアントから受け取ったリクエストをサーバがどのように処理したかを示す値を設定する。
 | \ **これはHTTPの仕様であり、HTTPの仕様に可能な限り準拠することを推奨する。**\
 
-.. tip:: **HTTPの仕様について**
+.. tip:: \ **HTTPの仕様について**\
  
   \ `RFC 7230(Hypertext Transfer Protocol -- HTTP/1.1)の3.1.2 Status Line <https://datatracker.ietf.org/doc/html/rfc7230#section-3.1.2>`_\ を参照されたい。
 
@@ -849,7 +849,7 @@ HTTPメソッドによるリソースの操作
     * - | (1)
       - | 会員情報のリソースを取得(\ ``GET http://example.com/api/v1/memebers/M000000001``\ )を行うと、以下のJSONが返却される。
 
-         .. code-block:: json
+          .. code-block:: json
             :emphasize-lines: 13-14,17-18
 
             {
@@ -879,7 +879,7 @@ HTTPメソッドによるリソースの操作
     * - | (2)
       - | 返却されたJSONに設定されているハイパーメディアリンク(URI)を使用して、注文履歴のリソースを取得(\ ``GET http://example.com/api/v1/memebers/M000000001/orders``\ )を行うと、以下のJSONが返却される。
 
-         .. code-block:: json
+          .. code-block:: json
             :emphasize-lines: 10-11,22-23,30-31
         
             {
@@ -922,7 +922,7 @@ HTTPメソッドによるリソースの操作
     * - | (3)
       - | 注文履歴のオーナとなる会員情報のリソースを再度取得(\ ``GET http://example.com/api/v1/memebers/M000000001``\ )し、返却されたJSONに設定されているハイパーメディアリンク(URI)を使用して、認証履歴のリソースを取得(\ ``GET http://example.com/api/v1/memebers/M000000001/authentications/``\ )を行うと、以下のJSONが返却される。
         
-         .. code-block:: json
+          .. code-block:: json
             :emphasize-lines: 18-19
         
             {
@@ -1321,7 +1321,7 @@ NULLとブランク文字
 
 エラーを検知した際に応答するフォーマット例を以下に示す。
 
- .. code-block:: json
+  .. code-block:: json
 
     {
       "code" : "e.ex.fw.7001",
@@ -1545,6 +1545,8 @@ How to use
 --------------------------------------------------------------------------------
 本節では、RESTful Web Serviceの具体的な作成方法について説明する。
 
+|
+
 .. _RESTHowToUseWebApplicationConstruction:
 
 Webアプリケーションの構成
@@ -1573,13 +1575,11 @@ Webアプリケーションの構成
 
   .. note:: \ **クライアントアプリケーション(UI層のアプリケーション)とは**\
 
-    ここで言うクライアントアプリケーション(UI層のアプリケーション)とは、HTML, JavaScriptなどのスクリプト, CSS(Cascading Style Sheets)といったクライアント層(UI層)のコンポーネントを応答するアプリケーションの事をさす。
-    JSPなどのテンプレートエンジンによって生成されるHTMLも対象となる。
+    ここで言うクライアントアプリケーション(UI層のアプリケーション)とは、HTML, JavaScriptなどのスクリプト, CSS(Cascading Style Sheets)といったクライアント層(UI層)のコンポーネントを応答するアプリケーションの事をさす。JSPなどのテンプレートエンジンによって生成されるHTMLも対象となる。
 
   .. note:: \ **DispatcherServletを分割する事を推奨する理由**\
 
-    Spring MVCでは、\ ``DispatcherServlet``\ 毎にアプリケーションの動作設定を定義することになる。
-    そのため、RESTful Web Serviceとクライアントアプリケーション(UI層のアプリケーション)のリクエストを同じ\ ``DispatcherServlet``\ で受ける構成にしてしまうと、RESTful Web Service又はクライアントアプリケーション固有の動作設定を定義する事ができなくなったり、設定が煩雑又は複雑になることがある。
+    Spring MVCでは、\ ``DispatcherServlet``\ 毎にアプリケーションの動作設定を定義することになる。そのため、RESTful Web Serviceとクライアントアプリケーション(UI層のアプリケーション)のリクエストを同じ\ ``DispatcherServlet``\ で受ける構成にしてしまうと、RESTful Web Service又はクライアントアプリケーション固有の動作設定を定義する事ができなくなったり、設定が煩雑又は複雑になることがある。
     
     本ガイドラインでは、上記の様な問題が起こらないようにするために、RESTful Web Serviceについてクライアントアプリケーションを同じWebアプリケーション(war)として構築する場合は、\ ``DispatcherServlet``\ を分割することを推奨している。
 
@@ -1605,6 +1605,8 @@ pom.xmlの設定
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 terasoluna-gfw-common-dependenciesを使用していれば、依存関係の設定は不要である。
 
+|
+
 .. _RESTHowToUseApplicationSettings:
 
 アプリケーションの設定
@@ -1626,119 +1628,255 @@ RESTful Web Serviceで必要となるSpring MVCのコンポーネントを有効
 | RESTful Web Service用のbean定義ファイルを作成する。
 | 以降の説明で示すサンプルを動かす際に必要となる定義を、以下に示す。
 
-- \ :file:`spring-mvc-rest.xml`\
+.. tabs::
+  .. group-tab:: Java Config
 
-  .. code-block:: xml
-    :emphasize-lines: 22, 32-34, 39-41, 44-47, 51, 61, 65
-
-    <?xml version="1.0" encoding="UTF-8"?>
-    <beans xmlns="http://www.springframework.org/schema/beans" 
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xmlns:context="http://www.springframework.org/schema/context"
-        xmlns:mvc="http://www.springframework.org/schema/mvc"
-        xmlns:util="http://www.springframework.org/schema/util"
-        xmlns:aop="http://www.springframework.org/schema/aop"
-        xsi:schemaLocation="
-            http://www.springframework.org/schema/mvc
-            https://www.springframework.org/schema/mvc/spring-mvc.xsd
-            http://www.springframework.org/schema/beans
-            https://www.springframework.org/schema/beans/spring-beans.xsd
-            http://www.springframework.org/schema/util
-            https://www.springframework.org/schema/util/spring-util.xsd
-            http://www.springframework.org/schema/context
-            https://www.springframework.org/schema/context/spring-context.xsd
-            http://www.springframework.org/schema/aop
-            https://www.springframework.org/schema/aop/spring-aop.xsd
-    ">
-
-        <!-- Load properties files for placeholder. -->
-        <!-- (1) -->
-        <context:property-placeholder 
-            location="classpath*:/META-INF/spring/*.properties" />
+    - \ :file:`SpringMvcRestConfig.java`\
     
-        <bean id="jsonMessageConverter"
-            class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
-            <property name="objectMapper" ref="objectMapper" />
-        </bean>
-    
-        <bean id="objectMapper" class="org.springframework.http.converter.json.Jackson2ObjectMapperFactoryBean">
-            <!-- (2) -->
-            <property name="dateFormat">
-                <bean class="com.fasterxml.jackson.databind.util.StdDateFormat" />
-            </property>
-        </bean>
+      .. code-block:: java
 
-        <!-- Register components of Spring MVC. -->
-        <!-- (3) -->
-         <mvc:annotation-driven>
-            <mvc:message-converters register-defaults="false">
-                <ref bean="jsonMessageConverter" />
-            </mvc:message-converters>
-            <!-- (4) -->
-            <mvc:argument-resolvers>
-                <bean class="org.springframework.data.web.PageableHandlerMethodArgumentResolver" />
-            </mvc:argument-resolvers>
-        </mvc:annotation-driven>
+        @EnableAspectJAutoProxy // (7)
+        @ComponentScan("com.example.project.api") // (6)
+        @EnableWebMvc
+        @Configuration
+        public class SpringMvcRestConfig implements WebMvcConfigurer {
         
-        <!-- Register components of interceptor. -->
-        <!-- (5) -->
-        <mvc:interceptors>
-            <mvc:interceptor>
-                <mvc:mapping path="/**" />
-                <bean class="org.terasoluna.gfw.web.logging.TraceLoggingInterceptor" />
-            </mvc:interceptor>
-            <!-- omitted -->
-        </mvc:interceptors>
+            @Inject
+            private LocalValidatorFactoryBean validator;
+
+            // (1)        
+            @Bean
+            public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer(
+                    @Value("classpath*:/META-INF/spring/*.properties") Resource... properties) {
+                PropertySourcesPlaceholderConfigurer bean = new PropertySourcesPlaceholderConfigurer();
+                bean.setLocations(properties);
+                return bean;
+            }
+        
+            @Bean("jsonMessageConverter")
+            public MappingJackson2HttpMessageConverter jsonMessageConverter(
+                    ObjectMapper objectMapper) {
+                MappingJackson2HttpMessageConverter bean = new MappingJackson2HttpMessageConverter();
+                bean.setObjectMapper(objectMapper);
+                return bean;
+            }
+        
+            @Bean("objectMapper")
+            public ObjectMapper objectMapper() {
+                Jackson2ObjectMapperFactoryBean bean = new Jackson2ObjectMapperFactoryBean();
+                bean.setDateFormat(stdDateFormat()); // (2)
+                bean.afterPropertiesSet();
+                return bean.getObject();
+            }
+        
+            @Bean
+            public StdDateFormat stdDateFormat() {
+                return new StdDateFormat();
+            }
+        
+            @Override
+            public Validator getValidator() {
+                return validator;
+            }
+        
+            // (3)
+            @Override
+            public void configureMessageConverters(
+                    List<HttpMessageConverter<?>> converters) {
+                converters.add(jsonMessageConverter(objectMapper()));
+            }
+        
+            // (4)
+            @Override
+            public void addArgumentResolvers(
+                    List<HandlerMethodArgumentResolver> argumentResolvers) {
+                argumentResolvers.add(pageableHandlerMethodArgumentResolver());
+            }
+        
+            @Bean
+            public PageableHandlerMethodArgumentResolver pageableHandlerMethodArgumentResolver() {
+                return new PageableHandlerMethodArgumentResolver();
+            }
+        
+            // (5)
+            @Override
+            public void addInterceptors(InterceptorRegistry registry) {
+                registry.addInterceptor(traceLoggingInterceptor()).addPathPatterns("/**");
+            }
+        
+            @Bean
+            public TraceLoggingInterceptor traceLoggingInterceptor() {
+                return new TraceLoggingInterceptor();
+            }
+        
+            @Bean("handlerExceptionResolverLoggingInterceptor")
+            public HandlerExceptionResolverLoggingInterceptor handlerExceptionResolverLoggingInterceptor(
+                    ExceptionLogger exceptionLogger) {
+                HandlerExceptionResolverLoggingInterceptor bean = new HandlerExceptionResolverLoggingInterceptor();
+                bean.setExceptionLogger(exceptionLogger);
+                return bean;
+            }
+        
+            // (7)
+            @Bean
+            public Advisor handlerExceptionResolverLoggingInterceptorAdvisor(
+                    HandlerExceptionResolverLoggingInterceptor handlerExceptionResolverLoggingInterceptor) {
+                AspectJExpressionPointcut pointcut = new AspectJExpressionPointcut();
+                pointcut.setExpression(
+                        "execution(* org.springframework.web.servlet.HandlerExceptionResolver.resolveException(..))");
+                return new DefaultPointcutAdvisor(pointcut, handlerExceptionResolverLoggingInterceptor);
+            }
+        
+        }
     
-        <!-- Scan & register components of RESTful Web Service. -->
-        <!-- (6) -->
-        <context:component-scan base-package="com.example.project.api" />
+      .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
+      .. list-table::
+        :header-rows: 1
+        :widths: 10 90
+        :class: longtable
+    
+        * - 項番
+          - 説明
+        * - | (1)
+          - | アプリケーション層のコンポーネントでプロパティファイルに定義されている値を参照する必要がある場合は、\ ``<context:property-placeholder>``\ 要素を使用してプロパティファイルを読み込む必要がある。
+            | プロパティファイルから値を取得する方法の詳細については、「\ :doc:`../GeneralFuncDetail/PropertyManagement`\ 」を参照されたい。
+        * - | (2)
+          - | JSONの日付フィールドの形式をISO-8601の拡張形式として扱うための設定を追加する。
+        * - | (3)
+          - | RESTful Web Serviceを提供するために必要となるSpring MVCのフレームワークコンポーネントをbean登録する。
+            | 本設定を行うことで、リソースのフォーマットとしてJSONを使用する事ができる。
+            | 上記例では、\ ``configureMessageConverters``\ を実装することでデフォルトの\ ``MessageConverter``\ を登録させないようにしており、リソースの形式はJSONに限定される。
+            |
+            | リソースのフォーマットとしてXMLを使用する場合は、XXE 対策が行われているXML用の\ ``MessageConverter``\ を指定すること。指定方法は、「\ :ref:`RESTAppendixEnabledXXEProtection`\ 」を参照されたい。
+        * - | (4)
+          - | ページ検索機能を有効にするための設定を追加する。
+            | ページ検索の詳細については、「\ :doc:`../WebApplicationDetail/Pagination`\ 」を参照されたい。
+            | ページ検索が必要ない場合は、本設定は不要であるが、定義があっても問題はない。
+        * - | (5)
+          - | Spring MVCのインターセプタをbean登録する。
+            | 上記例では、共通ライブラリから提供されている\ ``TraceLoggingInterceptor``\ のみを定義している。
+        * - | (6)
+          - | RESTful Web Service用のアプリケーション層のコンポーネント(ControllerやHelperクラスなど)をスキャンしてbean登録する。
+            | \ ``com.example.project.api``\ の部分は\ **プロジェクト毎のパッケージ名となる。**\
+        * - | (7)
+          - | Spring MVCのフレームワークでハンドリングされた例外を、ログ出力するためのAOP定義を指定する。
+            | \ ``HandlerExceptionResolverLoggingInterceptor``\ については、「\ :doc:`../WebApplicationDetail/ExceptionHandling`\ 」を参照されたい。
 
-        <!-- Register components of AOP. -->
-        <!-- (7) -->
-        <bean id="handlerExceptionResolverLoggingInterceptor" 
-            class="org.terasoluna.gfw.web.exception.HandlerExceptionResolverLoggingInterceptor">
-            <property name="exceptionLogger" ref="exceptionLogger" />
-        </bean>
-        <aop:config>
-            <aop:advisor advice-ref="handlerExceptionResolverLoggingInterceptor"
-                pointcut="execution(* org.springframework.web.servlet.HandlerExceptionResolver.resolveException(..))" />
-        </aop:config>
+  .. group-tab:: XML Config
 
-    </beans>
-
-  .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
-  .. list-table::
-    :header-rows: 1
-    :widths: 10 90
-    :class: longtable
-
-    * - 項番
-      - 説明
-    * - | (1)
-      - | アプリケーション層のコンポーネントでプロパティファイルに定義されている値を参照する必要がある場合は、\ ``<context:property-placeholder>``\ 要素を使用してプロパティファイルを読み込む必要がある。
-        | プロパティファイルから値を取得する方法の詳細については、「\ :doc:`../GeneralFuncDetail/PropertyManagement`\ 」を参照されたい。
-    * - | (2)
-      - | JSONの日付フィールドの形式をISO-8601の拡張形式として扱うための設定を追加する。
-    * - | (3)
-      - | RESTful Web Serviceを提供するために必要となるSpring MVCのフレームワークコンポーネントをbean登録する。
-        | 本設定を行うことで、リソースのフォーマットとしてJSONを使用する事ができる。
-        | 上記例では、\ ``<mvc:message-converters``>\ 要素のregister-defaults属性を\ ``false``\ にしているので、リソースの形式はJSONに限定される。
-        |
-        | リソースのフォーマットとしてXMLを使用する場合は、XXE 対策が行われているXML用の\ ``MessageConverter``\ を指定すること。指定方法は、「\ :ref:`RESTAppendixEnabledXXEProtection`\ 」を参照されたい。
-    * - | (4)
-      - | ページ検索機能を有効にするための設定を追加する。
-        | ページ検索の詳細については、「\ :doc:`../WebApplicationDetail/Pagination`\ 」を参照されたい。
-        | ページ検索が必要ない場合は、本設定は不要であるが、定義があっても問題はない。
-    * - | (5)
-      - | Spring MVCのインターセプタをbean登録する。
-        | 上記例では、共通ライブラリから提供されている\ ``TraceLoggingInterceptor``\ を定義している。
-    * - | (6)
-      - | RESTful Web Service用のアプリケーション層のコンポーネント(ControllerやHelperクラスなど)をスキャンしてbean登録する。
-        | \ ``com.example.project.api``\ の部分は\ **プロジェクト毎のパッケージ名となる。**\
-    * - | (7)
-      - | Spring MVCのフレームワークでハンドリングされた例外を、ログ出力するためのAOP定義を指定する。
-        | \ ``HandlerExceptionResolverLoggingInterceptor``\ については、「\ :doc:`../WebApplicationDetail/ExceptionHandling`\ 」を参照されたい。
+    - \ :file:`spring-mvc-rest.xml`\
+    
+      .. code-block:: xml
+    
+        <?xml version="1.0" encoding="UTF-8"?>
+        <beans xmlns="http://www.springframework.org/schema/beans" 
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:context="http://www.springframework.org/schema/context"
+            xmlns:mvc="http://www.springframework.org/schema/mvc"
+            xmlns:util="http://www.springframework.org/schema/util"
+            xmlns:aop="http://www.springframework.org/schema/aop"
+            xsi:schemaLocation="
+                http://www.springframework.org/schema/mvc
+                https://www.springframework.org/schema/mvc/spring-mvc.xsd
+                http://www.springframework.org/schema/beans
+                https://www.springframework.org/schema/beans/spring-beans.xsd
+                http://www.springframework.org/schema/util
+                https://www.springframework.org/schema/util/spring-util.xsd
+                http://www.springframework.org/schema/context
+                https://www.springframework.org/schema/context/spring-context.xsd
+                http://www.springframework.org/schema/aop
+                https://www.springframework.org/schema/aop/spring-aop.xsd
+        ">
+    
+            <!-- Load properties files for placeholder. -->
+            <!-- (1) -->
+            <context:property-placeholder 
+                location="classpath*:/META-INF/spring/*.properties" />
+        
+            <bean id="jsonMessageConverter"
+                class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+                <property name="objectMapper" ref="objectMapper" />
+            </bean>
+        
+            <bean id="objectMapper" class="org.springframework.http.converter.json.Jackson2ObjectMapperFactoryBean">
+                <!-- (2) -->
+                <property name="dateFormat">
+                    <bean class="com.fasterxml.jackson.databind.util.StdDateFormat" />
+                </property>
+            </bean>
+    
+            <!-- Register components of Spring MVC. -->
+            <!-- (3) -->
+             <mvc:annotation-driven>
+                <mvc:message-converters register-defaults="false">
+                    <ref bean="jsonMessageConverter" />
+                </mvc:message-converters>
+                <!-- (4) -->
+                <mvc:argument-resolvers>
+                    <bean class="org.springframework.data.web.PageableHandlerMethodArgumentResolver" />
+                </mvc:argument-resolvers>
+            </mvc:annotation-driven>
+            
+            <!-- Register components of interceptor. -->
+            <!-- (5) -->
+            <mvc:interceptors>
+                <mvc:interceptor>
+                    <mvc:mapping path="/**" />
+                    <bean class="org.terasoluna.gfw.web.logging.TraceLoggingInterceptor" />
+                </mvc:interceptor>
+                <!-- omitted -->
+            </mvc:interceptors>
+        
+            <!-- Scan & register components of RESTful Web Service. -->
+            <!-- (6) -->
+            <context:component-scan base-package="com.example.project.api" />
+    
+            <!-- Register components of AOP. -->
+            <!-- (7) -->
+            <aop:aspectj-autoproxy />
+            <bean id="handlerExceptionResolverLoggingInterceptor" 
+                class="org.terasoluna.gfw.web.exception.HandlerExceptionResolverLoggingInterceptor">
+                <property name="exceptionLogger" ref="exceptionLogger" />
+            </bean>
+            <aop:config>
+                <aop:advisor advice-ref="handlerExceptionResolverLoggingInterceptor"
+                    pointcut="execution(* org.springframework.web.servlet.HandlerExceptionResolver.resolveException(..))" />
+            </aop:config>
+    
+        </beans>
+    
+      .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
+      .. list-table::
+        :header-rows: 1
+        :widths: 10 90
+        :class: longtable
+    
+        * - 項番
+          - 説明
+        * - | (1)
+          - | アプリケーション層のコンポーネントでプロパティファイルに定義されている値を参照する必要がある場合は、\ ``<context:property-placeholder>``\ 要素を使用してプロパティファイルを読み込む必要がある。
+            | プロパティファイルから値を取得する方法の詳細については、「\ :doc:`../GeneralFuncDetail/PropertyManagement`\ 」を参照されたい。
+        * - | (2)
+          - | JSONの日付フィールドの形式をISO-8601の拡張形式として扱うための設定を追加する。
+        * - | (3)
+          - | RESTful Web Serviceを提供するために必要となるSpring MVCのフレームワークコンポーネントをbean登録する。
+            | 本設定を行うことで、リソースのフォーマットとしてJSONを使用する事ができる。
+            | 上記例では、\ ``<mvc:message-converters``>\ 要素のregister-defaults属性を\ ``false``\ にしているので、リソースの形式はJSONに限定される。
+            |
+            | リソースのフォーマットとしてXMLを使用する場合は、XXE 対策が行われているXML用の\ ``MessageConverter``\ を指定すること。指定方法は、「\ :ref:`RESTAppendixEnabledXXEProtection`\ 」を参照されたい。
+        * - | (4)
+          - | ページ検索機能を有効にするための設定を追加する。
+            | ページ検索の詳細については、「\ :doc:`../WebApplicationDetail/Pagination`\ 」を参照されたい。
+            | ページ検索が必要ない場合は、本設定は不要であるが、定義があっても問題はない。
+        * - | (5)
+          - | Spring MVCのインターセプタをbean登録する。
+            | 上記例では、共通ライブラリから提供されている\ ``TraceLoggingInterceptor``\ のみを定義している。
+        * - | (6)
+          - | RESTful Web Service用のアプリケーション層のコンポーネント(ControllerやHelperクラスなど)をスキャンしてbean登録する。
+            | \ ``com.example.project.api``\ の部分は\ **プロジェクト毎のパッケージ名となる。**\
+        * - | (7)
+          - | Spring MVCのフレームワークでハンドリングされた例外を、ログ出力するためのAOP定義を指定する。
+            | \ ``HandlerExceptionResolverLoggingInterceptor``\ については、「\ :doc:`../WebApplicationDetail/ExceptionHandling`\ 」を参照されたい。
 
 .. note:: \ **ObjectMapperのBean定義方法について**\
 
@@ -1748,24 +1886,41 @@ RESTful Web Serviceで必要となるSpring MVCのコンポーネントを有効
 
   なお、\ ``ObjectMapper``\ を直接Bean定義するスタイルから\ ``Jackson2ObjectMapperFactoryBean``\ を使用するスタイルに変更する場合は、以下のコンフィギュレーションに対するデフォルト値がJacksonのデフォルト値と異なる(無効化されている)点に注意すること。
 
-  * `MapperFeature#DEFAULT_VIEW_INCLUSION <https://fasterxml.github.io/jackson-databind/javadoc/2.14/com/fasterxml/jackson/databind/MapperFeature.html?is-external=true#DEFAULT_VIEW_INCLUSION>`_\
-  * `DeserializationFeature#FAIL_ON_UNKNOWN_PROPERTIES <https://fasterxml.github.io/jackson-databind/javadoc/2.14/com/fasterxml/jackson/databind/DeserializationFeature.html?is-external=true#FAIL_ON_UNKNOWN_PROPERTIES>`_\
+  * \ `MapperFeature#DEFAULT_VIEW_INCLUSION <https://fasterxml.github.io/jackson-databind/javadoc/2.14/com/fasterxml/jackson/databind/MapperFeature.html?is-external=true#DEFAULT_VIEW_INCLUSION>`_\
+  * \ `DeserializationFeature#FAIL_ON_UNKNOWN_PROPERTIES <https://fasterxml.github.io/jackson-databind/javadoc/2.14/com/fasterxml/jackson/databind/DeserializationFeature.html?is-external=true#FAIL_ON_UNKNOWN_PROPERTIES>`_\
 
   \ ``ObjectMapper``\ の動作をJacksonのデフォルト動作にあわせたい場合は、\ ``featuresToEnable``\ プロパティを使用して上記のコンフィギュレーションを有効化する。
 
-    .. code-block:: xml
+    .. tabs::
+      .. group-tab:: Java Config
 
-      <bean id="objectMapper" class="org.springframework.http.converter.json.Jackson2ObjectMapperFactoryBean">
-          <!-- ... -->
-          <property name="featuresToEnable">
-              <array>
-                  <util:constant static-field="com.fasterxml.jackson.databind.MapperFeature.DEFAULT_VIEW_INCLUSION"/>
-                  <util:constant static-field="com.fasterxml.jackson.databind.DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES"/>
-              </array>
-          </property>
-      </bean>
+        .. code-block:: java
+    
+          @Bean("objectMapper")
+          public ObjectMapper objectMapper() {
+              Jackson2ObjectMapperFactoryBean bean = new Jackson2ObjectMapperFactoryBean();
+              bean.setDateFormat(stdDateFormat());
+              bean.setFeaturesToEnable(MapperFeature.DEFAULT_VIEW_INCLUSION,
+                      DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
+              bean.afterPropertiesSet();
+              return bean.getObject();
+          }
 
-  \ ``Jackson2ObjectMapperFactoryBean``\ の詳細については、\ `Jackson2ObjectMapperFactoryBeanのJavaDoc <https://docs.spring.io/spring-framework/docs/6.0.3/javadoc-api/org/springframework/http/converter/json/Jackson2ObjectMapperFactoryBean.html>`_\ を参照されたい。
+      .. group-tab:: XML Config
+
+        .. code-block:: xml
+    
+          <bean id="objectMapper" class="org.springframework.http.converter.json.Jackson2ObjectMapperFactoryBean">
+              <!-- ... -->
+              <property name="featuresToEnable">
+                  <array>
+                      <util:constant static-field="com.fasterxml.jackson.databind.MapperFeature.DEFAULT_VIEW_INCLUSION"/>
+                      <util:constant static-field="com.fasterxml.jackson.databind.DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES"/>
+                  </array>
+              </property>
+          </bean>
+
+  \ ``Jackson2ObjectMapperFactoryBean``\ の詳細については、\ `Jackson2ObjectMapperFactoryBeanのJavaDoc <https://docs.spring.io/spring-framework/docs/6.1.3/javadoc-api/org/springframework/http/converter/json/Jackson2ObjectMapperFactoryBean.html>`_\ を参照されたい。
 
 |
 
@@ -1778,59 +1933,114 @@ RESTful Web Service用のサーブレットの設定
 
 - \ :file:`web.xml`\
 
-  .. code-block:: xml
-    :emphasize-lines: 4-5,9-10,14-18
+  .. tabs::
+    .. group-tab:: Java Config
 
-    <!-- omitted -->
+      .. code-block:: xml
+    
+        <!-- omitted -->
 
-    <servlet>
-        <!-- (1) -->
-        <servlet-name>restAppServlet</servlet-name>
-        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
-        <init-param>
-            <param-name>contextConfigLocation</param-name>
-            <!-- (2) -->
-            <param-value>classpath*:META-INF/spring/spring-mvc-rest.xml</param-value>
-        </init-param>
-        <load-on-startup>1</load-on-startup>
-    </servlet>
-    <!-- (3) -->
-    <servlet-mapping>
-        <servlet-name>restAppServlet</servlet-name>
-        <url-pattern>/api/v1/*</url-pattern>
-    </servlet-mapping>
+        <servlet>
+            <!-- (1) -->
+            <servlet-name>restApiServlet</servlet-name>
+            <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+            <init-param>
+                <param-name>contextClass</param-name>
+                <param-value>
+                    org.springframework.web.context.support.AnnotationConfigWebApplicationContext
+                </param-value>
+            </init-param>
+            <init-param>
+                <param-name>contextConfigLocation</param-name>
+                <!-- (2) -->
+                <param-value>com.example.project.api.config.web.SpringMvcRestConfig</param-value>
+            </init-param>
+            <load-on-startup>1</load-on-startup>
+        </servlet>
+        <!-- (3) -->
+        <servlet-mapping>
+            <servlet-name>restAppServlet</servlet-name>
+            <url-pattern>/api/v1/*</url-pattern>
+        </servlet-mapping>
+    
+        <!-- omitted -->
+    
+      .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
+      .. list-table::
+        :header-rows: 1
+        :widths: 10 90
+    
+        * - 項番
+          - 説明
+        * - | (1)
+          - | \ ``<servlet-name>``\ 要素に、RESTful Web Service用のサーブレットであることを示す名前を指定する。
+            | 上記例では、サーブレット名として\ ``restAppServlet``\ を指定している。
+        * - | (2)
+          - | RESTful Web Service用の\ ``DispatcherServlet``\ を構築する際に使用するSpring MVCのbean定義ファイルを指定する。
+            | 上記例では、Spring MVCのbean定義ファイルとして、\ :file:`com.example.project.api.config.web.SpringMvcRestConfig.java`\ を指定している。
+        * - | (3)
+          - | RESTful Web Service用の\ ``DispatcherServlet``\ へマッピングするサーブレットパスのパターンの指定を行う。
+            | 上記例では、\ ``/api/v1/``\ 配下のサーブレットパスをRESTful Web Service用の\ ``DispatcherServlet``\ にマッピングしている。
+            | 具体的には、
+            |   \ ``/api/v1/``\
+            |   \ ``/api/v1/members``\
+            |   \ ``/api/v1/members/xxxxx``\
+            | といったサーブレットパスが、RESTful Web Service用の\ ``DispatcherServlet``\ (\ ``restAppServlet``\ )にマッピングされる。
 
-    <!-- omitted -->
+    .. group-tab:: XML Config
 
-  .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
-  .. list-table::
-    :header-rows: 1
-    :widths: 10 90
+      .. code-block:: xml
+    
+        <!-- omitted -->
+    
+        <servlet>
+            <!-- (1) -->
+            <servlet-name>restAppServlet</servlet-name>
+            <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+            <init-param>
+                <param-name>contextConfigLocation</param-name>
+                <!-- (2) -->
+                <param-value>classpath*:META-INF/spring/spring-mvc-rest.xml</param-value>
+            </init-param>
+            <load-on-startup>1</load-on-startup>
+        </servlet>
+        <!-- (3) -->
+        <servlet-mapping>
+            <servlet-name>restAppServlet</servlet-name>
+            <url-pattern>/api/v1/*</url-pattern>
+        </servlet-mapping>
+    
+        <!-- omitted -->
+    
+      .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
+      .. list-table::
+        :header-rows: 1
+        :widths: 10 90
+    
+        * - 項番
+          - 説明
+        * - | (1)
+          - | \ ``<servlet-name>``\ 要素に、RESTful Web Service用のサーブレットであることを示す名前を指定する。
+            | 上記例では、サーブレット名として\ ``restAppServlet``\ を指定している。
+        * - | (2)
+          - | RESTful Web Service用の\ ``DispatcherServlet``\ を構築する際に使用するSpring MVCのbean定義ファイルを指定する。
+            | 上記例では、Spring MVCのbean定義ファイルとして、クラスパス上にある\ :file:`META-INF/spring/spring-mvc-rest.xml`\ を指定している。
+        * - | (3)
+          - | RESTful Web Service用の\ ``DispatcherServlet``\ へマッピングするサーブレットパスのパターンの指定を行う。
+            | 上記例では、\ ``/api/v1/``\ 配下のサーブレットパスをRESTful Web Service用の\ ``DispatcherServlet``\ にマッピングしている。
+            | 具体的には、
+            |   \ ``/api/v1/``\
+            |   \ ``/api/v1/members``\
+            |   \ ``/api/v1/members/xxxxx``\
+            | といったサーブレットパスが、RESTful Web Service用の\ ``DispatcherServlet``\ (\ ``restAppServlet``\ )にマッピングされる。
 
-    * - 項番
-      - 説明
-    * - | (1)
-      - | \ ``<servlet-name>``\ 要素に、RESTful Web Service用のサーブレットであることを示す名前を指定する。
-        | 上記例では、サーブレット名として\ ``restAppServlet``\ を指定している。
-    * - | (2)
-      - | RESTful Web Service用の\ ``DispatcherServlet``\ を構築する際に使用するSpring MVCのbean定義ファイルを指定する。
-        | 上記例では、Spring MVCのbean定義ファイルとして、クラスパス上にある\ :file:`META-INF/spring/spring-mvc-rest.xml`\ を指定している。
-    * - | (3)
-      - | RESTful Web Service用の\ ``DispatcherServlet``\ へマッピングするサーブレットパスのパターンの指定を行う。
-        | 上記例では、\ ``/api/v1/``\ 配下のサーブレットパスをRESTful Web Service用の\ ``DispatcherServlet``\ にマッピングしている。
-        | 具体的には、
-        |   \ ``/api/v1/``\
-        |   \ ``/api/v1/members``\
-        |   \ ``/api/v1/members/xxxxx``\
-        | といったサーブレットパスが、RESTful Web Service用の\ ``DispatcherServlet``\ (\ ``restAppServlet``\ )にマッピングされる。
+.. tip:: \ **@RequestMappingアノテーションのvalue属性に指定する値について**\
 
-  .. tip:: \ **@RequestMappingアノテーションのvalue属性に指定する値について**\
-
-    \ ``@RequestMapping``\ アノテーションのvalue属性に指定する値は、\ ``<url-pattern>``\ 要素で指定したワイルドカード("\ ``*``\ ")の部分の値を指定する。
+  \ ``@RequestMapping``\ アノテーションのvalue属性に指定する値は、\ ``<url-pattern>``\ 要素で指定したワイルドカード("\ ``*``\ ")の部分の値を指定する。
    
-    例えば、\ ``@RequestMapping(value = "members")``\ と指定した場合、\ ``/api/v1/members``\ といパスに対する処理を行うメソッドとしてデプロイされる。そのため、\ ``@RequestMapping``\ アノテーションのvalue属性には、分割したサーブレットへマッピングするためパス(\ ``api/v1``\ )を指定する必要はない。
+  例えば、\ ``@RequestMapping(value = "members")``\ と指定した場合、\ ``/api/v1/members``\ といパスに対する処理を行うメソッドとしてデプロイされる。そのため、\ ``@RequestMapping``\ アノテーションのvalue属性には、分割したサーブレットへマッピングするためパス(\ ``api/v1``\ )を指定する必要はない。
    
-    \ ``@RequestMapping(value = "api/v1/members")``\ と指定すると、\ ``/api/v1/api/v1/members``\ というパスに対する処理を行うメソッドとしてデプロイされてしまうので、注意すること。
+  \ ``@RequestMapping(value = "api/v1/members")``\ と指定すると、\ ``/api/v1/api/v1/members``\ というパスに対する処理を行うメソッドとしてデプロイされてしまうので、注意すること。
 
 |
 
@@ -2089,7 +2299,7 @@ REST API用パッケージの作成
 REST API用のクラスを格納するパッケージを作成する。
 
 | REST API用のクラスを格納するルートパッケージのパッケージ名は\ ``api``\ として、配下にリソース毎のパッケージ(リソース名の小文字)を作成する事を推奨する。
-| 説明で扱うリソース名は\ ``Member``\ なので、\ ``org.terasoluna.examples.rest.api.member``\ というパッケージとする。
+| 説明で扱うリソース名は\ ``Member``\ なので、\ ``com.examples.rest.api.member``\ というパッケージとする。
 
   .. note::
 
@@ -2116,7 +2326,7 @@ REST API用のクラスを格納するパッケージを作成する。
 
 | REST API用の共通部品を格納するパッケージは、REST API用のクラスを格納するルートパッケージ直下に\ ``common``\ という名前で作成し、サブパッケージは機能単位に作成する事を推奨する。
 | 例えば、エラーハンドリングを行う共通部品を格納するサブパッケージの場合、\ ``error``\ という名前でサブパッケージを作成する。
-| 以降の説明で作成する例外ハンドリング用のクラスは、\ ``org.terasoluna.examples.rest.api.common.error``\ というパッケージに格納している。
+| 以降の説明で作成する例外ハンドリング用のクラスは、\ ``com.examples.rest.api.common.error``\ というパッケージに格納している。
 
   .. note::
 
@@ -2227,9 +2437,8 @@ Resourceクラスの役割は以下の通りである。
 * \ :file:`MemberResource.java`\
 
   .. code-block:: java
-    :emphasize-lines: 18, 23-28, 68
 
-    package org.terasoluna.examples.rest.api.member;
+    package com.examples.rest.api.member;
     
     import java.io.Serializable;
     import java.time.LocalDate;
@@ -2331,9 +2540,8 @@ Resourceクラスの役割は以下の通りである。
 * \ :file:`MemberCredentialResource.java`\
 
   .. code-block:: java
-    :emphasize-lines: 13, 22
 
-    package org.terasoluna.examples.rest.api.member;
+    package com.examples.rest.api.member;
     
     import java.io.Serializable;
     import java.time.LocalDateTime;
@@ -2380,9 +2588,9 @@ Resourceクラスの役割は以下の通りである。
     * - | (4)
       - | Memberリソースの関連リソースとなるCredentialリソースを表現するJavaBean。
     * - | (5)
-      - | 値が\ ``null``\の時に、JSONにフィールド自体を出力しないようにするためのアノテーションを指定している。
+      - | 値が\ ``null``\ の時に、JSONにフィールド自体を出力しないようにするためのアノテーションを指定している。
         | これは、レスポンスするJSONの中にパスワードのフィールド出力しないようにするために行っている。
-        | 上記例ではNULLの場合(\ ``Inclusion.NON_NULL``\)に限っているが、値が空の場合(\ ``Inclusion.NON_EMPTY``\)という指定も可能である。
+        | 上記例ではNULLの場合(\ ``Inclusion.NON_NULL``\ )に限っているが、値が空の場合(\ ``Inclusion.NON_EMPTY``\ )という指定も可能である。
 
 |
 
@@ -2394,9 +2602,8 @@ Controllerクラスの作成
 | 全てのAPIの実装が完了した際のソースコードについては、\ :ref:`Appendix <RESTAppendixSoruceCodesOfMemberRestController>`\ を参照されたい。
 
   .. code-block:: java
-    :emphasize-lines: 7-8
 
-    package org.terasoluna.examples.rest.api.member;
+    package com.examples.rest.api.member;
     
     import org.springframework.web.bind.annotation.RestController;
 
@@ -2440,7 +2647,7 @@ Controllerクラスの作成
 
   .. tip::
  
-    \ ``@RestController``\ アノテーションの詳細については、\ `こちら <https://docs.spring.io/spring-framework/docs/6.0.3/javadoc-api/org/springframework/web/bind/annotation/RestController.html>`_\ を参照されたい。
+    \ ``@RestController``\ アノテーションの詳細については、\ `こちら <https://docs.spring.io/spring-framework/docs/6.1.3/javadoc-api/org/springframework/web/bind/annotation/RestController.html>`_\ を参照されたい。
 
     \ ``@RestController``\ アノテーションを使用せずに、\ ``@Controller``\ アノテーションと\ ``@ResponseBody``\ アノテーションを組み合わせてREST API用のControllerを作成する例を以下に示す。
 
@@ -2472,7 +2679,6 @@ URIで指定されたMemberリソースのコレクションをページ検索�
   | リソースのコレクションを取得する際に、検索条件が必要な場合は、検索条件を受け取るためのJavaBeanを作成する。
 
   .. code-block:: java
-    :emphasize-lines: 1, 5
 
     // (1)
     public class MembersSearchQuery implements Serializable {
@@ -2512,7 +2718,6 @@ URIで指定されたMemberリソースのコレクションをページ検索�
   | Memberリソースのコレクションをページ検索する処理を実装する。
   
   .. code-block:: java
-    :emphasize-lines: 10, 14, 16, 19, 21, 24, 27,35
 
     @RequestMapping("members")
     @RestController
@@ -2707,7 +2912,6 @@ URIで指定されたMemberリソースのコレクションをページ検索�
 * リクエスト例
 
   .. code-block:: http
-    :emphasize-lines: 1
 
     GET /rest-api-web/api/v1/members?name=Smith&page=0&size=2 HTTP/1.1
     Accept: text/plain, application/json, application/*+json, */*
@@ -2720,7 +2924,6 @@ URIで指定されたMemberリソースのコレクションをページ検索�
 * レスポンス例
 
   .. code-block:: http
-    :emphasize-lines: 1
 
     HTTP/1.1 200 OK
     Server: Apache-Coyote/1.1
@@ -2740,7 +2943,6 @@ URIで指定されたMemberリソースのコレクションをページ検索�
     Resourceクラスのリストを直接扱う場合のControllerのメソッドは以下のような定義となる。
 
       .. code-block:: java
-        :emphasize-lines: 3
 
         @GetMapping
         @ResponseStatus(HttpStatus.OK)
@@ -2802,7 +3004,6 @@ URIで指定されたMemberリソースのコレクションをページ検索�
   | 指定されたMemberリソースを作成し、Memberリソースをコレクションに追加する処理を実装する。
 
   .. code-block:: java
-    :emphasize-lines: 7, 9, 12, 16
 
     @RequestMapping("members")
     @RestController
@@ -2860,7 +3061,6 @@ URIで指定されたMemberリソースのコレクションをページ検索�
 * リクエスト例
 
   .. code-block:: http
-    :emphasize-lines: 1
 
     POST /rest-api-web/api/v1/members HTTP/1.1
     Accept: text/plain, application/json, application/*+json, */*
@@ -2877,7 +3077,6 @@ URIで指定されたMemberリソースのコレクションをページ検索�
 * レスポンス例
 
   .. code-block:: http
-    :emphasize-lines: 1
 
     HTTP/1.1 201 Created
     Server: Apache-Coyote/1.1
@@ -2900,7 +3099,6 @@ URIで指定されたMemberリソースを取得するREST APIの実装例を、
   | URIで指定されたMemberリソースを取得する処理を実装する。
 
   .. code-block:: java
-    :emphasize-lines: 7, 9, 12, 15
 
     @RequestMapping("members")
     @RestController
@@ -2945,7 +3143,7 @@ URIで指定されたMemberリソースを取得するREST APIの実装例を、
     * - | (3)
       - | リソースを一意に識別するための値を、パス変数から取得する。
         | 引数アノテーションとして、\ ``@PathVariable("memberId")``\ を指定することで、パス変数(\ ``{memberId}``\ )に指定された値をメソッドの引数として受け取ることが出来る。
-        | パス変数の詳細については、「\ :ref:`controller_method_argument-pathvariable-label`\」を参照されたい。
+        | パス変数の詳細については、「\ :ref:`controller_method_argument-pathvariable-label`\ 」を参照されたい。
         | 上記例だと、URIが\ ``/api/v1/members/M12345``\ の場合、引数の\ ``memberId``\ に\ ``M12345``\ が格納される。
     * - | (4)
       - | ドメイン層のServiceのメソッドを呼び出し、パス変数から取得したIDに一致するリソースの情報(Entityなど)を取得する。
@@ -2956,7 +3154,6 @@ URIで指定されたMemberリソースを取得するREST APIの実装例を、
 * リクエスト例
 
   .. code-block:: http
-    :emphasize-lines: 1
 
     GET /rest-api-web/api/v1/members/M000000003 HTTP/1.1
     Accept: text/plain, application/json, application/*+json, */*
@@ -2969,7 +3166,6 @@ URIで指定されたMemberリソースを取得するREST APIの実装例を、
 * レスポンス例
 
   .. code-block:: http
-    :emphasize-lines: 1
 
     HTTP/1.1 200 OK
     Server: Apache-Coyote/1.1
@@ -2992,7 +3188,6 @@ URIで指定されたMemberリソースを更新するREST APIの実装例を、
   | URIで指定されたMemberリソースを更新する処理を実装する。
 
   .. code-block:: java
-    :emphasize-lines: 7, 9, 13, 17
 
     @RequestMapping("members")
     @RestController
@@ -3054,7 +3249,6 @@ URIで指定されたMemberリソースを更新するREST APIの実装例を、
 * リクエスト例
 
   .. code-block:: http
-    :emphasize-lines: 1
 
     PUT /rest-api-web/api/v1/members/M000000004 HTTP/1.1
     Accept: text/plain, application/json, application/*+json, */*
@@ -3071,7 +3265,6 @@ URIで指定されたMemberリソースを更新するREST APIの実装例を、
 * レスポンス例
 
   .. code-block:: http
-    :emphasize-lines: 1
 
     HTTP/1.1 200 OK
     Server: Apache-Coyote/1.1
@@ -3094,7 +3287,6 @@ URIで指定されたMemberリソースを削除するREST APIの実装例を、
   | URIで指定されたMemberリソースを削除する処理を実装する。
 
   .. code-block:: java
-    :emphasize-lines: 7, 9, 14
 
     @RequestMapping("members")
     @RestController
@@ -3144,7 +3336,6 @@ URIで指定されたMemberリソースを削除するREST APIの実装例を、
 * リクエスト例
 
   .. code-block:: http
-    :emphasize-lines: 1
 
     DELETE /rest-api-web/api/v1/members/M000000005 HTTP/1.1
     Accept: text/plain, application/json, application/*+json, */*
@@ -3157,7 +3348,6 @@ URIで指定されたMemberリソースを削除するREST APIの実装例を、
 * レスポンス例
 
   .. code-block:: http
-    :emphasize-lines: 1
 
     HTTP/1.1 204 No Content
     Server: Apache-Coyote/1.1
@@ -3188,8 +3378,8 @@ RESTful Web Serviceで発生した例外のハンドリング方法について�
 | なお、個別に実装が必要になるのは、赤枠の部分となる。
 
   .. figure:: ./images_REST/RESTHowToUseExceptionHandling.png
-   :alt: Image of exception handling by Spring MVC
-   :width: 100%
+    :alt: Image of exception handling by Spring MVC
+    :width: 100%
 
 
   .. tabularcolumns:: |p{0.10\linewidth}|p{0.20\linewidth}|p{0.70\linewidth}|
@@ -3252,9 +3442,8 @@ RESTful Web Serviceで発生した例外のハンドリング方法について�
 * エラー情報を保持するJavaBeanを作成する。
 
   .. code-block:: java
-    :emphasize-lines: 9, 19, 22
 
-    package org.terasoluna.examples.rest.api.common.error;
+    package com.examples.rest.api.common.error;
     
     import java.io.Serializable;
     import java.util.ArrayList;
@@ -3331,6 +3520,7 @@ RESTful Web Serviceで発生した例外のハンドリング方法について�
   .. tip::   
  
     フィールドに\ ``@JsonInclude(JsonInclude.Include.NON_EMPTY)``\ を指定することで、値が\ ``null``\ や空の場合にJSONに項目が出力されないようにする事が出来る。
+
     項目を出力させないための条件を\ ``null``\ に限定したい場合は、\ ``@JsonInclude(JsonInclude.Include.NON_NULL)``\ を指定すればよい。
 
 |
@@ -3340,7 +3530,6 @@ RESTful Web Serviceで発生した例外のハンドリング方法について�
   全ての例外ハンドリングの実装が完了した際のソースコードについては、\ :ref:`Appendix <RESTAppendixSoruceCodesOfApiErrorCreator>`\ を参照されたい。
 
   .. code-block:: java
-    :emphasize-lines: 1, 10
 
     // (4)
     @Component
@@ -3388,7 +3577,6 @@ RESTful Web Serviceで発生した例外のハンドリング方法について�
   全ての例外ハンドリングの実装が完了した際のソースコードについては、\ :ref:`Appendix <RESTAppendixSoruceCodesOfApiGlobalExceptionHandler>`\ を参照されたい。
 
   .. code-block:: java
-    :emphasize-lines: 1-2, 10-12, 16, 24
 
     @ControllerAdvice // (6)
     public class ApiGlobalExceptionHandler extends ResponseEntityExceptionHandler {
@@ -3421,7 +3609,6 @@ RESTful Web Serviceで発生した例外のハンドリング方法について�
 
     }
 
-
   .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
   .. list-table::
     :header-rows: 1
@@ -3450,24 +3637,22 @@ RESTful Web Serviceで発生した例外のハンドリング方法について�
   .. tip:: \ **@ControllerAdviceアノテーションの属性について**\
 
     \ ``@ControllerAdvice``\ アノテーションの属性を指定することで、\ ``@ControllerAdvice``\ が付与されたクラスで実装したメソッドを適用するControllerを柔軟に指定できる。
+
     属性の詳細については、\ :ref:`@ControllerAdviceの属性 <application_layer_controller_advice_attribute>`\ を参照されたい。
 
-  .. note:: **@ControllerAdviceアノテーションの属性使用時の注意点**
+  .. note:: \ **@ControllerAdviceアノテーションの属性使用時の注意点**\
 
-    \ ``@ControllerAdvice``\ アノテーションの属性を使用することで、さまざまな粒度で例外ハンドリングを共通化することができるようになるが、
-    アプリケーション共通の例外ハンドラクラス(上記例の\ ``ApiGlobalExceptionHandler``\ クラスに相当するクラス)に対しては、\ ``@ControllerAdvice``\ アノテーションの属性を指定しない方がよい。
+    \ ``@ControllerAdvice``\ アノテーションの属性を使用することで、さまざまな粒度で例外ハンドリングを共通化することができるようになるが、アプリケーション共通の例外ハンドラクラス(上記例の\ ``ApiGlobalExceptionHandler``\ クラスに相当するクラス)に対しては、\ ``@ControllerAdvice``\ アノテーションの属性を指定しない方がよい。
 
     \ ``ApiGlobalExceptionHandler``\ に付与する\ ``@ControllerAdvice``\ アノテーションに属性を指定した場合、Spring MVCが提供するフレームワーク処理の中で発生する一部の例外をハンドリングできないケースがある。
 
-    具体的には、リクエストに対応するREST API(Controllerのハンドラメソッド)が見つからない時に発生する例外を\ ``ApiGlobalExceptionHandler``\ クラスでハンドリングする事ができないため、
-    「405 Method Not Allowed」などのエラーを正しく応答する事が出来なくなってしまう。
+    具体的には、リクエストに対応するREST API(Controllerのハンドラメソッド)が見つからない時に発生する例外を\ ``ApiGlobalExceptionHandler``\ クラスでハンドリングする事ができないため、「405 Method Not Allowed」などのエラーを正しく応答する事が出来なくなってしまう。
 
 |
 
 * レスポンス例
 
   .. code-block:: http
-    :emphasize-lines: 1, 9
 
     HTTP/1.1 400 Bad Request
     Server: Apache-Coyote/1.1
@@ -3500,14 +3685,9 @@ RESTful Web Serviceで発生した例外のハンドリング方法について�
     * - | (1)
       - | org.springframework.web.bind.
         | MethodArgumentNotValidException
-      - | リクエストBODYに指定されたJSONやXMLに対する入力チェックでエラーが発生した場合、本例外が発生する。
-        | 具体的には、リソースのPOST又はPUT時に指定するリソースに不正な値が指定されている場合に発生する。
+      - | リクエストBODYに指定されたJSONやXML又はリクエストパラメータ(key=value形式のクエリ文字列)に対する入力チェックでエラーが発生した場合、本例外が発生する。
+        | 具体的には、リソースのPOST又はPUT時に指定するリソースに不正な値が指定されている場合や、リソースコレクションのGET時に指定する検索条件に不正な値が指定されている場合に発生する。
     * - | (2)
-      - | org.springframework.validation.
-        | BindException
-      - | リクエストパラメータ(key=value形式のクエリ文字列)に対する入力チェックでエラーが発生した場合、本例外が発生する。
-        | 具体的には、リソースコレクションのGET時に指定する検索条件に不正な値が指定されている場合に発生する。
-    * - | (3)
       - | org.springframework.http.converter.
         | HttpMessageNotReadableException
       - | JSONやXMLからResourceオブジェクトを生成する際にエラーが発生した場合は、本例外が発生する。
@@ -3533,7 +3713,6 @@ RESTful Web Serviceで発生した例外のハンドリング方法について�
 * 入力チェックエラー用のエラー情報を生成するためのメソッドを作成する。
 
   .. code-block:: java
-    :emphasize-lines: 9-10, 26-27
 
     @Component
     public class ApiErrorCreator {
@@ -3591,7 +3770,6 @@ RESTful Web Serviceで発生した例外のハンドリング方法について�
 * \ ``ResponseEntityExceptionHandler``\ のメソッドを拡張し、レスポンスBodyに入力チェック用のエラー情報を出力するための実装を行う。
 
   .. code-block:: java
-    :emphasize-lines: 12-14, 21-23, 29-31, 44-45
 
     @ControllerAdvice
     public class ApiGlobalExceptionHandler extends ResponseEntityExceptionHandler {
@@ -3609,19 +3787,14 @@ RESTful Web Serviceで発生した例外のハンドリング方法について�
         protected ResponseEntity<Object> handleMethodArgumentNotValid(
                 MethodArgumentNotValidException ex, HttpHeaders headers,
                 HttpStatus status, WebRequest request) {
-            return handleBindingResult(ex, ex.getBindingResult(), headers, status,
+            String errorCode = exceptionCodeResolver.resolveExceptionCode(ex);
+            ApiError apiError = apiErrorCreator.createBindingResultApiError(request,
+                    errorCode, ex.getBindingResult(), ex.getMessage());
+            return handleExceptionInternal(ex, apiError, headers, statusCode,
                     request);
         }
     
         // (4)
-        @Override
-        protected ResponseEntity<Object> handleBindException(BindException ex,
-                HttpHeaders headers, HttpStatus status, WebRequest request) {
-            return handleBindingResult(ex, ex.getBindingResult(), headers, status,
-                    request);
-        }
-    
-        // (5)
         @Override
         protected ResponseEntity<Object> handleHttpMessageNotReadable(
                 HttpMessageNotReadableException ex, HttpHeaders headers,
@@ -3632,19 +3805,6 @@ RESTful Web Serviceで発生した例外のハンドリング方法について�
             } else {
                 return handleExceptionInternal(ex, null, headers, status, request);
             }
-        }
-
-        // omitted
-
-        // (6)
-        protected ResponseEntity<Object> handleBindingResult(Exception ex,
-                BindingResult bindingResult, HttpHeaders headers,
-                HttpStatus status, WebRequest request) {
-            String code = exceptionCodeResolver.resolveExceptionCode(ex);
-            String errorCode = exceptionCodeResolver.resolveExceptionCode(ex);
-            ApiError apiError = apiErrorCreator.createBindingResultApiError(
-                    request, errorCode, bindingResult, ex.getMessage());
-            return handleExceptionInternal(ex, apiError, headers, status, request);
         }
 
         // omitted
@@ -3660,25 +3820,16 @@ RESTful Web Serviceで発生した例外のハンドリング方法について�
       - 説明
     * - | (3)
       - | \ ``ResponseEntityExceptionHandler``\ のhandleMethodArgumentNotValidメソッドをオーバライドし、\ ``MethodArgumentNotValidException``\ のエラーハンドリングを拡張する。
-        | 上記例では、入力チェックエラーをハンドリングするための共通メソッド(6)に処理を委譲している。
+        | 上記例では、入力チェックエラーのエラー情報を保持するJavaBeanオブジェクトを生成している。
         | 項目毎のエラー情報を出力する必要がない場合は、オーバライドする必要はない。
         | 
         | ステータスコードには\ **400(Bad Request)**\ が設定され、指定されたリソースの項目値に不備がある事を通知する。
     * - | (4)
-      - | \ ``ResponseEntityExceptionHandler``\ のhandleBindExceptionメソッドをオーバライドし、\ ``BindException``\ のエラーハンドリングを拡張する。
-        | 上記例では、入力チェックエラーをハンドリングするための共通メソッド(6)に処理を委譲している。
-        | 項目毎のエラー情報を出力する必要がない場合は、オーバライドする必要はない。
-        | 
-        | ステータスコードには\ **400(Bad Request)**\ が設定され、指定されたリクエストパラメータに不備がある事を通知する。
-    * - | (5)
       - | \ ``ResponseEntityExceptionHandler``\ のhandleHttpMessageNotReadableメソッドをオーバライドし、\ ``HttpMessageNotReadableException``\ のエラーハンドリングを拡張する。
         | 上記例では、細かくエラーハンドリングを行うために、原因例外を使ってエラーハンドリングしている。
         | 細かくエラーハンドリングをしなくてもよい場合は、オーバライドする必要はない。
         | 
         | ステータスコードには\ **400(Bad Request)**\ が設定され、指定されたリソースのフォーマットなどに不備がある事を通知する。
-    * - | (6)
-      - | 入力チェックエラーのエラー情報を保持するJavaBeanオブジェクトを生成する。
-        | 上記例では、handleMethodArgumentNotValidとhandleBindExceptionで同じ処理を実装する事になるので、共通メソッドとして本メソッドを作成している。
 
   .. tip:: \ **JSON使用時のエラーハンドリングについて**\
 
@@ -3711,7 +3862,6 @@ RESTful Web Serviceで発生した例外のハンドリング方法について�
 * 入力チェックエラー(単項目チェック、相関項目チェックエラー)が発生した場合、以下のようなエラー応答が行われる。
 
   .. code-block:: http
-    :emphasize-lines: 1, 9
 
     HTTP/1.1 400 Bad Request
     Server: Apache-Coyote/1.1
@@ -3728,7 +3878,6 @@ RESTful Web Serviceで発生した例外のハンドリング方法について�
 * JSONエラー(フォーマットエラーなど)が発生した場合、以下のようなエラー応答が行われる。
 
   .. code-block:: http
-    :emphasize-lines: 1, 9
 
     HTTP/1.1 400 Bad Request
     Server: Apache-Coyote/1.1
@@ -3757,7 +3906,6 @@ RESTful Web Serviceで発生した例外のハンドリング方法について�
 * パス変数から取得したIDに一致するリソースが見つからない場合は、\ ``ResourceNotFoundException``\ を発生させる。
 
   .. code-block:: java
-    :emphasize-lines: 4-5
 
     public Member getMember(String memberId) {
         Member member = memberRepository.findByMemberId(memberId);
@@ -3773,7 +3921,6 @@ RESTful Web Serviceで発生した例外のハンドリング方法について�
 * \ ``ResultMessages``\ 用のエラー情報を生成するためのメソッドを作成する。
 
   .. code-block:: java
-    :emphasize-lines: 6-7
 
     @Component
     public class ApiErrorCreator {
@@ -3820,7 +3967,6 @@ RESTful Web Serviceで発生した例外のハンドリング方法について�
     * - | (1)
       - | 処理結果からエラー情報を生成するためのメソッドを作成する。
         | 上記例では、\ ``ResultMessages``\ が保持しているメッセージ情報を、エラー情報に設定している。
-        | 
         
   .. note::
  
@@ -3833,7 +3979,6 @@ RESTful Web Serviceで発生した例外のハンドリング方法について�
 * エラーハンドリングを行うクラスに、リソースが見つからない事を通知する例外をハンドリングするためのメソッドを作成する。
 
   .. code-block:: java
-    :emphasize-lines: 12-13, 17, 22-23
 
     @ControllerAdvice
     public class ApiGlobalExceptionHandler extends ResponseEntityExceptionHandler {
@@ -3892,7 +4037,6 @@ RESTful Web Serviceで発生した例外のハンドリング方法について�
 * リソースが見つからない場合、以下のようなエラー応答が行われる。
 
   .. code-block:: http
-    :emphasize-lines: 1, 8
 
     HTTP/1.1 404 Not Found
     Server: Apache-Coyote/1.1
@@ -3917,7 +4061,6 @@ RESTful Web Serviceで発生した例外のハンドリング方法について�
 * エラーハンドリングを行うクラスに、業務例外をハンドリングするためのメソッドを作成する。
 
   .. code-block:: java
-    :emphasize-lines: 6-7, 11
 
     @ControllerAdvice
     public class ApiGlobalExceptionHandler extends ResponseEntityExceptionHandler {
@@ -3956,7 +4099,6 @@ RESTful Web Serviceで発生した例外のハンドリング方法について�
 * 業務エラーが発生した場合、以下のようなエラー応答が行われる。
 
   .. code-block:: http
-    :emphasize-lines: 1, 8
 
     HTTP/1.1 409 Conflict
     Server: Apache-Coyote/1.1
@@ -3980,7 +4122,6 @@ RESTful Web Serviceで発生した例外のハンドリング方法について�
 * エラーハンドリングを行うクラスに、排他エラーをハンドリングするためのメソッドを作成する。
 
   .. code-block:: java
-    :emphasize-lines: 6-8, 12
 
     @ControllerAdvice
     public class ApiGlobalExceptionHandler extends ResponseEntityExceptionHandler {
@@ -4018,7 +4159,6 @@ RESTful Web Serviceで発生した例外のハンドリング方法について�
 * 排他エラーが発生した場合、以下のようなエラー応答が行われる。
 
   .. code-block:: http
-    :emphasize-lines: 1, 8
 
     HTTP/1.1 409 Conflict
     Server: Apache-Coyote/1.1
@@ -4043,7 +4183,6 @@ RESTful Web Serviceで発生した例外のハンドリング方法について�
 * エラーハンドリングを行うクラスに、システム例外をハンドリングするためのメソッドを作成する。
 
   .. code-block:: java
-    :emphasize-lines: 6-7, 11
 
     @ControllerAdvice
     public class ApiGlobalExceptionHandler extends ResponseEntityExceptionHandler {
@@ -4081,7 +4220,6 @@ RESTful Web Serviceで発生した例外のハンドリング方法について�
 * システムエラーが発生した場合、以下のようなエラー応答が行われる。
 
   .. code-block:: http
-    :emphasize-lines: 1, 9
 
     HTTP/1.1 500 Internal Server Error
     Server: Apache-Coyote/1.1
@@ -4096,11 +4234,9 @@ RESTful Web Serviceで発生した例外のハンドリング方法について�
 
   .. warning:: \ **システムエラー時のエラーメッセージについて**\
 
-    システムエラーが発生した場合、クライアントへ返却するメッセージは、エラー原因が特定されないシンプルなエラーメッセージを設定することを推奨する。
-    エラー原因が特定できるメッセージを設定してしまうと、システムの脆弱性をクライアントに公開する可能性があり、セキュリティー上問題がある。
+    システムエラーが発生した場合、クライアントへ返却するメッセージは、エラー原因が特定されないシンプルなエラーメッセージを設定することを推奨する。エラー原因が特定できるメッセージを設定してしまうと、システムの脆弱性をクライアントに公開する可能性があり、セキュリティー上問題がある。
     
-    エラー原因は、エラー解析用にログに出力する。
-    Blankプロジェクトのデフォルトの設定では、共通ライブラリから提供している\ ``ExceptionLogger``\ によってログが出力されるようなっているため、ログを出力するための設定や実装は不要である。
+    エラー原因は、エラー解析用にログに出力する。Blankプロジェクトのデフォルトの設定では、共通ライブラリから提供している\ ``ExceptionLogger``\ によってログが出力されるようなっているため、ログを出力するための設定や実装は不要である。
 
 |
 
@@ -4111,39 +4247,70 @@ ExceptionCodeResolverを使ったエラーコードとメッセージの解決
 | 共通ライブラリより提供している\ ``ExceptionCodeResolver``\ を使用すると、例外クラスからエラーコードを解決する事ができる。
 | 特に、エラー原因がクライアント側にある場合は、エラー原因に応じたエラーメッセージを設定する事が求められるケースがあるため、そのような場合に便利な機能である。
 
-- | \ :file:`applicationContext.xml`\
-  | 例外クラスとエラーコード(例外コード)のマッピングを行う。
+.. tabs::
+  .. group-tab:: Java Config
 
-  .. code-block:: xml
+    - | \ :file:`ApplicationContextConfig.java`\
+      | 例外クラスとエラーコード(例外コード)のマッピングを行う。
     
-    <!-- omitted -->
+      .. code-block:: java
 
-    <bean id="exceptionCodeResolver"
-        class="org.terasoluna.gfw.common.exception.SimpleMappingExceptionCodeResolver">
-        <property name="exceptionMappings">
-            <map>
-                <!-- omitted -->
-                <entry key="ResourceNotFoundException"              value="e.ex.fw.5001" />
-                <entry key="HttpRequestMethodNotSupportedException" value="e.ex.fw.6001" />
-                <entry key="MediaTypeNotAcceptableException"        value="e.ex.fw.6002" />
-                <entry key="HttpMediaTypeNotSupportedException"     value="e.ex.fw.6003" />
-                <entry key="MethodArgumentNotValidException"        value="e.ex.fw.7001" />
-                <entry key="BindException"                          value="e.ex.fw.7002" />
-                <entry key="JsonParseException"                     value="e.ex.fw.7003" />
-                <entry key="UnrecognizedPropertyException"          value="e.ex.fw.7004" />
-                <entry key="JsonMappingException"                   value="e.ex.fw.7005" />
-                <entry key="TypeMismatchException"                  value="e.ex.fw.7006" />
-                <entry key="BusinessException"                      value="e.ex.fw.8001" />
-                <entry key="OptimisticLockingFailureException"      value="e.ex.fw.8002" />
-                <entry key="PessimisticLockingFailureException"     value="e.ex.fw.8002" />
-                <entry key="DataAccessException"                    value="e.ex.fw.9002" />
-                <!-- omitted -->
-            </map>
-        </property>
-        <property name="defaultExceptionCode" value="e.ex.fw.9001" />
-    </bean>
+        @Bean("exceptionCodeResolver")
+        public ExceptionCodeResolver exceptionCodeResolver() {
+            LinkedHashMap<String, String> map = new LinkedHashMap<>();
+            map.put("ResourceNotFoundException", "e.ex.fw.5001");
+            map.put("HttpRequestMethodNotSupportedException", "e.ex.fw.6001");
+            map.put("MediaTypeNotAcceptableException", "e.ex.fw.6002");
+            map.put("HttpMediaTypeNotSupportedException", "e.ex.fw.6003");
+            map.put("MethodArgumentNotValidException", "e.ex.fw.7001");
+            map.put("JsonParseException", "e.ex.fw.7002");
+            map.put("UnrecognizedPropertyException", "e.ex.fw.7003");
+            map.put("JsonMappingException", "e.ex.fw.7004");
+            map.put("TypeMismatchException", "e.ex.fw.7005");
+            map.put("BusinessException", "e.ex.fw.8001");
+            map.put("OptimisticLockingFailureException", "e.ex.fw.8002");
+            map.put("PessimisticLockingFailureException", "e.ex.fw.8002");
+            map.put("DataAccessException", "e.ex.fw.9002");
+            SimpleMappingExceptionCodeResolver bean = new SimpleMappingExceptionCodeResolver();
+            bean.setExceptionMappings(map);
+            bean.setDefaultExceptionCode("e.ex.fw.9001");
+            return bean;
+        }
 
-    <!-- omitted -->
+  .. group-tab:: XML Config
+
+    - | \ :file:`applicationContext.xml`\
+      | 例外クラスとエラーコード(例外コード)のマッピングを行う。
+    
+      .. code-block:: xml
+        
+        <!-- omitted -->
+    
+        <bean id="exceptionCodeResolver"
+            class="org.terasoluna.gfw.common.exception.SimpleMappingExceptionCodeResolver">
+            <property name="exceptionMappings">
+                <map>
+                    <!-- omitted -->
+                    <entry key="ResourceNotFoundException"              value="e.ex.fw.5001" />
+                    <entry key="HttpRequestMethodNotSupportedException" value="e.ex.fw.6001" />
+                    <entry key="MediaTypeNotAcceptableException"        value="e.ex.fw.6002" />
+                    <entry key="HttpMediaTypeNotSupportedException"     value="e.ex.fw.6003" />
+                    <entry key="MethodArgumentNotValidException"        value="e.ex.fw.7001" />
+                    <entry key="JsonParseException"                     value="e.ex.fw.7002" />
+                    <entry key="UnrecognizedPropertyException"          value="e.ex.fw.7003" />
+                    <entry key="JsonMappingException"                   value="e.ex.fw.7004" />
+                    <entry key="TypeMismatchException"                  value="e.ex.fw.7005" />
+                    <entry key="BusinessException"                      value="e.ex.fw.8001" />
+                    <entry key="OptimisticLockingFailureException"      value="e.ex.fw.8002" />
+                    <entry key="PessimisticLockingFailureException"     value="e.ex.fw.8002" />
+                    <entry key="DataAccessException"                    value="e.ex.fw.9002" />
+                    <!-- omitted -->
+                </map>
+            </property>
+            <property name="defaultExceptionCode" value="e.ex.fw.9001" />
+        </bean>
+    
+        <!-- omitted -->
 
 |
 
@@ -4164,12 +4331,11 @@ ExceptionCodeResolverを使ったエラーコードとメッセージの解決
     e.ex.fw.6002 = Specified representation format not supported.
     e.ex.fw.6003 = Specified media type in the request body not supported.
     
-    e.ex.fw.7001 = Validation error occurred on item in the request body.
-    e.ex.fw.7002 = Validation error occurred on item in the request parameters.
-    e.ex.fw.7003 = Request body format error occurred.
-    e.ex.fw.7004 = Unknown field exists in JSON.
-    e.ex.fw.7005 = Type mismatch error occurred in JSON field.
-    e.ex.fw.7006 = Type mismatch error occurred in request parameter or header or path variable.
+    e.ex.fw.7001 = Validation error occurred on item in the request.
+    e.ex.fw.7002 = Request body format error occurred.
+    e.ex.fw.7003 = Unknown field exists in JSON.
+    e.ex.fw.7004 = Type mismatch error occurred in JSON field.
+    e.ex.fw.7005 = Type mismatch error occurred in request parameter or header or path variable.
     
     e.ex.fw.8001 = Business error occurred.
     e.ex.fw.8002 = Conflict with other processing occurred.
@@ -4183,7 +4349,7 @@ ExceptionCodeResolverを使ったエラーコードとメッセージの解決
 - | \ :file:`xxx-web/src/main/resources/ValidationMessages.properties`\
   | Bean Validationを使った入力チェックで発生するエラーに対して、エラーコードに対応するメッセージの設定を行う。
   | ここでは、Hibernate Validatorが用意するデフォルトメッセージを利用する。
-  | デフォルトメッセージは、メッセージの中に項目名が含まれないため、\ ``{0}``\（フィールド名）を追加している。
+  | デフォルトメッセージは、メッセージの中に項目名が含まれないため、\ ``{0}``\ （フィールド名）を追加している。
 
   .. code-block:: properties
 
@@ -4276,8 +4442,8 @@ Filterでエラーが発生した場合や\ ``HttpServletResponse#sendError``\ �
 本節では、サーブレットコンテナに通知されたエラーをハンドリングする方法について説明する。
 
   .. figure:: ./images_REST/RESTHowToUseErrorHandlingByServletContainer.png
-   :alt: Image of error handling processing by servlet container
-   :width: 100%
+    :alt: Image of error handling processing by servlet container
+    :width: 100%
 
 
   .. tabularcolumns:: |p{0.10\linewidth}|p{0.20\linewidth}|p{0.70\linewidth}|
@@ -4323,9 +4489,8 @@ Filterでエラーが発生した場合や\ ``HttpServletResponse#sendError``\ �
 サーブレットコンテナに通知されたエラーのエラー応答を行うControllerを作成する。
 
   .. code-block:: java
-    :emphasize-lines: 17-20, 23-24, 26, 29, 35-37, 38, 42, 44, 47
 
-    package org.terasoluna.examples.rest.api.common.error;
+    package com.examples.rest.api.common.error;
     
     import java.util.HashMap;
     import java.util.Map;
@@ -4427,7 +4592,6 @@ Filterでエラーが発生した場合や\ ``HttpServletResponse#sendError``\ �
 - \ :file:`web.xml`\
 
   .. code-block:: xml
-    :emphasize-lines: 3, 9, 15
 
     <!-- omitted -->
 
@@ -4481,7 +4645,6 @@ Filterでエラーが発生した場合や\ ``HttpServletResponse#sendError``\ �
 * 存在しないパスへリクエストを送った場合、以下のようなエラー応答が行われる。
 
   .. code-block:: http
-    :emphasize-lines: 1, 8
 
     HTTP/1.1 404 Not Found
     Server: Apache-Coyote/1.1
@@ -4497,7 +4660,6 @@ Filterでエラーが発生した場合や\ ``HttpServletResponse#sendError``\ �
 * 致命的なエラーが発生した場合、以下のようなエラー応答が行われる。
 
   .. code-block:: http
-    :emphasize-lines: 1, 9
 
     HTTP/1.1 500 Internal Server Error
     Server: Apache-Coyote/1.1
@@ -4517,6 +4679,7 @@ Filterでエラーが発生した場合や\ ``HttpServletResponse#sendError``\ �
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 | RESTful Web Serviceに対するセキュリティ対策の実現方法について説明する。
 | 本ガイドラインでは、セキュリティ対策の実現方法として、Spring Securityを使用する事を推奨している。
+|
 
 .. _RESTHowToUseSecurityAuth:
 
@@ -4534,7 +4697,7 @@ CSRF対策
 
 * RESTful Web Serviceに対してCSRF対策を行う場合の設定方法については、\ :doc:`../../Security/CSRF`\ を参照されたい。
 
-* RESTful Web Serviceに対してCSRF対策を行わない場合の設定方法については、:ref:`RESTAppendixDisabledCSRFProtection`\ を参照されたい。
+* RESTful Web Serviceに対してCSRF対策を行わない場合の設定方法については、\ :ref:`RESTAppendixDisabledCSRFProtection`\ を参照されたい。
 
 |
 
@@ -4545,7 +4708,7 @@ CSRF対策
 
 .. todo:: **TBD**
 
-    Etagなどのヘッダを使った条件付き処理の制御の実現方法について、次版以降に記載する予定である。
+  Etagなどのヘッダを使った条件付き処理の制御の実現方法について、次版以降に記載する予定である。
 
 |
 
@@ -4556,7 +4719,7 @@ CSRF対策
 
 .. todo:: **TBD**
 
-    Cache-Control/Expires/Pragmaなどのヘッダを使ったキャッシュ制御の実現方法について、次版以降に記載する予定である。
+  Cache-Control/Expires/Pragmaなどのヘッダを使ったキャッシュ制御の実現方法について、次版以降に記載する予定である。
 
 |
 
@@ -4583,7 +4746,7 @@ How to extend
 
   .. code-block:: java
 
-    package org.terasoluna.examples.rest.api.member;
+    package com.examples.rest.api.member;
     
     import java.io.Serializable;
     import java.time.LocalDate;
@@ -4673,7 +4836,7 @@ How to extend
 
   .. code-block:: java
  
-    package org.terasoluna.examples.rest.api.member;
+    package com.examples.rest.api.member;
     
     import java.util.ArrayList;
     import java.util.List;
@@ -4685,9 +4848,9 @@ How to extend
     import org.springframework.web.bind.annotation.RequestMapping;
     import org.springframework.web.bind.annotation.ResponseStatus;
     import org.springframework.web.bind.annotation.RestController;
-    import org.terasoluna.examples.rest.domain.model.Member;
-    import org.terasoluna.examples.rest.domain.service.member.MemberService;
-    
+
+    import com.examples.rest.domain.model.Member;
+    import com.examples.rest.domain.service.member.MemberService;
     import com.fasterxml.jackson.annotation.JsonView;
     
     import jakarta.inject.Inject;
@@ -4787,56 +4950,111 @@ How to extend
 | 上記の出力例は、\ ``MapperFeature.DEFAULT_VIEW_INCLUSION``\ を有効にした場合の出力例である。
 | \ ``MapperFeature.DEFAULT_VIEW_INCLUSION``\ を有効にする場合は、以下のように設定する。
 
-  .. code-block:: xml
- 
-    <bean id="objectMapper" class="org.springframework.http.converter.json.Jackson2ObjectMapperFactoryBean">
-        <!-- ... -->
-       
-        <!-- (1) -->
-        <property name="featuresToEnable">
-            <array>
-                <util:constant static-field="com.fasterxml.jackson.databind.MapperFeature.DEFAULT_VIEW_INCLUSION"/>
-            </array>
-        </property>
-    </bean>
+.. tabs::
+  .. group-tab:: Java Config
 
-  .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
-  .. list-table::
-    :header-rows: 1
-    :widths: 10 90
+    .. code-block:: java
+   
+      @Bean("objectMapper")
+      public ObjectMapper objectMapper() {
+          Jackson2ObjectMapperFactoryBean bean = new Jackson2ObjectMapperFactoryBean();
 
-    * - 項番
-      - 説明
-    * - | (1)
-      - | \ ``featuresToEnable``\ 要素に\ ``MapperFeature.DEFAULT_VIEW_INCLUSION``\ を定義することで設定が有効となる。
+          // omitted
+
+          bean.setFeaturesToEnable(MapperFeature.DEFAULT_VIEW_INCLUSION); // (1)
+          bean.afterPropertiesSet();
+          return bean.getObject();
+      }
+  
+    .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
+    .. list-table::
+      :header-rows: 1
+      :widths: 10 90
+  
+      * - 項番
+        - 説明
+      * - | (1)
+        - | \ ``featuresToEnable``\ 要素に\ ``MapperFeature.DEFAULT_VIEW_INCLUSION``\ を定義することで設定が有効となる。
+
+  .. group-tab:: XML Config
+
+    .. code-block:: xml
+   
+      <bean id="objectMapper" class="org.springframework.http.converter.json.Jackson2ObjectMapperFactoryBean">
+          <!-- ... -->
+         
+          <!-- (1) -->
+          <property name="featuresToEnable">
+              <array>
+                  <util:constant static-field="com.fasterxml.jackson.databind.MapperFeature.DEFAULT_VIEW_INCLUSION"/>
+              </array>
+          </property>
+      </bean>
+  
+    .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
+    .. list-table::
+      :header-rows: 1
+      :widths: 10 90
+  
+      * - 項番
+        - 説明
+      * - | (1)
+        - | \ ``featuresToEnable``\ 要素に\ ``MapperFeature.DEFAULT_VIEW_INCLUSION``\ を定義することで設定が有効となる。
 
 |
 
 | \ ``MapperFeature.DEFAULT_VIEW_INCLUSION``\ を無効にする場合は、以下のように設定する。
 
-  .. code-block:: xml
- 
-    <bean id="objectMapper" class="org.springframework.http.converter.json.Jackson2ObjectMapperFactoryBean">
-        <!-- ... -->
-       
-        <!-- (1) -->
-        <property name="featuresToDisable">
-            <array>
-                <util:constant static-field="com.fasterxml.jackson.databind.MapperFeature.DEFAULT_VIEW_INCLUSION"/>
-            </array>
-        </property>
-    </bean>
+.. tabs::
+  .. group-tab:: Java Config
 
-  .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
-  .. list-table::
-    :header-rows: 1
-    :widths: 10 90
-
-    * - 項番
-      - 説明
-    * - | (1)
-      - | \ ``featuresToDisable``\ 要素に\ ``MapperFeature.DEFAULT_VIEW_INCLUSION``\ を定義することで設定が無効となる。
+    .. code-block:: java
    
+      @Bean("objectMapper")
+      public ObjectMapper objectMapper() {
+          Jackson2ObjectMapperFactoryBean bean = new Jackson2ObjectMapperFactoryBean();
+
+          // omitted
+
+          bean.setFeaturesToDisable(MapperFeature.DEFAULT_VIEW_INCLUSION); // (1)
+          bean.afterPropertiesSet();
+          return bean.getObject();
+      }
+  
+    .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
+    .. list-table::
+      :header-rows: 1
+      :widths: 10 90
+  
+      * - 項番
+        - 説明
+      * - | (1)
+        - | \ ``featuresToDisable``\ 要素に\ ``MapperFeature.DEFAULT_VIEW_INCLUSION``\ を定義することで設定が無効となる。
+   
+  .. group-tab:: XML Config
+
+    .. code-block:: xml
+   
+      <bean id="objectMapper" class="org.springframework.http.converter.json.Jackson2ObjectMapperFactoryBean">
+          <!-- ... -->
+         
+          <!-- (1) -->
+          <property name="featuresToDisable">
+              <array>
+                  <util:constant static-field="com.fasterxml.jackson.databind.MapperFeature.DEFAULT_VIEW_INCLUSION"/>
+              </array>
+          </property>
+      </bean>
+  
+    .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
+    .. list-table::
+      :header-rows: 1
+      :widths: 10 90
+  
+      * - 項番
+        - 説明
+      * - | (1)
+        - | \ ``featuresToDisable``\ 要素に\ ``MapperFeature.DEFAULT_VIEW_INCLUSION``\ を定義することで設定が無効となる。
 
 | \ ``MapperFeature.DEFAULT_VIEW_INCLUSION``\ が無効の場合、先ほどの出力例は、以下のように出力内容が変更される。
 
@@ -4915,7 +5133,7 @@ How to extend
 
   \ ``ResponseBodyAdvice``\ は下記のメソッドを実装することができる。
 
-  * :file:`org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice`
+  * \ :file:`org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice`\
 
     .. tabularcolumns:: |p{0.10\linewidth}|p{0.20\linewidth}|p{0.70\linewidth}|
     .. list-table::
@@ -4954,78 +5172,156 @@ RESTful Web Service用の\ ``DispatcherServlet``\ を設ける方法
 
 - \ :file:`web.xml`\
 
-  .. code-block:: xml
-    :emphasize-lines: 3,17-19,19-20,24-25,29-33
+  .. tabs::
+    .. group-tab:: Java Config
 
-    <!-- omitted -->
+      .. code-block:: xml
+    
+        <!-- omitted -->
+    
+        <!-- (1) -->
+        <servlet>
+            <servlet-name>appServlet</servlet-name>
+            <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+            <init-param>
+                <param-name>contextClass</param-name>
+                <param-value>
+                    org.springframework.web.context.support.AnnotationConfigWebApplicationContext
+                </param-value>
+            </init-param>
+            <init-param>
+                <param-name>contextConfigLocation</param-name>
+                <param-value>com.example.project.api.config.web.SpringMvcConfig</param-value>
+            </init-param>
+            <load-on-startup>1</load-on-startup>
+        </servlet>
+        <servlet-mapping>
+            <servlet-name>appServlet</servlet-name>
+            <url-pattern>/</url-pattern>
+        </servlet-mapping>
 
-    <!-- (1) -->
-    <servlet>
-        <servlet-name>appServlet</servlet-name>
-        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
-        <init-param>
-            <param-name>contextConfigLocation</param-name>
-            <param-value>classpath*:META-INF/spring/spring-mvc.xml</param-value>
-        </init-param>
-        <load-on-startup>1</load-on-startup>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>appServlet</servlet-name>
-        <url-pattern>/</url-pattern>
-    </servlet-mapping>
+        <!-- (2) -->
+        <servlet>
+            <servlet-name>restAppServlet</servlet-name>
+            <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+            <init-param>
+                <param-name>contextClass</param-name>
+                <param-value>
+                    org.springframework.web.context.support.AnnotationConfigWebApplicationContext
+                </param-value>
+            </init-param>
+            <init-param>
+                <!-- (3) -->
+                <param-name>contextConfigLocation</param-name>
+                <param-value>com.example.project.api.config.web.SpringMvcRsclConfig</param-value>
+            </init-param>
+            <load-on-startup>2</load-on-startup>
+        </servlet>
+        <!-- (4) -->
+        <servlet-mapping>
+            <servlet-name>restAppServlet</servlet-name>
+            <url-pattern>/api/v1/*</url-pattern>
+        </servlet-mapping>
+    
+        <!-- omitted -->
+    
+      .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
+      .. list-table::
+        :header-rows: 1
+        :widths: 10 90
+    
+        * - 項番
+          - 説明
+        * - | (1)
+          - | クライアントアプリケーション用のリクエストを受け取る\ ``DispatcherServlet``\ とリクエストマッピング。
+        * - | (2)
+          - | RESTful Web Service用のリクエストを受けるServlet(\ ``DispatcherServlet``\ )を追加する。
+            | \ ``<servlet-name>``\ 要素に、RESTful Web Service用サーブレットであることを示す名前を指定する。
+            | 上記例では、サーブレット名として\ ``restAppServlet``\ を指定している。
+        * - | (3)
+          - | RESTful Web Service用の\ ``DispatcherServlet``\ を構築する際に使用するSpring MVCのbean定義ファイルを指定する。
+            | 上記例では、Spring MVCのbean定義ファイルとして、\ :file:`com.example.project.api.config.web.SpringMvcRsclConfig.java`\ を指定している。
+        * - | (4)
+          - | RESTful Web Service用の\ ``DispatcherServlet``\ へマッピングするサーブレットパスのパターンの指定を行う。
+            | 上記例では、\ ``/api/v1/``\ 配下のサーブレットパスをRESTful Web Service用の\ ``DispatcherServlet``\ にマッピングしている。
+            | 具体的には、
+            |   \ ``/api/v1/``\
+            |   \ ``/api/v1/members``\
+            |   \ ``/api/v1/members/xxxxx``\
+            | といったサーブレットパスが、RESTful Web Service用の\ ``DispatcherServlet``\ (\ ``restAppServlet``\ )にマッピングされる。
 
-    <!-- (2) -->
-    <servlet>
-        <servlet-name>restAppServlet</servlet-name>
-        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
-        <init-param>
-            <param-name>contextConfigLocation</param-name>
-            <!-- (3) -->
-            <param-value>classpath*:META-INF/spring/spring-mvc-rest.xml</param-value>
-        </init-param>
-        <load-on-startup>2</load-on-startup>
-    </servlet>
-    <!-- (4) -->
-    <servlet-mapping>
-        <servlet-name>restAppServlet</servlet-name>
-        <url-pattern>/api/v1/*</url-pattern>
-    </servlet-mapping>
+    .. group-tab:: XML Config
 
-    <!-- omitted -->
+      .. code-block:: xml
+    
+        <!-- omitted -->
+    
+        <!-- (1) -->
+        <servlet>
+            <servlet-name>appServlet</servlet-name>
+            <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+            <init-param>
+                <param-name>contextConfigLocation</param-name>
+                <param-value>classpath*:META-INF/spring/spring-mvc.xml</param-value>
+            </init-param>
+            <load-on-startup>1</load-on-startup>
+        </servlet>
+        <servlet-mapping>
+            <servlet-name>appServlet</servlet-name>
+            <url-pattern>/</url-pattern>
+        </servlet-mapping>
+    
+        <!-- (2) -->
+        <servlet>
+            <servlet-name>restAppServlet</servlet-name>
+            <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+            <init-param>
+                <param-name>contextConfigLocation</param-name>
+                <!-- (3) -->
+                <param-value>classpath*:META-INF/spring/spring-mvc-rest.xml</param-value>
+            </init-param>
+            <load-on-startup>2</load-on-startup>
+        </servlet>
+        <!-- (4) -->
+        <servlet-mapping>
+            <servlet-name>restAppServlet</servlet-name>
+            <url-pattern>/api/v1/*</url-pattern>
+        </servlet-mapping>
+    
+        <!-- omitted -->
+    
+      .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
+      .. list-table::
+        :header-rows: 1
+        :widths: 10 90
+    
+        * - 項番
+          - 説明
+        * - | (1)
+          - | クライアントアプリケーション用のリクエストを受け取る\ ``DispatcherServlet``\ とリクエストマッピング。
+        * - | (2)
+          - | RESTful Web Service用のリクエストを受けるServlet(\ ``DispatcherServlet``\ )を追加する。
+            | \ ``<servlet-name>``\ 要素に、RESTful Web Service用サーブレットであることを示す名前を指定する。
+            | 上記例では、サーブレット名として\ ``restAppServlet``\ を指定している。
+        * - | (3)
+          - | RESTful Web Service用の\ ``DispatcherServlet``\ を構築する際に使用するSpring MVCのbean定義ファイルを指定する。
+            | 上記例では、Spring MVCのbean定義ファイルとして、クラスパス上にある\ :file:`META-INF/spring/spring-mvc-rest.xml`\ を指定している。
+        * - | (4)
+          - | RESTful Web Service用の\ ``DispatcherServlet``\ へマッピングするサーブレットパスのパターンの指定を行う。
+            | 上記例では、\ ``/api/v1/``\ 配下のサーブレットパスをRESTful Web Service用の\ ``DispatcherServlet``\ にマッピングしている。
+            | 具体的には、
+            |   \ ``/api/v1/``\
+            |   \ ``/api/v1/members``\
+            |   \ ``/api/v1/members/xxxxx``\
+            | といったサーブレットパスが、RESTful Web Service用の\ ``DispatcherServlet``\ (\ ``restAppServlet``\ )にマッピングされる。
 
-  .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
-  .. list-table::
-    :header-rows: 1
-    :widths: 10 90
+.. tip:: \ **@RequestMappingアノテーションのvalue属性に指定する値について**\
 
-    * - 項番
-      - 説明
-    * - | (1)
-      - | クライアントアプリケーション用のリクエストを受け取る\ ``DispatcherServlet``\ とリクエストマッピング。
-    * - | (2)
-      - | RESTful Web Service用のリクエストを受けるServlet(\ ``DispatcherServlet``\ )を追加する。
-        | \ ``<servlet-name>``\ 要素に、RESTful Web Service用サーブレットであることを示す名前を指定する。
-        | 上記例では、サーブレット名として\ ``restAppServlet``\ を指定している。
-    * - | (3)
-      - | RESTful Web Service用の\ ``DispatcherServlet``\ を構築する際に使用するSpring MVCのbean定義ファイルを指定する。
-        | 上記例では、Spring MVCのbean定義ファイルとして、クラスパス上にある\ :file:`META-INF/spring/spring-mvc-rest.xml`\ を指定している。
-    * - | (4)
-      - | RESTful Web Service用の\ ``DispatcherServlet``\ へマッピングするサーブレットパスのパターンの指定を行う。
-        | 上記例では、\ ``/api/v1/``\ 配下のサーブレットパスをRESTful Web Service用の\ ``DispatcherServlet``\ にマッピングしている。
-        | 具体的には、
-        |   \ ``/api/v1/``\
-        |   \ ``/api/v1/members``\
-        |   \ ``/api/v1/members/xxxxx``\
-        | といったサーブレットパスが、RESTful Web Service用の\ ``DispatcherServlet``\ (\ ``restAppServlet``\ )にマッピングされる。
-
-  .. tip:: \ **@RequestMappingアノテーションのvalue属性に指定する値について**\
-
-   \ ``@RequestMapping``\ アノテーションのvalue属性に指定する値は、\ ``<url-pattern>``\ 要素で指定したワイルドカード("\ ``*``\ ")の部分の値を指定する。
+  \ ``@RequestMapping``\ アノテーションのvalue属性に指定する値は、\ ``<url-pattern>``\ 要素で指定したワイルドカード("\ ``*``\ ")の部分の値を指定する。
    
-   例えば、\ ``@RequestMapping(value = "members")``\ と指定した場合、\ ``/api/v1/members``\ といパスに対する処理を行うメソッドとしてデプロイされる。
-   そのため、\ ``@RequestMapping``\ アノテーションのvalue属性には、分割したサーブレットへマッピングするためパス(\ ``api/v1``\ )を指定する必要はない。
+  例えば、\ ``@RequestMapping(value = "members")``\ と指定した場合、\ ``/api/v1/members``\ といパスに対する処理を行うメソッドとしてデプロイされる。そのため、\ ``@RequestMapping``\ アノテーションのvalue属性には、分割したサーブレットへマッピングするためパス(\ ``api/v1``\ )を指定する必要はない。
    
-   \ ``@RequestMapping(value = "api/v1/members")``\ と指定すると、\ ``/api/v1/api/v1/members``\ というパスに対する処理を行うメソッドとしてデプロイされてしまうので、注意すること。
+  \ ``@RequestMapping(value = "api/v1/members")``\ と指定すると、\ ``/api/v1/api/v1/members``\ というパスに対する処理を行うメソッドとしてデプロイされてしまうので、注意すること。
 
 |
 
@@ -5035,15 +5331,16 @@ RESTful Web Service用の\ ``DispatcherServlet``\ を設ける方法
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 JSONの中に関連リソースへのハイパーメディアリンクを含める場合の実装について説明する。
 
+|
+
 共通部品の実装
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 * リンク情報を保持するJavaBeanを作成する。
 
   .. code-block:: java
-    :emphasize-lines: 5
  
-    package org.terasoluna.examples.rest.api.common.resource;
+    package com.examples.rest.api.common.resource;
     
     import java.io.Serializable;
     
@@ -5086,9 +5383,8 @@ JSONの中に関連リソースへのハイパーメディアリンクを含め�
 * リンク情報のコレクションを保持するResourceの抽象クラスを作成する。
 
   .. code-block:: java
-    :emphasize-lines: 9, 12, 20, 26, 31
 
-    package org.terasoluna.examples.rest.api.common.resource;
+    package com.examples.rest.api.common.resource;
     
     import java.net.URI;
     import java.util.LinkedHashSet;
@@ -5152,9 +5448,8 @@ JSONの中に関連リソースへのハイパーメディアリンクを含め�
 * Resourceクラスにて、リンク情報のコレクションを保持するResourceの抽象クラスを継承する。
 
   .. code-block:: java
-    :emphasize-lines: 3
 
-    package org.terasoluna.examples.rest.api.member;
+    package com.examples.rest.api.member;
     
     // (1)
     public class MemberResource extends 
@@ -5178,7 +5473,6 @@ JSONの中に関連リソースへのハイパーメディアリンクを含め�
 * REST APIの処理で、ハイパーメディアリンクを追加する。
 
   .. code-block:: java
-    :emphasize-lines: 11, 19
 
     @RequestMapping("members")
     @RestController
@@ -5225,7 +5519,7 @@ JSONの中に関連リソースへのハイパーメディアリンクを含め�
         | 上記例では、リンク情報に設定するURIを組み立てるため \ ``UriComponentsBuilder``\ クラスのメソッドを呼び出し、自身のリソースにアクセスするためのURIをリソースに追加している。
         |
         | Controllerのメソッドの引数として渡された\ ``ServletUriComponentsBuilder``\ のインスタンスは、web.xmlに記載の\ ``<servlet-mapping>``\ 要素の情報を元に初期化されており、リソースには依存しない。
-        | そのため、Spring Frameworkから提供される\ `URI patterns <https://docs.spring.io/spring-framework/docs/6.0.3/reference/html/web.html#mvc-ann-requestmapping-uri-templates>`_\ 等を利用し、
+        | そのため、Spring Frameworkから提供される\ `URI patterns <https://docs.spring.io/spring-framework/docs/6.1.3/reference/html/web.html#mvc-ann-requestmapping-uri-templates>`_\ 等を利用し、
         | リクエスト情報をベースにURIを組み立てる事により、リソースに依存しない汎用的な組み立て処理を実装することが可能となる。
         | 
         | 例えば、上記例において\ ``http://example.com/api/v1/members/M000000001``\ に対してGETした場合、組み立てられるURIは、リクエストされたURIと同じ値\ ``（http://example.com/api/v1/members/M000000001）``\ になる。
@@ -5234,9 +5528,9 @@ JSONの中に関連リソースへのハイパーメディアリンクを含め�
 
   .. tip::
 
-    \ ``ServletUriComponentsBuilder``\ では、URIを組み立てる際に「\ ``X-Forwarded-Host``\ 」ヘッダを参照することで、クライアントとアプリケーションサーバの間にロードバランサやWebサーバがある構成を考慮している。 
-    ただし、パスの構成を合わせておかないと期待通りのURIにならないので注意が必要である。
+    Spring Framework 5.1以降、\ ``ServletUriComponentsBuilder``\ では\ ``Forwarded``\ および\ ``X-Forwarded-*``\ ヘッダを参照しなくなった。
 
+    クライアントとアプリケーションサーバの間にロードバランサやWebサーバがある構成を考慮する場合は、\ ``ForwardedHeaderFilter``\ を利用することで\ ``Forwarded``\ および\ ``X-Forwarded-*``\ ヘッダを参照する。
 
 * | レスポンス例
   | 実際に動かすと、以下のようなレスポンスとなる。
@@ -5250,7 +5544,6 @@ JSONの中に関連リソースへのハイパーメディアリンクを含め�
     Connection: keep-alive
 
   .. code-block:: java
-    :emphasize-lines: 2-5
 
     {
       "links" : [ {
@@ -5297,7 +5590,6 @@ POST時のLocationヘッダの設定
 * REST APIの処理で、作成したリソースのURIをLocationヘッダに設定する。
 
   .. code-block:: java
-    :emphasize-lines: 11, 21, 25
 
     @RequestMapping("members")
     @RestController
@@ -5349,10 +5641,10 @@ POST時のLocationヘッダの設定
         | \ ``buildAndExpand``\ メソッドを呼び出して、作成したリソースのIDをバインドすることで、作成したリソースのURIを組み立てている。
         | 
         | Controllerのメソッドの引数として渡された\ ``ServletUriComponentsBuilder``\ のインスタンスは、web.xmlに記載の\ ``<servlet-mapping>``\ 要素の情報を元に初期化されており、リソースには依存しない。
-        | そのため、Spring Frameworkから提供される\ `URI patterns <https://docs.spring.io/spring-framework/docs/6.0.3/reference/html/web.html#mvc-ann-requestmapping-uri-templates>`_\ 等を利用し、
+        | そのため、Spring Frameworkから提供される\ `URI patterns <https://docs.spring.io/spring-framework/docs/6.1.3/reference/html/web.html#mvc-ann-requestmapping-uri-templates>`_\ 等を利用し、
         | リクエスト情報をベースにURIを組み立てる事により、リソースに依存しない汎用的な組み立て処理を実装することが可能となる。
         | 
-        | 例えば、上記例において\ ``http://example.com/api/v1/members``\に対してPOSTした場合、組み立てられるURIは、「リクエストされたURI + "\ ``/``\" + 作成したリソースのID」となる。
+        | 例えば、上記例において\ ``http://example.com/api/v1/members``\ に対してPOSTした場合、組み立てられるURIは、「リクエストされたURI + "\ ``/``\ " + 作成したリソースのID」となる。
         | 具体的には、IDに\ ``M000000001``\ を指定した場合、\ ``http://example.com/api/v1/members/M000000001``\ となる。
         | 
         | 必要に応じてリンク情報に設定するURIを組み立てるためのメソッドを実装すること。
@@ -5365,14 +5657,14 @@ POST時のLocationヘッダの設定
 
   .. tip::
 
-    \ ``ServletUriComponentsBuilder``\ では、URIを組み立てる際に「\ ``X-Forwarded-Host``\ 」ヘッダを参照することで、クライアントとアプリケーションサーバの間にロードバランサやWebサーバがある構成を考慮している。 
-    ただし、パスの構成を合わせておかないと期待通りのURIにならないので注意が必要である。
+    Spring Framework 5.1以降、\ ``ServletUriComponentsBuilder``\ では\ ``Forwarded``\ および\ ``X-Forwarded-*``\ ヘッダを参照しなくなった。
+
+    クライアントとアプリケーションサーバの間にロードバランサやWebサーバがある構成を考慮する場合は、\ ``ForwardedHeaderFilter``\ を利用することで\ ``Forwarded``\ および\ ``X-Forwarded-*``\ ヘッダを参照する。
 
 * | レスポンス例
   | 実際に動かすと、以下のようなレスポンスヘッダとなる。
 
   .. code-block:: http
-    :emphasize-lines: 4
 
     HTTP/1.1 201 Created
     Server: Apache-Coyote/1.1
@@ -5400,43 +5692,100 @@ RESTful Web Service向けのリクエストに対して、CSRF対策を行わな
 
 Blankプロジェクトのデフォルトの設定では、CSRF対策が有効化されているため、以下の設定を追加し、RESTful Web Service向けのリクエストに対して、CSRF対策の処理が行われないようにする。
 
-* \ :file:`spring-security.xml`\
+.. tabs::
+  .. group-tab:: Java Config
 
-  .. code-block:: xml
-    :emphasize-lines: 3-9
+    * \ :file:`SpringSecurityConfig.java`\
+    
+      .. code-block:: java
 
-    <!-- omitted -->
+        // (1)
+        @Bean
+        @Order(1)
+        public SecurityFilterChain filterChainApiView(
+                HttpSecurity http) throws Exception {
+            http.securityMatcher(
+                    new AntPathRequestMatcher("/api/v1/**"));
+            http.sessionManagement(sessionManagement -> sessionManagement
+                    .sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+            http.csrf(csrf -> csrf.disable());
+            http.authorizeHttpRequests(authz -> authz.requestMatchers(
+                    new AntPathRequestMatcher("/**")).permitAll());
+    
+            return http.build();
+        }
+    
+        @Bean
+        @Order(2)
+        public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+            http.exceptionHandling(ex -> ex.accessDeniedHandler(
+                    accessDeniedHandler()));
+            http.addFilterAfter(userIdMDCPutFilter(),
+                    AnonymousAuthenticationFilter.class);
+            http.formLogin(Customizer.withDefaults());
+            http.logout(Customizer.withDefaults());
+            http.sessionManagement(Customizer.withDefaults());
+            http.authorizeHttpRequests(authz -> authz.requestMatchers(
+                    new AntPathRequestMatcher("/**")).denyAll());
+    
+            return http.build();
+        }
+   
+      .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
+      .. list-table::
+        :header-rows: 1
+        :widths: 10 90
+    
+        * - 項番
+          - 説明
+        * - | (1)
+          - | REST API用のSpring Securityの定義を追加する。
+            | Spring Securityの処理を有効とするパスには、REST API用のリクエストパスのURLパターンを指定している。
+            | 上記例では、\ ``/api/v1/``\ で始まるリクエストパスをREST API用のリクエストパスとして扱う。
+            | また、\ ``create-session``\ 属性を\ ``stateless``\ とする事で、Spring Securityの処理でセッションが使用されなくなる。
+            |
+            | CSRF対策を無効化するために、\ ``csrf.disable()``\ を指定している。
 
-    <!-- (1) -->
-    <sec:http pattern="/api/v1/**" request-matcher="ant" create-session="stateless">
-        <sec:http-basic/>
-        <sec:csrf disabled="true"/>
-    </sec:http>
+  .. group-tab:: XML Config
 
-    <sec:http request-matcher="ant">
-        <sec:access-denied-handler ref="accessDeniedHandler"/>
-        <sec:custom-filter ref="userIdMDCPutFilter" after="ANONYMOUS_FILTER"/>
-        <sec:form-login/>
-        <sec:logout/>
-        <sec:session-management />
-    </sec:http>
-
-    <!-- omitted -->
-
-  .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
-  .. list-table::
-   :header-rows: 1
-   :widths: 10 90
-
-   * - 項番
-     - 説明
-   * - | (1)
-     - | REST API用のSpring Securityの定義を追加する。
-       | \ ``<sec:http>``\ 要素の\ ``pattern``\ 属性に、REST API用のリクエストパスのURLパターンを指定している。
-       | 上記例では、\ ``/api/v1/``\ で始まるリクエストパスをREST API用のリクエストパスとして扱う。
-       | また、\ ``create-session``\ 属性を\ ``stateless``\ とする事で、Spring Securityの処理でセッションが使用されなくなる。
-       |
-       | CSRF対策を無効化するために、\ ``<sec:csrf>``\ 要素に \ ``disabled="true"``\ を指定している。
+    * \ :file:`spring-security.xml`\
+    
+      .. code-block:: xml
+    
+        <!-- omitted -->
+    
+        <!-- (1) -->
+        <sec:http pattern="/api/v1/**" request-matcher="ant" create-session="stateless">
+            <sec:http-basic/>
+            <sec:csrf disabled="true"/>
+            <sec:intercept-url pattern="/**" access="permitAll" />
+        </sec:http>
+    
+        <sec:http request-matcher="ant">
+            <sec:access-denied-handler ref="accessDeniedHandler"/>
+            <sec:custom-filter ref="userIdMDCPutFilter" after="ANONYMOUS_FILTER"/>
+            <sec:form-login/>
+            <sec:logout/>
+            <sec:session-management />
+            <sec:intercept-url pattern="/**" access="permitAll" />
+        </sec:http>
+    
+        <!-- omitted -->
+    
+      .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
+      .. list-table::
+        :header-rows: 1
+        :widths: 10 90
+    
+        * - 項番
+          - 説明
+        * - | (1)
+          - | REST API用のSpring Securityの定義を追加する。
+            | \ ``<sec:http>``\ 要素の\ ``pattern``\ 属性に、REST API用のリクエストパスのURLパターンを指定している。
+            | 上記例では、\ ``/api/v1/``\ で始まるリクエストパスをREST API用のリクエストパスとして扱う。
+            | また、\ ``create-session``\ 属性を\ ``stateless``\ とする事で、Spring Securityの処理でセッションが使用されなくなる。
+            |
+            | CSRF対策を無効化するために、\ ``<sec:csrf>``\ 要素に \ ``disabled="true"``\ を指定している。
 
 |
 
@@ -5457,25 +5806,25 @@ XXE 対策の有効化
 
 アプリケーション層のソースコード
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-| \ :ref:`RESTHowToUse`\の説明で使用したアプリケーション層のソースコードのうち、断片的に貼りつけていたソースコードの完全版を添付しておく。
+| \ :ref:`RESTHowToUse`\ の説明で使用したアプリケーション層のソースコードのうち、断片的に貼りつけていたソースコードの完全版を添付しておく。
 
   .. tabularcolumns:: |p{0.10\linewidth}|p{0.45\linewidth}|p{0.45\linewidth}|
   .. list-table::
-   :header-rows: 1
-   :widths: 10 45 45
+    :header-rows: 1
+    :widths: 10 45 45
 
-   * - | 項番
-     - | セクション
-     - | ファイル名
-   * - | (1)
-     - | \ :ref:`RESTHowToUseApiImplementation`\
-     - | \ :ref:`MemberRestController.java <RESTAppendixSoruceCodesOfMemberRestController>`\
-   * - | (2)
-     - | \ :ref:`RESTHowToUseExceptionHandling`\
-     - | \ :ref:`ApiErrorCreator.java <RESTAppendixSoruceCodesOfApiErrorCreator>`\
-   * - | (3)
-     - | 
-     - | \ :ref:`ApiGlobalExceptionHandler.java <RESTAppendixSoruceCodesOfApiGlobalExceptionHandler>`\
+    * - | 項番
+      - | セクション
+      - | ファイル名
+    * - | (1)
+      - | \ :ref:`RESTHowToUseApiImplementation`\
+      - | \ :ref:`MemberRestController.java <RESTAppendixSoruceCodesOfMemberRestController>`\
+    * - | (2)
+      - | \ :ref:`RESTHowToUseExceptionHandling`\
+      - | \ :ref:`ApiErrorCreator.java <RESTAppendixSoruceCodesOfApiErrorCreator>`\
+    * - | (3)
+      - | 
+      - | \ :ref:`ApiGlobalExceptionHandler.java <RESTAppendixSoruceCodesOfApiGlobalExceptionHandler>`\
 
 以下のファイルは、除外している。
 
@@ -5489,11 +5838,11 @@ XXE 対策の有効化
 MemberRestController.java
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-\ :file:`java/org/terasoluna/examples/rest/api/member/MemberRestController.java`\
+\ :file:`java/com/examples/rest/api/member/MemberRestController.java`\
 
 .. code-block:: java
 
-  package org.terasoluna.examples.rest.api.member;
+  package com.examples.rest.api.member;
     
   import java.util.ArrayList;
   import java.util.List;
@@ -5513,10 +5862,11 @@ MemberRestController.java
   import org.springframework.web.bind.annotation.RequestMethod;
   import org.springframework.web.bind.annotation.ResponseStatus;
   import org.springframework.web.bind.annotation.RestController;
-  import org.terasoluna.examples.rest.api.member.MemberResource.PostMembers;
-  import org.terasoluna.examples.rest.api.member.MemberResource.PutMember;
-  import org.terasoluna.examples.rest.domain.model.Member;
-  import org.terasoluna.examples.rest.domain.service.member.MemberService;
+  
+  import com.examples.rest.api.member.MemberResource.PostMembers;
+  import com.examples.rest.api.member.MemberResource.PutMember;
+  import com.examples.rest.domain.model.Member;
+  import com.examples.rest.domain.service.member.MemberService;
     
   import jakarta.inject.Inject;
   import jakarta.validation.groups.Default;
@@ -5619,11 +5969,11 @@ MemberRestController.java
 ApiErrorCreator.java
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-\ :file:`java/org/terasoluna/examples/rest/api/common/error/ApiErrorCreator.java`\
+\ :file:`java/com/examples/rest/api/common/error/ApiErrorCreator.java`\
 
 .. code-block:: java
 
-  package org.terasoluna.examples.rest.api.common.error;
+  package com.examples.rest.api.common.error;
   
   import org.springframework.context.MessageSource;
   import org.springframework.context.support.DefaultMessageSourceResolvable;
@@ -5707,11 +6057,11 @@ ApiErrorCreator.java
 ApiGlobalExceptionHandler.java
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-\ :file:`java/org/terasoluna/examples/rest/api/common/error/ApiGlobalExceptionHandler.java`\
+\ :file:`java/com/examples/rest/api/common/error/ApiGlobalExceptionHandler.java`\
 
 .. code-block:: java
 
-  package org.terasoluna.examples.rest.api.common.error;
+  package com.examples.rest.api.common.error;
   
   import org.springframework.dao.OptimisticLockingFailureException;
   import org.springframework.dao.PessimisticLockingFailureException;
@@ -5719,8 +6069,6 @@ ApiGlobalExceptionHandler.java
   import org.springframework.http.HttpStatus;
   import org.springframework.http.ResponseEntity;
   import org.springframework.http.converter.HttpMessageNotReadableException;
-  import org.springframework.validation.BindException;
-  import org.springframework.validation.BindingResult;
   import org.springframework.web.bind.MethodArgumentNotValidException;
   import org.springframework.web.bind.annotation.ControllerAdvice;
   import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -5761,26 +6109,13 @@ ApiGlobalExceptionHandler.java
       protected ResponseEntity<Object> handleMethodArgumentNotValid(
               MethodArgumentNotValidException ex, HttpHeaders headers,
               HttpStatus status, WebRequest request) {
-          return handleBindingResult(ex, ex.getBindingResult(), headers, status,
-                  request);
-      }
-  
-      @Override
-      protected ResponseEntity<Object> handleBindException(BindException ex,
-              HttpHeaders headers, HttpStatus status, WebRequest request) {
-          return handleBindingResult(ex, ex.getBindingResult(), headers, status,
-                  request);
-      }
-  
-      private ResponseEntity<Object> handleBindingResult(Exception ex,
-              BindingResult bindingResult, HttpHeaders headers,
-              HttpStatus status, WebRequest request) {
           String errorCode = exceptionCodeResolver.resolveExceptionCode(ex);
-          ApiError apiError = apiErrorCreator.createBindingResultApiError(
-                  request, errorCode, bindingResult, ex.getMessage());
-          return handleExceptionInternal(ex, apiError, headers, status, request);
+          ApiError apiError = apiErrorCreator.createBindingResultApiError(request,
+                  errorCode, ex.getBindingResult(), ex.getMessage());
+          return handleExceptionInternal(ex, apiError, headers, statusCode,
+                  request);
       }
-  
+
       @Override
       protected ResponseEntity<Object> handleHttpMessageNotReadable(
               HttpMessageNotReadableException ex, HttpHeaders headers,
@@ -5839,50 +6174,50 @@ ApiGlobalExceptionHandler.java
 
 REST API実装時に作成したドメイン層のクラスのソースコード
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-| \ :ref:`RESTHowToUse`\で説明したREST APIから呼び出しているドメイン層のクラスのソースコードを添付しておく。
+| \ :ref:`RESTHowToUse`\ で説明したREST APIから呼び出しているドメイン層のクラスのソースコードを添付しておく。
 | なお、インフラストラクチャ層は、MyBatis3を使って実装している。
 
   .. tabularcolumns:: |p{0.10\linewidth}|p{0.35\linewidth}|p{0.55\linewidth}|
   .. list-table::
-   :header-rows: 1
-   :widths: 10 35 55
+    :header-rows: 1
+    :widths: 10 35 55
 
-   * - | 項番
-     - | 分類
-     - | ファイル名
-   * - | (1)
-     - | model
-     - | \ :ref:`Member.java <RESTAppendixSoruceCodesOfMember>`\
-   * - | (2)
-     - | 
-     - | \ :ref:`MemberCredentia.java <RESTAppendixSoruceCodesOfMemberCredentia>`\
-   * - | (3)
-     - | 
-     - | \ :ref:`Gender.java <RESTAppendixSoruceCodesOfGender>`\
-   * - | (4)
-     - | repository
-     - | \ :ref:`MemberRepository.java <RESTAppendixSoruceCodesOfMemberRepository>`\
-   * - | (5)
-     - | service
-     - | \ :ref:`MemberService.java <RESTAppendixSoruceCodesOfMemberService>`\
-   * - | (6)
-     - | 
-     - | \ :ref:`MemberServiceImpl.java <RESTAppendixSoruceCodesOfMemberServiceImpl>`\
-   * - | (7)
-     - | other
-     - | \ :ref:`DomainMessageCodes.java <RESTAppendixSoruceCodesOfDomainMessageCodes>`\
-   * - | (8)
-     - | 
-     - | \ :ref:`GenderTypeHandler.java <RESTAppendixSoruceCodesOfGenderTypeHandler>`\
-   * - | (9)
-     - | 
-     - | \ :ref:`MemberBeanMapper.java <RESTAppendixSoruceCodesOfMemberBeanMapper>`\
-   * - | (10)
-     - | 
-     - | \ :ref:`mybatis-config.xml <RESTAppendixSoruceCodesOfMybatisConfig>`\
-   * - | (11)
-     - | 
-     - | \ :ref:`MemberRepository.xml <RESTAppendixSoruceCodesOfMemberRepositoryxml>`\
+    * - | 項番
+      - | 分類
+      - | ファイル名
+    * - | (1)
+      - | model
+      - | \ :ref:`Member.java <RESTAppendixSoruceCodesOfMember>`\
+    * - | (2)
+      - | 
+      - | \ :ref:`MemberCredentia.java <RESTAppendixSoruceCodesOfMemberCredentia>`\
+    * - | (3)
+      - | 
+      - | \ :ref:`Gender.java <RESTAppendixSoruceCodesOfGender>`\
+    * - | (4)
+      - | repository
+      - | \ :ref:`MemberRepository.java <RESTAppendixSoruceCodesOfMemberRepository>`\
+    * - | (5)
+      - | service
+      - | \ :ref:`MemberService.java <RESTAppendixSoruceCodesOfMemberService>`\
+    * - | (6)
+      - | 
+      - | \ :ref:`MemberServiceImpl.java <RESTAppendixSoruceCodesOfMemberServiceImpl>`\
+    * - | (7)
+      - | other
+      - | \ :ref:`DomainMessageCodes.java <RESTAppendixSoruceCodesOfDomainMessageCodes>`\
+    * - | (8)
+      - | 
+      - | \ :ref:`GenderTypeHandler.java <RESTAppendixSoruceCodesOfGenderTypeHandler>`\
+    * - | (9)
+      - | 
+      - | \ :ref:`MemberBeanMapper.java <RESTAppendixSoruceCodesOfMemberBeanMapper>`\
+    * - | (10)
+      - | 
+      - | \ :ref:`mybatis-config.xml <RESTAppendixSoruceCodesOfMybatisConfig>`\
+    * - | (11)
+      - | 
+      - | \ :ref:`MemberRepository.xml <RESTAppendixSoruceCodesOfMemberRepositoryxml>`\
 
 以下のファイルは、除外している。
 
@@ -5896,11 +6231,11 @@ REST API実装時に作成したドメイン層のクラスのソースコード
 Member.java
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-\ :file:`java/org/terasoluna/examples/rest/domain/model/Member.java`\
+\ :file:`java/com/examples/rest/domain/model/Member.java`\
 
 .. code-block:: java
 
-  package org.terasoluna.examples.rest.domain.model;
+  package com.examples.rest.domain.model;
   
   import java.io.Serializable;    
   import java.time.LocalDate;
@@ -6062,11 +6397,11 @@ Member.java
 MemberCredentia.java
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-\ :file:`java/org/terasoluna/examples/rest/domain/model/MemberCredential.java`\
+\ :file:`java/com/examples/rest/domain/model/MemberCredential.java`\
 
 .. code-block:: java
 
-  package org.terasoluna.examples.rest.domain.model;
+  package com.examples.rest.domain.model;
   
   import java.io.Serializable;    
   import java.time.LocalDateTime;
@@ -6155,11 +6490,11 @@ MemberCredentia.java
 Gender.java
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-\ :file:`java/org/terasoluna/examples/rest/domain/model/Gender.java`\
+\ :file:`java/com/examples/rest/domain/model/Gender.java`\
 
 .. code-block:: java
 
-  package org.terasoluna.examples.rest.domain.model;
+  package com.examples.rest.domain.model;
   
   import java.util.Collections;
   import java.util.HashMap;
@@ -6206,16 +6541,16 @@ Gender.java
 MemberRepository.java
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-\ :file:`java/org/terasoluna/examples/rest/domain/repository/member/MemberRepository.java`\
+\ :file:`java/com/examples/rest/domain/repository/member/MemberRepository.java`\
 
 .. code-block:: java
 
-  package org.terasoluna.examples.rest.domain.repository.member;
+  package com.examples.rest.domain.repository.member;
 
   import java.util.List;    
   import org.apache.ibatis.session.RowBounds;
 
-  import org.terasoluna.examples.rest.domain.model.Member;
+  import com.examples.rest.domain.model.Member;
 
   public interface MemberRepository {
 
@@ -6246,16 +6581,17 @@ MemberRepository.java
 MemberService.java
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-:file:`java/org/terasoluna/examples/rest/domain/service/member/MemberService.java`
+\ :file:`java/com/examples/rest/domain/service/member/MemberService.java`\
 
 .. code-block:: java
 
-  package org.terasoluna.examples.rest.domain.service.member;
+  package com.examples.rest.domain.service.member;
   
   import java.util.List;
   import org.springframework.data.domain.Page;
   import org.springframework.data.domain.Pageable;
-  import org.terasoluna.examples.rest.domain.model.Member;
+
+  import com.examples.rest.domain.model.Member;
   
   public interface MemberService {
   
@@ -6280,11 +6616,11 @@ MemberService.java
 MemberServiceImpl.java
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-\ :file:`java/org/terasoluna/examples/rest/domain/service/member/MemberServiceImpl.java`\
+\ :file:`java/com/examples/rest/domain/service/member/MemberServiceImpl.java`\
 
 .. code-block:: java
 
-  package org.terasoluna.examples.rest.domain.service.member;
+  package com.examples.rest.domain.service.member;
 
   import java.time.LocalDateTime;
   import java.util.ArrayList;
@@ -6300,14 +6636,15 @@ MemberServiceImpl.java
   import org.springframework.stereotype.Service;
   import org.springframework.transaction.annotation.Transactional;
   import org.springframework.util.StringUtils;
-  import org.terasoluna.examples.rest.domain.message.DomainMessageCodes;
-  import org.terasoluna.examples.rest.domain.model.Member;
-  import org.terasoluna.examples.rest.domain.model.MemberCredential;
-  import org.terasoluna.examples.rest.domain.repository.member.MemberRepository;
   import org.terasoluna.gfw.common.exception.BusinessException;
   import org.terasoluna.gfw.common.exception.ResourceNotFoundException;
   import org.terasoluna.gfw.common.message.ResultMessages;
   import org.terasoluna.gfw.common.time.ClockFactory;
+
+  import com.examples.rest.domain.message.DomainMessageCodes;
+  import com.examples.rest.domain.model.Member;
+  import com.examples.rest.domain.model.MemberCredential;
+  import com.examples.rest.domain.repository.member.MemberRepository;
 
   import jakarta.inject.Inject;
 
@@ -6440,11 +6777,11 @@ MemberServiceImpl.java
 DomainMessageCodes.java
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-\ :file:`java/org/terasoluna/examples/rest/domain/message/DomainMessageCodes.java`\
+\ :file:`java/com/examples/rest/domain/message/DomainMessageCodes.java`\
 
 .. code-block:: java
 
-  package org.terasoluna.examples.rest.domain.message;
+  package com.examples.rest.domain.message;
   
   /**
    * Message codes of domain layer message.
@@ -6472,19 +6809,20 @@ GenderTypeHandler.java
 
 | Enum型のコード値をマッピングするためのタイプハンドラー。
 
-\ :file:`java/org/terasoluna/examples/infra/mybatis/typehandler/GenderTypeHandler.java`\
+\ :file:`java/com/examples/infra/mybatis/typehandler/GenderTypeHandler.java`\
 
 .. code-block:: java
 
-  package org.terasoluna.examples.infra.mybatis.typehandler;
+  package com.examples.infra.mybatis.typehandler;
 
   import java.sql.CallableStatement;
   import java.sql.PreparedStatement;
   import java.sql.ResultSet;
   import java.sql.SQLException;
-  import org.terasoluna.examples.domain.model.Gender;
   import org.apache.ibatis.type.JdbcType;
   import org.apache.ibatis.type.BaseTypeHandler;
+
+  import com.examples.domain.model.Gender;
 
   public class GenderTypeHandler extends BaseTypeHandler<Gender> {
 
@@ -6526,21 +6864,21 @@ GenderTypeHandler.java
 MemberBeanMapper.java
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-| 実装したServiceクラスでは、クライアントから指定された値を\ ``Member``\オブジェクトにマッピングする際に、「\ :doc:`../GeneralFuncDetail/BeanMapping`\」を使用している。
-| 実装例では、更新対象外の項目(\ ``memberId``\、\ ``credential``\、\ ``createdAt``\、\ ``version``\)をマッピング対象外にする必要がある。
-| マッピングメソッドに\ ``@Mapping``\アノテーションを付与し、設定を行う。
+| 実装したServiceクラスでは、クライアントから指定された値を\ ``Member``\ オブジェクトにマッピングする際に、「\ :doc:`../GeneralFuncDetail/BeanMapping`\ 」を使用している。
+| 実装例では、更新対象外の項目(\ ``memberId``\ 、\ ``credential``\ 、\ ``createdAt``\ 、\ ``version``\ )をマッピング対象外にする必要がある。
+| マッピングメソッドに\ ``@Mapping``\ アノテーションを付与し、設定を行う。
 
-\ :file:`java/org/terasoluna/examples/rest/domain/service/member/MemberBeanMapper.java`\
+\ :file:`java/com/examples/rest/domain/service/member/MemberBeanMapper.java`\
 
 .. code-block:: java
 
-  package org.terasoluna.examples.rest.domain.service.member;
+  package com.examples.rest.domain.service.member;
 
   import org.mapstruct.Mapper;
   import org.mapstruct.Mapping;
   import org.mapstruct.MappingTarget;
 
-  import org.terasoluna.examples.rest.domain.model.Member;
+  import com.examples.rest.domain.model.Member;
 
   @Mapper
   public interface MemberBeanMapper {
@@ -6560,32 +6898,68 @@ MemberBeanMapper.java
 mybatis-config.xml
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 | MyBatis3の動作をカスタマイズする場合は、MyBatis設定ファイルに設定値を追加する。MyBatis3では、Joda-Timeのクラス(org.joda.time.DateTime、org.joda.time.LocalDateTime、org.joda.time.LocalDateなど)はサポートされていない。
-| そのため、EntityクラスのフィールドにJoda-Timeのクラスを使用する場合は、Joda-Time用の\ ``TypeHandler`` \を用意する必要がある。
-| org.joda.time.DateTimeとjava.sql.Timestampをマッピングするための\ ``TypeHandler`` \の実装例、「\ :ref:`DataAccessMyBatis3HowToExtendTypeHandlerJoda`\」を使って行っている。
+| そのため、EntityクラスのフィールドにJoda-Timeのクラスを使用する場合は、Joda-Time用の\ ``TypeHandler``\ を用意する必要がある。
+| org.joda.time.DateTimeとjava.sql.Timestampをマッピングするための\ ``TypeHandler``\ の実装例、「\ :ref:`DataAccessMyBatis3HowToExtendTypeHandlerJoda`\ 」を使って行っている。
 
-\ :file:`resources/META-INF/mybatis/mybatis-config.xml`\
+.. tabs::
+  .. group-tab:: Java Config
 
-.. code-block:: xml
+    \ :file:`com.examples.rest.config.app.mybatis.MybatisConfig.java`\
 
-  <?xml version="1.0" encoding="UTF-8" ?>
-  <!DOCTYPE configuration PUBLIC "-//mybatis.org/DTD Config 3.0//EN"
-      "http://mybatis.org/dtd/mybatis-3-config.dtd">
-  <configuration>
+    .. code-block:: java
 
-      <settings>
-          <setting name="jdbcTypeForNull" value="NULL" />
-          <setting name="mapUnderscoreToCamelCase" value="true" />
-      </settings>
+      public class MybatisConfig {
+     
+          public static Configuration configuration() throws IOException {
+              Configuration configuration = new Configuration();
+              setSettings(configuration);
+              setTypeAliases(configuration.getTypeAliasRegistry());
+              setTypeHandlers(configuration.getTypeHandlerRegistry());
+              return configuration;
+          }
+      
+          private static void setSettings(Configuration configuration) {
+              configuration.getJdbcTypeForNull();
+              configuration.setMapUnderscoreToCamelCase(true);
+          }
+      
+          private static void setTypeAliases(TypeAliasRegistry typeAliasRegistry) {
+              typeAliasRegistry.registerAliases(
+                      "com.examples.infra.mybatis.typehandler");
+          }
+      
+          private static void setTypeHandlers(
+                  TypeHandlerRegistry typeHandlerRegistry) {
+              typeHandlerRegistry.register(
+                      "com.examples.infra.mybatis.typehandler");
+          }
+      }
+    
+  .. group-tab:: XML Config
 
-      <typeAliases>
-          <package name="org.terasoluna.examples.infra.mybatis.typehandler" />
-      </typeAliases>
-
-      <typeHandlers>
-         <package name="org.terasoluna.examples.infra.mybatis.typehandler" />
-      </typeHandlers>
-  
-  </configuration>
+    \ :file:`resources/META-INF/mybatis/mybatis-config.xml`\
+    
+    .. code-block:: xml
+    
+      <?xml version="1.0" encoding="UTF-8" ?>
+      <!DOCTYPE configuration PUBLIC "-//mybatis.org/DTD Config 3.0//EN"
+          "http://mybatis.org/dtd/mybatis-3-config.dtd">
+      <configuration>
+    
+          <settings>
+              <setting name="jdbcTypeForNull" value="NULL" />
+              <setting name="mapUnderscoreToCamelCase" value="true" />
+          </settings>
+    
+          <typeAliases>
+              <package name="com.examples.infra.mybatis.typehandler" />
+          </typeAliases>
+    
+          <typeHandlers>
+             <package name="com.examples.infra.mybatis.typehandler" />
+          </typeHandlers>
+      
+      </configuration>
 
 |
 
@@ -6594,7 +6968,7 @@ mybatis-config.xml
 MemberRepository.xml
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-\ :file:`resources/org/terasoluna/examples/rest/domain/repository/member/MemberRepository.xml`\
+\ :file:`resources/com/examples/rest/domain/repository/member/MemberRepository.xml`\
 
 .. code-block:: xml
 
@@ -6602,7 +6976,7 @@ MemberRepository.xml
   <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
       "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   <mapper
-      namespace="org.terasoluna.examples.rest.domain.repository.member.MemberRepository">
+      namespace="com.examples.rest.domain.repository.member.MemberRepository">
 
       <resultMap id="MemberResultMap" type="Member">
           <id property="memberId" column="member_id" />

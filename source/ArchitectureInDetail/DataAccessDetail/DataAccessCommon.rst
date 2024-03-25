@@ -16,7 +16,11 @@ Overview
 
 本節では、RDBMSで管理されているデータにアクセスする方法について、説明する。
 
-MyBatis3に依存する部分については、\ :doc:`DataAccessMyBatis3`\を参照されたい。
+O/R Mapperに依存する部分については、
+
+* \ :doc:`DataAccessMyBatis3`\
+
+を参照されたい。
 
 |
 
@@ -81,7 +85,7 @@ OSS/Third-Partyライブラリ提供のJDBCデータソース
       - 説明
     * - 1.
       - Apache Commons DBCP
-      - \ `Apache Commons DBCP <https://commons.apache.org/proper/commons-dbcp/index.html>`_\ を参照されたい。
+      - \ `Apache Commons DBCP <https://commons.apache.org/proper/commons-dbcp/>`_\ を参照されたい。
 
 |
 
@@ -150,7 +154,6 @@ Spring Framework提供のJDBCデータソース
 
     理由は、アプリケーション層の実装(Controllerの実装)を、使用するO/R Mapperに依存させないためである。
 
-
 下記は、一意制約違反を、ビジネス例外として扱う実装例である。
 
   .. code-block:: java
@@ -172,7 +175,9 @@ Spring Framework提供のJDBCデータソース
       - | 一意制約違反が発生した場合に発生する例外（DuplicateKeyException）をcatchする。
     * - | (2)
       - | データが重複している旨を伝えるビジネス例外を発生させている。
-        | 例外をcatchした場合は、必ず原因例外("\ ``e``\" ) をビジネス例外に指定すること。
+        | 例外をcatchした場合は、必ず原因例外("\ ``e``\ ") をビジネス例外に指定すること。
+
+|
 
 複数データソースについて
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -239,12 +244,6 @@ How to use
        defaultAutoCommit="false"
        /> <!-- (2) -->
 
-- \ :file:`xxx-env.xml`\
-
-  .. code-block:: xml
-
-    <jee:jndi-lookup id="dataSource" jndi-name="jdbc/SampleDataSource" /> <!-- (3) -->
-
   .. tabularcolumns:: |p{0.10\linewidth}|p{0.10\linewidth}|p{0.80\linewidth}|
   .. list-table::
     :header-rows: 1
@@ -279,11 +278,57 @@ How to use
       - 自動コミットフラグのデフォルト値を指定する。falseを指定する。トランザクション管理下であれば強制的にfalseになる。
     * - | (2)
       - \-
-      - | Tomcat10.1の場合、factory属性を省略するとtomcat-jdbc-poolが使用される。
-        | 設定項目の詳細については、\ `Attributes of The Tomcat JDBC Connection Pool <https://tomcat.apache.org/tomcat-10.1-doc/jdbc-pool.html#Attributes>`_\ を参照されたい。
-    * - | (3)
-      - \-
-      - データソースのJNDI名を指定する。Tomcatの場合は、データソース定義時のリソース名「(1)-name」に指定した値を指定する。
+      - | Tomcat10.1の場合、factory属性を省略すると\ `Apache Commons DBCP <https://commons.apache.org/proper/commons-dbcp/>`_\ が使用される。
+        | 設定項目の詳細については、\ `DBCP Configuration <https://commons.apache.org/proper/commons-dbcp/configuration.html>`_\ を参照されたい。
+
+.. tabs::
+  .. group-tab:: Java Config
+
+    - \ :file:`XxxEnvConfig.java`\
+    
+      .. code-block:: java
+    
+        @Bean(name = "dataSource")
+        public DataSource dataSource() throws NamingException {
+            JndiObjectFactoryBean bean = new JndiObjectFactoryBean();
+            bean.setJndiName("jdbc/SampleDataSource"); // (3)
+            bean.setExpectedType(javax.sql.DataSource.class);
+            bean.setResourceRef(true);
+            bean.afterPropertiesSet();
+            return (DataSource) bean.getObject();
+        }
+    
+      .. tabularcolumns:: |p{0.10\linewidth}|p{0.10\linewidth}|p{0.80\linewidth}|
+      .. list-table::
+        :header-rows: 1
+        :widths: 10 10 80
+    
+        * - 項番
+          - 属性名
+          - 説明
+        * - | (3)
+          - \-
+          - データソースのJNDI名を指定する。Tomcatの場合は、データソース定義時のリソース名「(1)-name」に指定した値を指定する。
+
+  .. group-tab:: XML Config
+
+    - \ :file:`xxx-env.xml`\
+    
+      .. code-block:: xml
+    
+        <jee:jndi-lookup id="dataSource" jndi-name="jdbc/SampleDataSource" /> <!-- (3) -->
+    
+      .. tabularcolumns:: |p{0.10\linewidth}|p{0.10\linewidth}|p{0.80\linewidth}|
+      .. list-table::
+        :header-rows: 1
+        :widths: 10 10 80
+    
+        * - 項番
+          - 属性名
+          - 説明
+        * - | (3)
+          - \-
+          - データソースのJNDI名を指定する。Tomcatの場合は、データソース定義時のリソース名「(1)-name」に指定した値を指定する。
 
 |
 
@@ -293,45 +338,92 @@ Bean定義したDataSourceを使用する場合の設定
 | OSS/Third-Partyライブラリから提供されているデータソースや、Spring Frameworkから提供されているJDBCデータソースを使用する場合は、Bean定義ファイルにDataSourceクラスのbean定義が必要となる。
 | 以下に、データベースはPostgreSQL、データソースはApache Commons DBCPを使用する際の、設定例を示す。
 
-- \ :file:`xxx-env.xml`\
+.. tabs::
+  .. group-tab:: Java Config
 
-  .. code-block:: xml
+    - \ :file:`XxxEnvConfig.java`\
+    
+      .. code-block:: java
 
-    <bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource"
-        destroy-method="close">                                           <!-- (1) (8) -->
-        <property name="driverClassName" value="org.postgresql.Driver" /> <!-- (2) -->
-        <property name="url" value="jdbc:postgresql://localhost:5432/macchinetta" /> <!-- (3) -->
-        <property name="username" value="postgres" />                     <!-- (4) -->
-        <property name="password" value="postgres" />                     <!-- (5) -->
-        <property name="defaultAutoCommit" value="false"/>               <!-- (6) -->
-        <!-- (7) -->
-    </bean>
+        @Bean(name = "dataSource", destroyMethod = "close")
+        public DataSource dataSourceDefault() {
+            BasicDataSource bean = new BasicDataSource(); // (1)
+            bean.setDriverClassName("org.postgresql.Driver"); // (2)
+            bean.setUrl("jdbc:postgresql://localhost:5432/macchinetta"); // (3)
+            bean.setUsername("postgres"); // (4)
+            bean.setPassword("postgres"); // (5)
+            bean.setDefaultAutoCommit(false); // (6)
+            // (7) (8)
+            return bean;
+        }
+    
+      .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
+      .. list-table::
+        :header-rows: 1
+        :widths: 10 90
+    
+        * - 項番
+          - 説明
+        * - | (1)
+          - データソースの実装クラスを指定する。例では、Apache Commons DBCPから提供されているデータソースクラス(\ ``org.apache.commons.dbcp2.BasicDataSource``\ )を指定する。
+        * - | (2)
+          - JDBCドライバクラスを指定する。例では、PostgreSQLから提供されているJDBCドライバクラスを指定する。
+        * - | (3)
+          - 接続URLを指定する。 【環境に合わせて変更が必要】
+        * - | (4)
+          - 接続ユーザ名を指定する。【環境に合わせて変更が必要】
+        * - | (5)
+          - 接続ユーザのパスワードを指定する。【環境に合わせて変更が必要】
+        * - | (6)
+          - 自動コミットフラグのデフォルト値を指定する。falseを指定する。トランザクション管理下であれば、強制的にfalseになる。
+        * - | (7)
+          - | BasicDataSourceには上記以外に、JDBC共通の設定値の指定、JDBCドライバー固有のプロパティ値の指定、コネクションプーリング機能の設定値の指定を行うことができる。
+            | 設定項目の詳細については、\ `DBCP Configuration <https://commons.apache.org/proper/commons-dbcp/configuration.html>`_\ を参照されたい。
+        * - | (8)
+          - | 設定例では値を直接指定しているが、環境によって設定値がかわる項目については、Placeholder(${...})を使用して、実際の設定値はプロパティファイルに指定すること。
+            | Placeholderについては、\ `Spring Framework Documentation -Customizing Configuration Metadata with a BeanFactoryPostProcessor- <https://docs.spring.io/spring-framework/docs/6.1.3/reference/html/core.html#beans-factory-extension-factory-postprocessors>`_\ の\ ``Example: The Class Name Substitution PropertySourcesPlaceholderConfigurer``\ を参照されたい。
 
-  .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
-  .. list-table::
-    :header-rows: 1
-    :widths: 10 90
+  .. group-tab:: XML Config
 
-    * - 項番
-      - 説明
-    * - | (1)
-      - データソースの実装クラスを指定する。例では、Apache Commons DBCPから提供されているデータソースクラス(\ ``org.apache.commons.dbcp2.BasicDataSource``\ )を指定する。
-    * - | (2)
-      - JDBCドライバクラスを指定する。例では、PostgreSQLから提供されているJDBCドライバクラスを指定する。
-    * - | (3)
-      - 接続URLを指定する。 【環境に合わせて変更が必要】
-    * - | (4)
-      - 接続ユーザ名を指定する。【環境に合わせて変更が必要】
-    * - | (5)
-      - 接続ユーザのパスワードを指定する。【環境に合わせて変更が必要】
-    * - | (6)
-      - 自動コミットフラグのデフォルト値を指定する。falseを指定する。トランザクション管理下であれば、強制的にfalseになる。
-    * - | (7)
-      - | BasicDataSourceには上記以外に、JDBC共通の設定値の指定、JDBCドライバー固有のプロパティ値の指定、コネクションプーリング機能の設定値の指定を行うことができる。
-        | 設定項目の詳細については、\ `DBCP Configuration <https://commons.apache.org/proper/commons-dbcp/configuration.html>`_\ を参照されたい。
-    * - | (8)
-      - | 設定例では値を直接指定しているが、環境によって設定値がかわる項目については、Placeholder(${...})を使用して、実際の設定値はプロパティファイルに指定すること。
-        | Placeholderについては、\ `Spring Framework Documentation -Customizing Configuration Metadata with a BeanFactoryPostProcessor- <https://docs.spring.io/spring-framework/docs/6.0.3/reference/html/core.html#beans-factory-extension-factory-postprocessors>`_\ の\ ``Example: The Class Name Substitution PropertySourcesPlaceholderConfigurer``\ を参照されたい。
+    - \ :file:`xxx-env.xml`\
+    
+      .. code-block:: xml
+    
+        <bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource"
+            destroy-method="close">                                           <!-- (1) (8) -->
+            <property name="driverClassName" value="org.postgresql.Driver" /> <!-- (2) -->
+            <property name="url" value="jdbc:postgresql://localhost:5432/macchinetta" /> <!-- (3) -->
+            <property name="username" value="postgres" />                     <!-- (4) -->
+            <property name="password" value="postgres" />                     <!-- (5) -->
+            <property name="defaultAutoCommit" value="false"/>               <!-- (6) -->
+            <!-- (7) -->
+        </bean>
+    
+      .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
+      .. list-table::
+        :header-rows: 1
+        :widths: 10 90
+    
+        * - 項番
+          - 説明
+        * - | (1)
+          - データソースの実装クラスを指定する。例では、Apache Commons DBCPから提供されているデータソースクラス(\ ``org.apache.commons.dbcp2.BasicDataSource``\ )を指定する。
+        * - | (2)
+          - JDBCドライバクラスを指定する。例では、PostgreSQLから提供されているJDBCドライバクラスを指定する。
+        * - | (3)
+          - 接続URLを指定する。 【環境に合わせて変更が必要】
+        * - | (4)
+          - 接続ユーザ名を指定する。【環境に合わせて変更が必要】
+        * - | (5)
+          - 接続ユーザのパスワードを指定する。【環境に合わせて変更が必要】
+        * - | (6)
+          - 自動コミットフラグのデフォルト値を指定する。falseを指定する。トランザクション管理下であれば、強制的にfalseになる。
+        * - | (7)
+          - | BasicDataSourceには上記以外に、JDBC共通の設定値の指定、JDBCドライバー固有のプロパティ値の指定、コネクションプーリング機能の設定値の指定を行うことができる。
+            | 設定項目の詳細については、\ `DBCP Configuration <https://commons.apache.org/proper/commons-dbcp/configuration.html>`_\ を参照されたい。
+        * - | (8)
+          - | 設定例では値を直接指定しているが、環境によって設定値がかわる項目については、Placeholder(${...})を使用して、実際の設定値はプロパティファイルに指定すること。
+            | Placeholderについては、\ `Spring Framework Documentation -Customizing Configuration Metadata with a BeanFactoryPostProcessor- <https://docs.spring.io/spring-framework/docs/6.1.3/reference/html/core.html#beans-factory-extension-factory-postprocessors>`_\ の\ ``Example: The Class Name Substitution PropertySourcesPlaceholderConfigurer``\ を参照されたい。
 
 |
 
@@ -343,6 +435,7 @@ PlatformTransactionManagerについては、使用するO/R Mapperによって�
 
 * \ :doc:`DataAccessMyBatis3`\
 
+
 を参照されたい。
 
 |
@@ -350,7 +443,7 @@ PlatformTransactionManagerについては、使用するO/R Mapperによって�
 JDBCのDebug用ログの設定
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-| O/R Mapper(MyBatis)で出力されるログより、さらに細かい情報が必要な場合、log4jdbc(log4jdbc-remix)を使って出力される情報が有効である。
+| O/R Mapper(MyBatis, Hibernate)で出力されるログより、さらに細かい情報が必要な場合、log4jdbc(log4jdbc-remix)を使って出力される情報が有効である。
 | log4jdbcの詳細については、\ `log4jdbc project page <https://github.com/arthurblake/log4jdbc>`_\ を参照されたい。
 | log4jdbc-remixの詳細については、\ `log4jdbc-remix project page <https://code.google.com/archive/p/log4jdbc-remix>`_\ を参照されたい。
 
@@ -410,7 +503,6 @@ AbstractRoutingDataSourceの実装
         }
     }
 
-
   .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
   .. list-table::
     :header-rows: 1
@@ -432,39 +524,79 @@ AbstractRoutingDataSourceの実装
     認証ユーザー情報(IDや権限)によってデータソースを切り替えたい場合には、\ ``determineCurrentLookupKey``\ メソッド内で、\ ``org.springframework.security.core.context.SecurityContext``\ を使用して取得すれば良い。
     \ ``org.springframework.security.core.context.SecurityContext``\ クラスの詳細は\ :doc:`../../Security/Authentication`\ を参照のこと。
 
+|
+
 データソースの定義
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 作成した\ ``AbstractRoutingDataSource``\ 拡張クラスをbean定義ファイルに定義する。
 
-- \ :file:`xxx-env.xml`\
+.. tabs::
+  .. group-tab:: Java Config
 
-  .. code-block:: xml
+    - \ :file:`XxxEnvConfig.java`\
 
-    <bean id="dataSource"
-        class="com.examples.infra.datasource.RoutingDataSource">  <!-- (1) -->
-        <property name="targetDataSources">  <!-- (2) -->
-            <map>
-                <entry key="OPEN" value-ref="dataSourceOpen" />
-                <entry key="CLOSE" value-ref="dataSourceClose" />
-            </map>
-        </property>
-        <property name="defaultTargetDataSource" ref="dataSourceDefault" />  <!-- (3) -->
-    </bean>
+      .. code-block:: java
 
-  .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
-  .. list-table::
-    :header-rows: 1
-    :widths: 10 90
+        @Bean("routingDataSource")
+        public RoutingDataSource routingDataSource(
+                @Qualifier("dataSourceOpen") DataSource dataSourceOpen,
+                @Qualifier("dataSourceClose") DataSource dataSourceClose,
+                @Qualifier("dataSourceDefault") DataSource dataSourceDefault) {
+    
+            RoutingDataSource bean = new RoutingDataSource(); // (1)
+            Map<Object, Object> target = new LinkedHashMap<Object, Object>();
+            target.put("OPEN", dataSourceOpen); // (2)
+            target.put("CLOSE", dataSourceClose); // (2)
+            bean.setTargetDataSources(target); 
+            bean.setDefaultTargetDataSource(dataSourceDefault); // (3)
+            return bean;
+        }
+    
+      .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
+      .. list-table::
+        :header-rows: 1
+        :widths: 10 90
+    
+        * - 項番
+          - 説明
+        * - | (1)
+          - 先ほど作成した\ ``AbstractRoutingDataSource``\ を継承したクラスを定義する。
+        * - | (2)
+          - 使用するデータソースを定義する。\ ``key``\ は\ ``determineCurrentLookupKey``\ メソッドで返却しうる値を定義する。\ ``value-ref``\ には\ ``key``\ ごとに使用するデータソースを指定する。\ :ref:`データソースの設定 <data-access-common_howtouse_datasource>`\ をもとに切り替えるデータソースの個数分、定義を行う必要がある。
+        * - | (3)
+          - \ ``determineCurrentLookupKey``\ メソッドで指定した\ ``key``\ が\ ``targetDataSources``\ に存在しない場合は、このデータソースが使用される。実装例の場合、デフォルトが使用されることはないが、今回は説明のため、\ ``defaultTargetDataSource``\ を定義している。
 
-    * - 項番
-      - 説明
-    * - | (1)
-      - 先ほど作成した\ ``AbstractRoutingDataSource``\ を継承したクラスを定義する。
-    * - | (2)
-      - 使用するデータソースを定義する。\ ``key``\ は\ ``determineCurrentLookupKey``\ メソッドで返却しうる値を定義する。\ ``value-ref``\ には\ ``key``\ ごとに使用するデータソースを指定する。\ :ref:`データソースの設定 <data-access-common_howtouse_datasource>`\ をもとに切り替えるデータソースの個数分、定義を行う必要がある。
-    * - | (3)
-      - \ ``determineCurrentLookupKey``\ メソッドで指定した\ ``key``\ が\ ``targetDataSources``\ に存在しない場合は、このデータソースが使用される。実装例の場合、デフォルトが使用されることはないが、今回は説明のため、\ ``defaultTargetDataSource``\ を定義している。
+  .. group-tab:: XML Config
+
+    - \ :file:`xxx-env.xml`\
+    
+      .. code-block:: xml
+    
+        <bean id="dataSource"
+            class="com.examples.infra.datasource.RoutingDataSource">  <!-- (1) -->
+            <property name="targetDataSources">  <!-- (2) -->
+                <map>
+                    <entry key="OPEN" value-ref="dataSourceOpen" />
+                    <entry key="CLOSE" value-ref="dataSourceClose" />
+                </map>
+            </property>
+            <property name="defaultTargetDataSource" ref="dataSourceDefault" />  <!-- (3) -->
+        </bean>
+    
+      .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
+      .. list-table::
+        :header-rows: 1
+        :widths: 10 90
+    
+        * - 項番
+          - 説明
+        * - | (1)
+          - 先ほど作成した\ ``AbstractRoutingDataSource``\ を継承したクラスを定義する。
+        * - | (2)
+          - 使用するデータソースを定義する。\ ``key``\ は\ ``determineCurrentLookupKey``\ メソッドで返却しうる値を定義する。\ ``value-ref``\ には\ ``key``\ ごとに使用するデータソースを指定する。\ :ref:`データソースの設定 <data-access-common_howtouse_datasource>`\ をもとに切り替えるデータソースの個数分、定義を行う必要がある。
+        * - | (3)
+          - \ ``determineCurrentLookupKey``\ メソッドで指定した\ ``key``\ が\ ``targetDataSources``\ に存在しない場合は、このデータソースが使用される。実装例の場合、デフォルトが使用されることはないが、今回は説明のため、\ ``defaultTargetDataSource``\ を定義している。
 
 |
 
@@ -534,8 +666,7 @@ JOIN(Join Fetch)を使用して解決する
 
     関連テーブルとの関連が、1:Nの場合は、JOIN(Join Fetch)による解決も可能だが、以下の点に注意すること。
 
-    * 1:Nの関連をもつレコードをJOINする場合、関連テーブルのレコード数に比例して、無駄なデータを取得することになる。
-      詳細については、\ :ref:`一括取得時の注意事項 <DataAccessMyBatis3AppendixAcquireRelatedObjectsWarningSqlMapping>`\ を参照されたい。
+    * 1:Nの関連をもつレコードをJOINする場合、関連テーブルのレコード数に比例して、無駄なデータを取得することになる。 詳細については、\ :ref:`一括取得時の注意事項 <DataAccessMyBatis3AppendixAcquireRelatedObjectsWarningSqlMapping>`\ を参照されたい。
 
 |
 
@@ -625,14 +756,14 @@ LIKE検索を行う場合は、検索条件として使用する値を、LIKE検
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 共通ライブラリから提供しているエスケープ処理の仕様は、以下の通りである。
 
-* エスケープ文字は「 "``~``" 」。
-* エスケープ対象文字は、デフォルトでは「 "``%``" , "``_``"」の2文字。
+* エスケープ文字は「 "\ ``~``\ " 」。
+* エスケープ対象文字は、デフォルトでは「 "\ ``%``\ " , "\ ``_``\ "」の2文字。
 
 .. note::
 
-  エスケープ対象文字は、terasoluna-gfw-common 1.0.1.RELEASEまでは「 "``%``" , "``_``" , "``％``" , "``＿``"」の4文字であったが、「\ `LIKE検索用のワイルドカード文字の扱いに関するバグ <https://github.com/terasolunaorg/terasoluna-gfw/issues/78>`_\ 」を修正するために、terasoluna-gfw-common 1.0.2.RELEASEより「 "``%``" , "``_``"」の2文字に変更している。
+  エスケープ対象文字は、terasoluna-gfw-common 1.0.1.RELEASEまでは「 "\ ``%``\ " , "\ ``_``\ " , "\ ``％``\ " , "\ ``＿``\ "」の4文字であったが、「\ `LIKE検索用のワイルドカード文字の扱いに関するバグ <https://github.com/terasolunaorg/terasoluna-gfw/issues/78>`_\ 」を修正するために、terasoluna-gfw-common 1.0.2.RELEASEより「 "\ ``%``\ " , "\ ``_``\ "」の2文字に変更している。
 
-  なお、エスケープ対象文字として全角文字「"``％``" , "``＿``"」を含めてエスケープする方法も提供している。
+  なお、エスケープ対象文字として全角文字「"\ ``％``\ " , "\ ``＿``\ "」を含めてエスケープする方法も提供している。
 
 |
 
@@ -811,7 +942,6 @@ LIKE検索時のエスケープ処理の実装例については、使用するO
       String escapedWord = QueryEscapeUtils.withFullWidth()  // (2)
                               .toLikeCondition(word);        // (3)
 
-
     .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
     .. list-table::
       :header-rows: 1
@@ -833,12 +963,6 @@ Sequencerについて
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 | Sequencerは、シーケンス値を取得するための共通ライブラリである。
 | Sequencerから取得したシーケンス値は、データベースのプライマリキーカラムの設定値などとして使用する。
-
-  .. note:: \ **共通ライブラリとしてSequencerを用意した理由**\
-
-    Sequencerを用意した理由は、JPAの機能として提供されているID採番機能において、シーケンス値を文字列としてフォーマットする仕組みがないためである。実際のアプリケーション開発では、フォーマットされた文字列をプライマリキーに設定するケースもあるため、共通ライブラリとしてSequencerを提供している。
-
-    Sequencerを用意した主な目的は、JPAでサポートされていない機能の補完であるが、JPAと関係ない処理で、シーケンス値が必要な場合に、使用することもできる。
 
 |
 
@@ -875,46 +999,90 @@ Sequencerについて
 
 Sequencerをbean定義する。
 
-- \ :file:`xxx-infra.xml`\
+.. tabs::
+  .. group-tab:: Java Config
 
-  .. code-block:: xml
+    - \ :file:`XxxInfraConfig.java`\
+    
+      .. code-block:: java
 
-    <!-- (1) -->
-    <bean id="articleIdSequencer" class="org.terasoluna.gfw.common.sequencer.JdbcSequencer">
-         <!-- (2) -->
-        <property name="dataSource" ref="dataSource" />
-         <!-- (3) -->
-        <property name="sequenceClass" value="java.lang.String" />
-        <!-- (4) -->
-        <property name="nextValueQuery"
-            value="SELECT TO_CHAR(NEXTVAL('seq_article'),'AFM0000000000')" />
-        <!-- (5) -->
-        <property name="currentValueQuery"
-            value="SELECT TO_CHAR(CURRVAL('seq_article'),'AFM0000000000')" />
-    </bean>
+        @Bean(name = "articleIdSequencer")
+        public JdbcSequencer<String> jdbcSequencer(DataSource dataSource) {
+            JdbcSequencer<String> bean = new JdbcSequencer<>(); // (1)
+            bean.setDataSource(dataSource); // (2)
+            bean.setSequenceClass(String.class); // (3)
+            bean.setNextValueQuery(
+                    "SELECT 'A' || LPAD(NEXTVAL('seq_article'),9,'0')"); // (4)
+            bean.setCurrentValueQuery(
+                    "SELECT 'A' || LPAD(CURRVAL('seq_article'),9,'0')"); // (5)
+            return bean;
+        }
+    
+      .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
+      .. list-table::
+        :header-rows: 1
+        :widths: 10 90
+    
+        * - 項番
+          - 説明
+        * - | (1)
+          - | \ ``org.terasoluna.gfw.common.sequencer.Sequencer``\ インタフェースを実装したクラスを、bean定義する。
+            | 上記例では、SQLを発行してシーケンス値を取得するためのクラス(\ ``JdbcSequencer``\ )を指定している。
+        * - | (2)
+          - | シーケンス値を取得するSQLを、実行するデータソースを指定する。
+        * - | (3)
+          - | 取得するシーケンス値の型を指定する。
+            | 上記例では、SQLで文字列へ変換しているので、\ ``java.lang.String``\ 型を指定している。
+        * - | (4)
+          - | 次のシーケンス値を取得するためのSQLを指定する。
+            | 上記例では、データベース(PostgreSQL)のシーケンスオブジェクトから取得したシーケンス値を、左"\ ``0``\ "埋めの文字列としてフォーマットしている。
+            | データベースから取得したシーケンス値が、"\ ``1``\ "の場合、\ ``A000000001``\ が\ ``Sequencer#getNext()``\ メソッドの返り値として返却される。
+        * - | (5)
+          - | 現在のシーケンス値を取得するためのSQLを指定する。
+            | データベースから取得したシーケンス値が、"\ ``2``\ "の場合、\ ``A000000002``\ が\ ``Sequencer#getCurrent()``\ メソッドの返り値として返却される。
 
-  .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
-  .. list-table::
-    :header-rows: 1
-    :widths: 10 90
+  .. group-tab:: XML Config
 
-    * - 項番
-      - 説明
-    * - | (1)
-      - | \ ``org.terasoluna.gfw.common.sequencer.Sequencer``\ インタフェースを実装したクラスを、bean定義する。
-        | 上記例では、SQLを発行してシーケンス値を取得するためのクラス(\ ``JdbcSequencer``\ )を指定している。
-    * - | (2)
-      - | シーケンス値を取得するSQLを、実行するデータソースを指定する。
-    * - | (3)
-      - | 取得するシーケンス値の型を指定する。
-        | 上記例では、SQLで文字列へ変換しているので、\ ``java.lang.String``\ 型を指定している。
-    * - | (4)
-      - | 次のシーケンス値を取得するためのSQLを指定する。
-        | 上記例では、データベース(PostgreSQL)のシーケンスオブジェクトから取得したシーケンス値を、文字列としてフォーマットしている。
-        | データベースのから取得したシーケンス値が、"\ ``1``\" の場合、\ ``A0000000001``\ が\ ``Sequencer#getNext()``\ メソッドの返り値として返却される。
-    * - | (5)
-      - | 現在のシーケンス値を取得するためのSQLを指定する。
-        | データベースのから取得したシーケンス値が、"\ ``2``\" の場合、\ ``A0000000002``\ が\ ``Sequencer#getCurrent()``\ メソッドの返り値として返却される。
+    - \ :file:`xxx-infra.xml`\
+    
+      .. code-block:: xml
+    
+        <!-- (1) -->
+        <bean id="articleIdSequencer" class="org.terasoluna.gfw.common.sequencer.JdbcSequencer">
+             <!-- (2) -->
+            <property name="dataSource" ref="dataSource" />
+             <!-- (3) -->
+            <property name="sequenceClass" value="java.lang.String" />
+            <!-- (4) -->
+            <property name="nextValueQuery"
+                value="SELECT 'A' || LPAD(NEXTVAL('seq_article'),9,'0')" />
+            <!-- (5) -->
+            <property name="currentValueQuery"
+                value="SELECT 'A' || LPAD(CURRVAL('seq_article'),9,'0')" />
+        </bean>
+    
+      .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
+      .. list-table::
+        :header-rows: 1
+        :widths: 10 90
+    
+        * - 項番
+          - 説明
+        * - | (1)
+          - | \ ``org.terasoluna.gfw.common.sequencer.Sequencer``\ インタフェースを実装したクラスを、bean定義する。
+            | 上記例では、SQLを発行してシーケンス値を取得するためのクラス(\ ``JdbcSequencer``\ )を指定している。
+        * - | (2)
+          - | シーケンス値を取得するSQLを、実行するデータソースを指定する。
+        * - | (3)
+          - | 取得するシーケンス値の型を指定する。
+            | 上記例では、SQLで文字列へ変換しているので、\ ``java.lang.String``\ 型を指定している。
+        * - | (4)
+          - | 次のシーケンス値を取得するためのSQLを指定する。
+            | 上記例では、データベース(PostgreSQL)のシーケンスオブジェクトから取得したシーケンス値を、左"\ ``0``\ "埋めの文字列としてフォーマットしている。
+            | データベースから取得したシーケンス値が、"\ ``1``\ "の場合、\ ``A000000001``\ が\ ``Sequencer#getNext()``\ メソッドの返り値として返却される。
+        * - | (5)
+          - | 現在のシーケンス値を取得するためのSQLを指定する。
+            | データベースから取得したシーケンス値が、"\ ``2``\ "の場合、\ ``A000000002``\ が\ ``Sequencer#getCurrent()``\ メソッドの返り値として返却される。
 
 bean定義したSequencerからシーケンス値を取得する。
 

@@ -104,7 +104,6 @@ MyBatis3を使用する場合、アプリケーション開発者は、
 
     </mapper>
 
-
   .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
   .. list-table::
     :header-rows: 1
@@ -132,4 +131,3 @@ MyBatis3を使用する場合、アプリケーション開発者は、
 .. raw:: latex
 
   \newpage
-

@@ -44,10 +44,11 @@ OWASP(Open Web Application Security Project)による観点
   * - A3:2021
     - \ `Injection <https://owasp.org/Top10/A03_2021-Injection/>`_\
     - * \ :ref:`secure-input-validation`\
+      * \ :ref:`view_thymeleaf_preprocessing-label` \
   * - A3:2021
     - \ `Injection <https://owasp.org/Top10/A03_2021-Injection/>`_\  Cross-Site Scripting (XSS)
     - * \ :doc:`../Security/XSS`\
-      * \ :ref:`LinkageWithBrowserXXSSProtection`\
+      * \ :ref:`LinkageWithBrowserContentSecurityPolicy`\
 
   * - A4:2021
     - \ `Insecure Design <https://owasp.org/Top10/A04_2021-Insecure_Design/>`_\
@@ -119,4 +120,3 @@ CVE(Common Vulnerabilities and Exposures)による観点
 .. raw:: latex
 
   \newpage
-

@@ -47,4 +47,3 @@
 .. raw:: latex
 
   \newpage
-

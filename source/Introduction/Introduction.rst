@@ -13,7 +13,7 @@
 本ガイドラインはソフトウェア開発経験のあるアーキテクトやプログラマ向けに書かれており、以下の知識があることを前提としている。
 
 * Spring FrameworkのDIやAOPに関する基礎的な知識がある
-* Servlet/JSPを使用してWebアプリケーションを開発したことがある
+* Servlet/テンプレートエンジン(JSPなど)を使用してWebアプリケーションを開発したことがある
 * SQLに関する知識がある
 * Mavenを使用してWebアプリケーションをビルドしたことがある
 
@@ -55,6 +55,8 @@ Spring Frameworkに関して、本ドキュメントを読むための基礎知�
 * | \ :doc:`../Appendix/index`\
   | Macchinetta Server Framework (1.x)を利用する場合の付加情報を説明する。
 
+|
+
 このドキュメントの読み方
 ================================================================================
 
@@ -80,7 +82,6 @@ Spring Frameworkに関して、本ドキュメントを読むための基礎知�
     
    #. \ :doc:`../Overview/FirstApplication`\ 
    #. \ :doc:`../Overview/ApplicationLayering`\ 
-   #. \ :doc:`../Tutorial/TutorialTodo`\ 
    #. \ :doc:`../ImplementationAtEachLayer/index`\ 
    #. \ :doc:`../Tutorial/TutorialTodo`\ 
    #. \ :doc:`../ArchitectureInDetail/WebApplicationDetail/Validation`\ 
@@ -96,10 +97,10 @@ Spring Frameworkに関して、本ドキュメントを読むための基礎知�
 
 .. note:: 
  
-   Macchinetta Server Framework (1.x)はSpring Framework 6の動作環境に合わせ、以下を前提としています。
+  Macchinetta Server Framework (1.x)はSpring Framework 6の動作環境に合わせ、以下を前提としています。
 
   * | Java 17
-    | Java 17で動作させるにあたり、追加の設定の等は\ :doc:`../Appendix/Java17Settings`\ を参照してください。
+    | Java 17で動作させるにあたり、追加の設定等は\ :doc:`../Appendix/Java17Settings`\ を参照してください。
   * | Tomcat 10.0.x がEOLしたことに伴い、Tomcat 10.1.xを使用しています。
     | これに伴い、Jakarta EE 10ベースとなります。
   * | Jakarta EE 9以降では、ライブラリが内包するクラスのパッケージ名が\ ``javax``\ から\ ``jakarta``\ に変更されています。

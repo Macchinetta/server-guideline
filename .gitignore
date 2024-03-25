@@ -1,11 +1,1 @@
-.svn
 build
-target
-.classpath
-.project
-.settings
-.idea
-*.iml
-*.doc*
-*.ppt*
-*.xls*

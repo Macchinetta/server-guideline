@@ -11,7 +11,7 @@ Contribution procedures are follows:
 
 ## Create a new issue
 
-Please create a new issue from [here](https://github.com/Macchinetta/server-guideline/issues/new) for contributing(bug report, improvement or new content), and get an issue number(tracking id).
+Please create a new issue from [here](https://github.com/Macchinetta/server-guideline-thymeleaf/issues/new) for contributing(bug report, improvement or new content), and get an issue number(tracking id).
 
 > **Note: Supported language**
 >
@@ -32,19 +32,18 @@ Please create a new issue from [here](https://github.com/Macchinetta/server-guid
 
  ## Affects Version/s
  * 1.5.0.RELEASE
- * 1.4.2.RELEASE
 
  ## Fix Version/s
  (To be written later by project member)
 
  ## Issue Links
  * #999
- * http://macchinetta.github.io/server-guideline/1.5.0.RELEASE/ja/ImplementationAtEachLayer/DomainLayer.html
+ * http://macchinetta.github.io/server-guideline-thymeleaf/1.5.0.RELEASE/ja/ImplementationAtEachLayer/DomainLayer.html
  ```
 
 ## Fork a repository
 
-Please fork the `Macchinetta/server-guideline` into your account repository of GitHub.
+Please fork the `Macchinetta/server-guideline-thymeleaf` into your account repository of GitHub.
 
 * Click a "Fork" button on GitHub web user interface.
 
@@ -57,7 +56,7 @@ Please clone a forked repository into your local machine.
 e.g.)
 
 ```
-git clone https://github.com/{your account}/server-guideline.git
+git clone https://github.com/{your account}/server-guideline-thymeleaf.git
 ```
 
 

@@ -41,9 +41,9 @@ Problem1
 ここでは、ショッピングサイトにて、ユーザからTeaの注文を受け付ける場合の例を示す。
 
   .. figure:: ./images_ExclusionControl/ExclusionControl-problem1.png
-   :alt: Exclusive Control problem1
-   :width: 90%
-   :align: center
+    :alt: Exclusive Control problem1
+    :width: 90%
+    :align: center
 
   .. tabularcolumns:: |p{0.10\linewidth}|p{0.05\linewidth}|p{0.05\linewidth}|p{0.80\linewidth}|
   .. list-table::
@@ -82,9 +82,9 @@ Problem2
 ここでは、ショッピングサイトでTeaの在庫数を管理するスタッフが、Teaの在庫数を表示し、仕入れたTeaの数をクライアントで計算して、Teaの在庫数を更新する場合の例を示す。
 
   .. figure:: ./images_ExclusionControl/ExclusionControl-problem2.png
-   :alt: Exclusive Control problem2
-   :width: 90%
-   :align: center
+    :alt: Exclusive Control problem2
+    :width: 90%
+    :align: center
 
   .. tabularcolumns:: |p{0.10\linewidth}|p{0.05\linewidth}|p{0.05\linewidth}|p{0.80\linewidth}|
   .. list-table::
@@ -515,11 +515,11 @@ Problem3
     * - 1.
       - 〇
       - \-
-      - Staff Aが、商品の在庫管理画面を表示する。在庫数は10個と画面に表示されている。参照したデータのVersionは "``1``" である。
+      - Staff Aが、商品の在庫管理画面を表示する。在庫数は10個と画面に表示されている。参照したデータのVersionは"\ ``1``\ "である。
     * - 2.
       - \-
       - 〇
-      - Staff Bが、商品の在庫管理画面を表示する。在庫数は10個と画面に表示されている。参照したデータのVersionは "``1``" である。
+      - Staff Bが、商品の在庫管理画面を表示する。在庫数は10個と画面に表示されている。参照したデータのVersionは"\ ``1``\ "である。
     * - 3.
       - 〇
       - \-
@@ -541,7 +541,7 @@ Problem3
     * - 6.
       - 〇
       - \-
-      - Staff Aのトランザクションがコミットされたため、4で待たされていたStaff Bの更新処理が再開する。この時、Stock TableのデータのVersionが "``2``" になっているため、更新結果が0件となる。更新結果が0件の場合は排他エラーとする。
+      - Staff Aのトランザクションがコミットされたため、4で待たされていたStaff Bの更新処理が再開する。この時、Stock TableのデータのVersionが"\ ``2``\ "になっているため、更新結果が0件となる。更新結果が0件の場合は排他エラーとする。
 
         .. code-block:: sql
 
@@ -555,7 +555,7 @@ Problem3
 
 .. note:: \ **ポイント**\
 
-    SQL内でVersionのインクリメント( ``version + 1`` )と、更新条件( ``and version = 1`` )の指定を行うことが、ポイントとなる。
+    SQL内でVersionのインクリメント(\ ``version + 1``\ )と、更新条件(\ ``and version = 1``\ )の指定を行うことが、ポイントとなる。
 
 |
 
@@ -693,6 +693,8 @@ Problem3
 *  :ref:`Dead-Lock-Record`
 *  :ref:`Dead-Lock-Table`
 
+|
+
 .. _Dead-Lock-Record:
 
 テーブル内でのデッドロック
@@ -788,9 +790,9 @@ Problem3
 
 .. note:: \ **デッドロックの解決方法について**\
 
-    タイムアウトやリトライ実施での解消する方法もあるが、テーブルを跨った際も、更新順序をルール化しておくことが重要である。
+  タイムアウトやリトライ実施での解消する方法もあるが、テーブルを跨った際も、更新順序をルール化しておくことが重要である。
 
-    仮にProgram AもProgram BもTable Aから更新するというルールに準じていれば、上記\ :ref:`Dead-Lock-Table`\ の図のような、デッドロックは発生しなくなる。
+  仮にProgram AもProgram BもTable Aから更新するというルールに準じていれば、上記\ :ref:`Dead-Lock-Table`\ の図のような、デッドロックは発生しなくなる。
 
 .. warning::
 
@@ -805,7 +807,7 @@ How to use
 
 ここからは、MyBatis3を使用した排他制御の実現方法について説明を行う。
 
-実装方法は
+使用するO/R Mapperの実装方法を確認されたい。
 
 * \ :ref:`ExclusionControlHowToUseMyBatis3`\
 
@@ -819,7 +821,7 @@ How to use
 
 .. _ExclusionControlHowToUseMyBatis3:
 
-排他制御の実装方法
+MyBatis3使用時の実装方法
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 RDBMSの行ロック機能
@@ -856,7 +858,7 @@ RDBMSの行ロック機能を使って排他制御を行う場合は、SQLの中
         RDBMSの行ロック機能を使ってデータを更新するメソッドを定義する。
 
         上記例では、在庫数を減らすためのメソッドを定義している。
-        在庫数の減らす事ができた場合は、\ ``true``\が返却される。
+        在庫数の減らす事ができた場合は、\ ``true``\ が返却される。
 
 |
 
@@ -902,9 +904,9 @@ RDBMSの行ロック機能を使って排他制御を行う場合は、SQLの中
 
         という動作になるため、データを安全に更新する事ができる。
     * - | (3)
-      - 在庫数の減算処理(\ ``quantity = quantity - #{quantity}``\)は、SQLの中で行う。
+      - 在庫数の減算処理(\ ``quantity = quantity - #{quantity}``\ )は、SQLの中で行う。
     * - | (4)
-      - 更新条件として、「在庫数が注文数以上ある事(\ ``quantity >= #{quantity}``\)」を加える。
+      - 更新条件として、「在庫数が注文数以上ある事(\ ``quantity >= #{quantity}``\ )」を加える。
 
 |
 
@@ -1001,8 +1003,7 @@ RDBMSの行ロック機能を使って排他制御を行う場合は、SQLの中
     * - | (3)
       - Repositoryインタフェースに、楽観ロック機能を使ってデータを更新するメソッドを定義する。
 
-        上記例では、指定されたEntityの内容でレコードを更新するためのメソッドを定義している。
-        更新できた場合は、\ ``true``\が返却される。
+        上記例では、指定されたEntityの内容でレコードを更新するためのメソッドを定義している。更新できた場合は、\ ``true``\ が返却される。
 
 |
 
@@ -1053,9 +1054,9 @@ RDBMSの行ロック機能を使って排他制御を行う場合は、SQLの中
 
         上記例では、指定されたEntityの内容でレコードを更新するSQLを定義している。
     * - | (6)
-      -  バージョンの更新(\ ``version = version + 1``\)は、SQLの中で行う。
+      -  バージョンの更新(\ ``version = version + 1``\ )は、SQLの中で行う。
     * - | (7)
-      - 更新条件として、「バージョンが変わっていない事(\ ``version = #{version}``\)」を加える。
+      - 更新条件として、「バージョンが変わっていない事(\ ``version = #{version}``\ )」を加える。
 
 |
 
@@ -1138,7 +1139,7 @@ RDBMSの行ロック機能を使って排他制御を行う場合は、SQLの中
 
         バージョンが異なる場合は、他のトランザクションによってデータが更新されているので、楽観ロックエラー(\ ``org.springframework.orm.ObjectOptimisticLockingFailureException``\ )を発生させる。
 
-        データが存在しない(\ ``stock == null``\)時の考慮も必要であり、アプリケーションの仕様に対応した実装を行う必要がある。上記例では、楽観ロックエラーとしている。
+        データが存在しない(\ ``stock == null``\ )時の考慮も必要であり、アプリケーションの仕様に対応した実装を行う必要がある。上記例では、楽観ロックエラーとしている。
 
 |
 
@@ -1247,7 +1248,6 @@ RDBMSの行ロック機能と楽観ロック機能を併用するアプリケー
         String viewName = top(modelMap);
         return new ModelAndView(viewName, modelMap);
     }
-
 
   .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
   .. list-table::
@@ -1376,4 +1376,3 @@ RDBMSの行ロック機能と楽観ロック機能を併用するアプリケー
 .. raw:: latex
 
   \newpage
-

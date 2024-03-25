@@ -11,6 +11,121 @@
     - 更新箇所
     - 更新内容
 
+  * - 2024-03-28
+    - \-
+    - 1.10.0 RELEASE版公開
+
+  * -
+    - 全般
+    - ガイドラインの誤記(タイプミスや単純な記述ミスなど)の修正
+
+      記載内容の改善
+
+      記載内容の修正・追加
+
+      * Apache Commons DBCP 2.10.0より\ ``org.apache.commons.dbcp2.BasicDataSource#setMaxWaitMillis``\ が非推奨となったことへの対応
+      * アプリケーションサーバに依存する記述について、動作検証環境と合わせて、Apache Tomcatを前提とした記述に統一
+
+  * -
+    - \ :doc:`../Overview/FrameworkStack`\
+    - 記載内容の修正
+
+      利用するOSSのバージョンを更新
+
+      * Spring Bootを3.2.2に更新
+      * MyBatisを3.5.15に更新
+      * MyBatis Springを3.0.3に更新
+      * Jakarta Dependency Injectionを2.0.1に更新
+      * SLF4Jを2.0.12に更新
+      * OpenPDFを1.3.35に更新
+      * Apache POIを5.2.5に更新
+      * Guavaを33.0.0-jreに更新
+      * Apache Commons IOを2.15.1に更新
+      
+      Spring Bootのバージョン更新に伴い利用するOSSのバージョンを更新
+
+      * Spring Frameworkを6.1.3に更新
+      * Spring Dataを3.2.2に更新
+      * Spring Securityを6.2.1に更新
+      * AspectJを1.9.21に更新
+      * Logbackを1.4.14に更新
+      * Jacksonを2.15.3に更新
+      * Thymeleafのバージョンを3.1.2に更新
+      * Hibernate Validatorを8.0.1.Final(Bean Validation 3.0)に更新
+      * MapStructを1.5.5.Finalに更新
+      * Apache Commons Langを3.13.0に更新
+      * Apache Commons DBCPを2.10.0に更新
+      * Jakarta Mailを2.0.2に更新
+      * Apache HttpClient5を5.2.3に更新
+      * Lombokを1.18.30に更新
+
+  * -
+    - \ :doc:`../ImplementationAtEachLayer/CreateWebApplicationProject`\
+    - 記載内容の修正
+
+      * \ ``maven-compiler-plugin``\ のデフォルト設定に関する説明を追加
+
+  * -
+    - \ :doc:`../ImplementationAtEachLayer/ApplicationLayer`\
+    - 記載内容の修正
+
+      * リクエストパスの拡張子によるパターンマッチングおよび末尾"\ ``/``\ "でのアクセスに関する記述をAppendixに追加
+
+      * \ ``@PathVariable``\ と\ ``@RequestParam``\ のvalue属性の省略についての記載をAppendixへ移動
+
+  * -
+    - \ :doc:`../ArchitectureInDetail/WebApplicationDetail/Ajax`\
+    - 記載内容の修正
+
+      * \ ``BindException``\ のハンドリングについての説明を削除
+
+  * -
+    - \ :doc:`../ArchitectureInDetail/WebServiceDetail/REST`\
+    - 記載内容の修正
+
+      * \ ``BindException``\ の説明及びハンドリングについての説明を削除
+      * \ ``ServletUriComponentsBuilder``\ に関するTipを修正
+
+  * -
+    - \ :doc:`../ArchitectureInDetail/WebServiceDetail/RestClient`\
+    - 記載内容の修正
+
+      * \ ``RestTemplate``\ でContent-Lengthが出力されないことに関するNoteを追加
+      * \ ``SimpleClientHttpRequestFactory``\ のタイムアウト設定が間違った型にマッピングされる事象に関するWarningを追加
+      * コンストラクタがオーバーロードされている場合に誤ったコンストラクタが使われる件に関するWarningを追加
+
+  * -
+    - \ :doc:`../ArchitectureInDetail/DataAccessDetail/DataAccessCommon`\
+    - 記載内容の修正
+
+      * factory属性省略時に使用されるコネクションプールに関する説明を修正
+
+  * -
+    - \ :doc:`../ArchitectureInDetail/GeneralFuncDetail/Logging`\
+    - 記載内容の修正
+    
+      * Logbackの設定の読み込みについてのNoteを修正
+
+  * -
+    - \ :doc:`../ArchitectureInDetail/MessagingDetail/Email`\
+    - 記載内容の削除
+
+      * JVMオプションの\ ``sun.nio.cs.map``\ に関する記述を削除
+
+  * -
+    - \ :doc:`../ArchitectureInDetail/MessagingDetail/JMS`\
+    - 記載内容の修正
+
+      * \ ``ActiveMQConnectionFactory``\ のクローズに関するNoteを追加
+
+  * -
+    - \ :doc:`../Security/Authentication`\
+    - 記載内容の修正
+
+      * \ ``delete-cookies``\ に関する古いTIPを削除
+      * 非推奨アルゴリズムの紹介をAppendixに移動
+      * \ ``UserDetails``\ を実装した\ ``AccountUserDetails``\ の実装例を修正
+
   * - 2023-04-28
     - \-
     - 1.9.1 RELEASE版公開
@@ -61,6 +176,7 @@
       * Logbackを1.4.5に更新
       * SLF4Jを2.0.6に更新
       * Jacksonを2.14.1に更新
+      * Thymeleafを3.1.1に更新
       * Hibernate Validatorを8.0.0.Final(Bean Validation 3.0)に更新
       * Apache Commons Langを3.12.0に更新
       * Apache Commons DBCPを2.9.0に更新
@@ -103,10 +219,22 @@
       * クラス階層の図を最新化
 
   * -
+    - \ :doc:`../ArchitectureInDetail/WebApplicationDetail/Thymeleaf`\
+    - 記載内容の修正
+  
+      * Web APIベースの式ユーティリティオブジェクトが削除されたことに伴う修正
+
+  * -
     - \ :doc:`../ArchitectureInDetail/WebApplicationDetail/ExceptionHandling`\
     - 記載内容の修正
   
       * NestedServletExceptionが削除されたことに伴い例外ハンドリングのパターンを修正
+
+  * -
+    - \ :doc:`../ArchitectureInDetail/WebApplicationDetail/Pagination`\
+    - 記載内容の修正
+  
+      * Web APIベースの式ユーティリティオブジェクトが削除されたことに伴う修正
 
   * -
     - \ :doc:`../ArchitectureInDetail/WebApplicationDetail/FileUpload`\
@@ -296,6 +424,7 @@
       * AspectJを1.9.7に更新
       * SLF4Jを1.7.32に更新
       * Jacksonを2.13.0に更新
+      * Thymeleafのバージョンを3.0.12に更新
       * Hibernate Validatorを6.2.0(Bean Validation 2.0)に更新
       * Apache Commons Langを3.12.0に更新
       * Apache Commons DBCPを2.9.0に更新
@@ -419,6 +548,7 @@
       * Spring Framework 5.3.0より\ ``@PathVariable``\ でバインドされる値に拡張子が含まれるように変更されたことへの対応
       * Spring Framework 5.3.0より\ ``HandlerInterceptor``\ のパス指定におけるワイルドカードの使用方法が変更されたことへの対応
       * Spring Framework 5.3.0より\ ``HandlerInterceptorAdapter``\ が非推奨となったことへの対応
+      * Spring Framework 5.3.0より\ ``StringUtils#isEmpty``\ が非推奨となったことへの対応
       * Spring Framework 5.3.0より\ ``JdbcTemplate``\ のメソッドのうち一部が非推奨となったことへの対応
       * Spring Security OAuth 2.5.0より\ ``DefaultUserAuthenticationConverter#getAuthorities``\ の可視性が変更されたことへの対応
       * Hibernate Validator 6.1.0より日本語メッセージが提供されたことへの対応
@@ -537,17 +667,41 @@
     - \ :doc:`../Tutorial/TutorialREST`\
     - 記載内容の修正
 
-      * \ ``MessageConverter``\ および\ ``ObjectMapper``\ の定義方法を\ \ :doc:`../ArchitectureInDetail/WebServiceDetail/REST`\ に合わせるよう変更
+      * \ ``MessageConverter``\ および\ ``ObjectMapper``\ の定義方法を\ :doc:`../ArchitectureInDetail/WebServiceDetail/REST`\ に合わせるよう変更
 
   * - 2021-01-07
     - \-
     - 1.7.1 RELEASE版公開
 
   * -
+    - \ :doc:`../ImplementationAtEachLayer/ApplicationLayer`\
+    - 記載内容の修正
+
+      * プリプロセッシングの実装例において、本来プリプロセッシングが不要な実装を実装例としていたため修正
+
+  * -
+    - \ :doc:`../ArchitectureInDetail/WebApplicationDetail/Thymeleaf`\
+    - 記載内容の修正
+
+      * SpEL評価時におけるnull-safetyの影響についての実装例において、本来プリプロセッシングが不要な実装でプリプロセッシングを使用していたため修正
+
+  * -
     - \ :doc:`../ArchitectureInDetail/WebApplicationDetail/SessionManagement`\
     - 記載内容の追加
 
       * 「同一セッション内のリクエストの同期化」の適用範囲についての注意事項を追加
+
+  * -
+    - \ :doc:`../ArchitectureInDetail/WebApplicationDetail/Codelist`\
+    - 記載内容の修正
+
+      * テンプレートHTMLの実装例において、本来プリプロセッシングが不要な実装でプリプロセッシングを使用していたため修正
+
+  * -
+    - \ :doc:`../ArchitectureInDetail/WebApplicationDetail/TemplateLayout`\
+    - 記載内容の修正
+
+      * テンプレートHTMLの実装例において、本来プリプロセッシングが不要な実装でプリプロセッシングを使用していたため修正
 
   * - 2020-06-29
     - \-
@@ -592,6 +746,7 @@
       * AspectJを1.9.5に更新
       * SLF4Jを1.7.30に更新
       * Jacksonを2.10.2に更新
+      * thymeleaf-extras-java8time を3.0.4に更新
       * Hibernate Validatorを6.0.18(Bean Validation 2.0)に更新
       * Apache Commons Langを3.9に更新
       * Joda Timeを2.10.5に更新
@@ -829,6 +984,33 @@
       * 利用するミドルウェアのバージョンを更新
 
   * -
+    - Thymeleaf対応
+    - 以下のThymeleaf対応章を追加
+
+      * \ :doc:`../ArchitectureInDetail/WebApplicationDetail/Pagination`\
+      * \ :doc:`../ArchitectureInDetail/WebApplicationDetail/Internationalization`\
+      * \ :doc:`../ArchitectureInDetail/WebApplicationDetail/Codelist`\
+      * \ :doc:`../ArchitectureInDetail/WebApplicationDetail/FileUpload`\
+      * \ :doc:`../ArchitectureInDetail/WebApplicationDetail/FileDownload`\
+      * \ :doc:`../ArchitectureInDetail/WebApplicationDetail/Ajax`\
+      * \ :doc:`../ArchitectureInDetail/WebApplicationDetail/HealthCheck`\
+      * \ :doc:`../ArchitectureInDetail/GeneralFuncDetail/DateAndTime`\
+      * \ :doc:`../Appendix/JodaTime`\
+      * OAuth(org.springframework.security.oauth)
+      * \ :doc:`../Security/SecureLoginDemo`\
+      * \ :doc:`../Tutorial/TutorialTodo`\
+      * \ :doc:`../Tutorial/TutorialREST`\
+      * \ :doc:`../Tutorial/TutorialSession`\
+      * \ :doc:`../Tutorial/TutorialSecurity`\
+
+      記載内容の修正・追加
+
+      * Decoupled Template Logicの適用方法についての記述を追加
+      * JavaScriptのテンプレート化についての記述を追加
+      * テンプレートHTMLのデバッグについての記述を追加
+      * フレームワークスタックに\ ``thymeleaf-extras-java8time``\ を追加
+
+  * -
     - \ :doc:`../Introduction/CriteriaBasedMapping`\
     - OWASP Top 10 を2013版から2017版へ変更
 
@@ -847,6 +1029,10 @@
        * Spring Frameworkのバージョンを5.1.4に更新
        * Spring Securityのバージョンを5.1.3に更新
        * Spring Dataのバージョンを2.1.4に更新
+       * thymeleafのバージョンを3.0.11に更新
+       * thymeleaf-spring4に代わりthymeleaf-spring5 3.0.11を追加
+       * thymeleaf-extras-springsecurity4に代わりthymeleaf-extras-springsecurity5 3.0.4を追加
+       * thymeleaf-extras-java8time 3.0.2を追加
        * Hibernate Validatorのバージョンを6.0.14(Bean Validation 2.0)に更新
        * Joda Timeのバージョンを2.10.1に更新
        * Jacksonのバージョンを2.9.8に更新
@@ -871,6 +1057,8 @@
       * Spring Security 5より非推奨の\ ``PasswordEncoder``\ のパッケージが廃止になったことへの対応
       * Spring Security 5.0.2および5.1.2で変更となったセキュリティヘッダの付与タイミングによる、リクエストパスのマッチングにおける注意事項の追加
       * Spring Security OAuth 2.2.2よりリダイレクトURIのホワイトリストチェックの仕様が変更されたことへの対応
+      * Thymeleaf 3.0.10よりイベントハンドラの式がJavaScriptテンプレートモードで解釈されるようになったことに対する対応
+      * Thymeleaf 3.0.10よりイベントハンドラで従来の記法におけるXSS対策が強化されたことに対する対応
 
   * -
     - \ :doc:`../Overview/FrameworkStack`\
@@ -893,6 +1081,13 @@
        * \ ``@ByteMax`` \ 及び\ ``@ByteMin`` \ をBean Validation 2.0に準拠するよう仕様変更
 
   * -
+    - \ :doc:`../ImplementationAtEachLayer/ApplicationLayer`\
+    - 記載内容の追加
+
+      * Spring Framework 4.3より追加された \ ``@RequestMapping``\ の合成アノテーションの説明を追加
+      * Thymeleafのプリプロセッシングについて、解決された値により自動的に型が判定されることについての注意事項を追加
+
+  * -
     - \ :doc:`../ImplementationAtEachLayer/CreateWebApplicationProject`\
     - 記載内容の追加
 
@@ -903,6 +1098,12 @@
     - 記載内容の追加
 
       * Spring Framework 4.3より追加された \ ``@RequestMapping``\ の合成アノテーションの説明を追加
+
+  * -
+    - \ :doc:`../ArchitectureInDetail/WebApplicationDetail/Thymeleaf`\
+    - Spring Framework 5.1.4対応に伴う修正
+
+      * SpEL評価時におけるnull-safetyの影響についての注意事項を追加
 
   * -
     - \ :doc:`../ArchitectureInDetail/WebApplicationDetail/Validation`\
@@ -1072,6 +1273,13 @@
     - OWASP Top 10 2017対応に伴う修正
 
       * OWASP Top 10 2013版へのリンクをOWASP Cheat Sheetへのリンクへ変更
+
+  * -
+    - \ :doc:`../Security/XSS`\
+    - Thymeleaf 3.0.11対応に伴う修正
+
+      * イベントハンドラの式がJavaScriptテンプレートモードで解釈されるようになったことに対する記載内容及びコード例の変更
+      * イベントハンドラで従来の記法におけるXSS対策が強化され、NumberとBoolean以外を出力する式が使用できなくなったことに対するWarningを追加
 
   * -
     - \ :doc:`../Security/LinkageWithBrowser`\
