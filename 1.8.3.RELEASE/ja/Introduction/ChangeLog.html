@@ -1,0 +1,1561 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>1.8. 更新履歴 &#8212; Macchinetta Server Framework (1.x) Development Guideline 1.8.3.RELEASE documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../_static/solar.css?v=d41ac240" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=27499e11"></script>
+    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="2. アーキテクチャ概要" href="../Overview/index.html" />
+    <link rel="prev" title="1.7. ガイドラインの観点別マッピング" href="CriteriaBasedMapping.html" /><script src="../_static/jquery.js" type="text/javascript"></script>
+<script src="../_static/jquery.treeview.js" type="text/javascript"></script>
+<!-- <link href='http://fonts.googleapis.com/css?family=Source+Code+Pro|Open+Sans:300italic,400italic,700italic,400,300,700' rel='stylesheet' type='text/css'> -->
+<link href="../_static/solarized-dark.css" rel="stylesheet">
+<link href="../_static/jquery.treeview.css" rel="stylesheet">
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../Overview/index.html" title="2. アーキテクチャ概要"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="CriteriaBasedMapping.html" title="1.7. ガイドラインの観点別マッピング"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Macchinetta Server Framework (1.x) Development Guideline 1.8.3.RELEASE documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U"><span class="section-number">1. </span>はじめに</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href=""><span class="section-number">1.8. </span>更新履歴</a></li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><label><input id="scroll" type="checkbox"> scroll sidebar</label>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="CriteriaBasedMapping.html"
+                          title="previous chapter"><span class="section-number">1.7. </span>ガイドラインの観点別マッピング</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="../Overview/index.html"
+                          title="next chapter"><span class="section-number">2. </span>アーキテクチャ概要</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/Introduction/ChangeLog.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="id1">
+<h1><span class="section-number">1.8. </span>更新履歴<a class="headerlink" href="#id1" title="Permalink to this heading">¶</a></h1>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 15.0%" />
+<col style="width: 25.0%" />
+<col style="width: 60.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>更新日付</p></th>
+<th class="head"><p>更新箇所</p></th>
+<th class="head"><p>更新内容</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>2024-03-28</p></td>
+<td><p>-</p></td>
+<td><p>1.8.3 RELEASE版公開</p></td>
+</tr>
+<tr class="row-odd"><td></td>
+<td><p>全般</p></td>
+<td><p>ガイドラインの誤記(タイプミスや単純な記述ミスなど)の修正</p>
+<p>記載内容の改善</p>
+<p>記載内容の修正・追加</p>
+<ul class="simple">
+<li><p>アプリケーションサーバに依存する記述について、動作検証環境と合わせて、Apache Tomcatを前提とした記述に統一</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td></td>
+<td><p><a class="reference internal" href="../Overview/FrameworkStack.html"><span class="doc">Macchinetta Server Framework (1.x)のスタック</span></a></p></td>
+<td><p>利用するOSSのバージョンを更新</p>
+<ul class="simple">
+<li><p>Spring Bootを2.7.18に更新</p></li>
+<li><p>MyBatisを3.5.15に更新</p></li>
+<li><p>MyBatis Springを2.1.2に更新</p></li>
+<li><p>Logback Coreを1.3.14に更新</p></li>
+<li><p>Logback Classicを1.3.14に更新</p></li>
+<li><p>SLF4Jを2.0.12に更新</p></li>
+<li><p>Joda Timeを2.12.5に更新</p></li>
+<li><p>Apache POIを5.2.5に更新</p></li>
+<li><p>OpenPDFを1.3.35に更新</p></li>
+<li><p>Guavaを33.0.0-jreに更新</p></li>
+</ul>
+<p>Spring Boot のバージョン更新に伴い利用するOSSのバージョンを更新</p>
+<ul class="simple">
+<li><p>Spring Frameworkを5.3.31に更新</p></li>
+<li><p>Spring Dataを2.7.18に更新</p></li>
+<li><p>Spring Securityを5.7.11に更新</p></li>
+<li><p>Jacksonを2.13.5に更新</p></li>
+<li><p>Lombokを1.18.30に更新</p></li>
+</ul>
+<p>単体テストで利用するOSSのバージョンを更新</p>
+<ul class="simple">
+<li><p>Spring Testを5.3.31に更新</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td></td>
+<td><p><a class="reference internal" href="../ArchitectureInDetail/WebServiceDetail/REST.html"><span class="doc">RESTful Web Service</span></a></p></td>
+<td><p>記載内容の修正</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">ServletUriComponentsBuilder</span></code>に関するTipを修正</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td></td>
+<td><p><a class="reference internal" href="../ArchitectureInDetail/DataAccessDetail/DataAccessCommon.html"><span class="doc">データベースアクセス（共通編）</span></a></p></td>
+<td><p>記載内容の修正</p>
+<ul class="simple">
+<li><p>factory属性省略時に使用されるコネクションプールに関する説明を修正</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td></td>
+<td><p><a class="reference internal" href="../Security/SpringSecurity.html"><span class="doc">Spring Security概要</span></a></p></td>
+<td><p>記載内容の修正</p>
+<ul class="simple">
+<li><p>Spring Securityのデフォルト実装で使用されるFilterの説明を <code class="docutils literal notranslate"><span class="pre">SecurityContextHolderFilter</span></code>から<code class="docutils literal notranslate"><span class="pre">SecurityContextPersistenceFilter</span></code>に修正</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td></td>
+<td><p><a class="reference internal" href="../Security/Authentication.html"><span class="doc">認証</span></a></p></td>
+<td><p>記載内容の修正</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">UserDetails</span></code>を実装した<code class="docutils literal notranslate"><span class="pre">AccountUserDetails</span></code>の実装例を修正</p></li>
+<li><p>Spring Securityのデフォルト実装で使用されるFilterの説明を <code class="docutils literal notranslate"><span class="pre">SecurityContextHolderFilter</span></code>から<code class="docutils literal notranslate"><span class="pre">SecurityContextPersistenceFilter</span></code>に修正</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td><p>2023-03-30</p></td>
+<td><p>-</p></td>
+<td><p>1.8.2 RELEASE版公開</p></td>
+</tr>
+<tr class="row-even"><td></td>
+<td><p><a class="reference internal" href="../Overview/FrameworkStack.html"><span class="doc">Macchinetta Server Framework (1.x)のスタック</span></a></p></td>
+<td><p>利用するOSSのバージョンを更新</p>
+<ul class="simple">
+<li><p>Spring Bootを2.7.7に更新</p></li>
+<li><p>MyBatisを3.5.11に更新</p></li>
+<li><p>MyBatis Springを2.1.0に更新</p></li>
+<li><p>Joda Timeを2.12.2に更新</p></li>
+<li><p>Apache POIを5.2.3に更新</p></li>
+<li><p>Guavaを31.1-jreに更新</p></li>
+</ul>
+<p>Spring Boot のバージョン更新に伴い利用するOSSのバージョンを更新</p>
+<ul class="simple">
+<li><p>Spring Frameworkを5.3.24に更新</p></li>
+<li><p>Spring Dataを2.7.6に更新</p></li>
+<li><p>Spring Securityを5.7.6に更新</p></li>
+<li><p>SLF4Jを1.7.36に更新</p></li>
+<li><p>Jacksonを2.13.4.2に更新</p></li>
+<li><p>Hibernate Validatorを6.2.5(Bean Validation 2.0)に更新</p></li>
+<li><p>Lombokを1.18.24に更新</p></li>
+<li><p>Logbackを1.2.11に更新</p></li>
+</ul>
+<p>単体テストで利用するOSSのバージョンを更新</p>
+<ul class="simple">
+<li><p>Mockitoを4.5.1に更新</p></li>
+<li><p>Spring Testを5.3.24に更新</p></li>
+</ul>
+<p>記載内容の修正</p>
+<ul class="simple">
+<li><p>LogbackについてのTipを修正</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td></td>
+<td><p><a class="reference internal" href="../ArchitectureInDetail/WebApplicationDetail/FileDownload.html"><span class="doc">ファイルダウンロード</span></a></p></td>
+<td><p>記載内容の修正</p>
+<ul class="simple">
+<li><p>AbstractPdfViewを継承したクラスの実装例で使用しているParagraphに渡す型を修正</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td></td>
+<td><p><a class="reference internal" href="../ArchitectureInDetail/GeneralFuncDetail/Logging.html"><span class="doc">ロギング</span></a></p></td>
+<td><p>記載内容の修正</p>
+<ul class="simple">
+<li><p>Logbackの設定の読み込みについてのNoteを修正</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td></td>
+<td><p><a class="reference internal" href="../Security/SpringSecurity.html"><span class="doc">Spring Security概要</span></a></p></td>
+<td><p>記載内容の修正</p>
+<ul class="simple">
+<li><p>Spring Security 5.7.0よりSecurityContextPersistenceFilterが非推奨となり、SecurityContextHolderFilterが推奨となったことへの対応</p></li>
+<li><p>FilterSecurityInterceptorの設定に関するWarningを追加</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td></td>
+<td><p><a class="reference internal" href="../Security/Authentication.html"><span class="doc">認証</span></a></p></td>
+<td><p>記載内容の修正</p>
+<ul class="simple">
+<li><p>Spring Security 5.7.0よりSecurityContextPersistenceFilterが非推奨となり、SecurityContextHolderFilterが推奨となったことへの対応</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td></td>
+<td><p><a class="reference internal" href="../Security/OAuth2.html"><span class="doc">OAuth 2.0</span></a></p></td>
+<td><p>記載内容の修正</p>
+<ul class="simple">
+<li><p>OAuth(org.springframework.security.oauth)へのリンクを削除</p></li>
+<li><p>認可コードグラントの認可フローの修正</p></li>
+<li><p>Spring Securityより提供されるOAuth2のアーキテクチャのフローを修正</p></li>
+<li><p>クライアント認可処理のフローを修正</p></li>
+<li><p>How to useの修正</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td></td>
+<td><p><a class="reference internal" href="../Tutorial/TutorialREST.html"><span class="doc">チュートリアル(Todoアプリケーション REST編)</span></a></p></td>
+<td><p>記載内容の追加</p>
+<ul class="simple">
+<li><p>DHC REST ClientのキャプチャをTalend API Testerのものに修正</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td></td>
+<td><p>OAuth(org.springframework.security.oauth)</p></td>
+<td><p>削除</p>
+<ul class="simple">
+<li><p>org.springframework.security.oauthがEOLしたことに伴い該当ページを削除</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td><p>2022-03-30</p></td>
+<td><p>-</p></td>
+<td><p>1.8.1 RELEASE版公開</p></td>
+</tr>
+<tr class="row-odd"><td></td>
+<td><p>全般</p></td>
+<td><p>ガイドラインの誤記(タイプミスや単純な記述ミスなど)の修正</p>
+<p>記載内容の改善</p>
+<p>記載内容の修正・追加</p>
+<ul class="simple">
+<li><p>ログインジェクション対策としてlogbackのフォーマットパターンを修正</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td></td>
+<td><p><a class="reference internal" href="CriteriaBasedMapping.html"><span class="doc">ガイドラインの観点別マッピング</span></a></p></td>
+<td><p>OWASP Top 10 を2017版から2021版へ変更</p>
+<ul class="simple">
+<li><p>OWASP(Open Web Application Security Project)による観点の更新</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td></td>
+<td><p><a class="reference internal" href="../Overview/FrameworkStack.html"><span class="doc">Macchinetta Server Framework (1.x)のスタック</span></a></p></td>
+<td><p>利用するOSSのバージョンを更新</p>
+<ul class="simple">
+<li><p>Spring Bootを2.6.1に更新</p></li>
+<li><p>MyBatisを3.5.7に更新</p></li>
+<li><p>Dozerを6.5.2に更新</p></li>
+<li><p>Apache POIを4.1.2に更新</p></li>
+</ul>
+<p>Spring Boot のバージョン更新に伴い利用するOSSのバージョンを更新</p>
+<ul class="simple">
+<li><p>Spring Frameworkを5.3.13に更新</p></li>
+<li><p>Spring Dataを2.6.0に更新</p></li>
+<li><p>Spring Securityを5.6.0に更新</p></li>
+<li><p>Hibernateを5.6.1(JPA 2.2)に更新</p></li>
+<li><p>AspectJを1.9.7に更新</p></li>
+<li><p>SLF4Jを1.7.32に更新</p></li>
+<li><p>Jacksonを2.13.0に更新</p></li>
+<li><p>Hibernate Validatorを6.2.0(Bean Validation 2.0)に更新</p></li>
+<li><p>Apache Commons Langを3.12.0に更新</p></li>
+<li><p>Apache Commons DBCPを2.9.0に更新</p></li>
+<li><p>Lombokを1.18.22に更新</p></li>
+<li><p>Logbackを1.2.7に更新</p></li>
+</ul>
+<p>単体テストで利用するOSSのバージョンを更新</p>
+<ul class="simple">
+<li><p>DB Unitを2.7.2に更新</p></li>
+<li><p>Mockitoを4.0.0に更新</p></li>
+<li><p>Spring Testを5.3.13に更新</p></li>
+</ul>
+<p>利用するOSSのサポートを終了</p>
+<ul class="simple">
+<li><p>Spring Security標準OAuthのサポートに伴い、非推奨となっているSpring Security OAuthをサポート対象外として削除</p></li>
+</ul>
+<p>記載内容の追加</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-42550">CVE-2021-42550</a>に関する説明及び注意点を追加</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td></td>
+<td><p><a class="reference internal" href="../ImplementationAtEachLayer/CreateProject.html"><span class="doc">開発プロジェクトのビルド</span></a></p></td>
+<td><p>記載内容の修正</p>
+<ul class="simple">
+<li><p>warファイルのコピーに使用するmaven-dependency-pluginのバージョンを更新し、使用するゴールをcopyに変更</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td></td>
+<td><p><a class="reference internal" href="../ArchitectureInDetail/WebServiceDetail/RestClient.html"><span class="doc">RESTクライアント（HTTPクライアント）</span></a></p></td>
+<td><p>記載内容の修正</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">RequestFactoryBean</span></code>内の<code class="docutils literal notranslate"><span class="pre">HttpClient</span></code>がクローズされるように修正</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td></td>
+<td><p><a class="reference internal" href="../Security/OAuth2.html"><span class="doc">OAuth 2.0</span></a></p></td>
+<td><p>記載内容の修正</p>
+<ul class="simple">
+<li><p>Spring Security標準OAuthのサポートに伴い、説明内容を修正</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td></td>
+<td><p><a class="reference internal" href="../Security/SecureLoginDemo.html"><span class="doc">代表的なセキュリティ要件の実装例</span></a></p></td>
+<td><p>記載内容の修正</p>
+<ul class="simple">
+<li><p>Passayを1.6.1に更新したことに伴い、説明内容を修正</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td></td>
+<td><p><a class="reference internal" href="../Tutorial/TutorialREST.html"><span class="doc">チュートリアル(Todoアプリケーション REST編)</span></a></p></td>
+<td><p>記載内容の追加</p>
+<ul class="simple">
+<li><p>REST ClientがDHC REST ClientからTalend API Testerに置き換わっていることについてのNoteを追加</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td></td>
+<td><p><a class="reference internal" href="../Tutorial/TutorialSession.html"><span class="doc">セッションチュートリアル</span></a></p></td>
+<td><p>記載内容の追加</p>
+<ul class="simple">
+<li><p>JDK11の場合のビルド手順についてのNoteを追加</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td></td>
+<td><p><a class="reference internal" href="../UnitTest/ImplementsOfUnitTest/ImplementsOfTestByLayer.html"><span class="doc">レイヤごとのテスト実装</span></a></p></td>
+<td><p>記載内容の削除</p>
+<ul class="simple">
+<li><p>DB Unitの更新に伴い、Apache POIのダウングレードに関するWarningを削除</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td></td>
+<td><p><a class="reference internal" href="../Appendix/SpringToolSuite4.html"><span class="doc">STS4の設定手順</span></a></p></td>
+<td><p>新規追加</p>
+<ul class="simple">
+<li><p>STS4の設定手順を追加</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td></td>
+<td><p>OAuth(org.springframework.security.oauth)</p></td>
+<td><p>新規追加</p>
+<ul class="simple">
+<li><p>Spring Security標準OAuthのサポートに伴い、Spring Security OAuthの説明をAppendixへ移動</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td><p>2021-03-26</p></td>
+<td><p>-</p></td>
+<td><p>1.8.0 RELEASE版公開</p></td>
+</tr>
+<tr class="row-even"><td></td>
+<td><p>全般</p></td>
+<td><p>Java EEからJakarta EEへ切り替えことに伴う記述修正</p>
+<p>記載内容の修正・追加</p>
+<ul class="simple">
+<li><p>利用するミドルウェアのバージョンを更新</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td></td>
+<td><p><a class="reference internal" href="../Overview/FrameworkStack.html"><span class="doc">Macchinetta Server Framework (1.x)のスタック</span></a></p></td>
+<td><p>利用するOSSのバージョンを更新</p>
+<ul class="simple">
+<li><p>Spring Bootを2.4.1に更新</p></li>
+<li><p>Spring Security OAuthを2.5.0に更新</p></li>
+<li><p>MyBatisを3.5.6に更新</p></li>
+<li><p>MyBatis Springを2.0.6に更新</p></li>
+<li><p>Joda Timeを2.10.9に更新</p></li>
+</ul>
+<p>Spring Boot のバージョン更新に伴い利用するOSSのバージョンを更新</p>
+<ul class="simple">
+<li><p>Spring Frameworkを5.3.2に更新</p></li>
+<li><p>Spring Dataを2.4.2に更新</p></li>
+<li><p>Spring Securityを5.4.2に更新</p></li>
+<li><p>Hibernateを5.4.25(JPA 2.2)に更新</p></li>
+<li><p>AspectJを1.9.6に更新</p></li>
+<li><p>SLF4Jを1.7.30に更新</p></li>
+<li><p>Jacksonを2.11.3に更新</p></li>
+<li><p>Hibernate Validatorを6.1.6(Bean Validation 2.0)に更新</p></li>
+<li><p>Apache Commons Langを3.11に更新</p></li>
+<li><p>Apache Commons DBCPを2.8.0に更新</p></li>
+<li><p>Apache HttpClientを4.5.13に更新</p></li>
+<li><p>Lombokを1.18.16に更新</p></li>
+</ul>
+<p>単体テストで利用するOSSのバージョンを更新</p>
+<ul class="simple">
+<li><p>Hamcrestを2.2に更新</p></li>
+<li><p>Mockitoを3.6.28に更新</p></li>
+<li><p>Spring Testを5.3.2に更新</p></li>
+</ul>
+<p>利用するOSSのバージョンの更新による主な変更</p>
+<ul class="simple">
+<li><p>Spring Boot 2.3よりjoda-timeをバージョン管理しなくなったため、terasoluna-gfw-parentで管理するよう変更</p></li>
+<li><p>Spring Framework 5.3.0より<code class="docutils literal notranslate"><span class="pre">&#64;PathVariable</span></code>でバインドされる値に拡張子が含まれるように変更されたことへの対応</p></li>
+<li><p>Spring Framework 5.3.0より<code class="docutils literal notranslate"><span class="pre">HandlerInterceptor</span></code>のパス指定におけるワイルドカードの使用方法が変更されたことへの対応</p></li>
+<li><p>Spring Framework 5.3.0より<code class="docutils literal notranslate"><span class="pre">HandlerInterceptorAdapter</span></code>が非推奨となったことへの対応</p></li>
+<li><p>Spring Framework 5.3.0より<code class="docutils literal notranslate"><span class="pre">JdbcTemplate</span></code>のメソッドのうち一部が非推奨となったことへの対応</p></li>
+<li><p>Spring Security OAuth 2.5.0より<code class="docutils literal notranslate"><span class="pre">DefaultUserAuthenticationConverter#getAuthorities</span></code>の可視性が変更されたことへの対応</p></li>
+<li><p>Hibernate Validator 6.1.0より日本語メッセージが提供されたことへの対応</p></li>
+<li><p>JUnit 4.13より<code class="docutils literal notranslate"><span class="pre">org.junit.Assert#assertThat</span></code>が非推奨となったことへの対応</p></li>
+</ul>
+<p>TERASOLUNA Server Framework for Java (5.x)の共通ライブラリの機能改善</p>
+<ul class="simple">
+<li><p>共通ライブラリが用意する入力チェックルールの日本語メッセージを提供</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&#64;Compare</span></code>がBean Validation 2.0に準拠</p></li>
+<li><p>Bootstrap v4以降に対応するため、以下の変更</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">ResultMessages</span></code>の標準メッセージタイプに、<code class="docutils literal notranslate"><span class="pre">primary</span></code>、<code class="docutils literal notranslate"><span class="pre">secondary</span></code>、<code class="docutils literal notranslate"><span class="pre">light</span></code>、<code class="docutils literal notranslate"><span class="pre">dark</span></code>を追加</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&lt;t:pagination&gt;</span></code>タグに、<code class="docutils literal notranslate"><span class="pre">anchorClass</span></code>属性を追加</p></li>
+</ul>
+</li>
+<li><p>共通ライブラリの非推奨APIを削除</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td></td>
+<td><p><a class="reference internal" href="../ImplementationAtEachLayer/CreateWebApplicationProject.html"><span class="doc">Webアプリケーション向け開発プロジェクトの作成</span></a></p></td>
+<td><p>記載内容の修正</p>
+<ul class="simple">
+<li><p>Mavenセントラルリポジトリで公開されるOracle JDBC DriverのgroupIdが変更されたことへの対応</p></li>
+<li><p>オフライン環境でプロジェクト開発を続けるための事前作業について、一部手順に誤りがあったため修正</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td></td>
+<td><p><a class="reference internal" href="../ImplementationAtEachLayer/ApplicationLayer.html"><span class="doc">アプリケーション層の実装</span></a></p></td>
+<td><p>Spring Framework 5.3.0対応に伴う修正</p>
+<ul class="simple">
+<li><p>Spring Framework 5.3.0より<code class="docutils literal notranslate"><span class="pre">&#64;PathVariable</span></code>でバインドされる値に拡張子が含まれるように変更されたことへの対応</p></li>
+<li><p>Spring Framework 5.3.0より<code class="docutils literal notranslate"><span class="pre">HandlerInterceptor</span></code>のパス指定におけるワイルドカードの使用方法が変更されたことへの対応</p></li>
+<li><p>Spring Framework 5.3.0より<code class="docutils literal notranslate"><span class="pre">HandlerInterceptorAdapter</span></code>が非推奨となったことへの対応</p></li>
+</ul>
+<p>記載内容の追加</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">addAttribute</span></code>、<code class="docutils literal notranslate"><span class="pre">addFlashAttribute</span></code>で第一引数を省略した際、<code class="docutils literal notranslate"><span class="pre">Conventions#getVariableName</span></code>の仕様に基づき属性名が決まる説明を追加</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td></td>
+<td><p><a class="reference internal" href="../ImplementationAtEachLayer/CreateProject.html"><span class="doc">開発プロジェクトのビルド</span></a></p></td>
+<td><p>記載内容の修正</p>
+<ul class="simple">
+<li><p>Tomcatへデプロイする際にコンテキストXMLファイルを配置するファイルパスを修正</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td></td>
+<td><p><a class="reference internal" href="../ArchitectureInDetail/WebApplicationDetail/Validation.html"><span class="doc">入力チェック</span></a></p></td>
+<td><p>記載内容の修正</p>
+<ul class="simple">
+<li><p>Hibernate Validator 6.1.0より日本語メッセージが提供されたことへの対応</p></li>
+<li><p>共通ライブラリが用意する入力チェックルールの日本語メッセージを提供</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&#64;Compare</span></code>がBean Validation 2.0に準拠</p></li>
+<li><p>相関項目チェックルールのコード例において、エラーメッセージを確認用フィールドに表示するように変更</p></li>
+<li><p>Bean Validationを利用した相関項目チェックルールのコード例をBean Validation 2.0に準拠するよう変更</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td></td>
+<td><p><a class="reference internal" href="../ArchitectureInDetail/WebApplicationDetail/Pagination.html"><span class="doc">ページネーション</span></a></p></td>
+<td><p>記載内容の修正</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">&lt;t:pagination&gt;</span></code>タグに、<code class="docutils literal notranslate"><span class="pre">anchorClass</span></code>属性を追加</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td></td>
+<td><p><a class="reference internal" href="../ArchitectureInDetail/WebApplicationDetail/MessageManagement.html"><span class="doc">メッセージ管理</span></a></p></td>
+<td><p>記載内容の修正</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">ResultMessages</span></code>の標準メッセージタイプに、<code class="docutils literal notranslate"><span class="pre">primary</span></code>、<code class="docutils literal notranslate"><span class="pre">secondary</span></code>、<code class="docutils literal notranslate"><span class="pre">light</span></code>、<code class="docutils literal notranslate"><span class="pre">dark</span></code>を追加</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ResultMessages</span></code>の標準メッセージタイプから、非推奨の<code class="docutils literal notranslate"><span class="pre">warn</span></code>を削除</p></li>
+<li><p>CSSライブラリBootstrapリンク先を最新化</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td></td>
+<td><p><a class="reference internal" href="../ArchitectureInDetail/DataAccessDetail/ExclusionControl.html"><span class="doc">排他制御</span></a></p></td>
+<td><p>記載内容の修正</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">ObjectOptimisticLockingFailureException</span></code>のFQCNの誤りを修正</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td></td>
+<td><p><a class="reference internal" href="../ArchitectureInDetail/GeneralFuncDetail/SystemDate.html"><span class="doc">システム時刻</span></a></p></td>
+<td><p>記載内容の修正</p>
+<ul class="simple">
+<li><p>JUnit 4.13より<code class="docutils literal notranslate"><span class="pre">org.junit.Assert#assertThat</span></code>が非推奨となったことへの対応</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td></td>
+<td><p><a class="reference internal" href="../Security/Authentication.html"><span class="doc">認証</span></a></p></td>
+<td><p>記載内容の修正・追加</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">UserDetails</span></code>実装クラスの<code class="docutils literal notranslate"><span class="pre">equals</span></code>メソッドについての説明を追加</p></li>
+<li><p>ブランクプロジェクトにおいてSpring Securityのフォーム認証を使用しない場合の注意事項を追加</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td></td>
+<td><p>OAuth(org.springframework.security.oauth)</p></td>
+<td><p>記載内容の修正・追加</p>
+<ul class="simple">
+<li><p>Spring Security OAuth 2.5.0より<code class="docutils literal notranslate"><span class="pre">DefaultUserAuthenticationConverter#getAuthorities</span></code>の可視性が変更されたことへの対応</p></li>
+<li><p>Spring Security OAuthが非推奨となったことへの対応</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td></td>
+<td><p><a class="reference internal" href="../UnitTest/UnitTestOverview.html"><span class="doc">単体テスト概要</span></a></p></td>
+<td><p>Spring Boot のバージョン更新に伴い利用するOSSのバージョンを更新</p>
+<ul class="simple">
+<li><p>Hamcrestを2.2に更新</p></li>
+<li><p>Mockitoを3.6.28に更新</p></li>
+<li><p>Spring Testを5.3.2に更新</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td></td>
+<td><p><a class="reference internal" href="../UnitTest/ImplementsOfUnitTest/ImplementsOfTestByLayer.html"><span class="doc">レイヤごとのテスト実装</span></a></p></td>
+<td><p>記載内容の修正</p>
+<ul class="simple">
+<li><p>Spring Framework 5.3.0より<code class="docutils literal notranslate"><span class="pre">JdbcTemplate</span></code>のメソッドのうち一部が非推奨となったことへの対応</p></li>
+<li><p>JUnit 4.13より<code class="docutils literal notranslate"><span class="pre">org.junit.Assert#assertThat</span></code>が非推奨となったことへの対応</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td></td>
+<td><p><a class="reference internal" href="../UnitTest/ImplementsOfUnitTest/UsageOfLibraryForTest.html"><span class="doc">単体テストで利用するOSSライブラリの使い方</span></a></p></td>
+<td><p>記載内容の修正・追加</p>
+<ul class="simple">
+<li><p>Mockito 2より<code class="docutils literal notranslate"><span class="pre">org.mockito.Matchers</span></code>が非推奨となったことへの対応</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">MockMultipartHttpServletRequestBuilder</span></code>の主なメソッドの説明に<code class="docutils literal notranslate"><span class="pre">part</span></code>メソッドを追加</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">MockMultipartHttpServletRequestBuilder</span></code>において、リクエストを送信する際に”/”から始まらないパスを指定した場合のエラーの説明を追加</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td></td>
+<td><p><a class="reference internal" href="../Tutorial/TutorialREST.html"><span class="doc">チュートリアル(Todoアプリケーション REST編)</span></a></p></td>
+<td><p>記載内容の修正</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">MessageConverter</span></code>および<code class="docutils literal notranslate"><span class="pre">ObjectMapper</span></code>の定義方法を<a class="reference internal" href="../ArchitectureInDetail/WebServiceDetail/REST.html"><span class="doc">RESTful Web Service</span></a>に合わせるよう変更</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td><p>2021-01-07</p></td>
+<td><p>-</p></td>
+<td><p>1.7.1 RELEASE版公開</p></td>
+</tr>
+<tr class="row-odd"><td></td>
+<td><p><a class="reference internal" href="../ArchitectureInDetail/WebApplicationDetail/SessionManagement.html"><span class="doc">セッション管理</span></a></p></td>
+<td><p>記載内容の追加</p>
+<ul class="simple">
+<li><p>「同一セッション内のリクエストの同期化」の適用範囲についての注意事項を追加</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td><p>2020-06-29</p></td>
+<td><p>-</p></td>
+<td><p>1.7.0 RELEASE版公開</p></td>
+</tr>
+<tr class="row-odd"><td></td>
+<td><p>全般</p></td>
+<td><p>ガイドラインの誤記(タイプミスや単純な記述ミスなど)の修正</p>
+<p>記載内容の改善</p>
+<p>記載内容の修正・追加</p>
+<ul class="simple">
+<li><p>利用するミドルウェアのバージョンを更新</p></li>
+<li><p>Spring Framework 5.1.16より<a class="reference external" href="https://github.com/spring-projects/spring-framework/issues/22504">XMLスキーマ処理が改善</a>されたため、ブランクプロジェクトにおけるBean定義ファイルのXMLスキーマファイル(.xsd)参照を<code class="docutils literal notranslate"><span class="pre">http</span></code>から<code class="docutils literal notranslate"><span class="pre">https</span></code>に変更</p></li>
+<li><p>Spring Framework 5.1より<a class="reference external" href="https://github.com/spring-projects/spring-framework/issues/21437">ログ出力の見直し</a>が行われたため、ブランクプロジェクトにおいてマッピングされたハンドラメソッドのログを出力するよう変更</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td></td>
+<td><p><a class="reference internal" href="CriteriaBasedMapping.html"><span class="doc">ガイドラインの観点別マッピング</span></a></p></td>
+<td><p>記載内容の追加</p>
+<ul class="simple">
+<li><p>CVE-2020-5408を追加</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td></td>
+<td><p><a class="reference internal" href="../Overview/FrameworkStack.html"><span class="doc">Macchinetta Server Framework (1.x)のスタック</span></a></p></td>
+<td><p>利用するOSSのバージョンを更新</p>
+<ul class="simple">
+<li><p>Spring Bootを2.2.4に更新</p></li>
+<li><p>Spring Security OAuthを2.4.0に更新</p></li>
+<li><p>MyBatisを3.5.3に更新</p></li>
+<li><p>MyBatis Springを2.0.3に更新</p></li>
+<li><p>Apache Commons BeanUtilsを1.9.4に更新</p></li>
+<li><p>Dozerを6.5.0に更新</p></li>
+<li><p>Apache POIを4.1.1に更新</p></li>
+</ul>
+<p>Spring Boot のバージョン更新に伴い利用するOSSのバージョンを更新</p>
+<ul class="simple">
+<li><p>Spring Frameworkを5.2.3に更新</p></li>
+<li><p>Spring Dataを2.2.4に更新</p></li>
+<li><p>Spring Securityを5.2.1に更新</p></li>
+<li><p>AspectJを1.9.5に更新</p></li>
+<li><p>SLF4Jを1.7.30に更新</p></li>
+<li><p>Jacksonを2.10.2に更新</p></li>
+<li><p>Hibernate Validatorを6.0.18(Bean Validation 2.0)に更新</p></li>
+<li><p>Apache Commons Langを3.9に更新</p></li>
+<li><p>Joda Timeを2.10.5に更新</p></li>
+<li><p>Apache Commons DBCPを2.7.0に更新</p></li>
+<li><p>Apache HttpClientを4.5.10に更新</p></li>
+<li><p>Lombokを1.18.10に更新</p></li>
+</ul>
+<p>単体テストで利用するOSSのバージョンを更新</p>
+<ul class="simple">
+<li><p>Hamcrestを2.1に更新</p></li>
+<li><p>Mockitoを3.1.0に更新</p></li>
+<li><p>Spring Testを5.2.3に更新</p></li>
+</ul>
+<p>利用するOSSのバージョンの更新による主な変更</p>
+<ul class="simple">
+<li><p>Spring Security 5.2で追加された<code class="docutils literal notranslate"><span class="pre">Argon2PasswordEncoder</span></code>の記述を追加</p></li>
+<li><p>Spring Security 5.2で追加された<code class="docutils literal notranslate"><span class="pre">LogoutSuccessEvent</span></code>および<code class="docutils literal notranslate"><span class="pre">LogoutSuccessEventPublishingLogoutHandler</span></code>の記述を追加</p></li>
+<li><p>Spring Security 5.2で追加された<code class="docutils literal notranslate"><span class="pre">ClearSiteDataHeaderWriter</span></code>および<code class="docutils literal notranslate"><span class="pre">HeaderWriterLogoutHandler</span></code>の記述を追加</p></li>
+<li><p>Spring Security 5.2.1において、既存のセキュリティヘッダがある場合の挙動が変更されたこと（<a class="reference external" href="https://github.com/spring-projects/spring-security/issues/6454">spring-projects/spring-security#6454</a>）への対応</p></li>
+<li><p>Spring Data 2.2において、廃止予定であった非推奨APIが削除されたことへの対応</p></li>
+<li><p>Spring Boot 2.2.0からJavaMailがJakarta Mailにバージョンアップしたことへの対応</p></li>
+<li><p>Hamcrest 2.1からHamcrestのモジュールが統合されたため、記載するOSSライブラリを変更</p></li>
+</ul>
+<p>利用するOSSのサポートを終了</p>
+<ul class="simple">
+<li><p>JDBC 4.2に対応していないLog4JDBCをサポート対象外として削除</p></li>
+</ul>
+<p>TERASOLUNA Server Framework for Java (5.x)の共通ライブラリの機能改善</p>
+<ul class="simple">
+<li><p>共通ライブラリが用意する入力チェックルールのデフォルトエラーメッセージを共通ライブラリで提供</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&lt;t:pagination&gt;</span></code>タグに、<code class="docutils literal notranslate"><span class="pre">innerElementClass</span></code>属性を追加</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Argon2PasswordEncoder</span></code>のサポートに伴い、<code class="docutils literal notranslate"><span class="pre">bcprov-jdk15on</span></code>への依存関係を共通ライブラリで管理</p></li>
+</ul>
+<p>記載内容の追加</p>
+<ul class="simple">
+<li><p>共通ライブラリの構成要素に、TERASOLUNA Server Framework のバージョンについてのNoteを追加</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td></td>
+<td><p><a class="reference internal" href="../ImplementationAtEachLayer/ApplicationLayer.html"><span class="doc">アプリケーション層の実装</span></a></p></td>
+<td><p>記載内容の追加</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">&#64;RequestMapping</span></code>の値（value属性）を省略した場合の動作についてのNoteを追加</p></li>
+<li><p>パス設計時の注意点についてのWarningを追加</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td></td>
+<td><p><a class="reference internal" href="../ArchitectureInDetail/WebApplicationDetail/Validation.html"><span class="doc">入力チェック</span></a></p></td>
+<td><p>記載内容の追加</p>
+<ul class="simple">
+<li><p>日付時刻の検証（<code class="docutils literal notranslate"><span class="pre">&#64;Past</span></code>、<code class="docutils literal notranslate"><span class="pre">&#64;Future</span></code>、<code class="docutils literal notranslate"><span class="pre">&#64;PastOrPresent</span></code>、<code class="docutils literal notranslate"><span class="pre">&#64;FutureOrPresent</span></code>）に適切な型を使用する必要があることについてのWarningを追加</p></li>
+</ul>
+<p>記載内容の修正</p>
+<ul class="simple">
+<li><p>共通ライブラリが用意する入力チェックルールのデフォルトエラーメッセージを共通ライブラリで提供するように変更したことに伴う記載内容の変更</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td></td>
+<td><p><a class="reference internal" href="../ArchitectureInDetail/WebApplicationDetail/Pagination.html"><span class="doc">ページネーション</span></a></p></td>
+<td><p>Spring Data 2.2対応に伴う修正</p>
+<ul class="simple">
+<li><p>Spring Data 2.2において、廃止予定であった非推奨APIが削除されたことに伴う実装例の修正</p></li>
+</ul>
+<p>TERASOLUNA Server Framework for Java (5.x)の共通ライブラリの機能改善</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">&lt;t:pagination&gt;</span></code>タグに、<code class="docutils literal notranslate"><span class="pre">innerElementClass</span></code>属性を追加</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td></td>
+<td><p><a class="reference internal" href="../ArchitectureInDetail/WebApplicationDetail/Internationalization.html"><span class="doc">国際化</span></a></p></td>
+<td><p>記載内容の修正</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">LocaleChangeInterceptor</span></code>の仕様についてのNoteを修正</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td></td>
+<td><p><a class="reference internal" href="../ArchitectureInDetail/WebApplicationDetail/Codelist.html"><span class="doc">コードリスト</span></a></p></td>
+<td><p>記載内容の修正</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">&#64;ExistInCodeList</span></code>の入力チェックエラーメッセージについての記述を<a class="reference internal" href="../ArchitectureInDetail/WebApplicationDetail/Validation.html"><span class="doc">入力チェック</span></a>に統合</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td></td>
+<td><p><a class="reference internal" href="../ArchitectureInDetail/WebApplicationDetail/TagLibAndELFunctions.html"><span class="doc">共通ライブラリが提供するJSP Tag Library と EL Functions</span></a></p></td>
+<td><p>TERASOLUNA Server Framework for Java (5.x)の共通ライブラリのバグ改修に伴う修正</p>
+<ul class="simple">
+<li><p>共通ライブラリのバグ改修(<a class="reference external" href="https://github.com/terasolunaorg/terasoluna-gfw/issues/846">terasoluna-gfw#846</a>)に伴い、<code class="docutils literal notranslate"><span class="pre">f:query</span></code>の仕様に関する説明を修正</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td></td>
+<td><p><a class="reference internal" href="../ArchitectureInDetail/WebServiceDetail/RestClient.html"><span class="doc">RESTクライアント（HTTPクライアント）</span></a></p></td>
+<td><p>記載内容の修正</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">AsyncRestTemplate</span></code>のスレッドプールをカスタマイズする方法の誤った説明を修正</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td></td>
+<td><p><a class="reference internal" href="../ArchitectureInDetail/DataAccessDetail/DataAccessCommon.html"><span class="doc">データベースアクセス（共通編）</span></a></p></td>
+<td><p>記載内容の削除</p>
+<ul class="simple">
+<li><p>共通ライブラリの変更に伴うlog4jdbcの記載の削除</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td></td>
+<td><p><a class="reference internal" href="../ArchitectureInDetail/GeneralFuncDetail/Dozer.html"><span class="doc">Beanマッピング(Dozer)</span></a></p></td>
+<td><p>記載内容の削除</p>
+<ul class="simple">
+<li><p>Dozer 6.5.0よりJSR-310 Date and Time APIで使用できるはずのパターン文字が使用できない不具合が解消されたため、不具合を記述したWarningを削除</p></li>
+</ul>
+<p>記載内容の追加</p>
+<ul class="simple">
+<li><p>javax.el標準APIの実装ライブラリが存在しないことにより発生する警告についての説明を追加</p></li>
+</ul>
+<p>記載内容の修正</p>
+<ul class="simple">
+<li><p>Dozer 6.5.0より、Mavenを利用してJava SE 9以降でビルドする場合JAXBを利用するための設定が不要になったため、WarningをNoteに変更し説明を修正</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td></td>
+<td><p><a class="reference internal" href="../ArchitectureInDetail/MessagingDetail/Email.html"><span class="doc">E-mail送信(SMTP)</span></a></p></td>
+<td><p>Spring Boot 2.2.4対応に伴う修正</p>
+<ul class="simple">
+<li><p>JavaMailからJakarta Mailにバージョンアップしたことに伴い、説明内容を修正</p></li>
+</ul>
+<p>記載内容の修正</p>
+<ul class="simple">
+<li><p>JavaMail 1.4.4よりマルチバイト文字を使用する際にメール本文終端に余計な文字が付与される不具合が修正された旨を追記</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td></td>
+<td><p><a class="reference internal" href="../ArchitectureInDetail/MessagingDetail/JMS.html"><span class="doc">JMS(Java Message Service)</span></a></p></td>
+<td><p>記載内容の修正・追加</p>
+<ul class="simple">
+<li><p>Spring Framework 5.0.0より、Spring JMSの動作にJMS 2.0のAPIが必要になったことによる記載の修正</p></li>
+<li><p>ActiveMQ Clientにおいて、JMS API 2.0で動作するために必要なライブラリ一覧を追加</p></li>
+<li><p>リスナークラスを格納するパッケージ配下をcomponent-scan対象とする必要がある旨の説明を追加</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td></td>
+<td><p><a class="reference internal" href="../Security/SpringSecurity.html"><span class="doc">Spring Security概要</span></a></p></td>
+<td><p>記載内容の修正</p>
+<ul class="simple">
+<li><p>Spring Security 5.0.1, 4.2.4, 4.1.5より、デフォルトで利用される<code class="docutils literal notranslate"><span class="pre">HttpFirewall</span></code>インタフェースの実装クラスが変更されたことに対する記述の修正</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td></td>
+<td><p><a class="reference internal" href="../Security/Authentication.html"><span class="doc">認証</span></a></p></td>
+<td><p>Spring Security 5.2.x対応に伴う修正</p>
+<ul class="simple">
+<li><p>Spring Security 5.2で追加された<code class="docutils literal notranslate"><span class="pre">Argon2PasswordEncoder</span></code>の記述を追加</p></li>
+<li><p>Spring Security 5.2で追加された<code class="docutils literal notranslate"><span class="pre">LogoutSuccessEvent</span></code>および<code class="docutils literal notranslate"><span class="pre">LogoutSuccessEventPublishingLogoutHandler</span></code>の記述を追加</p></li>
+<li><p>Spring Security 5.2で追加された<code class="docutils literal notranslate"><span class="pre">ClearSiteDataHeaderWriter</span></code>および<code class="docutils literal notranslate"><span class="pre">HeaderWriterLogoutHandler</span></code>の記述を追加</p></li>
+</ul>
+<p>TERASOLUNA Server Framework for Java (5.x)の共通ライブラリの機能改善</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">Argon2PasswordEncoder</span></code>のサポートに伴い、<code class="docutils literal notranslate"><span class="pre">bcprov-jdk15on</span></code>への依存関係を共通ライブラリで管理</p></li>
+</ul>
+<p>記載内容の追加</p>
+<ul class="simple">
+<li><p>PasswordEncoderに定義されているメソッドの一覧にSpring Security 5.1で追加された<code class="docutils literal notranslate"><span class="pre">upgradeEncoding</span></code>を追加</p></li>
+</ul>
+<p>記載内容の修正</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">&#64;EventListener</span></code>が処理する認証イベントの指定方法を改善</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&#64;EventListener</span></code>クラスを格納するパッケージの明示および注意点の記載</p></li>
+<li><p>Spring Securityが提供するクラスをまとめた表の見直し</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td></td>
+<td><p><a class="reference internal" href="../Security/Authorization.html"><span class="doc">認可</span></a></p></td>
+<td><p>記載内容の修正</p>
+<ul class="simple">
+<li><p>Spring Securityが提供するクラスをまとめた表の見直し</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td></td>
+<td><p><a class="reference internal" href="../Security/SessionManagement.html"><span class="doc">セッション管理</span></a></p></td>
+<td><p>記載内容の修正</p>
+<ul class="simple">
+<li><p>Spring Security 5.0.1, 4.2.4, 4.1.5以降では、デフォルトの設定でURL RewritingによるセッションIDの連携を行えず、設定を変更した場合、脆弱性が発生する可能性がある旨の記述を追加</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td></td>
+<td><p><a class="reference internal" href="../Security/LinkageWithBrowser.html"><span class="doc">ブラウザのセキュリティ対策機能との連携</span></a></p></td>
+<td><p>Spring Security 5.2.x対応に伴う修正</p>
+<ul class="simple">
+<li><p>Spring Security 5.2で追加された<code class="docutils literal notranslate"><span class="pre">ClearSiteDataHeaderWriter</span></code>の記述を追加</p></li>
+<li><p>Spring Security 5.2で追加されたStrict-Transport-SecurityヘッダのpreloadディレクティブについてのNoteを追加</p></li>
+<li><p><a class="reference external" href="https://github.com/spring-projects/spring-security/issues/6454">spring-projects/spring-security#6454</a>により解消されたWarning「個別に付与したセキュリティヘッダがSpring Securityにより上書き（追加）される問題」を削除</p></li>
+</ul>
+<p>記載内容の追加</p>
+<ul class="simple">
+<li><p>Content Security Policyヘッダに関するIEがサポートしていないことについてのWarningを追加</p></li>
+<li><p>Content Security Policyヘッダで混在コンテンツをブロックする方法についてのNoteを追加</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td></td>
+<td><p><a class="reference internal" href="../Security/Encryption.html"><span class="doc">暗号化</span></a></p></td>
+<td><p>記載内容の修正</p>
+<ul class="simple">
+<li><p>CVE-2020-5408により<code class="docutils literal notranslate"><span class="pre">Encryptors#queryableText</span></code>メソッドを非推奨とする旨のNoteを追加し、コード例を削除</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td></td>
+<td><p><a class="reference internal" href="../Security/SecureLoginDemo.html"><span class="doc">代表的なセキュリティ要件の実装例</span></a></p></td>
+<td><p>記載内容の修正</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">&#64;EventListener</span></code>が処理する認証イベントの指定方法を改善</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&#64;EventListener</span></code>クラスを格納するパッケージの変更</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td></td>
+<td><p><a class="reference internal" href="../UnitTest/UnitTestOverview.html"><span class="doc">単体テスト概要</span></a></p></td>
+<td><p>Spring Boot のバージョン更新に伴い利用するOSSのバージョンを更新</p>
+<ul class="simple">
+<li><p>Hamcrestを2.1に更新</p></li>
+<li><p>Mockitoを3.1.0に更新</p></li>
+<li><p>Spring Testを5.2.3に更新</p></li>
+</ul>
+<p>記載内容の修正</p>
+<ul class="simple">
+<li><p>Hamcrest 2.1から<code class="docutils literal notranslate"><span class="pre">hamcrest-core</span></code>, <code class="docutils literal notranslate"><span class="pre">hamcrest-library</span></code>が<code class="docutils literal notranslate"><span class="pre">hamcrest</span></code>に統合されたため、記載するOSSライブラリを変更</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td></td>
+<td><p><a class="reference internal" href="../UnitTest/ImplementsOfUnitTest/ImplementsOfTestByLayer.html"><span class="doc">レイヤごとのテスト実装</span></a></p></td>
+<td><p>記載内容の追加</p>
+<ul class="simple">
+<li><p>データ定義ファイルにExcel形式（.xlsx）のファイルを使用する場合のApache POIについてWarningを追加</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td></td>
+<td><p><a class="reference internal" href="../Appendix/Java11Changes.html"><span class="doc">Java SE 8からJava SE 11までの主要な変更点</span></a></p></td>
+<td><p>記載内容の追加</p>
+<ul class="simple">
+<li><p>「推移的に解決されるJava EE関連モジュールの競合」節の追加</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td><p>2019-03-26</p></td>
+<td><p>-</p></td>
+<td><p>1.6.1 RELEASE版公開</p></td>
+</tr>
+<tr class="row-even"><td></td>
+<td><p>全般</p></td>
+<td><p>Java SE 8および11のサポートに伴う修正</p>
+<ul class="simple">
+<li><p>サポート対象外となるJava SE 7を利用する際の記述を削除</p></li>
+<li><p>サポート対象となるJava SE 11を利用する際の記述を追加</p></li>
+</ul>
+<p>ガイドラインの誤記(タイプミスや単純な記述ミスなど)の修正</p>
+<p>記載内容の改善</p>
+<p>記載内容の修正・追加</p>
+<ul class="simple">
+<li><p>ViewResolverの定義について、Spring 4.0以前からの<code class="docutils literal notranslate"><span class="pre">&lt;bean&gt;</span></code>要素を使用した定義方法を削除し、Spring 4.1以降の<code class="docutils literal notranslate"><span class="pre">&lt;mvc:view-resolvers&gt;</span></code>要素を使用した定義方法のみ解説するよう変更</p></li>
+<li><p>利用するミドルウェアのバージョンを更新</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td></td>
+<td><p><a class="reference internal" href="CriteriaBasedMapping.html"><span class="doc">ガイドラインの観点別マッピング</span></a></p></td>
+<td><p>OWASP Top 10 を2013版から2017版へ変更</p>
+<ul class="simple">
+<li><p>OWASP(Open Web Application Security Project)による観点の更新</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td></td>
+<td><p><a class="reference internal" href="../Overview/FrameworkStack.html"><span class="doc">Macchinetta Server Framework (1.x)のスタック</span></a></p></td>
+<td><p>利用するOSSの管理方法の変更</p>
+<ul class="simple">
+<li><p>利用するライブラリの管理にSpring Bootを利用するよう変更</p></li>
+</ul>
+<p>利用するOSSのバージョンを更新</p>
+<ul class="simple">
+<li><p>Spring Boot 2.1.2の適用</p></li>
+</ul>
+<blockquote>
+<div><ul class="simple">
+<li><p>Spring Frameworkのバージョンを5.1.4に更新</p></li>
+<li><p>Spring Securityのバージョンを5.1.3に更新</p></li>
+<li><p>Spring Dataのバージョンを2.1.4に更新</p></li>
+<li><p>Hibernate Validatorのバージョンを6.0.14(Bean Validation 2.0)に更新</p></li>
+<li><p>Joda Timeのバージョンを2.10.1に更新</p></li>
+<li><p>Jacksonのバージョンを2.9.8に更新</p></li>
+<li><p>Apache HttpClientを4.5.6に更新</p></li>
+<li><p>Lombokを1.18.4に更新</p></li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li><p>Spring Security OAuthを2.2.4に更新</p></li>
+<li><p>MyBatisのバージョンを3.5.0に更新</p></li>
+<li><p>MyBatis Springのバージョンを2.0.0に更新</p></li>
+<li><p>Dozerのバージョンを6.4.1に更新</p></li>
+<li><p>Apache POIを3.17に更新</p></li>
+<li><p>iTextが非サポートになったため、OpenPDF 1.0.5を追加</p></li>
+</ul>
+<p>利用するOSSのバージョンの更新による主な変更</p>
+<ul class="simple">
+<li><p>Spring Framework 5.0.0よりJasperReportsが非サポートとなったことへの対応</p></li>
+<li><p>Spring Framework 5.0.3よりiTextが非サポートとなり、代わりにOpenPDFがサポートされたことへの対応</p></li>
+<li><p>Spring Framework 4.2から非推奨ととなっていた<code class="docutils literal notranslate"><span class="pre">AbstractExcelView</span></code>がSpring Framework 5.0で削除されたことに伴う対応</p></li>
+<li><p>Spring Framework 5.0.0よりクエリ文字列に対するURLエンコーディングの仕様が変更されたことへの対応</p></li>
+<li><p>Spring Framework 5.0.0より指定サイズを超えるファイルのアップロードやマルチパートのリクエストが行われた際に発生する例外の仕様が変更されたことに伴う対応</p></li>
+<li><p>Spring Framework 5.0.0よりSpEL評価時におけるnull-safety機能が追加されたことへの対応</p></li>
+<li><p>Spring Security 5より非推奨の<code class="docutils literal notranslate"><span class="pre">PasswordEncoder</span></code>のパッケージが廃止になったことへの対応</p></li>
+<li><p>Spring Security 5.0.2および5.1.2で変更となったセキュリティヘッダの付与タイミングによる、リクエストパスのマッチングにおける注意事項の追加</p></li>
+<li><p>Spring Security OAuth 2.2.2よりリダイレクトURIのホワイトリストチェックの仕様が変更されたことへの対応</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td></td>
+<td><p><a class="reference internal" href="../Overview/FrameworkStack.html"><span class="doc">Macchinetta Server Framework (1.x)のスタック</span></a></p></td>
+<td><p>TERASOLUNA Server Framework for Java (5.x)の共通ライブラリの新機能追加</p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">terasoluna-gfw-validator</span></code></dt><dd><ul class="simple">
+<li><p>バイト長チェック用Bean Validation制約アノテーション <code class="docutils literal notranslate"><span class="pre">&#64;ByteSize</span></code> </p></li>
+</ul>
+</dd>
+</dl>
+<p>TERASOLUNA Server Framework for Java (5.x)の共通ライブラリの機能改善</p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">terasoluna-gfw-common</span></code></dt><dd><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">SimpleI18nCodeList</span></code>のロケール解決方法の改善</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">SimpleReloadableI18nCodeList</span></code>の追加</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&#64;ExistInCodeList</span></code> で <code class="docutils literal notranslate"><span class="pre">Number</span></code> 型をサポートするよう改善</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ReloadableCodeList</span></code> のイミュータブル対応に伴う <code class="docutils literal notranslate"><span class="pre">CodeListInterceptor</span></code>の仕様変更</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&#64;ExistInCodeList</span></code> をBean Validation 2.0に準拠するよう仕様変更</p></li>
+</ul>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">terasoluna-gfw-codepoints</span></code></dt><dd><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">&#64;ConsistOf</span></code> をBean Validation 2.0に準拠するよう仕様変更</p></li>
+</ul>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">terasoluna-gfw-validator</span></code></dt><dd><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">&#64;ByteMax</span></code> 及び<code class="docutils literal notranslate"><span class="pre">&#64;ByteMin</span></code> をBean Validation 2.0に準拠するよう仕様変更</p></li>
+</ul>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="row-even"><td></td>
+<td><p><a class="reference internal" href="../ImplementationAtEachLayer/CreateWebApplicationProject.html"><span class="doc">Webアプリケーション向け開発プロジェクトの作成</span></a></p></td>
+<td><p>記載内容の追加</p>
+<ul class="simple">
+<li><p>大量にコードリストを定義する場合のBean定義方法に関する記載を追加</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td></td>
+<td><p><a class="reference internal" href="../ImplementationAtEachLayer/ApplicationLayer.html"><span class="doc">アプリケーション層の実装</span></a></p></td>
+<td><p>記載内容の追加</p>
+<ul class="simple">
+<li><p>Spring Framework 4.3より追加された <code class="docutils literal notranslate"><span class="pre">&#64;RequestMapping</span></code>の合成アノテーションの説明を追加</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td></td>
+<td><p><a class="reference internal" href="../ArchitectureInDetail/WebApplicationDetail/Validation.html"><span class="doc">入力チェック</span></a></p></td>
+<td><p>Bean Validation 2.0(Hibernate Validator 6.0)対応に伴う修正</p>
+<ul class="simple">
+<li><p>Bean Validation 2.0及びHibernate Validator 6.0では、コレクション内の各値に対して入力チェックできるようになった旨の説明を追加</p></li>
+<li><p>Bean Validation 2.0では、一つのフィールドに同じアノテーションを複数指定できる旨の説明を追加</p></li>
+<li><p>Bean Validation 2.0及びHibernate Validator 6.0で追加されたアノテーションに対する説明を追加</p></li>
+<li><p>Hibernate Validator 6.0で非推奨となったアノテーションに対する説明を追加</p></li>
+<li><p>Bean Validation 2.0で提供される<code class="docutils literal notranslate"><span class="pre">ClockProvider</span></code>を実装することで、基準日付の変更が可能である旨の説明を追加</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td></td>
+<td><p><a class="reference internal" href="../ArchitectureInDetail/WebApplicationDetail/ExceptionHandling.html"><span class="doc">例外ハンドリング</span></a></p></td>
+<td><p>Spring Framework 5.1.4対応に伴う修正</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">DefaultHandlerExceptionResolver</span></code>がハンドリングする例外一覧からSpring Framework 5.0より廃止された<code class="docutils literal notranslate"><span class="pre">org.springframework.web.servlet.mvc.multiaction.NoSuchRequestHandlingMethodException</span></code>を削除</p></li>
+</ul>
+<p>記載内容の修正</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">DefaultHandlerExceptionResolver</span></code>がハンドリングする例外一覧にSpring Framework 4.2より追加された<code class="docutils literal notranslate"><span class="pre">org.springframework.web.bind.MissingPathVariableException</span></code>を追加</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">SystemExceptionResolver#preventResponseCaching</span></code>とSpring SecurityのCache-Controlヘッダの併用についての注意を追加</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td></td>
+<td><p><a class="reference internal" href="../ArchitectureInDetail/WebApplicationDetail/Pagination.html"><span class="doc">ページネーション</span></a></p></td>
+<td><p>構成見直し</p>
+<ul class="simple">
+<li><p>Overviewを取得データの表示、ページネーションリンクの表示、ページネーション情報の表示の3点について説明するように変更</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td></td>
+<td><p><a class="reference internal" href="../ArchitectureInDetail/WebApplicationDetail/MessageManagement.html"><span class="doc">メッセージ管理</span></a></p></td>
+<td><p>記載内容の修正</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">SPRING_SECURITY_LAST_EXCEPTION</span></code> が格納されるスコープの誤記を修正</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td></td>
+<td><p><a class="reference internal" href="../ArchitectureInDetail/WebApplicationDetail/Internationalization.html"><span class="doc">国際化</span></a></p></td>
+<td><p>記載内容の追加</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">AcceptHeaderLocaleResolver</span></code>と<code class="docutils literal notranslate"><span class="pre">LocaleChangeInterceptor</span></code>の指定可能な設定についての説明を追加</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td></td>
+<td><p><a class="reference internal" href="../ArchitectureInDetail/WebApplicationDetail/Codelist.html"><span class="doc">コードリスト</span></a></p></td>
+<td><p>記載内容の修正</p>
+<ul class="simple">
+<li><p>独自カスタマイズしたコードリストのBean定義方法を、コンポーネントスキャンからBean定義ファイルによる定義に変更</p></li>
+</ul>
+<p>記載内容の追加</p>
+<ul class="simple">
+<li><p>コードリストBeanをJSPから直接参照する方法を追加</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td></td>
+<td><p><a class="reference internal" href="../ArchitectureInDetail/WebApplicationDetail/FileUpload.html"><span class="doc">ファイルアップロード</span></a></p></td>
+<td><p>Spring Framework 5.1.4対応に伴う修正</p>
+<ul class="simple">
+<li><p>指定サイズを超えるファイルのアップロードやマルチパートのリクエストが行われた際に発生する例外の仕様が変更されたことに伴い、Noteを追加</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td></td>
+<td><p><a class="reference internal" href="../ArchitectureInDetail/WebApplicationDetail/FileDownload.html"><span class="doc">ファイルダウンロード</span></a></p></td>
+<td><p>Spring Framework 5.1.4対応に伴う修正</p>
+<ul class="simple">
+<li><p>JasperReportsが非サポートとなったため、JasperReportsに言及している記載を修正</p></li>
+<li><p>iTextの代わりにOpenPDFがサポートされるようになった旨の説明を追加し、実装例を修正</p></li>
+<li><p>Spring Framework 4.2から非推奨ととなっていた<code class="docutils literal notranslate"><span class="pre">AbstractExcelView</span></code>がSpring Framework 5.0で削除されたことに伴う対応</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td></td>
+<td><p><a class="reference internal" href="../ArchitectureInDetail/WebApplicationDetail/TagLibAndELFunctions.html"><span class="doc">共通ライブラリが提供するJSP Tag Library と EL Functions</span></a></p></td>
+<td><p>Spring Framework 5.1.4対応に伴う修正</p>
+<ul class="simple">
+<li><p>Spring Frameworkのクエリ文字列に対するURLエンコーディングの仕様変更に伴うTERASOLUNA Server Framework for Java (5.x)の共通ライブラリ(<code class="docutils literal notranslate"><span class="pre">f:query()</span></code>, <code class="docutils literal notranslate"><span class="pre">f:u()</span></code>)の変更についてWarningを追加</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td></td>
+<td><div class="line-block">
+<div class="line"><a class="reference internal" href="../ArchitectureInDetail/WebApplicationDetail/Ajax.html"><span class="doc">Ajax</span></a></div>
+</div>
+</td>
+<td><p>OWASP Top 10 2017対応に伴う修正</p>
+<ul class="simple">
+<li><p>A8:2017に関連する、デシリアライズ時のWarningを追加</p></li>
+<li><p>Macchinetta Server Framework (1.x)ではXXE対策済みのSpring MVCを使用しているため、
+XXE対策についてのWarningをNoteへ変更し、spring-oxmによる対策方法の記述を削除</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td></td>
+<td><div class="line-block">
+<div class="line"><a class="reference internal" href="../ArchitectureInDetail/WebServiceDetail/REST.html"><span class="doc">RESTful Web Service</span></a></div>
+</div>
+</td>
+<td><p>OWASP Top 10 2017対応に伴う修正</p>
+<ul class="simple">
+<li><p>Macchinetta Server Framework (1.x)ではXXE対策済みのSpring MVCを使用しているため、
+XXE対策についてのWarningをNoteへ変更し、spring-oxmによる対策方法の記述を削除</p></li>
+</ul>
+<p>記載内容の追加</p>
+<ul class="simple">
+<li><p>Spring Framework 4.3より追加された <code class="docutils literal notranslate"><span class="pre">&#64;RequestMapping</span></code>の合成アノテーションの説明を追加</p></li>
+</ul>
+<p>記述内容の修正</p>
+<ul class="simple">
+<li><p>Dozerのカスタムコンバーターに関する記述を<a class="reference internal" href="../ArchitectureInDetail/GeneralFuncDetail/Dozer.html"><span class="doc">Beanマッピング(Dozer)</span></a>に統合</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td></td>
+<td><p><a class="reference internal" href="../ArchitectureInDetail/WebServiceDetail/RestClient.html"><span class="doc">RESTクライアント（HTTPクライアント）</span></a></p></td>
+<td><p>Spring Framework 5.1.4対応に伴う修正</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">AsyncRestTemplate</span></code>がSpring Framework 5より非推奨となった旨と、代替となるクラスが非サポートであることの説明を追加</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td></td>
+<td><p><a class="reference internal" href="../ArchitectureInDetail/DataAccessDetail/DataAccessMyBatis3.html"><span class="doc">データベースアクセス（MyBatis3編）</span></a></p></td>
+<td><p>記載内容の追加</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">Pageable</span></code> を利用した検索結果のソートについての説明を追加</p></li>
+<li><p>JSR-310 Date and Time APIを使う場合の設定の記事を削除し、依存ライブラリとして別途<code class="docutils literal notranslate"><span class="pre">mybatis-typehandlers-jsr310</span></code> を追加する必要はなくなった旨のNoteを追加</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td></td>
+<td><p><a class="reference internal" href="../ArchitectureInDetail/GeneralFuncDetail/Logging.html"><span class="doc">ロギング</span></a></p></td>
+<td><p>記載内容の修正</p>
+<ul class="simple">
+<li><p>TERASOLUNA Server Framework for Java (5.x)の共通ライブラリが提供する<code class="docutils literal notranslate"><span class="pre">TraceLoggingInterceptor</span></code>のWARNログ出力に関する閾値の設定例を修正</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td></td>
+<td><p><a class="reference internal" href="../ArchitectureInDetail/GeneralFuncDetail/Dozer.html"><span class="doc">Beanマッピング(Dozer)</span></a></p></td>
+<td><p>Dozer 6.4.1対応に伴う修正</p>
+<ul class="simple">
+<li><p>Dozer のバージョンアップ対応に伴い、ガイドラインに記載されているコード例を修正</p></li>
+<li><p>Dozer 6.2.0において、単方向マッピングの挙動が仕様と異なっていたバグが修正されたことの説明を追加</p></li>
+<li><p>Dozer 6.3.0よりJAXBがデフォルト利用されるようになったため、挙動の変更の注意点をWARNINGに追加</p></li>
+<li><p>Dozer 6.4.0より一部のJSR-310 Date and Time APIがサポートされた旨の説明を追加</p></li>
+</ul>
+<p>記載内容の削除</p>
+<ul class="simple">
+<li><p>現バージョン（Dozer5.5.0以降）ではCollection&lt;T&gt;を使用したBean間のマッピングも可能であるため、マッピングが失敗する旨を記述したTodoを削除</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td></td>
+<td><p><a class="reference internal" href="../ArchitectureInDetail/MessagingDetail/JMS.html"><span class="doc">JMS(Java Message Service)</span></a></p></td>
+<td><p>OWASP Top 10 2017対応に伴う修正</p>
+<ul class="simple">
+<li><p>A8:2017に関連する、デシリアライズ時のWarningを追加</p></li>
+</ul>
+<p>記載内容の修正・追加</p>
+<ul class="simple">
+<li><p>JMSを利用する際のBean定義の記載場所を再整理</p></li>
+<li><p>JNDIを使用しない場合の<code class="docutils literal notranslate"><span class="pre">DynamicDestinationResolver</span></code>のBean定義方法に関する記載を追加</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td></td>
+<td><p><a class="reference internal" href="../Security/Authentication.html"><span class="doc">認証</span></a></p></td>
+<td><p>OWASP Top 10 2017対応に伴う修正</p>
+<ul class="simple">
+<li><p>A10:2017に関連する、ログイン認証時のログについてのTipを追加</p></li>
+</ul>
+<p>記載内容の修正</p>
+<ul class="simple">
+<li><p>Spring Security 5より非推奨の<code class="docutils literal notranslate"><span class="pre">PasswordEncoder</span></code>のパッケージが廃止されたことに伴い、<code class="docutils literal notranslate"><span class="pre">MessageDigestPasswordEncoder</span></code>を使用する方法に記載を修正</p></li>
+</ul>
+<p>記載内容の改善</p>
+<ul class="simple">
+<li><p>ブランクプロジェクトで定義する<code class="docutils literal notranslate"><span class="pre">PasswordEncoder</span></code>を<code class="docutils literal notranslate"><span class="pre">BCryptPasswordEncoder</span></code>から<code class="docutils literal notranslate"><span class="pre">DelegatingPasswordEncoder</span></code>に変更したことに伴う記載内容の変更</p></li>
+</ul>
+<p>記載内容の追加</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">SPRING_SECURITY_LAST_EXCEPTION</span></code> が格納されるスコープの説明を追加</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td></td>
+<td><p><a class="reference internal" href="../Security/Authorization.html"><span class="doc">認可</span></a></p></td>
+<td><p>Spring Framework 5.1.4対応に伴う修正</p>
+<ul class="simple">
+<li><p>SpEL評価時におけるnull-safetyの影響についての注意事項を追加</p></li>
+</ul>
+<p>記載内容の追加</p>
+<ul class="simple">
+<li><p>Spring Securityが提供する<code class="docutils literal notranslate"><span class="pre">AccessDeniedHandler</span></code>の実装クラスの一覧に<code class="docutils literal notranslate"><span class="pre">RequestMatcherDelegatingAccessDeniedHandler</span></code>を追加</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td></td>
+<td><p><a class="reference internal" href="../Security/CSRF.html"><span class="doc">CSRF対策</span></a></p></td>
+<td><p>OWASP Top 10 2017対応に伴う修正</p>
+<ul class="simple">
+<li><p>OWASP Top 10 2013版へのリンクをOWASP Cheat Sheetへのリンクへ変更</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td></td>
+<td><p><a class="reference internal" href="../Security/LinkageWithBrowser.html"><span class="doc">ブラウザのセキュリティ対策機能との連携</span></a></p></td>
+<td><p>Spring Security 5.1.3対応に伴う修正</p>
+<ul class="simple">
+<li><p>Spring Securityが提供する<code class="docutils literal notranslate"><span class="pre">HeaderWriterFilter</span></code>の仕様変更と<code class="docutils literal notranslate"><span class="pre">DelegatingRequestMatcherHeaderWriter</span></code>でのリクエストパスのマッチングにおけるバグについての注意事項を追加</p></li>
+</ul>
+<p>記載内容の追加</p>
+<ul class="simple">
+<li><p>Spring Securityがサポートするセキュリティヘッダの一覧にReferrer-Policyヘッダを追加</p></li>
+<li><p>Spring Securityがサポートするセキュリティヘッダの一覧にFeature-Policyヘッダを追加</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td></td>
+<td><p>OAuth(org.springframework.security.oauth)</p></td>
+<td><p>Spring Security OAuth 2.2.2対応に伴う修正</p>
+<ul class="simple">
+<li><p>Spring Security OAuthのバージョン更新に伴いリダイレクトURI情報を保持するテーブルへの説明にWarningを追加</p></li>
+</ul>
+<p>記載内容の修正</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">alias</span></code>属性を用いた<code class="docutils literal notranslate"><span class="pre">authentication-manager</span></code>の定義に関する実装例、説明の修正</p></li>
+</ul>
+<p>記載内容の追加</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://tanzu.vmware.com/security/cve-2019-3778">CVE-2019-3778</a>(オープンリダイレクト脆弱性)に関する注意喚起を追加</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td></td>
+<td><p><a class="reference internal" href="../Tutorial/TutorialTodo.html"><span class="doc">チュートリアル(Todoアプリケーション)</span></a></p></td>
+<td><p>記載内容の修正・追加</p>
+<ul class="simple">
+<li><p>一覧表示機能作成時に、登録機能の一部を作成していた部分を変更し、一覧表示機能の動作確認できるように、コード例を追加</p></li>
+<li><p>ガイドライン修正に伴う、サンプルコードの最新化</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td></td>
+<td><p><a class="reference internal" href="../Tutorial/TutorialREST.html"><span class="doc">チュートリアル(Todoアプリケーション REST編)</span></a></p></td>
+<td><p>記載内容の修正</p>
+<ul class="simple">
+<li><p>spring-mvc-rest.xmlを作成する方法の説明を変更</p></li>
+<li><p>ガイドライン修正に伴う、サンプルコードの最新化</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td></td>
+<td><p><a class="reference internal" href="../Tutorial/TutorialSession.html"><span class="doc">セッションチュートリアル</span></a></p></td>
+<td><p>記載内容の修正</p>
+<ul class="simple">
+<li><p>JSPのコードをTiles形式に修正</p></li>
+<li><p>ガイドライン修正に伴う、サンプルコードの最新化</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td></td>
+<td><p><a class="reference internal" href="../Tutorial/TutorialSecurity.html"><span class="doc">Spring Securityチュートリアル</span></a></p></td>
+<td><p>記載内容の修正</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">SPRING_SECURITY_LAST_EXCEPTION</span></code> が格納されるスコープの誤記を修正</p></li>
+<li><p>ガイドライン修正に伴う、サンプルコードの最新化</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td></td>
+<td><p><a class="reference internal" href="../Appendix/Java11Changes.html"><span class="doc">Java SE 8からJava SE 11までの主要な変更点</span></a></p></td>
+<td><p>新規追加</p>
+<ul class="simple">
+<li><p>Java SE 8からJava SE 11までの主要な変更点を追加</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td><p>2018-03-09</p></td>
+<td><p>-</p></td>
+<td><p>1.5.1 RELEASE版公開</p></td>
+</tr>
+<tr class="row-odd"><td></td>
+<td><p><a class="reference internal" href="../Overview/FrameworkStack.html"><span class="doc">Macchinetta Server Framework (1.x)のスタック</span></a></p></td>
+<td><p>CVE-2018-1199への対応のため、利用するOSSのバージョンを更新</p>
+<ul class="simple">
+<li><p>Spring Frameworkのバージョンを4.3.14に更新</p></li>
+<li><p>Spring Securityのバージョンを4.2.4に更新</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td></td>
+<td><p>OAuth(org.springframework.security.oauth)</p></td>
+<td><p>記載内容の修正</p>
+<ul class="simple">
+<li><p>認可サーバのチェックトークンエンドポイントのURL設定が反映されない不具合へのWarningを削除</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td><p>2017-12-22</p></td>
+<td><p>-</p></td>
+<td><p>1.5.0 RELEASE版公開</p></td>
+</tr>
+<tr class="row-even"><td></td>
+<td><p>全般</p></td>
+<td><p>ガイドラインの誤記(タイプミスや単純な記述ミスなど)の修正</p>
+<p>記載内容の改善</p>
+</td>
+</tr>
+<tr class="row-odd"><td></td>
+<td><p><a class="reference internal" href="../Overview/FrameworkStack.html"><span class="doc">Macchinetta Server Framework (1.x)のスタック</span></a></p></td>
+<td><p>利用するOSSのバージョンを更新</p>
+<ul class="simple">
+<li><p>Spring IO PlatformのバージョンをBrussels-SR5に更新</p></li>
+<li><p>MyBatisのバージョンを3.4.5に更新</p></li>
+</ul>
+<p>Spring IO Platformのバージョン更新に伴い利用するOSSのバージョンを更新</p>
+</td>
+</tr>
+<tr class="row-even"><td></td>
+<td><p><a class="reference internal" href="../ImplementationAtEachLayer/DomainLayer.html"><span class="doc">ドメイン層の実装</span></a></p></td>
+<td><p>記載内容の追加</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">&#64;Transactional</span></code> アノテーションの<code class="docutils literal notranslate"><span class="pre">timeout</span></code> 属性に関する記載を追加</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td></td>
+<td><p><a class="reference internal" href="../ArchitectureInDetail/WebApplicationDetail/Validation.html"><span class="doc">入力チェック</span></a></p></td>
+<td><p>記載内容の追加</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">&#64;Compare</span></code> アノテーションの<code class="docutils literal notranslate"><span class="pre">operator</span></code> 属性に新たに追加された<code class="docutils literal notranslate"><span class="pre">NOT_EQUAL</span></code> の説明を追加</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&#64;Email</span></code> アノテーションを使用する際の注意事項を追加</p></li>
+</ul>
+<p>ガイドラインのバグ修正</p>
+<ul class="simple">
+<li><p>TERASOLUNA Server Framework for Java (5.x)の共通ライブラリのチェックルールの拡張方法の実装例を修正</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td></td>
+<td><p><a class="reference internal" href="../ArchitectureInDetail/WebApplicationDetail/ExceptionHandling.html"><span class="doc">例外ハンドリング</span></a></p></td>
+<td><p>記載内容の修正</p>
+<ul class="simple">
+<li><p>TERASOLUNA Server Framework for Java (5.x)の共通ライブラリ(<code class="docutils literal notranslate"><span class="pre">ExceptionLoggingFilter</span></code> )の変更に伴う修正、及び既存の誤記の修正</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td></td>
+<td><p><a class="reference internal" href="../ArchitectureInDetail/WebApplicationDetail/TilesLayout.html"><span class="doc">Tilesによる画面レイアウト</span></a></p></td>
+<td><p>記載内容の修正</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">&lt;definition&gt;</span></code> タグ(Tiles定義ファイル)の<code class="docutils literal notranslate"><span class="pre">name</span></code> 属性のマッチングに関する説明、及び関連する箇所の誤解を招く表現を修正</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td></td>
+<td><p><a class="reference internal" href="../ArchitectureInDetail/WebServiceDetail/RestClient.html"><span class="doc">RESTクライアント（HTTPクライアント）</span></a></p></td>
+<td><p>Spring Framework 4.3対応に伴う修正</p>
+<ul class="simple">
+<li><p>Basic認証用のリクエストヘッダの設定に関する記載を変更</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td></td>
+<td><p><a class="reference internal" href="../ArchitectureInDetail/WebServiceDetail/SOAP.html"><span class="doc">SOAP Web Service（サーバ/クライアント）</span></a></p></td>
+<td><p>記載内容の修正</p>
+<ul class="simple">
+<li><p>SOAP Web Serviceの実装に伴うインジェクションで使用するアノテーションを<code class="docutils literal notranslate"><span class="pre">&#64;Inject</span></code> から<code class="docutils literal notranslate"><span class="pre">&#64;Autowired</span></code> に変更</p></li>
+<li><p>Spring FrameworkのJAX-WS連携機能についての誤記修正と、SOAPサーバがJava EEサーバのJAW-WS実装上で動作することに伴なう注意事項の追記</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td></td>
+<td><p><a class="reference internal" href="../ArchitectureInDetail/MessagingDetail/JMS.html"><span class="doc">JMS(Java Message Service)</span></a></p></td>
+<td><p>記載内容の修正</p>
+<ul class="simple">
+<li><p>非同期送信のトランザクション管理はChainedTransactionManagerではなくDefaultMessageListenerContainerで行うよう記述を修正</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td></td>
+<td><p><a class="reference internal" href="../Security/Authentication.html"><span class="doc">認証</span></a></p></td>
+<td><p>記載内容の修正</p>
+<ul class="simple">
+<li><p>パスワードハッシュ化のためのクラス（<code class="docutils literal notranslate"><span class="pre">Pbkdf2PasswordEncoder</span></code>）の説明を追記し、それに伴い<code class="docutils literal notranslate"><span class="pre">BCryptPasswordEncoder</span></code>を推奨する記述を削除</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td></td>
+<td><p><a class="reference internal" href="../Security/Authorization.html"><span class="doc">認可</span></a></p></td>
+<td><p>Spring Framework 4.3対応に伴う修正</p>
+<ul class="simple">
+<li><p>ブランクプロジェクトから<code class="docutils literal notranslate"><span class="pre">mvc:path-matching</span></code> の定義を削除しSpring MVCのデフォルト設定を使用するよう変更したことに伴う記載内容の修正</p></li>
+</ul>
+<p>記載内容の修正</p>
+<ul class="simple">
+<li><p>Spring Securityでパス変数を使用するアクセスポリシーの定義に関する記載内容を修正</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td></td>
+<td><p><a class="reference internal" href="../Security/XSS.html"><span class="doc">XSS対策</span></a></p></td>
+<td><p>記載内容の修正、追加</p>
+<ul class="simple">
+<li><p>JavaScript Escapingのサンプルソースを修正</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">document.write()</span></code> を使用する際の注意事項を追加</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td></td>
+<td><p>OAuth(org.springframework.security.oauth)</p></td>
+<td><p>構成見直し</p>
+<ul class="simple">
+<li><p>How to useをグラントタイプ毎に説明する章構成に変更</p></li>
+</ul>
+<p>記載内容の追加</p>
+<ul class="simple">
+<li><p>Spring Security OAuthで発生する例外の一覧とハンドリング方法の追加</p></li>
+<li><p>Spring Security OAuthの拡張ポイントについての説明を追加</p></li>
+<li><p>リソースサーバに対するBasic認証設定方法の追加</p></li>
+<li><p>インプリシットにおける後処理（アクセストークンクリア）の追加</p></li>
+</ul>
+<p>記載内容の改善</p>
+<ul class="simple">
+<li><p>サンプルコードの修正</p></li>
+<li><p>フロー図およびその説明の改善</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td></td>
+<td><p><a class="reference internal" href="../UnitTest/index.html"><span class="doc">単体テスト</span></a></p></td>
+<td><p>新規追加</p>
+<ul class="simple">
+<li><p>単体テストを追加</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td><p>2017-11-10</p></td>
+<td><p>-</p></td>
+<td><p>1.4.1 RELEASE版公開</p></td>
+</tr>
+<tr class="row-odd"><td></td>
+<td><p>全般</p></td>
+<td><p>ガイドラインの誤記(タイプミスや単純な記述ミスなど)の修正</p></td>
+</tr>
+<tr class="row-even"><td><p>2017-03-10</p></td>
+<td><p>-</p></td>
+<td><p>1.4.0 RELEASE版公開</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../Overview/index.html" title="2. アーキテクチャ概要"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="CriteriaBasedMapping.html" title="1.7. ガイドラインの観点別マッピング"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Macchinetta Server Framework (1.x) Development Guideline 1.8.3.RELEASE documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" ><span class="section-number">1. </span>はじめに</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href=""><span class="section-number">1.8. </span>更新履歴</a></li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, NTT Corporation.
+      Created using <a href="https://www.sphinx-doc.org/en/master/">Sphinx</a> 7.1.2.Theme is <a href="https://pypi.org/project/solar-theme/">Solar</a>
+    </div>
+    
+    <script>
+    
+    $(function() {
+    	var $sidebar	= $('.sphinxsidebar'),
+    		$window		= $(window),
+    		offset		= $sidebar.offset(),
+    		topPadding	= 3,
+    		$scroll		= $('#scroll');
+    	
+    	$window.scroll(function() {
+    		if ($scroll.is(':checked')) {
+				if ($window.scrollTop() > offset.top) {
+					$sidebar.stop().animate({
+						marginTop:$window.scrollTop() - offset.top + topPadding
+					});
+				} else {
+					$sidebar.stop().animate({
+						marginTop:0
+					});
+				}
+			}
+		});
+    	
+    	var $navList = $('ul:first', $sidebar);
+    	$('li:first', $navList).addClass('open');
+    	
+    	$navList.treeview({
+    		persist: "location",
+    		collapsed: true,
+    		unique: false
+    	});
+    	
+	});
+    </script>
+  </body>
+</html>
