@@ -27,13 +27,13 @@ Spring MVCを用いたWebアプリケーションの開発に対するイメー�
     * - JVM
       - `Java <https://developers.redhat.com/products/openjdk/download>`_ 1.8
     * - IDE
-      - `Spring Tool Suite <https://spring.io/tools>`_ 4.17.1.RELEASE (以降「STS」と呼ぶ。設定方法は :doc:`../Appendix/SpringToolSuite4` を参照されたい。)
+      - `Spring Tool Suite <https://spring.io/tools>`_ 4.27.0.RELEASE (以降「STS」と呼ぶ。設定方法は :doc:`../Appendix/SpringToolSuite4` を参照されたい。)
     * - Build Tool
-      - `Apache Maven <https://maven.apache.org/download.cgi>`_ 3.8.6 (以降「Maven」と呼ぶ)
+      - `Apache Maven <https://maven.apache.org/download.cgi>`_ 3.9.9 (以降「Maven」と呼ぶ)
     * - Application Server
-      - `Apache Tomcat <https://tomcat.apache.org/tomcat-9.0-doc/index.html>`_ 9.0.82
+      - `Apache Tomcat <https://tomcat.apache.org/tomcat-9.0-doc/index.html>`_ 9.0.97
     * - Web Browser
-      - `Google Chrome <https://www.google.co.jp/chrome/>`_ 117
+      - `Google Chrome <https://www.google.co.jp/chrome/>`_ 132
 
 .. note::
 
@@ -51,7 +51,7 @@ Spring MVCを用いたWebアプリケーションの開発に対するイメー�
     mvn archetype:generate -B^
      -DarchetypeGroupId=com.github.macchinetta.blank^
      -DarchetypeArtifactId=macchinetta-web-blank-noorm-archetype^
-     -DarchetypeVersion=1.8.3.RELEASE^
+     -DarchetypeVersion=1.8.4.RELEASE^
      -DgroupId=com.example.helloworld^
      -DartifactId=helloworld^
      -Dversion=1.0.0-SNAPSHOT
@@ -63,7 +63,7 @@ Spring MVCを用いたWebアプリケーションの開発に対するイメー�
     C:\work>mvn archetype:generate -B^
     More?  -DarchetypeGroupId=com.github.macchinetta.blank^
     More?  -DarchetypeArtifactId=macchinetta-web-blank-noorm-archetype^
-    More?  -DarchetypeVersion=1.8.3.RELEASE^
+    More?  -DarchetypeVersion=1.8.4.RELEASE^
     More?  -DgroupId=com.example.helloworld^
     More?  -DartifactId=helloworld^
     More?  -Dversion=1.0.0-SNAPSHOT
@@ -73,16 +73,16 @@ Spring MVCを用いたWebアプリケーションの開発に対するイメー�
     [INFO] Building Maven Stub Project (No POM) 1
     [INFO] --------------------------------[ pom ]---------------------------------
     [INFO]
-    [INFO] >>> maven-archetype-plugin:3.2.1:generate (default-cli) > generate-sources @ standalone-pom >>>
+    [INFO] >>> archetype:3.3.1:generate (default-cli) > generate-sources @ standalone-pom >>>
     [INFO]
-    [INFO] <<< maven-archetype-plugin:3.2.1:generate (default-cli) < generate-sources @ standalone-pom <<<
+    [INFO] <<< archetype:3.3.1:generate (default-cli) < generate-sources @ standalone-pom <<<
     [INFO]
     [INFO]
-    [INFO] --- maven-archetype-plugin:3.2.1:generate (default-cli) @ standalone-pom ---
+    [INFO] --- archetype:3.3.1:generate (default-cli) @ standalone-pom ---
     [INFO] Generating project in Batch mode
-    [INFO] Archetype repository not defined. Using the one from [com.github.macchinetta.blank:macchinetta-web-blank-noorm-archetype:1.8.3.RELEASE] found in catalog remote
+    [INFO] Archetype repository not defined. Using the one from [com.github.macchinetta.blank:macchinetta-web-blank-noorm-archetype:1.8.4.RELEASE] found in catalog local
     [INFO] ----------------------------------------------------------------------------
-    [INFO] Using following parameters for creating project from Archetype: macchinetta-web-blank-noorm-archetype:1.8.3.RELEASE
+    [INFO] Using following parameters for creating project from Archetype: macchinetta-web-blank-noorm-archetype:1.8.4.RELEASE
     [INFO] ----------------------------------------------------------------------------
     [INFO] Parameter: groupId, Value: com.example.helloworld
     [INFO] Parameter: artifactId, Value: helloworld
@@ -90,15 +90,15 @@ Spring MVCを用いたWebアプリケーションの開発に対するイメー�
     [INFO] Parameter: package, Value: com.example.helloworld
     [INFO] Parameter: packageInPathFormat, Value: com/example/helloworld
     [INFO] Parameter: package, Value: com.example.helloworld
+    [INFO] Parameter: version, Value: 1.0.0-SNAPSHOT
     [INFO] Parameter: groupId, Value: com.example.helloworld
     [INFO] Parameter: artifactId, Value: helloworld
-    [INFO] Parameter: version, Value: 1.0.0-SNAPSHOT
     [INFO] Project created from Archetype in dir: C:\work\helloworld
     [INFO] ------------------------------------------------------------------------
     [INFO] BUILD SUCCESS
     [INFO] ------------------------------------------------------------------------
-    [INFO] Total time:  6.278 s
-    [INFO] Finished at: 2021-07-20T14:49:33+09:00
+    [INFO] Total time:  2.551 s
+    [INFO] Finished at: 2025-02-04T14:17:43+09:00
     [INFO] ------------------------------------------------------------------------
     C:\work>
 
@@ -132,11 +132,10 @@ Spring MVCの設定方法を理解するために、生成されたSpring MVCの
         xmlns:util="http://www.springframework.org/schema/util"
         xmlns:aop="http://www.springframework.org/schema/aop"
         xsi:schemaLocation="http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
-            http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
-            http://www.springframework.org/schema/util https://www.springframework.org/schema/util/spring-util.xsd
-            http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd
-            http://www.springframework.org/schema/aop https://www.springframework.org/schema/aop/spring-aop.xsd
-        ">
+                            http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+                            http://www.springframework.org/schema/util https://www.springframework.org/schema/util/spring-util.xsd
+                            http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd
+                            http://www.springframework.org/schema/aop https://www.springframework.org/schema/aop/spring-aop.xsd">
 
         <context:property-placeholder
             location="classpath*:/META-INF/spring/*.properties" />
@@ -253,7 +252,7 @@ Spring MVCの設定方法を理解するために、生成されたSpring MVCの
    * - 項番
      - 説明
    * - | (1)
-     - \ ``<mvc:annotation-driven>``\要素を定義することにより、Spring MVCのデフォルト設定が行われる。デフォルトの設定については、`Spring Framework Documentation -Enable MVC Configuration- <https://docs.spring.io/spring-framework/docs/5.3.31/reference/html/web.html#mvc-config-enable>`_ を参照されたい。
+     - \ ``<mvc:annotation-driven>``\要素を定義することにより、Spring MVCのデフォルト設定が行われる。デフォルトの設定については、`Spring Framework Documentation -Enable MVC Configuration- <https://docs.spring.io/spring-framework/docs/5.3.39/reference/html/web.html#mvc-config-enable>`_ を参照されたい。
    * - | (2)
      - Spring MVCで使用するコンポーネントを探すパッケージを定義する。
    * - | (3)
@@ -264,49 +263,48 @@ Spring MVCの設定方法を理解するために、生成されたSpring MVCの
 次に、Welcomeページを表示するためのController (\ ``com.example.helloworld.app.welcome.HelloController``\ ) について、簡単に説明する。
 
 .. code-block:: java
-   :emphasize-lines: 17,26,36,38
+   :emphasize-lines: 16,24,34,36
 
-    package com.example.helloworld.app.welcome;
+   package com.example.helloworld.app.welcome;
 
-    import java.text.DateFormat;
-    import java.util.Date;
-    import java.util.Locale;
+   import java.text.DateFormat;
+   import java.util.Date;
+   import java.util.Locale;
+   import org.slf4j.Logger;
+   import org.slf4j.LoggerFactory;
+   import org.springframework.stereotype.Controller;
+   import org.springframework.ui.Model;
+   import org.springframework.web.bind.annotation.RequestMapping;
+   import org.springframework.web.bind.annotation.RequestMethod;
 
-    import org.slf4j.Logger;
-    import org.slf4j.LoggerFactory;
-    import org.springframework.stereotype.Controller;
-    import org.springframework.ui.Model;
-    import org.springframework.web.bind.annotation.RequestMapping;
-    import org.springframework.web.bind.annotation.RequestMethod;
+   /**
+    * Handles requests for the application home page.
+    */
+   @Controller // (4)
+   public class HelloController {
 
-    /**
-     * Handles requests for the application home page.
-     */
-    @Controller // (4)
-    public class HelloController {
+       private static final Logger logger = LoggerFactory.getLogger(HelloController.class);
 
-        private static final Logger logger = LoggerFactory
-                .getLogger(HelloController.class);
+       /**
+        * Simply selects the home view to render by returning its name.
+        */
+       @RequestMapping(value = "/", method = {RequestMethod.GET, RequestMethod.POST}) // (5)
+       public String home(Locale locale, Model model) {
+           logger.info("Welcome home! The client locale is {}.", locale);
 
-        /**
-         * Simply selects the home view to render by returning its name.
-         */
-        @RequestMapping(value = "/", method = {RequestMethod.GET, RequestMethod.POST}) // (5)
-        public String home(Locale locale, Model model) {
-            logger.info("Welcome home! The client locale is {}.", locale);
+           Date date = new Date();
+           DateFormat dateFormat =
+                   DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
 
-            Date date = new Date();
-            DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG,
-                    DateFormat.LONG, locale);
+           String formattedDate = dateFormat.format(date);
 
-            String formattedDate = dateFormat.format(date);
+           model.addAttribute("serverTime", formattedDate); // (6)
 
-            model.addAttribute("serverTime", formattedDate); // (6)
+           return "welcome/home"; // (7)
+       }
 
-            return "welcome/home"; // (7)
-        }
+   }
 
-    }
 
 .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
 .. list-table::
@@ -333,17 +331,17 @@ Spring MVCの設定方法を理解するために、生成されたSpring MVCの
 
     <!DOCTYPE html>
     <html>
-    <head>
-    <meta charset="utf-8">
-    <title>Home</title>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/app/css/styles.css">
-    </head>
-    <body>
-        <div id="wrapper">
-            <h1 id="title">Hello world!</h1>
-            <p>The time on the server is ${serverTime}.</p> <%-- (8) --%>
-        </div>
-    </body>
+        <head>
+            <meta charset="utf-8" />
+            <title>Home</title>
+            <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/app/css/styles.css" />
+        </head>
+        <body>
+            <div id="wrapper">
+                <h1 id="title">Hello world!</h1>
+                <p>The time on the server is ${serverTime}.</p> <%-- (8) --%>
+            </div>
+        </body>
     </html>
 
 .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
@@ -430,23 +428,23 @@ Controllerの作成
     import org.springframework.web.bind.annotation.RequestMethod;
 
     @Controller
-    @RequestMapping("echo")
+    @RequestMapping("echo") // (1)
     public class EchoController {
 
-        @ModelAttribute // (1)
+        @ModelAttribute // (2)
         public EchoForm setUpEchoForm() {
             EchoForm form = new EchoForm();
             return form;
         }
 
-        @RequestMapping // (2)
+        @RequestMapping // (3)
         public String index(Model model) {
-            return "echo/index"; // (3)
+            return "echo/index"; // (4)
         }
 
-        @RequestMapping(value = "hello", method = RequestMethod.POST) // (4)
-        public String hello(EchoForm form, Model model) {// (5)
-            model.addAttribute("name", form.getName()); // (6)
+        @RequestMapping(value = "hello", method = RequestMethod.POST) // (5)
+        public String hello(EchoForm form, Model model) {// (6)
+            model.addAttribute("name", form.getName()); // (7)
             return "echo/hello";
         }
     }
@@ -459,19 +457,24 @@ Controllerの作成
    * - 項番
      - 説明
    * - | (1)
-     - | ``@ModelAttribute`` というアノテーションを、メソッドに付加する。このアノテーションがついたメソッドの返り値は、自動でModelに追加される。
-       | Modelの属性名を、 ``@ModelAttribute`` で指定することもできるが、デフォルトでは、クラス名の先頭を小文字にした値が、属性名になる。この場合は、”echoForm”である。フォームの属性名は、次に説明する  ``form:form タグ`` の ``modelAttribute`` 属性の値に一致している必要がある。
+     - | Controllerクラスに\ ``@RequestMapping``\ を付与した場合、該当のクラスのルートパスは"\ ``<contextPath> + / + value属性の値``\ "となる。
+       | 本実装例では\ ``<contextPath>/echo``\ がControllerクラスのルートパスとなる。
+       | Controllerクラスに\ ``@RequestMapping``\ を付与していない場合、該当のクラスのルートパスは"\ ``<contextPath>``\ "となる。
    * - | (2)
-     - | メソッドに付加した ``@RequestMapping`` アノテーションの ``value`` 属性に、何も指定しない場合、クラスに付加した ``@RequestMapping`` のルートに、マッピングされる。この場合、"<contextPath>/echo"にアクセスすると、 ``index`` メソッドが呼ばれる。
-       | ``method`` 属性に何もしない場合は、任意のHTTPメソッドでマッピングされる。
+     - | \ ``@ModelAttribute``\ というアノテーションを、メソッドに付加する。このアノテーションがついたメソッドの返り値は、自動でModelに追加される。
+       | Modelの属性名を、\ ``@ModelAttribute``\ で指定することもできるが、デフォルトでは、クラス名の先頭を小文字にした値が、属性名になる。この場合は、\ ``echoForm``\ である。フォームの属性名は、次に説明する\ ``form:form タグ``\ の\ ``modelAttribute``\ 属性の値に一致している必要がある。
    * - | (3)
-     - | View名で"echo/index"を返すので、ViewResolverにより、 "WEB-INF/views/echo/index.jsp"がレンダリングされる。
+     - | メソッドに\ ``@RequestMapping``\ を付与した場合、メソッドへのマッピングは"\ ``クラスのルートパス + / + value属性の値``\ "となる。
+       | 本実装例では\ ``value``\ 属性と\ ``method``\ 属性に何も指定していないため、"\ ``クラスのルートパス（<contextPath>/echo）``\ "に任意のHTTPメソッドでアクセスすると\ ``index``\ メソッドが呼ばれるようになる。
    * - | (4)
-     - | メソッドに付加した ``@RequestMapping`` アノテーションの\ ``value``\ 属性に"hello"を、\ ``method``\ 属性に\ ``RequestMethod.POST``\ を指定しているので、この場合、"<contextPath>/echo/hello"にPOSTメソッドを使用してアクセスすると ``hello`` メソッドが呼ばれる。
+     - | View名で"\ ``echo/index``\ "を返すので、ViewResolverにより、"\ ``WEB-INF/views/echo/index.jsp``\ "がレンダリングされる。
    * - | (5)
-     - | 引数に、EchoFormには(1)によりModelに追加されたEchoFormオブジェクトが渡される。
+     - | メソッドに\ ``@RequestMapping``\ を付与した場合、メソッドへのマッピングは"\ ``クラスのルートパス + / + value属性の値``\ "となる。
+       | 本実装例では\ ``value``\ 属性の値に\ ``hello``\ 、\ ``method``\ 属性の値に\ ``RequestMethod.POST``\ を指定しているため、"\ ``クラスのルートパス + value属性の値（<contextPath>/echo/hello）``\ "にPOSTメソッドでアクセスすると\ ``hello``\ メソッドが呼ばれるようになる。
    * - | (6)
-     - | フォームで入力された ``name`` を、Viewにそのまま渡す。
+     - | 引数に、EchoFormには(1)によりModelに追加されたEchoFormオブジェクトが渡される。
+   * - | (7)
+     - | フォームで入力された\ ``name``\ を、Viewにそのまま渡す。
 
 .. note::
 
@@ -501,19 +504,18 @@ JSPの作成
 
     <!DOCTYPE html>
     <html>
-    <head>
-    <title>Echo Application</title>
-    </head>
-    <body>
-      <%-- (1) --%>
-      <form:form modelAttribute="echoForm" action="${pageContext.request.contextPath}/echo/hello">
-        <form:label path="name">Input Your Name:</form:label>
-        <form:input path="name" />
-        <input type="submit" />
-      </form:form>
-    </body>
+        <head>
+            <title>Echo Application</title>
+        </head>
+        <body>
+            <%-- (1) --%>
+            <form:form modelAttribute="echoForm" action="${pageContext.request.contextPath}/echo/hello">
+                <form:label path="name">Input Your Name:</form:label>
+                <form:input path="name" />
+                <input type="submit" />
+            </form:form>
+        </body>
     </html>
-
 
 .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
 .. list-table::
@@ -524,7 +526,7 @@ JSPの作成
      - 説明
    * - | (1)
      - | タグライブラリを利用し、HTMLフォームを構築している。 ``modelAttribute`` 属性に、Controllerで用意したフォームオブジェクトの名前を指定する。
-       | タグライブラリは `Spring Framework Documentation -The Form Tag- <https://docs.spring.io/spring-framework/docs/5.3.31/reference/html/web.html#mvc-view-jsp-formtaglib-formtag>`_\を参照されたい。
+       | タグライブラリは `Spring Framework Documentation -The Form Tag- <https://docs.spring.io/spring-framework/docs/5.3.39/reference/html/web.html#mvc-view-jsp-formtaglib-formtag>`_\を参照されたい。
 
 .. note::
 
@@ -537,17 +539,19 @@ JSPの作成
 
     <!DOCTYPE html>
     <html>
-    <head>
-    <title>Echo Application</title>
-    </head>
-    <body>
-      <form id="echoForm" action="/helloworld/echo/hello" method="post">
-        <label for="name">Input Your Name:</label>
-        <input id="name" name="name" type="text" value=""/>
-        <input type="submit" />
-      <input type="hidden" name="_csrf" value="43595f38-3edd-4c08-843b-3c31a00d2b15" />
-    </form>
-    </body>
+        <head>
+            <title>Echo Application</title>
+        </head>
+        <body>
+            <form id="echoForm" action="/helloworld/echo/hello" method="post">
+                <label for="name">Input Your Name:</label>
+                <input id="name" name="name" type="text" value="" />
+                <input type="submit" />
+                <div>
+                    <input type="hidden" name="_csrf" value="49663583-ba4f-410a-bb14-03d19fd73eb9" />
+                </div>
+            </form>
+        </body>
     </html>
 
 となる。
@@ -557,18 +561,16 @@ JSPの作成
 出力画面 (src/main/webapp/WEB-INF/views/echo/hello.jsp) を作成する。
 
 .. code-block:: jsp
-    :emphasize-lines: 8
+    :emphasize-lines: 7
 
     <!DOCTYPE html>
     <html>
-    <head>
-    <title>Echo Application</title>
-    </head>
-    <body>
-      <p>
-        Hello <c:out value="${name}" /> <%-- (2) --%>
-      </p>
-    </body>
+        <head>
+            <title>Echo Application</title>
+        </head>
+        <body>
+            <p>Hello <c:out value="${name}" /> <%-- (2) --%></p>
+        </body>
     </html>
 
 .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
@@ -603,12 +605,11 @@ Spring MVCでは、 `Bean Validation <https://jcp.org/en/jsr/detail?id=349>`_\ �
 \ ``EchoForm``\ の\ ``name``\ フィールドに、入力チェックルールを指定するアノテーションを付与する。
 
 .. code-block:: java
-    :emphasize-lines: 5,6,11,12
+    :emphasize-lines: 4,5,10,11
 
     package com.example.helloworld.app.echo;
 
     import java.io.Serializable;
-
     import javax.validation.constraints.NotNull;
     import javax.validation.constraints.Size;
 
@@ -707,17 +708,17 @@ Spring MVCでは、 `Bean Validation <https://jcp.org/en/jsr/detail?id=349>`_\ �
 
     <!DOCTYPE html>
     <html>
-    <head>
-    <title>Echo Application</title>
-    </head>
-    <body>
-      <form:form modelAttribute="echoForm" action="${pageContext.request.contextPath}/echo/hello">
-        <form:label path="name">Input Your Name:</form:label>
-        <form:input path="name" />
-        <form:errors path="name" cssStyle="color:red" /><%-- (1) --%>
-        <input type="submit" />
-      </form:form>
-    </body>
+        <head>
+            <title>Echo Application</title>
+        </head>
+        <body>
+            <form:form modelAttribute="echoForm" action="${pageContext.request.contextPath}/echo/hello">
+                <form:label path="name">Input Your Name:</form:label>
+                <form:input path="name" />
+                <form:errors path="name" cssStyle="color:red" /><%-- (1) --%>
+                <input type="submit" />
+            </form:form>
+        </body>
     </html>
 
 .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
@@ -752,18 +753,20 @@ Spring MVCでは、 `Bean Validation <https://jcp.org/en/jsr/detail?id=349>`_\ �
 
     <!DOCTYPE html>
     <html>
-    <head>
-    <title>Echo Application</title>
-    </head>
-    <body>
-      <form id="echoForm" action="/helloworld/echo/hello" method="post">
-        <label for="name">Input Your Name:</label>
-        <input id="name" name="name" type="text" value=""/>
-        <span id="name.errors" style="color:red">size must be between 1 and 5</span>
-        <input type="submit" />
-      <input type="hidden" name="_csrf" value="6e94a78d-4a2c-4a41-a514-0a60f0dbedaf" />
-    </form>
-    </body>
+        <head>
+            <title>Echo Application</title>
+        </head>
+        <body>
+            <form id="echoForm" action="/helloworld/echo/hello" method="post">
+                <label for="name">Input Your Name:</label>
+                <input id="name" name="name" type="text" value="" />
+                <span id="name.errors" style="color: red">size must be between 1 and 5</span>
+                <input type="submit" />
+                <div>
+                    <input type="hidden" name="_csrf" value="6e94a78d-4a2c-4a41-a514-0a60f0dbedaf" />
+                </div>
+            </form>
+        </body>
     </html>
 
 となる。

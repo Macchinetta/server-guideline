@@ -161,7 +161,7 @@ Spring FrameworkのJAX-WS連携機能について
 
 .. note::
 
-    SpringでのJAX-WS実装の詳細は、\ `Spring Framework Documentation -Remoting and Web Services- <https://docs.spring.io/spring-framework/docs/5.3.31/reference/html/integration.html#remoting>`_\ を参照されたい。
+    SpringでのJAX-WS実装の詳細は、\ `Spring Framework Documentation -Remoting and Web Services- <https://docs.spring.io/spring-framework/docs/5.3.39/reference/html/integration.html#remoting>`_\ を参照されたい。
 
 |
 
@@ -359,11 +359,11 @@ SOAPサーバの作成
      
     Oracle WebLogic Server 12.2.1.4: \ `Understanding WebLogic Web Services for Oracle WebLogic Server -Features and Standards Supported by WebLogic Web Services- <https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/12.2.1.4/wsovr/weblogic-web-service-stand.html#GUID-FB83E047-F696-4B96-A982-140C0C8AD7EF>`__\
 
-    Oracle WebLogic Server 14.1.1.0: \ `Understanding WebLogic Web Services for Oracle WebLogic Server -Features and Standards Supported by WebLogic Web Services- <https://docs.oracle.com/en/middleware/standalone/weblogic-server/14.1.1.0/wsovr/weblogic-web-service-stand.html#GUID-FB83E047-F696-4B96-A982-140C0C8AD7EF>`__\
+    Oracle WebLogic Server 14.1.2.0: \ `Understanding WebLogic Web Services for Oracle WebLogic Server -Features and Standards Supported by WebLogic Web Services- <https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wsovr/weblogic-web-service-stand.html#GUID-FB83E047-F696-4B96-A982-140C0C8AD7EF>`__\
      
-    JBoss Enterprise Application Platform 7.3: \ `DEVELOPING JAX-WS WEB SERVICES <https://access.redhat.com/documentation/en-us/red_hat_jboss_enterprise_application_platform/7.3/html/developing_web_services_applications/developing_jax_ws_web_services>`_\
+    JBoss Enterprise Application Platform 7.4: \ `Developing Jakarta XML Web Services <https://docs.redhat.com/en/documentation/red_hat_jboss_enterprise_application_platform/7.4/html/developing_web_services_applications/developing_jax_ws_web_services>`_\
 
-    JBoss Enterprise Application Platform 6.4: \ `JAX-WS WEB SERVICES <https://access.redhat.com/documentation/en-us/red_hat_jboss_enterprise_application_platform/6.4/html/development_guide/chap-jax-ws_web_services>`_\
+    JBoss Enterprise Application Platform 6.4: \ `JAX-WS Web Services <https://access.redhat.com/documentation/en-us/red_hat_jboss_enterprise_application_platform/6.4/html/development_guide/chap-jax-ws_web_services>`_\
     
     WebSphere Application Server 9.0: \ `IBM Knowledge Center - Web services <https://www.ibm.com/docs/en/was/9.0.5?topic=services-web>`_\
 
@@ -682,7 +682,7 @@ webプロジェクト内にWebServiceインターフェースの実装クラス�
     import java.util.List;
 
     import javax.validation.Valid;
-    import javax.validation.constraints.NotNull;
+    import javax.validation.constraints.NotEmpty;
     import javax.validation.groups.Default;
 
     import org.springframework.validation.annotation.Validated;
@@ -692,11 +692,12 @@ webプロジェクト内にWebServiceインターフェースの実装クラス�
     @Validated // (1)
     public interface TodoService {
 
-        Todo getTodo(@NotNull String todoId); // (2)
+        Todo getTodo(@NotEmpty String todoId); // (2)
 
-        Todo createTodo(@Valid Todo todo); // (3)
+        @Validated({Default.class, Todo.Create.class}) // (3)
+        Todo createTodo(@Valid Todo todo); // (4)
 
-        @Validated({ Default.class, Todo.Update.class }) // (4)
+        @Validated({ Default.class, Todo.Update.class })
         Todo updateTodo(@Valid Todo todo);
 
     }
@@ -714,10 +715,10 @@ webプロジェクト内にWebServiceインターフェースの実装クラス�
     * - | (2)
       - | 引数をチェックする場合には、引数自体にアノテーションを付ける。
     * - | (3)
-      - | JavaBeanの入力チェックを行う場合も、引数に\ ``@Valid``\ を付ける。
-    * - | (4)
       - | \ ``@Validated``\ にグループを指定し、特定の条件を絞って入力チェックすることも可能である。
-        | グループの詳細は次のJavaBeanの説明で記述する。
+        | 入力チェックのグループ化については「\ :ref:`ValidationGroupValidation`\ 」を参照されたい。
+    * - | (4)
+      - | JavaBeanの入力チェックを行う場合も、引数に\ ``@Valid``\ を付ける。
 
 |
 
@@ -727,7 +728,7 @@ webプロジェクト内にWebServiceインターフェースの実装クラス�
 
     package com.example.domain.model;
 
-    import javax.validation.constraints.NotNull;
+    import javax.validation.constraints.NotEmpty;
     import javax.validation.constraints.Null;
     import java.io.Serializable;
     import java.util.Date;
@@ -743,10 +744,10 @@ webプロジェクト内にWebServiceインターフェースの実装クラス�
         }
 
         @Null(groups = Create.class)
-        @NotNull(groups = Update.class)
+        @NotEmpty(groups = Update.class)
         private String todoId;
 
-        @NotNull
+        @NotEmpty
         private String title;
 
         private String description;
@@ -1245,7 +1246,7 @@ Serviceからスローされる例外は以下を想定している。必要に�
                 this.addErrors(faultInfo, ((BusinessException) e).getResultMessages());
             } else {
                 // not translate.
-                throw new SystemException("e.ex.fw.9001", e);
+                throw new SystemException("e.xx.fw.9001", e);
             }
 
             throw new WebFaultException(e.getMessage(), faultInfo, e.getCause());
@@ -1591,7 +1592,7 @@ WebServiceインターフェースを実装したプロキシを生成する\ ``
 
         .. Note:: **wsdlDocumentResourceへのWSDLファイルのURL以外の指定**
 
-            上記の例では、SOAPサーバがWSDLファイルを公開している前提である。\ ``classpath:``\ や\ ``file:``\ プレフィックスを使用して指定することで静的ファイルを指定することもできる。指定できる文字列は、\ `Spring Framework Documentation -The ResourceLoader- <https://docs.spring.io/spring-framework/docs/5.3.31/reference/html/core.html#resources-resourceloader>`_\ を参照されたい。
+            上記の例では、SOAPサーバがWSDLファイルを公開している前提である。\ ``classpath:``\ や\ ``file:``\ プレフィックスを使用して指定することで静的ファイルを指定することもできる。指定できる文字列は、\ `Spring Framework Documentation -The ResourceLoader- <https://docs.spring.io/spring-framework/docs/5.3.39/reference/html/core.html#resources-resourceloader>`_\ を参照されたい。
 
 
 .. Note:: **エンドポイントアドレスの上書き指定**
@@ -1983,22 +1984,6 @@ modelプロジェクトの構成について説明する。
                 <artifactId>terasoluna-gfw-common-dependencies</artifactId>
                 <type>pom</type>
             </dependency>
-            <dependency>
-                <groupId>org.terasoluna.gfw</groupId>
-                <artifactId>terasoluna-gfw-jodatime-dependencies</artifactId>
-                <type>pom</type>
-            </dependency>
-            <dependency>
-                <groupId>org.terasoluna.gfw</groupId>
-                <artifactId>terasoluna-gfw-security-core-dependencies</artifactId>
-                <type>pom</type>
-            </dependency>
-
-            <dependency>
-                <groupId>org.terasoluna.gfw</groupId>
-                <artifactId>terasoluna-gfw-recommended-dependencies</artifactId>
-                <type>pom</type>
-            </dependency>
             <!-- == End TERASOLUNA == -->
         </dependencies>
     </project>
@@ -2054,23 +2039,7 @@ webserviceプロジェクトの構成について説明する。
             <!-- == Begin TERASOLUNA == -->
             <dependency>
                 <groupId>org.terasoluna.gfw</groupId>
-                <artifactId>terasoluna-gfw-common-dependencies</artifactId>
-                <type>pom</type>
-            </dependency>
-            <dependency>
-                <groupId>org.terasoluna.gfw</groupId>
-                <artifactId>terasoluna-gfw-jodatime-dependencies</artifactId>
-                <type>pom</type>
-            </dependency>
-            <dependency>
-                <groupId>org.terasoluna.gfw</groupId>
                 <artifactId>terasoluna-gfw-security-core-dependencies</artifactId>
-                <type>pom</type>
-            </dependency>
-
-            <dependency>
-                <groupId>org.terasoluna.gfw</groupId>
-                <artifactId>terasoluna-gfw-recommended-dependencies</artifactId>
                 <type>pom</type>
             </dependency>
             <!-- == End TERASOLUNA == -->
@@ -2520,12 +2489,12 @@ CXFServletを使用する場合の設定
     <dependency>
         <groupId>org.apache.cxf</groupId>
         <artifactId>cxf-rt-frontend-jaxws</artifactId>
-        <version>3.5.7</version>
+        <version>3.5.10</version>
     </dependency>
     <dependency>
         <groupId>org.apache.cxf</groupId>
         <artifactId>cxf-rt-transports-http</artifactId>
-        <version>3.5.7</version>
+        <version>3.5.10</version>
     </dependency>
 
 
@@ -2560,7 +2529,7 @@ CXFServletを使用する場合の設定
 
    .. note::
 
-      saaj-implのバージョンはterasoluna-gfw-parentが依存している\ `Spring Boot <https://docs.spring.io/spring-boot/docs/2.7.18/reference/htmlsingle/#dependency-versions>`_\ で管理されているため、pom.xmlでのバージョンの指定は不要である。
+      saaj-implのバージョンはterasoluna-dependenciesが依存している\ `Spring Boot <https://docs.spring.io/spring-boot/docs/2.7.18/reference/htmlsingle/#dependency-versions>`_\ で管理されているため、pom.xmlでのバージョンの指定は不要である。
 
 
 |

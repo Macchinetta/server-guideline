@@ -10,7 +10,7 @@ Spring MVCアーキテクチャ概要
 
 Spring MVCは、公式で以下のように説明されている。
 
-`Spring Framework Documentation <https://docs.spring.io/spring-framework/docs/5.3.31/reference/html/web.html#mvc>`_\ .
+`Spring Framework Documentation <https://docs.spring.io/spring-framework/docs/5.3.39/reference/html/web.html#mvc>`_\ .
 
      Spring's web MVC framework is, like many other web MVC frameworks, request-driven,
      designed around a central Servlet that dispatches requests to controllers and offers other functionality
@@ -59,7 +59,7 @@ Springから提供されている\ ``HandlerMapping``\ のクラス階層を、�
 
 | Spring Framework 3.1からは、\ ``RequestMappingHandlerMapping``\ は、\ ``DispatcherServlet``\ が読み込むBean定義ファイルに、
 | \ ``<mvc:annotation-driven>``\ の設定がある場合、デフォルトで設定される。
-| (\ ``<mvc:annotation-driven>``\ アノテーションで有効になる設定は、\ `Spring Framework Documentation -Enable MVC Configuration- <https://docs.spring.io/spring-framework/docs/5.3.31/reference/html/web.html#mvc-config-enable>`_\ を参照されたい。)
+| (\ ``<mvc:annotation-driven>``\ アノテーションで有効になる設定は、\ `Spring Framework Documentation -Enable MVC Configuration- <https://docs.spring.io/spring-framework/docs/5.3.39/reference/html/web.html#mvc-config-enable>`_\ を参照されたい。)
 
 
 Implementation of HandlerAdapter

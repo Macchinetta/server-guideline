@@ -1300,7 +1300,7 @@ Controllerで適切にハンドリングする必要がある。
     * - | (1)
       - ``OptimisticLockingFailureException`` をcatchする。
     * - | (2)
-      - | エラーハンドリングの処理を実装する。エラーを通知するためのメッセージ、画面表示に必要な情報（フォームやその他のモデル）を生成し、遷移先のview名を返却する。
+      - | エラーハンドリングの処理を実装する。エラーを通知するためのメッセージ、画面表示に必要な情報（フォームやその他のモデル）を生成し、遷移先のView名を返却する。
         | エラーハンドリングの詳細については、\ :ref:`exception-handling-how-to-use-codingpoint-controller-request-label`\ を参照されたい。
 
 悲観ロックの失敗時のエラーハンドリング
@@ -1373,7 +1373,7 @@ Controllerで適切にハンドリングする必要がある。
     * - | (1)
       - \ ``PessimisticLockingFailureException``\ をcatchする。
     * - | (2)
-      - | エラーハンドリングの処理を実装する。エラーを通知するためのメッセージ、画面表示に必要な情報（フォームやその他のモデル）を生成し、遷移先のview名を返却する。
+      - | エラーハンドリングの処理を実装する。エラーを通知するためのメッセージ、画面表示に必要な情報（フォームやその他のモデル）を生成し、遷移先のView名を返却する。
         | エラーハンドリングの詳細については、\ :ref:`exception-handling-how-to-use-codingpoint-controller-request-label`\ を参照されたい。
 
 

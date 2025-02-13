@@ -26,7 +26,7 @@ Spring Securityでは、以下の3つのリソースに対してアクセスポ�
 
 本節では、「Webリソース」「Javaメソッド」「JSPの画面項目」のアクセスに対して認可処理を適用するための実装例(定義例)を紹介しながら、Spring Securityの認可機能について説明する。
 
-.. [#fSpringSecurityAuthorization1] ドメインオブジェクトのアクセスに対する認可処理については、 \ `Spring Security Reference -Domain Object Security (ACLs)- <https://docs.spring.io/spring-security/reference/5.7.11/servlet/authorization/acls.html>`_\ を参照されたい。
+.. [#fSpringSecurityAuthorization1] ドメインオブジェクトのアクセスに対する認可処理については、 \ `Spring Security Reference -Domain Object Security (ACLs)- <https://docs.spring.io/spring-security/reference/5.7.13/servlet/authorization/acls.html>`_\ を参照されたい。
 
 |
 
@@ -148,6 +148,38 @@ How to use
 
 |
 
+.. tip:: 
+  Spring Securityはリソースやメソッドへのアクセスを拒否する際に\ ``AccessDeniedException``\ を発生させるが、\ ``AccessDeniedHandler``\ でハンドリングする前に共通ライブラリで提供している\ ``org.terasoluna.gfw.web.exception.SystemExceptionResolver``\ で捕捉してしまう。
+  
+  \ ``SystemExceptionResolver``\ で捕捉しないようにするためには、ハンドリング対象外とする下記設定が必要となる。
+  
+  \ ``SystemExceptionResolver``\ の詳細な設定方法については、\ :doc:`../ArchitectureInDetail/WebApplicationDetail/ExceptionHandling`\ の\ :ref:`exception-handling-how-to-use-application-configuration-app-label`\ を参照されたい。
+
+  * spring-mvc.xmlの定義例
+
+  .. code-block:: xml
+
+    <bean class="org.terasoluna.gfw.web.exception.SystemExceptionResolver">
+      <!-- omitted -->
+      <property name="excludedExceptions">
+        <array>
+          <value>org.springframework.security.access.AccessDeniedException</value> <!-- (1) -->
+        </array>
+      </property>
+      <!-- omitted -->
+    </bean>
+
+  .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
+  .. list-table::
+    :header-rows: 1
+    :widths: 10 90
+    :class: longtable
+
+    * - 項番
+      - 説明
+    * - | (1)
+      - | アクセス拒否によって発生する \ ``org.springframework.security.access.AccessDeniedException``\ をSystemExceptionResolver のハンドリング対象外とする。
+
 .. _SpringSecurityAuthorizationPolicy:
 
 アクセスポリシーの記述方法
@@ -157,7 +189,7 @@ How to use
 
 Spring Securityは、アクセスポリシーを指定する記述方法としてSpring Expression Language(SpEL)をサポートしている。
 SpELを使わない方法もあるが、本ガイドラインではExpressionを使ってアクセスポリシーを指定する方法で説明を行う。
-SpELの使い方については本節でも紹介するが、より詳しい使い方を知りたい場合は \ `Spring Framework Documentation -Spring Expression Language (SpEL)- <https://docs.spring.io/spring-framework/docs/5.3.31/reference/html/core.html#expressions>`_\ を参照されたい。
+SpELの使い方については本節でも紹介するが、より詳しい使い方を知りたい場合は \ `Spring Framework Documentation -Spring Expression Language (SpEL)- <https://docs.spring.io/spring-framework/docs/5.3.39/reference/html/core.html#expressions>`_\ を参照されたい。
 
 |
 
@@ -329,7 +361,7 @@ bean定義ファイルを使用して、Webリソースに対してアクセス�
       - | 「http」、もしくは「https」を指定する。指定したプロトコルでのアクセスを強制するための属性。
         | 指定しない場合、どちらでもアクセス可能である。
 
-上記以外の属性については、\ `<intercept-url> <https://docs.spring.io/spring-security/reference/5.7.11/servlet/appendix/namespace/http.html#nsa-intercept-url>`_\ を参照されたい。
+上記以外の属性については、\ `<intercept-url> <https://docs.spring.io/spring-security/reference/5.7.13/servlet/appendix/namespace/http.html#nsa-intercept-url>`_\ を参照されたい。
 
 * \ ``<sec:intercept-url>``\ タグ\ ``pattern``\ 属性の定義例（spring-security.xml）
 
@@ -707,7 +739,7 @@ Expression内で「# + 引数名」形式のExpressionを指定することで�
 
 .. warning::
 
-   Spring 5から、SpringのコアAPIに\ `null-safety <https://docs.spring.io/spring-framework/docs/5.3.31/reference/html/core.html#null-safety>`_\ の機能が取り入れられており、SpELが解釈される際の\ ``null``\に対する動作も変更(\ `SPR-15540 <https://jira.spring.io/browse/SPR-15540?redirect=false>`_\ )されている。
+   Spring 5から、SpringのコアAPIに\ `null-safety <https://docs.spring.io/spring-framework/docs/5.3.39/reference/html/core.html#null-safety>`_\ の機能が取り入れられており、SpELが解釈される際の\ ``null``\に対する動作も変更(\ `SPR-15540 <https://jira.spring.io/browse/SPR-15540?redirect=false>`_\ )されている。
    例えば\ ``@PreAuthorize``\ の引数(\ ``#xxx``\)や、\ ``@PostAuthorize``\ の戻り値（\ ``resultObject``\）が\ ``Map``\ を含む場合、\ ``Map``\ から値を取得するSpELでキー値に\ ``null``\ となる値を入力すると、Spring 4以前ではそのまま\ ``Map``\ に\ ``null``\ が渡され該当する値がないため\ ``null``\ が返却されていたが、Spring 5以降ではキーとなるSpELを評価した結果に対する\ ``null``\ チェックが追加されており、\ ``null``\ の場合は\ ``IllegalStateException``\ が発生する。
    そのため、キーとする値に対して事前に\ ``null``\ チェックを行うなど、\ ``null``\ を考慮した実装が必要となる。
 

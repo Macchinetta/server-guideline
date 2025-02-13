@@ -783,8 +783,7 @@ How to use
         </encoder>
     </appender>
 
-    <logger name="org.terasoluna.gfw.common.exception.ExceptionLogger.Monitoring" additivity="false"> <!-- (2) -->
-        <level value="error" /> <!-- (3) -->
+    <logger name="org.terasoluna.gfw.common.exception.ExceptionLogger.Monitoring" additivity="false" level="error"> <!-- (2) (3) -->
         <appender-ref ref="MONITORING_LOG_FILE" /> <!-- (4) -->
     </logger>
 
@@ -830,9 +829,7 @@ How to use
         </encoder>
     </appender>
 
-    <logger name="org.terasoluna.gfw.common.exception.ExceptionLogger"> <!-- (2) -->
-        <level value="info" /> <!-- (3) -->
-    </logger>
+    <logger name="org.terasoluna.gfw.common.exception.ExceptionLogger" level="info" /> <!-- (2) (3) -->
 
     <root level="warn">
         <appender-ref ref="STDOUT" />
@@ -1267,7 +1264,7 @@ Spring MVCの、デフォルトの例外ハンドリング機能によって行�
 
             if (stockQuantity < orderQuantity) {                  // (1)
                 ResultMessages messages = ResultMessages.error(); // (2)
-                messages.add("e.ad.od.5001", stockQuantity);      // (3)
+                messages.add("e.xx.yy.5001", stockQuantity);      // (3)
                 throw new BusinessException(messages);            // (4)
             }
             ...
@@ -1298,7 +1295,7 @@ Spring MVCの、デフォルトの例外ハンドリング機能によって行�
      .. code-block:: java
 
         throw new BusinessException(ResultMessages.error().add(
-             "e.ad.od.5001", stockQuantity));
+             "e.xx.yy.5001", stockQuantity));
 
 
 - xxx.properties
@@ -1307,19 +1304,19 @@ Spring MVCの、デフォルトの例外ハンドリング機能によって行�
 
   .. code-block:: properties
 
-    e.ad.od.5001 = Order number is higher than the stock quantity={0}. Change the order number.
+    e.xx.yy.5001 = Order number is higher than the stock quantity={0}. Change the order number.
 
 下記のようなアプリケーションログが出力される。
 
  .. code-block:: console
 
-    date:2013-09-17 22:25:55	thread:tomcat-http--8	X-Track:6cfb0b378c124b918e40ac0c32a1fac7	level:WARN 	logger:o.t.gfw.common.exception.ExceptionLogger        	message:[e.xx.fw.8001] ResultMessages [type=error, list=[ResultMessage [code=e.ad.od.5001, args=[5], text=null]]]
-    org.terasoluna.gfw.common.exception.BusinessException: ResultMessages [type=error, list=[ResultMessage [code=e.ad.od.5001, args=[5], text=null]]]
+    date:2013-09-17 22:25:55	thread:tomcat-http--8	X-Track:6cfb0b378c124b918e40ac0c32a1fac7	level:WARN 	logger:o.t.gfw.common.exception.ExceptionLogger        	message:[e.xx.fw.8001] ResultMessages [type=error, list=[ResultMessage [code=e.xx.yy.5001, args=[5], text=null]]]
+    org.terasoluna.gfw.common.exception.BusinessException: ResultMessages [type=error, list=[ResultMessage [code=e.xx.yy.5001, args=[5], text=null]]]
 
     // stackTarace omitted
     ...
 
-    date:2013-09-17 22:25:55	thread:tomcat-http--8	X-Track:6cfb0b378c124b918e40ac0c32a1fac7	level:DEBUG	logger:o.t.gfw.web.exception.SystemExceptionResolver   	message:Resolving exception from handler [public java.lang.String org.terasoluna.exception.app.example.ExampleExceptionController.home(java.util.Locale,org.springframework.ui.Model)]: org.terasoluna.gfw.common.exception.BusinessException: ResultMessages [type=error, list=[ResultMessage [code=e.ad.od.5001, args=[5], text=null]]]
+    date:2013-09-17 22:25:55	thread:tomcat-http--8	X-Track:6cfb0b378c124b918e40ac0c32a1fac7	level:DEBUG	logger:o.t.gfw.web.exception.SystemExceptionResolver   	message:Resolving exception from handler [public java.lang.String org.terasoluna.exception.app.example.ExampleExceptionController.home(java.util.Locale,org.springframework.ui.Model)]: org.terasoluna.gfw.common.exception.BusinessException: ResultMessages [type=error, list=[ResultMessage [code=e.xx.yy.5001, args=[5], text=null]]]
     date:2013-09-17 22:25:55	thread:tomcat-http--8	X-Track:6cfb0b378c124b918e40ac0c32a1fac7	level:DEBUG	logger:o.t.gfw.web.exception.SystemExceptionResolver   	message:Resolving to view 'common/error/businessError' for exception of type [org.terasoluna.gfw.common.exception.BusinessException], based on exception mapping [BusinessException]
     date:2013-09-17 22:25:55	thread:tomcat-http--8	X-Track:6cfb0b378c124b918e40ac0c32a1fac7	level:DEBUG	logger:o.t.gfw.web.exception.SystemExceptionResolver   	message:Applying HTTP status code 409
     date:2013-09-17 22:25:55	thread:tomcat-http--8	X-Track:6cfb0b378c124b918e40ac0c32a1fac7	level:DEBUG	logger:o.t.gfw.web.exception.SystemExceptionResolver   	message:Exposing Exception as model attribute 'exception'
@@ -1343,7 +1340,7 @@ Spring MVCの、デフォルトの例外ハンドリング機能によって行�
         order(orderQuantity, itemId );
     } catch (StockNotEnoughException e) {                  // (1)
         throw new BusinessException(ResultMessages.error().add(
-                "e.ad.od.5001", e.getStockQuantity()), e); // (2)
+                "e.xx.yy.5001", e.getStockQuantity()), e); // (2)
     }
 
  .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
@@ -1371,7 +1368,7 @@ Spring MVCの、デフォルトの例外ハンドリング機能によって行�
  .. code-block:: java
 
     if (itemEntity == null) {                                      // (1)
-        throw new SystemException("e.ad.od.9012",
+        throw new SystemException("e.xx.yy.9012",
             "not found item entity. item code [" + itemId + "]."); // (2)
     }
 
@@ -1398,7 +1395,7 @@ Spring MVCの、デフォルトの例外ハンドリング機能によって行�
   date:2013-09-19 21:03:06	thread:tomcat-http--3	X-Track:c19eec546b054d54a13658f94292b24f	level:DEBUG	logger:o.t.gfw.web.exception.SystemExceptionResolver   	message:Resolving to default view 'common/error/systemError' for exception of type [org.terasoluna.gfw.common.exception.SystemException]
   date:2013-09-19 21:03:06	thread:tomcat-http--3	X-Track:c19eec546b054d54a13658f94292b24f	level:DEBUG	logger:o.t.gfw.web.exception.SystemExceptionResolver   	message:Applying HTTP status code 500
   date:2013-09-19 21:03:06	thread:tomcat-http--3	X-Track:c19eec546b054d54a13658f94292b24f	level:DEBUG	logger:o.t.gfw.web.exception.SystemExceptionResolver   	message:Exposing Exception as model attribute 'exception'
-  date:2013-09-19 21:03:06	thread:tomcat-http--3	X-Track:c19eec546b054d54a13658f94292b24f	level:ERROR	logger:o.t.gfw.common.exception.ExceptionLogger        	message:[e.ad.od.9012] not found item entity. item code [10-123456].
+  date:2013-09-19 21:03:06	thread:tomcat-http--3	X-Track:c19eec546b054d54a13658f94292b24f	level:ERROR	logger:o.t.gfw.common.exception.ExceptionLogger        	message:[e.xx.yy.9012] not found item entity. item code [10-123456].
   org.terasoluna.gfw.common.exception.SystemException: not found item entity. item code [10-123456].
   	at macchinetta.exception.domain.service.ExampleExceptionServiceImpl.throwSystemException(ExampleExceptionServiceImpl.java:14) ~[ExampleExceptionServiceImpl.class:na]
   ...
@@ -1427,7 +1424,7 @@ Spring MVCの、デフォルトの例外ハンドリング機能によって行�
     try {
         return new File(preUploadDir.getFile(), key);
     } catch (FileNotFoundException e) { // (1)
-        throw new SystemException("e.ad.od.9007",
+        throw new SystemException("e.xx.yy.9007",
             "not found upload file. file is [" + preUploadDir.getDescription() + "]."
             e); // (2)
     }
@@ -1725,7 +1722,7 @@ MessagesPanelTagを使用して、メッセージを画面表示する方法
         <c:if test="${!empty exceptionCode}">  <!-- (1) -->
             [${f:h(exceptionCode)}]            <!-- (2) -->
         </c:if>
-        <spring:message code="e.cm.fw.9999" /> <!-- (3) -->
+        <spring:message code="e.xx.fw.9999" /> <!-- (3) -->
     </p>
 
  .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
@@ -1958,12 +1955,22 @@ SystemExceptionResolverの設定項目について
      - | 例外コード(メッセージID)として、HttpServletResponseのレスポンスヘッダに設定する際のヘッダ名(String)を指定する。
      - X-Exception-Code
    * - | (4)
+     - | 原因例外の除外対象確認の有無
+     - | checkCause
+     - | ハンドリングした例外の原因例外も確認の対象とするかどうかを指定する。
+     - false:無
+   * - | (5)
+     - | サブクラスの除外対象確認の有無
+     - | checkSubClass
+     - | ハンドリングした例外が、excludedExceptionsに指定されたクラスのサブクラスである場合も除外の対象とするかどうかを指定する。
+     - false:無
+   * - | (6)
      - | 例外オブジェクトの属性名
      - | exceptionAttribute
      - | ハンドリングした例外オブジェクトとして、モデルに設定する際の属性名(String)を指定する。
        | View(JSP)から例外オブジェクトにアクセスする際の属性名となる。
      - exception
-   * - | (5)
+   * - | (7)
      - | 本ExceptionResolverとして、使用するハンドラー(Controller)のオブジェクト一覧
      - | mappedHandlers
      - | 本ExceptionResolverを使用するハンドラーの、オブジェクト一覧(Set)を指定する。
@@ -1972,7 +1979,7 @@ SystemExceptionResolverの設定項目について
      - | 指定なし
        |
        | **指定した場合の動作は、保証しない。**
-   * - | (6)
+   * - | (8)
      - | 本ExceptionResolverを使用するハンドラー(Controller)のクラス一覧
      - | mappedHandlerClasses
      - | 本ExceptionResolverを使用するハンドラーのクラス一覧(Class[])を指定する。
@@ -1981,7 +1988,7 @@ SystemExceptionResolverの設定項目について
      - | 指定なし
        |
        | **指定した場合の動作は、保証しない。**
-   * - | (7)
+   * - | (9)
      - | HTTPレスポンスのキャッシュ制御有無
      - | preventResponseCaching
      - | HTTPレスポンス時のキャッシュ制御の有無(true:有 false:無)を指定する。
@@ -1992,9 +1999,9 @@ SystemExceptionResolverの設定項目について
 
    \newpage
 
-| (1)-(3)は、\ ``org.terasoluna.gfw.web.exception.SystemExceptionResolver``\ の設定項目。
-| (4)は、\ ``org.springframework.web.servlet.handler.SimpleMappingExceptionResolver``\ の設定項目。
-| (5)-(7)は、\ ``org.springframework.web.servlet.handler.AbstractHandlerExceptionResolver``\ の設定項目。
+| (1)-(5)は、\ ``org.terasoluna.gfw.web.exception.SystemExceptionResolver``\ の設定項目。
+| (6)は、\ ``org.springframework.web.servlet.handler.SimpleMappingExceptionResolver``\ の設定項目。
+| (7)-(9)は、\ ``org.springframework.web.servlet.handler.AbstractHandlerExceptionResolver``\ の設定項目。
 
 
 結果メッセージの属性名
@@ -2060,7 +2067,7 @@ SystemExceptionResolverの設定項目について
         <c:if test="${!empty exceptionCodeForExceptionResolver}">  <!-- (2) -->
             [${f:h(exceptionCodeForExceptionResolver)}]            <!-- (3) -->
         </c:if>
-        <spring:message code="e.cm.fw.9999" />
+        <spring:message code="e.xx.fw.9999" />
     </p>
 
  .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
@@ -2106,6 +2113,71 @@ SystemExceptionResolverの設定項目について
     * - | (1)
       - | 例外コード(メッセージID)のヘッダ名(exceptionCodeHeader)に、"X-Exception-Code-ForExceptionResolver"を指定する。
 
+原因例外の除外対象確認の有無
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+| ハンドリングした例外の原因例外も除外対象かどうかを確認したい場合は、true:有を設定する。
+
+- \ **spring-mvc.xml**\
+
+  .. code-block:: xml
+
+    <bean class="org.terasoluna.gfw.web.exception.SystemExceptionResolver">
+        <!-- omitted -->
+        <property name="excludedExceptions"> <!-- (1) -->
+            <array>
+                <value>com.example.common.CauseException</value>
+            </array>
+        </property>
+        <property name="checkCause" value="true" /> <!-- (2) -->
+        <!-- omitted -->
+    </bean>
+
+  .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
+  .. list-table::
+    :header-rows: 1
+    :widths: 10 90
+
+    * - 項番
+      - 説明
+    * - | (1)
+      - | excludedExceptionsに除外対象とするクラスを指定する。ここでは例として、独自に作成したCauseExceptionというクラスを設定する。
+    * - | (2)
+      - | 原因例外の確認有無(checkCause)に、true:有を指定する。この場合、ハンドリングした例外の原因に(1)で設定した例外(CauseException)が含まれていると除外対象となる。
+
+|
+
+サブクラスの除外対象確認の有無
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+| ハンドリングした例外が、excludedExceptionsに指定されたクラスのサブクラスでも除外の対象とする場合は、true:有を設定する。
+
+- \ **spring-mvc.xml**\
+
+  .. code-block:: xml
+
+    <bean class="org.terasoluna.gfw.web.exception.SystemExceptionResolver">
+        <!-- omitted -->
+        <property name="excludedExceptions"> <!-- (1) -->
+            <array>
+                <value>com.example.common.SuperClassException</value>
+            </array>
+        </property>
+        <property name="checkSubClass" value="true" /> <!-- (2) -->
+        <!-- omitted -->
+    </bean>
+
+  .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
+  .. list-table::
+    :header-rows: 1
+    :widths: 10 90
+
+    * - 項番
+      - 説明
+    * - | (1)
+      - | excludedExceptionsに除外対象とするクラスを指定する。ここでは例として、独自に作成したSuperClassExceptionというクラスを設定する。
+    * - | (2)
+      - | サブクラスの確認有無(checkSubClass)に、true:有を指定する。この場合、ハンドリングした例外が(1)で設定した例外(SuperClassException)のサブクラスである場合も例外の除外対象となる。
+
+|
 
 例外オブジェクトの属性名
 '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''

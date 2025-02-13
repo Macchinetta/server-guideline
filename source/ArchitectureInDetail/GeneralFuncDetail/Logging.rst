@@ -268,49 +268,28 @@ logback.xml
       </appender>
 
       <!-- Application Loggers -->
-      <logger name="com.example.sample"> <!-- (9) -->
-          <level value="debug" />
-      </logger>
+      <logger name="com.example.sample" level="debug" /> <!-- (9) -->
 
-      <logger name="com.example.sample.domain.repository">
-          <level value="trace" />
-      </logger>
+      <logger name="com.example.sample.domain.repository" level="trace" />
 
       <!-- TERASOLUNA -->
-      <logger name="org.terasoluna.gfw">
-          <level value="info" />
-      </logger>
-      <logger name="org.terasoluna.gfw.web.logging.TraceLoggingInterceptor">
-          <level value="trace" />
-      </logger>
-      <logger name="org.terasoluna.gfw.common.exception.ExceptionLogger">
-          <level value="info" />
-      </logger>
-      <logger name="org.terasoluna.gfw.common.exception.ExceptionLogger.Monitoring" additivity="false"><!-- (10) -->
-          <level value="error" />
+      <logger name="org.terasoluna.gfw" level="info" />
+      <logger name="org.terasoluna.gfw.web.logging.TraceLoggingInterceptor" level="trace" />
+      <logger name="org.terasoluna.gfw.common.exception.ExceptionLogger" level="info" />
+      <logger name="org.terasoluna.gfw.common.exception.ExceptionLogger.Monitoring" additivity="false" level="error"><!-- (10) -->
           <appender-ref ref="MONITORING_LOG_FILE" />
       </logger>
 
       <!-- 3rdparty Loggers -->
-      <logger name="org.springframework">
-          <level value="warn" />
-      </logger>
+      <logger name="org.springframework" level="warn" />
 
-      <logger name="org.springframework.web.servlet">
-          <level value="info" />
-      </logger>
+      <logger name="org.springframework.web.servlet" level="info" />
 
-      <logger name="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping">
-          <level value="trace" />
-      </logger>
+      <logger name="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping" level="trace" />
 
-      <logger name="org.springframework.jdbc.core.JdbcTemplate">
-          <level value="debug" />
-      </logger>
+      <logger name="org.springframework.jdbc.core.JdbcTemplate" level="debug" />
 
-      <logger name="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-          <level value="debug" />
-      </logger>
+      <logger name="org.springframework.jdbc.datasource.DataSourceTransactionManager" level="debug" />
 
       <root level="warn"> <!-- (11) -->
           <appender-ref ref="STDOUT" /> <!-- (12) -->
@@ -569,7 +548,7 @@ SLF4Jのロガー(\ ``org.slf4j.Logger``\ )の各ログレベルに応じたメ�
     try {
         throwException();
     } catch (Exception e) {
-        throw new SystemException("e.ex.fw.9001", e);
+        throw new SystemException("e.xx.fw.9001", e);
         // no need to log
     }
 
@@ -782,7 +761,7 @@ How to extend
        | 詳細は、\ :doc:`../../ArchitectureInDetail/WebApplicationDetail/MessageManagement`\ の\ :ref:`properties-display`\ を参照されたい。
    * - | (5)
      - | 国際化を考慮し\ ``setBasenames``\ メソッドを使用してプロパティファイルを指定する。
-       | \ ``setBasenames``\ の詳細は\ ``ResourceBundleMessageSource``\ が継承する\ ``AbstractResourceBasedMessageSource``\ クラスの\ `JavaDoc <https://docs.spring.io/spring-framework/docs/5.3.31/javadoc-api/org/springframework/context/support/AbstractResourceBasedMessageSource.html#setBasenames-java.lang.String...->`_\を参照されたい。
+       | \ ``setBasenames``\ の詳細は\ ``ResourceBundleMessageSource``\ が継承する\ ``AbstractResourceBasedMessageSource``\ クラスの\ `JavaDoc <https://docs.spring.io/spring-framework/docs/5.3.39/javadoc-api/org/springframework/context/support/AbstractResourceBasedMessageSource.html#setBasenames-java.lang.String...->`_\を参照されたい。
    * - | (6)
      - | Loggerラッパークラスにおいても、SLF4Jを使用する。ロギングライブラリの実装を直接使用しない。
    * - | (7)
@@ -804,10 +783,10 @@ How to extend
 
 .. code-block:: console
 
-    i.ab.cd.1001 = This message is Info-Level. {0}
-    w.ab.cd.2001 = This message is Warn-Level. {0}
-    e.ab.cd.3001 = This message is Error-Level. {0}
-    t.ab.cd.4001 = This message is Trace-Level. {0}
+    i.xx.yy.1001 = This message is Info-Level. {0}
+    w.xx.yy.2001 = This message is Warn-Level. {0}
+    e.xx.yy.3001 = This message is Error-Level. {0}
+    t.xx.yy.4001 = This message is Trace-Level. {0}
 
 \
 
@@ -847,11 +826,11 @@ How to extend
                 RequestMethod.POST })
         public String home(Model model) {
             logger.debug("debug log");
-            logger.info("i.ab.cd.1001","replace_value_1");
-            logger.warn("w.ab.cd.2001","replace_value_2");
-            logger.error("e.ab.cd.3001","replace_value_3");
-            logger.trace("t.ab.cd.4001","replace_value_4");
-            logger.info("i.ab.cd.1002","replace_value_5");
+            logger.info("i.xx.yy.1001","replace_value_1");
+            logger.warn("w.xx.yy.2001","replace_value_2");
+            logger.error("e.xx.yy.3001","replace_value_3");
+            logger.trace("t.xx.yy.4001","replace_value_4");
+            logger.info("i.xx.yy.1002","replace_value_5");
             return "welcome/home";
         }
     }
@@ -866,7 +845,7 @@ How to extend
     date:2016-05-30 17:34:18.590  thread:http-bio-8080-exec-3  X-Track:e2a65cd9160b48d6aaeb63fe6e751c6b  level:WARN   logger:com.example.sample.app.welcome.HomeController   message:This message is Warn-Level. replace_value_2
     date:2016-05-30 17:34:18.590  thread:http-bio-8080-exec-3  X-Track:e2a65cd9160b48d6aaeb63fe6e751c6b  level:ERROR  logger:com.example.sample.app.welcome.HomeController   message:This message is Error-Level. replace_value_3
     date:2016-05-30 17:34:18.590  thread:http-bio-8080-exec-3  X-Track:e2a65cd9160b48d6aaeb63fe6e751c6b  level:TRACE  logger:com.example.sample.app.welcome.HomeController   message:This message is Trace-Level. replace_value_4
-    date:2016-05-30 17:34:18.590  thread:http-bio-8080-exec-3  X-Track:e2a65cd9160b48d6aaeb63fe6e751c6b  level:INFO   logger:com.example.sample.app.welcome.HomeController   message:UNDEFINED-MESSAGE id:i.ab.cd.1002 arg:[replace_value_5]
+    date:2016-05-30 17:34:18.590  thread:http-bio-8080-exec-3  X-Track:e2a65cd9160b48d6aaeb63fe6e751c6b  level:INFO   logger:com.example.sample.app.welcome.HomeController   message:UNDEFINED-MESSAGE id:i.xx.yy.1002 arg:[replace_value_5]
 
 
 ログメッセージの出力フォーマットの統一
@@ -946,11 +925,11 @@ How to extend
 .. code-block:: console
 
   date:2016-05-30 16:32:33.239  thread:http-bio-8080-exec-4  X-Track:4f61314a51524ab3a41832b0ceae7119  level:DEBUG  logger:com.example.sample.app.welcome.HomeController   message:debug log
-  date:2016-05-30 16:32:33.239  thread:http-bio-8080-exec-4  X-Track:4f61314a51524ab3a41832b0ceae7119  level:INFO   logger:com.example.sample.app.welcome.HomeController   message:[i.ab.cd.1001] This message is Info-Level. replace_value_1
-  date:2016-05-30 16:32:33.239  thread:http-bio-8080-exec-4  X-Track:4f61314a51524ab3a41832b0ceae7119  level:WARN   logger:com.example.sample.app.welcome.HomeController   message:[w.ab.cd.2001] This message is Warn-Level. replace_value_2
-  date:2016-05-30 16:32:33.239  thread:http-bio-8080-exec-4  X-Track:4f61314a51524ab3a41832b0ceae7119  level:ERROR  logger:com.example.sample.app.welcome.HomeController   message:[e.ab.cd.3001] This message is Error-Level. replace_value_3
-  date:2016-05-30 17:34:18.590  thread:http-bio-8080-exec-3  X-Track:4f61314a51524ab3a41832b0ceae7119  level:TRACE  logger:com.example.sample.app.welcome.HomeController   message:[t.ab.cd.4001] This message is Trace-Level. replace_value_4
-  date:2016-05-30 16:32:33.239  thread:http-bio-8080-exec-4  X-Track:4f61314a51524ab3a41832b0ceae7119  level:INFO   logger:com.example.sample.app.welcome.HomeController   message:[i.ab.cd.1002] UNDEFINED-MESSAGE id:i.ab.cd.1002 arg:[replace_value_5]
+  date:2016-05-30 16:32:33.239  thread:http-bio-8080-exec-4  X-Track:4f61314a51524ab3a41832b0ceae7119  level:INFO   logger:com.example.sample.app.welcome.HomeController   message:[i.xx.yy.1001] This message is Info-Level. replace_value_1
+  date:2016-05-30 16:32:33.239  thread:http-bio-8080-exec-4  X-Track:4f61314a51524ab3a41832b0ceae7119  level:WARN   logger:com.example.sample.app.welcome.HomeController   message:[w.xx.yy.2001] This message is Warn-Level. replace_value_2
+  date:2016-05-30 16:32:33.239  thread:http-bio-8080-exec-4  X-Track:4f61314a51524ab3a41832b0ceae7119  level:ERROR  logger:com.example.sample.app.welcome.HomeController   message:[e.xx.yy.3001] This message is Error-Level. replace_value_3
+  date:2016-05-30 17:34:18.590  thread:http-bio-8080-exec-3  X-Track:4f61314a51524ab3a41832b0ceae7119  level:TRACE  logger:com.example.sample.app.welcome.HomeController   message:[t.xx.yy.4001] This message is Trace-Level. replace_value_4
+  date:2016-05-30 16:32:33.239  thread:http-bio-8080-exec-4  X-Track:4f61314a51524ab3a41832b0ceae7119  level:INFO   logger:com.example.sample.app.welcome.HomeController   message:[i.xx.yy.1002] UNDEFINED-MESSAGE id:i.xx.yy.1002 arg:[replace_value_5]
 
 独自のフォーマットに統一
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -1006,11 +985,11 @@ How to extend
 .. code-block:: console
 
   date:2016-05-30 16:32:33.239  thread:http-bio-8080-exec-4  X-Track:4f61314a51524ab3a41832b0ceae7119  level:DEBUG  logger:com.example.sample.app.welcome.HomeController   message:debug log
-  date:2016-05-30 16:32:33.239  thread:http-bio-8080-exec-4  X-Track:4f61314a51524ab3a41832b0ceae7119  level:INFO   logger:com.example.sample.app.welcome.HomeController   message:[i.ab.cd.1001], This message is Info-Level. replace_value_1
-  date:2016-05-30 16:32:33.239  thread:http-bio-8080-exec-4  X-Track:4f61314a51524ab3a41832b0ceae7119  level:WARN   logger:com.example.sample.app.welcome.HomeController   message:[w.ab.cd.2001], This message is Warn-Level. replace_value_2
-  date:2016-05-30 16:32:33.239  thread:http-bio-8080-exec-4  X-Track:4f61314a51524ab3a41832b0ceae7119  level:ERROR  logger:com.example.sample.app.welcome.HomeController   message:[e.ab.cd.3001], This message is Error-Level. replace_value_3
-  date:2016-05-30 17:34:18.590  thread:http-bio-8080-exec-3  X-Track:4f61314a51524ab3a41832b0ceae7119  level:TRACE  logger:com.example.sample.app.welcome.HomeController   message:[t.ab.cd.4001], This message is Trace-Level. replace_value_4
-  date:2016-05-30 16:32:33.239  thread:http-bio-8080-exec-4  X-Track:4f61314a51524ab3a41832b0ceae7119  level:INFO   logger:com.example.sample.app.welcome.HomeController   message:[i.ab.cd.1002], UNDEFINED-MESSAGE arg:[replace_value_5]
+  date:2016-05-30 16:32:33.239  thread:http-bio-8080-exec-4  X-Track:4f61314a51524ab3a41832b0ceae7119  level:INFO   logger:com.example.sample.app.welcome.HomeController   message:[i.xx.yy.1001], This message is Info-Level. replace_value_1
+  date:2016-05-30 16:32:33.239  thread:http-bio-8080-exec-4  X-Track:4f61314a51524ab3a41832b0ceae7119  level:WARN   logger:com.example.sample.app.welcome.HomeController   message:[w.xx.yy.2001], This message is Warn-Level. replace_value_2
+  date:2016-05-30 16:32:33.239  thread:http-bio-8080-exec-4  X-Track:4f61314a51524ab3a41832b0ceae7119  level:ERROR  logger:com.example.sample.app.welcome.HomeController   message:[e.xx.yy.3001], This message is Error-Level. replace_value_3
+  date:2016-05-30 17:34:18.590  thread:http-bio-8080-exec-3  X-Track:4f61314a51524ab3a41832b0ceae7119  level:TRACE  logger:com.example.sample.app.welcome.HomeController   message:[t.xx.yy.4001], This message is Trace-Level. replace_value_4
+  date:2016-05-30 16:32:33.239  thread:http-bio-8080-exec-4  X-Track:4f61314a51524ab3a41832b0ceae7119  level:INFO   logger:com.example.sample.app.welcome.HomeController   message:[i.xx.yy.1002], UNDEFINED-MESSAGE arg:[replace_value_5]
 
 
 
@@ -1048,7 +1027,7 @@ How to extend
 
 .. code-block:: console
 
-    date:2013-09-19 21:03:06   thread:tomcat-http--3   X-Track:c19eec546b054d54a13658f94292b24f    level:ERROR logger:o.t.gfw.common.exception.ExceptionLogger         message:[e.ad.od.9012], not found item entity. item code [10-123456].
+    date:2013-09-19 21:03:06   thread:tomcat-http--3   X-Track:c19eec546b054d54a13658f94292b24f    level:ERROR logger:o.t.gfw.common.exception.ExceptionLogger         message:[e.xx.yy.9012], not found item entity. item code [10-123456].
     ...
     // stackTarace omitted
 
@@ -1291,9 +1270,9 @@ web.xmlに、以下を追加すればよい。
 .. code-block:: xml
 
     <?xml version="1.0" encoding="UTF-8"?>
-    <web-app xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
-        version="3.0">
+    <web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
+        version="4.0">
         <listener>
             <listener-class>org.terasoluna.gfw.web.logging.HttpSessionEventLoggingListener</listener-class>
         </listener>
@@ -1307,9 +1286,7 @@ logback.xmlには、以下のように\ ``org.terasoluna.gfw.web.logging.HttpSes
 .. code-block:: xml
 
     <logger
-        name="org.terasoluna.gfw.web.logging.HttpSessionEventLoggingListener"> <!-- (1) -->
-        <level value="debug" />
-    </logger>
+        name="org.terasoluna.gfw.web.logging.HttpSessionEventLoggingListener" level="debug" /> <!-- (1) -->
 
 
 以下のようなデバッグログが出力される。
@@ -1371,9 +1348,7 @@ logback.xmlには、以下のように、\ ``org.terasoluna.gfw.web.logging.Trac
 
 .. code-block:: xml
 
-    <logger name="org.terasoluna.gfw.web.logging.TraceLoggingInterceptor"> <!-- (1) -->
-        <level value="trace" />
-    </logger>
+    <logger name="org.terasoluna.gfw.web.logging.TraceLoggingInterceptor" level="trace" /> <!-- (1) -->
 
 ExceptionLogger
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""

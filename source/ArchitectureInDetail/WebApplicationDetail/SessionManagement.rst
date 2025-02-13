@@ -798,10 +798,10 @@ Controllerのハンドラメソッドの引数に渡すオブジェクトが、\
         <property name="exceptionMappings">
             <map>
                 <!-- ... -->
-                <entry key="HttpSessionRequiredException" value="w.xx.0003" /> <!-- (7) -->
+                <entry key="HttpSessionRequiredException" value="w.xx.yy.0003" /> <!-- (7) -->
             </map>
         </property>
-        <property name="defaultExceptionCode" value="e.xx.0001" /> <!-- (8) -->
+        <property name="defaultExceptionCode" value="e.xx.yy.0001" /> <!-- (8) -->
     </bean>
 
  .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
@@ -813,7 +813,7 @@ Controllerのハンドラメソッドの引数に渡すオブジェクトが、\
       - 説明
     * - | (7)
       - | 共通ライブラリから提供している\ ``SimpleMappingExceptionCodeResolver``\ の\ ``exceptionMappings``\ に、\ ``HttpSessionRequiredException``\ の例外ハンドリングの定義を追加する。
-        | 上記例では、  例外発生時の例外コードとして、\ ``w.xx.0003``\ を指定している。
+        | 上記例では、  例外発生時の例外コードとして、\ ``w.xx.yy.0003``\ を指定している。
         | この設定を追加しない場合は、デフォルトの例外コードが、ログに出力される。
     * - | (8)
       - | 例外発生時のデフォルトの例外コード。
@@ -1993,10 +1993,10 @@ Appendix
         <property name="exceptionMappings">
             <map>
                 <!-- ... -->
-                <entry key="InvalidRequestException" value="w.xx.0004" /> <!-- (36) -->
+                <entry key="InvalidRequestException" value="w.xx.yy.0004" /> <!-- (36) -->
             </map>
         </property>
-        <property name="defaultExceptionCode" value="e.xx.0001" /> <!-- (37) -->
+        <property name="defaultExceptionCode" value="e.xx.yy.0001" /> <!-- (37) -->
     </bean>
 
  .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
@@ -2008,7 +2008,7 @@ Appendix
       - 説明
     * - | (36)
       - | 共通ライブラリから提供している\ ``SimpleMappingExceptionCodeResolver``\ の\ ``exceptionMappings``\ に、\ ``InvalidRequestException``\ の例外ハンドリングの定義を追加する。
-        | 上記例では、  例外発生時の例外コードとして、\ ``w.xx.0004``\ を指定している。
+        | 上記例では、  例外発生時の例外コードとして、\ ``w.xx.yy.0004``\ を指定している。
         | この設定を追加しない場合は、デフォルトの例外コードが、ログに出力される。
     * - | (37)
       - | 例外発生時のデフォルトの例外コード。

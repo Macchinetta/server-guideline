@@ -55,7 +55,7 @@ Maven Archetypeで作成したプロジェクトでは、warファイルを作�
     #. CIサーバ上ではビルドツール(maven)によるテストの実行とパッケージングを行い、必要に応じてパッケージリポジトリにartifactをdeployする。
     #. 試験サーバ、本番サーバでは、パッケージリポジトリにあらかじめ保管しているプロジェクト本体に、リリース先環境にあわせてビルドした\*-envプロジェクトを追加してリリースすることにより、アプリケーションの動作が可能になる。
 
-    詳細については\ `チュートリアル <https://github.com/Macchinetta/tutorial-apps/tree/1.8.3.RELEASE/secure-login-demo/secure-login>`_\ を参考にされたい。
+    詳細については\ `チュートリアル <https://github.com/Macchinetta/tutorial-apps/tree/1.8.4.RELEASE/secure-login-demo/secure-login>`_\ を参考にされたい。
 
 .. warning:: **ビルド環境について**
 
@@ -222,7 +222,7 @@ WebアプリケーションをTomcat 8.5およびTomcat 9上にリリースす�
 4. Tomcatのリソース機能を使用して、 /etc/foo/bar/\*.jar をクラスパスに追加する。
 
  * [CATALINA_HOME]/conf/Catalina/localhost/[contextPath].xmlファイルに下記の定義を追加する。
- * 詳しくは、 `The Resources Component <https://tomcat.apache.org/tomcat-9.0-doc/config/resources.html>`_\ と `atrs-envのconfigsフォルダ <https://github.com/Macchinetta/atrs/tree/1.8.3.RELEASE/atrs-env/configs>`_\ を参考されたい。
+ * 詳しくは、 `The Resources Component <https://tomcat.apache.org/tomcat-9.0-doc/config/resources.html>`_\ と `atrs-envのconfigsフォルダ <https://github.com/Macchinetta/atrs/tree/1.8.4.RELEASE/atrs-env/configs>`_\ を参考されたい。
  * リソースの設定例：
    
   .. code-block:: xml

@@ -378,7 +378,7 @@ CSRFのトークンチェックエラー時に発生する例外は以下の通�
 
 \ ``DelegatingAccessDeniedHandler``\クラスを使用して上記の例外をハンドリングし、それぞれに \ ``AccessDeniedHandler``\ インタフェースの実装クラスを割り当てることで、例外毎の遷移先を設定することが可能である。
 
-CSRFトークンチェックエラー時に専用のエラー画面（JSP）に遷移させたい場合は、以下のようなBean定義を行う。(以下の定義例は、`ブランクプロジェクト <https://github.com/Macchinetta/macchinetta-web-multi-blank/tree/1.8.3.RELEASE>`_\ からの抜粋である)
+CSRFトークンチェックエラー時に専用のエラー画面（JSP）に遷移させたい場合は、以下のようなBean定義を行う。(以下の定義例は、`ブランクプロジェクト <https://github.com/Macchinetta/macchinetta-web-multi-blank/tree/1.8.4.RELEASE>`_\ からの抜粋である)
 
 * spring-security.xmlの定義例
 
@@ -443,7 +443,7 @@ CSRFトークンチェックエラー時に専用のエラー画面（JSP）に�
    * - | (4)
      - | \ ``key``\ に \ ``AccessDeniedException``\ のサブクラスを指定する。
        | \ ``value`` として、\ ``AccessDeniedHandler``\ の実装クラスである、 \ ``org.springframework.security.web.access.AccessDeniedHandlerImpl`` を指定する。
-       | \ ``property``\ の \ ``name``\ に \ ``errorPage``\ を指定し、\ ``value``\ に表示するviewを指定する。
+       | \ ``property``\ の \ ``name``\ に \ ``errorPage``\ を指定し、\ ``value``\ に表示するViewを指定する。
        | マッピングするExceptionに関しては、:ref:`csrf_token-error-response` を参照されたい。
    * - | (5)
      - | (4)のExceptionと異なるExceptionを制御したい場合に定義する。

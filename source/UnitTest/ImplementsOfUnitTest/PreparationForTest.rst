@@ -156,7 +156,7 @@ initdbプロジェクトについては、\ :ref:`CreateWebApplicationProjectCon
     * SQL解析メタデータ(\ ``config``\ に\ ``@SqlConfig``\ アノテーションを指定)
 
     また、\ ``@Sql``\ アノテーションはデフォルトで有効になっている\ ``SqlScriptsTestExecutionListener``\ によって
-    実行される。詳細は、\ `Executing SQL scripts declaratively with @Sql <https://docs.spring.io/spring-framework/docs/5.3.31/reference/html/testing.html#testcontext-executing-sql-declaratively>`_\
+    実行される。詳細は、\ `Executing SQL scripts declaratively with @Sql <https://docs.spring.io/spring-framework/docs/5.3.39/reference/html/testing.html#testcontext-executing-sql-declaratively>`_\
     を参照されたい。
 
     なお、\ ``@Sql``\ アノテーションと\ ``@SqlConfig``\ アノテーションによる構成は\ ``<jdbc:initialize-database>``\ 要素
@@ -368,7 +368,7 @@ Spring Testの DI機能を使用することでテストで使用するBeanを�
             <entry key="bcrypt">
               <bean class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
             </entry>
-            <!-- When using commented out PasswordEncoders, you need to add bcprov-jdk15on.jar to the dependency.
+            <!-- When using commented out PasswordEncoders, you need to add bcprov-jdk18on.jar to the dependency.
             <entry key="argon2">
               <bean class="org.springframework.security.crypto.argon2.Argon2PasswordEncoder" />
             </entry>

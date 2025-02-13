@@ -28,20 +28,18 @@ Java SE 11では、Java SE 9から非推奨であったJava EE関連のモジュ
 JAXBの削除
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Java SE 11でJAXBを利用する場合、jaxb-core及びjaxb-implが必要となる。
-アプリケーションの依存ライブラリやAPサーバから提供されるライブラリにjaxb-core及びjaxb-implがない場合は、下記のようにpom.xmlに依存関係を追加すること。
+Java SE 11でJAXBを利用する場合、jakarta.xml.bind-api及びjaxb-runtimeが必要となる。
+アプリケーションの依存ライブラリやAPサーバから提供されるライブラリにjakarta.xml.bind-api及びjaxb-runtimeがない場合は、下記のようにpom.xmlに依存関係を追加すること。
 
 .. code-block:: xml
 
    <dependency>
-       <groupId>com.sun.xml.bind</groupId>
-       <artifactId>jaxb-core</artifactId>
-       <version>${jaxb-core.version}</version> <!-- (1) -->
+       <groupId>jakarta.xml.bind</groupId>
+       <artifactId>jakarta.xml.bind-api</artifactId> <!-- (1) -->
    </dependency>
    <dependency>
-       <groupId>com.sun.xml.bind</groupId>
-       <artifactId>jaxb-impl</artifactId>
-       <version>${jaxb-impl.version}</version> <!-- (1) -->
+       <groupId>org.glassfish.jaxb</groupId>
+       <artifactId>jaxb-runtime</artifactId> <!-- (1) -->
    </dependency>
 
 .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
@@ -52,9 +50,7 @@ Java SE 11でJAXBを利用する場合、jaxb-core及びjaxb-implが必要とな
     * - 項番
       - 説明
     * - | (1)
-      - | Jakarta EE 8に準拠した任意のバージョンを指定する。
-
-なお、上記ではJAXBを動作させるための実装ライブラリを追加している。JAXBのAPIを利用するソースコードがある場合、コンパイルのためAPIライブラリが必要となる。
+      - | バージョンはterasoluna-dependenciesが依存している\ `Spring Boot <https://docs.spring.io/spring-boot/docs/2.7.18/reference/htmlsingle/#dependency-versions>`_\ で管理されているため、pom.xmlでのバージョンの指定は不要である。
 
 .. _remove-jax-ws-from-java11:
 
@@ -67,7 +63,8 @@ Java SE 11でJAX-WSを利用する場合、以下のようにjakarta.xml.ws-api�
 
    <dependency>
        <groupId>jakarta.xml.ws</groupId>
-       <artifactId>jakarta.xml.ws-api</artifactId> <!-- (1) -->
+       <artifactId>jakarta.xml.ws-api</artifactId>
+       <version>${jakarta.xml.ws.version}</version> <!-- (1) -->
    </dependency>
    <dependency>
        <groupId>jakarta.jws</groupId>
@@ -83,11 +80,12 @@ Java SE 11でJAX-WSを利用する場合、以下のようにjakarta.xml.ws-api�
     * - 項番
       - 説明
     * - | (1)
-      - | jakarta.xml.ws-apiのバージョンはterasoluna-gfw-parentが依存している\ `Spring Boot <https://docs.spring.io/spring-boot/docs/2.7.18/reference/htmlsingle/#dependency-versions>`_\ で管理されているため、pom.xmlでのバージョンの指定は不要である。
+      - | jakarta.xml.ws-apiのバージョンは、JAX-WSのランタイムが使用するバージョンを指定する。
     * - | (2)
       - | Jakarta EE 8に準拠した任意のバージョンを指定する。
 
 なお、JAX-WSを動作させるための実装は各APサーバまたはApache CXFによって提供される想定であり、上記ではアプリケーションのコンパイルに必要となるAPIのみを追加している。
+Apache CXFを使用する場合のJAX-WSのランタイム定義に関しては、「\ :ref:`SOAPAppendixTomcatWebService`\ 」 に記載を行っているので、そちらを参照されたい。
 
 jaxws-riはjakarta.xml.ws-api及びjakarta.jws-apiを含むJAX-WS実装をカバーするライブラリだが、Jakarta EE（Java EE）サーバやApache CXFのJAX-WS実装に干渉し、Java SE 8での実行と異なる挙動を示す場合があるため、jaxws-riの利用は推奨していない。
 例として、jaxws-riを利用した場合、Apache CXFのタイムアウト値として認識されるプロパティが変わってしまう事象を確認している。
@@ -114,7 +112,7 @@ Java SE 11でCommon Annotationsを利用する場合、以下のようにjakarta
     * - 項番
       - 説明
     * - | (1)
-      - | jakarta.annotation-apiのバージョンはterasoluna-gfw-parentが依存している\ `Spring Boot <https://docs.spring.io/spring-boot/docs/2.7.18/reference/htmlsingle/#dependency-versions>`_\ で管理されているため、pom.xmlでのバージョンの指定は不要である。
+      - | jakarta.annotation-apiのバージョンはterasoluna-dependenciesが依存している\ `Spring Boot <https://docs.spring.io/spring-boot/docs/2.7.18/reference/htmlsingle/#dependency-versions>`_\ で管理されているため、pom.xmlでのバージョンの指定は不要である。
 
 なお、Common Annotationsを動作させるための実装は各APサーバによって提供される想定であり、上記ではアプリケーションのコンパイルに必要となるAPIのみを追加している。
 

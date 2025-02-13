@@ -11,6 +11,105 @@
       - 更新箇所
       - 更新内容
 
+    * - 2025-03-28
+      - \-
+      - 1.8.4 RELEASE版公開
+
+    * -
+      - 全般
+      - ガイドラインの誤記(タイプミスや単純な記述ミスなど)の修正
+
+        記載内容の改善
+
+        記載内容の修正・追加
+
+        * Logbackの \ ``<logger>``\ タグの \ ``level``\ 属性が非推奨な実装になっていたため、適切な実装に修正
+        * サーブレットを4.0に変更
+        * リファレンスページへのリンクを最新化
+        * 依存ライブラリの依存先をSpring Bootから各OSSに修正
+        * Spring Frameworkのバージョンを5.3.39に更新
+        * Tomcatのバージョンを9.0.97に修正
+        * Stringフィールドに付与する入力必須チェック用のアノテーションを適切なものに修正
+
+    * -
+      - :doc:`../Overview/FrameworkStack`
+      - 利用するOSSのバージョンを更新
+
+        * Spring Frameworkを5.3.39に更新
+        * Spring Securityを5.7.13に更新
+        * MyBatisを3.5.17に更新
+        * SLF4Jを2.0.16に更新
+        * Joda Timeを2.13.0に更新
+        * Apache Commons DBCPを2.12.0に更新
+        * Apache POIを5.3.0に更新
+        * Apache Commons IOを2.18.0に更新
+        * Guavaを33.3.1-jreに更新
+        * Lombokを1.18.36に更新
+
+        利用するOSSを追加
+
+        * Jetty
+        * Tomcat
+        * FreeMarker
+
+        単体テストで利用するOSSのバージョンを更新
+
+        * DB Unitを2.8.0に更新
+
+    * -
+      - \ :doc:`../ImplementationAtEachLayer/CreateWebApplicationProject`\
+      - 記載内容の追加
+
+        * プロジェクト情報に開発者とソース管理システムを追加
+
+    * -
+      - \ :doc:`../ArchitectureInDetail/WebApplicationDetail/Validation`\
+      - 記載内容の追加
+
+        * 入力必須チェックについての詳細な説明を追加
+
+    * -
+      - \ :doc:`../ArchitectureInDetail/WebApplicationDetail/ExceptionHandling`\
+      - 記載内容の追加
+
+        * SystemExceptionResolverの設定項目に \ ``checkCause``\ と \ ``checkSubClass``\ ついての記述を追加
+
+    * -
+      - \ :doc:`../ArchitectureInDetail/WebServiceDetail/SOAP`\
+      - 記載内容の修正
+
+        * SOAPサーバ側の入力チェックの誤記を修正
+        * ApacheCXFのバージョンを3.5.10に更新
+        * modelプロジェクトの作成およびwebserviceプロジェクトの作成から不要な依存関係を削除
+
+    * -
+      - \ :doc:`../ArchitectureInDetail/DataAccessDetail/DataAccessCommon`\
+      - 記載内容の修正
+
+        * log4jdbc-remixの代替となるO/R Mapper(MyBatis)のログ出力設定の実装例を追加
+
+    * -
+      - \ :doc:`../Security/Authorization`\
+      - 記載内容の追加
+
+        * \ ``SystemExceptionResolver``\ で\ ``AccessDeniedException``\ を捕捉しないようにするための設定をTipに追加
+
+    * -
+      - \ :doc:`../Security/Authentication`\
+      - 記載内容の修正・追加
+
+        * ログアウト処理の仕組みに、\ ``CompositeLogoutHandler``\ の説明を追加
+        * 主なLogoutHandlerの実装クラスに、\ ``TokenBasedRememberMeServices``\ , \ ``PersistentTokenBasedRememberMeServices``\ の説明を追加
+        * 主なLogoutSuccessHandlerの実装クラスから、\ ``DelegatingLogoutSuccessHandler``\ の説明を削除
+        * 主なLogoutSuccessHandlerの実装クラスに、\ ``ForwardLogoutSuccessHandler``\ の説明を追加
+
+    * -
+      - \ :doc:`../Appendix/SpringToolSuite4`\
+      - 記載内容の修正・追加
+
+        * 記載内容をSTS4の最新バージョンに準じた内容に修正
+        * Javaバージョンが異なる場合の対応を追加
+
     * - 2024-03-28
       - \-
       - 1.8.3 RELEASE版公開

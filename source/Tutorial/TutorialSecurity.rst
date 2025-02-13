@@ -87,7 +87,7 @@ URL一覧を以下に示す。
 プロジェクトの作成
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Mavenのアーキタイプを利用し、\ `Macchinetta Server Framework (1.x)のブランクプロジェクト <https://github.com/Macchinetta/macchinetta-web-blank/tree/1.8.3.RELEASE>`_\ を作成する。
+Mavenのアーキタイプを利用し、\ `Macchinetta Server Framework (1.x)のブランクプロジェクト <https://github.com/Macchinetta/macchinetta-web-blank/tree/1.8.4.RELEASE>`_\ を作成する。
 
 本チュートリアルでは、MyBatis3用のブランクプロジェクトを作成する。
 
@@ -99,7 +99,7 @@ Mavenのアーキタイプを利用し、\ `Macchinetta Server Framework (1.x)�
     mvn archetype:generate -B^
      -DarchetypeGroupId=com.github.macchinetta.blank^
      -DarchetypeArtifactId=macchinetta-web-blank-archetype^
-     -DarchetypeVersion=1.8.3.RELEASE^
+     -DarchetypeVersion=1.8.4.RELEASE^
      -DgroupId=com.example.security^
      -DartifactId=first-springsecurity^
      -Dversion=1.0.0-SNAPSHOT
@@ -144,58 +144,58 @@ Domain Objectの作成
 | ``src/main/java/com/example/security/domain/model/Account.java``
 
 .. code-block:: java
-  
+
     package com.example.security.domain.model;
-  
+
     import java.io.Serializable;
-  
+
     public class Account implements Serializable {
         private static final long serialVersionUID = 1L;
-  
+
         private String username;
-  
+
         private String password;
-  
+
         private String firstName;
-  
+
         private String lastName;
-  
+
         public String getUsername() {
             return username;
         }
-  
+
         public void setUsername(String username) {
             this.username = username;
         }
-  
+
         public String getPassword() {
             return password;
         }
-  
+
         public void setPassword(String password) {
             this.password = password;
         }
-  
+
         public String getFirstName() {
             return firstName;
         }
-  
+
         public void setFirstName(String firstName) {
             this.firstName = firstName;
         }
-  
+
         public String getLastName() {
             return lastName;
         }
-  
+
         public void setLastName(String lastName) {
             this.lastName = lastName;
         }
-  
+
         @Override
         public String toString() {
-            return "Account [username=" + username + ", password=" + password
-                    + ", firstName=" + firstName + ", lastName=" + lastName + "]";
+            return "Account [username=" + username + ", password=" + password + ", firstName="
+                    + firstName + ", lastName=" + lastName + "]";
         }
     }
 
@@ -210,13 +210,13 @@ AccountRepositoryの作成
 | ``src/main/java/com/example/security/domain/repository/account/AccountRepository.java``
 
 .. code-block:: java
-  
+
     package com.example.security.domain.repository.account;
-  
+
     import com.example.security.domain.model.Account;
 
     public interface AccountRepository {
-        Account findOne(String username);
+        Account findByUserName(String username);
     }
 
 |
@@ -227,8 +227,7 @@ AccountRepositoryの作成
 .. code-block:: xml
 
     <?xml version="1.0" encoding="UTF-8"?>
-    <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
     <mapper namespace="com.example.security.domain.repository.account.AccountRepository">
 
         <resultMap id="accountResultMap" type="Account">
@@ -238,7 +237,7 @@ AccountRepositoryの作成
             <result property="lastName" column="last_name" />
         </resultMap>
 
-        <select id="findOne" parameterType="String" resultMap="accountResultMap">
+        <select id="findByUserName" parameterType="String" resultMap="accountResultMap">
             SELECT
                 username,
                 password,
@@ -298,13 +297,11 @@ AccountSharedServiceの作成
     package com.example.security.domain.service.account;
 
     import javax.inject.Inject;
-
     import org.springframework.stereotype.Service;
     import org.springframework.transaction.annotation.Transactional;
     import org.terasoluna.gfw.common.exception.ResourceNotFoundException;
     import org.terasoluna.gfw.common.message.ResultMessage;
     import org.terasoluna.gfw.common.message.ResultMessages;
-
     import com.example.security.domain.model.Account;
     import com.example.security.domain.repository.account.AccountRepository;
 
@@ -317,12 +314,12 @@ AccountSharedServiceの作成
         @Override
         public Account findOne(String username) {
             // (1)
-            Account account = accountRepository.findOne(username);
+            Account account = accountRepository.findByUserName(username);
             // (2)
             if (account == null) {
                 ResultMessages messages = ResultMessages.error();
-                messages.add(ResultMessage.fromText(
-                        "The given account is not found! username=" + username));
+                messages.add(
+                        ResultMessage.fromText("The given account is not found! username=" + username));
                 throw new ResourceNotFoundException(messages);
             }
             return account;
@@ -358,7 +355,6 @@ AccountSharedServiceの作成
 
     import org.springframework.security.core.authority.AuthorityUtils;
     import org.springframework.security.core.userdetails.User;
-
     import com.example.security.domain.model.Account;
 
     public class SampleUserDetails extends User { // (1)
@@ -368,8 +364,8 @@ AccountSharedServiceの作成
 
         public SampleUserDetails(Account account) {
             // (3)
-            super(account.getUsername(), account.getPassword(), AuthorityUtils
-                    .createAuthorityList("ROLE_USER")); // (4)
+            super(account.getUsername(), account.getPassword(),
+                    AuthorityUtils.createAuthorityList("ROLE_USER")); // (4)
             this.account = account;
         }
 
@@ -383,7 +379,7 @@ AccountSharedServiceの作成
 .. list-table::
      :header-rows: 1
      :widths: 10 90
-  
+
      * - 項番
        - 説明
      * - | (1)
@@ -408,14 +404,12 @@ AccountSharedServiceの作成
     package com.example.security.domain.service.userdetails;
 
     import javax.inject.Inject;
-
     import org.springframework.security.core.userdetails.UserDetails;
     import org.springframework.security.core.userdetails.UserDetailsService;
     import org.springframework.security.core.userdetails.UsernameNotFoundException;
     import org.springframework.stereotype.Service;
     import org.springframework.transaction.annotation.Transactional;
     import org.terasoluna.gfw.common.exception.ResourceNotFoundException;
-
     import com.example.security.domain.model.Account;
     import com.example.security.domain.service.account.AccountSharedService;
 
@@ -441,7 +435,7 @@ AccountSharedServiceの作成
 .. list-table::
      :header-rows: 1
      :widths: 10 90
-  
+
      * - 項番
        - 説明
      * - | (1)
@@ -539,7 +533,7 @@ Spring Securityの設定
 .. list-table::
    :header-rows: 1
    :widths: 30 70
-   
+
    * - | URL
      - | 説明
    * - | /login/loginForm
@@ -563,18 +557,16 @@ Spring Securityの設定
 | ``src/main/resources/META-INF/spring/spring-security.xml``
 
 .. code-block:: xml
-    :emphasize-lines: 12-15,16-19,23-24,31-32
+    :emphasize-lines: 10-18,27-29,30-31
 
     <?xml version="1.0" encoding="UTF-8"?>
     <beans xmlns="http://www.springframework.org/schema/beans"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xmlns:sec="http://www.springframework.org/schema/security"
-        xsi:schemaLocation="
-            http://www.springframework.org/schema/security https://www.springframework.org/schema/security/spring-security.xsd
-            http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
-        ">
+        xsi:schemaLocation="http://www.springframework.org/schema/security https://www.springframework.org/schema/security/spring-security.xsd
+                            http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd">
 
-        <sec:http pattern="/resources/**" security="none"/>
+        <sec:http pattern="/resources/**" security="none" />
         <sec:http once-per-request="false">
             <!-- (1) -->
             <sec:form-login login-page="/login/loginForm"
@@ -585,16 +577,15 @@ Spring Securityの設定
             <sec:intercept-url pattern="/login/**"
                 access="permitAll" />
             <sec:intercept-url pattern="/**" access="isAuthenticated()" />
-            <sec:access-denied-handler ref="accessDeniedHandler"/>
-            <sec:custom-filter ref="userIdMDCPutFilter" after="ANONYMOUS_FILTER"/>
+            <sec:access-denied-handler ref="accessDeniedHandler" />
+            <sec:custom-filter ref="userIdMDCPutFilter" after="ANONYMOUS_FILTER" />
             <sec:session-management />
         </sec:http>
 
         <sec:authentication-manager>
             <!-- com.example.security.domain.service.userdetails.SampleUserDetailsService
-              is scanned by component scan with @Service -->
+                is scanned by component scan with @Service -->
             <!-- (4) -->
-            <sec:authentication-provider user-service-ref="sampleUserDetailsService" />
             <sec:authentication-provider
                 user-service-ref="sampleUserDetailsService">
                 <!-- (5) -->
@@ -644,7 +635,7 @@ Spring Securityの設定
 .. list-table::
     :header-rows: 1
     :widths: 10 90
-  
+
     * - 項番
       - 説明
     * - | (1)
@@ -697,7 +688,7 @@ Spring Securityの設定
 | ``src/main/java/com/example/security/app/login/LoginController.java``
 
 .. code-block:: java
-  
+
     package com.example.security.app.login;
 
     import org.springframework.stereotype.Controller;
@@ -713,16 +704,16 @@ Spring Securityの設定
             return "login/loginForm";
         }
     }
-  
+
 .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
 .. list-table::
     :header-rows: 1
     :widths: 10 90
-  
+
     * - 項番
       - 説明
     * - | (1)
-      - ログインページである、\ ``login/loginForm``\ を返す。 
+      - ログインページである、\ ``login/loginForm``\ を返す。
 
 |
 
@@ -733,52 +724,49 @@ Spring Securityの設定
 | ``src/main/webapp/WEB-INF/views/login/loginForm.jsp``
 
 .. code-block:: jsp
-  
+
     <!DOCTYPE html>
     <html>
-    <head>
-    <title>Login Page</title>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/app/css/styles.css">
-    </head>
-    <body>
-        <div id="wrapper">
-            <h3>Login with Username and Password</h3>
-
-            <!-- (1) -->
-            <c:if test="${param.containsKey('error')}">
-                <!-- (2) -->
-                <t:messagesPanel messagesType="error"
-                    messagesAttributeName="SPRING_SECURITY_LAST_EXCEPTION" />
-            </c:if>
-
-            <!-- (3) -->
-            <form:form action="${pageContext.request.contextPath}/login">
-                <table>
-                    <tr>
-                        <td><label for="username">User:</label></td>
-                        <td><input type="text" id="username"
-                            name="username" value="demo">(demo)</td><!-- (4) -->
-                    </tr>
-                    <tr>
-                        <td><label for="password">Password:</label></td>
-                        <td><input type="password" id="password"
-                            name="password" value="demo" />(demo)</td><!-- (5) -->
-                    </tr>
-                    <tr>
-                        <td>&nbsp;</td>
-                        <td><input name="submit" type="submit" value="Login" /></td>
-                    </tr>
-                </table>
-            </form:form>
-        </div>
-    </body>
+        <head>
+            <title>Login Page</title>
+            <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/app/css/styles.css" />
+        </head>
+        <body>
+            <div id="wrapper">
+                <h3>Login with Username and Password</h3>
+                <!-- (1) -->
+                <c:if test="${param.containsKey('error')}">
+                    <!-- (2) -->
+                    <t:messagesPanel messagesType="error" messagesAttributeName="SPRING_SECURITY_LAST_EXCEPTION" />
+                </c:if>
+                <!-- (3) -->
+                <form:form action="${pageContext.request.contextPath}/login">
+                    <table>
+                        <tr>
+                            <td><label for="username">User:</label></td>
+                            <!-- (4) -->
+                            <td><input type="text" id="username" name="username" value="demo" />(demo)</td>
+                        </tr>
+                        <tr>
+                            <td><label for="password">Password:</label></td>
+                            <!-- (5) -->
+                            <td><input type="password" id="password" name="password" value="demo" />(demo)</td>
+                        </tr>
+                        <tr>
+                            <td>&nbsp;</td>
+                            <td><input name="submit" type="submit" value="Login" /></td>
+                        </tr>
+                    </table>
+                </form:form>
+            </div>
+        </body>
     </html>
 
 .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
 .. list-table::
     :header-rows: 1
     :widths: 10 90
-  
+
     * - 項番
       - 説明
     * - | (1)
@@ -788,7 +776,7 @@ Spring Securityの設定
       - 共通ライブラリから提供されている\ ``<t:messagesPanel>``\ タグを使用してエラーメッセージを表示する。
 
         認証が失敗した場合、Spring Securityのデフォルトの設定で使用される、\ ``org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler``\ では、認証エラー時に発生した例外オブジェクトを\ ``SPRING_SECURITY_LAST_EXCEPTION``\ という属性名で、リダイレクト時はセッション、フォワード時はリクエストスコープに格納する。
-        
+
         ここでは、認証エラー時にはリダイレクトするため、認証エラー時に発生した例外オブジェクトは、セッションスコープに格納される。
     * - | (3)
       - \ ``<form:form>``\ タグの\ ``action``\ 属性に、認証処理用のURL(\ ``/login``\ )を設定する。このURLはSpring Securityのデフォルトである。
@@ -809,8 +797,9 @@ Spring Securityの設定
 | ``src/main/webapp/WEB-INF/views/common/include.jsp``
 
 .. code-block:: jsp
-    :emphasize-lines: 1
+    :emphasize-lines: 2
 
+    <!-- prettier-ignore -->
     <%@ page session="true"%> <!-- (6) -->
     <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
     <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
@@ -852,36 +841,36 @@ JSPからログインユーザーのアカウント情報へアクセス
 
 .. code-block:: jsp
     :emphasize-lines: 9-10,16-17
-  
+
     <!DOCTYPE html>
     <html>
-    <head>
-    <meta charset="utf-8">
-    <title>Home</title>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/app/css/styles.css">
-    </head>
+        <head>
+            <meta charset="utf-8" />
+            <title>Home</title>
+            <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/app/css/styles.css" />
+        </head>
 
-    <!-- (1) -->
-    <sec:authentication property="principal.account" var="account" />
+        <!-- (1) -->
+        <sec:authentication property="principal.account" var="account" />
 
-    <body>
-        <div id="wrapper">
-            <h1>Hello world!</h1>
-            <p>The time on the server is ${serverTime}.</p>
-            <!-- (2) -->
-            <p>Welcome ${f:h(account.firstName)} ${f:h(account.lastName)} !!</p>
-            <ul>
-                <li><a href="${pageContext.request.contextPath}/account">view account</a></li>
-            </ul>
-        </div>
-    </body>
+        <body>
+            <div id="wrapper">
+                <h1>Hello world!</h1>
+                <p>The time on the server is ${serverTime}.</p>
+                <!-- (2) -->
+                <p>Welcome ${f:h(account.firstName)} ${f:h(account.lastName)} !!</p>
+                <ul>
+                    <li><a href="${pageContext.request.contextPath}/account">view account</a></li>
+                </ul>
+            </div>
+        </body>
     </html>
 
 .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
 .. list-table::
     :header-rows: 1
     :widths: 10 90
-  
+
     * - 項番
       - 説明
     * - | (1)
@@ -913,30 +902,30 @@ JSPからログインユーザーのアカウント情報へアクセス
 
     <!DOCTYPE html>
     <html>
-    <head>
-    <meta charset="utf-8">
-    <title>Home</title>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/app/css/styles.css">
-    </head>
+        <head>
+            <meta charset="utf-8" />
+            <title>Home</title>
+            <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/app/css/styles.css" />
+        </head>
 
-    <sec:authentication property="principal.account" var="account" />
+        <sec:authentication property="principal.account" var="account" />
 
-    <body>
-        <div id="wrapper">
-            <h1>Hello world!</h1>
-            <p>The time on the server is ${serverTime}.</p>
-            <p>Welcome ${f:h(account.firstName)} ${f:h(account.lastName)} !!</p>
-            <p>
-                <!-- (1) -->
-                <form:form action="${pageContext.request.contextPath}/logout">
-                    <button type="submit">Logout</button>
-                </form:form>
-            </p>
-            <ul>
-                <li><a href="${pageContext.request.contextPath}/account">view account</a></li>
-            </ul>
-        </div>
-    </body>
+        <body>
+            <div id="wrapper">
+                <h1>Hello world!</h1>
+                <p>The time on the server is ${serverTime}.</p>
+                <p>Welcome ${f:h(account.firstName)} ${f:h(account.lastName)} !!</p>
+                <p>
+                    <!-- (1) -->
+                    <form:form action="${pageContext.request.contextPath}/logout">
+                        <button type="submit">Logout</button>
+                    </form:form>
+                </p>
+                <ul>
+                    <li><a href="${pageContext.request.contextPath}/account">view account</a></li>
+                </ul>
+            </div>
+        </body>
     </html>
 
 .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
@@ -971,8 +960,8 @@ Controllerからログインユーザーのアカウント情報へアクセス
 | ``src/main/java/com/example/security/app/account/AccountController.java``
 
 .. code-block:: java
-    :emphasize-lines: 18,20-22
-  
+    :emphasize-lines: 16,18-20
+
     package com.example.security.app.account;
 
     import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -980,7 +969,6 @@ Controllerからログインユーザーのアカウント情報へアクセス
     import org.springframework.ui.Model;
     import org.springframework.web.bind.annotation.GetMapping;
     import org.springframework.web.bind.annotation.RequestMapping;
-
     import com.example.security.domain.model.Account;
     import com.example.security.domain.service.userdetails.SampleUserDetails;
 
@@ -989,8 +977,7 @@ Controllerからログインユーザーのアカウント情報へアクセス
     public class AccountController {
 
         @GetMapping
-        public String view(
-                @AuthenticationPrincipal SampleUserDetails userDetails, // (1)
+        public String view(@AuthenticationPrincipal SampleUserDetails userDetails, // (1)
                 Model model) {
             // (2)
             Account account = userDetails.getAccount();
@@ -998,12 +985,12 @@ Controllerからログインユーザーのアカウント情報へアクセス
             return "account/view";
         }
     }
-  
+
 .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
 .. list-table::
     :header-rows: 1
     :widths: 10 90
-  
+
     * - 項番
       - 説明
     * - | (1)
@@ -1011,7 +998,7 @@ Controllerからログインユーザーのアカウント情報へアクセス
     * - | (2)
       - | \ ``SampleUserDetails``\ オブジェクトが保持している\ ``Account``\ オブジェクトを取得し、Viewに引き渡すために\ ``Model``\ に格納する。
 
-| 
+|
 
 | Controllerから引き渡されたアカウント情報にアクセスし、アカウント情報を表示する。
 | ``src/main/webapp/WEB-INF/views/account/view.jsp``
@@ -1020,33 +1007,33 @@ Controllerからログインユーザーのアカウント情報へアクセス
 
     <!DOCTYPE html>
     <html>
-    <head>
-    <meta charset="utf-8">
-    <title>Home</title>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/app/css/styles.css">
-    </head>
-    <body>
-        <div id="wrapper">
-            <h1>Account Information</h1>
-            <table>
-                <tr>
-                    <th>Username</th>
-                    <td>${f:h(account.username)}</td>
-                </tr>
-                <tr>
-                    <th>First name</th>
-                    <td>${f:h(account.firstName)}</td>
-                </tr>
-                <tr>
-                    <th>Last name</th>
-                    <td>${f:h(account.lastName)}</td>
-                </tr>
-            </table>
-        </div>
-    </body>
+        <head>
+            <meta charset="utf-8" />
+            <title>Home</title>
+            <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/app/css/styles.css" />
+        </head>
+        <body>
+            <div id="wrapper">
+                <h1>Account Information</h1>
+                <table>
+                    <tr>
+                        <th>Username</th>
+                        <td>${f:h(account.username)}</td>
+                    </tr>
+                    <tr>
+                        <th>First name</th>
+                        <td>${f:h(account.firstName)}</td>
+                    </tr>
+                    <tr>
+                        <th>Last name</th>
+                        <td>${f:h(account.lastName)}</td>
+                    </tr>
+                </table>
+            </div>
+        </body>
     </html>
 
-| 
+|
 
 ウェルカムページのview accountリンクを押下して、ログインユーザーのアカウント情報表示ページを表示する。
 
@@ -1096,28 +1083,26 @@ spring-security.xml
 作成したブランクプロジェクトの\ ``src/main/resources/META-INF/spring/spring-security.xml``\ は、以下のような設定となっている。
 
 .. code-block:: xml
-    :emphasize-lines: 10,13,15,17,19,21,25,28,61
+    :emphasize-lines: 8,11,13,15,17,19,23,26,59
 
     <?xml version="1.0" encoding="UTF-8"?>
     <beans xmlns="http://www.springframework.org/schema/beans"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xmlns:sec="http://www.springframework.org/schema/security"
-        xsi:schemaLocation="
-            http://www.springframework.org/schema/security https://www.springframework.org/schema/security/spring-security.xsd
-            http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
-        ">
+        xsi:schemaLocation="http://www.springframework.org/schema/security https://www.springframework.org/schema/security/spring-security.xsd
+                            http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd">
 
         <!-- (1) -->
-        <sec:http pattern="/resources/**" security="none"/>
+        <sec:http pattern="/resources/**" security="none" />
         <sec:http once-per-request="false">
             <!-- (2) -->
-            <sec:form-login/>
+            <sec:form-login />
             <!-- (3) -->
-            <sec:logout/>
+            <sec:logout />
             <!-- (4) -->
-            <sec:access-denied-handler ref="accessDeniedHandler"/>
+            <sec:access-denied-handler ref="accessDeniedHandler" />
             <!-- (5) -->
-            <sec:custom-filter ref="userIdMDCPutFilter" after="ANONYMOUS_FILTER"/>
+            <sec:custom-filter ref="userIdMDCPutFilter" after="ANONYMOUS_FILTER" />
             <!-- (6) -->
             <sec:session-management />
         </sec:http>
@@ -1215,7 +1200,7 @@ spring-mvc.xml
 Spring Securityと関係のない設定については、説明を割愛する。
 
 .. code-block:: xml
-    :emphasize-lines: 22-24,67-69
+    :emphasize-lines: 21-23,66-69
 
     <?xml version="1.0" encoding="UTF-8"?>
     <beans xmlns="http://www.springframework.org/schema/beans"
@@ -1225,11 +1210,10 @@ Spring Securityと関係のない設定については、説明を割愛する�
         xmlns:util="http://www.springframework.org/schema/util"
         xmlns:aop="http://www.springframework.org/schema/aop"
         xsi:schemaLocation="http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
-            http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
-            http://www.springframework.org/schema/util https://www.springframework.org/schema/util/spring-util.xsd
-            http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd
-            http://www.springframework.org/schema/aop https://www.springframework.org/schema/aop/spring-aop.xsd
-        ">
+                            http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+                            http://www.springframework.org/schema/util https://www.springframework.org/schema/util/spring-util.xsd
+                            http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd
+                            http://www.springframework.org/schema/aop https://www.springframework.org/schema/aop/spring-aop.xsd">
 
         <context:property-placeholder
             location="classpath*:/META-INF/spring/*.properties" />

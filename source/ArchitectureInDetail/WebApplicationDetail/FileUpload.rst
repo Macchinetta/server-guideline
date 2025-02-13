@@ -39,8 +39,8 @@ Servlet 3.0からサポートされたファイルアップロード機能と、
    * - | (2)
      - | サーブレットコンテナは、\ ``multipart/form-data``\ リクエストを受け取り、\ ``org.springframework.web.multipart.support.MultipartFilter``\ を呼び出す。
    * - | (3)
-     - | \ ``MultipartFilter``\ は、 \ ``org.springframework.web.multipart.support.StandardServletMultipartResolver``\ のメソッドを呼び出し、Servlet 3.0のファイルアップロード機能を、Spring MVCで扱えるようにする。
-       | \ ``StandardServletMultipartResolver``\ は、Servlet 3.0から導入されたAPI( \ ``javax.servlet.http.Part``\ )をラップする \ ``org.springframework.web.multipart.MultipartFile``\ のオブジェクトを生成する。
+     - | \ ``MultipartFilter``\ は、 \ ``org.springframework.web.multipart.support.StandardServletMultipartResolver``\ のメソッドを呼び出し、Servlet のファイルアップロード機能を、Spring MVCで扱えるようにする。
+       | \ ``StandardServletMultipartResolver``\ は、\ ``javax.servlet.http.Part``\ をラップする \ ``org.springframework.web.multipart.MultipartFile``\ のオブジェクトを生成する。
    * - | (4)
      - | \ ``MultipartFilter``\ から \ ``DispatcherServlet``\ にフィルタチェーンする。
    * - | (5)
@@ -49,16 +49,16 @@ Servlet 3.0からサポートされたファイルアップロード機能と、
    * - | (6)
      - | Controllerは、 \ ``MultipartFile``\ オブジェクトのメソッドを呼び出し、アップロードされたファイルの中身と、メタ情報(ファイル名など)を取得する。
    * - | (7)
-     - | \ ``MultipartFile``\ は、Servlet 3.0から導入された \ ``Part``\ オブジェクトのメソッドを呼び出し、アップロードされたファイルの中身と、メタ情報(ファイル名など)を取得し、Controllerに返却する。
+     - | \ ``MultipartFile``\ は、\ ``Part``\ オブジェクトのメソッドを呼び出し、アップロードされたファイルの中身と、メタ情報(ファイル名など)を取得し、Controllerに返却する。
    * - | (8)
      - | Controllerは、Serviceのメソッドを呼び出し、アップロード処理を実行する。
        | \ ``MultipartFile``\ オブジェクトより取得した、ファイルの中身と、メタ情報(ファイル名など)は、Serviceのメソッドの引数として、引き渡す。
    * - | (9)
      - | Serviceは、アップロードされたファイルの中身と、メタ情報(ファイル名など)を、ファイルまたはデータベースに格納する。
    * - | (10)
-     - | \ ``MultipartFilter``\ は、 \ ``StandardServletMultipartResolver``\ を呼び出し、Servlet 3.0のファイルアップロード機能で使用される一時ファイルを削除する。
+     - | \ ``MultipartFilter``\ は、 \ ``StandardServletMultipartResolver``\ を呼び出し、Servletのファイルアップロード機能で使用される一時ファイルを削除する。
    * - | (11)
-     - | \ ``StandardServletMultipartResolver``\ は、Servlet 3.0から導入された \ ``Part``\ オブジェクトのメソッドを呼び出し、ディスクに保存されている一時ファイルを削除する。
+     - | \ ``StandardServletMultipartResolver``\ は、\ ``Part``\ オブジェクトのメソッドを呼び出し、ディスクに保存されている一時ファイルを削除する。
 
  .. raw:: latex
 
@@ -66,7 +66,7 @@ Servlet 3.0からサポートされたファイルアップロード機能と、
 
  .. note::
 
-    Controllerでは、Spring Webから提供されている\ ``MultipartFile``\ オブジェクトに対して処理を行うため、Servlet 3.0から提供されたファイルアップロード用のAPIに依存した実装を、排除することができる。
+    Controllerでは、Spring Webから提供されている\ ``MultipartFile``\ オブジェクトに対して処理を行うため、ファイルアップロード用のAPIに依存した実装を排除することができる。
 
 
 Spring Webから提供されているクラスについて
@@ -90,8 +90,8 @@ Spring Webから提供されているファイルアップロード用のクラ�
      - | org.springframework.web.multipart.support.
        | StandardMultipartHttpServletRequest$
        | StandardMultipartFile
-     - | Servlet 3.0から導入されたファイルアップロード機能用の\ ``MultipartFile``\ クラス。
-       | Servlet 3.0から導入された\ ``Part``\ オブジェクトに、処理を委譲している。
+     - | ファイルアップロード機能用の\ ``MultipartFile``\ クラス。
+       | \ ``Part``\ オブジェクトに、処理を委譲している。
    * - 3.
      - | org.springframework.web.multipart.
        | MultipartResolver
@@ -100,7 +100,7 @@ Spring Webから提供されているファイルアップロード用のクラ�
    * - 4.
      - | org.springframework.web.multipart.support.
        | StandardServletMultipartResolver
-     - | Servlet 3.0から導入されたファイルアップロード機能用の\ ``MultipartResolver``\ クラス。
+     - | ファイルアップロード機能用の\ ``MultipartResolver``\ クラス。
    * - 5.
      - | org.springframework.web.multipart.support.
        | MultipartFilter
@@ -120,19 +120,18 @@ How to use
 
 .. _file-upload_how_to_enable_Servlet_3.0:
 
-Servlet 3.0のアップロード機能を有効化するための設定
+Servlet のアップロード機能を有効化するための設定
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-Servlet 3.0のアップロード機能を有効化するために、以下の設定を行う。
+Servlet のアップロード機能を有効化するために、以下の設定を行う。
 
 - :file:`web.xml`
 
  .. code-block:: xml
    :emphasize-lines: 11-15
 
-    <web-app xmlns="http://java.sun.com/xml/ns/javaee"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
-        version="3.0"> <!-- (1) (2) -->
+    <web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
+        version="4.0"> <!-- (1) (2) -->
 
         <servlet>
             <servlet-class>
@@ -313,7 +312,7 @@ multipart/form-dataリクエストの時、ファイルアップロードで許�
     また、プロジェクト独自で作成するServlet Filterでリクエストパラメータにアクセスするものがある場合は、そのServlet Filterより前に定義すること。
 
     ただし、\ ``springSecurityFilterChain``\ より前に定義することで、認証又は認可されていないユーザーからのアップロード(一時ファイル作成)を許容することになる。
-    この動作を回避する方法が\ `Spring Security Reference -Include CSRF Token in URL- <https://docs.spring.io/spring-security/reference/5.7.11/reactive/exploits/csrf.html#webflux-csrf-considerations-multipart-url>`_\ の中で紹介されているが、セキュリティ上のリスクを含む回避方法になるため、本ガイドラインでは回避策の適用は推奨していない。
+    この動作を回避する方法が\ `Spring Security Reference -Include CSRF Token in URL- <https://docs.spring.io/spring-security/reference/5.7.13/reactive/exploits/csrf.html#webflux-csrf-considerations-multipart-url>`_\ の中で紹介されているが、セキュリティ上のリスクを含む回避方法になるため、本ガイドラインでは回避策の適用は推奨していない。
 
  .. warning:: **ファイルアップロードの許容サイズを超過した場合の注意点**
 
@@ -608,19 +607,19 @@ Controllerの実装
 
             // (4)
             if (!StringUtils.hasLength(uploadFile.getOriginalFilename())) {
-                result.rejectValue(uploadFile.getName(), "e.xx.at.6002");
+                result.rejectValue(uploadFile.getName(), "e.xx.yy.6002");
                 return "article/uploadForm";
             }
 
             // (5)
             if (uploadFile.isEmpty()) {
-                result.rejectValue(uploadFile.getName(), "e.xx.at.6003");
+                result.rejectValue(uploadFile.getName(), "e.xx.yy.6003");
                 return "article/uploadForm";
             }
 
             // (6)
             if (uploadAllowableFileSize < uploadFile.getSize()) {
-                result.rejectValue(uploadFile.getName(), "e.xx.at.6004",
+                result.rejectValue(uploadFile.getName(), "e.xx.yy.6004",
                         new Object[] { uploadAllowableFileSize }, null);
                 return "article/uploadForm";
             }
@@ -630,7 +629,7 @@ Controllerの実装
 
             // (8)
             redirectAttributes.addFlashAttribute(ResultMessages.success().add(
-                    "i.xx.at.0001"));
+                    "i.xx.yy.0001"));
 
             // (9)
             return "redirect:/article/upload?complete";
@@ -694,7 +693,7 @@ Controllerの実装
  .. note:: **MultipartFileについて**
 
     MultipartFileには、アップロードされたファイルを操作するためのメソッドが用意されている。
-    各メソッドの利用方法については、\ `MultipartFileクラスのJavaDoc <https://docs.spring.io/spring-framework/docs/5.3.31/javadoc-api/org/springframework/web/multipart/MultipartFile.html>`_\ を参照されたい。
+    各メソッドの利用方法については、\ `MultipartFileクラスのJavaDoc <https://docs.spring.io/spring-framework/docs/5.3.39/javadoc-api/org/springframework/web/multipart/MultipartFile.html>`_\ を参照されたい。
 
 .. _fileupload_validator:
 
@@ -942,7 +941,7 @@ Controllerの実装
         // omit processing of upload.
 
         redirectAttributes.addFlashAttribute(ResultMessages.success().add(
-                "i.xx.at.0001"));
+                "i.xx.yy.0001"));
 
         return "redirect:/article/upload";
     }
@@ -1096,7 +1095,7 @@ Controllerの実装
         }
 
         redirectAttributes.addFlashAttribute(ResultMessages.success().add(
-                "i.xx.at.0001"));
+                "i.xx.yy.0001"));
 
         return "redirect:/article/upload?complete";
     }
@@ -1292,7 +1291,7 @@ Controllerの実装
         }
 
         redirectAttributes.addFlashAttribute(ResultMessages.success().add(
-                "i.xx.at.0001"));
+                "i.xx.yy.0001"));
 
         return "redirect:/article/upload?complete";
     }
@@ -1477,7 +1476,7 @@ How to extend
     不要なファイルを残したままにすると、ディスクを圧迫する可能性があるため、必ず不要なファイルを削除する仕組みを用意すること。
 
 本ガイドラインでは、Spring Frameworkから提供されている「Task Scheduler」機能を使用して、不要なファイルを削除する方法について説明する。
-「Task Scheduler」の詳細については、\ `Spring Framework Documentation -Task Execution and Scheduling- <https://docs.spring.io/spring-framework/docs/5.3.31/reference/html/integration.html#scheduling>`_\ を参照されたい。
+「Task Scheduler」の詳細については、\ `Spring Framework Documentation -Task Execution and Scheduling- <https://docs.spring.io/spring-framework/docs/5.3.39/reference/html/integration.html#scheduling>`_\ を参照されたい。
 
  .. note::
 
@@ -1627,7 +1626,7 @@ How to extend
      * ``0 0 * * * *`` : 毎時 0分に実行される。
      * ``0 0 9-17 * * MON-FRI`` : 平日9時～17時の間の毎時0分に実行される。
 
-    cronの指定値の詳細については、\ `CronExpressionのJavaDoc <https://docs.spring.io/spring-framework/docs/5.3.31/javadoc-api/org/springframework/scheduling/support/CronExpression.html#parse-java.lang.String->`_\ を参照されたい。
+    cronの指定値の詳細については、\ `CronExpressionのJavaDoc <https://docs.spring.io/spring-framework/docs/5.3.39/javadoc-api/org/springframework/scheduling/support/CronExpression.html#parse-java.lang.String->`_\ を参照されたい。
 
     実行タイミングは、アプリケーションをデプロイする環境によって異なる可能性があるため、外部プロパティから取得すること。
     外部プロパティの詳細については、\ :doc:`../GeneralFuncDetail/PropertyManagement`\ を参照されたい。

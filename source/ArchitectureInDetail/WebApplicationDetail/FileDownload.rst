@@ -42,7 +42,7 @@ Overview
 | クラスは、modelの情報を用いてExcelファイルをレンダリングするときに、サブクラスとして利用するクラスである。
 |
 | Spring では上記以外にも、いろいろなViewの実装を提供している。
-| Viewの技術詳細は、\ `Spring Framework Documentation -View Technologies- <https://docs.spring.io/spring-framework/docs/5.3.31/reference/html/web.html#mvc-view>`_\ を参照されたい。
+| Viewの技術詳細は、\ `Spring Framework Documentation -View Technologies- <https://docs.spring.io/spring-framework/docs/5.3.39/reference/html/web.html#mvc-view>`_\ を参照されたい。
 
 | 共通ライブラリから提供している、\ ``org.terasoluna.gfw.web.download.AbstractFileDownloadView``\ は、
 | 任意のファイルをダウンロードするために使用する抽象クラスである。
@@ -121,7 +121,7 @@ PDFファイルのダウンロード
 
 \
     .. note::
-        上記設定例は、依存ライブラリのバージョンを親プロジェクトである terasoluna-gfw-parent で管理する前提であるため、pom.xmlでのバージョンの指定は不要である。
+        上記設定例は、依存ライブラリのバージョンをBOMプロジェクトである terasoluna-dependencies で管理する前提であるため、pom.xmlでのバージョンの指定は不要である。
 
     .. note::
         iText 2.1.7を利用する場合、日本語の出力を行うためにはiTextAsianを依存ライブラリに追加する必要があったが、OpenPDFはデフォルトで日本語に対応しているため、追加は不要である。
@@ -288,13 +288,13 @@ Excelファイルのダウンロード
   
 .. note::
 
-  上記設定例は、依存ライブラリのバージョンを親プロジェクトである terasoluna-gfw-parent で管理する前提であるため、pom.xmlでのバージョンの指定は不要である。
+  上記設定例は、依存ライブラリのバージョンをBOMプロジェクトである terasoluna-dependencies で管理する前提であるため、pom.xmlでのバージョンの指定は不要である。
 
 .. note::
 
   xlsファイル形式をサポートしたい場合は \ ``AbstractXlsView``\ を使用されたい。
 
-  詳細は、\ `AbstractXlsViewのJavaDoc <https://docs.spring.io/spring-framework/docs/5.3.31/javadoc-api/org/springframework/web/servlet/view/document/AbstractXlsView.html>`_\ を参照されたい。
+  詳細は、\ `AbstractXlsViewのJavaDoc <https://docs.spring.io/spring-framework/docs/5.3.39/javadoc-api/org/springframework/web/servlet/view/document/AbstractXlsView.html>`_\ を参照されたい。
 
 .. note::
 
@@ -314,7 +314,7 @@ Excelファイルのダウンロード
           </dependency>
       </dependencies>
   
-  上記設定例は、依存ライブラリのバージョンを親プロジェクトである terasoluna-gfw-parent で管理する前提であるため、pom.xmlでのバージョンの指定は不要である。
+  上記設定例は、依存ライブラリのバージョンをBOMプロジェクトである terasoluna-dependencies で管理する前提であるため、pom.xmlでのバージョンの指定は不要である。
     
     .. warning:: 
 
@@ -459,7 +459,7 @@ ViewResolverの定義
 
         前述してきたように、SpringはModelの情報をいろいろなViewにレンダリングすることができる。
         Springでは、複数のレンダリングエンジンをサポートしており、さまざまなViewを返却することが可能である。
-        詳細は、Spring の公式ドキュメント\ `Spring Framework Documentation -View Technologies- <https://docs.spring.io/spring-framework/docs/5.3.31/reference/html/web.html#mvc-view>`_\ を参照されたい。
+        詳細は、Spring の公式ドキュメント\ `Spring Framework Documentation -View Technologies- <https://docs.spring.io/spring-framework/docs/5.3.39/reference/html/web.html#mvc-view>`_\ を参照されたい。
 
 .. raw:: latex
 

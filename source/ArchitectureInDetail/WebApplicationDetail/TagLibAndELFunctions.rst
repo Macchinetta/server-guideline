@@ -379,7 +379,7 @@ RFC 3986では、クエリ文字列のパート以下のように定義してい
     "\ ``+``\" がエンコーディング対象外となったことによる影響を受ける可能性がある為、注意すること。
     なお、\ ``UriComponentsBuilder``\ では、クエリパラメータに含まれる\ ``unreserved``\文字以外をエンコーディングする機能を提供している為、
     当機能を用いる事でクエリパラメータに含まれる "\ ``+``\" のエンコーディングは可能である。
-    \ ``UriComponentsBuilder``\ を利用してURIをエンコーディングする方法については、`Spring Framework Documentation -URI Encoding- <https://docs.spring.io/spring-framework/docs/5.3.31/reference/html/web.html#web-uri-encoding>`_\ を参照されたい。
+    \ ``UriComponentsBuilder``\ を利用してURIをエンコーディングする方法については、`Spring Framework Documentation -URI Encoding- <https://docs.spring.io/spring-framework/docs/5.3.39/reference/html/web.html#web-uri-encoding>`_\ を参照されたい。
 
 
 f:query() 関数仕様
@@ -417,7 +417,7 @@ f:query() 関数仕様
     指定されたオブジェクトのシンプル型のプロパティ値は、
     \ ``org.springframework.format.support.DefaultFormattingConversionService``\ の \ ``convert``\ メソッドを使用して文字列に変換される。
     \ ``ConversionService``\ については、
-    \ `Spring Framework Documentation -Spring Type Conversion- <https://docs.spring.io/spring-framework/docs/5.3.31/reference/html/core.html#core-convert>`_\ を参照されたい。
+    \ `Spring Framework Documentation -Spring Type Conversion- <https://docs.spring.io/spring-framework/docs/5.3.39/reference/html/core.html#core-convert>`_\ を参照されたい。
 
 
 **戻り値**
@@ -497,7 +497,7 @@ f:query() 関数仕様
 
     Spring Web MVCのバインディング処理(\ ``WebDataBinder``\)のデフォルト設定では「"\ ``_``\" (アンダースコア) + プロパティ名」のリクエストパラメータが送信された場合、
     \ ``List``\、配列、\ ``Map``\に対してはそれぞれに対応する空のオブジェクトをバインドし、\ ``boolean``\及び\ ``Boolean``\型のプロパティに対しては\ ``Boolean``\型のfalseをバインドする。
-    詳細は\ `WebDataBinder#getEmptyValueのJavadoc <https://docs.spring.io/spring-framework/docs/5.3.31/javadoc-api/org/springframework/web/bind/WebDataBinder.html#getEmptyValue-java.lang.Class->`_\を参照されたい。
+    詳細は\ `WebDataBinder#getEmptyValueのJavadoc <https://docs.spring.io/spring-framework/docs/5.3.39/javadoc-api/org/springframework/web/bind/WebDataBinder.html#getEmptyValue-java.lang.Class->`_\を参照されたい。
 
     terasoluna-gfw-web 5.6.0.RELEASEからは、\ ``Boolean``\型プロパティで\ ``null``\がfalseに変換されてしまうことを防ぐため「"\ ``_``\" (アンダースコア) + プロパティ名」のリクエストパラメータを送信しないよう改善されている。
 
@@ -604,7 +604,7 @@ f:link() 関数仕様
       - \ ``java.lang.String``\
       - リンク先のURL文字列
 
-        URL文字列は、HTTP又はHTTPSスキーマのURL形式である必要がある。
+        URL文字列は、HTTP又はHTTPSスキームのURL形式である必要がある。
         （e.g : \ ``http://hostname:80/macchinetta/global.ex?id=123``\ ）
 
 **戻り値**
@@ -621,12 +621,11 @@ f:link() 関数仕様
       - \ ``java.lang.String``\
       - 引数に指定された文字列を元に生成したハイパーリンク(\ ``<a>``\ タグ)
 
-        引数に指定された文字列が、
+        引数に指定された文字列に、URLとして許可していない文字列を指定した場合、以下のとおり動作する。
 
-        * 引数で指定された文字列が\ ``null``\ の場合は、空文字(\ ``""``\ )
-        * HTTP又はHTTPSスキーマのURL形式でない場合は、ハイパーリンクを生成せず入力値の文字列
-
-        を返却する。
+        * 引数で指定された文字列が\ ``null``\ の場合は、空文字(\ ``""``\ )を返却
+        * HTTP又はHTTPSスキームのURL形式でない場合は、ハイパーリンクを生成せず入力値の文字列を返却
+        * \ `RFC 3986 <https://www.ietf.org/rfc/rfc3986.txt>`_\ で許可していない文字を使用している場合は、ハイパーリンクを生成せず入力値の文字列を返却
 
 f:link() 使用方法
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -665,7 +664,7 @@ f:link() 使用方法
     リクエストパラメータを付加する場合は、\ ``f:query()``\ 関数や\ ``f:u()``\ 関数を使用して、
     リクエストパラメータの値を適切にURLエンコーディングすること。
 
-    また、戻り値の説明でも記載しているが、引数のURL文字列の形式が適切でない場合は、
+    また、戻り値の説明でも記載しているが、引数のURL文字列に対応していないURLスキームおよびRFC 3986で許可していない文字を指定した場合は、
     ハイパーリンクを生成せず入力値の文字列を返却する仕様としている。
     そのため、引数に指定するURL文字列としてユーザからの入力値を使用する場合は、
     文字列出力処理と同様のHTML特殊文字のエスケープ処理(:doc:`../../Security/XSS`)が必要になるケースがある。

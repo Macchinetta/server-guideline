@@ -105,7 +105,7 @@ How to use
         | location属性には、カンマ区切りで複数のパスを指定することができる。
         | 上記設定により、クラスパス中のMETA-INF/springディレクトリ配下のpropertiesファイルを読み込む。
         | 一度設定すれば、あとはMETA-INF/spring以下にpropertiesファイルを追加するだけで良い。
-        | locationの設定値の詳細は、\ `Spring Framework Documentation -Resources- <https://docs.spring.io/spring-framework/docs/5.3.31/reference/html/core.html#resources>`_\ を参照されたい。
+        | locationの設定値の詳細は、\ `Spring Framework Documentation -Resources- <https://docs.spring.io/spring-framework/docs/5.3.39/reference/html/core.html#resources>`_\ を参照されたい。
 
  .. note::
 
@@ -410,7 +410,7 @@ How to extend
             String value = valueResolver.resolveStringValue(strVal); // (4)
 
             // Target messages only, implement coding
-            if (value.startsWith("Encrypted:")) { // (5)
+            if (StringUtils.startsWith(value, "Encrypted:")) { // (5)
                 value =  value.substring(10); // (6)
                 // omitted decryption
             }
