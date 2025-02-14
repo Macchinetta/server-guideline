@@ -92,7 +92,7 @@ URL一覧を以下に示す。
 プロジェクトの作成
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Mavenのアーキタイプを利用し、\ `Macchinetta Server Framework (1.x)のブランクプロジェクト <https://github.com/Macchinetta/macchinetta-web-blank/tree/1.10.0.RELEASE>`_\ を作成する。
+Mavenのアーキタイプを利用し、\ `Macchinetta Server Framework (1.x)のブランクプロジェクト <https://github.com/Macchinetta/macchinetta-web-blank/tree/1.11.0.RELEASE>`_\ を作成する。
 
 本チュートリアルでは、MyBatis3用のブランクプロジェクトを作成する。
 
@@ -109,7 +109,7 @@ Mavenのアーキタイプを利用し、\ `Macchinetta Server Framework (1.x)�
           mvn archetype:generate -B^
            -DarchetypeGroupId=com.github.macchinetta.blank^
            -DarchetypeArtifactId=macchinetta-web-blank-jsp-mybatis3-archetype^
-           -DarchetypeVersion=1.10.0.RELEASE^
+           -DarchetypeVersion=1.11.0.RELEASE^
            -DgroupId=com.example.security^
            -DartifactId=first-springsecurity^
            -Dversion=1.0.0-SNAPSHOT
@@ -121,7 +121,7 @@ Mavenのアーキタイプを利用し、\ `Macchinetta Server Framework (1.x)�
           mvn archetype:generate -B^
            -DarchetypeGroupId=com.github.macchinetta.blank^
            -DarchetypeArtifactId=macchinetta-web-blank-thymeleaf-mybatis3-archetype^
-           -DarchetypeVersion=1.10.0.RELEASE^
+           -DarchetypeVersion=1.11.0.RELEASE^
            -DgroupId=com.example.security^
            -DartifactId=first-springsecurity^
            -Dversion=1.0.0-SNAPSHOT
@@ -136,7 +136,7 @@ Mavenのアーキタイプを利用し、\ `Macchinetta Server Framework (1.x)�
           mvn archetype:generate -B^
            -DarchetypeGroupId=com.github.macchinetta.blank^
            -DarchetypeArtifactId=macchinetta-web-blank-xmlconfig-jsp-mybatis3-archetype^
-           -DarchetypeVersion=1.10.0.RELEASE^
+           -DarchetypeVersion=1.11.0.RELEASE^
            -DgroupId=com.example.security^
            -DartifactId=first-springsecurity^
            -Dversion=1.0.0-SNAPSHOT
@@ -148,7 +148,7 @@ Mavenのアーキタイプを利用し、\ `Macchinetta Server Framework (1.x)�
           mvn archetype:generate -B^
            -DarchetypeGroupId=com.github.macchinetta.blank^
            -DarchetypeArtifactId=macchinetta-web-blank-xmlconfig-thymeleaf-mybatis3-archetype^
-           -DarchetypeVersion=1.10.0.RELEASE^
+           -DarchetypeVersion=1.11.0.RELEASE^
            -DgroupId=com.example.security^
            -DartifactId=first-springsecurity^
            -Dversion=1.0.0-SNAPSHOT
@@ -241,8 +241,8 @@ Domain Objectの作成
 
       @Override
       public String toString() {
-          return "Account [username=" + username + ", password=" + password
-                  + ", firstName=" + firstName + ", lastName=" + lastName + "]";
+          return "Account [username=" + username + ", password=" + password + ", firstName="
+                  + firstName + ", lastName=" + lastName + "]";
       }
   }
 
@@ -274,8 +274,7 @@ AccountRepositoryの作成
 .. code-block:: xml
 
   <?xml version="1.0" encoding="UTF-8"?>
-  <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-      "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   <mapper namespace="com.example.security.domain.repository.account.AccountRepository">
 
       <resultMap id="accountResultMap" type="Account">
@@ -344,10 +343,8 @@ AccountSharedServiceの作成
   import org.terasoluna.gfw.common.exception.ResourceNotFoundException;
   import org.terasoluna.gfw.common.message.ResultMessage;
   import org.terasoluna.gfw.common.message.ResultMessages;
-
   import com.example.security.domain.model.Account;
   import com.example.security.domain.repository.account.AccountRepository;
-
   import jakarta.inject.Inject;
 
   @Service
@@ -363,8 +360,8 @@ AccountSharedServiceの作成
           // (2)
           if (account == null) {
               ResultMessages messages = ResultMessages.error();
-              messages.add(ResultMessage.fromText(
-                      "The given account is not found! username=" + username));
+              messages.add(
+                      ResultMessage.fromText("The given account is not found! username=" + username));
               throw new ResourceNotFoundException(messages);
           }
           return account;
@@ -400,7 +397,6 @@ AccountSharedServiceの作成
 
   import org.springframework.security.core.authority.AuthorityUtils;
   import org.springframework.security.core.userdetails.User;
-
   import com.example.security.domain.model.Account;
 
   public class SampleUserDetails extends User { // (1)
@@ -410,8 +406,8 @@ AccountSharedServiceの作成
 
       public SampleUserDetails(Account account) {
           // (3)
-          super(account.getUsername(), account.getPassword(), AuthorityUtils
-                  .createAuthorityList("ROLE_USER")); // (4)
+          super(account.getUsername(), account.getPassword(),
+                  AuthorityUtils.createAuthorityList("ROLE_USER")); // (4)
           this.account = account;
       }
 
@@ -449,17 +445,15 @@ AccountSharedServiceの作成
 
   package com.example.security.domain.service.userdetails;
 
-  import jakarta.inject.Inject;
-
   import org.springframework.security.core.userdetails.UserDetails;
   import org.springframework.security.core.userdetails.UserDetailsService;
   import org.springframework.security.core.userdetails.UsernameNotFoundException;
   import org.springframework.stereotype.Service;
   import org.springframework.transaction.annotation.Transactional;
   import org.terasoluna.gfw.common.exception.ResourceNotFoundException;
-
   import com.example.security.domain.model.Account;
   import com.example.security.domain.service.account.AccountSharedService;
+  import jakarta.inject.Inject;
 
   @Service
   public class SampleUserDetailsService implements UserDetailsService { // (1)
@@ -468,8 +462,7 @@ AccountSharedServiceの作成
 
       @Transactional(readOnly = true)
       @Override
-      public UserDetails loadUserByUsername(
-              String username) throws UsernameNotFoundException {
+      public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
           try {
               Account account = accountSharedService.findOne(username); // (3)
               return new SampleUserDetails(account); // (4)
@@ -521,10 +514,9 @@ AccountSharedServiceの作成
           bean.setDataSource(dataSource());
 
           ResourceDatabasePopulator databasePopulator = new ResourceDatabasePopulator();
-          databasePopulator.addScript(new ClassPathResource("/database/"
-                  + database + "-schema.sql"));
-          databasePopulator.addScript(new ClassPathResource("/database/"
-                  + database + "-dataload.sql"));
+          databasePopulator.addScript(new ClassPathResource("/database/" + database + "-schema.sql"));
+          databasePopulator
+                  .addScript(new ClassPathResource("/database/" + database + "-dataload.sql"));
           databasePopulator.setSqlScriptEncoding("UTF-8");
           databasePopulator.setIgnoreFailedDrops(true);
           bean.setDatabasePopulator(databasePopulator);
@@ -608,7 +600,7 @@ Package ExplorerのPackage PresentationはHierarchicalを使用している。
 Spring Securityの設定
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-\ ``spring-security.xml``\ にSpring Securityによる認証・認可の設定を行う。
+Spring Securityによる認証・認可の設定を行う。
 
 本チュートリアルで作成するアプリケーションで扱うURLのパターンを以下に示す。
 
@@ -651,8 +643,8 @@ Spring Securityの設定
 
           package com.example.security.config.web;
 
+          import static org.springframework.security.web.util.matcher.AntPathRequestMatcher.antMatcher;
           import java.util.LinkedHashMap;
-
           import org.springframework.beans.factory.annotation.Qualifier;
           import org.springframework.context.annotation.Bean;
           import org.springframework.context.annotation.Configuration;
@@ -662,9 +654,9 @@ Spring Securityの設定
           import org.springframework.security.config.Customizer;
           import org.springframework.security.config.annotation.web.builders.HttpSecurity;
           import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+          import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
           import org.springframework.security.core.userdetails.UserDetailsService;
           import org.springframework.security.crypto.password.PasswordEncoder;
-          import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
           import org.springframework.security.web.SecurityFilterChain;
           import org.springframework.security.web.access.AccessDeniedHandler;
           import org.springframework.security.web.access.AccessDeniedHandlerImpl;
@@ -673,7 +665,6 @@ Spring Securityの設定
           import org.springframework.security.web.authentication.AnonymousAuthenticationFilter;
           import org.springframework.security.web.csrf.InvalidCsrfTokenException;
           import org.springframework.security.web.csrf.MissingCsrfTokenException;
-          import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
           import org.terasoluna.gfw.security.web.logging.UserIdMDCPutFilter;
 
           /**
@@ -689,8 +680,7 @@ Spring Securityの設定
                */
               @Bean
               public WebSecurityCustomizer webSecurityCustomizer() {
-                  return web -> web.ignoring().requestMatchers(
-                          new AntPathRequestMatcher("/resources/**"));
+                  return web -> web.ignoring().requestMatchers(antMatcher("/resources/**"));
               }
 
               /**
@@ -702,23 +692,16 @@ Spring Securityの設定
               @Bean
               public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
                   // (1)
-                  http.formLogin(login -> login
-                          .loginPage("/login/loginForm")
-                          .loginProcessingUrl("/login")
+                  http.formLogin(login -> login.loginPage("/login/loginForm").loginProcessingUrl("/login")
                           .failureUrl("/login/loginForm?error=true"));
                   // (2)
-                  http.logout(logout -> logout
-                          .logoutSuccessUrl("/")
-                          .deleteCookies("JSESSIONID"));
-                  http.exceptionHandling(ex -> ex.accessDeniedHandler(
-                          accessDeniedHandler()));
-                  http.addFilterAfter(userIdMDCPutFilter(),
-                          AnonymousAuthenticationFilter.class);
+                  http.logout(logout -> logout.logoutSuccessUrl("/").deleteCookies("JSESSIONID"));
+                  http.exceptionHandling(ex -> ex.accessDeniedHandler(accessDeniedHandler()));
+                  http.addFilterAfter(userIdMDCPutFilter(), AnonymousAuthenticationFilter.class);
                   http.sessionManagement(Customizer.withDefaults());
                   // (3)
-                  http.authorizeHttpRequests(authz -> authz
-                          .requestMatchers(new AntPathRequestMatcher("/login/**")).permitAll()
-                          .requestMatchers(new AntPathRequestMatcher("/**")).authenticated());
+                  http.authorizeHttpRequests(authz -> authz.requestMatchers(antMatcher("/login/**"))
+                          .permitAll().requestMatchers(antMatcher("/**")).authenticated());
 
                   return http.build();
               }
@@ -731,8 +714,7 @@ Spring Securityの設定
                */
               // (4)
               @Bean
-              public AuthenticationProvider authProvider(
-                      UserDetailsService sampleUserDetailsService,
+              public AuthenticationProvider authProvider(UserDetailsService sampleUserDetailsService,
                       @Qualifier("passwordEncoder") PasswordEncoder passwordEncoder) {
                   DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
                   authProvider.setUserDetailsService(sampleUserDetailsService);
@@ -747,26 +729,24 @@ Spring Securityの設定
                */
               @Bean("accessDeniedHandler")
               public AccessDeniedHandler accessDeniedHandler() {
-                  LinkedHashMap<Class<? extends AccessDeniedException>, AccessDeniedHandler> errorHandlers = new LinkedHashMap<>();
+                  LinkedHashMap<Class<? extends AccessDeniedException>, AccessDeniedHandler> errorHandlers =
+                          new LinkedHashMap<>();
 
                   // Invalid CSRF authenticator error handler
                   AccessDeniedHandlerImpl invalidCsrfTokenErrorHandler = new AccessDeniedHandlerImpl();
-                  invalidCsrfTokenErrorHandler.setErrorPage(
-                          "/WEB-INF/views/common/error/invalidCsrfTokenError.jsp");
-                  errorHandlers.put(InvalidCsrfTokenException.class,
-                          invalidCsrfTokenErrorHandler);
+                  invalidCsrfTokenErrorHandler
+                          .setErrorPage("/WEB-INF/views/common/error/invalidCsrfTokenError.jsp");
+                  errorHandlers.put(InvalidCsrfTokenException.class, invalidCsrfTokenErrorHandler);
 
                   // Missing CSRF authenticator error handler
                   AccessDeniedHandlerImpl missingCsrfTokenErrorHandler = new AccessDeniedHandlerImpl();
-                  missingCsrfTokenErrorHandler.setErrorPage(
-                          "/WEB-INF/views/common/error/missingCsrfTokenError.jsp");
-                  errorHandlers.put(MissingCsrfTokenException.class,
-                          missingCsrfTokenErrorHandler);
+                  missingCsrfTokenErrorHandler
+                          .setErrorPage("/WEB-INF/views/common/error/missingCsrfTokenError.jsp");
+                  errorHandlers.put(MissingCsrfTokenException.class, missingCsrfTokenErrorHandler);
 
                   // Default error handler
                   AccessDeniedHandlerImpl defaultErrorHandler = new AccessDeniedHandlerImpl();
-                  defaultErrorHandler.setErrorPage(
-                          "/WEB-INF/views/common/error/accessDeniedError.jsp");
+                  defaultErrorHandler.setErrorPage("/WEB-INF/views/common/error/accessDeniedError.jsp");
 
                   return new DelegatingAccessDeniedHandler(errorHandlers, defaultErrorHandler);
               }
@@ -796,8 +776,8 @@ Spring Securityの設定
 
           package com.example.security.config.web;
 
+          import static org.springframework.security.web.util.matcher.AntPathRequestMatcher.antMatcher;
           import java.util.LinkedHashMap;
-
           import org.springframework.beans.factory.annotation.Qualifier;
           import org.springframework.context.annotation.Bean;
           import org.springframework.context.annotation.Configuration;
@@ -807,9 +787,9 @@ Spring Securityの設定
           import org.springframework.security.config.Customizer;
           import org.springframework.security.config.annotation.web.builders.HttpSecurity;
           import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+          import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
           import org.springframework.security.core.userdetails.UserDetailsService;
           import org.springframework.security.crypto.password.PasswordEncoder;
-          import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
           import org.springframework.security.web.SecurityFilterChain;
           import org.springframework.security.web.access.AccessDeniedHandler;
           import org.springframework.security.web.access.AccessDeniedHandlerImpl;
@@ -818,7 +798,6 @@ Spring Securityの設定
           import org.springframework.security.web.authentication.AnonymousAuthenticationFilter;
           import org.springframework.security.web.csrf.InvalidCsrfTokenException;
           import org.springframework.security.web.csrf.MissingCsrfTokenException;
-          import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
           import org.terasoluna.gfw.security.web.logging.UserIdMDCPutFilter;
 
           /**
@@ -834,8 +813,7 @@ Spring Securityの設定
                */
               @Bean
               public WebSecurityCustomizer webSecurityCustomizer() {
-                  return web -> web.ignoring().requestMatchers(
-                          new AntPathRequestMatcher("/resources/**"));
+                  return web -> web.ignoring().requestMatchers(antMatcher("/resources/**"));
               }
 
               /**
@@ -847,23 +825,16 @@ Spring Securityの設定
               @Bean
               public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
                   // (1)
-                  http.formLogin(login -> login
-                          .loginPage("/login/loginForm")
-                          .loginProcessingUrl("/login")
+                  http.formLogin(login -> login.loginPage("/login/loginForm").loginProcessingUrl("/login")
                           .failureUrl("/login/loginForm?error=true"));
                   // (2)
-                  http.logout(logout -> logout
-                          .logoutSuccessUrl("/")
-                          .deleteCookies("JSESSIONID"));
-                  http.exceptionHandling(ex -> ex.accessDeniedHandler(
-                          accessDeniedHandler()));
-                  http.addFilterAfter(userIdMDCPutFilter(),
-                          AnonymousAuthenticationFilter.class);
+                  http.logout(logout -> logout.logoutSuccessUrl("/").deleteCookies("JSESSIONID"));
+                  http.exceptionHandling(ex -> ex.accessDeniedHandler(accessDeniedHandler()));
+                  http.addFilterAfter(userIdMDCPutFilter(), AnonymousAuthenticationFilter.class);
                   http.sessionManagement(Customizer.withDefaults());
                   // (3)
-                  http.authorizeHttpRequests(authz -> authz
-                          .requestMatchers(new AntPathRequestMatcher("/login/**")).permitAll()
-                          .requestMatchers(new AntPathRequestMatcher("/**")).authenticated());
+                  http.authorizeHttpRequests(authz -> authz.requestMatchers(antMatcher("/login/**"))
+                          .permitAll().requestMatchers(antMatcher("/**")).authenticated());
 
                   return http.build();
               }
@@ -876,8 +847,7 @@ Spring Securityの設定
                */
               // (4)
               @Bean
-              public AuthenticationProvider authProvider(
-                      UserDetailsService sampleUserDetailsService,
+              public AuthenticationProvider authProvider(UserDetailsService sampleUserDetailsService,
                       @Qualifier("passwordEncoder") PasswordEncoder passwordEncoder) {
                   DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
                   authProvider.setUserDetailsService(sampleUserDetailsService);
@@ -892,21 +862,18 @@ Spring Securityの設定
                */
               @Bean("accessDeniedHandler")
               public AccessDeniedHandler accessDeniedHandler() {
-                  LinkedHashMap<Class<? extends AccessDeniedException>, AccessDeniedHandler> errorHandlers = new LinkedHashMap<>();
+                  LinkedHashMap<Class<? extends AccessDeniedException>, AccessDeniedHandler> errorHandlers =
+                          new LinkedHashMap<>();
 
                   // Invalid CSRF authenticator error handler
                   AccessDeniedHandlerImpl invalidCsrfTokenErrorHandler = new AccessDeniedHandlerImpl();
-                  invalidCsrfTokenErrorHandler.setErrorPage(
-                          "/common/error/invalidCsrfTokenError");
-                  errorHandlers.put(InvalidCsrfTokenException.class,
-                          invalidCsrfTokenErrorHandler);
+                  invalidCsrfTokenErrorHandler.setErrorPage("/common/error/invalidCsrfTokenError");
+                  errorHandlers.put(InvalidCsrfTokenException.class, invalidCsrfTokenErrorHandler);
 
                   // Missing CSRF authenticator error handler
                   AccessDeniedHandlerImpl missingCsrfTokenErrorHandler = new AccessDeniedHandlerImpl();
-                  missingCsrfTokenErrorHandler.setErrorPage(
-                          "/common/error/missingCsrfTokenError");
-                  errorHandlers.put(MissingCsrfTokenException.class,
-                          missingCsrfTokenErrorHandler);
+                  missingCsrfTokenErrorHandler.setErrorPage("/common/error/missingCsrfTokenError");
+                  errorHandlers.put(MissingCsrfTokenException.class, missingCsrfTokenErrorHandler);
 
                   // Default error handler
                   AccessDeniedHandlerImpl defaultErrorHandler = new AccessDeniedHandlerImpl();
@@ -995,12 +962,10 @@ Spring Securityの設定
           <beans xmlns="http://www.springframework.org/schema/beans"
               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
               xmlns:sec="http://www.springframework.org/schema/security"
-              xsi:schemaLocation="
-                  http://www.springframework.org/schema/security https://www.springframework.org/schema/security/spring-security.xsd
-                  http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
-              ">
+              xsi:schemaLocation="http://www.springframework.org/schema/security https://www.springframework.org/schema/security/spring-security.xsd
+                                  http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd">
 
-              <sec:http pattern="/resources/**" request-matcher="ant" security="none"/>
+              <sec:http pattern="/resources/**" request-matcher="ant" security="none" />
               <sec:http request-matcher="ant">
 
                   <!-- (1) -->
@@ -1012,14 +977,14 @@ Spring Securityの設定
                   <sec:intercept-url pattern="/login/**"
                       access="permitAll" />
                   <sec:intercept-url pattern="/**" access="isAuthenticated()" />
-                  <sec:access-denied-handler ref="accessDeniedHandler"/>
-                  <sec:custom-filter ref="userIdMDCPutFilter" after="ANONYMOUS_FILTER"/>
+                  <sec:access-denied-handler ref="accessDeniedHandler" />
+                  <sec:custom-filter ref="userIdMDCPutFilter" after="ANONYMOUS_FILTER" />
                   <sec:session-management />
               </sec:http>
 
               <sec:authentication-manager>
                   <!-- com.example.security.domain.service.userdetails.SampleUserDetailsService 
-                      is scanned by component scan with @Service -->
+                                is scanned by component scan with @Service -->
                   <!-- (4) -->
                   <sec:authentication-provider
                       user-service-ref="sampleUserDetailsService">
@@ -1059,7 +1024,7 @@ Spring Securityの設定
                       </bean>
                   </constructor-arg>
               </bean>
-                   
+
               <bean id="webSecurityExpressionHandler" class="org.springframework.security.web.access.expression.DefaultWebSecurityExpressionHandler" />
 
               <!-- Put UserID into MDC -->
@@ -1076,12 +1041,10 @@ Spring Securityの設定
           <beans xmlns="http://www.springframework.org/schema/beans"
               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
               xmlns:sec="http://www.springframework.org/schema/security"
-              xsi:schemaLocation="
-                  http://www.springframework.org/schema/security https://www.springframework.org/schema/security/spring-security.xsd
-                  http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
-              ">
+              xsi:schemaLocation="http://www.springframework.org/schema/security https://www.springframework.org/schema/security/spring-security.xsd
+                                  http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd">
 
-              <sec:http pattern="/resources/**" request-matcher="ant" security="none"/>
+              <sec:http pattern="/resources/**" request-matcher="ant" security="none" />
               <sec:http request-matcher="ant">
 
                   <!-- (1) -->
@@ -1093,14 +1056,14 @@ Spring Securityの設定
                   <sec:intercept-url pattern="/login/**"
                       access="permitAll" />
                   <sec:intercept-url pattern="/**" access="isAuthenticated()" />
-                  <sec:access-denied-handler ref="accessDeniedHandler"/>
-                  <sec:custom-filter ref="userIdMDCPutFilter" after="ANONYMOUS_FILTER"/>
+                  <sec:access-denied-handler ref="accessDeniedHandler" />
+                  <sec:custom-filter ref="userIdMDCPutFilter" after="ANONYMOUS_FILTER" />
                   <sec:session-management />
               </sec:http>
 
               <sec:authentication-manager>
                   <!-- com.example.security.domain.service.userdetails.SampleUserDetailsService 
-                      is scanned by component scan with @Service -->
+                                is scanned by component scan with @Service -->
                   <!-- (4) -->
                   <sec:authentication-provider
                       user-service-ref="sampleUserDetailsService">
@@ -1249,42 +1212,37 @@ Spring Securityの設定
 
       <!DOCTYPE html>
       <html>
-      <head>
-      <title>Login Page</title>
-      <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/app/css/styles.css">
-      </head>
-      <body>
-          <div id="wrapper">
-              <h3>Login with Username and Password</h3>
-
-              <!-- (1) -->
-              <c:if test="${param.containsKey('error')}">
-                  <!-- (2) -->
-                  <t:messagesPanel messagesType="error"
-                      messagesAttributeName="SPRING_SECURITY_LAST_EXCEPTION" />
-              </c:if>
-
-              <!-- (3) -->
-              <form:form action="${pageContext.request.contextPath}/login">
-                  <table>
-                      <tr>
-                          <td><label for="username">User:</label></td>
-                          <td><input type="text" id="username"
-                              name="username" value="demo">(demo)</td><!-- (4) -->
-                      </tr>
-                      <tr>
-                          <td><label for="password">Password:</label></td>
-                          <td><input type="password" id="password"
-                              name="password" value="demo" />(demo)</td><!-- (5) -->
-                      </tr>
-                      <tr>
-                          <td>&nbsp;</td>
-                          <td><input name="submit" type="submit" value="Login" /></td>
-                      </tr>
-                  </table>
-              </form:form>
-          </div>
-      </body>
+          <head>
+              <title>Login Page</title>
+              <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/app/css/styles.css" />
+          </head>
+          <body>
+              <div id="wrapper">
+                  <h3>Login with Username and Password</h3>
+                  <!-- (1) -->
+                  <c:if test="${param.containsKey('error')}">
+                      <!-- (2) -->
+                      <t:messagesPanel messagesType="error" messagesAttributeName="SPRING_SECURITY_LAST_EXCEPTION" />
+                  </c:if>
+                  <!-- (3) -->
+                  <form:form action="${pageContext.request.contextPath}/login">
+                      <table>
+                          <tr>
+                              <td><label for="username">User:</label></td>
+                              <td><input type="text" id="username" name="username" value="demo" />(demo)</td> <!-- (4) -->
+                          </tr>
+                          <tr>
+                              <td><label for="password">Password:</label></td>
+                              <td><input type="password" id="password" name="password" value="demo" />(demo)</td> <!-- (5) -->
+                          </tr>
+                          <tr>
+                              <td>&nbsp;</td>
+                              <td><input name="submit" type="submit" value="Login" /></td>
+                          </tr>
+                      </table>
+                  </form:form>
+              </div>
+          </body>
       </html>
 
     .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
@@ -1324,43 +1282,41 @@ Spring Securityの設定
 
       <!DOCTYPE html>
       <html xmlns:th="http://www.thymeleaf.org">
-      <head>
-      <title>Login Page</title>
-      <link rel="stylesheet" th:href="@{/resources/app/css/styles.css}">
-      </head>
-      <body>
-          <div id="wrapper">
-              <h3>Login with Username and Password</h3>
+          <head>
+              <title>Login Page</title>
+              <link rel="stylesheet" th:href="@{/resources/app/css/styles.css}" />
+          </head>
+          <body>
+              <div id="wrapper">
+                  <h3>Login with Username and Password</h3>
 
-              <!--/* (1) */-->
-              <div th:if="${param.containsKey('error')}"
-              th:with="exception = ${SPRING_SECURITY_LAST_EXCEPTION} ?: ${session[SPRING_SECURITY_LAST_EXCEPTION]}"> <!--/* (2) */-->
-                  <ul th:if="${exception != null}" class="alert alert-error">
-                      <li th:text="${exception.message}"></li>
-                  </ul>
+                  <!--/* (1) */-->
+                  <div th:if="${param.containsKey('error')}" th:with="exception = ${SPRING_SECURITY_LAST_EXCEPTION} ?: ${session[SPRING_SECURITY_LAST_EXCEPTION]}">
+                      <!--/* (2) */-->
+                      <ul th:if="${exception != null}" class="alert alert-error">
+                          <li th:text="${exception.message}"></li>
+                      </ul>
+                  </div>
+
+                  <!--/* (3) */-->
+                  <form th:action="@{/login}" method="post">
+                      <table>
+                          <tr>
+                              <td><label for="username">User:</label></td>
+                              <td><input type="text" id="username" name="username" value="demo" />(demo)</td><!--/* (4) */-->
+                          </tr>
+                          <tr>
+                              <td><label for="password">Password:</label></td>
+                              <td><input type="password" id="password" name="password" value="demo" />(demo)</td><!--/* (5) */-->
+                          </tr>
+                          <tr>
+                              <td>&nbsp;</td>
+                              <td><input name="submit" type="submit" value="Login" /></td>
+                          </tr>
+                      </table>
+                  </form>
               </div>
-
-              <!--/* (3) */-->
-              <form th:action="@{/login}" method="post">
-                  <table>
-                      <tr>
-                          <td><label for="username">User:</label></td>
-                          <td><input type="text" id="username"
-                              name="username" value="demo">(demo)</td> <!--/* (4) */-->
-                      </tr>
-                      <tr>
-                          <td><label for="password">Password:</label></td>
-                          <td><input type="password" id="password"
-                              name="password" value="demo">(demo)</td> <!--/* (5) */-->
-                      </tr>
-                      <tr>
-                          <td>&nbsp;</td>
-                          <td><input name="submit" type="submit" value="Login"></td>
-                      </tr>
-                  </table>
-              </form>
-          </div>
-      </body>
+          </body>
       </html>
 
     .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
@@ -1451,31 +1407,30 @@ Viewファイルからログインユーザーのアカウント情報へアク�
 
       <!DOCTYPE html>
       <html>
-      <head>
-      <meta charset="utf-8">
-      <title>Home</title>
-      <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/app/css/styles.css">
-      </head>
+          <head>
+              <meta charset="utf-8" />
+              <title>Home</title>
+              <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/app/css/styles.css" />
+          </head>
 
-      <!-- (1) -->
-      <sec:authentication property="principal.account" var="account" />
+          <!-- (1) -->
+          <sec:authentication property="principal.account" var="account" />
 
-      <body>
-          <div class="container">
-              <div id="wrapper">
-                  <h1 id="title">Hello world!</h1>
-                  <p>The time on the server is ${serverTime}.</p>
-                  <!-- (2) -->
-                  <p>Welcome ${f:h(account.firstName)} ${f:h(account.lastName)} !!</p>
-                  <ul>
-                      <li><a href="${pageContext.request.contextPath}/account">view account</a></li>
-                  </ul>
+          <body>
+              <div class="container">
+                  <div id="wrapper">
+                      <h1 id="title">Hello world!</h1>
+                      <p>The time on the server is ${serverTime}.</p>
+                      <!-- (2) -->
+                      <p>Welcome ${f:h(account.firstName)} ${f:h(account.lastName)} !!</p>
+                      <ul>
+                          <li><a href="${pageContext.request.contextPath}/account">view account</a></li>
+                      </ul>
+                  </div>
+                  <jsp:include page="../layout/footer.jsp" />
               </div>
-              <jsp:include page="../layout/footer.jsp" />
-          </div>
-      </body>
+          </body>
       </html>
-
 
     .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
     .. list-table::
@@ -1505,23 +1460,22 @@ Viewファイルからログインユーザーのアカウント情報へアク�
 
       <!DOCTYPE html>
       <html xmlns:th="http://www.thymeleaf.org">
-      <head>
-      <meta charset="utf-8">
-      <title>Home</title>
-      <link rel="stylesheet"
-          href="../../../resources/app/css/styles.css" th:href="@{/resources/app/css/styles.css}">
-      </head>
-      <body>
-          <div id="wrapper">
-              <h1 id="title">Hello world!</h1>
-              <p th:text="|The time on the server is ${serverTime}.|">The time on the server is 2018/01/01 00:00:00 JST.</p>
-              <!--/* (1) */-->
-              <p th:object="${#authentication.principal.account}" th:text="|Welcome *{firstName} *{lastName} !! |"></p>
-              <ul>
-                  <li><a th:href="@{/account}">view account</a></li>
-              </ul>
-          </div>
-      </body>
+          <head>
+              <meta charset="utf-8" />
+              <title>Home</title>
+              <link rel="stylesheet" href="../../../resources/app/css/styles.css" th:href="@{/resources/app/css/styles.css}" />
+          </head>
+          <body>
+              <div id="wrapper">
+                  <h1 id="title">Hello world!</h1>
+                  <p th:text="|The time on the server is ${serverTime}.|">The time on the server is 2018/01/01 00:00:00 JST.</p>
+                  <!--/* (1) */-->
+                  <p th:object="${#authentication.principal.account}" th:text="|Welcome *{firstName} *{lastName} !! |"></p>
+                  <ul>
+                      <li><a th:href="@{/account}">view account</a></li>
+                  </ul>
+              </div>
+          </body>
       </html>
 
     .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
@@ -1559,33 +1513,33 @@ Viewファイルからログインユーザーのアカウント情報へアク�
 
       <!DOCTYPE html>
       <html>
-      <head>
-      <meta charset="utf-8">
-      <title>Home</title>
-      <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/app/css/styles.css">
-      </head>
+          <head>
+              <meta charset="utf-8" />
+              <title>Home</title>
+              <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/app/css/styles.css" />
+          </head>
 
-      <sec:authentication property="principal.account" var="account" />
+          <sec:authentication property="principal.account" var="account" />
 
-      <body>
-          <div class="container">
-              <div id="wrapper">
-                  <h1 id="title">Hello world!</h1>
-                  <p>The time on the server is ${serverTime}.</p>
-                  <p>Welcome ${f:h(account.firstName)} ${f:h(account.lastName)} !!</p>
-                  <p>
-                      <!-- (1) -->
-                      <form:form action="${pageContext.request.contextPath}/logout">
-                          <button type="submit">Logout</button>
-                      </form:form>
-                  </p>
-                  <ul>
-                      <li><a href="${pageContext.request.contextPath}/account">view account</a></li>
-                  </ul>
+          <body>
+              <div class="container">
+                  <div id="wrapper">
+                      <h1 id="title">Hello world!</h1>
+                      <p>The time on the server is ${serverTime}.</p>
+                      <p>Welcome ${f:h(account.firstName)} ${f:h(account.lastName)} !!</p>
+                      <p>
+                          <!-- (1) -->
+                          <form:form action="${pageContext.request.contextPath}/logout">
+                              <button type="submit">Logout</button>
+                          </form:form>
+                      </p>
+                      <ul>
+                          <li><a href="${pageContext.request.contextPath}/account">view account</a></li>
+                      </ul>
+                  </div>
+                  <jsp:include page="../layout/footer.jsp" />
               </div>
-              <jsp:include page="../layout/footer.jsp" />
-          </div>
-      </body>
+          </body>
       </html>
 
     .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
@@ -1674,7 +1628,6 @@ Controllerからログインユーザーのアカウント情報へアクセス
   import org.springframework.ui.Model;
   import org.springframework.web.bind.annotation.GetMapping;
   import org.springframework.web.bind.annotation.RequestMapping;
-
   import com.example.security.domain.model.Account;
   import com.example.security.domain.service.userdetails.SampleUserDetails;
 
@@ -1683,8 +1636,7 @@ Controllerからログインユーザーのアカウント情報へアクセス
   public class AccountController {
 
       @GetMapping
-      public String view(
-              @AuthenticationPrincipal SampleUserDetails userDetails, // (1)
+      public String view(@AuthenticationPrincipal SampleUserDetails userDetails, // (1)
               Model model) {
           // (2)
           Account account = userDetails.getAccount();
@@ -1718,30 +1670,30 @@ Controllerからログインユーザーのアカウント情報へアクセス
 
       <!DOCTYPE html>
       <html>
-      <head>
-      <meta charset="utf-8">
-      <title>Home</title>
-      <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/app/css/styles.css">
-      </head>
-      <body>
-          <div id="wrapper">
-              <h1>Account Information</h1>
-              <table>
-                  <tr>
-                      <th>Username</th>
-                      <td>${f:h(account.username)}</td>
-                  </tr>
-                  <tr>
-                      <th>First name</th>
-                      <td>${f:h(account.firstName)}</td>
-                  </tr>
-                  <tr>
-                      <th>Last name</th>
-                      <td>${f:h(account.lastName)}</td>
-                  </tr>
-              </table>
-          </div>
-      </body>
+          <head>
+              <meta charset="utf-8" />
+              <title>Home</title>
+              <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/app/css/styles.css" />
+          </head>
+          <body>
+              <div id="wrapper">
+                  <h1>Account Information</h1>
+                  <table>
+                      <tr>
+                          <th>Username</th>
+                          <td>${f:h(account.username)}</td>
+                      </tr>
+                      <tr>
+                          <th>First name</th>
+                          <td>${f:h(account.firstName)}</td>
+                      </tr>
+                      <tr>
+                          <th>Last name</th>
+                          <td>${f:h(account.lastName)}</td>
+                      </tr>
+                  </table>
+              </div>
+          </body>
       </html>
 
   .. group-tab:: Thymeleaf
@@ -1752,30 +1704,30 @@ Controllerからログインユーザーのアカウント情報へアクセス
 
       <!DOCTYPE html>
       <html xmlns:th="http://www.thymeleaf.org">
-      <head>
-      <meta charset="utf-8">
-      <title>Home</title>
-      <link rel="stylesheet" th:href="@{/resources/app/css/styles.css}">
-      </head>
-      <body>
-          <div id="wrapper">
-              <h1>Account Information</h1>
-              <table th:object="${account}">
-                  <tr>
-                      <th>Username</th>
-                      <td th:text="*{username}"></td>
-                  </tr>
-                  <tr>
-                      <th>First name</th>
-                      <td th:text="*{firstName}"></td>
-                  </tr>
-                  <tr>
-                      <th>Last name</th>
-                      <td th:text="*{lastName}"></td>
-                  </tr>
-              </table>
-          </div>
-      </body>
+          <head>
+              <meta charset="utf-8" />
+              <title>Home</title>
+              <link rel="stylesheet" th:href="@{/resources/app/css/styles.css}" />
+          </head>
+          <body>
+              <div id="wrapper">
+                  <h1>Account Information</h1>
+                  <table th:object="${account}">
+                      <tr>
+                          <th>Username</th>
+                          <td th:text="*{username}"></td>
+                      </tr>
+                      <tr>
+                          <th>First name</th>
+                          <td th:text="*{firstName}"></td>
+                      </tr>
+                      <tr>
+                          <th>Last name</th>
+                          <td th:text="*{lastName}"></td>
+                      </tr>
+                  </table>
+              </div>
+          </body>
       </html>
 
 | 
@@ -1864,8 +1816,8 @@ spring-security
 
           package com.example.security.config.web;
 
+          import static org.springframework.security.web.util.matcher.AntPathRequestMatcher.antMatcher;
           import java.util.LinkedHashMap;
-
           import org.springframework.context.annotation.Bean;
           import org.springframework.context.annotation.Configuration;
           import org.springframework.security.access.AccessDeniedException;
@@ -1881,7 +1833,6 @@ spring-security
           import org.springframework.security.web.authentication.AnonymousAuthenticationFilter;
           import org.springframework.security.web.csrf.InvalidCsrfTokenException;
           import org.springframework.security.web.csrf.MissingCsrfTokenException;
-          import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
           import org.terasoluna.gfw.security.web.logging.UserIdMDCPutFilter;
 
           /**
@@ -1898,8 +1849,7 @@ spring-security
               // (1)
               @Bean
               public WebSecurityCustomizer webSecurityCustomizer() {
-                  return web -> web.ignoring().requestMatchers(
-                          new AntPathRequestMatcher("/resources/**"));
+                  return web -> web.ignoring().requestMatchers(antMatcher("/resources/**"));
               }
 
               /**
@@ -1915,15 +1865,12 @@ spring-security
                   http.formLogin(Customizer.withDefaults());
                   // (3)
                   http.logout(Customizer.withDefaults());
-                  http.exceptionHandling(ex -> ex.accessDeniedHandler(
-                          accessDeniedHandler()));
+                  http.exceptionHandling(ex -> ex.accessDeniedHandler(accessDeniedHandler()));
                   // (5)
-                  http.addFilterAfter(userIdMDCPutFilter(),
-                          AnonymousAuthenticationFilter.class);
+                  http.addFilterAfter(userIdMDCPutFilter(), AnonymousAuthenticationFilter.class);
                   // (6)
                   http.sessionManagement(Customizer.withDefaults());
-                  http.authorizeHttpRequests(authz -> authz.requestMatchers(
-                          new AntPathRequestMatcher("/**")).permitAll());
+                  http.authorizeHttpRequests(authz -> authz.requestMatchers(antMatcher("/**")).permitAll());
 
                   return http.build();
               }
@@ -1935,26 +1882,24 @@ spring-security
               // (4)
               @Bean("accessDeniedHandler")
               public AccessDeniedHandler accessDeniedHandler() {
-                  LinkedHashMap<Class<? extends AccessDeniedException>, AccessDeniedHandler> errorHandlers = new LinkedHashMap<>();
+                  LinkedHashMap<Class<? extends AccessDeniedException>, AccessDeniedHandler> errorHandlers =
+                          new LinkedHashMap<>();
 
                   // Invalid CSRF authenticator error handler
                   AccessDeniedHandlerImpl invalidCsrfTokenErrorHandler = new AccessDeniedHandlerImpl();
-                  invalidCsrfTokenErrorHandler.setErrorPage(
-                          "/WEB-INF/views/common/error/invalidCsrfTokenError.jsp");
-                  errorHandlers.put(InvalidCsrfTokenException.class,
-                          invalidCsrfTokenErrorHandler);
+                  invalidCsrfTokenErrorHandler
+                          .setErrorPage("/WEB-INF/views/common/error/invalidCsrfTokenError.jsp");
+                  errorHandlers.put(InvalidCsrfTokenException.class, invalidCsrfTokenErrorHandler);
 
                   // Missing CSRF authenticator error handler
                   AccessDeniedHandlerImpl missingCsrfTokenErrorHandler = new AccessDeniedHandlerImpl();
-                  missingCsrfTokenErrorHandler.setErrorPage(
-                          "/WEB-INF/views/common/error/missingCsrfTokenError.jsp");
-                  errorHandlers.put(MissingCsrfTokenException.class,
-                          missingCsrfTokenErrorHandler);
+                  missingCsrfTokenErrorHandler
+                          .setErrorPage("/WEB-INF/views/common/error/missingCsrfTokenError.jsp");
+                  errorHandlers.put(MissingCsrfTokenException.class, missingCsrfTokenErrorHandler);
 
                   // Default error handler
                   AccessDeniedHandlerImpl defaultErrorHandler = new AccessDeniedHandlerImpl();
-                  defaultErrorHandler.setErrorPage(
-                          "/WEB-INF/views/common/error/accessDeniedError.jsp");
+                  defaultErrorHandler.setErrorPage("/WEB-INF/views/common/error/accessDeniedError.jsp");
 
                   return new DelegatingAccessDeniedHandler(errorHandlers, defaultErrorHandler);
               }
@@ -1985,8 +1930,8 @@ spring-security
 
           package com.example.security.config.web;
 
+          import static org.springframework.security.web.util.matcher.AntPathRequestMatcher.antMatcher;
           import java.util.LinkedHashMap;
-
           import org.springframework.context.annotation.Bean;
           import org.springframework.context.annotation.Configuration;
           import org.springframework.security.access.AccessDeniedException;
@@ -2002,7 +1947,6 @@ spring-security
           import org.springframework.security.web.authentication.AnonymousAuthenticationFilter;
           import org.springframework.security.web.csrf.InvalidCsrfTokenException;
           import org.springframework.security.web.csrf.MissingCsrfTokenException;
-          import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
           import org.terasoluna.gfw.security.web.logging.UserIdMDCPutFilter;
 
           /**
@@ -2019,8 +1963,7 @@ spring-security
               // (1)
               @Bean
               public WebSecurityCustomizer webSecurityCustomizer() {
-                  return web -> web.ignoring().requestMatchers(
-                          new AntPathRequestMatcher("/resources/**"));
+                  return web -> web.ignoring().requestMatchers(antMatcher("/resources/**"));
               }
 
               /**
@@ -2029,22 +1972,19 @@ spring-security
                * @return Bean of configured {@link SecurityFilterChain}
                * @throws Exception Exception that occurs when setting HttpSecurity
                */
-               // (1)
+              // (1)
               @Bean
               public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
                   // (2)
                   http.formLogin(Customizer.withDefaults());
                   // (3)
                   http.logout(Customizer.withDefaults());
-                  http.exceptionHandling(ex -> ex.accessDeniedHandler(
-                          accessDeniedHandler()));
+                  http.exceptionHandling(ex -> ex.accessDeniedHandler(accessDeniedHandler()));
                   // (5)
-                  http.addFilterAfter(userIdMDCPutFilter(),
-                          AnonymousAuthenticationFilter.class);
+                  http.addFilterAfter(userIdMDCPutFilter(), AnonymousAuthenticationFilter.class);
                   // (6)
                   http.sessionManagement(Customizer.withDefaults());
-                  http.authorizeHttpRequests(authz -> authz.requestMatchers(
-                          new AntPathRequestMatcher("/**")).permitAll());
+                  http.authorizeHttpRequests(authz -> authz.requestMatchers(antMatcher("/**")).permitAll());
 
                   return http.build();
               }
@@ -2056,21 +1996,18 @@ spring-security
               // (4)
               @Bean("accessDeniedHandler")
               public AccessDeniedHandler accessDeniedHandler() {
-                  LinkedHashMap<Class<? extends AccessDeniedException>, AccessDeniedHandler> errorHandlers = new LinkedHashMap<>();
+                  LinkedHashMap<Class<? extends AccessDeniedException>, AccessDeniedHandler> errorHandlers =
+                          new LinkedHashMap<>();
 
                   // Invalid CSRF authenticator error handler
                   AccessDeniedHandlerImpl invalidCsrfTokenErrorHandler = new AccessDeniedHandlerImpl();
-                  invalidCsrfTokenErrorHandler.setErrorPage(
-                          "/common/error/invalidCsrfTokenError");
-                  errorHandlers.put(InvalidCsrfTokenException.class,
-                          invalidCsrfTokenErrorHandler);
+                  invalidCsrfTokenErrorHandler.setErrorPage("/common/error/invalidCsrfTokenError");
+                  errorHandlers.put(InvalidCsrfTokenException.class, invalidCsrfTokenErrorHandler);
 
                   // Missing CSRF authenticator error handler
                   AccessDeniedHandlerImpl missingCsrfTokenErrorHandler = new AccessDeniedHandlerImpl();
-                  missingCsrfTokenErrorHandler.setErrorPage(
-                          "/common/error/missingCsrfTokenError");
-                  errorHandlers.put(MissingCsrfTokenException.class,
-                          missingCsrfTokenErrorHandler);
+                  missingCsrfTokenErrorHandler.setErrorPage("/common/error/missingCsrfTokenError");
+                  errorHandlers.put(MissingCsrfTokenException.class, missingCsrfTokenErrorHandler);
 
                   // Default error handler
                   AccessDeniedHandlerImpl defaultErrorHandler = new AccessDeniedHandlerImpl();
@@ -2149,22 +2086,20 @@ spring-security
           <beans xmlns="http://www.springframework.org/schema/beans"
               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
               xmlns:sec="http://www.springframework.org/schema/security"
-              xsi:schemaLocation="
-                  http://www.springframework.org/schema/security https://www.springframework.org/schema/security/spring-security.xsd
-                  http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
-              ">
+              xsi:schemaLocation="http://www.springframework.org/schema/security https://www.springframework.org/schema/security/spring-security.xsd
+                                  http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd">
 
               <!-- (1) -->
-              <sec:http pattern="/resources/**" request-matcher="ant" security="none"/>
+              <sec:http pattern="/resources/**" request-matcher="ant" security="none" />
               <sec:http request-matcher="ant">
                   <!-- (2) -->
-                  <sec:form-login/>
+                  <sec:form-login />
                   <!-- (3) -->
-                  <sec:logout/>
+                  <sec:logout />
                   <!-- (4) -->
-                  <sec:access-denied-handler ref="accessDeniedHandler"/>
+                  <sec:access-denied-handler ref="accessDeniedHandler" />
                   <!-- (5) -->
-                  <sec:custom-filter ref="userIdMDCPutFilter" after="ANONYMOUS_FILTER"/>
+                  <sec:custom-filter ref="userIdMDCPutFilter" after="ANONYMOUS_FILTER" />
                   <!-- (6) -->
                   <sec:session-management />
                   <sec:intercept-url pattern="/**" access="permitAll" />
@@ -2207,7 +2142,7 @@ spring-security
               </bean>
 
               <bean id="webSecurityExpressionHandler" class="org.springframework.security.web.access.expression.DefaultWebSecurityExpressionHandler" />
- 
+
               <!-- (5) -->
               <!-- Put UserID into MDC -->
               <bean id="userIdMDCPutFilter" class="org.terasoluna.gfw.security.web.logging.UserIdMDCPutFilter">
@@ -2223,22 +2158,20 @@ spring-security
           <beans xmlns="http://www.springframework.org/schema/beans"
               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
               xmlns:sec="http://www.springframework.org/schema/security"
-              xsi:schemaLocation="
-                  http://www.springframework.org/schema/security https://www.springframework.org/schema/security/spring-security.xsd
-                  http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
-              ">
+              xsi:schemaLocation="http://www.springframework.org/schema/security https://www.springframework.org/schema/security/spring-security.xsd
+                                  http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd">
 
               <!-- (1) -->
-              <sec:http pattern="/resources/**" request-matcher="ant" security="none"/>
+              <sec:http pattern="/resources/**" request-matcher="ant" security="none" />
               <sec:http request-matcher="ant">
                   <!-- (2) -->
-                  <sec:form-login/>
+                  <sec:form-login />
                   <!-- (3) -->
-                  <sec:logout/>
+                  <sec:logout />
                   <!-- (4) -->
-                  <sec:access-denied-handler ref="accessDeniedHandler"/>
+                  <sec:access-denied-handler ref="accessDeniedHandler" />
                   <!-- (5) -->
-                  <sec:custom-filter ref="userIdMDCPutFilter" after="ANONYMOUS_FILTER"/>
+                  <sec:custom-filter ref="userIdMDCPutFilter" after="ANONYMOUS_FILTER" />
                   <!-- (6) -->
                   <sec:session-management />
                   <sec:intercept-url pattern="/**" access="permitAll" />
@@ -2351,7 +2284,6 @@ spring-mvc
           import java.util.List;
           import java.util.Properties;
           import java.util.regex.Pattern;
-
           import org.springframework.aop.Advisor;
           import org.springframework.aop.aspectj.AspectJExpressionPointcut;
           import org.springframework.aop.support.DefaultPointcutAdvisor;
@@ -2388,7 +2320,7 @@ spring-mvc
           /**
            * Configure SpringMVC.
            */
-          @ComponentScan(basePackages = { "com.example.security.app" })
+          @ComponentScan(basePackages = {"com.example.security.app"})
           @EnableAspectJAutoProxy
           @EnableWebMvc
           @Configuration
@@ -2411,8 +2343,7 @@ spring-mvc
                * {@inheritDoc}
                */
               @Override
-              public void addArgumentResolvers(
-                      List<HandlerMethodArgumentResolver> argumentResolvers) {
+              public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
                   argumentResolvers.add(pageableHandlerMethodArgumentResolver());
                   argumentResolvers.add(authenticationPrincipalArgumentResolver()); // (1)
               }
@@ -2440,8 +2371,7 @@ spring-mvc
                * {@inheritDoc}
                */
               @Override
-              public void configureDefaultServletHandling(
-                      DefaultServletHandlerConfigurer configurer) {
+              public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
                   configurer.enable();
               }
 
@@ -2450,9 +2380,9 @@ spring-mvc
                */
               @Override
               public void addResourceHandlers(final ResourceHandlerRegistry registry) {
-                  registry.addResourceHandler("/resources/**").addResourceLocations(
-                          "/resources/", "classpath:META-INF/resources/").setCachePeriod(
-                                  60 * 60);
+                  registry.addResourceHandler("/resources/**")
+                          .addResourceLocations("/resources/", "classpath:META-INF/resources/")
+                          .setCachePeriod(60 * 60);
               }
 
               /**
@@ -2470,8 +2400,7 @@ spring-mvc
                * @param registry {@link InterceptorRegistry}
                * @param interceptor {@link HandlerInterceptor}
                */
-              private void addInterceptor(InterceptorRegistry registry,
-                      HandlerInterceptor interceptor) {
+              private void addInterceptor(InterceptorRegistry registry, HandlerInterceptor interceptor) {
                   registry.addInterceptor(interceptor).addPathPatterns("/**")
                           .excludePathPatterns("/resources/**");
               }
@@ -2519,7 +2448,8 @@ spring-mvc
                */
               @Bean("requestDataValueProcessor")
               public RequestDataValueProcessor requestDataValueProcessor() {
-                  return new CompositeRequestDataValueProcessor(csrfRequestDataValueProcessor(), transactionTokenRequestDataValueProcessor()); // (2)
+                  return new CompositeRequestDataValueProcessor(csrfRequestDataValueProcessor(),
+                          transactionTokenRequestDataValueProcessor()); // (2)
               }
 
               /**
@@ -2557,23 +2487,21 @@ spring-mvc
                   Properties exceptionMappings = new Properties();
                   exceptionMappings.setProperty("ResourceNotFoundException",
                           "common/error/resourceNotFoundError");
-                  exceptionMappings.setProperty("BusinessException",
-                          "common/error/businessError");
+                  exceptionMappings.setProperty("BusinessException", "common/error/businessError");
                   exceptionMappings.setProperty("InvalidTransactionTokenException",
                           "common/error/transactionTokenError");
-                  exceptionMappings.setProperty(".DataAccessException",
-                          "common/error/dataAccessError");
+                  exceptionMappings.setProperty(".DataAccessException", "common/error/dataAccessError");
                   bean.setExceptionMappings(exceptionMappings);
 
                   Properties statusCodes = new Properties();
-                  statusCodes.setProperty("common/error/resourceNotFoundError", String
-                          .valueOf(HttpStatus.NOT_FOUND.value()));
-                  statusCodes.setProperty("common/error/businessError", String.valueOf(
-                          HttpStatus.CONFLICT.value()));
-                  statusCodes.setProperty("common/error/transactionTokenError", String
-                          .valueOf(HttpStatus.CONFLICT.value()));
-                  statusCodes.setProperty("common/error/dataAccessError", String.valueOf(
-                          HttpStatus.INTERNAL_SERVER_ERROR.value()));
+                  statusCodes.setProperty("common/error/resourceNotFoundError",
+                          String.valueOf(HttpStatus.NOT_FOUND.value()));
+                  statusCodes.setProperty("common/error/businessError",
+                          String.valueOf(HttpStatus.CONFLICT.value()));
+                  statusCodes.setProperty("common/error/transactionTokenError",
+                          String.valueOf(HttpStatus.CONFLICT.value()));
+                  statusCodes.setProperty("common/error/dataAccessError",
+                          String.valueOf(HttpStatus.INTERNAL_SERVER_ERROR.value()));
                   bean.setStatusCodes(statusCodes);
 
                   bean.setDefaultErrorView("common/error/systemError");
@@ -2590,14 +2518,16 @@ spring-mvc
               @Bean("handlerExceptionResolverLoggingInterceptor")
               public HandlerExceptionResolverLoggingInterceptor handlerExceptionResolverLoggingInterceptor(
                       ExceptionLogger exceptionLogger) {
-                  HandlerExceptionResolverLoggingInterceptor bean = new HandlerExceptionResolverLoggingInterceptor();
+                  HandlerExceptionResolverLoggingInterceptor bean =
+                          new HandlerExceptionResolverLoggingInterceptor();
                   bean.setExceptionLogger(exceptionLogger);
                   return bean;
               }
 
               /**
                * Configure messages logging AOP advisor.
-               * @param handlerExceptionResolverLoggingInterceptor Bean defined by #handlerExceptionResolverLoggingInterceptor
+               * @param handlerExceptionResolverLoggingInterceptor Bean defined by
+               *        #handlerExceptionResolverLoggingInterceptor
                * @see #handlerExceptionResolverLoggingInterceptor(ExceptionLogger)
                * @return Advisor configured for PointCut
                */
@@ -2622,7 +2552,6 @@ spring-mvc
           import java.util.Properties;
           import java.util.Set;
           import java.util.regex.Pattern;
-
           import org.springframework.aop.Advisor;
           import org.springframework.aop.aspectj.AspectJExpressionPointcut;
           import org.springframework.aop.support.DefaultPointcutAdvisor;
@@ -2665,7 +2594,7 @@ spring-mvc
           /**
            * Configure SpringMVC.
            */
-          @ComponentScan(basePackages = { "com.example.security.app" })
+          @ComponentScan(basePackages = {"com.example.security.app"})
           @EnableAspectJAutoProxy
           @EnableWebMvc
           @Configuration
@@ -2688,8 +2617,7 @@ spring-mvc
                * {@inheritDoc}
                */
               @Override
-              public void addArgumentResolvers(
-                      List<HandlerMethodArgumentResolver> argumentResolvers) {
+              public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
                   argumentResolvers.add(pageableHandlerMethodArgumentResolver());
                   argumentResolvers.add(authenticationPrincipalArgumentResolver()); // (1)
               }
@@ -2717,8 +2645,7 @@ spring-mvc
                * {@inheritDoc}
                */
               @Override
-              public void configureDefaultServletHandling(
-                      DefaultServletHandlerConfigurer configurer) {
+              public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
                   configurer.enable();
               }
 
@@ -2727,9 +2654,9 @@ spring-mvc
                */
               @Override
               public void addResourceHandlers(final ResourceHandlerRegistry registry) {
-                  registry.addResourceHandler("/resources/**").addResourceLocations(
-                          "/resources/", "classpath:META-INF/resources/").setCachePeriod(
-                                  60 * 60);
+                  registry.addResourceHandler("/resources/**")
+                          .addResourceLocations("/resources/", "classpath:META-INF/resources/")
+                          .setCachePeriod(60 * 60);
               }
 
               /**
@@ -2747,8 +2674,7 @@ spring-mvc
                * @param registry {@link InterceptorRegistry}
                * @param interceptor {@link HandlerInterceptor}
                */
-              private void addInterceptor(InterceptorRegistry registry,
-                      HandlerInterceptor interceptor) {
+              private void addInterceptor(InterceptorRegistry registry, HandlerInterceptor interceptor) {
                   registry.addInterceptor(interceptor).addPathPatterns("/**")
                           .excludePathPatterns("/resources/**");
               }
@@ -2839,7 +2765,8 @@ spring-mvc
                */
               @Bean("requestDataValueProcessor")
               public RequestDataValueProcessor requestDataValueProcessor() {
-                  return new CompositeRequestDataValueProcessor(csrfRequestDataValueProcessor(), transactionTokenRequestDataValueProcessor()); // (2)
+                  return new CompositeRequestDataValueProcessor(csrfRequestDataValueProcessor(),
+                          transactionTokenRequestDataValueProcessor()); // (2)
               }
 
               /**
@@ -2877,23 +2804,21 @@ spring-mvc
                   Properties exceptionMappings = new Properties();
                   exceptionMappings.setProperty("ResourceNotFoundException",
                           "common/error/resourceNotFoundError");
-                  exceptionMappings.setProperty("BusinessException",
-                          "common/error/businessError");
+                  exceptionMappings.setProperty("BusinessException", "common/error/businessError");
                   exceptionMappings.setProperty("InvalidTransactionTokenException",
                           "common/error/transactionTokenError");
-                  exceptionMappings.setProperty(".DataAccessException",
-                          "common/error/dataAccessError");
+                  exceptionMappings.setProperty(".DataAccessException", "common/error/dataAccessError");
                   bean.setExceptionMappings(exceptionMappings);
 
                   Properties statusCodes = new Properties();
-                  statusCodes.setProperty("common/error/resourceNotFoundError", String
-                          .valueOf(HttpStatus.NOT_FOUND.value()));
-                  statusCodes.setProperty("common/error/businessError", String.valueOf(
-                          HttpStatus.CONFLICT.value()));
-                  statusCodes.setProperty("common/error/transactionTokenError", String
-                          .valueOf(HttpStatus.CONFLICT.value()));
-                  statusCodes.setProperty("common/error/dataAccessError", String.valueOf(
-                          HttpStatus.INTERNAL_SERVER_ERROR.value()));
+                  statusCodes.setProperty("common/error/resourceNotFoundError",
+                          String.valueOf(HttpStatus.NOT_FOUND.value()));
+                  statusCodes.setProperty("common/error/businessError",
+                          String.valueOf(HttpStatus.CONFLICT.value()));
+                  statusCodes.setProperty("common/error/transactionTokenError",
+                          String.valueOf(HttpStatus.CONFLICT.value()));
+                  statusCodes.setProperty("common/error/dataAccessError",
+                          String.valueOf(HttpStatus.INTERNAL_SERVER_ERROR.value()));
                   bean.setStatusCodes(statusCodes);
 
                   bean.setDefaultErrorView("common/error/systemError");
@@ -2910,14 +2835,16 @@ spring-mvc
               @Bean("handlerExceptionResolverLoggingInterceptor")
               public HandlerExceptionResolverLoggingInterceptor handlerExceptionResolverLoggingInterceptor(
                       ExceptionLogger exceptionLogger) {
-                  HandlerExceptionResolverLoggingInterceptor bean = new HandlerExceptionResolverLoggingInterceptor();
+                  HandlerExceptionResolverLoggingInterceptor bean =
+                          new HandlerExceptionResolverLoggingInterceptor();
                   bean.setExceptionLogger(exceptionLogger);
                   return bean;
               }
 
               /**
                * Configure messages logging AOP advisor.
-               * @param handlerExceptionResolverLoggingInterceptor Bean defined by #handlerExceptionResolverLoggingInterceptor
+               * @param handlerExceptionResolverLoggingInterceptor Bean defined by
+               *        #handlerExceptionResolverLoggingInterceptor
                * @see #handlerExceptionResolverLoggingInterceptor(ExceptionLogger)
                * @return Advisor configured for PointCut
                */
@@ -2968,11 +2895,10 @@ spring-mvc
               xmlns:util="http://www.springframework.org/schema/util"
               xmlns:aop="http://www.springframework.org/schema/aop"
               xsi:schemaLocation="http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
-                  http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
-                  http://www.springframework.org/schema/util https://www.springframework.org/schema/util/spring-util.xsd
-                  http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd
-                  http://www.springframework.org/schema/aop https://www.springframework.org/schema/aop/spring-aop.xsd
-              ">
+                                  http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+                                  http://www.springframework.org/schema/util https://www.springframework.org/schema/util/spring-util.xsd
+                                  http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd
+                                  http://www.springframework.org/schema/aop https://www.springframework.org/schema/aop/spring-aop.xsd">
 
               <context:property-placeholder
                   location="classpath*:/META-INF/spring/*.properties" />
@@ -3089,11 +3015,10 @@ spring-mvc
               xmlns:util="http://www.springframework.org/schema/util"
               xmlns:aop="http://www.springframework.org/schema/aop"
               xsi:schemaLocation="http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
-                  http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
-                  http://www.springframework.org/schema/util https://www.springframework.org/schema/util/spring-util.xsd
-                  http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd
-                  http://www.springframework.org/schema/aop https://www.springframework.org/schema/aop/spring-aop.xsd
-              ">
+                                  http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+                                  http://www.springframework.org/schema/util https://www.springframework.org/schema/util/spring-util.xsd
+                                  http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd
+                                  http://www.springframework.org/schema/aop https://www.springframework.org/schema/aop/spring-aop.xsd">
 
               <context:property-placeholder
                   location="classpath*:/META-INF/spring/*.properties" />
@@ -3238,8 +3163,6 @@ spring-mvc
         - \ ``<form:form>``\ タグ(JSPタグライブラリ)を使用して、CSRFトークン値をHTMLフォームに埋め込むための設定。
 
           \ ``CompositeRequestDataValueProcessor``\ のコンストラクタに\ ``CsrfRequestDataValueProcessor``\ を指定する。
-
-  \ ``CompositeRequestDataValueProcessor``\ のコンストラクタに\ ``CsrfRequestDataValueProcessor``\ を指定する。
 
 .. raw:: latex
 

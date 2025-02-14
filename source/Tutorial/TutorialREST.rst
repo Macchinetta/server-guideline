@@ -101,7 +101,7 @@ Chromeの右上の拡張機能のマークを押下して拡張機能一覧を�
 
 本チュートリアルでは、「\ :doc:`./TutorialTodo`\ 」または「\ :doc:`./TutorialTodoThymeleaf`\ 」で作成したプロジェクトに対して、RESTful Webサービスを追加する手順となっている。
 
-そのため、「\ :doc:`./TutorialTodo`\ 」または「\ :doc:`./TutorialTodoThymeleaf`\ 」で作成したプロジェクトが残っていない場合は、再度「\ :doc:`./TutorialTodo`\ 」または「\ :doc:`./TutorialTodoThymeleaf`\ 」を実施してプロジェクトを作成してほしい。
+そのため、「\ :doc:`./TutorialTodo`\ 」または「\ :doc:`./TutorialTodoThymeleaf`\ 」で作成したプロジェクトが残っていない場合は、再度「\ :doc:`./TutorialTodo`\ 」または「\ :doc:`./TutorialTodoThymeleaf`\ 」を実施してプロジェクトを作成してほしい。なお、\ :ref:`TutorialREST_systemexception_handling`\ で\ ``todo-infra.properties``\ を編集する操作があるため、MyBatis3用のブランクプロジェクトから作成したTODOプロジェクトを使用すること。
 
 .. note::
 
@@ -462,10 +462,10 @@ web.xmlの修正
                   <servlet-name>restApiServlet</servlet-name>
                   <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
                   <init-param>
-                    <param-name>contextClass</param-name>
-                    <param-value>
-                      org.springframework.web.context.support.AnnotationConfigWebApplicationContext
-                    </param-value>
+                      <param-name>contextClass</param-name>
+                      <param-value>
+                          org.springframework.web.context.support.AnnotationConfigWebApplicationContext
+                      </param-value>
                   </init-param>
                   <init-param>
                       <param-name>contextConfigLocation</param-name>
@@ -656,10 +656,10 @@ web.xmlの修正
                   <servlet-name>restApiServlet</servlet-name>
                   <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
                   <init-param>
-                    <param-name>contextClass</param-name>
-                    <param-value>
-                      org.springframework.web.context.support.AnnotationConfigWebApplicationContext
-                    </param-value>
+                      <param-name>contextClass</param-name>
+                      <param-value>
+                          org.springframework.web.context.support.AnnotationConfigWebApplicationContext
+                      </param-value>
                   </init-param>
                   <init-param>
                       <param-name>contextConfigLocation</param-name>
@@ -1099,7 +1099,6 @@ spring-mvc-restの作成
       package com.example.todo.config.web;
 
       import java.util.List;
-
       import org.springframework.aop.Advisor;
       import org.springframework.aop.aspectj.AspectJExpressionPointcut;
       import org.springframework.aop.support.DefaultPointcutAdvisor;
@@ -1120,14 +1119,13 @@ spring-mvc-restの作成
       import org.terasoluna.gfw.common.exception.ExceptionLogger;
       import org.terasoluna.gfw.web.exception.HandlerExceptionResolverLoggingInterceptor;
       import org.terasoluna.gfw.web.logging.TraceLoggingInterceptor;
-
       import com.fasterxml.jackson.databind.ObjectMapper;
       import com.fasterxml.jackson.databind.util.StdDateFormat;
 
       /**
        * Configure SpringMVCRest.
        */
-      @ComponentScan(basePackages = { "com.example.todo.api" }) // (5)
+      @ComponentScan(basePackages = {"com.example.todo.api"}) // (5)
       @EnableAspectJAutoProxy // (7)
       @EnableWebMvc
       @Configuration
@@ -1166,8 +1164,7 @@ spring-mvc-restの作成
           @Bean("objectMapper")
           public ObjectMapper objectMapper() {
               // (3)
-              return Jackson2ObjectMapperBuilder.json().build().setDateFormat(
-                      new StdDateFormat());
+              return Jackson2ObjectMapperBuilder.json().build().setDateFormat(new StdDateFormat());
           }
 
           /**
@@ -1175,8 +1172,7 @@ spring-mvc-restの作成
            */
           // (4)
           @Override
-          public void configureMessageConverters(
-                  List<HttpMessageConverter<?>> converters) {
+          public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
               // If you want to add a converter after adding the default converter,
               // use extendMessageConverters(List<HttpMessageConverter<?>> converters).
               converters.add(jsonMessageConverter());
@@ -1197,8 +1193,7 @@ spring-mvc-restの作成
            * @param interceptor {@link HandlerInterceptor}
            */
           // (6)
-          private void addInterceptor(InterceptorRegistry registry,
-                  HandlerInterceptor interceptor) {
+          private void addInterceptor(InterceptorRegistry registry, HandlerInterceptor interceptor) {
               registry.addInterceptor(interceptor).addPathPatterns("/**")
                       .excludePathPatterns("/resources/**", "/*/*.html");
           }
@@ -1223,14 +1218,16 @@ spring-mvc-restの作成
           @Bean(name = "handlerExceptionResolverLoggingInterceptor")
           public HandlerExceptionResolverLoggingInterceptor handlerExceptionResolverLoggingInterceptor(
                   ExceptionLogger exceptionLogger) {
-              HandlerExceptionResolverLoggingInterceptor bean = new HandlerExceptionResolverLoggingInterceptor();
+              HandlerExceptionResolverLoggingInterceptor bean =
+                      new HandlerExceptionResolverLoggingInterceptor();
               bean.setExceptionLogger(exceptionLogger);
               return bean;
           }
 
           /**
            * Configure messages logging AOP advisor.
-           * @param handlerExceptionResolverLoggingInterceptor Bean defined by #handlerExceptionResolverLoggingInterceptor
+           * @param handlerExceptionResolverLoggingInterceptor Bean defined by
+           *        #handlerExceptionResolverLoggingInterceptor
            * @see #handlerExceptionResolverLoggingInterceptor(ExceptionLogger)
            * @return Advisor configured for PointCut
            */
@@ -1332,6 +1329,7 @@ spring-mvc-restの作成
               <mvc:interceptor>
                   <mvc:mapping path="/**" />
                   <mvc:exclude-mapping path="/resources/**" />
+                  <mvc:exclude-mapping path="/*/*.html" />
                   <bean
                       class="org.terasoluna.gfw.web.logging.TraceLoggingInterceptor" />
               </mvc:interceptor>
@@ -1407,8 +1405,8 @@ REST API用のSpring Securityの定義追加
 
           package com.example.todo.config.web;
 
+          import static org.springframework.security.web.util.matcher.AntPathRequestMatcher.antMatcher;
           import java.util.LinkedHashMap;
-
           import org.springframework.context.annotation.Bean;
           import org.springframework.context.annotation.Configuration;
           import org.springframework.security.access.AccessDeniedException;
@@ -1424,7 +1422,6 @@ REST API用のSpring Securityの定義追加
           import org.springframework.security.web.authentication.AnonymousAuthenticationFilter;
           import org.springframework.security.web.csrf.InvalidCsrfTokenException;
           import org.springframework.security.web.csrf.MissingCsrfTokenException;
-          import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
           import org.terasoluna.gfw.security.web.logging.UserIdMDCPutFilter;
 
           /**
@@ -1441,9 +1438,8 @@ REST API用のSpring Securityの定義追加
               // (1)
               @Bean
               public WebSecurityCustomizer webSecurityCustomizer() {
-                  return web -> web.ignoring().requestMatchers(
-                          new AntPathRequestMatcher("/resources/**"),
-                          new AntPathRequestMatcher("/api/v1/**"));
+                  return web -> web.ignoring().requestMatchers(antMatcher("/resources/**"),
+                          antMatcher("/api/v1/**"));
               }
 
               /**
@@ -1456,13 +1452,10 @@ REST API用のSpring Securityの定義追加
               public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
                   http.formLogin(Customizer.withDefaults());
                   http.logout(Customizer.withDefaults());
-                  http.exceptionHandling(ex -> ex.accessDeniedHandler(
-                          accessDeniedHandler()));
-                  http.addFilterAfter(userIdMDCPutFilter(),
-                          AnonymousAuthenticationFilter.class);
+                  http.exceptionHandling(ex -> ex.accessDeniedHandler(accessDeniedHandler()));
+                  http.addFilterAfter(userIdMDCPutFilter(), AnonymousAuthenticationFilter.class);
                   http.sessionManagement(Customizer.withDefaults());
-                  http.authorizeHttpRequests(authz -> authz.requestMatchers(
-                          new AntPathRequestMatcher("/**")).permitAll());
+                  http.authorizeHttpRequests(authz -> authz.requestMatchers(antMatcher("/**")).permitAll());
 
                   return http.build();
               }
@@ -1473,26 +1466,24 @@ REST API用のSpring Securityの定義追加
                */
               @Bean("accessDeniedHandler")
               public AccessDeniedHandler accessDeniedHandler() {
-                  LinkedHashMap<Class<? extends AccessDeniedException>, AccessDeniedHandler> errorHandlers = new LinkedHashMap<>();
+                  LinkedHashMap<Class<? extends AccessDeniedException>, AccessDeniedHandler> errorHandlers =
+                          new LinkedHashMap<>();
 
                   // Invalid CSRF authenticator error handler
                   AccessDeniedHandlerImpl invalidCsrfTokenErrorHandler = new AccessDeniedHandlerImpl();
-                  invalidCsrfTokenErrorHandler.setErrorPage(
-                          "/WEB-INF/views/common/error/invalidCsrfTokenError.jsp");
-                  errorHandlers.put(InvalidCsrfTokenException.class,
-                          invalidCsrfTokenErrorHandler);
+                  invalidCsrfTokenErrorHandler
+                          .setErrorPage("/WEB-INF/views/common/error/invalidCsrfTokenError.jsp");
+                  errorHandlers.put(InvalidCsrfTokenException.class, invalidCsrfTokenErrorHandler);
 
                   // Missing CSRF authenticator error handler
                   AccessDeniedHandlerImpl missingCsrfTokenErrorHandler = new AccessDeniedHandlerImpl();
-                  missingCsrfTokenErrorHandler.setErrorPage(
-                          "/WEB-INF/views/common/error/missingCsrfTokenError.jsp");
-                  errorHandlers.put(MissingCsrfTokenException.class,
-                          missingCsrfTokenErrorHandler);
+                  missingCsrfTokenErrorHandler
+                          .setErrorPage("/WEB-INF/views/common/error/missingCsrfTokenError.jsp");
+                  errorHandlers.put(MissingCsrfTokenException.class, missingCsrfTokenErrorHandler);
 
                   // Default error handler
                   AccessDeniedHandlerImpl defaultErrorHandler = new AccessDeniedHandlerImpl();
-                  defaultErrorHandler.setErrorPage(
-                          "/WEB-INF/views/common/error/accessDeniedError.jsp");
+                  defaultErrorHandler.setErrorPage("/WEB-INF/views/common/error/accessDeniedError.jsp");
 
                   return new DelegatingAccessDeniedHandler(errorHandlers, defaultErrorHandler);
               }
@@ -1515,7 +1506,7 @@ REST API用のSpring Securityの定義追加
                   return new UserIdMDCPutFilter();
               }
           }
-               
+
         .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
         .. list-table::
           :header-rows: 1
@@ -1534,8 +1525,8 @@ REST API用のSpring Securityの定義追加
 
           package com.example.todo.config.web;
 
+          import static org.springframework.security.web.util.matcher.AntPathRequestMatcher.antMatcher;
           import java.util.LinkedHashMap;
-
           import org.springframework.context.annotation.Bean;
           import org.springframework.context.annotation.Configuration;
           import org.springframework.security.access.AccessDeniedException;
@@ -1551,7 +1542,6 @@ REST API用のSpring Securityの定義追加
           import org.springframework.security.web.authentication.AnonymousAuthenticationFilter;
           import org.springframework.security.web.csrf.InvalidCsrfTokenException;
           import org.springframework.security.web.csrf.MissingCsrfTokenException;
-          import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
           import org.terasoluna.gfw.security.web.logging.UserIdMDCPutFilter;
 
           /**
@@ -1568,9 +1558,8 @@ REST API用のSpring Securityの定義追加
               // (1)
               @Bean
               public WebSecurityCustomizer webSecurityCustomizer() {
-                  return web -> web.ignoring().requestMatchers(
-                          new AntPathRequestMatcher("/resources/**"),
-                          new AntPathRequestMatcher("/api/v1/**"));
+                  return web -> web.ignoring().requestMatchers(antMatcher("/resources/**"),
+                          antMatcher("/api/v1/**"));
               }
 
               /**
@@ -1583,13 +1572,10 @@ REST API用のSpring Securityの定義追加
               public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
                   http.formLogin(Customizer.withDefaults());
                   http.logout(Customizer.withDefaults());
-                  http.exceptionHandling(ex -> ex.accessDeniedHandler(
-                          accessDeniedHandler()));
-                  http.addFilterAfter(userIdMDCPutFilter(),
-                          AnonymousAuthenticationFilter.class);
+                  http.exceptionHandling(ex -> ex.accessDeniedHandler(accessDeniedHandler()));
+                  http.addFilterAfter(userIdMDCPutFilter(), AnonymousAuthenticationFilter.class);
                   http.sessionManagement(Customizer.withDefaults());
-                  http.authorizeHttpRequests(authz -> authz.requestMatchers(
-                          new AntPathRequestMatcher("/**")).permitAll());
+                  http.authorizeHttpRequests(authz -> authz.requestMatchers(antMatcher("/**")).permitAll());
 
                   return http.build();
               }
@@ -1600,21 +1586,18 @@ REST API用のSpring Securityの定義追加
                */
               @Bean("accessDeniedHandler")
               public AccessDeniedHandler accessDeniedHandler() {
-                  LinkedHashMap<Class<? extends AccessDeniedException>, AccessDeniedHandler> errorHandlers = new LinkedHashMap<>();
+                  LinkedHashMap<Class<? extends AccessDeniedException>, AccessDeniedHandler> errorHandlers =
+                          new LinkedHashMap<>();
 
                   // Invalid CSRF authenticator error handler
                   AccessDeniedHandlerImpl invalidCsrfTokenErrorHandler = new AccessDeniedHandlerImpl();
-                  invalidCsrfTokenErrorHandler.setErrorPage(
-                          "/common/error/invalidCsrfTokenError");
-                  errorHandlers.put(InvalidCsrfTokenException.class,
-                          invalidCsrfTokenErrorHandler);
+                  invalidCsrfTokenErrorHandler.setErrorPage("/common/error/invalidCsrfTokenError");
+                  errorHandlers.put(InvalidCsrfTokenException.class, invalidCsrfTokenErrorHandler);
 
                   // Missing CSRF authenticator error handler
                   AccessDeniedHandlerImpl missingCsrfTokenErrorHandler = new AccessDeniedHandlerImpl();
-                  missingCsrfTokenErrorHandler.setErrorPage(
-                          "/common/error/missingCsrfTokenError");
-                  errorHandlers.put(MissingCsrfTokenException.class,
-                          missingCsrfTokenErrorHandler);
+                  missingCsrfTokenErrorHandler.setErrorPage("/common/error/missingCsrfTokenError");
+                  errorHandlers.put(MissingCsrfTokenException.class, missingCsrfTokenErrorHandler);
 
                   // Default error handler
                   AccessDeniedHandlerImpl defaultErrorHandler = new AccessDeniedHandlerImpl();
@@ -1868,7 +1851,6 @@ Resourceクラスの作成
 
   import java.io.Serializable;
   import java.util.Date;
-
   import jakarta.validation.constraints.NotNull;
   import jakarta.validation.constraints.Size;
 
@@ -1943,7 +1925,6 @@ Beanマッピングのマッパーインタフェースを作成する。
   package com.example.todo.api.todo;
 
   import org.mapstruct.Mapper;
-
   import com.example.todo.domain.model.Todo;
 
   @Mapper
@@ -2023,16 +2004,13 @@ GET Todosの実装
   import java.util.ArrayList;
   import java.util.Collection;
   import java.util.List;
-
   import org.springframework.http.HttpStatus;
   import org.springframework.web.bind.annotation.GetMapping;
   import org.springframework.web.bind.annotation.RequestMapping;
   import org.springframework.web.bind.annotation.ResponseStatus;
   import org.springframework.web.bind.annotation.RestController;
-
   import com.example.todo.domain.model.Todo;
   import com.example.todo.domain.service.todo.TodoService;
-
   import jakarta.inject.Inject;
 
   @RestController
@@ -2081,10 +2059,10 @@ GET Todosの実装
 Application Serverを起動し、実装したAPIの動作確認を行う。
 
 | REST API(Get Todos)にアクセスする。
-| Talend API Testerを開いてURLに\ ``localhost:8080/todo/api/v1/todos``\ を入力し、メソッドにGETを指定して、"Send"ボタンをクリックする。
+| Talend API Testerを開いてURLに\ ``http://localhost:8080/todo/api/v1/todos``\ を入力し、メソッドにGETを指定して、"Send"ボタンをクリックする。
 
 .. figure:: ./images_TutorialREST/get-todos1.png
-  :width: 100%
+  :width: 80%
 
 |
 
@@ -2092,7 +2070,7 @@ Application Serverを起動し、実装したAPIの動作確認を行う。
 | 現時点ではデータが何も登録されていないため、空配列である\ ``[]``\ が返却される。
 
 .. figure:: ./images_TutorialREST/get-todos2.png
-  :width: 100%
+  :width: 80%
 
 |
 
@@ -2110,7 +2088,6 @@ Todoリソースを新規作成するAPI(POST Todos)の処理を、\ ``TodoRestC
   import java.util.ArrayList;
   import java.util.Collection;
   import java.util.List;
-
   import org.springframework.http.HttpStatus;
   import org.springframework.validation.annotation.Validated;
   import org.springframework.web.bind.annotation.GetMapping;
@@ -2119,10 +2096,8 @@ Todoリソースを新規作成するAPI(POST Todos)の処理を、\ ``TodoRestC
   import org.springframework.web.bind.annotation.RequestMapping;
   import org.springframework.web.bind.annotation.ResponseStatus;
   import org.springframework.web.bind.annotation.RestController;
-
   import com.example.todo.domain.model.Todo;
   import com.example.todo.domain.service.todo.TodoService;
-
   import jakarta.inject.Inject;
 
   @RestController
@@ -2182,7 +2157,7 @@ Todoリソースを新規作成するAPI(POST Todos)の処理を、\ ``TodoRestC
 |
 
 | Talend API Testerを使用して、実装したAPIの動作確認を行う。
-| Talend API Testerを開いてURLに\ ``localhost:8080/todo/api/v1/todos``\ を入力し、メソッドにPOSTを指定する。
+| Talend API Testerを開いてURLに\ ``http://localhost:8080/todo/api/v1/todos``\ を入力し、メソッドにPOSTを指定する。
 | 「REQUEST」の「BODY」に以下のJSONを入力する。
 
 .. code-block:: json
@@ -2194,21 +2169,21 @@ Todoリソースを新規作成するAPI(POST Todos)の処理を、\ ``TodoRestC
 また、「REQUEST」の「HEADERS」の「+」ボタンでHTTPヘッダーを追加し、「\ ``Content-Type``\ 」に「\ ``application/json``\ 」を設定後、"Send"ボタンをクリックする。
 
 .. figure:: ./images_TutorialREST/post-todos1.png
-  :width: 100%
+  :width: 80%
 
 |
 
 "201"のHTTPステータスが返却され、「RESPONSE」の「Body」に新規作成されたTodoリソースのJSONが表示される。
 
 .. figure:: ./images_TutorialREST/post-todos2.png
-  :width: 100%
+  :width: 80%
 
 |
 
 この状態で再びGET Todosを実行すると、作成したTodoリソースを含む配列が返却される。
 
 .. figure:: ./images_TutorialREST/get-todos3.png
-  :width: 100%
+  :width: 80%
 
 |
 
@@ -2226,7 +2201,6 @@ GET Todoの実装
   package com.example.todo.domain.service.todo;
 
   import java.util.Collection;
-
   import com.example.todo.domain.model.Todo;
 
   public interface TodoService {
@@ -2253,17 +2227,14 @@ GET Todoの実装
   import java.util.Collection;
   import java.util.Date;
   import java.util.UUID;
-
   import org.springframework.stereotype.Service;
   import org.springframework.transaction.annotation.Transactional;
   import org.terasoluna.gfw.common.exception.BusinessException;
   import org.terasoluna.gfw.common.exception.ResourceNotFoundException;
   import org.terasoluna.gfw.common.message.ResultMessage;
   import org.terasoluna.gfw.common.message.ResultMessages;
-
   import com.example.todo.domain.model.Todo;
   import com.example.todo.domain.repository.todo.TodoRepository;
-
   import jakarta.inject.Inject;
 
   @Service
@@ -2282,8 +2253,7 @@ GET Todoの実装
           if (todo == null) {
               ResultMessages messages = ResultMessages.error();
               messages.add(ResultMessage
-                      .fromText("[E404] The requested Todo is not found. (id="
-                              + todoId + ")"));
+                      .fromText("[E404] The requested Todo is not found. (id=" + todoId + ")"));
               throw new ResourceNotFoundException(messages);
           }
           return todo;
@@ -2300,8 +2270,8 @@ GET Todoの実装
           long unfinishedCount = todoRepository.countByFinished(false);
           if (unfinishedCount >= MAX_UNFINISHED_COUNT) {
               ResultMessages messages = ResultMessages.error();
-              messages.add(ResultMessage
-                      .fromText("[E001] The count of un-finished Todo must not be over "
+              messages.add(
+                      ResultMessage.fromText("[E001] The count of un-finished Todo must not be over "
                               + MAX_UNFINISHED_COUNT + "."));
               throw new BusinessException(messages);
           }
@@ -2323,9 +2293,8 @@ GET Todoの実装
           Todo todo = findOne(todoId);
           if (todo.isFinished()) {
               ResultMessages messages = ResultMessages.error();
-              messages.add(ResultMessage
-                      .fromText("[E002] The requested Todo is already finished. (id="
-                              + todoId + ")"));
+              messages.add(ResultMessage.fromText(
+                      "[E002] The requested Todo is already finished. (id=" + todoId + ")"));
               throw new BusinessException(messages);
           }
           todo.setFinished(true);
@@ -2352,7 +2321,6 @@ GET Todoの実装
   import java.util.ArrayList;
   import java.util.Collection;
   import java.util.List;
-
   import org.springframework.http.HttpStatus;
   import org.springframework.validation.annotation.Validated;
   import org.springframework.web.bind.annotation.GetMapping;
@@ -2362,10 +2330,8 @@ GET Todoの実装
   import org.springframework.web.bind.annotation.RequestMapping;
   import org.springframework.web.bind.annotation.ResponseStatus;
   import org.springframework.web.bind.annotation.RestController;
-
   import com.example.todo.domain.model.Todo;
   import com.example.todo.domain.service.todo.TodoService;
-
   import jakarta.inject.Inject;
 
   @RestController
@@ -2391,8 +2357,7 @@ GET Todoの実装
 
       @PostMapping
       @ResponseStatus(HttpStatus.CREATED)
-      public TodoResource postTodos(
-              @RequestBody @Validated TodoResource todoResource) {
+      public TodoResource postTodos(@RequestBody @Validated TodoResource todoResource) {
           Todo createdTodo = todoService.create(beanMapper.map(todoResource));
           TodoResource createdTodoResponse = beanMapper.map(createdTodo);
           return createdTodoResponse;
@@ -2426,13 +2391,13 @@ GET Todoの実装
 |
 
 | Talend API Testerを使用して、実装したAPIの動作確認を行う。
-| Talend API Testerを開いてURLに\ ``localhost:8080/todo/api/v1/todos/{todoId}``\ を入力し、メソッドにGETを指定する。
+| Talend API Testerを開いてURLに\ ``http://localhost:8080/todo/api/v1/todos/{todoId}``\ を入力し、メソッドにGETを指定する。
 | \ ``{todoId}``\ の部分は実際のIDを入れる必要があるので、POST TodosまたはGET Todosを実行してResponse中の\ ``todoId``\ をコピーして貼り付けてから、"Send"ボタンをクリックする。
 
 "200"のHTTPステータスが返却され、「RESPONSE」の「Body」に指定したTodoリソースのJSONが表示される。
 
 .. figure:: ./images_TutorialREST/get-todo1.png
-  :width: 100%
+  :width: 80%
 
 |
 
@@ -2450,7 +2415,6 @@ Todoリソースを一件更新(完了状態へ更新)するAPI(PUT Todo)の処�
   import java.util.ArrayList;
   import java.util.Collection;
   import java.util.List;
-
   import org.springframework.http.HttpStatus;
   import org.springframework.validation.annotation.Validated;
   import org.springframework.web.bind.annotation.GetMapping;
@@ -2461,10 +2425,8 @@ Todoリソースを一件更新(完了状態へ更新)するAPI(PUT Todo)の処�
   import org.springframework.web.bind.annotation.RequestMapping;
   import org.springframework.web.bind.annotation.ResponseStatus;
   import org.springframework.web.bind.annotation.RestController;
-
   import com.example.todo.domain.model.Todo;
   import com.example.todo.domain.service.todo.TodoService;
-
   import jakarta.inject.Inject;
 
   @RestController
@@ -2490,8 +2452,7 @@ Todoリソースを一件更新(完了状態へ更新)するAPI(PUT Todo)の処�
 
       @PostMapping
       @ResponseStatus(HttpStatus.CREATED)
-      public TodoResource postTodos(
-              @RequestBody @Validated TodoResource todoResource) {
+      public TodoResource postTodos(@RequestBody @Validated TodoResource todoResource) {
           Todo createdTodo = todoService.create(beanMapper.map(todoResource));
           TodoResource createdTodoResponse = beanMapper.map(createdTodo);
           return createdTodoResponse;
@@ -2533,11 +2494,11 @@ Todoリソースを一件更新(完了状態へ更新)するAPI(PUT Todo)の処�
 |
 
 | Talend API Testerを使用して、実装したAPIの動作確認を行う。
-| Talend API Testerを開いてURLに\ ``localhost:8080/todo/api/v1/todos/{todoId}``\ を入力し、メソッドにPUTを指定する。
+| Talend API Testerを開いてURLに\ ``http://localhost:8080/todo/api/v1/todos/{todoId}``\ を入力し、メソッドにPUTを指定する。
 | \ ``{todoId}``\ の部分は実際のIDを入れる必要があるので、POST TodosまたはGET Todosを実行してResponse中の\ ``todoId``\ をコピーして貼り付けてから、"Send"ボタンをクリックする。
 
 .. figure:: ./images_TutorialREST/put-todo1.png
-  :width: 100%
+  :width: 80%
 
 |
 
@@ -2545,7 +2506,7 @@ Todoリソースを一件更新(完了状態へ更新)するAPI(PUT Todo)の処�
 | \ ``finished``\ が\ ``true``\ に更新されている。
 
 .. figure:: ./images_TutorialREST/put-todo2.png
-  :width: 100%
+  :width: 80%
 
 |
 
@@ -2563,7 +2524,6 @@ DELETE Todoの実装
   import java.util.ArrayList;
   import java.util.Collection;
   import java.util.List;
-
   import org.springframework.http.HttpStatus;
   import org.springframework.validation.annotation.Validated;
   import org.springframework.web.bind.annotation.DeleteMapping;
@@ -2575,10 +2535,8 @@ DELETE Todoの実装
   import org.springframework.web.bind.annotation.RequestMapping;
   import org.springframework.web.bind.annotation.ResponseStatus;
   import org.springframework.web.bind.annotation.RestController;
-
   import com.example.todo.domain.model.Todo;
   import com.example.todo.domain.service.todo.TodoService;
-
   import jakarta.inject.Inject;
 
   @RestController
@@ -2604,8 +2562,7 @@ DELETE Todoの実装
 
       @PostMapping
       @ResponseStatus(HttpStatus.CREATED)
-      public TodoResource postTodos(
-              @RequestBody @Validated TodoResource todoResource) {
+      public TodoResource postTodos(@RequestBody @Validated TodoResource todoResource) {
           Todo createdTodo = todoService.create(beanMapper.map(todoResource));
           TodoResource createdTodoResponse = beanMapper.map(createdTodo);
           return createdTodoResponse;
@@ -2656,26 +2613,26 @@ DELETE Todoの実装
 |
 
 | Talend API Testerを使用して、実装したAPIの動作確認を行う。
-| Talend API Testerを開いてURLに\ ``localhost:8080/todo/api/v1/todos/{todoId}``\ を入力し、メソッドにDELETEを指定する。
+| Talend API Testerを開いてURLに\ ``http://localhost:8080/todo/api/v1/todos/{todoId}``\ を入力し、メソッドにDELETEを指定する。
 | \ ``{todoId}``\ の部分は実際のIDを入れる必要があるので、POST TodosまたはGET Todosを実行してResponse中の\ ``todoId``\ をコピーして貼り付けてから、"Send"ボタンをクリックする。
 
 .. figure:: ./images_TutorialREST/delete-todo1.png
-  :width: 100%
+  :width: 80%
 
 |
 
 "204"のHTTPステータスが返却され、「RESPONSE」の「Body」は空である。
 
 .. figure:: ./images_TutorialREST/delete-todo2.png
-  :width: 100%
+  :width: 80%
 
 |
 
-| Talend API TesterのURLに\ ``localhost:8080/todo/api/v1/todos``\ を入力し、メソッドにGETを指定してから"Send"ボタンをクリックする。
+| Talend API TesterのURLに\ ``http://localhost:8080/todo/api/v1/todos``\ を入力し、メソッドにGETを指定してから"Send"ボタンをクリックする。
 | Todoリソースが削除されている事が確認できる。
 
 .. figure:: ./images_TutorialREST/delete-todo3.png
-  :width: 100%
+  :width: 80%
 
 |
 
@@ -2701,16 +2658,13 @@ DELETE Todoの実装
   import java.util.Collection;
   import java.util.Date;
   import java.util.UUID;
-
   import org.springframework.stereotype.Service;
   import org.springframework.transaction.annotation.Transactional;
   import org.terasoluna.gfw.common.exception.BusinessException;
   import org.terasoluna.gfw.common.exception.ResourceNotFoundException;
   import org.terasoluna.gfw.common.message.ResultMessages;
-
   import com.example.todo.domain.model.Todo;
   import com.example.todo.domain.repository.todo.TodoRepository;
-
   import jakarta.inject.Inject;
 
   @Service
@@ -2903,7 +2857,6 @@ REST APIのエラー情報を保持するJavaBeanの作成
   import java.io.Serializable;
   import java.util.ArrayList;
   import java.util.List;
-
   import com.fasterxml.jackson.annotation.JsonInclude;
 
   public class ApiError implements Serializable {
@@ -2973,7 +2926,6 @@ HTTPレスポンスBODYにエラー情報を出力するための実装
   import org.springframework.web.bind.annotation.ControllerAdvice;
   import org.springframework.web.context.request.WebRequest;
   import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
-
   import jakarta.inject.Inject;
 
   @ControllerAdvice
@@ -2983,21 +2935,18 @@ HTTPレスポンスBODYにエラー情報を出力するための実装
       MessageSource messageSource;
 
       @Override
-      protected ResponseEntity<Object> handleExceptionInternal(Exception ex,
-              Object body, HttpHeaders headers, HttpStatusCode status,
-              WebRequest request) {
+      protected ResponseEntity<Object> handleExceptionInternal(Exception ex, Object body,
+              HttpHeaders headers, HttpStatusCode status, WebRequest request) {
           Object responseBody = body;
           if (body == null) {
               responseBody = createApiError(request, "E999", ex.getMessage());
           }
-          return ResponseEntity.status(status).headers(headers).body(
-                  responseBody);
+          return ResponseEntity.status(status).headers(headers).body(responseBody);
       }
 
-      private ApiError createApiError(WebRequest request, String errorCode,
-              Object... args) {
-          return new ApiError(errorCode, messageSource.getMessage(errorCode, args,
-                  request.getLocale()));
+      private ApiError createApiError(WebRequest request, String errorCode, Object... args) {
+          return new ApiError(errorCode,
+                  messageSource.getMessage(errorCode, args, request.getLocale()));
       }
 
   }
@@ -3008,12 +2957,12 @@ HTTPレスポンスBODYにエラー情報を出力するための実装
 |
 
 | Talend API Testerを使用して、実装したエラーハンドリングの動作確認を行う。
-| Talend API Testerを開いてURLに\ ``localhost:8080/todo/api/v1/todos``\ を入力し、メソッドにPUTを指定してから、"Send"ボタンをクリックする。
+| Talend API Testerを開いてURLに\ ``http://localhost:8080/todo/api/v1/todos``\ を入力し、メソッドにPUTを指定してから、"Send"ボタンをクリックする。
 
 "405"のHTTPステータスが返却され、「RESPONSE」の「Body」には、エラー情報のJSONが表示される。
 
 .. figure:: ./images_TutorialREST/exception-genericerror.png
-  :width: 100%
+  :width: 80%
 
 |
 
@@ -3048,7 +2997,6 @@ HTTPレスポンスBODYにエラー情報を出力するための実装
   import org.springframework.web.bind.annotation.ControllerAdvice;
   import org.springframework.web.context.request.WebRequest;
   import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
-
   import jakarta.inject.Inject;
 
   @ControllerAdvice
@@ -3058,46 +3006,38 @@ HTTPレスポンスBODYにエラー情報を出力するための実装
       MessageSource messageSource;
 
       @Override
-      protected ResponseEntity<Object> handleExceptionInternal(Exception ex,
-              Object body, HttpHeaders headers, HttpStatusCode status,
-              WebRequest request) {
+      protected ResponseEntity<Object> handleExceptionInternal(Exception ex, Object body,
+              HttpHeaders headers, HttpStatusCode status, WebRequest request) {
           Object responseBody = body;
           if (body == null) {
               responseBody = createApiError(request, "E999", ex.getMessage());
           }
-          return ResponseEntity.status(status).headers(headers).body(
-                  responseBody);
+          return ResponseEntity.status(status).headers(headers).body(responseBody);
       }
 
-      private ApiError createApiError(WebRequest request, String errorCode,
-              Object... args) {
-          return new ApiError(errorCode, messageSource.getMessage(errorCode, args,
-                  request.getLocale()));
+      private ApiError createApiError(WebRequest request, String errorCode, Object... args) {
+          return new ApiError(errorCode,
+                  messageSource.getMessage(errorCode, args, request.getLocale()));
       }
 
       @Override
       protected ResponseEntity<Object> handleMethodArgumentNotValid(
-              MethodArgumentNotValidException ex, HttpHeaders headers,
-              HttpStatusCode status, WebRequest request) {
+              MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatusCode status,
+              WebRequest request) {
           ApiError apiError = createApiError(request, "E400");
           for (FieldError fieldError : ex.getBindingResult().getFieldErrors()) {
-              apiError.addDetail(createApiError(request, fieldError, fieldError
-                      .getField()));
+              apiError.addDetail(createApiError(request, fieldError, fieldError.getField()));
           }
-          for (ObjectError objectError : ex.getBindingResult()
-                  .getGlobalErrors()) {
-              apiError.addDetail(createApiError(request, objectError, objectError
-                      .getObjectName()));
+          for (ObjectError objectError : ex.getBindingResult().getGlobalErrors()) {
+              apiError.addDetail(createApiError(request, objectError, objectError.getObjectName()));
           }
           return handleExceptionInternal(ex, apiError, headers, status, request);
       }
 
       private ApiError createApiError(WebRequest request,
-              DefaultMessageSourceResolvable messageSourceResolvable,
-              String target) {
-          return new ApiError(messageSourceResolvable.getCode(), messageSource
-                  .getMessage(messageSourceResolvable, request
-                          .getLocale()), target);
+              DefaultMessageSourceResolvable messageSourceResolvable, String target) {
+          return new ApiError(messageSourceResolvable.getCode(),
+                  messageSource.getMessage(messageSourceResolvable, request.getLocale()), target);
       }
 
   }
@@ -3105,7 +3045,7 @@ HTTPレスポンスBODYにエラー情報を出力するための実装
 |
 
 | Talend API Testerを使用して、実装したエラーハンドリングの動作確認を行う。
-| Talend API Testerを開いてURLに\ ``localhost:8080/todo/api/v1/todos``\ を入力し、メソッドにPOSTを指定する。
+| Talend API Testerを開いてURLに\ ``http://localhost:8080/todo/api/v1/todos``\ を入力し、メソッドにPOSTを指定する。
 | 「REQUEST」の「BODY」に以下のJSONを入力する。
 
 .. code-block:: json
@@ -3120,7 +3060,7 @@ HTTPレスポンスBODYにエラー情報を出力するための実装
 | \ ``todoTitle``\ は必須項目なので、必須エラーが発生している。
 
 .. figure:: ./images_TutorialREST/exception-inputerror.png
-  :width: 100%
+  :width: 80%
 
 |
 
@@ -3153,7 +3093,6 @@ HTTPレスポンスBODYにエラー情報を出力するための実装
   import org.terasoluna.gfw.common.exception.BusinessException;
   import org.terasoluna.gfw.common.exception.ResultMessagesNotificationException;
   import org.terasoluna.gfw.common.message.ResultMessage;
-
   import jakarta.inject.Inject;
 
   @ControllerAdvice
@@ -3163,61 +3102,52 @@ HTTPレスポンスBODYにエラー情報を出力するための実装
       MessageSource messageSource;
 
       @Override
-      protected ResponseEntity<Object> handleExceptionInternal(Exception ex,
-              Object body, HttpHeaders headers, HttpStatusCode status,
-              WebRequest request) {
+      protected ResponseEntity<Object> handleExceptionInternal(Exception ex, Object body,
+              HttpHeaders headers, HttpStatusCode status, WebRequest request) {
           Object responseBody = body;
           if (body == null) {
               responseBody = createApiError(request, "E999", ex.getMessage());
           }
-          return ResponseEntity.status(status).headers(headers).body(
-                  responseBody);
+          return ResponseEntity.status(status).headers(headers).body(responseBody);
       }
 
-      private ApiError createApiError(WebRequest request, String errorCode,
-              Object... args) {
-          return new ApiError(errorCode, messageSource.getMessage(errorCode, args,
-                  request.getLocale()));
+      private ApiError createApiError(WebRequest request, String errorCode, Object... args) {
+          return new ApiError(errorCode,
+                  messageSource.getMessage(errorCode, args, request.getLocale()));
       }
 
       @Override
       protected ResponseEntity<Object> handleMethodArgumentNotValid(
-              MethodArgumentNotValidException ex, HttpHeaders headers,
-              HttpStatusCode status, WebRequest request) {
+              MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatusCode status,
+              WebRequest request) {
           ApiError apiError = createApiError(request, "E400");
           for (FieldError fieldError : ex.getBindingResult().getFieldErrors()) {
-              apiError.addDetail(createApiError(request, fieldError, fieldError
-                      .getField()));
+              apiError.addDetail(createApiError(request, fieldError, fieldError.getField()));
           }
-          for (ObjectError objectError : ex.getBindingResult()
-                  .getGlobalErrors()) {
-              apiError.addDetail(createApiError(request, objectError, objectError
-                      .getObjectName()));
+          for (ObjectError objectError : ex.getBindingResult().getGlobalErrors()) {
+              apiError.addDetail(createApiError(request, objectError, objectError.getObjectName()));
           }
           return handleExceptionInternal(ex, apiError, headers, status, request);
       }
 
       private ApiError createApiError(WebRequest request,
-              DefaultMessageSourceResolvable messageSourceResolvable,
-              String target) {
-          return new ApiError(messageSourceResolvable.getCode(), messageSource
-                  .getMessage(messageSourceResolvable, request
-                          .getLocale()), target);
+              DefaultMessageSourceResolvable messageSourceResolvable, String target) {
+          return new ApiError(messageSourceResolvable.getCode(),
+                  messageSource.getMessage(messageSourceResolvable, request.getLocale()), target);
       }
 
       @ExceptionHandler(BusinessException.class)
       public ResponseEntity<Object> handleBusinessException(BusinessException ex,
               WebRequest request) {
-          return handleResultMessagesNotificationException(ex, new HttpHeaders(),
-                  HttpStatus.CONFLICT, request);
+          return handleResultMessagesNotificationException(ex, new HttpHeaders(), HttpStatus.CONFLICT,
+                  request);
       }
 
       private ResponseEntity<Object> handleResultMessagesNotificationException(
-              ResultMessagesNotificationException ex, HttpHeaders headers,
-              HttpStatus status, WebRequest request) {
+              ResultMessagesNotificationException ex, HttpHeaders headers, HttpStatus status,
+              WebRequest request) {
           ResultMessage message = ex.getResultMessages().iterator().next();
-          ApiError apiError = createApiError(request, message.getCode(), message
-                  .getArgs());
+          ApiError apiError = createApiError(request, message.getCode(), message.getArgs());
           return handleExceptionInternal(ex, apiError, headers, status, request);
       }
 
@@ -3226,14 +3156,14 @@ HTTPレスポンスBODYにエラー情報を出力するための実装
 |
 
 | Talend API Testerを使用して、実装したエラーハンドリングの動作確認を行う。
-| Talend API Testerを開いてURLに\ ``localhost:8080/todo/api/v1/todos/{todoId}``\ を入力し、メソッドにPUTを指定する。
+| Talend API Testerを開いてURLに\ ``http://localhost:8080/todo/api/v1/todos/{todoId}``\ を入力し、メソッドにPUTを指定する。
 | {todoId}の部分は実際のIDを入れる必要があるので、POST TodosまたはGET Todosを実行してResponse中の\ ``todoId``\ をコピーして貼り付けてから、”Send”ボタンを2回クリックする。
 | 未完了状態のTodoの\ ``todoId``\ を指定すること。
 
 2回目のリクエストに対するレスポンスとして、"409"のHTTPステータスが返却され、「RESPONSE」の「Body」には、エラー情報のJSONが表示される。
 
 .. figure:: ./images_TutorialREST/exception-businesserror.png
-  :width: 100%
+  :width: 80%
 
 |
 
@@ -3267,7 +3197,6 @@ HTTPレスポンスBODYにエラー情報を出力するための実装
   import org.terasoluna.gfw.common.exception.ResourceNotFoundException;
   import org.terasoluna.gfw.common.exception.ResultMessagesNotificationException;
   import org.terasoluna.gfw.common.message.ResultMessage;
-
   import jakarta.inject.Inject;
 
   @ControllerAdvice
@@ -3277,67 +3206,58 @@ HTTPレスポンスBODYにエラー情報を出力するための実装
       MessageSource messageSource;
 
       @Override
-      protected ResponseEntity<Object> handleExceptionInternal(Exception ex,
-              Object body, HttpHeaders headers, HttpStatusCode status,
-              WebRequest request) {
+      protected ResponseEntity<Object> handleExceptionInternal(Exception ex, Object body,
+              HttpHeaders headers, HttpStatusCode status, WebRequest request) {
           Object responseBody = body;
           if (body == null) {
               responseBody = createApiError(request, "E999", ex.getMessage());
           }
-          return ResponseEntity.status(status).headers(headers).body(
-                  responseBody);
+          return ResponseEntity.status(status).headers(headers).body(responseBody);
       }
 
-      private ApiError createApiError(WebRequest request, String errorCode,
-              Object... args) {
-          return new ApiError(errorCode, messageSource.getMessage(errorCode, args,
-                  request.getLocale()));
+      private ApiError createApiError(WebRequest request, String errorCode, Object... args) {
+          return new ApiError(errorCode,
+                  messageSource.getMessage(errorCode, args, request.getLocale()));
       }
 
       @Override
       protected ResponseEntity<Object> handleMethodArgumentNotValid(
-              MethodArgumentNotValidException ex, HttpHeaders headers,
-              HttpStatusCode status, WebRequest request) {
+              MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatusCode status,
+              WebRequest request) {
           ApiError apiError = createApiError(request, "E400");
           for (FieldError fieldError : ex.getBindingResult().getFieldErrors()) {
-              apiError.addDetail(createApiError(request, fieldError, fieldError
-                      .getField()));
+              apiError.addDetail(createApiError(request, fieldError, fieldError.getField()));
           }
-          for (ObjectError objectError : ex.getBindingResult()
-                  .getGlobalErrors()) {
-              apiError.addDetail(createApiError(request, objectError, objectError
-                      .getObjectName()));
+          for (ObjectError objectError : ex.getBindingResult().getGlobalErrors()) {
+              apiError.addDetail(createApiError(request, objectError, objectError.getObjectName()));
           }
           return handleExceptionInternal(ex, apiError, headers, status, request);
       }
 
       private ApiError createApiError(WebRequest request,
-              DefaultMessageSourceResolvable messageSourceResolvable,
-              String target) {
-          return new ApiError(messageSourceResolvable.getCode(), messageSource
-                  .getMessage(messageSourceResolvable, request
-                          .getLocale()), target);
+              DefaultMessageSourceResolvable messageSourceResolvable, String target) {
+          return new ApiError(messageSourceResolvable.getCode(),
+                  messageSource.getMessage(messageSourceResolvable, request.getLocale()), target);
       }
 
       @ExceptionHandler(BusinessException.class)
       public ResponseEntity<Object> handleBusinessException(BusinessException ex,
               WebRequest request) {
-          return handleResultMessagesNotificationException(ex, new HttpHeaders(),
-                  HttpStatus.CONFLICT, request);
+          return handleResultMessagesNotificationException(ex, new HttpHeaders(), HttpStatus.CONFLICT,
+                  request);
       }
 
       private ResponseEntity<Object> handleResultMessagesNotificationException(
-              ResultMessagesNotificationException ex, HttpHeaders headers,
-              HttpStatus status, WebRequest request) {
+              ResultMessagesNotificationException ex, HttpHeaders headers, HttpStatus status,
+              WebRequest request) {
           ResultMessage message = ex.getResultMessages().iterator().next();
-          ApiError apiError = createApiError(request, message.getCode(), message
-                  .getArgs());
+          ApiError apiError = createApiError(request, message.getCode(), message.getArgs());
           return handleExceptionInternal(ex, apiError, headers, status, request);
       }
 
       @ExceptionHandler(ResourceNotFoundException.class)
-      public ResponseEntity<Object> handleResourceNotFoundException(
-              ResourceNotFoundException ex, WebRequest request) {
+      public ResponseEntity<Object> handleResourceNotFoundException(ResourceNotFoundException ex,
+              WebRequest request) {
           return handleResultMessagesNotificationException(ex, new HttpHeaders(),
                   HttpStatus.NOT_FOUND, request);
       }
@@ -3347,15 +3267,17 @@ HTTPレスポンスBODYにエラー情報を出力するための実装
 |
 
 | Talend API Testerを使用して、実装したエラーハンドリングの動作確認を行う。
-| Talend API Testerを開いてURLに\ ``localhost:8080/todo/api/v1/todos/{todoId}``\ を入力し、メソッドにGETを指定する。
+| Talend API Testerを開いてURLに\ ``http://localhost:8080/todo/api/v1/todos/{todoId}``\ を入力し、メソッドにGETを指定する。
 | {todoId}の部分には存在しないIDを指定して、”Send”ボタンをクリックする。
 
 "404"のHTTPステータスが返却され、「RESPONSE」の「Body」には、エラー情報のJSONが表示される。
 
 .. figure:: ./images_TutorialREST/exception-notfound.png
-  :width: 100%
+  :width: 80%
 
 |
+
+.. _TutorialREST_systemexception_handling:
 
 システム例外のエラーハンドリングの実装
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -3386,7 +3308,6 @@ HTTPレスポンスBODYにエラー情報を出力するための実装
   import org.terasoluna.gfw.common.exception.ResourceNotFoundException;
   import org.terasoluna.gfw.common.exception.ResultMessagesNotificationException;
   import org.terasoluna.gfw.common.message.ResultMessage;
-
   import jakarta.inject.Inject;
 
   @ControllerAdvice
@@ -3396,74 +3317,64 @@ HTTPレスポンスBODYにエラー情報を出力するための実装
       MessageSource messageSource;
 
       @Override
-      protected ResponseEntity<Object> handleExceptionInternal(Exception ex,
-              Object body, HttpHeaders headers, HttpStatusCode status,
-              WebRequest request) {
+      protected ResponseEntity<Object> handleExceptionInternal(Exception ex, Object body,
+              HttpHeaders headers, HttpStatusCode status, WebRequest request) {
           Object responseBody = body;
           if (body == null) {
               responseBody = createApiError(request, "E999", ex.getMessage());
           }
-          return ResponseEntity.status(status).headers(headers).body(
-                  responseBody);
+          return ResponseEntity.status(status).headers(headers).body(responseBody);
       }
 
-      private ApiError createApiError(WebRequest request, String errorCode,
-              Object... args) {
-          return new ApiError(errorCode, messageSource.getMessage(errorCode, args,
-                  request.getLocale()));
+      private ApiError createApiError(WebRequest request, String errorCode, Object... args) {
+          return new ApiError(errorCode,
+                  messageSource.getMessage(errorCode, args, request.getLocale()));
       }
 
       @Override
       protected ResponseEntity<Object> handleMethodArgumentNotValid(
-              MethodArgumentNotValidException ex, HttpHeaders headers,
-              HttpStatusCode status, WebRequest request) {
+              MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatusCode status,
+              WebRequest request) {
           ApiError apiError = createApiError(request, "E400");
           for (FieldError fieldError : ex.getBindingResult().getFieldErrors()) {
-              apiError.addDetail(createApiError(request, fieldError, fieldError
-                      .getField()));
+              apiError.addDetail(createApiError(request, fieldError, fieldError.getField()));
           }
-          for (ObjectError objectError : ex.getBindingResult()
-                  .getGlobalErrors()) {
-              apiError.addDetail(createApiError(request, objectError, objectError
-                      .getObjectName()));
+          for (ObjectError objectError : ex.getBindingResult().getGlobalErrors()) {
+              apiError.addDetail(createApiError(request, objectError, objectError.getObjectName()));
           }
           return handleExceptionInternal(ex, apiError, headers, status, request);
       }
 
       private ApiError createApiError(WebRequest request,
-              DefaultMessageSourceResolvable messageSourceResolvable,
-              String target) {
-          return new ApiError(messageSourceResolvable.getCode(), messageSource
-                  .getMessage(messageSourceResolvable, request
-                          .getLocale()), target);
+              DefaultMessageSourceResolvable messageSourceResolvable, String target) {
+          return new ApiError(messageSourceResolvable.getCode(),
+                  messageSource.getMessage(messageSourceResolvable, request.getLocale()), target);
       }
 
       @ExceptionHandler(BusinessException.class)
       public ResponseEntity<Object> handleBusinessException(BusinessException ex,
               WebRequest request) {
-          return handleResultMessagesNotificationException(ex, new HttpHeaders(),
-                  HttpStatus.CONFLICT, request);
+          return handleResultMessagesNotificationException(ex, new HttpHeaders(), HttpStatus.CONFLICT,
+                  request);
       }
 
       private ResponseEntity<Object> handleResultMessagesNotificationException(
-              ResultMessagesNotificationException ex, HttpHeaders headers,
-              HttpStatus status, WebRequest request) {
+              ResultMessagesNotificationException ex, HttpHeaders headers, HttpStatus status,
+              WebRequest request) {
           ResultMessage message = ex.getResultMessages().iterator().next();
-          ApiError apiError = createApiError(request, message.getCode(), message
-                  .getArgs());
+          ApiError apiError = createApiError(request, message.getCode(), message.getArgs());
           return handleExceptionInternal(ex, apiError, headers, status, request);
       }
 
       @ExceptionHandler(ResourceNotFoundException.class)
-      public ResponseEntity<Object> handleResourceNotFoundException(
-              ResourceNotFoundException ex, WebRequest request) {
+      public ResponseEntity<Object> handleResourceNotFoundException(ResourceNotFoundException ex,
+              WebRequest request) {
           return handleResultMessagesNotificationException(ex, new HttpHeaders(),
                   HttpStatus.NOT_FOUND, request);
       }
 
       @ExceptionHandler(Exception.class)
-      public ResponseEntity<Object> handleSystemError(Exception ex,
-              WebRequest request) {
+      public ResponseEntity<Object> handleSystemError(Exception ex, WebRequest request) {
           ApiError apiError = createApiError(request, "E500");
           return handleExceptionInternal(ex, apiError, new HttpHeaders(),
                   HttpStatus.INTERNAL_SERVER_ERROR, request);
@@ -3494,12 +3405,12 @@ HTTPレスポンスBODYにエラー情報を出力するための実装
 
 |
 
-Talend API Testerを開いてURLに\ ``localhost:8080/todo/api/v1/todos``\ を入力し、メソッドにGETを指定して、”Send”ボタンをクリックする。
+Talend API Testerを開いてURLに\ ``http://localhost:8080/todo/api/v1/todos``\ を入力し、メソッドにGETを指定して、”Send”ボタンをクリックする。
 
 "500"のHTTPステータスが返却され、「RESPONSE」の「Body」には、エラー情報のJSONが表示される。
 
 .. figure:: ./images_TutorialREST/exception-systemerror.png
-  :width: 100%
+  :width: 80%
 
 .. note::
 

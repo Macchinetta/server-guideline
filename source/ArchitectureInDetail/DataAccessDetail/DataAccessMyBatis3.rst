@@ -333,7 +333,7 @@ How to use
         * \ :ref:`DataAccessMyBatis3HowToUseSettingsCooperateWithMyBatis3AndSpring`\
         * \ :ref:`DataAccessMyBatis3HowToUseSettingsMyBatis3`\
 
-        \ `ブランクプロジェクト <https://github.com/Macchinetta/macchinetta-web-multi-blank/tree/1.10.0.RELEASE?tab=readme-ov-file#multi-blank-projectjavaconfigjsp-with-mybatis3>`_ \ からプロジェクトを生成した場合は、上記で説明している設定の多くが既に設定済みの状態となっているため、アプリケーションアーキテクトは、プロジェクト特性を判断し、必要に応じて設定の追加及び変更を行うことになる。
+        \ `ブランクプロジェクト <https://github.com/Macchinetta/macchinetta-web-multi-blank/tree/1.11.0.RELEASE?tab=readme-ov-file#multi-blank-projectjavaconfigjsp-with-mybatis3>`_ \ からプロジェクトを生成した場合は、上記で説明している設定の多くが既に設定済みの状態となっているため、アプリケーションアーキテクトは、プロジェクト特性を判断し、必要に応じて設定の追加及び変更を行うことになる。
 
     * - (2)
       - データアクセス処理の実装方法
@@ -363,7 +363,7 @@ pom.xmlの設定
 | インフラストラクチャ層にMyBatis3を使用する場合は、\ :file:`pom.xml`\ にterasoluna-gfw-mybatis3-dependenciesへの依存関係を追加する。
 | マルチプロジェクト構成の場合は、domainプロジェクトの\ :file:`pom.xml`\ (\ :file:`projectName-domain/pom.xml`\ )に追加する。
 
-\ `ブランクプロジェクト <https://github.com/Macchinetta/macchinetta-web-multi-blank/tree/1.10.0.RELEASE?tab=readme-ov-file#multi-blank-projectjavaconfigjsp-with-mybatis3>`_ \ からプロジェクトを生成した場合は、terasoluna-gfw-mybatis3-dependenciesへの依存関係は、設定済みの状態である。
+\ `ブランクプロジェクト <https://github.com/Macchinetta/macchinetta-web-multi-blank/tree/1.11.0.RELEASE?tab=readme-ov-file#multi-blank-projectjavaconfigjsp-with-mybatis3>`_ \ からプロジェクトを生成した場合は、terasoluna-gfw-mybatis3-dependenciesへの依存関係は、設定済みの状態である。
 
   .. code-block:: xml
 
@@ -432,7 +432,7 @@ MyBatis3とSpringを連携するための設定
 
 MyBatis3とSpringを連携する場合、データソースはSpringのDIコンテナで管理しているデータソースを使用する必要がある。
 
-\ `ブランクプロジェクト <https://github.com/Macchinetta/macchinetta-web-multi-blank/tree/1.10.0.RELEASE?tab=readme-ov-file#multi-blank-projectjavaconfigjsp-with-mybatis3>`_ \ からプロジェクトを生成した場合は、Apache Commons DBCPのデータソースが設定済みの状態であるため、プロジェクトの要件に合わせて設定を変更すること。
+\ `ブランクプロジェクト <https://github.com/Macchinetta/macchinetta-web-multi-blank/tree/1.11.0.RELEASE?tab=readme-ov-file#multi-blank-projectjavaconfigjsp-with-mybatis3>`_ \ からプロジェクトを生成した場合は、Apache Commons DBCPのデータソースが設定済みの状態であるため、プロジェクトの要件に合わせて設定を変更すること。
 
 データソースの設定方法については、共通編の「\ :ref:`data-access-common_howtouse_datasource`\ 」を参照されたい。
 
@@ -451,7 +451,7 @@ MyBatis3とSpringを連携する場合、データソースはSpringのDIコン�
 .. tabs::
   .. group-tab:: Java Config
 
-    \ `MyBatis3用のブランクプロジェクト <https://github.com/Macchinetta/macchinetta-web-multi-blank/tree/1.10.0.RELEASE?tab=readme-ov-file#multi-blank-projectjavaconfigjsp-with-mybatis3>`__ \ からプロジェクトを生成した場合は、\ ``DataSourceTransactionManager``\ が設定済みの状態である。
+    \ `MyBatis3用のブランクプロジェクト <https://github.com/Macchinetta/macchinetta-web-multi-blank/tree/1.11.0.RELEASE?tab=readme-ov-file#multi-blank-projectjavaconfigjsp-with-mybatis3>`__ \ からプロジェクトを生成した場合は、\ ``DataSourceTransactionManager``\ が設定済みの状態である。
     
     設定例は以下の通り。
     
@@ -488,7 +488,7 @@ MyBatis3とSpringを連携する場合、データソースはSpringのDIコン�
 
   .. group-tab:: XML Config
 
-    \ `MyBatis3用のブランクプロジェクト <https://github.com/Macchinetta/macchinetta-web-multi-blank/tree/1.10.0.RELEASE?tab=readme-ov-file#multi-blank-projectxmlconfigjsp-with-mybatis3>`__ \ からプロジェクトを生成した場合は、\ ``DataSourceTransactionManager``\ が設定済みの状態である。
+    \ `MyBatis3用のブランクプロジェクト <https://github.com/Macchinetta/macchinetta-web-multi-blank/tree/1.11.0.RELEASE?tab=readme-ov-file#multi-blank-projectxmlconfigjsp-with-mybatis3>`__ \ からプロジェクトを生成した場合は、\ ``DataSourceTransactionManager``\ が設定済みの状態である。
     
     設定例は以下の通り。
     
@@ -564,7 +564,7 @@ MyBatis3とSpringを連携する場合、MyBatis-Springのコンポーネント�
 .. tabs::
   .. group-tab:: Java Config
 
-    \ `MyBatis3用のブランクプロジェクト <https://github.com/Macchinetta/macchinetta-web-multi-blank/tree/1.10.0.RELEASE?tab=readme-ov-file#multi-blank-projectjavaconfigjsp-with-mybatis3>`__ \ からプロジェクトを生成した場合は、MyBatis3とSpringを連携するための設定は、設定済みの状態である。
+    \ `MyBatis3用のブランクプロジェクト <https://github.com/Macchinetta/macchinetta-web-multi-blank/tree/1.11.0.RELEASE?tab=readme-ov-file#multi-blank-projectjavaconfigjsp-with-mybatis3>`__ \ からプロジェクトを生成した場合は、MyBatis3とSpringを連携するための設定は、設定済みの状態である。
     
     設定例は以下の通り。
     
@@ -612,7 +612,7 @@ MyBatis3とSpringを連携する場合、MyBatis-Springのコンポーネント�
 
   .. group-tab:: XML Config
 
-    \ `MyBatis3用のブランクプロジェクト <https://github.com/Macchinetta/macchinetta-web-multi-blank/tree/1.10.0.RELEASE?tab=readme-ov-file#multi-blank-projectxmlconfigjsp-with-mybatis3>`__ \ からプロジェクトを生成した場合は、MyBatis3とSpringを連携するための設定は、設定済みの状態である。
+    \ `MyBatis3用のブランクプロジェクト <https://github.com/Macchinetta/macchinetta-web-multi-blank/tree/1.11.0.RELEASE?tab=readme-ov-file#multi-blank-projectxmlconfigjsp-with-mybatis3>`__ \ からプロジェクトを生成した場合は、MyBatis3とSpringを連携するための設定は、設定済みの状態である。
     
     設定例は以下の通り。
     
@@ -804,7 +804,7 @@ MyBatis3では、SQLを実行するモードとして以下の3種類を用意�
       - SIMPLE
       - SQL実行毎に新しい\ ``java.sql.PreparedStatement``\ を作成する。
 
-        MyBatisのデフォルトの動作であり、\ `ブランクプロジェクト <https://github.com/Macchinetta/macchinetta-web-multi-blank/tree/1.10.0.RELEASE?tab=readme-ov-file#multi-blank-projectjavaconfigjsp-with-mybatis3>`_ \ も\ ``SIMPLE``\ モードとなっている。
+        MyBatisのデフォルトの動作であり、\ `ブランクプロジェクト <https://github.com/Macchinetta/macchinetta-web-multi-blank/tree/1.11.0.RELEASE?tab=readme-ov-file#multi-blank-projectjavaconfigjsp-with-mybatis3>`_ \ も\ ``SIMPLE``\ モードとなっている。
     * - (2)
       - REUSE
       - \ ``PreparedStatement``\ をキャッシュし再利用する。
@@ -946,7 +946,7 @@ TypeAliasを使用しない場合、マッピングファイルで指定する\ 
 
 本ガイドラインでは、記述効率の向上、記述ミスの削減、マッピングファイルの可読性向上などを目的として、TypeAliasを使用することを推奨する。
 
-| \ `ブランクプロジェクト <https://github.com/Macchinetta/macchinetta-web-multi-blank/tree/1.10.0.RELEASE?tab=readme-ov-file#multi-blank-projectjavaconfigjsp-with-mybatis3>`_ \ からプロジェクトを生成した場合は、Entityを格納するパッケージ(\ ``${projectPackage}.domain.model``\ )配下に格納されるクラスがTypeAliasの対象となっている。
+| \ `ブランクプロジェクト <https://github.com/Macchinetta/macchinetta-web-multi-blank/tree/1.11.0.RELEASE?tab=readme-ov-file#multi-blank-projectjavaconfigjsp-with-mybatis3>`_ \ からプロジェクトを生成した場合は、Entityを格納するパッケージ(\ ``${projectPackage}.domain.model``\ )配下に格納されるクラスがTypeAliasの対象となっている。
 | 必要に応じて、設定を追加されたい。
 
 パッケージ名を指定してTypeAliasを設定する
@@ -1194,34 +1194,13 @@ TypeHandlerの設定
 
 \ ``TypeHandler``\ は、JavaクラスとJDBC型をマッピングする時に使用される。
 
-具体的には、
+具体的には以下を実施時に使用される。
 
 * SQLを発行する際に、Javaクラスのオブジェクトを\ ``java.sql.PreparedStatement``\ のバインドパラメータとして設定する
 * SQLの発行結果として取得した\ ``java.sql.ResultSet``\ から値を取得する
 
-際に、使用される。
-
-プリミティブ型やプリミティブラッパ型などの一般的なJavaクラスについては、MyBatis3から\ ``TypeHandler``\ が提供されており、特別な設定を行う必要はない。
-
-.. note:: \ **BLOB用とCLOB用の実装について**\
-
-  MyBatis 3.4で追加された\ ``TypeHandler``\ は、JDBC 4.0 (Java 1.6)で追加されたAPIを使用することで、BLOBと\ ``java.io.InputStream``\ 、CLOBと\ ``java.io.Reader``\ の変換を実現している。
-
-  JDBC 4.0サポートのJDBCドライバーであれば、BLOB⇔\ ``InputStream``\ 、CLOB⇔\ ``Reader``\ 変換用のタイプハンドラーがデフォルトで有効になるため、\ ``TypeHandler``\ を新たに実装する必要はない。
-
-  JDBC 4.0との互換性のないJDBCドライバを使う場合は、利用するJDBCドライバの互換バージョンを意識した\ ``TypeHandler``\ を作成する必要がある。
-
-  例えば、PostgreSQL用のJDBCドライバ(\ ``postgresql-42.2.9.jar``\ )では、JDBC 4.0から追加されたメソッドの一部が、未実装の状態である。
-
-.. note::
-
-  \ ``mybatis-typehandlers-jsr310``\ で提供されていたJSR-310 Date and Time API用の\ ``TypeHandler``\ が、MyBatis 3.4.5からコアモジュールに統合された。
-
-  これにより、依存ライブラリとして別途\ ``mybatis-typehandlers-jsr310``\ を追加する必要はなくなった。
-
-.. tip::
-
-  MyBatis3から提供されている\ ``TypeHandler``\ については、「\ `MyBatis 3 REFERENCE DOCUMENTATION(Configuration XML-typeHandlers-) <https://mybatis.org/mybatis-3/configuration.html#typeHandlers>`_ \ 」を参照されたい。
+| プリミティブ型やプリミティブラッパ型などの一般的なJavaクラスについては、MyBatis3から\ ``TypeHandler``\ が提供されており、特別な設定を行う必要はない。
+| 詳しくは\ `MyBatis 3 REFERENCE DOCUMENTATION(Configuration XML-typeHandlers-) <https://mybatis.org/mybatis-3/configuration.html#typeHandlers>`_ \ を参照されたい。
 
 .. tip:: \ **Enum型のマッピングについて**\
 
@@ -1241,11 +1220,8 @@ TypeHandlerの設定
 
 |
 
-\ ``TypeHandler``\ の作成が必要になるケースは、MyBatis3でサポートしていないJoda-TimeのクラスとJDBC型をマッピングする場合である。
-
-具体的には、「\ :doc:`../../Appendix/JodaTime`\ 」の\ ``org.joda.time.DateTime``\ 型と、JDBC型の\ ``TIMESTAMP``\ 型をマッピングする場合に、\ ``TypeHandler``\ の作成が必要となる。
-
-Joda-TimeのクラスとJDBC型をマッピングする\ ``TypeHandler``\ の作成例については、「\ :ref:`DataAccessMyBatis3HowToExtendTypeHandler`\ 」を参照されたい。
+| \ ``TypeHandler``\ の作成が必要になるケースは、MyBatis3でサポートしていないオブジェクトとJDBC型をマッピングする場合である。
+| \ ``TypeHandler``\ の作成例については、「\ :ref:`DataAccessMyBatis3HowToExtendTypeHandler`\ 」を参照されたい。
 
 |
 
@@ -1438,41 +1414,44 @@ Joda-TimeのクラスとJDBC型をマッピングする\ ``TypeHandler``\ の作
 
   .. code-block:: xml
 
-    <?xml version="1.0" encoding="UTF-8" ?>
-    <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-    <mapper namespace="com.example.domain.repository.image.ImageRepository">
-        <resultMap id="resultMapImage" type="Image">
-            <id property="id" column="id" />
+    <?xml version="1.0" encoding="UTF-8"?>
+    <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    <mapper namespace="com.example.domain.repository.dam3.CustomTypeHandlerRepository">
+        <resultMap id="SampleObjResultMap" type="com.example.domain.model.SampleObj">
+            <id property="id" column="id"/>
             <!-- (1) -->
-            <result property="imageData" column="image_data" typeHandler="XxxBlobInputStreamTypeHandler" />
-            <result property="createdAt" column="created_at"  />
+            <result property="handlerObj" column="handler_obj" typeHandler="CustomTypeHandler"/>
         </resultMap>
-        <select id="findById" parameterType="string" resultMap="resultMapImage">
-            SELECT
-                id
-                ,image_data
-                ,created_at
-            FROM
-                t_image
-            WHERE
-                id = #{id}
+    
+        <select id="findAllHandlerObj" resultMap="SampleObjResultMap">
+            SELECT id, handler_obj
+            FROM t_custom_type_handler
         </select>
-        <insert id="create" parameterType="Image">
-            INSERT INTO
-                t_image
-            (
-                id
-                ,image_data
-                ,created_at
-            )
-            VALUES
-            (
-                #{id}
-                /* (2) */
-                ,#{imageData,typeHandler=XxxBlobInputStreamTypeHandler}
-                ,#{createdAt}
-            )
+    
+        <select id="findOneById" parameterType="string" resultMap="SampleObjResultMap">
+            SELECT id, handler_obj
+            FROM t_custom_type_handler
+            WHERE id = #{id}
+        </select>
+
+        <insert id="insert" parameterType="com.example.domain.model.SampleObj">
+            INSERT INTO t_custom_type_handler (id, handler_obj)
+            <!-- (2) -->
+            VALUES (#{id}, #{handlerObj, typeHandler=CustomTypeHandler})
         </insert>
+    
+        <update id="update" parameterType="com.example.domain.model.SampleObj">
+            UPDATE t_custom_type_handler
+            <!-- (2) -->
+            SET handler_obj = #{handlerObj, typeHandler=CustomTypeHandler}
+            WHERE id = #{id}
+        </update>
+    
+        <delete id="delete" parameterType="string">
+            DELETE FROM t_custom_type_handler
+            WHERE id = #{id}
+        </delete>
+        
     </mapper>
 
   .. tabularcolumns:: |p{0.10\linewidth}|p{0.80\linewidth}|
@@ -2215,7 +2194,7 @@ PKが単一カラムで構成されるテーブルより、PKを指定してEnti
             Todo todo = todoRepository.findByTodoId(todoId);
             if (todo == null) { // (7)
                 throw new ResourceNotFoundException(ResultMessages.error().add(
-                        "e.ex.td.5001", todoId));
+                        "e.xx.yy.5001", todoId));
             }
             return todo;
         }
@@ -3587,10 +3566,10 @@ JDBCのバッチ更新機能を使用する方法については、「\ :ref:`Da
     
     以下に主要なデータベースのリファレンスページへのリンクを記載しておく。
 
-    * \ `Oracle 23c <https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/GRANT.html#GUID-20B4E2C0-A7F8-4BC8-A5E8-BE61BDC41AC3>`_\
-    * \ `DB2 11.5 <https://www.ibm.com/docs/en/db2/11.5?topic=statements-insert>`_\
-    * \ `PostgreSQL 15 <https://www.postgresql.org/docs/15/sql-insert.html>`_\
-    * \ `MySQL 8.3 <https://dev.mysql.com/doc/refman/8.3/en/insert.html>`_\
+    * \ `Oracle <https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/GRANT.html#GUID-20B4E2C0-A7F8-4BC8-A5E8-BE61BDC41AC3>`_\
+    * \ `DB2 <https://www.ibm.com/docs/en/db2/latest?topic=statements-insert>`_\
+    * \ `PostgreSQL <https://www.postgresql.org/docs/16/sql-insert.html>`_\
+    * \ `MySQL <https://dev.mysql.com/doc/refman/en/insert.html>`_\
 
 |
 
@@ -5138,91 +5117,110 @@ MyBatis3では、 \ ``sql``\ 要素と\ ``include``\ 要素を使用すること
 TypeHandlerの実装
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-MyBatis3の標準でサポートされていないJoda-Timeのクラスとのマッピングが必要の場合、
-独自の\ ``TypeHandler``\ の作成が必要となる。
+MyBatis3の標準でサポートされていないオブジェクトとのマッピングが必要な場合、独自の\ ``TypeHandler``\ の作成が必要となる。
 
-本ガイドラインでは「\ :ref:`DataAccessMyBatis3HowToExtendTypeHandlerJoda`\ 」を例に、\ ``TypeHandler``\ の実装方法について説明する。
+本ガイドラインでは「\ :ref:`DataAccessMyBatis3HowToExtendTypeHandlerCustom`\ 」を例に、\ ``TypeHandler``\ の実装方法について説明する。
 
 作成した\ ``TypeHandler``\ をアプリケーションに適用する方法については、「\ :ref:`DataAccessMyBatis3HowToUseSettingsTypeHandler`\ 」を参照されたい。
 
-.. note:: \ **BLOB用とCLOB用の実装について**\
-
-  MyBatis 3.4で追加された\ ``TypeHandler``\ は、JDBC 4.0 (Java 1.6)で追加されたAPIを使用することで、BLOBと\ ``java.io.InputStream``\ 、CLOBと\ ``java.io.Reader``\ の変換を実現している。JDBC 4.0サポートのJDBCドライバーであれば、BLOB⇔\ ``InputStream``\ 、CLOB⇔\ ``Reader``\ 変換用のタイプハンドラーがデフォルトで有効になるため、\ ``TypeHandler``\ を新たに実装する必要はない。
-
-  JDBC 4.0との互換性のないJDBCドライバを使う場合は、利用するJDBCドライバの互換バージョンを意識した\ ``TypeHandler``\ を作成する必要がある。
-
-  例えば、PostgreSQL用のJDBCドライバ(\ ``postgresql-42.2.9.jar``\ )では、JDBC 4.0から追加されたメソッドの一部が、未実装の状態である。
-
 |
 
-.. _DataAccessMyBatis3HowToExtendTypeHandlerJoda:
+.. _DataAccessMyBatis3HowToExtendTypeHandlerCustom:
 
-Joda-Time用のTypeHandlerの実装
+独自TypeHandlerの実装
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-| MyBatis3では、Joda-Timeのクラス(\ ``org.joda.time.DateTime``\ 、\ ``org.joda.time.LocalDateTime``\ 、\ ``org.joda.time.LocalDate``\ など)はサポートされていない。
-| そのため、EntityクラスのフィールドにJoda-Timeのクラスを使用する場合は、Joda-Time用の\ ``TypeHandler``\ を用意する必要がある。
+| 独自のTypeHandlerを実装する例を紹介する。
+| ここでは、以下のようなjavaクラスのvalue1～value3とVARCHARをマッピングする。
 
-\ ``org.joda.time.DateTime``\ と\ ``java.sql.Timestamp``\ をマッピングするための\ ``TypeHandler``\ の実装例を、以下に示す。
+.. code-block:: java
 
-.. note::
+  public class HandlerObj implements Serializable {
 
-  Jada-Timeから提供されている他のクラス(\ ``LocalDateTime``\ 、\ ``LocalDate``\ 、\ ``LocalTime``\ など)も同じ要領で実装すればよい。
+      private static final long serialVersionUID = 1L;
+
+      private String value1;
+
+      private String value2;
+
+      private Integer value3;
+
+      // omitted
+  }
+
+  public class SampleObj implements Serializable {
+
+      private static final long serialVersionUID = 1L;
+
+      private String id;
+
+      private HandlerObj handlerObj;
+
+      // omitted
+  }
+
+| \ ``com.example.domain.model.HandlerObj``\ と\ ``VARCHAR``\ をマッピングするための\ ``TypeHandler``\ の実装例を、以下に示す。
+| ここでは\ ``value1``\ 、\ ``value2``\ 、\ ``value3``\ を文字列"\ ``value1/value2/value3``\ "に変換し\ ``VARCHAR``\ に格納している。また逆に、\ ``VARCHAR``\ に格納された文字列を分解し\ ``value1``\ ～\ ``value3``\ にマッピングしている。
 
     .. code-block:: java
 
       package com.example.infra.mybatis.typehandler;
-
+      
       import java.sql.CallableStatement;
       import java.sql.PreparedStatement;
       import java.sql.ResultSet;
       import java.sql.SQLException;
-      import java.sql.Timestamp;
-
       import org.apache.ibatis.type.BaseTypeHandler;
       import org.apache.ibatis.type.JdbcType;
-      import org.joda.time.DateTime;
-
+      import org.springframework.util.StringUtils;
+      import com.example.domain.model.HandlerObj;
+      
       // (1)
-      public class DateTimeTypeHandler extends BaseTypeHandler<DateTime> {
-
+      public class CustomTypeHandler extends BaseTypeHandler<HandlerObj> {
+      
           // (2)
           @Override
-          public void setNonNullParameter(PreparedStatement ps, int i,
-                  DateTime parameter, JdbcType jdbcType) throws SQLException {
-              ps.setTimestamp(i, new Timestamp(parameter.getMillis()));
+          public HandlerObj getNullableResult(ResultSet rs, String columnName) throws SQLException {
+              return getObj(rs.getString(columnName));
           }
-
+      
+          // (2)
+          @Override
+          public HandlerObj getNullableResult(ResultSet rs, int columnIndex) throws SQLException {
+              return getObj(rs.getString(columnIndex));
+          }
+      
+          // (2)
+          @Override
+          public HandlerObj getNullableResult(CallableStatement cs, int columnIndex) throws SQLException {
+              return getObj(cs.getString(columnIndex));
+          }
+      
           // (3)
           @Override
-          public DateTime getNullableResult(ResultSet rs, String columnName)
-                  throws SQLException {
-              return toDateTime(rs.getTimestamp(columnName));
+          public void setNonNullParameter(PreparedStatement ps, int i, HandlerObj parameter,
+                  JdbcType jdbcType) throws SQLException {
+              ps.setString(i, objToString(parameter));
+      
           }
-
-          // (3)
-          @Override
-          public DateTime getNullableResult(ResultSet rs, int columnIndex)
-                  throws SQLException {
-              return toDateTime(rs.getTimestamp(columnIndex));
-          }
-
-          // (3)
-          @Override
-          public DateTime getNullableResult(CallableStatement cs, int columnIndex)
-                  throws SQLException {
-              return toDateTime(cs.getTimestamp(columnIndex));
-          }
-
-          private DateTime toDateTime(Timestamp timestamp) {
+      
+          private HandlerObj getObj(String value) {
+      
               // (4)
-              if (timestamp == null) {
-                  return null;
-              } else {
-                  return new DateTime(timestamp.getTime());
+              if (StringUtils.hasText(value)) {
+                  String[] parts = value.split("/");
+                  if (parts.length == 3) {
+                      return new HandlerObj(parts[0], parts[1], Integer.valueOf(parts[2]));
+                  }
               }
+      
+              return null;
           }
-
+      
+          private String objToString(HandlerObj handlerObj) {
+              return handlerObj.getValue1() + "/" + handlerObj.getValue2() + "/" + handlerObj.getValue3();
+          }
+      
       }
 
     .. tabularcolumns:: |p{0.10\linewidth}|p{0.80\linewidth}|
@@ -5235,15 +5233,13 @@ Joda-Time用のTypeHandlerの実装
       * - (1)
         - MyBatis3から提供されている\ ``BaseTypeHandler``\ を親クラスに指定する。
 
-          その際、\ ``BaseTypeHandler``\ のジェネリック型には、\ ``DateTime``\ を指定する。
+          その際、\ ``BaseTypeHandler``\ のジェネリック型にはマッピング対象となるクラス（ここでは\ ``HandlerObj``\ ）を指定する。
       * - (2)
-        - \ ``DateTime``\ を\ ``Timestamp``\ に変換し、\ ``PreparedStatement``\ に設定する処理を実装する。
+        - \ ``ResultSet``\ 又は\ ``CallableStatement``\ から取得した\ ``VARCHAR``\ を\ ``HandlerObj``\ に変換し、返り値として返却する。
       * - (3)
-        - \ ``ResultSet``\ 又は\ ``CallableStatement``\ から取得した\ ``Timestamp``\ を\ ``DateTime``\ に変換し、返り値として返却する。
+        - \ ``HandlerObj``\  を文字列に変換し、\ ``PreparedStatement``\ に設定する処理を実装する。
       * - (4)
-        - \ ``null``\ を許可するカラムの場合、\ ``Timestamp``\ が\ ``null``\ になる可能性があるため、\ ``null``\ チェックを行ってから\ ``DateTime``\ に変換する必要がある。
-
-          上記実装例では、3つのメソッドで同じ処理が必要になるため、privateメソッドを作成している。
+        - \ ``null``\ やを許可するカラムの場合、\ ``value``\ が\ ``null``\ になる可能性があるため、\ ``null``\ チェックを行ってから変換する必要がある。
 
 |
 
@@ -6490,7 +6486,7 @@ Mapperインタフェースの仕組みについて
             Todo todo = todoRepository.findByTodoId(todoId);
             if(todo == null){
                 throw new ResourceNotFoundException(
-                    ResultMessages.error().add("e.ex.td.5001" ,todoId));
+                    ResultMessages.error().add("e.xx.yy.5001" ,todoId));
             }
             return todo;
         }

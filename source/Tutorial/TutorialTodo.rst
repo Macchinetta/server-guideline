@@ -47,13 +47,13 @@
   * - JVM
     - \ `Java <https://developers.redhat.com/products/openjdk/download>`_\  17
   * - IDE
-    - \ `Spring Tool Suite <https://spring.io/tools>`_\  4.17.1.RELEASE (以降「STS」と呼ぶ。設定方法は\ :doc:`../Appendix/SpringToolSuite4`\ を参照されたい。)
+    - \ `Spring Tool Suite <https://spring.io/tools>`_\  4.27.0.RELEASE (以降「STS」と呼ぶ。設定方法は\ :doc:`../Appendix/SpringToolSuite4`\ を参照されたい。)
   * - Build Tool
-    - \ `Apache Maven <https://maven.apache.org/download.cgi>`_\  3.8.6 (以降「Maven」と呼ぶ)
+    - \ `Apache Maven <https://maven.apache.org/download.cgi>`_\  3.9.9 (以降「Maven」と呼ぶ)
   * - Application Server
-    - \ `Apache Tomcat <https://tomcat.apache.org/tomcat-10.1-doc/index.html>`_\  10.1.15
+    - \ `Apache Tomcat <https://tomcat.apache.org/tomcat-10.1-doc/index.html>`_\  10.1.33
   * - Web Browser
-    - \ `Google Chrome <https://www.google.co.jp/chrome/>`_\  117
+    - \ `Google Chrome <https://www.google.co.jp/chrome/>`_\  132
 
 |
 
@@ -231,7 +231,7 @@ Delete TODO
       mvn archetype:generate -B\
        -DarchetypeGroupId=com.github.macchinetta.blank\
        -DarchetypeArtifactId=macchinetta-web-blank-jsp-archetype\
-       -DarchetypeVersion=1.10.0.RELEASE\
+       -DarchetypeVersion=1.11.0.RELEASE\
        -DgroupId=com.example.todo\
        -DartifactId=todo\
        -Dversion=1.0.0-SNAPSHOT
@@ -252,7 +252,7 @@ O/R Mapperに依存しないブランクプロジェクトの作成
       mvn archetype:generate -B^
         -DarchetypeGroupId=com.github.macchinetta.blank^
         -DarchetypeArtifactId=macchinetta-web-blank-jsp-archetype^
-        -DarchetypeVersion=1.10.0.RELEASE^
+        -DarchetypeVersion=1.11.0.RELEASE^
         -DgroupId=com.example.todo^
         -DartifactId=todo^
         -Dversion=1.0.0-SNAPSHOT
@@ -263,7 +263,7 @@ O/R Mapperに依存しないブランクプロジェクトの作成
       mvn archetype:generate -B^
         -DarchetypeGroupId=com.github.macchinetta.blank^
         -DarchetypeArtifactId=macchinetta-web-blank-xmlconfig-jsp-archetype^
-        -DarchetypeVersion=1.10.0.RELEASE^
+        -DarchetypeVersion=1.11.0.RELEASE^
         -DgroupId=com.example.todo^
         -DartifactId=todo^
         -Dversion=1.0.0-SNAPSHOT
@@ -282,7 +282,7 @@ MyBatis3を使用してデータベースにアクセスするRepositoryImpl用�
       mvn archetype:generate -B^
         -DarchetypeGroupId=com.github.macchinetta.blank^
         -DarchetypeArtifactId=macchinetta-web-blank-jsp-mybatis3-archetype^
-        -DarchetypeVersion=1.10.0.RELEASE^
+        -DarchetypeVersion=1.11.0.RELEASE^
         -DgroupId=com.example.todo^
         -DartifactId=todo^
         -Dversion=1.0.0-SNAPSHOT
@@ -293,7 +293,7 @@ MyBatis3を使用してデータベースにアクセスするRepositoryImpl用�
       mvn archetype:generate -B^
         -DarchetypeGroupId=com.github.macchinetta.blank^
         -DarchetypeArtifactId=macchinetta-web-blank-xmlconfig-jsp-mybatis3-archetype^
-        -DarchetypeVersion=1.10.0.RELEASE^
+        -DarchetypeVersion=1.11.0.RELEASE^
         -DgroupId=com.example.todo^
         -DartifactId=todo^
         -Dversion=1.0.0-SNAPSHOT
@@ -331,26 +331,15 @@ Root Directoryに\ ``C:\work\todo``\ を設定し、Projectsにtodoのpom.xmlが
     .. figure:: ./images_TutorialTodo/image004_XMLConfig.png
       :alt: workspace
 
+プロジェクトのJavaバージョンを変更したい場合は\ :ref:`SpringToolSuite4JavaVersion`\ を参照されたい。
+
+|
+
 .. note::
 
   インポート後にビルドエラーが発生する場合は、プロジェクト名を右クリックし、「Maven」->「Update Project...」をクリックし、「OK」ボタンをクリックすることでエラーが解消されるケースがある。
 
   .. figure:: ./images_TutorialTodo/update-project.png
-    :width: 70%
-
-.. note::
-
-  ビルド時にJSPファイルで以下のエラーが発生する場合がある。
-  
-    .. code-block:: console
-
-      The superclass "javax.servlet.http.HttpServlet", determined from the Dynamic Web Module facet version (2.5), was not found on the Java Build Path
-
-  この状態は、Dynamic Web Moduleのバージョンをあげることで解消できる。
-
-  プロジェクト名を右クリックし、「Properties」を選択 ->「Project Facets」の「Dynamic Web Module」を5.0へ変更することで解決する。
-
-  .. figure:: ./images_TutorialTodo/change-DynamicWebModule.png
     :width: 70%
 
 .. tip::
@@ -364,7 +353,14 @@ Root Directoryに\ ``C:\work\todo``\ を設定し、Projectsにtodoのpom.xmlが
 
   Package PresentationをHierarchicalにすると、以下の様な表示になる。
 
-  .. figure:: ./images_TutorialTodo/presentation-hierarchical-view.png
+  .. tabs::
+    .. group-tab:: Java Config
+
+       .. figure:: ./images_TutorialTodo/presentation-hierarchical-view_JavaConfig.png
+
+    .. group-tab:: XML Config
+
+       .. figure:: ./images_TutorialTodo/presentation-hierarchical-view_XMLConfig.png
 
 .. warning::
 
@@ -382,9 +378,9 @@ Root Directoryに\ ``C:\work\todo``\ を設定し、Projectsにtodoのpom.xmlが
 
 .. note::
 
-  上記設定例は、依存ライブラリのバージョンを親プロジェクトである terasoluna-gfw-parent で管理する前提であるため、pom.xmlでのバージョンの指定は不要である。
+  上記設定例は、依存ライブラリのバージョンをBOMプロジェクトである terasoluna-dependencies で管理する前提であるため、pom.xmlでのバージョンの指定は不要である。
 
-  上記の依存ライブラリはterasoluna-gfw-parentが依存している\ `Spring Boot <https://docs.spring.io/spring-boot/docs/3.2.2/reference/htmlsingle/#dependency-versions>`_\ で管理されている。
+  上記の依存ライブラリはterasoluna-dependenciesが依存している\ `Spring Boot <https://docs.spring.io/spring-boot/3.4.1/appendix/dependency-versions/coordinates.html>`_\ で管理されている。
 
 |
 
@@ -618,7 +614,6 @@ Todoアプリケーションの開発を始める前に、プロジェクトの�
   import java.text.DateFormat;
   import java.util.Date;
   import java.util.Locale;
-
   import org.slf4j.Logger;
   import org.slf4j.LoggerFactory;
   import org.springframework.stereotype.Controller;
@@ -633,8 +628,7 @@ Todoアプリケーションの開発を始める前に、プロジェクトの�
   public class HelloController {
 
       // (2)
-      private static final Logger logger = LoggerFactory
-              .getLogger(HelloController.class);
+      private static final Logger logger = LoggerFactory.getLogger(HelloController.class);
 
       /**
        * Simply selects the home view to render by returning its name.
@@ -646,8 +640,8 @@ Todoアプリケーションの開発を始める前に、プロジェクトの�
           logger.info("Welcome home! The client locale is {}.", locale);
 
           Date date = new Date();
-          DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG,
-                  DateFormat.LONG, locale);
+          DateFormat dateFormat =
+                  DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
 
           String formattedDate = dateFormat.format(date);
 
@@ -679,7 +673,7 @@ Todoアプリケーションの開発を始める前に、プロジェクトの�
   * - | (5)
     - | 画面に表示するための日付文字列を、\ ``serverTime``\ という属性名でModelに設定している。
   * - | (6)
-    - | view名として\ ``welcome/home``\ を返す。\ ``ViewResolver``\ の設定により、\ ``WEB-INF/views/welcome/home.jsp``\ が呼び出される。
+    - | View名として\ ``welcome/home``\ を返す。\ ``ViewResolver``\ の設定により、\ ``WEB-INF/views/welcome/home.jsp``\ が呼び出される。
 
 |
 
@@ -689,21 +683,21 @@ Todoアプリケーションの開発を始める前に、プロジェクトの�
 
   <!DOCTYPE html>
   <html>
-  <head>
-  <meta charset="utf-8">
-  <title>Home</title>
-  <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/app/css/styles.css">
-  </head>
-  <body>
-      <div class="container">
-          <div id="wrapper">
-              <h1 id="title">Hello world!</h1>
-              <!-- (7) -->
-              <p>The time on the server is ${serverTime}.</p>
+      <head>
+          <meta charset="utf-8" />
+          <title>Home</title>
+          <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/app/css/styles.css" />
+      </head>
+      <body>
+          <div class="container">
+              <div id="wrapper">
+                  <h1 id="title">Hello world!</h1>
+                  <!-- (7) -->
+                  <p>The time on the server is ${serverTime}.</p>
+              </div>
+              <jsp:include page="../layout/footer.jsp" />
           </div>
-          <jsp:include page="../layout/footer.jsp" />
-      </div>
-  </body>
+      </body>
   </html>
 
 .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
@@ -769,10 +763,10 @@ todoが「Configured」に含まれていることを確認して「Finish」を
 
 .. code-block:: console
 
-  date:2022-11-25 17:24:47	thread:http-nio-8080-exec-4	X-Track:90843a0f267a4a85b70232ed9884d969	level:TRACE	logger:o.t.gfw.web.logging.TraceLoggingInterceptor     	message:[START CONTROLLER] HelloController.home(Locale,Model)
-  date:2022-11-25 17:24:47	thread:http-nio-8080-exec-4	X-Track:90843a0f267a4a85b70232ed9884d969	level:INFO 	logger:com.example.todo.app.welcome.HelloController    	message:Welcome home! The client locale is ja.
-  date:2022-11-25 17:24:47	thread:http-nio-8080-exec-4	X-Track:90843a0f267a4a85b70232ed9884d969	level:TRACE	logger:o.t.gfw.web.logging.TraceLoggingInterceptor     	message:[END CONTROLLER  ] HelloController.home(Locale,Model)-> view=welcome/home, model={serverTime=2022年11月25日 17:24:47 JST}
-  date:2022-11-25 17:24:47	thread:http-nio-8080-exec-4	X-Track:90843a0f267a4a85b70232ed9884d969	level:TRACE	logger:o.t.gfw.web.logging.TraceLoggingInterceptor     	message:[HANDLING TIME   ] HelloController.home(Locale,Model)-> 51,864,000 ns
+  date:2025-01-28 14:00:49	thread:http-nio-8080-exec-2	X-Track:aae50332dd844ee28c44067d96e1f09f	level:TRACE	logger:o.t.gfw.web.logging.TraceLoggingInterceptor     	message:[START CONTROLLER] HelloController.home(Locale,Model)
+  date:2025-01-28 14:00:49	thread:http-nio-8080-exec-2	X-Track:aae50332dd844ee28c44067d96e1f09f	level:INFO 	logger:com.example.todo.app.welcome.HelloController    	message:Welcome home! The client locale is ja.
+  date:2025-01-28 14:00:49	thread:http-nio-8080-exec-2	X-Track:aae50332dd844ee28c44067d96e1f09f	level:TRACE	logger:o.t.gfw.web.logging.TraceLoggingInterceptor     	message:[END CONTROLLER  ] HelloController.home(Locale,Model)-> view=welcome/home, model={serverTime=2025年1月28日 14:00:49 JST}
+  date:2025-01-28 14:00:49	thread:http-nio-8080-exec-2	X-Track:aae50332dd844ee28c44067d96e1f09f	level:TRACE	logger:o.t.gfw.web.logging.TraceLoggingInterceptor     	message:[HANDLING TIME   ] HelloController.home(Locale,Model)-> 87,161,900 ns
 
 .. note::
 
@@ -841,7 +835,15 @@ Package Explorer上で右クリック -> New -> Class を選択し、「New Java
 
 作成したクラスは以下のディレクトリに格納される。
 
-.. figure:: ./images_TutorialTodo/image058.png
+.. tabs::
+  .. group-tab:: Java Config
+
+     .. figure:: ./images_TutorialTodo/image058_JavaConfig.png
+
+  .. group-tab:: XML Config
+
+     .. figure:: ./images_TutorialTodo/image058_XMLConfig.png
+
 
 |
 
@@ -949,7 +951,15 @@ Package Explorer上で右クリック -> New -> Interface を選択し、「New 
 
 作成したインタフェースは以下のディレクトリに格納される。
 
-.. figure:: ./images_TutorialTodo/image061.png
+.. tabs::
+  .. group-tab:: Java Config
+
+     .. figure:: ./images_TutorialTodo/image061_JavaConfig.png
+
+  .. group-tab:: XML Config
+
+     .. figure:: ./images_TutorialTodo/image061_XMLConfig.png
+
 
 作成したインタフェースに、今回のアプリケーションで必要となる以下のCRUD操作を行うメソッドを定義する。
 
@@ -1020,7 +1030,15 @@ Package Explorer上で右クリック -> New -> Class を選択し、「New Java
 
 作成したクラスは以下のディレクトリに格納される。
 
-.. figure:: ./images_TutorialTodo/image062.png
+.. tabs::
+  .. group-tab:: Java Config
+
+     .. figure:: ./images_TutorialTodo/image062_JavaConfig.png
+
+  .. group-tab:: XML Config
+
+     .. figure:: ./images_TutorialTodo/image062_XMLConfig.png
+
 
 作成したクラスにCRUD操作を実装する。
 
@@ -1035,14 +1053,12 @@ Package Explorer上で右クリック -> New -> Class を選択し、「New Java
   import java.util.Collection;
   import java.util.Map;
   import java.util.concurrent.ConcurrentHashMap;
-
   import org.springframework.stereotype.Repository;
-
   import com.example.todo.domain.model.Todo;
 
   @Repository // (1)
   public class TodoRepositoryImpl implements TodoRepository {
-      private static final Map<String, Todo> TODO_MAP = new ConcurrentHashMap<String, Todo>();
+      private static final Map<String, Todo> TODO_MAP = new ConcurrentHashMap<>();
 
       @Override
       public Todo findById(String todoId) {
@@ -1128,7 +1144,15 @@ Package Explorer上で右クリック -> New -> Interface を選択し、「New 
 
 作成したインタフェースは以下のディレクトリに格納される。
 
-.. figure:: ./images_TutorialTodo/image063.png
+.. tabs::
+  .. group-tab:: Java Config
+
+     .. figure:: ./images_TutorialTodo/image063_JavaConfig.png
+
+  .. group-tab:: XML Config
+
+     .. figure:: ./images_TutorialTodo/image063_XMLConfig.png
+
 
 作成したインタフェースに以下の業務処理を行うメソッドを定義する。
 
@@ -1142,7 +1166,6 @@ Package Explorer上で右クリック -> New -> Interface を選択し、「New 
   package com.example.todo.domain.service.todo;
 
   import java.util.Collection;
-
   import com.example.todo.domain.model.Todo;
 
   public interface TodoService {
@@ -1183,7 +1206,15 @@ Package Explorer上で右クリック -> New -> Class を選択し、「New Java
 
 作成したクラスは以下のディレクトリに格納される。
 
-.. figure:: ./images_TutorialTodo/image064.png
+.. tabs::
+  .. group-tab:: Java Config
+
+     .. figure:: ./images_TutorialTodo/image064_JavaConfig.png
+
+  .. group-tab:: XML Config
+
+     .. figure:: ./images_TutorialTodo/image064_XMLConfig.png
+
 
 .. code-block:: java
 
@@ -1192,26 +1223,23 @@ Package Explorer上で右クリック -> New -> Class を選択し、「New Java
   import java.util.Collection;
   import java.util.Date;
   import java.util.UUID;
-
   import org.springframework.stereotype.Service;
   import org.springframework.transaction.annotation.Transactional;
   import org.terasoluna.gfw.common.exception.BusinessException;
   import org.terasoluna.gfw.common.exception.ResourceNotFoundException;
   import org.terasoluna.gfw.common.message.ResultMessage;
   import org.terasoluna.gfw.common.message.ResultMessages;
-
   import com.example.todo.domain.model.Todo;
   import com.example.todo.domain.repository.todo.TodoRepository;
-
   import jakarta.inject.Inject;
 
-  @Service// (1)
+  @Service // (1)
   @Transactional // (2)
   public class TodoServiceImpl implements TodoService {
 
       private static final long MAX_UNFINISHED_COUNT = 5;
 
-      @Inject// (3)
+      @Inject // (3)
       TodoRepository todoRepository;
 
       @Override
@@ -1226,8 +1254,8 @@ Package Explorer上で右クリック -> New -> Class を選択し、「New Java
           if (unfinishedCount >= MAX_UNFINISHED_COUNT) {
               // (5)
               ResultMessages messages = ResultMessages.error();
-              messages.add(ResultMessage.fromText(
-                      "[E001] The count of un-finished Todo must not be over "
+              messages.add(
+                      ResultMessage.fromText("[E001] The count of un-finished Todo must not be over "
                               + MAX_UNFINISHED_COUNT + "."));
               // (6)
               throw new BusinessException(messages);
@@ -1252,8 +1280,7 @@ Package Explorer上で右クリック -> New -> Class を選択し、「New Java
           if (todo.isFinished()) {
               ResultMessages messages = ResultMessages.error();
               messages.add(ResultMessage.fromText(
-                      "[E002] The requested Todo is already finished. (id="
-                              + todoId + ")"));
+                      "[E002] The requested Todo is already finished. (id=" + todoId + ")"));
               throw new BusinessException(messages);
           }
           todo.setFinished(true);
@@ -1272,9 +1299,8 @@ Package Explorer上で右クリック -> New -> Class を選択し、「New Java
           Todo todo = todoRepository.findById(todoId);
           if (todo == null) {
               ResultMessages messages = ResultMessages.error();
-              messages.add(ResultMessage.fromText(
-                      "[E404] The requested Todo is not found. (id=" + todoId
-                              + ")"));
+              messages.add(ResultMessage
+                      .fromText("[E404] The requested Todo is not found. (id=" + todoId + ")"));
               // (9)
               throw new ResourceNotFoundException(messages);
           }
@@ -1362,7 +1388,15 @@ Package Explorer上で右クリック -> New -> Class を選択し、「New Java
 
 作成したクラスは以下のディレクトリに格納される。
 
-.. figure:: ./images_TutorialTodo/image065.png
+.. tabs::
+  .. group-tab:: Java Config
+
+     .. figure:: ./images_TutorialTodo/image065_JavaConfig.png
+
+  .. group-tab:: XML Config
+
+     .. figure:: ./images_TutorialTodo/image065_XMLConfig.png
+
 
 .. code-block:: java
 
@@ -1376,7 +1410,6 @@ Package Explorer上で右クリック -> New -> Class を選択し、「New Java
   public class TodoController {
 
   }
-
 
 .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
 .. list-table::
@@ -1434,7 +1467,14 @@ Package Explorer上で右クリック -> New -> Class を選択し、「New Java
 
 作成したクラスは以下のディレクトリに格納される。
 
-.. figure:: ./images_TutorialTodo/image066.png
+.. tabs::
+  .. group-tab:: Java Config
+
+     .. figure:: ./images_TutorialTodo/image066_JavaConfig.png
+
+  .. group-tab:: XML Config
+
+     .. figure:: ./images_TutorialTodo/image066_XMLConfig.png
 
 作成したクラスに以下のプロパティを追加する。
 
@@ -1473,16 +1513,13 @@ Controllerの実装
   package com.example.todo.app.todo;
 
   import java.util.Collection;
-
   import org.springframework.stereotype.Controller;
   import org.springframework.ui.Model;
   import org.springframework.web.bind.annotation.GetMapping;
   import org.springframework.web.bind.annotation.ModelAttribute;
   import org.springframework.web.bind.annotation.RequestMapping;
-
   import com.example.todo.domain.model.Todo;
   import com.example.todo.domain.service.todo.TodoService;
-
   import jakarta.inject.Inject;
 
   @Controller
@@ -1572,37 +1609,37 @@ Package Explorer上で右クリック -> New -> File を選択し、「Create Ne
 
   <!DOCTYPE html>
   <html>
-  <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  <title>Todo List</title>
-  <style type="text/css">
-  .strike {
-      text-decoration: line-through;
-  }
-  </style>
-  </head>
-  <body>
-      <h1>Todo List</h1>
-      <hr />
-      <div id="todoList">
-          <ul>
-              <!-- (1) -->
-              <c:forEach items="${todos}" var="todo">
-                  <li><c:choose>
-                          <c:when test="${todo.finished}"><!-- (2) -->
-                              <span class="strike">
-                              <!-- (3) -->
-                              ${f:h(todo.todoTitle)}
-                              </span>
-                          </c:when>
-                          <c:otherwise>
-                              ${f:h(todo.todoTitle)}
-                           </c:otherwise>
-                      </c:choose></li>
-              </c:forEach>
-          </ul>
-      </div>
-  </body>
+      <head>
+          <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+          <title>Todo List</title>
+          <style type="text/css">
+              .strike {
+                  text-decoration: line-through;
+              }
+          </style>
+      </head>
+      <body>
+          <h1>Todo List</h1>
+          <hr />
+          <div id="todoList">
+              <ul>
+                  <!-- (1) -->
+                  <c:forEach items="${todos}" var="todo">
+                      <li>
+                          <c:choose>
+                              <c:when test="${todo.finished}"><!-- (2) -->
+                                  <span class="strike">
+                                      <!-- (3) -->
+                                      ${f:h(todo.todoTitle)}
+                                  </span>
+                              </c:when>
+                              <c:otherwise> ${f:h(todo.todoTitle)} </c:otherwise>
+                          </c:choose>
+                      </li>
+                  </c:forEach>
+              </ul>
+          </div>
+      </body>
   </html>
 
 .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
@@ -1647,9 +1684,7 @@ Package Explorer上で右クリック -> New -> File を選択し、「Create Ne
       import java.util.Collection;
       import java.util.Map;
       import java.util.concurrent.ConcurrentHashMap;
-
       import org.springframework.stereotype.Repository;
-
       import com.example.todo.domain.model.Todo;
 
       @Repository
@@ -1718,7 +1753,15 @@ Package Explorer上で右クリック -> New -> Interface を選択し、「New 
 
 作成したクラスは以下のディレクトリに格納される。
 
-.. figure:: ./images_TutorialTodo/create-bean-mapper.png
+.. tabs::
+  .. group-tab:: Java Config
+
+     .. figure:: ./images_TutorialTodo/create-bean-mapper_JavaConfig.png
+
+  .. group-tab:: XML Config
+
+     .. figure:: ./images_TutorialTodo/create-bean-mapper_XMLConfig.png
+
 
 作成したクラスに以下の\ ``@Mapper``\ アノテーションを付与したBeanマッピングメソッドを追加する。
 
@@ -1735,7 +1778,6 @@ Package Explorer上で右クリック -> New -> Interface を選択し、「New 
 
   import org.mapstruct.Mapper;
   import org.mapstruct.Mapping;
-
   import com.example.todo.domain.model.Todo;
 
   @Mapper
@@ -1775,7 +1817,6 @@ Controllerの修正
   package com.example.todo.app.todo;
 
   import java.util.Collection;
-
   import org.springframework.stereotype.Controller;
   import org.springframework.ui.Model;
   import org.springframework.validation.BindingResult;
@@ -1787,10 +1828,8 @@ Controllerの修正
   import org.terasoluna.gfw.common.exception.BusinessException;
   import org.terasoluna.gfw.common.message.ResultMessage;
   import org.terasoluna.gfw.common.message.ResultMessages;
-
   import com.example.todo.domain.model.Todo;
   import com.example.todo.domain.service.todo.TodoService;
-
   import jakarta.inject.Inject;
   import jakarta.validation.Valid;
 
@@ -1839,8 +1878,8 @@ Controllerの修正
           }
 
           // (8)
-          attributes.addFlashAttribute(ResultMessages.success().add(ResultMessage
-                  .fromText("Created successfully!")));
+          attributes.addFlashAttribute(
+                  ResultMessages.success().add(ResultMessage.fromText("Created successfully!")));
           return "redirect:/todo/list";
       }
 
@@ -1887,7 +1926,6 @@ Formの修正
   package com.example.todo.app.todo;
 
   import java.io.Serializable;
-
   import jakarta.validation.constraints.NotNull;
   import jakarta.validation.constraints.Size;
 
@@ -1935,48 +1973,44 @@ JSPの修正
 
   <!DOCTYPE html>
   <html>
-  <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  <title>Todo List</title>
-  <style type="text/css">
-  .strike {
-      text-decoration: line-through;
-  }
-  </style>
-  </head>
-  <body>
-      <h1>Todo List</h1>
-      <div id="todoForm">
-          <!-- (1) -->
-          <t:messagesPanel />
+      <head>
+          <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+          <title>Todo List</title>
+          <style type="text/css">
+              .strike {
+                  text-decoration: line-through;
+              }
+          </style>
+      </head>
+      <body>
+          <h1>Todo List</h1>
+          <div id="todoForm">
+              <!-- (1) -->
+              <t:messagesPanel />
 
-          <!-- (2) -->
-          <form:form
-             action="${pageContext.request.contextPath}/todo/create"
-              method="post" modelAttribute="todoForm">
-              <form:input path="todoTitle" /><!-- (3) -->
-              <form:errors path="todoTitle" /><!-- (4) -->
-              <form:button>Create Todo</form:button>
-          </form:form>
-      </div>
-      <hr />
-      <div id="todoList">
-          <ul>
-              <c:forEach items="${todos}" var="todo">
-                  <li><c:choose>
-                          <c:when test="${todo.finished}">
-                              <span class="strike">
-                              ${f:h(todo.todoTitle)}
-                              </span>
-                          </c:when>
-                          <c:otherwise>
-                              ${f:h(todo.todoTitle)}
-                           </c:otherwise>
-                      </c:choose></li>
-              </c:forEach>
-          </ul>
-      </div>
-  </body>
+              <!-- (2) -->
+              <form:form action="${pageContext.request.contextPath}/todo/create" method="post" modelAttribute="todoForm">
+                  <form:input path="todoTitle" /><!-- (3) -->
+                  <form:errors path="todoTitle" /><!-- (4) -->
+                  <form:button>Create Todo</form:button>
+              </form:form>
+          </div>
+          <hr />
+          <div id="todoList">
+              <ul>
+                  <c:forEach items="${todos}" var="todo">
+                      <li>
+                          <c:choose>
+                              <c:when test="${todo.finished}">
+                                  <span class="strike"> ${f:h(todo.todoTitle)} </span>
+                              </c:when>
+                              <c:otherwise> ${f:h(todo.todoTitle)} </c:otherwise>
+                          </c:choose>
+                      </li>
+                  </c:forEach>
+              </ul>
+          </div>
+      </body>
   </html>
 
 .. tabularcolumns:: |p{0.10\linewidth}|p{0.80\linewidth}|
@@ -2112,7 +2146,7 @@ Formクラスに以下のプロパティを追加する。
   package com.example.todo.app.todo;
 
   import java.io.Serializable;
-
+  import jakarta.validation.constraints.NotEmpty;
   import jakarta.validation.constraints.NotNull;
   import jakarta.validation.constraints.Size;
 
@@ -2127,12 +2161,12 @@ Formクラスに以下のプロパティを追加する。
       private static final long serialVersionUID = 1L;
 
       // (2)
-      @NotNull(groups = { TodoFinish.class })
+      @NotEmpty(groups = {TodoFinish.class})
       private String todoId;
 
       // (3)
-      @NotNull(groups = { TodoCreate.class })
-      @Size(min = 1, max = 30, groups = { TodoCreate.class })
+      @NotNull(groups = {TodoCreate.class})
+      @Size(min = 1, max = 30, groups = {TodoCreate.class})
       private String todoTitle;
 
       public String getTodoId() {
@@ -2167,7 +2201,7 @@ Formクラスに以下のプロパティを追加する。
       | ここでは、新規作成処理用のインタフェースとして\ ``TodoCreate``\ を、完了処理用のインタフェースとして\ ``TodoFinish``\ を作成している。
   * - | (2)
     - | \ ``todoId``\ は完了処理で使用するプロパティである。
-      | そのため、\ ``@NotNull``\ アノテーションの\ ``groups``\ 属性には、完了処理用の入力チェックルールである事を示す\ ``TodoFinish``\ インタフェースを指定する。
+      | そのため、\ ``@NotEmpty``\ アノテーションの\ ``groups``\ 属性には、完了処理用の入力チェックルールである事を示す\ ``TodoFinish``\ インタフェースを指定する。
   * - | (3)
     - | \ ``todoTitle``\ は新規作成処理で使用するプロパティである。
       | そのため、\ ``@NotNull``\ アノテーションと\ ``@Size``\ アノテーションの\ ``groups``\ 属性には、新規作成処理用の入力チェックルールである事を示す\ ``TodoCreate``\ インタフェースを指定する。
@@ -2186,7 +2220,6 @@ Controllerの修正
   package com.example.todo.app.todo;
 
   import java.util.Collection;
-
   import org.springframework.stereotype.Controller;
   import org.springframework.ui.Model;
   import org.springframework.validation.BindingResult;
@@ -2199,12 +2232,10 @@ Controllerの修正
   import org.terasoluna.gfw.common.exception.BusinessException;
   import org.terasoluna.gfw.common.message.ResultMessage;
   import org.terasoluna.gfw.common.message.ResultMessages;
-
   import com.example.todo.app.todo.TodoForm.TodoCreate;
   import com.example.todo.app.todo.TodoForm.TodoFinish;
   import com.example.todo.domain.model.Todo;
   import com.example.todo.domain.service.todo.TodoService;
-
   import jakarta.inject.Inject;
   import jakarta.validation.groups.Default;
 
@@ -2232,9 +2263,9 @@ Controllerの修正
       }
 
       @PostMapping("create")
-      public String create(@Validated({ Default.class, // (1)
-              TodoCreate.class }) TodoForm todoForm, BindingResult bindingResult,
-              Model model, RedirectAttributes attributes) {
+      public String create(@Validated({Default.class, // (1)
+              TodoCreate.class}) TodoForm todoForm, BindingResult bindingResult, Model model,
+              RedirectAttributes attributes) {
 
           if (bindingResult.hasErrors()) {
               return list(model);
@@ -2249,15 +2280,15 @@ Controllerの修正
               return list(model);
           }
 
-          attributes.addFlashAttribute(ResultMessages.success().add(ResultMessage
-                  .fromText("Created successfully!")));
+          attributes.addFlashAttribute(
+                  ResultMessages.success().add(ResultMessage.fromText("Created successfully!")));
           return "redirect:/todo/list";
       }
 
       @PostMapping("finish") // (2)
-      public String finish(@Validated({ Default.class, // (3)
-              TodoFinish.class }) TodoForm form, BindingResult bindingResult,
-              Model model, RedirectAttributes attributes) {
+      public String finish(@Validated({Default.class, // (3)
+              TodoFinish.class}) TodoForm form, BindingResult bindingResult, Model model,
+              RedirectAttributes attributes) {
           // (4)
           if (bindingResult.hasErrors()) {
               return list(model);
@@ -2272,8 +2303,8 @@ Controllerの修正
           }
 
           // (6)
-          attributes.addFlashAttribute(ResultMessages.success().add( ResultMessage
-                  .fromText("Finished successfully!")));
+          attributes.addFlashAttribute(
+                  ResultMessages.success().add(ResultMessage.fromText("Finished successfully!")));
           return "redirect:/todo/list";
       }
   }
@@ -2324,80 +2355,75 @@ JSPの修正
 
   <!DOCTYPE html>
   <html>
-  <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  <title>Todo List</title>
-  </head>
-  <style type="text/css">
-  .strike {
-      text-decoration: line-through;
-  }
+      <head>
+          <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+          <title>Todo List</title>
+      </head>
+      <style type="text/css">
+          .strike {
+              text-decoration: line-through;
+          }
 
-  .inline {
-      display: inline-block;
-  }
+          .inline {
+              display: inline-block;
+          }
 
-  .alert {
-      border: 1px solid;
-  }
+          .alert {
+              border: 1px solid;
+          }
 
-  .alert-error {
-      background-color: #c60f13;
-      border-color: #970b0e;
-      color: white;
-  }
+          .alert-error {
+              background-color: #c60f13;
+              border-color: #970b0e;
+              color: white;
+          }
 
-  .alert-success {
-      background-color: #5da423;
-      border-color: #457a1a;
-      color: white;
-  }
+          .alert-success {
+              background-color: #5da423;
+              border-color: #457a1a;
+              color: white;
+          }
 
-  .text-error {
-      color: #c60f13;
-  }
-  </style>
-  <body>
-      <h1>Todo List</h1>
+          .text-error {
+              color: #c60f13;
+          }
+      </style>
+      <body>
+          <h1>Todo List</h1>
 
-      <div id="todoForm">
-          <t:messagesPanel />
+          <div id="todoForm">
+              <t:messagesPanel />
 
-          <form:form
-              action="${pageContext.request.contextPath}/todo/create"
-              method="post" modelAttribute="todoForm">
-              <form:input path="todoTitle" />
-              <form:errors path="todoTitle" cssClass="text-error" />
-              <form:button>Create Todo</form:button>
-          </form:form>
-      </div>
-      <hr />
-      <div id="todoList">
-          <ul>
-              <c:forEach items="${todos}" var="todo">
-                  <li><c:choose>
-                          <c:when test="${todo.finished}">
-                              <span class="strike">${f:h(todo.todoTitle)}</span>
-                          </c:when>
-                          <c:otherwise>
-                              ${f:h(todo.todoTitle)}
-                              <!-- (1) -->
-                              <form:form
-                                  action="${pageContext.request.contextPath}/todo/finish"
-                                  method="post"
-                                  modelAttribute="todoForm"
-                                  cssClass="inline">
-                                  <!-- (2) -->
-                                  <form:hidden path="todoId"
-                                      value="${f:h(todo.todoId)}" />
-                                  <form:button>Finish</form:button>
-                              </form:form>
-                          </c:otherwise>
-                      </c:choose></li>
-              </c:forEach>
-          </ul>
-      </div>
-  </body>
+              <form:form action="${pageContext.request.contextPath}/todo/create" method="post" modelAttribute="todoForm">
+                  <form:input path="todoTitle" />
+                  <form:errors path="todoTitle" cssClass="text-error" />
+                  <form:button>Create Todo</form:button>
+              </form:form>
+          </div>
+          <hr />
+          <div id="todoList">
+              <ul>
+                  <c:forEach items="${todos}" var="todo">
+                      <li>
+                          <c:choose>
+                              <c:when test="${todo.finished}">
+                                  <span class="strike">${f:h(todo.todoTitle)}</span>
+                              </c:when>
+                              <c:otherwise>
+                                  ${f:h(todo.todoTitle)}
+                                  <!-- (1) -->
+                                  <form:form action="${pageContext.request.contextPath}/todo/finish" method="post" modelAttribute="todoForm" cssClass="inline">
+                                      <!-- (2) -->
+                                      <form:hidden path="todoId" value="${f:h(todo.todoId)}" />
+                                      <form:button>Finish</form:button>
+                                  </form:form>
+                              </c:otherwise>
+                          </c:choose>
+                      </li>
+                  </c:forEach>
+              </ul>
+          </div>
+      </body>
   </html>
 
 .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
@@ -2445,7 +2471,7 @@ Formの修正
   package com.example.todo.app.todo;
 
   import java.io.Serializable;
-
+  import jakarta.validation.constraints.NotEmpty;
   import jakarta.validation.constraints.NotNull;
   import jakarta.validation.constraints.Size;
 
@@ -2463,11 +2489,11 @@ Formの修正
       private static final long serialVersionUID = 1L;
 
       // (2)
-      @NotNull(groups = { TodoFinish.class, TodoDelete.class })
+      @NotEmpty(groups = {TodoFinish.class, TodoDelete.class})
       private String todoId;
 
-      @NotNull(groups = { TodoCreate.class })
-      @Size(min = 1, max = 30, groups = { TodoCreate.class })
+      @NotNull(groups = {TodoCreate.class})
+      @Size(min = 1, max = 30, groups = {TodoCreate.class})
       private String todoTitle;
 
       public String getTodoId() {
@@ -2499,7 +2525,7 @@ Formの修正
     - | 削除処理用の入力チェックルールをグループ化するためのインタフェースとして\ ``TodoDelete``\ を作成する。
   * - | (2)
     - | 削除処理では\ ``todoId``\ プロパティを使用する。
-      | そのため、\ ``todoId``\ の\ ``@NotNull``\ アノテーションの\ ``groups``\ 属性には、削除処理用の入力チェックルールである事を示す\ ``TodoDelete``\ インタフェースを指定する。
+      | そのため、\ ``todoId``\ の\ ``@NotEmpty``\ アノテーションの\ ``groups``\ 属性には、削除処理用の入力チェックルールである事を示す\ ``TodoDelete``\ インタフェースを指定する。
 
 |
 
@@ -2513,7 +2539,6 @@ Controllerの修正
   package com.example.todo.app.todo;
 
   import java.util.Collection;
-
   import org.springframework.stereotype.Controller;
   import org.springframework.ui.Model;
   import org.springframework.validation.BindingResult;
@@ -2526,13 +2551,11 @@ Controllerの修正
   import org.terasoluna.gfw.common.exception.BusinessException;
   import org.terasoluna.gfw.common.message.ResultMessage;
   import org.terasoluna.gfw.common.message.ResultMessages;
-
   import com.example.todo.app.todo.TodoForm.TodoCreate;
   import com.example.todo.app.todo.TodoForm.TodoDelete;
   import com.example.todo.app.todo.TodoForm.TodoFinish;
   import com.example.todo.domain.model.Todo;
   import com.example.todo.domain.service.todo.TodoService;
-
   import jakarta.inject.Inject;
   import jakarta.validation.groups.Default;
 
@@ -2560,9 +2583,8 @@ Controllerの修正
       }
 
       @PostMapping("create")
-      public String create(@Validated({ Default.class,
-              TodoCreate.class }) TodoForm todoForm, BindingResult bindingResult,
-              Model model, RedirectAttributes attributes) {
+      public String create(@Validated({Default.class, TodoCreate.class}) TodoForm todoForm,
+              BindingResult bindingResult, Model model, RedirectAttributes attributes) {
 
           if (bindingResult.hasErrors()) {
               return list(model);
@@ -2577,15 +2599,14 @@ Controllerの修正
               return list(model);
           }
 
-          attributes.addFlashAttribute(ResultMessages.success().add(ResultMessage
-                  .fromText("Created successfully!")));
+          attributes.addFlashAttribute(
+                  ResultMessages.success().add(ResultMessage.fromText("Created successfully!")));
           return "redirect:/todo/list";
       }
 
       @PostMapping("finish")
-      public String finish(@Validated({ Default.class,
-              TodoFinish.class }) TodoForm form, BindingResult bindingResult,
-              Model model, RedirectAttributes attributes) {
+      public String finish(@Validated({Default.class, TodoFinish.class}) TodoForm form,
+              BindingResult bindingResult, Model model, RedirectAttributes attributes) {
           if (bindingResult.hasErrors()) {
               return list(model);
           }
@@ -2597,15 +2618,14 @@ Controllerの修正
               return list(model);
           }
 
-          attributes.addFlashAttribute(ResultMessages.success().add(ResultMessage
-                  .fromText("Finished successfully!")));
+          attributes.addFlashAttribute(
+                  ResultMessages.success().add(ResultMessage.fromText("Finished successfully!")));
           return "redirect:/todo/list";
       }
 
       @PostMapping("delete") // (1)
-      public String delete(@Validated({ Default.class,
-              TodoDelete.class }) TodoForm form, BindingResult bindingResult,
-              Model model, RedirectAttributes attributes) {
+      public String delete(@Validated({Default.class, TodoDelete.class}) TodoForm form,
+              BindingResult bindingResult, Model model, RedirectAttributes attributes) {
 
           if (bindingResult.hasErrors()) {
               return list(model);
@@ -2618,8 +2638,8 @@ Controllerの修正
               return list(model);
           }
 
-          attributes.addFlashAttribute(ResultMessages.success().add(ResultMessage
-                  .fromText("Deleted successfully!")));
+          attributes.addFlashAttribute(
+                  ResultMessages.success().add(ResultMessage.fromText("Deleted successfully!")));
           return "redirect:/todo/list";
       }
 
@@ -2646,89 +2666,79 @@ JSPの修正
 
   <!DOCTYPE html>
   <html>
-  <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  <title>Todo List</title>
-  </head>
-  <style type="text/css">
-  .strike {
-      text-decoration: line-through;
-  }
+      <head>
+          <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+          <title>Todo List</title>
+      </head>
+      <style type="text/css">
+          .strike {
+              text-decoration: line-through;
+          }
 
-  .inline {
-      display: inline-block;
-  }
+          .inline {
+              display: inline-block;
+          }
 
-  .alert {
-      border: 1px solid;
-  }
+          .alert {
+              border: 1px solid;
+          }
 
-  .alert-error {
-      background-color: #c60f13;
-      border-color: #970b0e;
-      color: white;
-  }
+          .alert-error {
+              background-color: #c60f13;
+              border-color: #970b0e;
+              color: white;
+          }
 
-  .alert-success {
-      background-color: #5da423;
-      border-color: #457a1a;
-      color: white;
-  }
+          .alert-success {
+              background-color: #5da423;
+              border-color: #457a1a;
+              color: white;
+          }
 
-  .text-error {
-      color: #c60f13;
-  }
-  </style>
-  <body>
-      <h1>Todo List</h1>
+          .text-error {
+              color: #c60f13;
+          }
+      </style>
+      <body>
+          <h1>Todo List</h1>
 
-      <div id="todoForm">
-          <t:messagesPanel />
+          <div id="todoForm">
+              <t:messagesPanel />
 
-          <form:form
-              action="${pageContext.request.contextPath}/todo/create"
-              method="post" modelAttribute="todoForm">
-              <form:input path="todoTitle" />
-              <form:errors path="todoTitle" cssClass="text-error" />
-              <form:button>Create Todo</form:button>
-          </form:form>
-      </div>
-      <hr />
-      <div id="todoList">
-          <ul>
-              <c:forEach items="${todos}" var="todo">
-                  <li><c:choose>
-                          <c:when test="${todo.finished}">
-                              <span class="strike">${f:h(todo.todoTitle)}</span>
-                          </c:when>
-                          <c:otherwise>
-                              ${f:h(todo.todoTitle)}
-                              <form:form
-                                  action="${pageContext.request.contextPath}/todo/finish"
-                                  method="post"
-                                  modelAttribute="todoForm"
-                                  cssClass="inline">
-                                  <form:hidden path="todoId"
-                                      value="${f:h(todo.todoId)}" />
-                                  <form:button>Finish</form:button>
-                              </form:form>
-                          </c:otherwise>
-                      </c:choose>
-                      <!-- (1) -->
-                      <form:form
-                          action="${pageContext.request.contextPath}/todo/delete"
-                          method="post" modelAttribute="todoForm"
-                          cssClass="inline">
-                          <!-- (2) -->
-                          <form:hidden path="todoId"
-                              value="${f:h(todo.todoId)}" />
-                          <form:button>Delete</form:button>
-                      </form:form>
-                  </li>
-              </c:forEach>
-          </ul>
-      </div>
-  </body>
+              <form:form action="${pageContext.request.contextPath}/todo/create" method="post" modelAttribute="todoForm">
+                  <form:input path="todoTitle" />
+                  <form:errors path="todoTitle" cssClass="text-error" />
+                  <form:button>Create Todo</form:button>
+              </form:form>
+          </div>
+          <hr />
+          <div id="todoList">
+              <ul>
+                  <c:forEach items="${todos}" var="todo">
+                      <li>
+                          <c:choose>
+                              <c:when test="${todo.finished}">
+                                  <span class="strike">${f:h(todo.todoTitle)}</span>
+                              </c:when>
+                              <c:otherwise>
+                                  ${f:h(todo.todoTitle)}
+                                  <form:form action="${pageContext.request.contextPath}/todo/finish" method="post" modelAttribute="todoForm" cssClass="inline">
+                                      <form:hidden path="todoId" value="${f:h(todo.todoId)}" />
+                                      <form:button>Finish</form:button>
+                                  </form:form>
+                              </c:otherwise>
+                          </c:choose>
+                          <!-- (1) -->
+                          <form:form action="${pageContext.request.contextPath}/todo/delete" method="post" modelAttribute="todoForm" cssClass="inline">
+                              <!-- (2) -->
+                              <form:hidden path="todoId" value="${f:h(todo.todoId)}" />
+                              <form:button>Delete</form:button>
+                          </form:form>
+                      </li>
+                  </c:forEach>
+              </ul>
+          </div>
+      </body>
   </html>
 
 .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
@@ -2817,60 +2827,50 @@ JSPからCSSファイルを読み込む。
 
   <!DOCTYPE html>
   <html>
-  <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  <title>Todo List</title>
-  <!-- (1) -->
-  <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/app/css/styles.css" type="text/css">
-  </head>
-  <body>
-      <h1>Todo List</h1>
+      <head>
+          <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+          <title>Todo List</title>
+          <!-- (1) -->
+          <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/app/css/styles.css" type="text/css" />
+      </head>
+      <body>
+          <h1>Todo List</h1>
 
-      <div id="todoForm">
-          <t:messagesPanel />
+          <div id="todoForm">
+              <t:messagesPanel />
 
-          <form:form
-              action="${pageContext.request.contextPath}/todo/create"
-              method="post" modelAttribute="todoForm">
-              <form:input path="todoTitle" />
-              <form:errors path="todoTitle" cssClass="text-error" />
-              <form:button>Create Todo</form:button>
-          </form:form>
-      </div>
-      <hr />
-      <div id="todoList">
-          <ul>
-              <c:forEach items="${todos}" var="todo">
-                  <li><c:choose>
-                          <c:when test="${todo.finished}">
-                              <span class="strike">${f:h(todo.todoTitle)}</span>
-                          </c:when>
-                          <c:otherwise>
-                              ${f:h(todo.todoTitle)}
-                              <form:form
-                                  action="${pageContext.request.contextPath}/todo/finish"
-                                  method="post"
-                                  modelAttribute="todoForm"
-                                  cssClass="inline">
-                                  <form:hidden path="todoId"
-                                      value="${f:h(todo.todoId)}" />
-                                  <form:button>Finish</form:button>
-                              </form:form>
-                          </c:otherwise>
-                      </c:choose>
-                      <form:form
-                          action="${pageContext.request.contextPath}/todo/delete"
-                          method="post" modelAttribute="todoForm"
-                          cssClass="inline">
-                          <form:hidden path="todoId"
-                              value="${f:h(todo.todoId)}" />
-                          <form:button>Delete</form:button>
-                      </form:form>
-                  </li>
-              </c:forEach>
-          </ul>
-      </div>
-  </body>
+              <form:form action="${pageContext.request.contextPath}/todo/create" method="post" modelAttribute="todoForm">
+                  <form:input path="todoTitle" />
+                  <form:errors path="todoTitle" cssClass="text-error" />
+                  <form:button>Create Todo</form:button>
+              </form:form>
+          </div>
+          <hr />
+          <div id="todoList">
+              <ul>
+                  <c:forEach items="${todos}" var="todo">
+                      <li>
+                          <c:choose>
+                              <c:when test="${todo.finished}">
+                                  <span class="strike">${f:h(todo.todoTitle)}</span>
+                              </c:when>
+                              <c:otherwise>
+                                  ${f:h(todo.todoTitle)}
+                                  <form:form action="${pageContext.request.contextPath}/todo/finish" method="post" modelAttribute="todoForm" cssClass="inline">
+                                      <form:hidden path="todoId" value="${f:h(todo.todoId)}" />
+                                      <form:button>Finish</form:button>
+                                  </form:form>
+                              </c:otherwise>
+                          </c:choose>
+                          <form:form action="${pageContext.request.contextPath}/todo/delete" method="post" modelAttribute="todoForm" cssClass="inline">
+                              <form:hidden path="todoId" value="${f:h(todo.todoId)}" />
+                              <form:button>Delete</form:button>
+                          </form:form>
+                      </li>
+                  </c:forEach>
+              </ul>
+          </div>
+      </body>
   </html>
 
 .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
@@ -3029,8 +3029,7 @@ Package Explorer上で右クリック -> New -> File を選択し、「Create Ne
 .. code-block:: xml
 
   <?xml version="1.0" encoding="UTF-8"?>
-  <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-      "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
   <!-- (1) -->
   <mapper namespace="com.example.todo.domain.repository.todo.TodoRepository">
@@ -3045,86 +3044,86 @@ Package Explorer上で右クリック -> New -> File を選択し、「Create Ne
 
       <!-- (3) -->
       <select id="findById" parameterType="String" resultMap="todoResultMap">
-      <![CDATA[
-          SELECT
-              todo_id,
-              todo_title,
-              finished,
-              created_at
-          FROM
-              todo
-          WHERE
-              todo_id = #{todoId}
-      ]]>
+        <![CDATA[
+            SELECT
+                todo_id,
+                todo_title,
+                finished,
+                created_at
+            FROM
+                todo
+            WHERE
+                todo_id = #{todoId}
+        ]]>
       </select>
 
       <!-- (4) -->
       <select id="findAll" resultMap="todoResultMap">
-      <![CDATA[
-          SELECT
-              todo_id,
-              todo_title,
-              finished,
-              created_at
-          FROM
-              todo
-      ]]>
+        <![CDATA[
+            SELECT
+                todo_id,
+                todo_title,
+                finished,
+                created_at
+            FROM
+                todo
+        ]]>
       </select>
 
       <!-- (5) -->
       <insert id="create" parameterType="Todo">
-      <![CDATA[
-          INSERT INTO todo
-          (
-              todo_id,
-              todo_title,
-              finished,
-              created_at
-          )
-          VALUES
-          (
-              #{todoId},
-              #{todoTitle},
-              #{finished},
-              #{createdAt}
-          )
-      ]]>
+        <![CDATA[
+            INSERT INTO todo
+            (
+                todo_id,
+                todo_title,
+                finished,
+                created_at
+            )
+            VALUES
+            (
+                #{todoId},
+                #{todoTitle},
+                #{finished},
+                #{createdAt}
+            )
+        ]]>
       </insert>
 
       <!-- (6) -->
       <update id="update" parameterType="Todo">
-      <![CDATA[
-          UPDATE todo
-          SET
-              todo_title = #{todoTitle},
-              finished = #{finished},
-              created_at = #{createdAt}
-          WHERE
-              todo_id = #{todoId}
-      ]]>
+        <![CDATA[
+            UPDATE todo
+            SET
+                todo_title = #{todoTitle},
+                finished = #{finished},
+                created_at = #{createdAt}
+            WHERE
+                todo_id = #{todoId}
+        ]]>
       </update>
 
       <!-- (7) -->
       <delete id="delete" parameterType="Todo">
-      <![CDATA[
-          DELETE FROM
-              todo
-          WHERE
-              todo_id = #{todoId}
-      ]]>
+        <![CDATA[
+            DELETE FROM
+                todo
+            WHERE
+                todo_id = #{todoId}
+        ]]>
       </delete>
 
       <!-- (8) -->
       <select id="countByFinished" parameterType="Boolean"
           resultType="Long">
-      <![CDATA[
-          SELECT
-              COUNT(*)
-          FROM
-              todo
-          WHERE
-              finished = #{finished}
-      ]]>
+        <![CDATA[
+            SELECT
+                COUNT(*)
+            FROM
+                todo
+            WHERE
+                finished = #{finished}
+        ]]>
       </select>
 
   </mapper>
@@ -3454,7 +3453,7 @@ web.xml
 
     |
 
-  .. group-tab:: Xml Config
+  .. group-tab:: XML Config
     .. code-block:: xml
 
       <?xml version="1.0" encoding="UTF-8"?>
@@ -3674,6 +3673,7 @@ web.xml
 
 .. code-block:: jsp
 
+  <!-- prettier-ignore -->
   <!-- (1) -->
   <%@ page session="false"%>
   <!-- (2) -->
@@ -3772,7 +3772,6 @@ applicationContext
       import java.util.HashMap;
       import java.util.LinkedHashMap;
       import java.util.Map;
-
       import org.springframework.beans.factory.annotation.Value;
       import org.springframework.context.MessageSource;
       import org.springframework.context.annotation.Bean;
@@ -3796,7 +3795,7 @@ applicationContext
        */
       @Configuration
       @EnableAspectJAutoProxy
-      @Import({ TodoDomainConfig.class }) // (1)
+      @Import({TodoDomainConfig.class}) // (1)
       public class ApplicationContextConfig {
 
           /**
@@ -3937,11 +3936,9 @@ applicationContext
           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
           xmlns:context="http://www.springframework.org/schema/context"
           xmlns:aop="http://www.springframework.org/schema/aop"
-          xsi:schemaLocation="
-              http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
-              http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd
-              http://www.springframework.org/schema/aop https://www.springframework.org/schema/aop/spring-aop.xsd
-          ">
+          xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+                              http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd
+                              http://www.springframework.org/schema/aop https://www.springframework.org/schema/aop/spring-aop.xsd">
 
           <!-- (1) -->
           <import resource="classpath:/META-INF/spring/todo-domain.xml" />
@@ -4005,7 +4002,7 @@ applicationContext
 
           <!-- Filter. -->
           <bean id="exceptionLoggingFilter"
-              class="org.terasoluna.gfw.web.exception.ExceptionLoggingFilter" >
+              class="org.terasoluna.gfw.web.exception.ExceptionLoggingFilter">
               <property name="exceptionLogger" ref="exceptionLogger" />
           </bean>
 
@@ -4026,18 +4023,6 @@ applicationContext
         - | プロパティファイルの読み込み設定を行う。
           | \ ``src/main/resources/META-INF/spring``\ 直下の任意のプロパティファイルを読み込む。
           | この設定により、プロパティファイルの値をBean定義ファイル内で\ ``${propertyName}``\ 形式で埋め込んだり、Javaクラスに\ ``@Value("${propertyName}")``\ でインジェクションすることができる。
-
-    .. tip::
-
-      エディタの「Configure Namespaces」タブにて、以下のようにチェックを入れると、チェックしたXMLスキーマが有効になり、XML編集時にCtrl+Spaceを使用して入力を補完することができる。
-
-      「Namespace Versions」にはバージョンなしのxsdファイルを選択することを推奨する。バージョンなしのxsdファイルを選択することで、常にjarに含まれる最新のxsdが使用されるため、Springのバージョンアップを意識する必要がなくなる。
-
-        .. figure:: ./images_TutorialTodo/image021.jpg
-          :width: 90%
-
-        .. figure:: ./images_TutorialTodo/image023.png
-          :width: 60%
 
 |
 
@@ -4062,7 +4047,6 @@ todo-domain
         import org.springframework.context.annotation.ComponentScan;
         import org.springframework.context.annotation.Configuration;
         import org.springframework.context.annotation.Import;
-        import org.springframework.transaction.annotation.EnableTransactionManagement;
         import org.terasoluna.gfw.common.exception.ExceptionLogger;
         import org.terasoluna.gfw.common.exception.ResultMessagesLoggingInterceptor;
 
@@ -4070,16 +4054,14 @@ todo-domain
          * Bean definitions for domain layer.
          */
         @Configuration
-        @EnableTransactionManagement
-        @ComponentScan(basePackages = { "com.example.todo.domain" }) // (1)
-        @Import({ TodoInfraConfig.class,
-            TodoCodeListConfig.class }) // (2)
+        @ComponentScan(basePackages = {"com.example.todo.domain"}) // (1)
+        @Import({TodoInfraConfig.class, TodoCodeListConfig.class}) // (2)
         public class TodoDomainConfig {
 
             /**
-             * Configure {@link ResultMessagesLoggingInterceptor} bean.
-             * @param exceptionLogger Bean defined by ApplicationContextConfig#exceptionLogger
-             * @see com.example.todo.config.app.ApplicationContextConfig#exceptionLogger()
+             * Configure messages logging AOP.
+             * @param exceptionLogger Bean defined by ApplicationContext#exceptionLogger
+             * @see com.example.todo.config.app.ApplicationContext#exceptionLogger()
              * @return Bean of configured {@link ResultMessagesLoggingInterceptor}
              */
             @Bean("resultMessagesLoggingInterceptor")
@@ -4100,8 +4082,7 @@ todo-domain
             public Advisor resultMessagesLoggingInterceptorAdvisor(
                     ResultMessagesLoggingInterceptor resultMessagesLoggingInterceptor) {
                 AspectJExpressionPointcut pointcut = new AspectJExpressionPointcut();
-                pointcut.setExpression(
-                        "@within(org.springframework.stereotype.Service)");
+                pointcut.setExpression("@within(org.springframework.stereotype.Service)");
                 return new DefaultPointcutAdvisor(pointcut, resultMessagesLoggingInterceptor);
             }
         }
@@ -4142,11 +4123,9 @@ todo-domain
           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
           xmlns:context="http://www.springframework.org/schema/context"
           xmlns:aop="http://www.springframework.org/schema/aop"
-          xsi:schemaLocation="
-              http://www.springframework.org/schema/aop https://www.springframework.org/schema/aop/spring-aop.xsd
-              http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
-              http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd
-          ">
+          xsi:schemaLocation="http://www.springframework.org/schema/aop https://www.springframework.org/schema/aop/spring-aop.xsd
+                              http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+                              http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
 
           <!-- (1) -->
           <import resource="classpath:META-INF/spring/todo-infra.xml" />
@@ -4239,9 +4218,7 @@ O/R Mapperに依存しないブランクプロジェクトを作成した場合�
       <?xml version="1.0" encoding="UTF-8"?>
       <beans xmlns="http://www.springframework.org/schema/beans"
           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-          xsi:schemaLocation="
-              http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
-          ">
+          xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd">
 
       </beans>
 
@@ -4260,13 +4237,11 @@ MyBatis3用のブランクプロジェクトを作成した場合、以下のよ
       package com.example.todo.config.app;
 
       import javax.sql.DataSource;
-
       import org.mybatis.spring.SqlSessionFactoryBean;
       import org.mybatis.spring.annotation.MapperScan;
       import org.springframework.context.annotation.Bean;
       import org.springframework.context.annotation.Configuration;
       import org.springframework.context.annotation.Import;
-
       import com.example.todo.config.app.mybatis.MybatisConfig;
 
       /**
@@ -4274,11 +4249,11 @@ MyBatis3用のブランクプロジェクトを作成した場合、以下のよ
        */
       @Configuration
       @MapperScan("com.example.todo.domain.repository") // (1)
-      @Import({ TodoEnvConfig.class }) // (2)
+      @Import({TodoEnvConfig.class}) // (2)
       public class TodoInfraConfig {
 
           /**
-           * Configure {@link SqlSessionFactory} bean.
+           * Configure {@link SqlSessionFactoryBean} bean.
            * @param dataSource DataSource
            * @see com.example.todo.config.app.TodoEnvConfig#dataSource()
            * @return Bean of configured {@link SqlSessionFactoryBean}
@@ -4329,10 +4304,8 @@ MyBatis3用のブランクプロジェクトを作成した場合、以下のよ
       <beans xmlns="http://www.springframework.org/schema/beans"
           xmlns:mybatis="http://mybatis.org/schema/mybatis-spring"
           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-          xsi:schemaLocation="
-              http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
-              http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring.xsd
-          ">
+          xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+                              http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring.xsd">
 
           <!-- (1) -->
           <import resource="classpath:/META-INF/spring/todo-env.xml" />
@@ -4384,10 +4357,8 @@ MyBatis3用のブランクプロジェクトを作成した場合、以下のよ
 
         .. code-block:: xml
 
-          <?xml version="1.0" encoding="UTF-8" ?>
-          <!DOCTYPE configuration
-              PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
-              "http://mybatis.org/dtd/mybatis-3-config.dtd">
+          <?xml version="1.0" encoding="UTF-8"?>
+          <!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
           <configuration>
 
               <!-- See https://mybatis.org/mybatis-3/configuration.html#settings -->
@@ -4395,25 +4366,25 @@ MyBatis3用のブランクプロジェクトを作成した場合、以下のよ
                   <setting name="mapUnderscoreToCamelCase" value="true" />
                   <setting name="lazyLoadingEnabled" value="true" />
                   <setting name="defaultFetchSize" value="100" />
-          <!--
+                  <!--
                   <setting name="defaultExecutorType" value="REUSE" />
                   <setting name="jdbcTypeForNull" value="NULL" />
                   <setting name="localCacheScope" value="STATEMENT" />
-          -->
+                  -->
               </settings>
 
               <typeAliases>
                   <package name="com.example.todo.domain.model" />
                   <package name="com.example.todo.domain.repository" />
-          <!--
+                  <!--
                   <package name="com.example.todo.infra.mybatis.typehandler" />
-          -->
+                  -->
               </typeAliases>
 
               <typeHandlers>
-          <!--
+                  <!--
                   <package name="com.example.todo.infra.mybatis.typehandler" />
-          -->
+                  -->
               </typeHandlers>
 
           </configuration>
@@ -4479,9 +4450,7 @@ todo-env
       package com.example.todo.config.app;
 
       import java.time.Duration;
-
       import javax.sql.DataSource;
-
       import org.apache.commons.dbcp2.BasicDataSource;
       import org.springframework.beans.factory.annotation.Value;
       import org.springframework.context.annotation.Bean;
@@ -4594,10 +4563,9 @@ todo-env
               bean.setDataSource(dataSource());
               // (3)
               ResourceDatabasePopulator databasePopulator = new ResourceDatabasePopulator();
-              databasePopulator.addScript(new ClassPathResource("/database/"
-                      + database + "-schema.sql"));
-              databasePopulator.addScript(new ClassPathResource("/database/"
-                      + database + "-dataload.sql"));
+              databasePopulator.addScript(new ClassPathResource("/database/" + database + "-schema.sql"));
+              databasePopulator
+                      .addScript(new ClassPathResource("/database/" + database + "-dataload.sql"));
               databasePopulator.setSqlScriptEncoding("UTF-8");
               databasePopulator.setIgnoreFailedDrops(true);
               bean.setDatabasePopulator(databasePopulator);
@@ -4658,10 +4626,8 @@ todo-env
       <beans xmlns="http://www.springframework.org/schema/beans"
           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
           xmlns:jdbc="http://www.springframework.org/schema/jdbc"
-          xsi:schemaLocation="
-              http://www.springframework.org/schema/jdbc https://www.springframework.org/schema/jdbc/spring-jdbc.xsd
-              http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
-          ">
+          xsi:schemaLocation="http://www.springframework.org/schema/jdbc https://www.springframework.org/schema/jdbc/spring-jdbc.xsd
+                              http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd">
 
           <bean id="dateFactory" class="org.terasoluna.gfw.common.time.DefaultClockFactory" />
 
@@ -4676,10 +4642,10 @@ todo-env
               <property name="maxTotal" value="${cp.maxActive}" />
               <property name="maxIdle" value="${cp.maxIdle}" />
               <property name="minIdle" value="${cp.minIdle}" />
-              <property name="maxWait" >
-                <bean class="java.time.Duration" factory-method="ofMillis">
-                  <constructor-arg value="${cp.maxWait}" />
-                </bean>
+              <property name="maxWait">
+                  <bean class="java.time.Duration" factory-method="ofMillis">
+                      <constructor-arg value="${cp.maxWait}" />
+                  </bean>
               </property>
           </bean>
 
@@ -4744,7 +4710,6 @@ spring-mvc
       import java.util.List;
       import java.util.Properties;
       import java.util.regex.Pattern;
-
       import org.springframework.aop.Advisor;
       import org.springframework.aop.aspectj.AspectJExpressionPointcut;
       import org.springframework.aop.support.DefaultPointcutAdvisor;
@@ -4782,7 +4747,7 @@ spring-mvc
        * Configure SpringMVC.
        */
       // (1)
-      @ComponentScan(basePackages = { "com.example.todo.app" })
+      @ComponentScan(basePackages = {"com.example.todo.app"})
       @EnableAspectJAutoProxy
       @EnableWebMvc
       @Configuration
@@ -4807,8 +4772,7 @@ spring-mvc
            */
           // (3)
           @Override
-          public void addArgumentResolvers(
-                  List<HandlerMethodArgumentResolver> argumentResolvers) {
+          public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
               argumentResolvers.add(pageableHandlerMethodArgumentResolver());
               argumentResolvers.add(authenticationPrincipalArgumentResolver());
           }
@@ -4835,8 +4799,7 @@ spring-mvc
            * {@inheritDoc}
            */
           @Override
-          public void configureDefaultServletHandling(
-                  DefaultServletHandlerConfigurer configurer) {
+          public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
               configurer.enable();
           }
 
@@ -4846,9 +4809,9 @@ spring-mvc
           // (4)
           @Override
           public void addResourceHandlers(final ResourceHandlerRegistry registry) {
-              registry.addResourceHandler("/resources/**").addResourceLocations(
-                      "/resources/", "classpath:META-INF/resources/").setCachePeriod(
-                              60 * 60);
+              registry.addResourceHandler("/resources/**")
+                      .addResourceLocations("/resources/", "classpath:META-INF/resources/")
+                      .setCachePeriod(60 * 60);
           }
 
           /**
@@ -4867,8 +4830,7 @@ spring-mvc
            * @param registry {@link InterceptorRegistry}
            * @param interceptor {@link HandlerInterceptor}
            */
-          private void addInterceptor(InterceptorRegistry registry,
-                  HandlerInterceptor interceptor) {
+          private void addInterceptor(InterceptorRegistry registry, HandlerInterceptor interceptor) {
               registry.addInterceptor(interceptor).addPathPatterns("/**")
                       .excludePathPatterns("/resources/**");
           }
@@ -4917,7 +4879,8 @@ spring-mvc
            */
           @Bean("requestDataValueProcessor")
           public RequestDataValueProcessor requestDataValueProcessor() {
-              return new CompositeRequestDataValueProcessor(csrfRequestDataValueProcessor(), transactionTokenRequestDataValueProcessor());
+              return new CompositeRequestDataValueProcessor(csrfRequestDataValueProcessor(),
+                      transactionTokenRequestDataValueProcessor());
           }
 
           /**
@@ -4954,23 +4917,21 @@ spring-mvc
               Properties exceptionMappings = new Properties();
               exceptionMappings.setProperty("ResourceNotFoundException",
                       "common/error/resourceNotFoundError");
-              exceptionMappings.setProperty("BusinessException",
-                      "common/error/businessError");
+              exceptionMappings.setProperty("BusinessException", "common/error/businessError");
               exceptionMappings.setProperty("InvalidTransactionTokenException",
                       "common/error/transactionTokenError");
-              exceptionMappings.setProperty(".DataAccessException",
-                      "common/error/dataAccessError");
+              exceptionMappings.setProperty(".DataAccessException", "common/error/dataAccessError");
               bean.setExceptionMappings(exceptionMappings);
 
               Properties statusCodes = new Properties();
-              statusCodes.setProperty("common/error/resourceNotFoundError", String
-                      .valueOf(HttpStatus.NOT_FOUND.value()));
-              statusCodes.setProperty("common/error/businessError", String.valueOf(
-                      HttpStatus.CONFLICT.value()));
-              statusCodes.setProperty("common/error/transactionTokenError", String
-                      .valueOf(HttpStatus.CONFLICT.value()));
-              statusCodes.setProperty("common/error/dataAccessError", String.valueOf(
-                      HttpStatus.INTERNAL_SERVER_ERROR.value()));
+              statusCodes.setProperty("common/error/resourceNotFoundError",
+                      String.valueOf(HttpStatus.NOT_FOUND.value()));
+              statusCodes.setProperty("common/error/businessError",
+                      String.valueOf(HttpStatus.CONFLICT.value()));
+              statusCodes.setProperty("common/error/transactionTokenError",
+                      String.valueOf(HttpStatus.CONFLICT.value()));
+              statusCodes.setProperty("common/error/dataAccessError",
+                      String.valueOf(HttpStatus.INTERNAL_SERVER_ERROR.value()));
               bean.setStatusCodes(statusCodes);
 
               bean.setDefaultErrorView("common/error/systemError");
@@ -4987,14 +4948,16 @@ spring-mvc
           @Bean("handlerExceptionResolverLoggingInterceptor")
           public HandlerExceptionResolverLoggingInterceptor handlerExceptionResolverLoggingInterceptor(
                   ExceptionLogger exceptionLogger) {
-              HandlerExceptionResolverLoggingInterceptor bean = new HandlerExceptionResolverLoggingInterceptor();
+              HandlerExceptionResolverLoggingInterceptor bean =
+                      new HandlerExceptionResolverLoggingInterceptor();
               bean.setExceptionLogger(exceptionLogger);
               return bean;
           }
 
           /**
            * Configure messages logging AOP advisor.
-           * @param handlerExceptionResolverLoggingInterceptor Bean defined by #handlerExceptionResolverLoggingInterceptor
+           * @param handlerExceptionResolverLoggingInterceptor Bean defined by
+           *        #handlerExceptionResolverLoggingInterceptor
            * @see #handlerExceptionResolverLoggingInterceptor(ExceptionLogger)
            * @return Advisor configured for PointCut
            */
@@ -5033,13 +4996,13 @@ spring-mvc
           | どこにも\ ``styles.css``\ が格納されていない場合は、404エラーを返す。
 
           | ここでは\ ``cache-period``\ 属性で静的リソースのキャッシュ時間(3600秒=60分)も設定している。
-          | \ ``cache-period="3600"``\ と設定しても良いが、60分であることを明示するために\ `SpEL <https://docs.spring.io/spring-framework/docs/6.1.3/reference/html/core.html#expressions-beandef-xml-based>`_\ を使用して\ ``cache-period="#{60 * 60}"``\ と書く方が分かりやすい。
+          | \ ``cache-period="3600"``\ と設定しても良いが、60分であることを明示するために\ `SpEL <https://docs.spring.io/spring-framework/docs/6.2.1/reference/html/core.html#expressions-beandef-xml-based>`_\ を使用して\ ``cache-period="#{60 * 60}"``\ と書く方が分かりやすい。
       * - | (5)
         - | コントローラ処理のTraceログを出力するインターセプタを設定する。
           | \ ``/resources``\ 配下を除く任意のパスに適用されるように設定する。
       * - | (6)
         - | \ ``ViewResolver``\ の設定を行う。
-          | この設定により、例えばコントローラからview名として\ ``hello``\ が返却された場合には\ ``/WEB-INF/views/hello.jsp``\ が実行される。
+          | この設定により、例えばコントローラからView名として\ ``hello``\ が返却された場合には\ ``/WEB-INF/views/hello.jsp``\ が実行される。
 
   .. group-tab:: XML Config
 
@@ -5058,11 +5021,10 @@ spring-mvc
           xmlns:util="http://www.springframework.org/schema/util"
           xmlns:aop="http://www.springframework.org/schema/aop"
           xsi:schemaLocation="http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
-              http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
-              http://www.springframework.org/schema/util https://www.springframework.org/schema/util/spring-util.xsd
-              http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd
-              http://www.springframework.org/schema/aop https://www.springframework.org/schema/aop/spring-aop.xsd
-          ">
+                              http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+                              http://www.springframework.org/schema/util https://www.springframework.org/schema/util/spring-util.xsd
+                              http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd
+                              http://www.springframework.org/schema/aop https://www.springframework.org/schema/aop/spring-aop.xsd">
 
           <!-- (1) -->
           <context:property-placeholder
@@ -5196,13 +5158,13 @@ spring-mvc
           | どこにも\ ``styles.css``\ が格納されていない場合は、404エラーを返す。
 
           | ここでは\ ``cache-period``\ 属性で静的リソースのキャッシュ時間(3600秒=60分)も設定している。
-          | \ ``cache-period="3600"``\ と設定しても良いが、60分であることを明示するために\ `SpEL <https://docs.spring.io/spring-framework/docs/6.1.3/reference/html/core.html#expressions-beandef-xml-based>`_\ を使用して\ ``cache-period="#{60 * 60}"``\ と書く方が分かりやすい。
+          | \ ``cache-period="3600"``\ と設定しても良いが、60分であることを明示するために\ `SpEL <https://docs.spring.io/spring-framework/docs/6.2.1/reference/html/core.html#expressions-beandef-xml-based>`_\ を使用して\ ``cache-period="#{60 * 60}"``\ と書く方が分かりやすい。
       * - | (5)
         - | コントローラ処理のTraceログを出力するインターセプタを設定する。
           | \ ``/resources``\ 配下を除く任意のパスに適用されるように設定する。
       * - | (6)
         - | \ ``ViewResolver``\ の設定を行う。
-          | この設定により、例えばコントローラからview名として\ ``hello``\ が返却された場合には\ ``/WEB-INF/views/hello.jsp``\ が実行される。
+          | この設定により、例えばコントローラからView名として\ ``hello``\ が返却された場合には\ ``/WEB-INF/views/hello.jsp``\ が実行される。
 
 |
 
@@ -5220,8 +5182,8 @@ spring-security
 
       package com.example.todo.config.web;
 
+      import static org.springframework.security.web.util.matcher.AntPathRequestMatcher.antMatcher;
       import java.util.LinkedHashMap;
-
       import org.springframework.context.annotation.Bean;
       import org.springframework.context.annotation.Configuration;
       import org.springframework.security.access.AccessDeniedException;
@@ -5237,7 +5199,6 @@ spring-security
       import org.springframework.security.web.authentication.AnonymousAuthenticationFilter;
       import org.springframework.security.web.csrf.InvalidCsrfTokenException;
       import org.springframework.security.web.csrf.MissingCsrfTokenException;
-      import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
       import org.terasoluna.gfw.security.web.logging.UserIdMDCPutFilter;
 
       /**
@@ -5253,8 +5214,7 @@ spring-security
            */
           @Bean
           public WebSecurityCustomizer webSecurityCustomizer() {
-              return web -> web.ignoring().requestMatchers(
-                      new AntPathRequestMatcher("/resources/**"));
+              return web -> web.ignoring().requestMatchers(antMatcher("/resources/**"));
           }
 
           /**
@@ -5267,13 +5227,10 @@ spring-security
           public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
               http.formLogin(Customizer.withDefaults());
               http.logout(Customizer.withDefaults());
-              http.exceptionHandling(ex -> ex.accessDeniedHandler(
-                      accessDeniedHandler()));
-              http.addFilterAfter(userIdMDCPutFilter(),
-                      AnonymousAuthenticationFilter.class);
+              http.exceptionHandling(ex -> ex.accessDeniedHandler(accessDeniedHandler()));
+              http.addFilterAfter(userIdMDCPutFilter(), AnonymousAuthenticationFilter.class);
               http.sessionManagement(Customizer.withDefaults());
-              http.authorizeHttpRequests(authz -> authz.requestMatchers(
-                      new AntPathRequestMatcher("/**")).permitAll());
+              http.authorizeHttpRequests(authz -> authz.requestMatchers(antMatcher("/**")).permitAll());
 
               return http.build();
           }
@@ -5284,26 +5241,24 @@ spring-security
            */
           @Bean("accessDeniedHandler")
           public AccessDeniedHandler accessDeniedHandler() {
-              LinkedHashMap<Class<? extends AccessDeniedException>, AccessDeniedHandler> errorHandlers = new LinkedHashMap<>();
+              LinkedHashMap<Class<? extends AccessDeniedException>, AccessDeniedHandler> errorHandlers =
+                      new LinkedHashMap<>();
 
               // Invalid CSRF authenticator error handler
               AccessDeniedHandlerImpl invalidCsrfTokenErrorHandler = new AccessDeniedHandlerImpl();
-              invalidCsrfTokenErrorHandler.setErrorPage(
-                      "/WEB-INF/views/common/error/invalidCsrfTokenError.jsp");
-              errorHandlers.put(InvalidCsrfTokenException.class,
-                      invalidCsrfTokenErrorHandler);
+              invalidCsrfTokenErrorHandler
+                      .setErrorPage("/WEB-INF/views/common/error/invalidCsrfTokenError.jsp");
+              errorHandlers.put(InvalidCsrfTokenException.class, invalidCsrfTokenErrorHandler);
 
               // Missing CSRF authenticator error handler
               AccessDeniedHandlerImpl missingCsrfTokenErrorHandler = new AccessDeniedHandlerImpl();
-              missingCsrfTokenErrorHandler.setErrorPage(
-                      "/WEB-INF/views/common/error/missingCsrfTokenError.jsp");
-              errorHandlers.put(MissingCsrfTokenException.class,
-                      missingCsrfTokenErrorHandler);
+              missingCsrfTokenErrorHandler
+                      .setErrorPage("/WEB-INF/views/common/error/missingCsrfTokenError.jsp");
+              errorHandlers.put(MissingCsrfTokenException.class, missingCsrfTokenErrorHandler);
 
               // Default error handler
               AccessDeniedHandlerImpl defaultErrorHandler = new AccessDeniedHandlerImpl();
-              defaultErrorHandler.setErrorPage(
-                      "/WEB-INF/views/common/error/accessDeniedError.jsp");
+              defaultErrorHandler.setErrorPage("/WEB-INF/views/common/error/accessDeniedError.jsp");
 
               return new DelegatingAccessDeniedHandler(errorHandlers, defaultErrorHandler);
           }
@@ -5340,17 +5295,15 @@ spring-security
       <beans xmlns="http://www.springframework.org/schema/beans"
           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
           xmlns:sec="http://www.springframework.org/schema/security"
-          xsi:schemaLocation="
-              http://www.springframework.org/schema/security https://www.springframework.org/schema/security/spring-security.xsd
-              http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
-          ">
+          xsi:schemaLocation="http://www.springframework.org/schema/security https://www.springframework.org/schema/security/spring-security.xsd
+                              http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd">
 
-          <sec:http pattern="/resources/**" request-matcher="ant" security="none"/>
+          <sec:http pattern="/resources/**" request-matcher="ant" security="none" />
           <sec:http request-matcher="ant">
-              <sec:form-login/>
-              <sec:logout/>
-              <sec:access-denied-handler ref="accessDeniedHandler"/>
-              <sec:custom-filter ref="userIdMDCPutFilter" after="ANONYMOUS_FILTER"/>
+              <sec:form-login />
+              <sec:logout />
+              <sec:access-denied-handler ref="accessDeniedHandler" />
+              <sec:custom-filter ref="userIdMDCPutFilter" after="ANONYMOUS_FILTER" />
               <sec:session-management />
               <sec:intercept-url pattern="/**" access="permitAll" />
           </sec:http>
@@ -5446,51 +5399,30 @@ logback.xml
 
       <!-- Application Loggers -->
       <!-- (2) -->
-      <logger name="com.example.todo">
-          <level value="debug" />
-      </logger>
+      <logger name="com.example.todo" level="debug" />
 
-      <logger name="com.example.todo.domain.repository">
-          <level value="trace" />
-      </logger>
+      <logger name="com.example.todo.domain.repository" level="trace" />
 
       <!-- TERASOLUNA -->
-      <logger name="org.terasoluna.gfw">
-          <level value="info" />
-      </logger>
+      <logger name="org.terasoluna.gfw" level="info" />
       <!-- (3) -->
-      <logger name="org.terasoluna.gfw.web.logging.TraceLoggingInterceptor">
-          <level value="trace" />
-      </logger>
-      <logger name="org.terasoluna.gfw.common.exception.ExceptionLogger">
-          <level value="info" />
-      </logger>
-      <logger name="org.terasoluna.gfw.common.exception.ExceptionLogger.Monitoring" additivity="false">
-          <level value="error" />
+      <logger name="org.terasoluna.gfw.web.logging.TraceLoggingInterceptor" level="trace" />
+      <logger name="org.terasoluna.gfw.common.exception.ExceptionLogger" level="info" />
+      <logger name="org.terasoluna.gfw.common.exception.ExceptionLogger.Monitoring" additivity="false" level="error">
           <appender-ref ref="MONITORING_LOG_FILE" />
       </logger>
 
       <!-- 3rdparty Loggers -->
-      <logger name="org.springframework">
-          <level value="warn" />
-      </logger>
+      <logger name="org.springframework" level="warn" />
 
-      <logger name="org.springframework.web.servlet">
-          <level value="info" />
-      </logger>
+      <logger name="org.springframework.web.servlet" level="info" />
 
-      <logger name="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping">
-          <level value="trace" />
-      </logger>
+      <logger name="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping" level="trace" />
 
-      <logger name="org.springframework.jdbc.core.JdbcTemplate">
-          <level value="trace" />
-      </logger>
+      <logger name="org.springframework.jdbc.core.JdbcTemplate" level="trace" />
 
       <!--  REMOVE THIS LINE IF YOU USE MyBatis3
-      <logger name="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-          <level value="debug" />
-      </logger>
+      <logger name="org.springframework.jdbc.datasource.DataSourceTransactionManager" level="debug" />
             REMOVE THIS LINE IF YOU USE MyBatis3  -->
 
       <root level="warn">
@@ -5522,19 +5454,13 @@ logback.xml
 
     .. code-block:: xml
 
-      <logger name="com.example.todo">
-          <level value="debug" />
-      </logger>
+      <logger name="com.example.todo" level="debug" />
 
-      <logger name="com.example.todo.domain.repository">
-          <level value="trace" />
-      </logger>
+      <logger name="com.example.todo.domain.repository" level="trace" />
 
       <!-- omitted -->
 
-      <logger name="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-          <level value="debug" />
-      </logger>
+      <logger name="org.springframework.jdbc.datasource.DataSourceTransactionManager" level="debug" />
 
 .. raw:: latex
 

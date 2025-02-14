@@ -161,7 +161,7 @@ Spring Framework提供のJDBCデータソース
     try {
         accountRepository.saveAndFlash(account);
     } catch(DuplicateKeyException e) { // (1)
-        throw new BusinessException(ResultMessages.error().add("e.xx.xx.0002"), e); // (2)
+        throw new BusinessException(ResultMessages.error().add("e.xx.yy.0002"), e); // (2)
     }
 
   .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
@@ -381,7 +381,7 @@ Bean定義したDataSourceを使用する場合の設定
             | 設定項目の詳細については、\ `DBCP Configuration <https://commons.apache.org/proper/commons-dbcp/configuration.html>`_\ を参照されたい。
         * - | (8)
           - | 設定例では値を直接指定しているが、環境によって設定値がかわる項目については、Placeholder(${...})を使用して、実際の設定値はプロパティファイルに指定すること。
-            | Placeholderについては、\ `Spring Framework Documentation -Customizing Configuration Metadata with a BeanFactoryPostProcessor- <https://docs.spring.io/spring-framework/docs/6.1.3/reference/html/core.html#beans-factory-extension-factory-postprocessors>`_\ の\ ``Example: The Class Name Substitution PropertySourcesPlaceholderConfigurer``\ を参照されたい。
+            | Placeholderについては、\ `Spring Framework Documentation -Customizing Configuration Metadata with a BeanFactoryPostProcessor- <https://docs.spring.io/spring-framework/docs/6.2.1/reference/html/core.html#beans-factory-extension-factory-postprocessors>`_\ の\ ``Example: The Class Name Substitution PropertySourcesPlaceholderConfigurer``\ を参照されたい。
 
   .. group-tab:: XML Config
 
@@ -423,7 +423,7 @@ Bean定義したDataSourceを使用する場合の設定
             | 設定項目の詳細については、\ `DBCP Configuration <https://commons.apache.org/proper/commons-dbcp/configuration.html>`_\ を参照されたい。
         * - | (8)
           - | 設定例では値を直接指定しているが、環境によって設定値がかわる項目については、Placeholder(${...})を使用して、実際の設定値はプロパティファイルに指定すること。
-            | Placeholderについては、\ `Spring Framework Documentation -Customizing Configuration Metadata with a BeanFactoryPostProcessor- <https://docs.spring.io/spring-framework/docs/6.1.3/reference/html/core.html#beans-factory-extension-factory-postprocessors>`_\ の\ ``Example: The Class Name Substitution PropertySourcesPlaceholderConfigurer``\ を参照されたい。
+            | Placeholderについては、\ `Spring Framework Documentation -Customizing Configuration Metadata with a BeanFactoryPostProcessor- <https://docs.spring.io/spring-framework/docs/6.2.1/reference/html/core.html#beans-factory-extension-factory-postprocessors>`_\ の\ ``Example: The Class Name Substitution PropertySourcesPlaceholderConfigurer``\ を参照されたい。
 
 |
 
@@ -443,19 +443,40 @@ PlatformTransactionManagerについては、使用するO/R Mapperによって�
 JDBCのDebug用ログの設定
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-| O/R Mapper(MyBatis, Hibernate)で出力されるログより、さらに細かい情報が必要な場合、log4jdbc(log4jdbc-remix)を使って出力される情報が有効である。
-| log4jdbcの詳細については、\ `log4jdbc project page <https://github.com/arthurblake/log4jdbc>`_\ を参照されたい。
-| log4jdbc-remixの詳細については、\ `log4jdbc-remix project page <https://code.google.com/archive/p/log4jdbc-remix>`_\ を参照されたい。
+| O/R Mapper(MyBatis)で出力されるログに発行したSQL等の詳細な情報が必要な場合、ログの出力設定を見直す必要がある。
+| 以下に、logback.xmlに追加するO/R Mapperのログ出力設定を示す。
 
-  .. note::
+    .. code-block:: xml
 
-    log4jdbcはJDBC 4.2に対応しておらず実行時エラーとなる場合があるため、Macchinetta Server Framework 1.7.0よりサポート対象外となった。
-    log4jdbcと同等のログを出力したい場合は、独自に実装することを検討されたい。
+      <!-- (1) -->
+      <logger name="xxxxxx.yyyyyy.zzzzzz.domain.repository" level="trace" />
 
+    .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
+    .. list-table::
+      :header-rows: 1
+      :widths: 10 90
+      :class: longtable
 
-  .. todo::
+      * - 項番
+        - 説明
+      * - | (1)
+        - | \ ``xxxxxx.yyyyyy.zzzzzz``\ には、ログ出力対象のプロジェクトのグループIDを定義する。
 
-    log4jdbcの代替となるログ出力の方法は、次版以降に記載する予定である。
+    | 上記の出力設定によって、出力されるログの例を以下に示す。
+
+    .. code-block:: console
+
+      level:DEBUG     logger:j.c.n.f.s.f.d.r.dam3.TodoRepository.findByTodoId message:==>  Preparing: SELECT todo_id ,category_id ,todo_title ,finished ,created_at ,version ,complete_at ,desc1 ,desc2 FROM t_todo WHERE todo_id = ?
+      level:DEBUG     logger:j.c.n.f.s.f.d.r.dam3.TodoRepository.findByTodoId message:==> Parameters: 0000000001(String)
+      level:TRACE     logger:j.c.n.f.s.f.d.r.dam3.TodoRepository.findByTodoId message:<==    Columns: todo_id, category_id, todo_title, finished, created_at, version, complete_at, desc1, desc2
+      level:TRACE     logger:j.c.n.f.s.f.d.r.dam3.TodoRepository.findByTodoId message:<==        Row: 0000000001, 0000000001, Todo 1, f, 2016-12-24, 1, null, <<BLOB>>, desc21
+      level:DEBUG     logger:j.c.n.f.s.f.d.r.d.T.findByTodoCategoryId         message:====>  Preparing: SELECT category_id ,name FROM m_todo_cat WHERE category_id = ?
+      level:DEBUG     logger:j.c.n.f.s.f.d.r.d.T.findByTodoCategoryId         message:====> Parameters: 0000000001(String)
+      level:TRACE     logger:j.c.n.f.s.f.d.r.d.T.findByTodoCategoryId         message:<====    Columns: category_id, name
+      level:TRACE     logger:j.c.n.f.s.f.d.r.d.T.findByTodoCategoryId         message:<====        Row: 0000000001, CA1
+      level:DEBUG     logger:j.c.n.f.s.f.d.r.d.T.findByTodoCategoryId         message:<====      Total: 1
+      level:DEBUG     logger:j.c.n.f.s.f.d.r.dam3.TodoRepository.findByTodoId message:<==      Total: 1
+
 
 |
 

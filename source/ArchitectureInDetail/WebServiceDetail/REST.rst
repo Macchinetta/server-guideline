@@ -1324,7 +1324,7 @@ NULLとブランク文字
   .. code-block:: json
 
     {
-      "code" : "e.ex.fw.7001",
+      "code" : "e.xx.fw.7001",
       "message" : "Validation error occurred on item in the request body.",
       "details" : [ {
         "code" : "ExistInCodeList",
@@ -1640,9 +1640,6 @@ RESTful Web Serviceで必要となるSpring MVCのコンポーネントを有効
         @EnableWebMvc
         @Configuration
         public class SpringMvcRestConfig implements WebMvcConfigurer {
-        
-            @Inject
-            private LocalValidatorFactoryBean validator;
 
             // (1)        
             @Bean
@@ -1673,12 +1670,7 @@ RESTful Web Serviceで必要となるSpring MVCのコンポーネントを有効
             public StdDateFormat stdDateFormat() {
                 return new StdDateFormat();
             }
-        
-            @Override
-            public Validator getValidator() {
-                return validator;
-            }
-        
+
             // (3)
             @Override
             public void configureMessageConverters(
@@ -1882,12 +1874,12 @@ RESTful Web Serviceで必要となるSpring MVCのコンポーネントを有効
 
   Jacksonの\ ``com.fasterxml.jackson.databind.ObjectMapper``\ のBean定義を行う場合は、Springが提供している\ ``Jackson2ObjectMapperFactoryBean``\ を使用するとよい。
   
-  \ ``Jackson2ObjectMapperFactoryBean``\ を使用すると、JSR-310 Date and Time APIやJoda Time用の拡張モジュールを自動登録することができ、さらにXMLのBean定義ファイル上で表現が難しかった\ ``ObjectMapper``\ のコンフィギュレーションも簡単に行うことができる。
+  \ ``Jackson2ObjectMapperFactoryBean``\ を使用すると、JSR-310 Date and Time API用の拡張モジュールを自動登録することができ、さらにXMLのBean定義ファイル上で表現が難しかった\ ``ObjectMapper``\ のコンフィギュレーションも簡単に行うことができる。
 
   なお、\ ``ObjectMapper``\ を直接Bean定義するスタイルから\ ``Jackson2ObjectMapperFactoryBean``\ を使用するスタイルに変更する場合は、以下のコンフィギュレーションに対するデフォルト値がJacksonのデフォルト値と異なる(無効化されている)点に注意すること。
 
-  * \ `MapperFeature#DEFAULT_VIEW_INCLUSION <https://fasterxml.github.io/jackson-databind/javadoc/2.14/com/fasterxml/jackson/databind/MapperFeature.html?is-external=true#DEFAULT_VIEW_INCLUSION>`_\
-  * \ `DeserializationFeature#FAIL_ON_UNKNOWN_PROPERTIES <https://fasterxml.github.io/jackson-databind/javadoc/2.14/com/fasterxml/jackson/databind/DeserializationFeature.html?is-external=true#FAIL_ON_UNKNOWN_PROPERTIES>`_\
+  * \ `MapperFeature#DEFAULT_VIEW_INCLUSION <https://javadoc.io/doc/com.fasterxml.jackson.core/jackson-databind/2.18.2/com/fasterxml/jackson/databind/MapperFeature.html?is-external=true#DEFAULT_VIEW_INCLUSION>`_\
+  * \ `DeserializationFeature#FAIL_ON_UNKNOWN_PROPERTIES <https://javadoc.io/doc/com.fasterxml.jackson.core/jackson-databind/2.18.2/com/fasterxml/jackson/databind/DeserializationFeature.html?is-external=true#FAIL_ON_UNKNOWN_PROPERTIES>`_\
 
   \ ``ObjectMapper``\ の動作をJacksonのデフォルト動作にあわせたい場合は、\ ``featuresToEnable``\ プロパティを使用して上記のコンフィギュレーションを有効化する。
 
@@ -1920,7 +1912,7 @@ RESTful Web Serviceで必要となるSpring MVCのコンポーネントを有効
               </property>
           </bean>
 
-  \ ``Jackson2ObjectMapperFactoryBean``\ の詳細については、\ `Jackson2ObjectMapperFactoryBeanのJavaDoc <https://docs.spring.io/spring-framework/docs/6.1.3/javadoc-api/org/springframework/http/converter/json/Jackson2ObjectMapperFactoryBean.html>`_\ を参照されたい。
+  \ ``Jackson2ObjectMapperFactoryBean``\ の詳細については、\ `Jackson2ObjectMapperFactoryBeanのJavaDoc <https://docs.spring.io/spring-framework/docs/6.2.1/javadoc-api/org/springframework/http/converter/json/Jackson2ObjectMapperFactoryBean.html>`_\ を参照されたい。
 
 |
 
@@ -2468,16 +2460,16 @@ Resourceクラスの役割は以下の通りである。
         }
     
         @Null(groups = PostMembers.class)
-        @NotEmpty(groups = PutMember.class)
+        @NotNull(groups = PutMember.class)
         @Size(min = 10, max = 10, groups = PutMember.class)
         private String memberId;
     
-        @NotEmpty
-        @Size(max = 128)
+        @NotNull
+        @Size(min = 1, max = 128)
         private String firstName;
     
-        @NotEmpty
-        @Size(max = 128)
+        @NotNull
+        @Size(min = 1, max = 128)
         private String lastName;
     
         @NotEmpty
@@ -2488,8 +2480,8 @@ Resourceクラスの役割は以下の通りである。
         @Past
         private LocalDate dateOfBirth;
     
-        @NotEmpty
-        @Size(max = 256)
+        @NotNull
+        @Size(min = 1, max = 256)
         @Email
         private String emailAddress;
     
@@ -2647,7 +2639,7 @@ Controllerクラスの作成
 
   .. tip::
  
-    \ ``@RestController``\ アノテーションの詳細については、\ `こちら <https://docs.spring.io/spring-framework/docs/6.1.3/javadoc-api/org/springframework/web/bind/annotation/RestController.html>`_\ を参照されたい。
+    \ ``@RestController``\ アノテーションの詳細については、\ `こちら <https://docs.spring.io/spring-framework/docs/6.2.1/javadoc-api/org/springframework/web/bind/annotation/RestController.html>`_\ を参照されたい。
 
     \ ``@RestController``\ アノテーションを使用せずに、\ ``@Controller``\ アノテーションと\ ``@ResponseBody``\ アノテーションを組み合わせてREST API用のControllerを作成する例を以下に示す。
 
@@ -3428,7 +3420,7 @@ RESTful Web Serviceで発生した例外のハンドリング方法について�
   .. code-block:: json
 
     {
-      "code" : "e.ex.fw.7001",
+      "code" : "e.xx.fw.7001",
       "message" : "Validation error occurred on item in the request body.",
       "details" : [ {
         "code" : "ExistInCodeList",
@@ -3589,20 +3581,18 @@ RESTful Web Serviceで発生した例外のハンドリング方法について�
     
         // (7)
         @Override
-        protected ResponseEntity<Object> handleExceptionInternal(Exception ex,
-                Object body, HttpHeaders headers, HttpStatus status,
-                WebRequest request) {
+        protected ResponseEntity<Object> handleExceptionInternal(Exception ex, Object body,
+                HttpHeaders headers, HttpStatusCode statusCode, WebRequest request) {
             final Object apiError;
             // (8)
             if (body == null) {
                 String errorCode = exceptionCodeResolver.resolveExceptionCode(ex);
-                apiError = apiErrorCreator.createApiError(request, errorCode, ex
-                        .getLocalizedMessage());
+                apiError = apiErrorCreator.createApiError(request, errorCode, ex.getLocalizedMessage());
             } else {
                 apiError = body;
             }
             // (9)
-            return ResponseEntity.status(status).headers(headers).body(apiError);
+            return ResponseEntity.status(statusCode).headers(headers).body(apiError);
         }
         
         // omitted
@@ -3662,7 +3652,7 @@ RESTful Web Serviceで発生した例外のハンドリング方法について�
     Date: Thu, 13 Mar 2014 12:16:55 GMT
     Connection: close
     
-    {"code":"e.ex.fw.7001","message":"Validation error occurred on item in the request body.","details":[{"code":"ExistInCodeList","message":"\"genderCode\" must exist in code list of CL_GENDER.","target":"genderCode"}]}
+    {"code":"e.xx.fw.7001","message":"Validation error occurred on item in the request body.","details":[{"code":"ExistInCodeList","message":"\"genderCode\" must exist in code list of CL_GENDER.","target":"genderCode"}]}
 
 |
 
@@ -3785,25 +3775,24 @@ RESTful Web Serviceで発生した例外のハンドリング方法について�
         // (3)
         @Override
         protected ResponseEntity<Object> handleMethodArgumentNotValid(
-                MethodArgumentNotValidException ex, HttpHeaders headers,
-                HttpStatus status, WebRequest request) {
+                MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatusCode statusCode,
+                WebRequest request) {
             String errorCode = exceptionCodeResolver.resolveExceptionCode(ex);
-            ApiError apiError = apiErrorCreator.createBindingResultApiError(request,
-                    errorCode, ex.getBindingResult(), ex.getMessage());
-            return handleExceptionInternal(ex, apiError, headers, statusCode,
-                    request);
+            ApiError apiError = apiErrorCreator.createBindingResultApiError(request, errorCode,
+                    ex.getBindingResult(), ex.getMessage());
+            return handleExceptionInternal(ex, apiError, headers, statusCode, request);
         }
     
         // (4)
         @Override
         protected ResponseEntity<Object> handleHttpMessageNotReadable(
-                HttpMessageNotReadableException ex, HttpHeaders headers,
-                HttpStatus status, WebRequest request) {
+                HttpMessageNotReadableException ex, HttpHeaders headers, HttpStatusCode statusCode,
+                WebRequest request) {
             if (ex.getCause() instanceof Exception) {
-                return handleExceptionInternal((Exception) ex.getCause(), null,
-                        headers, status, request);
+                return handleExceptionInternal((Exception) ex.getCause(), null, headers, statusCode,
+                        request);
             } else {
-                return handleExceptionInternal(ex, null, headers, status, request);
+                return handleExceptionInternal(ex, null, headers, statusCode, request);
             }
         }
 
@@ -3871,7 +3860,7 @@ RESTful Web Serviceで発生した例外のハンドリング方法について�
     Date: Wed, 19 Feb 2014 05:08:28 GMT
     Connection: close
     
-    {"code":"e.ex.fw.7002","message":"Validation error occurred on item in the request parameters.","details":[{"code":"NotEmpty","message":"\"{0}\" may not be empty.","target":"name"}]}
+    {"code":"e.xx.fw.7002","message":"Validation error occurred on item in the request parameters.","details":[{"code":"NotEmpty","message":"\"{0}\" may not be empty.","target":"name"}]}
 
 |
 
@@ -3887,7 +3876,7 @@ RESTful Web Serviceで発生した例外のハンドリング方法について�
     Date: Wed, 19 Feb 2014 13:32:24 GMT
     Connection: close
     
-    {"code":"e.ex.fw.7003","message":"Request body format error occurred."}
+    {"code":"e.xx.fw.7003","message":"Request body format error occurred."}
 
 |
 
@@ -3911,7 +3900,7 @@ RESTful Web Serviceで発生した例外のハンドリング方法について�
         Member member = memberRepository.findByMemberId(memberId);
         if (member == null) {
             throw new ResourceNotFoundException(ResultMessages.error().add(
-                    "e.ex.mm.5001", memberId));
+                    "e.xx.yy.5001", memberId));
         }
         return member;
     }
@@ -3993,8 +3982,8 @@ RESTful Web Serviceで発生した例外のハンドリング方法について�
 
         // (2)
         @ExceptionHandler(ResourceNotFoundException.class)
-        public ResponseEntity<Object> handleResourceNotFoundException(
-                ResourceNotFoundException ex, WebRequest request) {
+        public ResponseEntity<Object> handleResourceNotFoundException(ResourceNotFoundException ex,
+                WebRequest request) {
             return handleResultMessagesNotificationException(ex, new HttpHeaders(),
                     HttpStatus.NOT_FOUND, request);
         }
@@ -4003,11 +3992,11 @@ RESTful Web Serviceで発生した例外のハンドリング方法について�
 
         // (3)
         private ResponseEntity<Object> handleResultMessagesNotificationException(
-                ResultMessagesNotificationException ex, HttpHeaders headers,
-                HttpStatus status, WebRequest request) {
+                ResultMessagesNotificationException ex, HttpHeaders headers, HttpStatus status,
+                WebRequest request) {
             String errorCode = exceptionCodeResolver.resolveExceptionCode(ex);
-            ApiError apiError = apiErrorCreator.createResultMessagesApiError(
-                    request, errorCode, ex.getResultMessages(), ex.getMessage());
+            ApiError apiError = apiErrorCreator.createResultMessagesApiError(request, errorCode,
+                    ex.getResultMessages(), ex.getMessage());
             return handleExceptionInternal(ex, apiError, headers, status, request);
         }
         
@@ -4045,7 +4034,7 @@ RESTful Web Serviceで発生した例外のハンドリング方法について�
     Transfer-Encoding: chunked
     Date: Wed, 19 Feb 2014 08:46:18 GMT
     
-    {"code":"e.ex.mm.5001","message":"Specified member not found. member id : M000000001"}
+    {"code":"e.xx.yy.5001","message":"Specified member not found. member id : M000000001"}
 
 |
 
@@ -4071,8 +4060,8 @@ RESTful Web Serviceで発生した例外のハンドリング方法について�
         @ExceptionHandler(BusinessException.class)
         public ResponseEntity<Object> handleBusinessException(BusinessException ex,
                 WebRequest request) {
-            return handleResultMessagesNotificationException(ex, new HttpHeaders(),
-                    HttpStatus.CONFLICT, request);
+            return handleResultMessagesNotificationException(ex, new HttpHeaders(), HttpStatus.CONFLICT,
+                    request);
         }
 
         // omitted
@@ -4107,7 +4096,7 @@ RESTful Web Serviceで発生した例外のハンドリング方法について�
     Transfer-Encoding: chunked
     Date: Wed, 19 Feb 2014 09:03:26 GMT
     
-    {"code":"e.ex.mm.8001","message":"Cannot use specified sign id. sign id : user1@test.com"}
+    {"code":"e.xx.yy.8001","message":"Cannot use specified sign id. sign id : user1@test.com"}
 
 |
 
@@ -4129,12 +4118,10 @@ RESTful Web Serviceで発生した例外のハンドリング方法について�
         // omitted
 
         // (1)
-        @ExceptionHandler({ OptimisticLockingFailureException.class,
-                PessimisticLockingFailureException.class })
-        public ResponseEntity<Object> handleLockingFailureException(Exception ex,
-                WebRequest request) {
-            return handleExceptionInternal(ex, null, new HttpHeaders(),
-                    HttpStatus.CONFLICT, request);
+        @ExceptionHandler({OptimisticLockingFailureException.class,
+                PessimisticLockingFailureException.class})
+        public ResponseEntity<Object> handleLockingFailureException(Exception ex, WebRequest request) {
+            return handleExceptionInternal(ex, null, new HttpHeaders(), HttpStatus.CONFLICT, request);
         }
     
         // omitted
@@ -4167,7 +4154,7 @@ RESTful Web Serviceで発生した例外のハンドリング方法について�
     Transfer-Encoding: chunked
     Date: Wed, 19 Feb 2014 16:32:45 GMT
     
-    {"code":"e.ex.fw.8002","message":"Conflict with other processing occurred."}
+    {"code":"e.xx.fw.8002","message":"Conflict with other processing occurred."}
 
 |
 
@@ -4191,8 +4178,7 @@ RESTful Web Serviceで発生した例外のハンドリング方法について�
 
         // (1)
         @ExceptionHandler(Exception.class)
-        public ResponseEntity<Object> handleSystemError(Exception ex,
-                WebRequest request) {
+        public ResponseEntity<Object> handleSystemError(Exception ex, WebRequest request) {
             return handleExceptionInternal(ex, null, new HttpHeaders(),
                     HttpStatus.INTERNAL_SERVER_ERROR, request);
         }
@@ -4229,7 +4215,7 @@ RESTful Web Serviceで発生した例外のハンドリング方法について�
     Date: Wed, 19 Feb 2014 12:22:33 GMT
     Connection: close
     
-    {"code":"e.ex.fw.9003","message":"System error occurred."}
+    {"code":"e.xx.fw.9003","message":"System error occurred."}
 
 
   .. warning:: \ **システムエラー時のエラーメッセージについて**\
@@ -4258,22 +4244,22 @@ ExceptionCodeResolverを使ったエラーコードとメッセージの解決
         @Bean("exceptionCodeResolver")
         public ExceptionCodeResolver exceptionCodeResolver() {
             LinkedHashMap<String, String> map = new LinkedHashMap<>();
-            map.put("ResourceNotFoundException", "e.ex.fw.5001");
-            map.put("HttpRequestMethodNotSupportedException", "e.ex.fw.6001");
-            map.put("MediaTypeNotAcceptableException", "e.ex.fw.6002");
-            map.put("HttpMediaTypeNotSupportedException", "e.ex.fw.6003");
-            map.put("MethodArgumentNotValidException", "e.ex.fw.7001");
-            map.put("JsonParseException", "e.ex.fw.7002");
-            map.put("UnrecognizedPropertyException", "e.ex.fw.7003");
-            map.put("JsonMappingException", "e.ex.fw.7004");
-            map.put("TypeMismatchException", "e.ex.fw.7005");
-            map.put("BusinessException", "e.ex.fw.8001");
-            map.put("OptimisticLockingFailureException", "e.ex.fw.8002");
-            map.put("PessimisticLockingFailureException", "e.ex.fw.8002");
-            map.put("DataAccessException", "e.ex.fw.9002");
+            map.put("ResourceNotFoundException", "e.xx.fw.5001");
+            map.put("HttpRequestMethodNotSupportedException", "e.xx.fw.6001");
+            map.put("MediaTypeNotAcceptableException", "e.xx.fw.6002");
+            map.put("HttpMediaTypeNotSupportedException", "e.xx.fw.6003");
+            map.put("MethodArgumentNotValidException", "e.xx.fw.7001");
+            map.put("JsonParseException", "e.xx.fw.7002");
+            map.put("UnrecognizedPropertyException", "e.xx.fw.7003");
+            map.put("JsonMappingException", "e.xx.fw.7004");
+            map.put("TypeMismatchException", "e.xx.fw.7005");
+            map.put("BusinessException", "e.xx.fw.8001");
+            map.put("OptimisticLockingFailureException", "e.xx.fw.8002");
+            map.put("PessimisticLockingFailureException", "e.xx.fw.8002");
+            map.put("DataAccessException", "e.xx.fw.9002");
             SimpleMappingExceptionCodeResolver bean = new SimpleMappingExceptionCodeResolver();
             bean.setExceptionMappings(map);
-            bean.setDefaultExceptionCode("e.ex.fw.9001");
+            bean.setDefaultExceptionCode("e.xx.fw.9001");
             return bean;
         }
 
@@ -4291,23 +4277,23 @@ ExceptionCodeResolverを使ったエラーコードとメッセージの解決
             <property name="exceptionMappings">
                 <map>
                     <!-- omitted -->
-                    <entry key="ResourceNotFoundException"              value="e.ex.fw.5001" />
-                    <entry key="HttpRequestMethodNotSupportedException" value="e.ex.fw.6001" />
-                    <entry key="MediaTypeNotAcceptableException"        value="e.ex.fw.6002" />
-                    <entry key="HttpMediaTypeNotSupportedException"     value="e.ex.fw.6003" />
-                    <entry key="MethodArgumentNotValidException"        value="e.ex.fw.7001" />
-                    <entry key="JsonParseException"                     value="e.ex.fw.7002" />
-                    <entry key="UnrecognizedPropertyException"          value="e.ex.fw.7003" />
-                    <entry key="JsonMappingException"                   value="e.ex.fw.7004" />
-                    <entry key="TypeMismatchException"                  value="e.ex.fw.7005" />
-                    <entry key="BusinessException"                      value="e.ex.fw.8001" />
-                    <entry key="OptimisticLockingFailureException"      value="e.ex.fw.8002" />
-                    <entry key="PessimisticLockingFailureException"     value="e.ex.fw.8002" />
-                    <entry key="DataAccessException"                    value="e.ex.fw.9002" />
+                    <entry key="ResourceNotFoundException"              value="e.xx.fw.5001" />
+                    <entry key="HttpRequestMethodNotSupportedException" value="e.xx.fw.6001" />
+                    <entry key="MediaTypeNotAcceptableException"        value="e.xx.fw.6002" />
+                    <entry key="HttpMediaTypeNotSupportedException"     value="e.xx.fw.6003" />
+                    <entry key="MethodArgumentNotValidException"        value="e.xx.fw.7001" />
+                    <entry key="JsonParseException"                     value="e.xx.fw.7002" />
+                    <entry key="UnrecognizedPropertyException"          value="e.xx.fw.7003" />
+                    <entry key="JsonMappingException"                   value="e.xx.fw.7004" />
+                    <entry key="TypeMismatchException"                  value="e.xx.fw.7005" />
+                    <entry key="BusinessException"                      value="e.xx.fw.8001" />
+                    <entry key="OptimisticLockingFailureException"      value="e.xx.fw.8002" />
+                    <entry key="PessimisticLockingFailureException"     value="e.xx.fw.8002" />
+                    <entry key="DataAccessException"                    value="e.xx.fw.9002" />
                     <!-- omitted -->
                 </map>
             </property>
-            <property name="defaultExceptionCode" value="e.ex.fw.9001" />
+            <property name="defaultExceptionCode" value="e.xx.fw.9001" />
         </bean>
     
         <!-- omitted -->
@@ -4325,24 +4311,24 @@ ExceptionCodeResolverを使ったエラーコードとメッセージの解決
     # ---
     # Application common messages
     # ---
-    e.ex.fw.5001 = Resource not found.
+    e.xx.fw.5001 = Resource not found.
     
-    e.ex.fw.6001 = Request method not supported.
-    e.ex.fw.6002 = Specified representation format not supported.
-    e.ex.fw.6003 = Specified media type in the request body not supported.
+    e.xx.fw.6001 = Request method not supported.
+    e.xx.fw.6002 = Specified representation format not supported.
+    e.xx.fw.6003 = Specified media type in the request body not supported.
     
-    e.ex.fw.7001 = Validation error occurred on item in the request.
-    e.ex.fw.7002 = Request body format error occurred.
-    e.ex.fw.7003 = Unknown field exists in JSON.
-    e.ex.fw.7004 = Type mismatch error occurred in JSON field.
-    e.ex.fw.7005 = Type mismatch error occurred in request parameter or header or path variable.
+    e.xx.fw.7001 = Validation error occurred on item in the request.
+    e.xx.fw.7002 = Request body format error occurred.
+    e.xx.fw.7003 = Unknown field exists in JSON.
+    e.xx.fw.7004 = Type mismatch error occurred in JSON field.
+    e.xx.fw.7005 = Type mismatch error occurred in request parameter or header or path variable.
     
-    e.ex.fw.8001 = Business error occurred.
-    e.ex.fw.8002 = Conflict with other processing occurred.
+    e.xx.fw.8001 = Business error occurred.
+    e.xx.fw.8002 = Conflict with other processing occurred.
     
-    e.ex.fw.9001 = System error occurred.
-    e.ex.fw.9002 = System error occurred.
-    e.ex.fw.9003 = System error occurred.
+    e.xx.fw.9001 = System error occurred.
+    e.xx.fw.9002 = System error occurred.
+    e.xx.fw.9003 = System error occurred.
 
     # omitted
 
@@ -4425,8 +4411,8 @@ ExceptionCodeResolverを使ったエラーコードとメッセージの解決
 
     # omitted
 
-    e.ex.mm.5001 = Specified member not found. member id : {0}
-    e.ex.mm.8001 = Cannot use specified sign id. sign id : {0}
+    e.xx.yy.5001 = Specified member not found. member id : {0}
+    e.xx.yy.8001 = Cannot use specified sign id. sign id : {0}
 
     # omitted
 
@@ -4521,7 +4507,7 @@ Filterでエラーが発生した場合や\ ``HttpServletResponse#sendError``\ �
         // (4)
         public ApiErrorPageController() {
             errorCodeMap.put(HttpStatus.NOT_FOUND,
-                    "e.ex.fw.5001");
+                    "e.xx.fw.5001");
         }
     
         // (5)
@@ -4581,7 +4567,7 @@ Filterでエラーが発生した場合や\ ``HttpServletResponse#sendError``\ �
 
   .. code-block:: json
     
-    {"code":"e.ex.fw.9999","message":"Unhandled system error occurred."}
+    {"code":"e.xx.fw.9999","message":"Unhandled system error occurred."}
 
 |
 
@@ -4653,7 +4639,7 @@ Filterでエラーが発生した場合や\ ``HttpServletResponse#sendError``\ �
     Transfer-Encoding: chunked
     Date: Wed, 19 Feb 2014 23:24:20 GMT
     
-    {"code":"e.ex.fw.5001","message":"Resource not found."}
+    {"code":"e.xx.fw.5001","message":"Resource not found."}
 
 |
 
@@ -4669,7 +4655,7 @@ Filterでエラーが発生した場合や\ ``HttpServletResponse#sendError``\ �
     Date: Thu, 20 Feb 2014 00:13:43 GMT
     Connection: close
     
-    {"code":"e.ex.fw.9999","message":"Unhandled system error occurred."}
+    {"code":"e.xx.fw.9999","message":"Unhandled system error occurred."}
 
 |
 
@@ -5519,7 +5505,7 @@ JSONの中に関連リソースへのハイパーメディアリンクを含め�
         | 上記例では、リンク情報に設定するURIを組み立てるため \ ``UriComponentsBuilder``\ クラスのメソッドを呼び出し、自身のリソースにアクセスするためのURIをリソースに追加している。
         |
         | Controllerのメソッドの引数として渡された\ ``ServletUriComponentsBuilder``\ のインスタンスは、web.xmlに記載の\ ``<servlet-mapping>``\ 要素の情報を元に初期化されており、リソースには依存しない。
-        | そのため、Spring Frameworkから提供される\ `URI patterns <https://docs.spring.io/spring-framework/docs/6.1.3/reference/html/web.html#mvc-ann-requestmapping-uri-templates>`_\ 等を利用し、
+        | そのため、Spring Frameworkから提供される\ `URI patterns <https://docs.spring.io/spring-framework/docs/6.2.1/reference/html/web.html#mvc-ann-requestmapping-uri-templates>`_\ 等を利用し、
         | リクエスト情報をベースにURIを組み立てる事により、リソースに依存しない汎用的な組み立て処理を実装することが可能となる。
         | 
         | 例えば、上記例において\ ``http://example.com/api/v1/members/M000000001``\ に対してGETした場合、組み立てられるURIは、リクエストされたURIと同じ値\ ``（http://example.com/api/v1/members/M000000001）``\ になる。
@@ -5641,7 +5627,7 @@ POST時のLocationヘッダの設定
         | \ ``buildAndExpand``\ メソッドを呼び出して、作成したリソースのIDをバインドすることで、作成したリソースのURIを組み立てている。
         | 
         | Controllerのメソッドの引数として渡された\ ``ServletUriComponentsBuilder``\ のインスタンスは、web.xmlに記載の\ ``<servlet-mapping>``\ 要素の情報を元に初期化されており、リソースには依存しない。
-        | そのため、Spring Frameworkから提供される\ `URI patterns <https://docs.spring.io/spring-framework/docs/6.1.3/reference/html/web.html#mvc-ann-requestmapping-uri-templates>`_\ 等を利用し、
+        | そのため、Spring Frameworkから提供される\ `URI patterns <https://docs.spring.io/spring-framework/docs/6.2.1/reference/html/web.html#mvc-ann-requestmapping-uri-templates>`_\ 等を利用し、
         | リクエスト情報をベースにURIを組み立てる事により、リソースに依存しない汎用的な組み立て処理を実装することが可能となる。
         | 
         | 例えば、上記例において\ ``http://example.com/api/v1/members``\ に対してPOSTした場合、組み立てられるURIは、「リクエストされたURI + "\ ``/``\ " + 作成したリソースのID」となる。
@@ -5704,13 +5690,12 @@ Blankプロジェクトのデフォルトの設定では、CSRF対策が有効�
         @Order(1)
         public SecurityFilterChain filterChainApiView(
                 HttpSecurity http) throws Exception {
-            http.securityMatcher(
-                    new AntPathRequestMatcher("/api/v1/**"));
+            http.securityMatcher(antMatcher("/api/v1/**"));
             http.sessionManagement(sessionManagement -> sessionManagement
                     .sessionCreationPolicy(SessionCreationPolicy.STATELESS));
             http.csrf(csrf -> csrf.disable());
             http.authorizeHttpRequests(authz -> authz.requestMatchers(
-                    new AntPathRequestMatcher("/**")).permitAll());
+                    antMatcher("/**")).permitAll());
     
             return http.build();
         }
@@ -5726,7 +5711,7 @@ Blankプロジェクトのデフォルトの設定では、CSRF対策が有効�
             http.logout(Customizer.withDefaults());
             http.sessionManagement(Customizer.withDefaults());
             http.authorizeHttpRequests(authz -> authz.requestMatchers(
-                    new AntPathRequestMatcher("/**")).denyAll());
+                    antMatcher("/**")).denyAll());
     
             return http.build();
         }
@@ -6067,6 +6052,7 @@ ApiGlobalExceptionHandler.java
   import org.springframework.dao.PessimisticLockingFailureException;
   import org.springframework.http.HttpHeaders;
   import org.springframework.http.HttpStatus;
+  import org.springframework.http.HttpStatusCode;
   import org.springframework.http.ResponseEntity;
   import org.springframework.http.converter.HttpMessageNotReadableException;
   import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -6091,46 +6077,43 @@ ApiGlobalExceptionHandler.java
       ExceptionCodeResolver exceptionCodeResolver;
   
       @Override
-      protected ResponseEntity<Object> handleExceptionInternal(Exception ex,
-              Object body, HttpHeaders headers, HttpStatus status,
-              WebRequest request) {
+      protected ResponseEntity<Object> handleExceptionInternal(Exception ex, Object body,
+              HttpHeaders headers, HttpStatusCode statusCode, WebRequest request) {
           final Object apiError;
           if (body == null) {
               String errorCode = exceptionCodeResolver.resolveExceptionCode(ex);
-              apiError = apiErrorCreator.createApiError(request, errorCode, ex
-                      .getLocalizedMessage());
+              apiError = apiErrorCreator.createApiError(request, errorCode, ex.getLocalizedMessage());
           } else {
               apiError = body;
           }
-          return ResponseEntity.status(status).headers(headers).body(apiError);
+          return ResponseEntity.status(statusCode).headers(headers).body(apiError);
       }
   
       @Override
       protected ResponseEntity<Object> handleMethodArgumentNotValid(
-              MethodArgumentNotValidException ex, HttpHeaders headers,
-              HttpStatus status, WebRequest request) {
+              MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatusCode statusCode,
+              WebRequest request) {
           String errorCode = exceptionCodeResolver.resolveExceptionCode(ex);
-          ApiError apiError = apiErrorCreator.createBindingResultApiError(request,
-                  errorCode, ex.getBindingResult(), ex.getMessage());
-          return handleExceptionInternal(ex, apiError, headers, statusCode,
-                  request);
+          ApiError apiError = apiErrorCreator.createBindingResultApiError(request, errorCode,
+                  ex.getBindingResult(), ex.getMessage());
+          return handleExceptionInternal(ex, apiError, headers, statusCode, request);
       }
 
       @Override
       protected ResponseEntity<Object> handleHttpMessageNotReadable(
-              HttpMessageNotReadableException ex, HttpHeaders headers,
-              HttpStatus status, WebRequest request) {
+              HttpMessageNotReadableException ex, HttpHeaders headers, HttpStatusCode statusCode,
+              WebRequest request) {
           if (ex.getCause() instanceof Exception) {
-              return handleExceptionInternal((Exception) ex.getCause(), null,
-                      headers, status, request);
+              return handleExceptionInternal((Exception) ex.getCause(), null, headers, statusCode,
+                      request);
           } else {
-              return handleExceptionInternal(ex, null, headers, status, request);
+              return handleExceptionInternal(ex, null, headers, statusCode, request);
           }
       }
   
       @ExceptionHandler(ResourceNotFoundException.class)
-      public ResponseEntity<Object> handleResourceNotFoundException(
-              ResourceNotFoundException ex, WebRequest request) {
+      public ResponseEntity<Object> handleResourceNotFoundException(ResourceNotFoundException ex,
+              WebRequest request) {
           return handleResultMessagesNotificationException(ex, new HttpHeaders(),
                   HttpStatus.NOT_FOUND, request);
       }
@@ -6138,30 +6121,27 @@ ApiGlobalExceptionHandler.java
       @ExceptionHandler(BusinessException.class)
       public ResponseEntity<Object> handleBusinessException(BusinessException ex,
               WebRequest request) {
-          return handleResultMessagesNotificationException(ex, new HttpHeaders(),
-                  HttpStatus.CONFLICT, request);
+          return handleResultMessagesNotificationException(ex, new HttpHeaders(), HttpStatus.CONFLICT,
+                  request);
       }
   
       private ResponseEntity<Object> handleResultMessagesNotificationException(
-              ResultMessagesNotificationException ex, HttpHeaders headers,
-              HttpStatus status, WebRequest request) {
+              ResultMessagesNotificationException ex, HttpHeaders headers, HttpStatus status,
+              WebRequest request) {
           String errorCode = exceptionCodeResolver.resolveExceptionCode(ex);
-          ApiError apiError = apiErrorCreator.createResultMessagesApiError(
-                  request, errorCode, ex.getResultMessages(), ex.getMessage());
+          ApiError apiError = apiErrorCreator.createResultMessagesApiError(request, errorCode,
+                  ex.getResultMessages(), ex.getMessage());
           return handleExceptionInternal(ex, apiError, headers, status, request);
       }
-  
-      @ExceptionHandler({ OptimisticLockingFailureException.class,
-              PessimisticLockingFailureException.class })
-      public ResponseEntity<Object> handleLockingFailureException(Exception ex,
-              WebRequest request) {
-          return handleExceptionInternal(ex, null, new HttpHeaders(),
-                  HttpStatus.CONFLICT, request);
+
+      @ExceptionHandler({OptimisticLockingFailureException.class,
+              PessimisticLockingFailureException.class})
+      public ResponseEntity<Object> handleLockingFailureException(Exception ex, WebRequest request) {
+          return handleExceptionInternal(ex, null, new HttpHeaders(), HttpStatus.CONFLICT, request);
       }
-  
+
       @ExceptionHandler(Exception.class)
-      public ResponseEntity<Object> handleSystemError(Exception ex,
-              WebRequest request) {
+      public ResponseEntity<Object> handleSystemError(Exception ex, WebRequest request) {
           return handleExceptionInternal(ex, null, new HttpHeaders(),
                   HttpStatus.INTERNAL_SERVER_ERROR, request);
       }
@@ -6693,7 +6673,7 @@ MemberServiceImpl.java
           if (member == null) {
               // If member is not exists
               throw new ResourceNotFoundException(ResultMessages.error().add(
-                              DomainMessageCodes.E_EX_MM_5001, memberId));
+                              DomainMessageCodes.E_XX_YY_5001, memberId));
           }
           return member;
       }
@@ -6733,7 +6713,7 @@ MemberServiceImpl.java
           } catch (DuplicateKeyException e) {
               // If sign id is already used
               throw new BusinessException(ResultMessages.error().add(
-                              DomainMessageCodes.E_EX_MM_8001,
+                              DomainMessageCodes.E_XX_YY_8001,
                               creatingCredential.getSignId()), e);
           }
       }
@@ -6793,11 +6773,11 @@ DomainMessageCodes.java
           // NOP
       }
   
-      /** e.ex.mm.5001=Specified member not found. member id : {0} */
-      public static final String E_EX_MM_5001 = "e.ex.mm.5001";
+      /** e.xx.yy.5001=Specified member not found. member id : {0} */
+      public static final String E_XX_YY_5001 = "e.xx.yy.5001";
   
-      /** e.ex.mm.8001=Cannot use specified sign id. sign id : {0} */
-      public static final String E_EX_MM_8001 = "e.ex.mm.8001";
+      /** e.xx.yy.8001=Cannot use specified sign id. sign id : {0} */
+      public static final String E_XX_YY_8001 = "e.xx.yy.8001";
   }
 
 |
@@ -6897,9 +6877,8 @@ MemberBeanMapper.java
 
 mybatis-config.xml
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-| MyBatis3の動作をカスタマイズする場合は、MyBatis設定ファイルに設定値を追加する。MyBatis3では、Joda-Timeのクラス(org.joda.time.DateTime、org.joda.time.LocalDateTime、org.joda.time.LocalDateなど)はサポートされていない。
-| そのため、EntityクラスのフィールドにJoda-Timeのクラスを使用する場合は、Joda-Time用の\ ``TypeHandler``\ を用意する必要がある。
-| org.joda.time.DateTimeとjava.sql.Timestampをマッピングするための\ ``TypeHandler``\ の実装例、「\ :ref:`DataAccessMyBatis3HowToExtendTypeHandlerJoda`\ 」を使って行っている。
+| MyBatis3の動作をカスタマイズする場合は、MyBatis設定ファイルに設定値を追加する。
+| 独自のTypeHandlerを実装する場合は「\ :ref:`DataAccessMyBatis3HowToExtendTypeHandler`\ 」を参照されたい。
 
 .. tabs::
   .. group-tab:: Java Config

@@ -58,7 +58,7 @@ Webアプリケーションの入力チェックには、サーバサイドで�
   * - 相関項目チェック
     - | 複数のフィールドを比較するチェック
     - | パスワードと確認用パスワードの一致チェック
-    - | \ `org.springframework.validation.Validator <https://docs.spring.io/spring-framework/docs/6.1.3/reference/html/core.html#validator>`_\ インタフェースを実装したValidationクラス
+    - | \ `org.springframework.validation.Validator <https://docs.spring.io/spring-framework/docs/6.2.1/reference/html/core.html#validator>`_\ インタフェースを実装したValidationクラス
       | または Bean Validation
 
 | Spring は、Java標準であるBean Validationをサポートしている。単項目チェックには、このBean Validationを利用する。
@@ -135,6 +135,45 @@ Bean Validation 3.0(Hibernate Validator 8.x)以上を使用する場合、Bean V
 
 |
 
+.. _Input_required_check:
+
+入力必須チェックについて
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+| 入力必須チェックは基本的に、対象のフィールドに\ ``@NotNull``\ を付け、値が\ ``null``\ ではないことを確認することでチェックを行う。しかし、文字列の入力フィールドに未入力の状態でフォームを送信した場合、Spring MVCのデフォルト挙動ではフォームオブジェクトに\ **nullではなく、空文字がバインドされる**\ 。そのため、文字列の入力フィールドに対して入力必須チェックを行う場合は、\ ``@NotNull``\ ではなく、\ ``@NotEmpty``\ を使用して\ ``null``\ および空文字を許可しないことを推奨する。
+| 入力フィールドが未入力の場合に、空文字ではなく\ ``null``\ にバインドする方法に関しては、\ :ref:`Validation_string_trimmer_editor`\ を参照されたい。
+
+文字列のフィールドに対して入力必須チェックだけではなく、\ ``@Size(min = 1, max = 20)``\ のように最小の文字数をチェックする場合は\ ``@NotNull``\ を使用した場合と\ ``@NotEmpty``\ を使用した場合では挙動が異なる点に注意されたい。
+
+* \ ``@NotNull``\ を使用した場合は、未入力の場合\ ``@Size``\ のエラーメッセージのみが表示される。
+* \ ``@NotEmpty``\ を使用した場合は、未入力の場合\ ``@NotEmpty``\ のエラーメッセージと\ ``@Size``\ のエラーメッセージが表示される。
+
+\ ``@Size``\ のminを1以上に設定する場合は空文字を許容しないため、\ ``@NotEmpty``\ によるチェックは冗長となる。そのため、本ガイドラインで文字列フィールドに対して入力必須チェックと文字列長の最小値チェックを行う場合は、\ ``@NotNull``\ を使用する。
+
+以上の説明より、本ガイドラインでは次の表の内容に従い入力必須チェックを行う。
+
+.. tabularcolumns:: |p{0.20\linewidth}|p{0.40\linewidth}|p{0.30\linewidth}|p{0.50\linewidth}|
+.. list-table::
+  :header-rows: 1
+  :widths: 20 30 30 50
+
+  * - 対象フィールド
+    - チェック内容
+    - 使用するアノテーション
+    - 説明
+  * - | 文字列以外
+    - | 入力必須チェック
+    - | \ ``@NotNull``\ 
+    - | \ ``null``\ を許可しない
+  * - | 文字列
+    - | 入力必須チェック
+    - | \ ``@NotEmpty``\ 
+    - | \ ``null``\ と空文字を許可しない
+  * - | 
+    - | 入力必須チェック + 文字列長チェック
+    - | \ ``@NotNull``\ + \ ``@Size(min = 1, max = 20)``\
+    - | 未入力の場合は\ ``@Size``\ のエラーメッセージのみが表示される。
+
 .. _Validation_basic_validation:
 
 基本的な単項目チェック
@@ -170,7 +209,7 @@ Bean Validation 3.0(Hibernate Validator 8.x)以上を使用する場合、Bean V
 
 * フォームクラス
 
-  フォームクラスの各フィールドに、Bean Validationのアノテーションを付ける。
+  フォームクラスの各フィールドに、Bean Validationのアノテーションを付ける。使用するアノテーションの詳細は\ :ref:`Validation_jsr380_doc`\ を参照されたい。
 
   .. code-block:: java
 
@@ -238,10 +277,6 @@ Bean Validation 3.0(Hibernate Validator 8.x)以上を使用する場合、Bean V
   .. tip::
   
     Bean Validation標準のアノテーション、Hibernate Validationが用意しているアノテーションについては、\ :ref:`Validation_jsr380_doc`\ 、\ :ref:`Validation_validator_list`\ を参照されたい。
-  
-  .. tip::
-  
-    入力フィールドが未入力の場合に、空文字ではなく\ ``null``\ にバインドする方法に関しては、\ :ref:`Validation_string_trimmer_editor`\ を参照されたい。
 
 * Controllerクラス
 
@@ -2654,7 +2689,7 @@ Bean Validationによって、相関項目チェックの実装するために�
 Spring MVCによるBean Validationのエラーメッセージは、以下の順で解決される。
 
 #. | \ ``org.springframework.context.MessageSource``\ に定義されているメッセージの中に、ルールに合致するものがあればそれをエラーメッセージとして使用する (Springのルール)。
-   | Springのデフォルトのルールについては、「\ `DefaultMessageCodesResolverのJavaDoc <https://docs.spring.io/spring-framework/docs/6.1.3/javadoc-api/org/springframework/validation/DefaultMessageCodesResolver.html>`_\ 」を参照されたい。
+   | Springのデフォルトのルールについては、「\ `DefaultMessageCodesResolverのJavaDoc <https://docs.spring.io/spring-framework/docs/6.2.1/javadoc-api/org/springframework/validation/DefaultMessageCodesResolver.html>`_\ 」を参照されたい。
 #. 1.でメッセージが見つからない場合、アノテーションの\ ``message``\ 属性に、指定されたメッセージからエラーメッセージを取得する (Bean Validationのルール)
 
   #. \ ``message``\ 属性に指定されたメッセージが、"{メッセージキー}"形式でない場合、そのテキストをエラーメッセージとして使用する。
@@ -2709,7 +2744,7 @@ Spring MVCによるBean Validationのエラーメッセージは、以下の順�
   * マルチプロジェクト構成を採用する場合は、\ ``ValidationMessages.properties``\ ファイルを複数のプロジェクトに配置しないように注意すること。
   * Bean Validation用の共通部品をjarファイルとして配布する際に、\ ``ValidationMessages.properties``\ ファイルをjarファイルの中に含めないように注意すること。
 
-  \ `ブランクプロジェクト <https://github.com/Macchinetta/macchinetta-web-multi-blank/tree/1.10.0.RELEASE>`_ \ からプロジェクトを生成した場合は、\ ``xxx-web/src/main/resources``\ の直下に\ ``ValidationMessages.properties``\ が格納されている。
+  \ `ブランクプロジェクト <https://github.com/Macchinetta/macchinetta-web-multi-blank/tree/1.11.0.RELEASE>`_ \ からプロジェクトを生成した場合は、\ ``xxx-web/src/main/resources``\ の直下に\ ``ValidationMessages.properties``\ が格納されている。
 
 |
 
@@ -2957,7 +2992,7 @@ ValidationMessages.propertiesでシステムが利用するデフォルトのメ
 * \ ``{2}``\  : \ ``min``\ 属性の値
 
 | となる。
-| 仕様の詳細については\ `SpringValidatorAdapterのJavaDoc <https://docs.spring.io/spring-framework/docs/6.1.3/javadoc-api/org/springframework/validation/beanvalidation/SpringValidatorAdapter.html#getArgumentsForConstraint(java.lang.String,java.lang.String,jakarta.validation.metadata.ConstraintDescriptor)>`_\ を参照されたい。
+| 仕様の詳細については\ `SpringValidatorAdapterのJavaDoc <https://docs.spring.io/spring-framework/docs/6.2.1/javadoc-api/org/springframework/validation/beanvalidation/SpringValidatorAdapter.html#getArgumentsForConstraint(java.lang.String,java.lang.String,jakarta.validation.metadata.ConstraintDescriptor)>`_\ を参照されたい。
 
 エラーメッセージは以下のように変更される。
 
@@ -2966,7 +3001,7 @@ ValidationMessages.propertiesでシステムが利用するデフォルトのメ
 
 .. note::
 
-  application-messages.propertiesのメッセージキーの形式は\ `これ以外にも用意されている <https://docs.spring.io/spring-framework/docs/6.1.3/javadoc-api/org/springframework/validation/DefaultMessageCodesResolver.html>`_\ が、デフォルトメッセージを一部上書きする目的で使用するのであれば、基本的に、\ ``アノテーション名.フォーム属性名.プロパティ名``\ 形式でよい。
+  application-messages.propertiesのメッセージキーの形式は\ `これ以外にも用意されている <https://docs.spring.io/spring-framework/docs/6.2.1/javadoc-api/org/springframework/validation/DefaultMessageCodesResolver.html>`_\ が、デフォルトメッセージを一部上書きする目的で使用するのであれば、基本的に、\ ``アノテーション名.フォーム属性名.プロパティ名``\ 形式でよい。
 
 |
 
@@ -4062,14 +4097,14 @@ Method Validation対象のメソッドにするための定義方法
 
   import org.springframework.validation.annotation.Validated;
 
-  import jakarta.validation.constraints.NotNull;
+  import jakarta.validation.constraints.NotEmpty;
 
   @Validated
   public interface HelloService {
 
       // (2)
-      @NotNull
-      String hello(@NotNull /* (1) */ String message);
+      @NotEmpty
+      String hello(@NotEmpty /* (1) */ String message);
 
   }
 
@@ -4083,12 +4118,12 @@ Method Validation対象のメソッドにするための定義方法
   * - | (1)
     - Bean Validationの制約アノテーションをメソッドの引数アノテーションとして指定する。
 
-      | \ ``@NotNull``\ は\ ``message``\ という引数がNull値を許可しないことを意味する制約である。
-      | 引数にNull値が指定された場合、\ ``jakarta.validation.ConstraintViolationException``\ が発生する。
+      | \ ``@NotEmpty``\ は\ ``message``\ という引数がNull値と空文字を許可しないことを意味する制約である。
+      | 引数にNull値もしくは空文字が指定された場合、\ ``jakarta.validation.ConstraintViolationException``\ が発生する。
   * - | (2)
     - Bean Validationの制約アノテーションをメソッドアノテーションとして指定する。
 
-      上記例では、返り値がNull値にならないことを示しており、返り値としてNull値が返却された場合、\ ``jakarta.validation.ConstraintViolationException``\ が発生する。
+      上記例では、返り値がNull値もしくは空文字にならないことを示しており、返り値としてNull値もしくは空文字が返却された場合、\ ``jakarta.validation.ConstraintViolationException``\ が発生する。
 
 |
 
@@ -4154,6 +4189,7 @@ Method Validation対象のメソッドにするための定義方法
 
   import java.util.Date;
 
+  import jakarta.validation.constraints.NotEmpty;
   import jakarta.validation.constraints.NotNull;
   import jakarta.validation.constraints.Past;
 
@@ -4163,7 +4199,7 @@ Method Validation対象のメソッドにするための定義方法
       @Past
       private Date visitDate;
 
-      @NotNull
+      @NotEmpty
       private String visitMessage;
 
       private String userId;
@@ -4183,6 +4219,7 @@ Method Validation対象のメソッドにするための定義方法
   import com.example.domain.model.User;
 
   import jakarta.validation.Valid;
+  import jakarta.validation.constraints.NotEmpty;
   import jakarta.validation.constraints.NotNull;
   import jakarta.validation.constraints.Past;
 
@@ -4192,7 +4229,7 @@ Method Validation対象のメソッドにするための定義方法
       @Past
       private Date acceptDate;
 
-      @NotNull
+      @NotEmpty
       private String acceptMessage;
 
       @Valid // (5)
@@ -4210,15 +4247,15 @@ Method Validation対象のメソッドにするための定義方法
 
   import java.util.Date;
 
-  import jakarta.validation.constraints.NotNull;
+  import jakarta.validation.constraints.NotEmpty;
   import jakarta.validation.constraints.Past;
 
   public class User {
 
-      @NotNull
+      @NotEmpty
       private String userId;
 
-      @NotNull
+      @NotEmpty
       private String userName;
 
       @Past
@@ -4354,8 +4391,8 @@ Bean Validationの標準アノテーション(\ ``jakarta.validation.*``\ )を�
             
   * - \ ``@NotEmpty``\
     - \ ``Collection``\ 、\ ``Map``\ 、Array、任意の\ ``CharSequence``\ インタフェースの実装クラスに適用可能
-    - | \ ``null``\ 、または空でないことを検証する。
-      | \ ``@NotNull``\  + \ ``@Min(1)``\ の組み合わせでチェックする場合は、\ ``@NotEmpty``\ を使用すること。（2.0から追加）
+    - | \ ``null``\ 、または空文字でないことを検証する。
+      | Stringの入力必須チェックについては\ ``@NotNull``\ ではなくこちらを使用することを推奨する。（2.0から追加）
     - .. code-block:: java
 
         @NotEmpty
@@ -4650,7 +4687,7 @@ Hibernate Validatorが用意するデフォルトメッセージ
 hibernate-validator-<version>.jar内のorg/hibernate/validatorに、ValidationMessages.propertiesのデフォルト値が定義されている。
 
 | 各言語に対応したValidationMessages.propertiesが定義されており、\ :doc:`../WebApplicationDetail/Internationalization`\ の仕組みによりメッセージが決定される。
-| 対応する言語については \ `org/hibernate/validator <https://github.com/hibernate/hibernate-validator/tree/8.0.1.Final/engine/src/main/resources/org/hibernate/validator>`_\ を参照されたい。
+| 対応する言語については \ `org/hibernate/validator <https://github.com/hibernate/hibernate-validator/tree/8.0.2.Final/engine/src/main/resources/org/hibernate/validator>`_\ を参照されたい。
 
 .. code-block:: properties
 
@@ -4726,7 +4763,7 @@ hibernate-validator-<version>.jar内のorg/hibernate/validatorに、ValidationMe
 terasoluna-gfw-commonのチェックルール
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-\ `terasoluna-gfw-common <https://github.com/terasolunaorg/terasoluna-gfw/tree/5.9.0.RELEASE/terasoluna-gfw-common-libraries/terasoluna-gfw-common>`_\ が提供するアノテーション(\ ``org.terasoluna.gfw.common.codelist.*``\ )を以下に示す。
+\ `terasoluna-gfw-common <https://github.com/terasolunaorg/terasoluna-gfw/tree/5.10.0.RELEASE/terasoluna-gfw-common-libraries/terasoluna-gfw-common>`_\ が提供するアノテーション(\ ``org.terasoluna.gfw.common.codelist.*``\ )を以下に示す。
 
 .. tabularcolumns:: |p{0.15\linewidth}|p{0.30\linewidth}|p{0.30\linewidth}|p{0.25\linewidth}|
 .. list-table::
@@ -4751,7 +4788,7 @@ terasoluna-gfw-commonのチェックルール
 terasoluna-gfw-codepointsのチェックルール
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-\ `terasoluna-gfw-codepoints <https://github.com/terasolunaorg/terasoluna-gfw/tree/5.9.0.RELEASE/terasoluna-gfw-common-libraries/terasoluna-gfw-codepoints>`_\ が提供するアノテーション(\ ``org.terasoluna.gfw.common.codepoints.*``\ )を以下に示す。なお、\ ``terasoluna-gfw-codepoints``\ はバージョン5.1.0.RELEASE以上で利用することができる。
+\ `terasoluna-gfw-codepoints <https://github.com/terasolunaorg/terasoluna-gfw/tree/5.10.0.RELEASE/terasoluna-gfw-common-libraries/terasoluna-gfw-codepoints>`_\ が提供するアノテーション(\ ``org.terasoluna.gfw.common.codepoints.*``\ )を以下に示す。なお、\ ``terasoluna-gfw-codepoints``\ はバージョン5.1.0.RELEASE以上で利用することができる。
 
 .. tabularcolumns:: |p{0.15\linewidth}|p{0.30\linewidth}|p{0.30\linewidth}|p{0.25\linewidth}|
 .. list-table::
@@ -4775,7 +4812,7 @@ terasoluna-gfw-codepointsのチェックルール
 terasoluna-gfw-validatorのチェックルール
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-\ `terasoluna-gfw-validator <https://github.com/terasolunaorg/terasoluna-gfw/tree/5.9.0.RELEASE/terasoluna-gfw-common-libraries/terasoluna-gfw-validator>`_\ が提供するアノテーション(\ ``org.terasoluna.gfw.common.validator.constraints.*``\ )を以下に示す。なお、\ ``terasoluna-gfw-validator``\ はバージョン5.1.0.RELEASE以上で利用することができる。
+\ `terasoluna-gfw-validator <https://github.com/terasolunaorg/terasoluna-gfw/tree/5.10.0.RELEASE/terasoluna-gfw-common-libraries/terasoluna-gfw-validator>`_\ が提供するアノテーション(\ ``org.terasoluna.gfw.common.validator.constraints.*``\ )を以下に示す。なお、\ ``terasoluna-gfw-validator``\ はバージョン5.1.0.RELEASE以上で利用することができる。
 
 .. tabularcolumns:: |p{0.15\linewidth}|p{0.30\linewidth}|p{0.30\linewidth}|p{0.25\linewidth}|
 .. list-table::
@@ -4957,7 +4994,7 @@ terasoluna-gfw-validatorのチェックルール
 共通ライブラリの各Jar内のContributorValidationMessages.propertiesファイルに、ValidationMessages.propertiesのデフォルト値が定義されている。
 
 | 各言語に対応したValidationMessages.propertiesが定義されており、\ :doc:`../WebApplicationDetail/Internationalization`\ の仕組みによりメッセージが決定される。
-| 対応する言語については各ライブラリ（\ `terasoluna-gfw-commonのjar <https://github.com/terasolunaorg/terasoluna-gfw/tree/5.9.0.RELEASE/terasoluna-gfw-common-libraries/terasoluna-gfw-common/src/main/resources>`_\ 、\ `terasoluna-gfw-codepointsのjar <https://github.com/terasolunaorg/terasoluna-gfw/tree/5.9.0.RELEASE/terasoluna-gfw-common-libraries/terasoluna-gfw-codepoints/src/main/resources>`_\ 、\ `terasoluna-gfw-validatorのjar <https://github.com/terasolunaorg/terasoluna-gfw/tree/5.9.0.RELEASE/terasoluna-gfw-common-libraries/terasoluna-gfw-validator/src/main/resources>`_\ ）を参照されたい。
+| 対応する言語については各ライブラリ（\ `terasoluna-gfw-commonのjar <https://github.com/terasolunaorg/terasoluna-gfw/tree/5.10.0.RELEASE/terasoluna-gfw-common-libraries/terasoluna-gfw-common/src/main/resources>`_\ 、\ `terasoluna-gfw-codepointsのjar <https://github.com/terasolunaorg/terasoluna-gfw/tree/5.10.0.RELEASE/terasoluna-gfw-common-libraries/terasoluna-gfw-codepoints/src/main/resources>`_\ 、\ `terasoluna-gfw-validatorのjar <https://github.com/terasolunaorg/terasoluna-gfw/tree/5.10.0.RELEASE/terasoluna-gfw-common-libraries/terasoluna-gfw-validator/src/main/resources>`_\ ）を参照されたい。
 
 .. code-block:: properties
 
@@ -5107,6 +5144,7 @@ terasoluna-gfw-validatorのチェックルール
 
   import com.example.sample.domain.validation.Confirm;
 
+  import jakarta.validation.constraints.NotEmpty;
   import jakarta.validation.constraints.NotNull;
   import jakarta.validation.constraints.Size;
 
@@ -5118,7 +5156,7 @@ terasoluna-gfw-validatorのチェックルール
       @Size(min = 8)
       private String password;
 
-      @NotNull // (3)
+      @NotEmpty // (3)
       private String confirmPassword;
 
       // omitted geter/setter
@@ -5136,7 +5174,7 @@ terasoluna-gfw-validatorのチェックルール
   * - | (2)
     - | \ ``password``\ フィールドが\ ``null``\ の場合は\ ``@Confirm``\ の検証はパスするため、\ ``null``\ チェックは\ ``@NotNull``\ アノテーションを付与して行う。
   * - | (3)
-    - | 同様に\ ``confirmPassword``\ フィールドにも、\ ``@NotNull``\ アノテーションを付与する。
+    - | \ ``confirmPassword``\ フィールドには、\ ``@NotEmpty``\ アノテーションを付与する。
 
 |
 
@@ -5207,7 +5245,7 @@ application-messages.propertiesに以下の定義を行った場合、
 
 .. tip::
 
-  メッセージキーのルールの詳細は、\ `DefaultMessageCodesResolverのJavadoc <https://docs.spring.io/spring-framework/docs/6.1.3/javadoc-api/org/springframework/validation/DefaultMessageCodesResolver.html>`_\ を参照されたい。
+  メッセージキーのルールの詳細は、\ `DefaultMessageCodesResolverのJavadoc <https://docs.spring.io/spring-framework/docs/6.2.1/javadoc-api/org/springframework/validation/DefaultMessageCodesResolver.html>`_\ を参照されたい。
 
 |
 

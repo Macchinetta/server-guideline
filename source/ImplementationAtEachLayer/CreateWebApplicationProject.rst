@@ -27,7 +27,7 @@ Webアプリケーション向け開発プロジェクトの作成
 
   * - 種別
     - 使用用途
-  * - | \ `マルチプロジェクト構成のブランクプロジェクト <https://github.com/Macchinetta/macchinetta-web-multi-blank-thymeleaf/tree/1.10.0.RELEASE>`_\
+  * - | \ `マルチプロジェクト構成のブランクプロジェクト <https://github.com/Macchinetta/macchinetta-web-multi-blank-thymeleaf/tree/1.11.0.RELEASE>`_\
     - 商用環境にリリースするような本格的なアプリケーションを開発する際に使用する。
 
       プロジェクトの雛形は、MavenのArchetypeとして以下を用意している。
@@ -35,7 +35,7 @@ Webアプリケーション向け開発プロジェクトの作成
       * MyBatis3用の設定が盛り込まれた雛形
 
       \ **本ガイドラインでは、マルチプロジェクト構成のプロジェクトを使用する事を推奨している。**\
-  * - | \ `シングルプロジェクト構成のブランクプロジェクト <https://github.com/Macchinetta/macchinetta-web-blank-thymeleaf/tree/1.10.0.RELEASE>`_\
+  * - | \ `シングルプロジェクト構成のブランクプロジェクト <https://github.com/Macchinetta/macchinetta-web-blank-thymeleaf/tree/1.11.0.RELEASE>`_\
     - POC(Proof Of Concept)、プロトタイプ、サンプルなどの簡易的なアプリケーションを作成する際に使用する。
 
       プロジェクトの雛形は、MavenのArchetypeとして以下を用意している。
@@ -151,7 +151,7 @@ Webアプリケーション向け開発プロジェクトの作成
   mvn archetype:generate -B^
    -DarchetypeGroupId=com.github.macchinetta.blank^
    -DarchetypeArtifactId=macchinetta-multi-web-blank-jsp-mybatis3-archetype^
-   -DarchetypeVersion=1.10.0.RELEASE^
+   -DarchetypeVersion=1.11.0.RELEASE^
    -DgroupId=com.example.todo^
    -DartifactId=todo^
    -Dversion=1.0.0-SNAPSHOT
@@ -202,7 +202,7 @@ Webアプリケーション向け開発プロジェクトの作成
 
   (omitted)
   [INFO] ----------------------------------------------------------------------------
-  [INFO] Using following parameters for creating project from Archetype: macchinetta-multi-web-blank-jsp-mybatis3-archetype:1.10.0.RELEASE
+  [INFO] Using following parameters for creating project from Archetype: macchinetta-multi-web-blank-jsp-mybatis3-archetype:1.11.0.RELEASE
   [INFO] ----------------------------------------------------------------------------
   [INFO] Parameter: groupId, Value: com.example.todo
   [INFO] Parameter: artifactId, Value: todo
@@ -297,6 +297,8 @@ Maven Archetypeで作成したプロジェクトのPOMファイルでは、
 * プロジェクト創設年(\ ``inceptionYear``\ 要素)
 * プロジェクトライセンス(\ ``licenses``\ 要素)
 * プロジェクト組織(\ ``organization``\ 要素)
+* 開発者(\ ``developers``\ 要素)
+* ソース管理システム(\ ``scm``\ 要素)
 
 | といったプロジェクト情報が、Archetype自身のプロジェクト情報が設定されている状態となっている。
 | 例として、ブランクプロジェクトで設定している内容を以下に示す。
@@ -321,6 +323,18 @@ Maven Archetypeで作成したプロジェクトのPOMファイルでは、
       <name>Macchinetta Framework Team</name>
       <url>http://macchinetta.github.io</url>
   </organization>
+  <developers>
+      <developer>
+          <name>Macchinetta</name>
+          <organization>Macchinetta</organization>
+          <organizationUrl>http://macchinetta.github.io</organizationUrl>
+      </developer>
+  </developers>
+  <scm>
+      <connection>scm:git:git://github.com/Macchinetta/macchinetta-web-multi-blank.git</connection>
+      <developerConnection>scm:git:ssh://github.com/Macchinetta/macchinetta-web-multi-blank.git</developerConnection>
+      <url>https://github.com/Macchinetta/macchinetta-web-multi-blank</url>
+  </scm>
 
   <!-- omitted -->
 
@@ -374,15 +388,14 @@ Maven Archetypeで作成したプロジェクトのPOMファイルでは、以�
           <artifactId>mapstruct-processor</artifactId>
           <version>${mapstruct.version}</version>
         </path>
+        <!-- (3) -->
         <!-- REMOVE THIS LINE IF YOU USE MapStruct AND Lombok
         <path>
-          <!-- (3) -->
           <groupId>org.projectlombok</groupId>
           <artifactId>lombok</artifactId>
           <version>${lombok.version}</version>
         </path> 
         <path>
-          <!-- (3) -->
           <groupId>org.projectlombok</groupId>
           <artifactId>lombok-mapstruct-binding</artifactId>
           <version>${lombok-mapstruct-binding.version}</version>
@@ -409,7 +422,7 @@ Maven Archetypeで作成したプロジェクトのPOMファイルでは、以�
     - | Java8から追加された\ ``-parameters``\ オプション(メソッド・パラメータにリフレクション用のメタデータを生成するモード)
       | Spring の各機能は\ ``-parameters``\ が設定されていることを前提としており、\ ``-parameters``\ を設定していない場合、\ ``@RequestParam``\ や\ ``@PathVariable``\ の属性省略ができなくなる、XMLConfigでBean定義する際に変数を名前で解決することができなくなる等の問題が発生する。
   * - 2.
-    - MapStructsを使用するための設定。詳しくは\ :ref:`mapstruct-setting`\ を参照されたい。
+    - MapStructを使用するための設定。詳しくは\ :ref:`mapstruct-setting`\ を参照されたい。
   * - 3.
     - MapStructとLombokを併用するための設定。詳しくは\ :ref:`mapstruct_lombok`\ を参照されたい。
 
@@ -1006,9 +1019,9 @@ Maven Archetypeで作成したプロジェクトでは、インメモリデー�
 
 .. note::
 
-  上記設定例は、依存ライブラリのバージョンを親プロジェクトである terasoluna-gfw-parent で管理する前提であるため、pom.xmlでのバージョンの指定は不要である。
+  上記設定例は、依存ライブラリのバージョンをBOMプロジェクトである terasoluna-dependencies で管理する前提であるため、pom.xmlでのバージョンの指定は不要である。
 
-  上記の依存ライブラリはterasoluna-gfw-parentが依存している\ `Spring Boot <https://docs.spring.io/spring-boot/docs/3.2.2/reference/htmlsingle/#dependency-versions>`_\ で管理されている。
+  上記の依存ライブラリはterasoluna-dependenciesが依存している\ `Spring Boot <https://docs.spring.io/spring-boot/3.4.1/appendix/dependency-versions/coordinates.html>`_\ で管理されている。
 
 \ **[artifactId]-infra.properties**\
 
@@ -1177,14 +1190,14 @@ Maven Archetypeで作成したプロジェクトでは、インメモリデー�
                    </dependency>
       <!--         <dependency> -->
       <!--             <groupId>com.oracle.database.jdbc</groupId> -->
-      <!--             <artifactId>ojdbc11</artifactId> -->
+      <!--             <artifactId>ojdbc17</artifactId> -->
       <!--             <version>${ojdbc.version}</version> -->
       <!--         </dependency> -->
 
                    <!-- omitted -->
 
-                   <postgresql.version>42.5.1</postgresql.version>
-                   <ojdbc.version>21.8.0.0</ojdbc.version>
+                   <postgresql.version>42.7.4</postgresql.version>
+                   <ojdbc.version>23.6.0.24.10</ojdbc.version>
 
   * \ ``[artifactId]/[artifactId]-web/pom.xml``\
 
@@ -1197,7 +1210,7 @@ Maven Archetypeで作成したプロジェクトでは、インメモリデー�
                    </dependency>
       <!--         <dependency> -->
       <!--             <groupId>com.oracle.database.jdbc</groupId> -->
-      <!--             <artifactId>ojdbc11</artifactId> -->
+      <!--             <artifactId>ojdbc17</artifactId> -->
       <!--             <scope>runtime</scope> -->
       <!--         </dependency> -->
 
@@ -2382,7 +2395,7 @@ initdbモジュールの構成
     - データベースを初期化するためのSQLファイルを格納するためのディレクトリ。
 
       | 作成時点では、空のディレクトリである。
-      | 作成例については、\ `サンプルアプリケーションのinitdbプロジェクト <https://github.com/Macchinetta/atrs-thymeleaf/tree/1.10.0.RELEASE/atrs-initdb/src/sqls/integration-test-postgres>`_\ を参照されたい。
+      | 作成例については、\ `サンプルアプリケーションのinitdbプロジェクト <https://github.com/Macchinetta/atrs-thymeleaf/tree/1.11.0.RELEASE/atrs-initdb/src/sqls/integration-test-postgres>`_\ を参照されたい。
 
 .. note::
 
@@ -2442,7 +2455,7 @@ Seleniumを使用したE2E(End To End)テスト用のコンポーネントを管
       * - | (2)
         - テスト用のコンポーネントと設定ファイルを格納するディレクトリ。
     
-          作成例については、\ `共通ライブラリのテストアプリケーションのseleniumプロジェクト <https://github.com/terasolunaorg/terasoluna-gfw-functionaltest/tree/5.9.0.RELEASE/terasoluna-gfw-functionaltest-selenium>`_\ を参照されたい。
+          作成例については、\ `共通ライブラリのテストアプリケーションのseleniumプロジェクト <https://github.com/terasolunaorg/terasoluna-gfw-functionaltest/tree/5.10.0.RELEASE/terasoluna-gfw-functionaltest-selenium>`_\ を参照されたい。
     
       * - | (3)
         - Selenium WebDriverを使用したサンプルテストクラス。
@@ -2498,7 +2511,7 @@ Seleniumを使用したE2E(End To End)テスト用のコンポーネントを管
       * - | (2)
         - テスト用のコンポーネントと設定ファイルを格納するディレクトリ。
     
-          作成例については、\ `共通ライブラリのテストアプリケーションのseleniumプロジェクト <https://github.com/terasolunaorg/terasoluna-gfw-functionaltest/tree/5.9.0.RELEASE/terasoluna-gfw-functionaltest-selenium>`_\ を参照されたい。
+          作成例については、\ `共通ライブラリのテストアプリケーションのseleniumプロジェクト <https://github.com/terasolunaorg/terasoluna-gfw-functionaltest/tree/5.10.0.RELEASE/terasoluna-gfw-functionaltest-selenium>`_\ を参照されたい。
     
       * - | (3)
         - Selenium WebDriverを使用したサンプルテストクラス。
@@ -2545,7 +2558,7 @@ Maven Archetypeで作成したプロジェクトのプロジェクト階層の�
 
       Maven Archetypeで作成したプロジェクトはマルチモジュール構成となっており、親プロジェクトと各サブモジュールは相互参照の関係になっている。
 
-      version 1.10.0.RELEASE用のMaven Archetypeで作成したプロジェクトでは、親プロジェクトとして「org.terasoluna.gfw:terasoluna-gfw-parent:5.9.0.RELEASE」を指定している。
+      version 1.11.0.RELEASE用のMaven Archetypeで作成したプロジェクトでは、親プロジェクトとして「org.terasoluna.gfw:terasoluna-gfw-parent:5.10.0.RELEASE」を指定している。
   * - | (2)
     - TERASOLUNA Server Framework for Java (5.x) Parentプロジェクト。
 
