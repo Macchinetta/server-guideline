@@ -618,7 +618,7 @@ Spring Validatorで実装したValidatorの単体テスト
     - | \ ``getGlobalError``\ メソッドで、エラー内容を取得する。
   * - | (4)
     - | エラーメッセージの内容を確認するために、\ ``MessageSource``\ の実装クラスである\ ``org.springframework.context.support.ResourceBundleMessageSource``\ のオブジェクトを生成する。
-      | クラスの詳細については、\ `ResourceBundleMessageSourceのJavadoc <https://docs.spring.io/spring-framework/docs/6.2.1/javadoc-api/org/springframework/context/support/ResourceBundleMessageSource.html>`_\ を参照されたい。
+      | クラスの詳細については、\ :url_spring_javadoc:`ResourceBundleMessageSourceのJavadoc </org/springframework/context/support/ResourceBundleMessageSource.html>`\ を参照されたい。
   * - | (5)
     - | \ ``setBasename``\ メソッドに、メッセージが定義されたプロパティファイルを指定して読み込ませる。
   * - | (6)

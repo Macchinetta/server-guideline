@@ -24,7 +24,7 @@ Overview
 
 ファイルのダウンロード処理の概要を、以下に示す。
 
-#. DispatchServletは、コントローラへファイルダウンロードのリクエストを送信する。
+#. DispatcherServletは、コントローラへファイルダウンロードのリクエストを送信する。
 #. コントローラは、ファイル表示の情報を取得する。
 #. コントローラは、Viewを選択する。
 #. ファイルレンダリングは、Viewで行われる。
@@ -39,7 +39,7 @@ Overview
 | Springから提供されている\ ``org.springframework.web.servlet.view.document.AbstractXlsxView``\ クラスは、modelの情報を用いてExcelファイルをレンダリングするときに、サブクラスとして利用するクラスである。
 |
 | Spring では上記以外にも、いろいろなViewの実装を提供している。
-| Viewの技術詳細は、\ `Spring Framework Documentation -View Technologies- <https://docs.spring.io/spring-framework/docs/6.2.1/reference/html/web.html#mvc-view>`_\ を参照されたい。
+| Viewの技術詳細は、\ :url_spring_reference:`Spring Framework Documentation -View Technologies- </web/webmvc-view.html>`\ を参照されたい。
 
 | 共通ライブラリから提供している、\ ``org.terasoluna.gfw.web.download.AbstractFileDownloadView``\ は、任意のファイルをダウンロードするために使用する抽象クラスである。
 | PDFやExcel形式以外のファイルをレンダリングする際に、本クラスをサブクラスに定義する。
@@ -96,7 +96,7 @@ PDFファイルのダウンロード
   * - | (3)
     - | \ ``buildPdfDocument``\ メソッドを実装する。
 
-| \ ``AbstractPdfView``\ は、PDFのレンダリングに、\ `OpenPDF <https://github.com/LibrePDF/OpenPDF>`_\ を利用している。
+| \ ``AbstractPdfView``\ は、PDFのレンダリングに、\ :url_openpdf:`OpenPDF <>`\ を利用している。
 | そのため、Mavenのpom.xmlに OpenPDFの定義を追加する必要がある。
 
 .. code-block:: xml
@@ -109,10 +109,6 @@ PDFファイルのダウンロード
       </dependency>
   </dependencies>
   
-.. note::
-
-  上記設定例は、依存ライブラリのバージョンをBOMプロジェクトである terasoluna-dependencies で管理する前提であるため、pom.xmlでのバージョンの指定は不要である。
-
 |
 
 .. _viewresolver-label:
@@ -357,7 +353,7 @@ Excelファイルのダウンロード
   * - | (3)
     - | \ ``buildExcelDocument``\ メソッドを実装する。
 
-| \ ``AbstractXlsxView``\ は、EXCELのレンダリングに、\ `Apache POI <https://poi.apache.org/>`_\ を利用している。
+| \ ``AbstractXlsxView``\ は、EXCELのレンダリングに、\ :url_apache_poi:`Apache POI </>`\ を利用している。
 | そのため、Mavenのpom.xmlに POIの定義を追加する必要がある。
 
 .. code-block:: xml
@@ -372,19 +368,15 @@ Excelファイルのダウンロード
   
 .. note::
 
-  上記設定例は、依存ライブラリのバージョンをBOMプロジェクトである terasoluna-dependencies で管理する前提であるため、pom.xmlでのバージョンの指定は不要である。
-
-.. note::
-
   xlsファイル形式をサポートしたい場合は \ ``AbstractXlsView``\ を使用されたい。
 
-  詳細は、\ `AbstractXlsViewのJavaDoc <https://docs.spring.io/spring-framework/docs/6.2.1/javadoc-api/org/springframework/web/servlet/view/document/AbstractXlsView.html>`_\ を参照されたい。
+  詳細は、\ :url_spring_javadoc:`AbstractXlsViewのJavaDoc </org/springframework/web/servlet/view/document/AbstractXlsView.html>`\ を参照されたい。
 
 .. note::
 
-  POI 5.1.0 以降のバージョンでは\ `Apache Log4j v2 <https://logging.apache.org/log4j/2.x/>`_\ を依存関係に含んでおり、POIがLog4j 2を直接使用するようになった。
+  POI 5.1.0 以降のバージョンでは\ :url_log4j:`Apache Log4j v2 </>`\ を依存関係に含んでおり、POIがLog4j 2を直接使用するようになった。
 
-  Macchinetta Server Framework (1.x)ではロガーのAPIに\ `SLF4J <https://www.slf4j.org/>`_\ を使用しているが、APIの優先順位の関係でLog4j 2が有効になる可能性がある。
+  \ |framework_name|\ではロガーのAPIに\ :url_slf4j:`SLF4J </>`\ を使用しているが、APIの優先順位の関係でLog4j 2が有効になる可能性がある。
 
   これを回避するため、\ ``log4j-to-slf4j``\ を依存関係に含むことでSLF4Jへブリッジされるようになる。
 
@@ -398,13 +390,11 @@ Excelファイルのダウンロード
           </dependency>
       </dependencies>
   
-  上記設定例は、依存ライブラリのバージョンをBOMプロジェクトである terasoluna-dependencies で管理する前提であるため、pom.xmlでのバージョンの指定は不要である。
-    
     .. warning:: 
 
       SLF4J adapter (log4j-to-slf4j-2.0.jar) とSLF4J bridge (log4j-slf4j-impl-2.0.jar) を一緒に使用すると、SLF4J と Log4j 2の間でイベントが際限なくルーティングされてしまうため注意すること。
 
-      詳しくは、\ `Log4j 2 to SLF4J Adapter <https://logging.apache.org/log4j/log4j-2.2/log4j-to-slf4j/index.html>`_\ を参照されたい。
+      詳しくは、\ :url_log4j_adaptor:`Log4j 2 to SLF4J Adapter <>`\ を参照されたい。
 
 |
 
@@ -550,7 +540,7 @@ ViewResolverの定義
 
   前述してきたように、SpringはModelの情報をいろいろなViewにレンダリングすることができる。Springでは、複数のレンダリングエンジンをサポートしており、さまざまなViewを返却することが可能である。
 
-  詳細は、Spring の公式ドキュメント\ `Spring Framework Documentation -View Technologies- <https://docs.spring.io/spring-framework/docs/6.2.1/reference/html/web.html#mvc-view>`_\ を参照されたい。
+  詳細は、Spring の公式ドキュメント\ :url_spring_reference:`Spring Framework Documentation -View Technologies- </web/webmvc-view.html>`\ を参照されたい。
 
 .. raw:: latex
 

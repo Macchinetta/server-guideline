@@ -1,11 +1,11 @@
-Macchinetta Server Framework (1.x) Development Guideline
+|framework_name| Development Guideline
 ================================================================================
 
 .. note::
 
-  内容の誤りやコメントは\ `GithubのIssues <https://github.com/Macchinetta/server-guideline-thymeleaf/issues/new>`_\ にご登録お願いします。
+  内容の誤りやコメントは\ :url_macchinetta_guideline_issues:`GithubのIssues </new>`\ にご登録お願いします。
 
-  現在のissue状況は\ `こちら <https://github.com/Macchinetta/server-guideline/issues/>`_\ をご確認ください。
+  現在のissue状況は\ :url_macchinetta_guideline_issues:`こちら <>`\ をご確認ください。
 
 .. toctree::
   :maxdepth: 2

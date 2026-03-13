@@ -11,6 +11,144 @@
     - 更新箇所
     - 更新内容
 
+  * - 2026-03-30
+    - \-
+    - 1.11.1 RELEASE版公開
+
+  * -
+    - 全般
+    - ガイドラインの誤記(タイプミスや単純な記述ミスなど)の修正
+
+      記載内容の修正・追加
+
+      * ライブラリのバージョン定義に関するNoteを削除
+
+      * Spring Framework ReferenceへのリンクURLを変更
+
+      記載内容の削除
+
+      * Spring Framework理解度チェックテストに関する記述を削除
+
+  * -
+    - \ :doc:`../Introduction/CriteriaBasedMapping`\
+    - 
+      OWASP Top 10 を2021版から2025版へ変更
+
+      * OWASP(Open Web Application Security Project)による観点の更新
+
+  * -
+    - \ :doc:`../Overview/FrameworkStack`\
+    - 記載内容の修正・追加
+
+      * Terasoluna Dependenciesに関する説明を追加
+
+      利用するOSSのバージョンを更新
+
+      * Spring Bootを3.5.9に更新
+      * MyBatisを3.5.19に更新
+      * MyBatis Springを3.0.5に更新
+      * Apache Commons BeanUtilsを1.11.0に更新
+      * Guavaを33.5.0-jreに更新
+      * Apache Commons Collectionsを4.5.0に更新
+      * Apache Commons IOを2.20.0に更新
+      * MapStructを1.6.3に更新
+      * OpenPDFを2.0.5に更新
+      * Apache POIを5.4.1に更新
+
+      Spring Bootのバージョン更新に伴い利用するOSSのバージョンを更新
+
+      * Spring Frameworkを6.2.15に更新
+      * Spring Dataを3.5.7に更新
+      * Spring Securityを6.5.7に更新
+      * AspectJを1.9.25.1に更新
+      * Logbackを1.5.22に更新
+      * SLF4Jを2.0.17に更新
+      * Jacksonを2.19.4に更新
+      * Hibernate Validatorを8.0.3.Final(Bean Validation 3.1)に更新
+      * Apache Commons Langを3.19.0に更新
+      * Apache Commons DBCPを2.13.0に更新
+      * Jakarta Mailを2.0.5に更新
+      * Apache HttpClient5を5.5.1に更新
+      * Lombokを1.18.42に更新
+
+      単体テストで利用するOSSのバージョンを更新
+
+      * JUnitを4.13.2に更新
+      * Hamcrestを3.0に更新
+      * Mockitoを5.17.0に更新
+      * Spring Testを6.2.15に更新
+
+  * -
+    - Webアプリケーション向け開発プロジェクトの作成
+    - 削除
+
+      * 「\ :doc:`../ImplementationAtEachLayer/BlankProject`\」の追加にともない削除
+
+  * -
+    - \ :doc:`../ImplementationAtEachLayer/BlankProject`\
+    - 新規追加
+
+      * 各ページに分散していたブランクプロジェクトに関する内容を1ページに集約
+
+  * -
+    - \ :doc:`../ArchitectureInDetail/WebApplicationDetail/Validation`\
+    - 記載内容の修正・追加
+
+      * 「ネストしたBeanの単項目チェック」において、ネストしたBeanのコレクションに対するバリデーションの記載内容を修正
+
+  * -
+    - \ :doc:`../ArchitectureInDetail/WebApplicationDetail/ExceptionHandling`\
+    - 記載内容の削除
+
+      * HTTPステータスコードの表を削除し、DefaultHandlerExceptionResolverのJavaDocへリンクするよう修正
+
+  * -
+    - \ :doc:`../ArchitectureInDetail/WebApplicationDetail/FileUpload`\
+    - 記載内容の修正・追加
+
+      * Multipartに関する制限についての説明を追加
+
+  * -
+    - \ :doc:`../ArchitectureInDetail/GeneralFuncDetail/SystemDate`\
+    - 記載内容の修正
+
+      * 節構成の見直し
+
+  * -
+    - \ :doc:`../Appendix/SpringToolSuite` 
+    - 記載内容の修正
+
+      * 記載内容をSTS5の最新バージョンに準じた内容に修正
+
+  * -
+    - \ :doc:`../Appendix/AppDevInOfflineEnv`\
+    - 新規追加
+
+      * 「Webアプリケーション向け開発プロジェクトの作成」の「オフライン環境におけるアプリケーション開発」の内容を移動
+
+  * -
+    - \ :doc:`../ArchitectureInDetail/WebServiceDetail/RestClient`\
+    - 記載内容の修正
+
+      * 内容の見直しに伴い、Overviewの構成と説明を修正
+      * 内容の見直しに伴い、How to useの構成と説明を修正
+      * 内容の見直しに伴い、How to extendの構成と説明を修正
+      * 非同期通信の説明をAppendixに移動
+      * HTTP Proxyサーバの設定方法をHow to extendに移動
+
+      記載内容の追加
+
+      * RestTemplateの廃止予定に伴い、RestClientを推奨とする説明を追加
+      * \ ``ClientHttpRequestFactory``\ の実装として、\ ``HttpComponentsClientHttpRequestFactory``\ の利用を推奨とする旨の説明を追加
+      * URLの生成に関する説明を追加
+      * リクエスト初期化に関する説明を追加
+      * \ ``ClientHttpRequestInterceptor``\ と\ ``ClientHttpRequestInitializer``\ の使い分けについての説明を追加
+      * レスポンス取得後処理に関する説明を追加
+      * \ ``baseUrl``\ の設定に関する説明を追加
+      * HTTPステータスコードでハンドリングする方法に\ ``NoOpResponseErrorHandler``\ の説明を追加
+      * 認証要求の設定に関する説明を追加
+      * URL生成処理をカスタマイズする方法についての説明を追加
+
   * - 2025-03-28
     - \-
     - 1.11.0 RELEASE版公開
@@ -68,7 +206,7 @@
       * Mockitoを5.14.2に更新
 
   * -
-    - \ :doc:`../ImplementationAtEachLayer/CreateWebApplicationProject`\
+    - Webアプリケーション向け開発プロジェクトの作成
     - 記載内容の追加
 
       * プロジェクト情報に開発者とソース管理システムを追加
@@ -175,7 +313,7 @@
       * 非推奨としていたJoda Timeに関する記述を削除
 
   * -
-    - \ :doc:`../Appendix/SpringToolSuite4`\
+    - \ :doc:`../Appendix/SpringToolSuite`\
     - 記載内容の修正・追加
 
       * 記載内容をSTS4の最新バージョンに準じた内容に修正
@@ -230,7 +368,7 @@
       * Lombokを1.18.30に更新
 
   * -
-    - \ :doc:`../ImplementationAtEachLayer/CreateWebApplicationProject`\
+    - Webアプリケーション向け開発プロジェクトの作成
     - 記載内容の修正
 
       * \ ``maven-compiler-plugin``\ のデフォルト設定に関する説明を追加
@@ -532,7 +670,7 @@
       * ページタイトルを「Java SE 8からJava SE 11までの主要な変更点」から「Java SE 17を使用するための設定」へ修正
 
   * -
-    - \ :doc:`../Appendix/SpringToolSuite4`\
+    - \ :doc:`../Appendix/SpringToolSuite`\
     - 記載内容の追加
 
       * プラグインが入れられない問題についてNoteを追加
@@ -613,7 +751,7 @@
 
       記載内容の追加
 
-      * \ `CVE-2021-42550 <https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-42550>`_\ に関する説明及び注意点を追加
+      * \ :url_cve:`CVE-2021-42550 <?name=CVE-2021-42550>`\ に関する説明及び注意点を追加
 
   * -
     - \ :doc:`../ImplementationAtEachLayer/CreateProject`\
@@ -658,7 +796,7 @@
       * DB Unitの更新に伴い、Apache POIのダウングレードに関するWarningを削除
 
   * -
-    - \ :doc:`../Appendix/SpringToolSuite4`\
+    - \ :doc:`../Appendix/SpringToolSuite`\
     - 新規追加
 
       * STS4の設定手順を追加
@@ -736,7 +874,7 @@
       * 共通ライブラリの非推奨APIを削除
 
   * -
-    - \ :doc:`../ImplementationAtEachLayer/CreateWebApplicationProject`\
+    - Webアプリケーション向け開発プロジェクトの作成
     - 記載内容の修正
 
       * Mavenセントラルリポジトリで公開されるOracle JDBC DriverのgroupIdが変更されたことへの対応
@@ -887,8 +1025,8 @@
 
       * 利用するミドルウェアのバージョンを更新
 
-      * Spring Framework 5.1.16より\ `XMLスキーマ処理が改善 <https://github.com/spring-projects/spring-framework/issues/22504>`_\ されたため、ブランクプロジェクトにおけるBean定義ファイルのXMLスキーマファイル(.xsd)参照を\ ``http``\ から\ ``https``\ に変更
-      * Spring Framework 5.1より\ `ログ出力の見直し <https://github.com/spring-projects/spring-framework/issues/21437>`_\ が行われたため、ブランクプロジェクトにおいてマッピングされたハンドラメソッドのログを出力するよう変更
+      * Spring Framework 5.1.16より\ :url_spring_framework_issues:`XMLスキーマ処理が改善 </22504>`\ されたため、ブランクプロジェクトにおけるBean定義ファイルのXMLスキーマファイル(.xsd)参照を\ ``http``\ から\ ``https``\ に変更
+      * Spring Framework 5.1より\ :url_spring_framework_issues:`ログ出力の見直し </21437>`\ が行われたため、ブランクプロジェクトにおいてマッピングされたハンドラメソッドのログを出力するよう変更
 
   * -
     - \ :doc:`../Introduction/CriteriaBasedMapping`\
@@ -935,7 +1073,7 @@
       * Spring Security 5.2で追加された\ ``Argon2PasswordEncoder``\ の記述を追加
       * Spring Security 5.2で追加された\ ``LogoutSuccessEvent``\ および\ ``LogoutSuccessEventPublishingLogoutHandler``\ の記述を追加
       * Spring Security 5.2で追加された\ ``ClearSiteDataHeaderWriter``\ および\ ``HeaderWriterLogoutHandler``\ の記述を追加
-      * Spring Security 5.2.1において、既存のセキュリティヘッダがある場合の挙動が変更されたこと（\ `spring-projects/spring-security#6454 <https://github.com/spring-projects/spring-security/issues/6454>`_\ ）への対応
+      * Spring Security 5.2.1において、既存のセキュリティヘッダがある場合の挙動が変更されたこと（\ :url_spring_security_issues:`spring-projects/spring-security#6454 </6454>`\ ）への対応
       * Spring Data 2.2において、廃止予定であった非推奨APIが削除されたことへの対応
       * Spring Boot 2.2.0からJavaMailがJakarta Mailにバージョンアップしたことへの対応
       * Hamcrest 2.1からHamcrestのモジュールが統合されたため、記載するOSSライブラリを変更
@@ -997,7 +1135,7 @@
     - \ :doc:`../ArchitectureInDetail/WebApplicationDetail/TagLibAndELFunctions`\
     - TERASOLUNA Server Framework for Java (5.x)の共通ライブラリのバグ改修に伴う修正
 
-      * 共通ライブラリのバグ改修(\ `terasoluna-gfw#846 <https://github.com/terasolunaorg/terasoluna-gfw/issues/846>`_\)に伴い、\ ``f:query``\ の仕様に関する説明を修正
+      * 共通ライブラリのバグ改修(\ :url_gfw_issues:`terasoluna-gfw#846 </846>`\ )に伴い、\ ``f:query``\ の仕様に関する説明を修正
 
   * -
     - \ :doc:`../ArchitectureInDetail/WebServiceDetail/RestClient`\
@@ -1089,7 +1227,7 @@
 
       * Spring Security 5.2で追加された\ ``ClearSiteDataHeaderWriter``\ の記述を追加
       * Spring Security 5.2で追加されたStrict-Transport-SecurityヘッダのpreloadディレクティブについてのNoteを追加
-      * \ `spring-projects/spring-security#6454 <https://github.com/spring-projects/spring-security/issues/6454>`_\ により解消されたWarning「個別に付与したセキュリティヘッダがSpring Securityにより上書き（追加）される問題」を削除
+      * \ :url_spring_security_issues:`spring-projects/spring-security#6454 </6454>`\ により解消されたWarning「個別に付与したセキュリティヘッダがSpring Securityにより上書き（追加）される問題」を削除
 
       記載内容の追加
 
@@ -1258,7 +1396,7 @@
       * Thymeleafのプリプロセッシングについて、解決された値により自動的に型が判定されることについての注意事項を追加
 
   * -
-    - \ :doc:`../ImplementationAtEachLayer/CreateWebApplicationProject`\
+    - Webアプリケーション向け開発プロジェクトの作成
     - 記載内容の追加
 
       * 大量にコードリストを定義する場合のBean定義方法に関する記載を追加
@@ -1474,7 +1612,7 @@
 
       記載内容の追加
 
-      * \ `CVE-2019-3778 <https://tanzu.vmware.com/security/cve-2019-3778>`_\ (オープンリダイレクト脆弱性)に関する注意喚起を追加
+      * \ :url_spring_io:`CVE-2019-3778 </security/cve-2019-3778>`\ (オープンリダイレクト脆弱性)に関する注意喚起を追加
 
   * -
     - \ :doc:`../Tutorial/TutorialTodo`\

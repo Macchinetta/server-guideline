@@ -27,7 +27,7 @@ Overview
 
 本節では、「Webリソース」「Javaメソッド」「画面項目」のアクセスに対して認可処理を適用するための実装例(定義例)を紹介しながら、Spring Securityの認可機能について説明する。
 
-.. [#fSpringSecurityAuthorization1] ドメインオブジェクトのアクセスに対する認可処理については、 \ `Spring Security Reference -Domain Object Security (ACLs)- <https://docs.spring.io/spring-security/reference/servlet/authorization/acls.html>`_\ を参照されたい。
+.. [#fSpringSecurityAuthorization1] ドメインオブジェクトのアクセスに対する認可処理については、 \ :url_spring_security_reference:`Spring Security Reference -Domain Object Security (ACLs)- </servlet/authorization/acls.html>`\ を参照されたい。
 
 |
 
@@ -106,7 +106,7 @@ AuthorizationManager
     - | 認証情報(\ ``Authentication``\ )が\ ``PostAuthorize``\ アノテーションから指定された権限を含んでいるかどうかを評価する。
 
 | Spring Securityが提供する\ ``AuthorizationManager``\ 以外に、独自に構築した\ ``RequestMatcherDelegatingAuthorizationManager``\ を使用することも可能である。 
-| 詳しくは、\ `Configure RequestMatcherDelegatingAuthorizationManager <https://docs.spring.io/spring-security/reference/servlet/authorization/authorize-http-requests.html#_tabs_17>`_\ を参照されたい。
+| 詳しくは、\ :url_spring_security_reference:`Configure RequestMatcherDelegatingAuthorizationManager </servlet/authorization/authorize-http-requests.html#_tabs_17>`\ を参照されたい。
 |
 
 How to use
@@ -190,7 +190,7 @@ How to use
 
 .. tip:: 
 
-  SpELの使い方については本節でも紹介するが、より詳しい使い方を知りたい場合は\ `Spring Framework Documentation -Spring Expression Language (SpEL)- <https://docs.spring.io/spring-framework/docs/6.2.1/reference/html/core.html#expressions>`_\ を参照されたい。
+  SpELの使い方については本節でも紹介するが、より詳しい使い方を知りたい場合は\ :url_spring_reference:`Spring Framework Documentation -Spring Expression Language (SpEL)- </core/expressions.html>`\ を参照されたい。
 
 |
 
@@ -591,11 +591,74 @@ bean定義ファイルを使用して、Webリソースに対してアクセス�
 
   Spring MVCとSpring Securityでは、リクエストとのマッチングの仕組みが厳密には異なっており、この差異を利用してSpring Securityの認可機能を突破し、ハンドラメソッドにアクセスできる脆弱性が存在する。
     
-  本事象の詳細は「\ `CVE-2016-5007 Spring Security / MVC Path Matching Inconsistency <https://tanzu.vmware.com/security/cve-2016-5007>`_\ 」を参照されたい。
+  本事象の詳細は「\ :url_spring_io:`CVE-2016-5007 Spring Security / MVC Path Matching Inconsistency </security/cve-2016-5007>`\ 」を参照されたい。
 
   \ ``trimTokens``\ プロパティに\ ``true``\ を設定した\ ``org.springframework.util.AntPathMatcher``\ のBeanがSpring MVCに適用されている場合に、本事象が発生する。
     
   デフォルト値は\ ``false``\ であるため、意図的に変更しない限り本事象は発生しない。
+
+|
+
+正規表現を使用したパスパターン指定
+````````````````````````````````````````````````````````````````````````````````
+
+| \ ``Spring Security``\のデフォルトの設定では、パスパターンの解析に\ ``MvcRequestMatcher``\クラスを使用しているが、本フレームワークでは\ ``AntPathRequestMatcher``\を使用する。
+| \ ``AntPathRequestMatcher``\は正規表現に対応していないため、正規表現を用いたパスパターン指定を行いたい場合は\ ``RegexRequestMatcher``\を使用する必要がある。
+| 以下に\ ``RegexRequestMatcher``\の実装方法を記載する。
+
+.. tabs::
+  .. group-tab:: Java Config
+
+    \ ``AuthorizationManagerRequestMatcherRegistry.requestMatchers``\ に、正規表現を使用するための\ ``RequestMatcher``\を設定する。
+
+    * SpringSecurityConfig.javaの定義例
+
+      .. code-block:: java
+
+        @Bean
+        public SecurityFilterChain filterChain(HttpSecurity http) {
+            // omitted
+            http.authorizeHttpRequests(authz -> authz
+                    .requestMatchers(new RegexRequestMatcher("^/admin/accounts/.*\\.csv$", "GET")).hasRole("ACCOUNT_MANAGER") // (1)(2)
+                    );
+            // omitted
+        }
+
+      .. tabularcolumns:: |p{0.20\linewidth}|p{0.80\linewidth}|
+      .. list-table:: \ **正規表現でのパスパターン指定を有効にする設定**\
+        :header-rows: 1
+        :widths: 20 80
+
+        * - 項番
+          - 説明
+        * - | (1)
+          - | \ ``requestMatchers``\ の引数に\ ``RegexRequestMatcher``\を指定することで正規表現でのパスパターン指定を有効にする。
+        * - | (2)
+          - | 正規表現でパスパターンの指定を行う。
+
+  .. group-tab:: XML Config
+
+    \ ``<sec:http>``\ タグに、正規表現を使用するための\ ``RequestMatcher``\を設定する。
+
+    * spring-security.xmlの定義例
+
+      .. code-block:: xml
+
+        <sec:http request-matcher="regex"> <!-- (1) -->
+            <sec:intercept-url pattern="^/admin/accounts/.*\\.csv$" method="GET" access="hasRole('ACCOUNT_MANAGER')"/> <!-- (2) -->
+            <!-- omitted -->
+        </sec:http>
+      .. tabularcolumns:: |p{0.20\linewidth}|p{0.80\linewidth}|
+      .. list-table:: \ **正規表現でのパスパターン指定を有効にする設定**\
+        :header-rows: 1
+        :widths: 20 80
+
+        * - 項番
+          - 説明
+        * - | (1)
+          - | \ ``<sec:http>``\タグの\ ``request-matcher``\属性に\ ``regex``\を指定することで正規表現でのパスパターン指定を有効にする。
+        * - | (2)
+          - | 正規表現でパスパターンの指定を行う。
 
 |
 
@@ -968,7 +1031,7 @@ Spring Securityは、以下のアノテーションをサポートしている�
 
 .. warning::
 
-  Spring 5から、SpringのコアAPIに\ `null-safety <https://docs.spring.io/spring-framework/docs/6.2.1/reference/html/core.html#null-safety>`_\ の機能が取り入れられており、SpELが解釈される際の\ ``null``\ に対する動作も変更(\ `SPR-15540 <https://jira.spring.io/browse/SPR-15540?redirect=false>`_\ )されている。
+  Spring 5から、SpringのコアAPIに\ :url_spring_reference:`null-safety </core/null-safety.html>`\ の機能が取り入れられており、SpELが解釈される際の\ ``null``\ に対する動作も変更(\ :url_spring_framework_issues:`SPR-15540 </20099>`\ )されている。
 
   例えば\ ``@PreAuthorize``\ の引数(\ ``#xxx``\ )や、\ ``@PostAuthorize``\ の戻り値（\ ``resultObject``\ ）が\ ``Map``\ を含む場合、\ ``Map``\ から値を取得するSpELでキー値に\ ``null``\ となる値を入力すると、Spring 4以前ではそのまま\ ``Map``\ に\ ``null``\ が渡され該当する値がないため\ ``null``\ が返却されていたが、Spring 5以降ではキーとなるSpELを評価した結果に対する\ ``null``\ チェックが追加されており、\ ``null``\ の場合は\ ``IllegalStateException``\ が発生する。
 

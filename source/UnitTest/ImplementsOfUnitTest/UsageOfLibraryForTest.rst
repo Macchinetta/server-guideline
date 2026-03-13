@@ -252,7 +252,7 @@ TestExecutionListenerの登録
     - \ ``@Sql``\ アノテーションで指定されているSQLを実行する機能を提供している。
 
 
-各\ ``TestExecutionListener``\ の詳細は\ `Spring Framework Documentation -TestExecutionListener Configuration- <https://docs.spring.io/spring-framework/docs/6.2.1/reference/html/testing.html#testcontext-tel-config>`_\ を参照されたい。
+各\ ``TestExecutionListener``\ の詳細は\ :url_spring_reference:`Spring Framework Documentation -TestExecutionListener Configuration- </testing/testcontext-framework/tel-config.html>`\ を参照されたい。
 
 \ ``TestExecutionListener``\ は通常、デフォルト設定から変更する必要はないが、テストライブラリが独自に提供している\ ``TestExecutionListener``\ を使用する場合は\ ``@TestExecutionListeners``\ アノテーションを使用して\ ``TestContextManager``\ に登録する必要がある。
 
@@ -279,7 +279,7 @@ TestExecutionListenerの登録
     - 説明
   * - | (1)
     - | クラスレベルに\ ``@TestExecutionListeners``\ アノテーションを付けて\ ``TestExecutionListener``\ インタフェースの実装クラスを指定することで、テスト実行時に指定した\ ``TestExecutionListener``\ の処理を呼び出すことができる。
-      | 詳細は\ `@TestExecutionListenersのJavadoc <https://docs.spring.io/spring-framework/docs/6.2.1/javadoc-api/org/springframework/test/context/TestExecutionListeners.html>`_\ を参照されたい。
+      | 詳細は\ :url_spring_javadoc:`@TestExecutionListenersのJavadoc </org/springframework/test/context/TestExecutionListeners.html>`\ を参照されたい。
   * - | (2)
     - | \ ``TransactionDbUnitTestExecutionListener``\ はSpring Test DBUnitが提供する\ ``TestExecutionListener``\ インタフェースの実装クラスである。\ ``@DatabaseSetup``\ や\ ``@ExpectedDatabase``\ 、\ ``@DatabaseTearDown``\ などのアノテーションを使用したデータのセットアップ、検証、後処理の機能を提供している。
       | \ ``TransactionDbUnitTestExecutionListener``\ は内部で\ ``TransactionalTestExecutionListener``\ と\ ``com.github.springtestdbunit.DbUnitTestExecutionListener``\ をチェインしている。
@@ -471,7 +471,7 @@ MockMvcのセットアップ設定例を以下に示す。
   * - | (1)
     - | テスト実行時に生成するDIコンテナの設定ファイルを指定する。
       | DIコンテナの階層関係については、\ ``@org.springframework.test.context.ContextHierarchy``\ を使うことで再現することができる。
-      | DIコンテナの階層関係については\ :ref:`CreateWebApplicationProjectAppendixApplicationContext`\ を参照されたい。
+      | DIコンテナの階層関係については\ :ref:`BlankProjectRelationshipBetweenApplicationContextConfigurationAndBeanDefinitionFiles`\ を参照されたい。
   * - | (2)
     - | Webアプリケーション向けのDIコンテナ（\ ``WebApplicationContext``\ ）が作成できるようになる。
       | また、\ ``@WebAppConfiguration``\ を指定すると開発プロジェクト内の\ ``src/main/webapp``\ がWebアプリケーションのルートディレクトリになるが、これはMavenの標準構成と同じなので特別に設定を加える必要はない。
@@ -570,7 +570,7 @@ MockMvcのセットアップ設定例を以下に示す。
   * - | (1)
     - | テスト対象の\ ``Controller``\ を指定して、MockMvcを生成する。
       | 必要に応じて\ ``org.springframework.test.web.servlet.setup.StandaloneMockMvcBuilder``\ のメソッドを呼び出して、Spring Testが生成するDIコンテナをカスタマイズすることができる。
-      | カスタマイズするためのメソッドについての詳細は、\ `StandaloneMockMvcBuilderのJavadoc <https://docs.spring.io/spring-framework/docs/6.2.1/javadoc-api/org/springframework/test/web/servlet/setup/StandaloneMockMvcBuilder.html>`_\ を参照されたい。
+      | カスタマイズするためのメソッドについての詳細は、\ :url_spring_javadoc:`StandaloneMockMvcBuilderのJavadoc </org/springframework/test/web/servlet/setup/StandaloneMockMvcBuilder.html>`\ を参照されたい。
 
 |
 
@@ -589,7 +589,7 @@ MockMvcによるテストの実装
 リクエストデータの設定は、\ ``org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder``\ や\ ``org.springframework.test.web.servlet.request.MockMultipartHttpServletRequestBuilder``\ のファクトリメソッドを使用して行う。
 
 | ここでは、2つのクラスのファクトリメソッドの中から主要なメソッドについて紹介する。
-| 詳細は、\ `MockHttpServletRequestBuilder のJavadoc <https://docs.spring.io/spring-framework/docs/6.2.1/javadoc-api/org/springframework/test/web/servlet/request/MockHttpServletRequestBuilder.html>`_\または\ `MockMultipartHttpServletRequestBuilder のJavadoc <https://docs.spring.io/spring-framework/docs/6.2.1/javadoc-api/org/springframework/test/web/servlet/request/MockMultipartHttpServletRequestBuilder.html>`_\ を参照されたい。
+| 詳細は、\ :url_spring_javadoc:`MockHttpServletRequestBuilder のJavadoc </org/springframework/test/web/servlet/request/MockHttpServletRequestBuilder.html>`\または\ :url_spring_javadoc:`MockMultipartHttpServletRequestBuilder のJavadoc </org/springframework/test/web/servlet/request/MockMultipartHttpServletRequestBuilder.html>`\ を参照されたい。
 
 .. tabularcolumns:: |p{0.15\linewidth}|p{0.85\linewidth}|
 .. list-table:: **MockHttpServletRequestBuilderの主なメソッド**
@@ -682,7 +682,7 @@ MockMvcによるテストの実装
 
 | 設定したリクエストデータを\ ``MockMvc``\ の\ ``perform``\ メソッドの引数として渡すことで、テストで利用するリクエストデータを設定し、\ ``DispatcherServlet``\ に疑似的なリクエストを行なう。
 | \ ``MockMvcRequestBuilders``\ のメソッドには、\ ``get``\ 、\ ``post``\ 、\ ``fileUpload``\ といったメソッドが、リクエストの種類ごとに提供されている。
-| 詳細は、\ `MockMvcRequestBuilders のJavadoc <https://docs.spring.io/spring-framework/docs/6.2.1/javadoc-api/org/springframework/test/web/servlet/request/MockMvcRequestBuilders.html>`_\ を参照されたい。
+| 詳細は、\ :url_spring_javadoc:`MockMvcRequestBuilders のJavadoc </org/springframework/test/web/servlet/request/MockMvcRequestBuilders.html>`\ を参照されたい。
 
 以下に、リクエスト送信の実装例を示す。
 
@@ -732,7 +732,7 @@ MockMvcによるテストの実装
 | Spring Testは、\ ``org.springframework.test.web.servlet.result.MockMvcResultMatchers``\ のファクトリメソッドを介してさまざまな\ ``ResultMatcher``\ を提供している。
 
 | ここでは、\ ``andExpect``\ メソッドの引数として、主要となる\ ``MockMvcResultMatchers``\ のメソッドを紹介する。
-| ここで紹介しないメソッドについては、\ `MockMvcResultMatchers のJavadoc <https://docs.spring.io/spring-framework/docs/6.2.1/javadoc-api/org/springframework/test/web/servlet/result/MockMvcResultMatchers.html>`_\ を参照されたい。
+| ここで紹介しないメソッドについては、\ :url_spring_javadoc:`MockMvcResultMatchers のJavadoc </org/springframework/test/web/servlet/result/MockMvcResultMatchers.html>`\ を参照されたい。
 
 .. tabularcolumns:: |p{0.15\linewidth}|p{0.85\linewidth}|
 .. list-table:: \ **MockMvcResultMatchersの主なメソッド**\
@@ -838,7 +838,7 @@ MockMvcによるテストの実装
 | \ ``alwaysDo``\ メソッドの引数には、実行結果に対して任意の処理を行なう\ ``org.springframework.test.web.servlet.ResultHandler``\ を指定する。
 | Spring Testでは、\ ``org.springframework.test.web.servlet.result.MockMvcResultHandlers``\ のファクトリメソッドを介してさまざまな\ ``ResultHandler``\ を提供している。
 | ここでは、\ ``alwaysDo``\ メソッドの引数として主要となる\ ``MockMvcResultHandlers``\ のメソッドを紹介する。
-| 各メソッドの詳細については、\ `MockMvcResultHandlers のJavadoc <https://docs.spring.io/spring-framework/docs/6.2.1/javadoc-api/org/springframework/test/web/servlet/result/MockMvcResultHandlers.html>`_\ を参照されたい。
+| 各メソッドの詳細については、\ :url_spring_javadoc:`MockMvcResultHandlers のJavadoc </org/springframework/test/web/servlet/result/MockMvcResultHandlers.html>`\ を参照されたい。
 
 .. tabularcolumns:: |p{0.15\linewidth}|p{0.85\linewidth}|
 .. list-table:: \ **MockMvcResultHandlersの主なメソッド**\
@@ -969,7 +969,7 @@ Mockitoは、依存クラスのモック化、メソッドの呼び出し検証�
 | Mockitoでは、\ ``final``\ 宣言、\ ``private``\ 宣言されたクラス/メソッド、\ ``static``\ 宣言されたメソッドをモック化することができない。
 | 通常のオブジェクト指向に沿った実装であれば、モック化に制限のかかるようなテストになることは考えにくいため、このような事態に直面した場合はテスト対象の設計に問題がないか一度確認したほうがよい。
 
-その他のMockitoの制限については、\ `What are the limitations of Mockito <https://github.com/mockito/mockito/wiki/FAQ#what-are-the-limitations-of-mockito>`_\ を参照されたい。
+その他のMockitoの制限については、\ :url_mockito_github:`What are the limitations of Mockito </wiki/FAQ#what-are-the-limitations-of-mockito>`\ を参照されたい。
 
 |
 
@@ -991,7 +991,7 @@ Mockitoのモック化には2種類の方法が存在する。
 * \ ``spy``\ メソッドを用いて依存クラスの一部のメソッドのみをモックにする
 
 | ここではより単純な、依存クラスをすべてモック化する方法について紹介する。
-| 依存クラスの一部のみをモックにする方法については、\ `MockitoのJavadoc <https://javadoc.io/doc/org.mockito/mockito-core/5.14.2/org/mockito/Mockito.html#13>`__\ を参照されたい。
+| 依存クラスの一部のみをモックにする方法については、\ :url_mockito_javadoc:`MockitoのJavadoc </Mockito.html#13>`\ を参照されたい。
 
 完全にモック化する場合、基本的には\ ``mock``\ メソッドを用いてモック化する。
 
@@ -1105,7 +1105,7 @@ Mockitoのモック化には2種類の方法が存在する。
 | \ ``when``\ メソッドの引数にはモック化するメソッドとその引数を指定し、実行時の返り値を\ ``OngoingStubbing``\ のメソッドで定義する。
 
 | 以下に、\ ``OngoingStubbing``\ の主なメソッドを示す。
-| \ ``OngoingStubbing``\ の詳細については、\ `OngoingStubbingのJavadoc <https://javadoc.io/doc/org.mockito/mockito-core/5.14.2/org/mockito/stubbing/OngoingStubbing.html>`_\ を、また\ ``when``\ メソッドについては\ `MockitoのJavadoc <https://javadoc.io/doc/org.mockito/mockito-core/5.14.2/org/mockito/Mockito.html>`__\ を参照されたい。
+| \ ``OngoingStubbing``\ の詳細については、\ :url_mockito_javadoc:`OngoingStubbingのJavadoc </stubbing/OngoingStubbing.html>`\ を、また\ ``when``\ メソッドについては\ :url_mockito_javadoc:`MockitoのJavadoc </Mockito.html>`\ を参照されたい。
 
 .. tabularcolumns:: |p{0.15\linewidth}|p{0.85\linewidth}|
 .. list-table:: **OngoingStubbingの主なメソッド**
@@ -1154,7 +1154,7 @@ Mockitoのモック化には2種類の方法が存在する。
 モック化したいメソッドの引数に\ ``org.mockito.ArgumentMatchers``\ のメソッドを用いることで、任意の引数を対象に返り値を定義することもできる。
 
 | 以下に、\ ``ArgumentMatchers``\ の主なメソッドを示す。
-| 詳細については、\ `ArgumentMatchersのJavadoc <https://javadoc.io/doc/org.mockito/mockito-core/5.14.2/org/mockito/ArgumentMatchers.html>`_\ を参照されたい。
+| 詳細については、\ :url_mockito_javadoc:`ArgumentMatchersのJavadoc </ArgumentMatchers.html>`\ を参照されたい。
 
 .. tabularcolumns:: |p{0.15\linewidth}|p{0.85\linewidth}|
 .. list-table:: **ArgumentMatchersの主なメソッド**
@@ -1210,7 +1210,7 @@ Mockitoのモック化には2種類の方法が存在する。
 \ ``when``\ メソッドでは定義できない返り値が\ ``void``\ 型であるメソッドについては、\ ``Mockito``\ クラスの\ ``doThrow``\ メソッドなどを用いることで定義できる。
 
 | 以下に、返り値が\ ``void``\ 型であるメソッドを再定義するための\ ``Mockito``\ の主なメソッドを示す。
-| 詳細については、\ `MockitoのJavadoc <https://javadoc.io/doc/org.mockito/mockito-core/5.14.2/org/mockito/Mockito.html>`__\ を参照されたい。
+| 詳細については、\ :url_mockito_javadoc:`MockitoのJavadoc </Mockito.html>`\ を参照されたい。
 
 .. tabularcolumns:: |p{0.15\linewidth}|p{0.85\linewidth}|
 .. list-table:: **返り値がvoid型であるメソッドを再定義するMockitoの主なメソッド**
@@ -1253,7 +1253,7 @@ Mockitoで作成したオブジェクトをモックとして用いる場合は�
 \ ``verify``\ メソッドは引数にモックを指定し、チェーンする形でモック化したメソッドを続けることで、そのメソッドが正しく呼ばれているかどうかを検証できる。また、\ ``verify``\ メソッドの引数としてモックと\ ``org.mockito.verification.VerificationMode``\ を指定することで、より詳しくメソッドの呼び出しについて検証できる。
 
 | 以下に、\ ``VerificationMode``\ の主なメソッドを示す。
-| 詳細については、\ `VerificationModeのJavadoc <https://javadoc.io/doc/org.mockito/mockito-core/5.14.2/org/mockito/verification/VerificationMode.html>`_\ を参照されたい。
+| 詳細については、\ :url_mockito_javadoc:`VerificationModeのJavadoc </verification/VerificationMode.html>`\ を参照されたい。
 
 .. tabularcolumns:: |p{0.15\linewidth}|p{0.85\linewidth}|
 .. list-table:: \ **VerificationModeの主なメソッド**\

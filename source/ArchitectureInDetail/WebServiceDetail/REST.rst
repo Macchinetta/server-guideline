@@ -72,7 +72,7 @@ RESTful Web Serviceとは
 
 RESTful Web Serviceの開発について
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-Macchinetta Server Framework (1.x)では、Spring MVCの機能を利用してRESTful Web Serviceの開発を行う。
+\ |framework_name|\では、Spring MVCの機能を利用してRESTful Web Serviceの開発を行う。
 
 | Spring MVCでは、RESTful Web Serviceを開発する上で必要となる共通的な機能がデフォルトで組み込まれている。
 | そのため、特別な設定の追加や実装を行うことなく、RESTful Web Serviceの開発を開始する事ができる。
@@ -235,7 +235,7 @@ REST APIの実装サンプル
 
     \ **詳細な説明を読む前に、まずは**\ 「\ :doc:`../../Tutorial/TutorialREST`\ 」\ **を実践する事を強く推奨する。**\
 
-    チュートリアルでは”習うより慣れろ”を目的としており、 詳細な説明の前に実際に手を動かすことでMacchinetta Server Framework (1.x)によるRESTful Web Serviceの開発を体感する事が出来る。
+    チュートリアルでは”習うより慣れろ”を目的としており、 詳細な説明の前に実際に手を動かすことで\ |framework_name|\によるRESTful Web Serviceの開発を体感する事が出来る。
 
     RESTful Web Serviceの開発を体感した後に、詳細な説明を読むことで、RESTful Web Serviceの開発に対する理解度がより深まる事が期待できる。
     
@@ -253,7 +253,7 @@ REST APIの実装サンプル
         "todoId" : "9aef3ee3-30d4-4a7c-be4a-bc184ca1d558",
         "todoTitle" : "Hello World!",
         "finished" : false,
-        "createdAt" : "2014-02-25T02:21:48.493+0000"
+        "createdAt" : "2014-02-25T02:21:48.493"
     } 
 
 |
@@ -268,7 +268,7 @@ REST APIの実装サンプル
     package todo.api.todo;
 
     import java.io.Serializable;
-    import java.util.Date;
+    import java.time.LocalDateTime;
     
     import jakarta.validation.constraints.NotNull;
     import jakarta.validation.constraints.Size;
@@ -285,7 +285,7 @@ REST APIの実装サンプル
     
         private boolean finished;
     
-        private Date createdAt;
+        private LocalDateTime createdAt;
     
         public String getTodoId() {
             return todoId;
@@ -311,11 +311,11 @@ REST APIの実装サンプル
             this.finished = finished;
         }
     
-        public Date getCreatedAt() {
+        public LocalDateTime getCreatedAt() {
             return createdAt;
         }
     
-        public void setCreatedAt(Date createdAt) {
+        public void setCreatedAt(LocalDateTime createdAt) {
             this.createdAt = createdAt;
         }
     }
@@ -756,7 +756,7 @@ HTTPメソッドによるリソースの操作
 
 .. tip:: \ **HTTPの仕様について**\
  
-  \ `RFC 7230(Hypertext Transfer Protocol -- HTTP/1.1)の3.1.2 Status Line <https://datatracker.ietf.org/doc/html/rfc7230#section-3.1.2>`_\ を参照されたい。
+  \ :url_rfc:`RFC 7230(Hypertext Transfer Protocol -- HTTP/1.1)の3.1.2 Status Line </rfc7230#section-3.1.2>`\ を参照されたい。
 
 |
 
@@ -785,7 +785,7 @@ HTTPメソッドによるリソースの操作
     HTTPのメッセージ構文を規定するRFC 7230では、HTTPステータスコードの説明句（\ ``reason-phrase``\ ）の出力は必須ではなく、クライアントは無視すべきであると規定されている。
     例えば、RFC 7230に準拠した実装のTomcat 8.5では、説明句が出力されない。
     
-    \ `RFC 7230(Hypertext Transfer Protocol -- HTTP/1.1)の3.1.2 Status Line <https://datatracker.ietf.org/doc/html/rfc7230#section-3.1.2>`_\ を参照されたい。
+    \ :url_rfc:`RFC 7230(Hypertext Transfer Protocol -- HTTP/1.1)の3.1.2 Status Line </rfc7230#section-3.1.2>`\ を参照されたい。
 
 |
 
@@ -1617,7 +1617,7 @@ RESTful Web Service向けのアプリケーションの設定について説明�
 
   XML形式のデータについてStAXを使用して解析する場合は、DTDを使ったDoS攻撃を受けないように対応する必要がある。
 
-  詳細は、\ `CVE-2015-3192 - DoS Attack with XML Input <https://tanzu.vmware.com/security/cve-2015-3192>`_\ を参照されたい。
+  詳細は、\ :url_spring_io:`CVE-2015-3192 - DoS Attack with XML Input </security/cve-2015-3192>`\ を参照されたい。
 
 |
 
@@ -1878,8 +1878,8 @@ RESTful Web Serviceで必要となるSpring MVCのコンポーネントを有効
 
   なお、\ ``ObjectMapper``\ を直接Bean定義するスタイルから\ ``Jackson2ObjectMapperFactoryBean``\ を使用するスタイルに変更する場合は、以下のコンフィギュレーションに対するデフォルト値がJacksonのデフォルト値と異なる(無効化されている)点に注意すること。
 
-  * \ `MapperFeature#DEFAULT_VIEW_INCLUSION <https://javadoc.io/doc/com.fasterxml.jackson.core/jackson-databind/2.18.2/com/fasterxml/jackson/databind/MapperFeature.html?is-external=true#DEFAULT_VIEW_INCLUSION>`_\
-  * \ `DeserializationFeature#FAIL_ON_UNKNOWN_PROPERTIES <https://javadoc.io/doc/com.fasterxml.jackson.core/jackson-databind/2.18.2/com/fasterxml/jackson/databind/DeserializationFeature.html?is-external=true#FAIL_ON_UNKNOWN_PROPERTIES>`_\
+  * \ :url_jackson_javadoc:`MapperFeature#DEFAULT_VIEW_INCLUSION </MapperFeature.html?is-external=true#DEFAULT_VIEW_INCLUSION>`\
+  * \ :url_jackson_javadoc:`DeserializationFeature#FAIL_ON_UNKNOWN_PROPERTIES </DeserializationFeature.html?is-external=true#FAIL_ON_UNKNOWN_PROPERTIES>`\
 
   \ ``ObjectMapper``\ の動作をJacksonのデフォルト動作にあわせたい場合は、\ ``featuresToEnable``\ プロパティを使用して上記のコンフィギュレーションを有効化する。
 
@@ -1912,7 +1912,7 @@ RESTful Web Serviceで必要となるSpring MVCのコンポーネントを有効
               </property>
           </bean>
 
-  \ ``Jackson2ObjectMapperFactoryBean``\ の詳細については、\ `Jackson2ObjectMapperFactoryBeanのJavaDoc <https://docs.spring.io/spring-framework/docs/6.2.1/javadoc-api/org/springframework/http/converter/json/Jackson2ObjectMapperFactoryBean.html>`_\ を参照されたい。
+  \ ``Jackson2ObjectMapperFactoryBean``\ の詳細については、\ :url_spring_javadoc:`Jackson2ObjectMapperFactoryBeanのJavaDoc </org/springframework/http/converter/json/Jackson2ObjectMapperFactoryBean.html>`\ を参照されたい。
 
 |
 
@@ -2639,7 +2639,7 @@ Controllerクラスの作成
 
   .. tip::
  
-    \ ``@RestController``\ アノテーションの詳細については、\ `こちら <https://docs.spring.io/spring-framework/docs/6.2.1/javadoc-api/org/springframework/web/bind/annotation/RestController.html>`_\ を参照されたい。
+    \ ``@RestController``\ アノテーションの詳細については、\ :url_spring_javadoc:`こちら </org/springframework/web/bind/annotation/RestController.html>`\ を参照されたい。
 
     \ ``@RestController``\ アノテーションを使用せずに、\ ``@Controller``\ アノテーションと\ ``@ResponseBody``\ アノテーションを組み合わせてREST API用のControllerを作成する例を以下に示す。
 
@@ -3360,8 +3360,8 @@ RESTful Web Serviceで発生した例外のハンドリング方法について�
 
 | \ ``ResponseEntityExceptionHandler``\ では、Spring MVCのフレームワーク内で発生する例外を\ ``@ExceptionHandler``\ アノテーションを使ってハンドリングするメソッドが予め実装されている。
 | そのため、Spring MVCのフレームワーク内で発生する例外のハンドリングを個別に実装する必要がない。
-| また、\ ``ResponseEntityExceptionHandler``\ でハンドリングされる例外に対応するHTTPステータスコードは、\ ``DefaultHandlerExceptionResolver``\ と同様の仕様で設定される。
-| ハンドリングされる例外と設定されるHTTPステータスコードについては、「\ :ref:`exception-handling-appendix-defaulthandlerexceptionresolver-label`\ 」を参照されたい。
+| また、\ ``ResponseEntityExceptionHandler``\ でハンドリングされる例外については、\ :url_spring_javadoc:`ResponseEntityExceptionHandlerのJavaDoc </org/springframework/web/servlet/mvc/method/annotation/ResponseEntityExceptionHandler.html>`\ を参照されたい。
+| \ ``DefaultHandlerExceptionResolver``\ でハンドリングされる例外と設定されるHTTPステータスコードについては、\ :url_spring_javadoc:`DefaultHandlerExceptionResolverのJavaDoc </org/springframework/web/servlet/mvc/support/DefaultHandlerExceptionResolver.html>`\ を参照されたい。
 
 | \ ``ResponseEntityExceptionHandler``\ のデフォルトの実装ではレスポンスBodyは空で返却されるが、レスポンスBodyにエラー情報を出力する様に拡張する事ができる。
 | 本ガイドラインでは、レスポンスBodyに適切なエラー情報を出力する事を推奨する。
@@ -3622,7 +3622,6 @@ RESTful Web Serviceで発生した例外のハンドリング方法について�
         | 返却したエラー情報は、フレームワークによってJSONに変換されレスポンスされる。
         |
         | ステータスコードには、Spring MVCから提供されている\ ``ResponseEntityExceptionHandler``\ によって適切な値が設定される。
-        | 設定されるステータスコードについては、「\ :ref:`exception-handling-appendix-defaulthandlerexceptionresolver-label`\ 」を参照されたい。
 
   .. tip:: \ **@ControllerAdviceアノテーションの属性について**\
 
@@ -4346,59 +4345,8 @@ ExceptionCodeResolverを使ったエラーコードとメッセージの解決
     # for bean validation of standard
     jakarta.validation.constraints.AssertFalse.message     = "{0}" must be false.
     jakarta.validation.constraints.AssertTrue.message      = "{0}" must be true.
-    jakarta.validation.constraints.DecimalMax.message      = "{0}" must be less than ${inclusive == true ? 'or equal to ' : ''}{value}.
-    jakarta.validation.constraints.DecimalMin.message      = "{0}" must be greater than ${inclusive == true ? 'or equal to ' : ''}{value}.
-    jakarta.validation.constraints.Digits.message          = "{0}" numeric value out of bounds (<{integer} digits>.<{fraction} digits> expected).
-    jakarta.validation.constraints.Email.message           = "{0}" must be a well-formed email address.
-    jakarta.validation.constraints.Future.message          = "{0}" must be a future date.
-    jakarta.validation.constraints.FutureOrPresent.message = "{0}" must be a date in the present or in the future.
-    jakarta.validation.constraints.Max.message             = "{0}" must be less than or equal to {value}.
-    jakarta.validation.constraints.Min.message             = "{0}" must be greater than or equal to {value}.
-    jakarta.validation.constraints.Negative.message        = "{0}" must be less than 0.
-    jakarta.validation.constraints.NegativeOrZero.message  = "{0}" must be less than or equal to 0.
-    jakarta.validation.constraints.NotBlank.message        = "{0}" must not be blank.
-    jakarta.validation.constraints.NotEmpty.message        = "{0}" must not be empty.
-    jakarta.validation.constraints.NotNull.message         = "{0}" must not be null.
-    jakarta.validation.constraints.Null.message            = "{0}" must be null.
-    jakarta.validation.constraints.Past.message            = "{0}" must be a past date.
-    jakarta.validation.constraints.PastOrPresent.message   = "{0}" must be a date in the past or in the present.
-    jakarta.validation.constraints.Pattern.message         = "{0}" must match "{regexp}".
-    jakarta.validation.constraints.Positive.message        = "{0}" must be greater than 0.
-    jakarta.validation.constraints.PositiveOrZero.message  = "{0}" must be greater than or equal to 0.
-    jakarta.validation.constraints.Size.message            = "{0}" size must be between {min} and {max}.
-    
-    # for bean validation of hibernate
-    org.hibernate.validator.constraints.CreditCardNumber.message        = "{0}" invalid credit card number.
-    org.hibernate.validator.constraints.Currency.message                = "{0}" invalid currency (must be one of {value}).
-    org.hibernate.validator.constraints.EAN.message                     = "{0}" invalid {type} barcode.
-    org.hibernate.validator.constraints.Email.message                   = "{0}" not a well-formed email address.
-    org.hibernate.validator.constraints.ISBN.message                    = "{0}" invalid ISBN.
-    org.hibernate.validator.constraints.Length.message                  = "{0}" length must be between {min} and {max}.
-    org.hibernate.validator.constraints.CodePointLength.message         = "{0}" length must be between {min} and {max}.
-    org.hibernate.validator.constraints.LuhnCheck.message               = "{0}" the check digit for ${validatedValue} is invalid, Luhn Modulo 10 checksum failed.
-    org.hibernate.validator.constraints.Mod10Check.message              = "{0}" the check digit for ${validatedValue} is invalid, Modulo 10 checksum failed.
-    org.hibernate.validator.constraints.Mod11Check.message              = "{0}" the check digit for ${validatedValue} is invalid, Modulo 11 checksum failed.
-    org.hibernate.validator.constraints.ModCheck.message                = "{0}" the check digit for ${validatedValue} is invalid, {modType} checksum failed.
-    org.hibernate.validator.constraints.NotBlank.message                = "{0}" may not be empty.
-    org.hibernate.validator.constraints.NotEmpty.message                = "{0}" may not be empty.
-    org.hibernate.validator.constraints.ParametersScriptAssert.message  = "{0}" script expression "{script}" didn't evaluate to true.
-    org.hibernate.validator.constraints.Range.message                   = "{0}" must be between {min} and {max}.
-    org.hibernate.validator.constraints.SafeHtml.message                = "{0}" may have unsafe html content.
-    org.hibernate.validator.constraints.ScriptAssert.message            = "{0}" script expression "{script}" didn't evaluate to true.
-    org.hibernate.validator.constraints.UniqueElements.message          = "{0}" must only contain unique elements.
-    org.hibernate.validator.constraints.URL.message                     = "{0}" must be a valid URL.
-    
-    org.hibernate.validator.constraints.br.CNPJ.message                 = "{0}" invalid Brazilian corporate taxpayer registry number (CNPJ).
-    org.hibernate.validator.constraints.br.CPF.message                  = "{0}" invalid Brazilian individual taxpayer registry number (CPF).
-    org.hibernate.validator.constraints.br.TituloEleitoral.message      = "{0}" invalid Brazilian Voter ID card number.
-    
-    org.hibernate.validator.constraints.pl.REGON.message                = "{0}" invalid Polish Taxpayer Identification Number (REGON).
-    org.hibernate.validator.constraints.pl.NIP.message                  = "{0}" invalid VAT Identification Number (NIP).
-    org.hibernate.validator.constraints.pl.PESEL.message                = "{0}" invalid Polish National Identification Number (PESEL).
-    
-    org.hibernate.validator.constraints.time.DurationMax.message        = "{0}" must be shorter than${inclusive == true ? ' or equal to' : ''}${days == 0 ? '' : days == 1 ? ' 1 day' : ' ' += days += ' days'}${hours == 0 ? '' : hours == 1 ? ' 1 hour' : ' ' += hours += ' hours'}${minutes == 0 ? '' : minutes == 1 ? ' 1 minute' : ' ' += minutes += ' minutes'}${seconds == 0 ? '' : seconds == 1 ? ' 1 second' : ' ' += seconds += ' seconds'}${millis == 0 ? '' : millis == 1 ? ' 1 milli' : ' ' += millis += ' millis'}${nanos == 0 ? '' : nanos == 1 ? ' 1 nano' : ' ' += nanos += ' nanos'}.
-    org.hibernate.validator.constraints.time.DurationMin.message        = "{0}" must be longer than${inclusive == true ? ' or equal to' : ''}${days == 0 ? '' : days == 1 ? ' 1 day' : ' ' += days += ' days'}${hours == 0 ? '' : hours == 1 ? ' 1 hour' : ' ' += hours += ' hours'}${minutes == 0 ? '' : minutes == 1 ? ' 1 minute' : ' ' += minutes += ' minutes'}${seconds == 0 ? '' : seconds == 1 ? ' 1 second' : ' ' += seconds += ' seconds'}${millis == 0 ? '' : millis == 1 ? ' 1 milli' : ' ' += millis += ' millis'}${nanos == 0 ? '' : nanos == 1 ? ' 1 nano' : ' ' += nanos += ' nanos'}.
-    
+    # omitted
+
     # for common library
     org.terasoluna.gfw.common.codelist.ExistInCodeList.message   = "{0}" must exist in code list of {codeListId}.
 
@@ -4622,7 +4570,7 @@ Filterでエラーが発生した場合や\ ``HttpServletResponse#sendError``\ �
 
   .. note::
     
-    \ `Servletの仕様 <https://jakarta.ee/specifications/servlet/6.0/jakarta-servlet-spec-6.0.html#error-pages>`_\ では、 \ ``<error-page>``\ の \ ``<location>``\ にクエリパラメータを付与したパスを指定した場合の挙動について、定義していない。そのため、APサーバによって挙動が異なる可能性がある。
+    \ :url_jakarta_servlet:`Servletの仕様 <#error-pages>`\ では、 \ ``<error-page>``\ の \ ``<location>``\ にクエリパラメータを付与したパスを指定した場合の挙動について、定義していない。そのため、APサーバによって挙動が異なる可能性がある。
 
     よって、クエリパラメータを使用してエラー時の遷移先に情報を渡すことは推奨しない。
 
@@ -4720,7 +4668,7 @@ How to extend
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 | \ ``@JsonView``\ を使用することによって、Resourceオブジェクト内のプロパティーをグループ分けすることができる。
 | この機能はSpring FrameworkがJacksonの機能をサポートすることにより実現している。
-| 詳細は、\ `JacksonJsonViews <https://www.baeldung.com/jackson-json-view-annotation>`_\ を参照されたい。
+| 詳細は、\ :url_jacksonviews:`JacksonJsonViews <>`\ を参照されたい。
 
 | Controllerにてグループを指定することで、指定したグループに所属するプロパティーのみ出力することができる。
 | 1つのプロパティーは、複数のグループに所属することも可能である。
@@ -5505,7 +5453,7 @@ JSONの中に関連リソースへのハイパーメディアリンクを含め�
         | 上記例では、リンク情報に設定するURIを組み立てるため \ ``UriComponentsBuilder``\ クラスのメソッドを呼び出し、自身のリソースにアクセスするためのURIをリソースに追加している。
         |
         | Controllerのメソッドの引数として渡された\ ``ServletUriComponentsBuilder``\ のインスタンスは、web.xmlに記載の\ ``<servlet-mapping>``\ 要素の情報を元に初期化されており、リソースには依存しない。
-        | そのため、Spring Frameworkから提供される\ `URI patterns <https://docs.spring.io/spring-framework/docs/6.2.1/reference/html/web.html#mvc-ann-requestmapping-uri-templates>`_\ 等を利用し、
+        | そのため、Spring Frameworkから提供される\ :url_spring_reference:`URI patterns </web/webmvc/mvc-controller/ann-requestmapping.html#mvc-ann-requestmapping-uri-templates>`\ 等を利用し、
         | リクエスト情報をベースにURIを組み立てる事により、リソースに依存しない汎用的な組み立て処理を実装することが可能となる。
         | 
         | 例えば、上記例において\ ``http://example.com/api/v1/members/M000000001``\ に対してGETした場合、組み立てられるURIは、リクエストされたURIと同じ値\ ``（http://example.com/api/v1/members/M000000001）``\ になる。
@@ -5627,7 +5575,7 @@ POST時のLocationヘッダの設定
         | \ ``buildAndExpand``\ メソッドを呼び出して、作成したリソースのIDをバインドすることで、作成したリソースのURIを組み立てている。
         | 
         | Controllerのメソッドの引数として渡された\ ``ServletUriComponentsBuilder``\ のインスタンスは、web.xmlに記載の\ ``<servlet-mapping>``\ 要素の情報を元に初期化されており、リソースには依存しない。
-        | そのため、Spring Frameworkから提供される\ `URI patterns <https://docs.spring.io/spring-framework/docs/6.2.1/reference/html/web.html#mvc-ann-requestmapping-uri-templates>`_\ 等を利用し、
+        | そのため、Spring Frameworkから提供される\ :url_spring_reference:`URI patterns </web/webmvc/mvc-controller/ann-requestmapping.html#mvc-ann-requestmapping-uri-templates>`\ 等を利用し、
         | リクエスト情報をベースにURIを組み立てる事により、リソースに依存しない汎用的な組み立て処理を実装することが可能となる。
         | 
         | 例えば、上記例において\ ``http://example.com/api/v1/members``\ に対してPOSTした場合、組み立てられるURIは、「リクエストされたURI + "\ ``/``\ " + 作成したリソースのID」となる。
@@ -5779,11 +5727,11 @@ Blankプロジェクトのデフォルトの設定では、CSRF対策が有効�
 XXE 対策の有効化
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-| RESTful Web ServiceでXML形式のデータを扱う場合は、\ `XXE(XML External Entity) <https://owasp.org/www-community/vulnerabilities/XML_External_Entity_(XXE)_Processing>`_\ 対策を行う必要がある。
+| RESTful Web ServiceでXML形式のデータを扱う場合は、\ :url_owasp_community:`XXE(XML External Entity) </vulnerabilities/XML_External_Entity_(XXE)_Processing>`\ 対策を行う必要がある。
 
 .. note:: \ **XXE(XML External Entity) 対策について**\
 
-  Macchinetta Server Framework (1.x)では、XXE 対策が行われているSpring MVC(3.2.10.RELEASE以上)に依存しているため、個別に対策を行う必要はない。
+  \ |framework_name|\では、XXE 対策が行われているSpring MVC(3.2.10.RELEASE以上)に依存しているため、個別に対策を行う必要はない。
 
 |
 

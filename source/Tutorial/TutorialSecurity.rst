@@ -92,7 +92,7 @@ URL一覧を以下に示す。
 プロジェクトの作成
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Mavenのアーキタイプを利用し、\ `Macchinetta Server Framework (1.x)のブランクプロジェクト <https://github.com/Macchinetta/macchinetta-web-blank/tree/1.11.0.RELEASE>`_\ を作成する。
+Mavenのアーキタイプを利用し、\ |framework_name|\の\ :url_single_blank:`ブランクプロジェクト <>`\ を作成する。
 
 本チュートリアルでは、MyBatis3用のブランクプロジェクトを作成する。
 
@@ -109,7 +109,7 @@ Mavenのアーキタイプを利用し、\ `Macchinetta Server Framework (1.x)�
           mvn archetype:generate -B^
            -DarchetypeGroupId=com.github.macchinetta.blank^
            -DarchetypeArtifactId=macchinetta-web-blank-jsp-mybatis3-archetype^
-           -DarchetypeVersion=1.11.0.RELEASE^
+           -DarchetypeVersion=1.11.1.RELEASE^
            -DgroupId=com.example.security^
            -DartifactId=first-springsecurity^
            -Dversion=1.0.0-SNAPSHOT
@@ -121,7 +121,7 @@ Mavenのアーキタイプを利用し、\ `Macchinetta Server Framework (1.x)�
           mvn archetype:generate -B^
            -DarchetypeGroupId=com.github.macchinetta.blank^
            -DarchetypeArtifactId=macchinetta-web-blank-thymeleaf-mybatis3-archetype^
-           -DarchetypeVersion=1.11.0.RELEASE^
+           -DarchetypeVersion=1.11.1.RELEASE^
            -DgroupId=com.example.security^
            -DartifactId=first-springsecurity^
            -Dversion=1.0.0-SNAPSHOT
@@ -136,7 +136,7 @@ Mavenのアーキタイプを利用し、\ `Macchinetta Server Framework (1.x)�
           mvn archetype:generate -B^
            -DarchetypeGroupId=com.github.macchinetta.blank^
            -DarchetypeArtifactId=macchinetta-web-blank-xmlconfig-jsp-mybatis3-archetype^
-           -DarchetypeVersion=1.11.0.RELEASE^
+           -DarchetypeVersion=1.11.1.RELEASE^
            -DgroupId=com.example.security^
            -DartifactId=first-springsecurity^
            -Dversion=1.0.0-SNAPSHOT
@@ -148,7 +148,7 @@ Mavenのアーキタイプを利用し、\ `Macchinetta Server Framework (1.x)�
           mvn archetype:generate -B^
            -DarchetypeGroupId=com.github.macchinetta.blank^
            -DarchetypeArtifactId=macchinetta-web-blank-xmlconfig-thymeleaf-mybatis3-archetype^
-           -DarchetypeVersion=1.11.0.RELEASE^
+           -DarchetypeVersion=1.11.1.RELEASE^
            -DgroupId=com.example.security^
            -DartifactId=first-springsecurity^
            -Dversion=1.0.0-SNAPSHOT
@@ -159,6 +159,10 @@ Mavenのアーキタイプを利用し、\ `Macchinetta Server Framework (1.x)�
 | チュートリアルを実施するだけであれば、これらの設定の理解は必須ではないが、アプリケーションを動かすためにどのような設定が必要なのかを理解しておくことを推奨する。
 
 アプリケーションを動かすために必要な設定(設定ファイル)の解説については、「\ :ref:`SecurityTutorialAppendixConfigurationFiles`\ 」を参照されたい。
+
+| \ :ref:`前節の「プロジェクト構成」 <application-layering_project-structure>`\ ではマルチプロジェクトにすることを推奨していたが、本チュートリアルでは、学習容易性を重視しているためシングルプロジェクト構成にしている。
+| \ **ただし、実プロジェクトで適用する場合は、マルチプロジェクト構成を強く推奨する。**\
+| マルチプロジェクトの作成方法は、「\ :ref:`BlankProjectCreateBlankProject`\ 」を参照されたい。
 
 |
 
@@ -509,9 +513,9 @@ AccountSharedServiceの作成
     .. code-block:: java
 
       @Bean
-      public DataSourceInitializer dataSourceInitializer() {
+      public DataSourceInitializer dataSourceInitializer(DataSource dataSource) {
           DataSourceInitializer bean = new DataSourceInitializer();
-          bean.setDataSource(dataSource());
+          bean.setDataSource(dataSource);
 
           ResourceDatabasePopulator databasePopulator = new ResourceDatabasePopulator();
           databasePopulator.addScript(new ClassPathResource("/database/" + database + "-schema.sql"));
@@ -709,15 +713,15 @@ Spring Securityによる認証・認可の設定を行う。
               /**
                * Configure {@link AuthenticationProvider} bean.
                * @param userDetailsService Bean defined within Application
-               * @param passwordEncoder Bean defined by ApplicationContext#passwordEncoder
+               * @param passwordEncoder Bean defined by ApplicationContextConfig#passwordEncoder
                * @return Bean of configured {@link AuthenticationProvider}
                */
               // (4)
               @Bean
               public AuthenticationProvider authProvider(UserDetailsService sampleUserDetailsService,
                       @Qualifier("passwordEncoder") PasswordEncoder passwordEncoder) {
-                  DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-                  authProvider.setUserDetailsService(sampleUserDetailsService);
+                  DaoAuthenticationProvider authProvider =
+                          new DaoAuthenticationProvider(sampleUserDetailsService);
                   // (5)
                   authProvider.setPasswordEncoder(passwordEncoder);
                   return authProvider;
@@ -842,15 +846,15 @@ Spring Securityによる認証・認可の設定を行う。
               /**
                * Configure {@link AuthenticationProvider} bean.
                * @param userDetailsService Bean defined within Application
-               * @param passwordEncoder Bean defined by ApplicationContext#passwordEncoder
+               * @param passwordEncoder Bean defined by ApplicationContextConfig#passwordEncoder
                * @return Bean of configured {@link AuthenticationProvider}
                */
               // (4)
               @Bean
               public AuthenticationProvider authProvider(UserDetailsService sampleUserDetailsService,
                       @Qualifier("passwordEncoder") PasswordEncoder passwordEncoder) {
-                  DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-                  authProvider.setUserDetailsService(sampleUserDetailsService);
+                  DaoAuthenticationProvider authProvider =
+                          new DaoAuthenticationProvider(sampleUserDetailsService);
                   // (5)
                   authProvider.setPasswordEncoder(passwordEncoder);
                   return authProvider;
@@ -1386,8 +1390,8 @@ Spring Securityによる認証・認可の設定を行う。
 
     Thymeleafでは、include.jspの利用はない。
 
-| ブラウザのアドレスバーに\ ``http://localhost:8080/first-springsecurity/``\ を入力し、ウェルカムページを表示しようとする。
-| 未ログイン状態のため、\ ``<sec:form-login>``\ タグの\ ``login-page``\ 属性または\ ``http.formLogin()``\ の\ ``loginPage``\ の設定値(\ ``http://localhost:8080/first-springsecurity/login/loginForm``\ )に遷移し、以下のような画面が表示される。
+| ブラウザのアドレスバーに\ :url_localhost:`/first-springsecurity/`\ を入力し、ウェルカムページを表示しようとする。
+| 未ログイン状態のため、\ ``<sec:form-login>``\ タグの\ ``login-page``\ 属性または\ ``http.formLogin()``\ の\ ``loginPage``\ の設定値(\ :url_localhost:`/first-springsecurity/login/loginForm`\ )に遷移し、以下のような画面が表示される。
 
 .. figure:: ./images_TutorialSecurity/security_tutorial_login_page.png
   :width: 80%
@@ -1563,28 +1567,27 @@ Viewファイルからログインユーザーのアカウント情報へアク�
 
       <!DOCTYPE html>
       <html xmlns:th="http://www.thymeleaf.org">
-      <head>
-      <meta charset="utf-8">
-      <title>Home</title>
-      <link rel="stylesheet"
-          href="../../../resources/app/css/styles.css" th:href="@{/resources/app/css/styles.css}">
-      </head>
-      <body>
-          <div id="wrapper">
-              <h1 id="title">Hello world!</h1>
-              <p th:text="|The time on the server is ${serverTime}.|">The time on the server is 2018/01/01 00:00:00 JST.</p>
-              <p th:object="${#authentication.principal.account}" th:text="|Welcome *{firstName} *{lastName} !! |"></p>
-              <p>
-                  <!--/* (1) */-->
-                  <form th:action="@{/logout}" method="post">
-                      <button type="submit">Logout</button>
-                  </form>
-              </p>
-              <ul>
-                  <li><a th:href="@{/account}">view account</a></li>
-              </ul>
-          </div>
-      </body>
+          <head>
+              <meta charset="utf-8" />
+              <title>Home</title>
+              <link rel="stylesheet" href="../../../resources/app/css/styles.css" th:href="@{/resources/app/css/styles.css}" />
+          </head>
+          <body>
+              <div id="wrapper">
+                  <h1 id="title">Hello world!</h1>
+                  <p th:text="|The time on the server is ${serverTime}.|">The time on the server is 2018/01/01 00:00:00 JST.</p>
+                  <p th:object="${#authentication.principal.account}" th:text="|Welcome *{firstName} *{lastName} !! |"></p>
+                  <p>
+                      <!--/* (1) */-->
+                      <form th:action="@{/logout}" method="post">
+                          <button type="submit">Logout</button>
+                      </form>
+                  </p>
+                  <ul>
+                      <li><a th:href="@{/account}">view account</a></li>
+                  </ul>
+              </div>
+          </body>
       </html>
 
     .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
@@ -1747,28 +1750,28 @@ Controllerからログインユーザーのアカウント情報へアクセス
 Package ExplorerのPackage PresentationはHierarchicalを使用している。
 
 .. tabs::
-  .. group-tab:: JSP
+  .. group-tab:: Java Config
 
     .. tabs::
-      .. group-tab:: Java Config
+      .. group-tab:: JSP
 
         .. figure:: ./images_TutorialSecurity/security_tutorial-application-layer-package-explorer_javaConfig_jsp.png
            :alt: security tutorial application layer package explorer
 
-      .. group-tab:: XML Config
-
-        .. figure:: ./images_TutorialSecurity/security_tutorial-application-layer-package-explorer_XMLConfig_jsp.png
-           :alt: security tutorial application layer package explorer
-
-  .. group-tab:: Thymeleaf
-
-    .. tabs::
-      .. group-tab:: Java Config
+      .. group-tab:: Thymeleaf
 
         .. figure:: ./images_TutorialSecurity/security_tutorial-application-layer-package-explorer_javaConfig_thymeleaf.png
            :alt: security tutorial application layer package explorer
 
-      .. group-tab:: XML Config
+  .. group-tab:: XML Config
+
+    .. tabs::
+      .. group-tab:: JSP
+
+        .. figure:: ./images_TutorialSecurity/security_tutorial-application-layer-package-explorer_XMLConfig_jsp.png
+           :alt: security tutorial application layer package explorer
+
+      .. group-tab:: Thymeleaf
 
         .. figure:: ./images_TutorialSecurity/security_tutorial-application-layer-package-explorer_XMLConfig_thymeleaf.png
            :alt: security tutorial application layer package explorer
@@ -2439,6 +2442,7 @@ spring-mvc
                */
               @Override
               public void configureViewResolvers(ViewResolverRegistry registry) {
+                  registry.beanName();
                   registry.jsp("/WEB-INF/views/", ".jsp");
               }
 
@@ -2473,8 +2477,8 @@ spring-mvc
 
               /**
                * Configure {@link SystemExceptionResolver} bean.
-               * @param exceptionCodeResolver Bean defined by ApplicationContext#exceptionCodeResolver
-               * @see com.example.security.config.app.ApplicationContext#exceptionCodeResolver()
+               * @param exceptionCodeResolver Bean defined by ApplicationContextConfig#exceptionCodeResolver
+               * @see com.example.security.config.app.ApplicationContextConfig#exceptionCodeResolver()
                * @return Bean of configured {@link SystemExceptionResolver}
                */
               @Bean("systemExceptionResolver")
@@ -2511,8 +2515,8 @@ spring-mvc
 
               /**
                * Configure messages logging AOP.
-               * @param exceptionLogger Bean defined by ApplicationContext#exceptionLogger
-               * @see com.example.security.config.app.ApplicationContext#exceptionLogger()
+               * @param exceptionLogger Bean defined by ApplicationContextConfig#exceptionLogger
+               * @see com.example.security.config.app.ApplicationContextConfig#exceptionLogger()
                * @return Bean of configured {@link HandlerExceptionResolverLoggingInterceptor}
                */
               @Bean("handlerExceptionResolverLoggingInterceptor")
@@ -2713,6 +2717,7 @@ spring-mvc
                */
               @Override
               public void configureViewResolvers(ViewResolverRegistry registry) {
+                  registry.beanName();
                   registry.viewResolver(thymeleafViewResolver());
               }
 
@@ -2790,8 +2795,8 @@ spring-mvc
 
               /**
                * Configure {@link SystemExceptionResolver} bean.
-               * @param exceptionCodeResolver Bean defined by ApplicationContext#exceptionCodeResolver
-               * @see com.example.security.config.app.ApplicationContext#exceptionCodeResolver()
+               * @param exceptionCodeResolver Bean defined by ApplicationContextConfig#exceptionCodeResolver
+               * @see com.example.security.config.app.ApplicationContextConfig#exceptionCodeResolver()
                * @return Bean of configured {@link SystemExceptionResolver}
                */
               @Bean("systemExceptionResolver")
@@ -2828,8 +2833,8 @@ spring-mvc
 
               /**
                * Configure messages logging AOP.
-               * @param exceptionLogger Bean defined by ApplicationContext#exceptionLogger
-               * @see com.example.security.config.app.ApplicationContext#exceptionLogger()
+               * @param exceptionLogger Bean defined by ApplicationContextConfig#exceptionLogger
+               * @see com.example.security.config.app.ApplicationContextConfig#exceptionLogger()
                * @return Bean of configured {@link HandlerExceptionResolverLoggingInterceptor}
                */
               @Bean("handlerExceptionResolverLoggingInterceptor")
@@ -2945,6 +2950,7 @@ spring-mvc
 
               <!-- Settings View Resolver. -->
               <mvc:view-resolvers>
+                  <mvc:bean-name />
                   <mvc:jsp prefix="/WEB-INF/views/" />
               </mvc:view-resolvers>
 
@@ -3065,6 +3071,7 @@ spring-mvc
 
               <!-- Settings View Resolver. -->
               <mvc:view-resolvers>
+                  <mvc:bean-name />
                   <bean class="org.thymeleaf.spring6.view.ThymeleafViewResolver">
                       <property name="templateEngine" ref="templateEngine" />
                       <property name="characterEncoding" value="UTF-8" />

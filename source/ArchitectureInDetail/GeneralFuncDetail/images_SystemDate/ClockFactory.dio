@@ -1,0 +1,53 @@
+<mxfile host="65bd71144e">
+    <diagram name="Page-1" id="clockFactory">
+        <mxGraphModel dx="532" dy="563" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="2" value="project-domain" style="shape=folder;fontStyle=1;spacingTop=10;tabWidth=40;tabHeight=14;tabPosition=left;html=1;whiteSpace=wrap;align=center;verticalAlign=top;fillColor=#B3D9FF;strokeColor=#6699CC;fontColor=#333333;strokeWidth=2;" parent="1" vertex="1">
+                    <mxGeometry x="40" y="50" width="200" height="130" as="geometry"/>
+                </mxCell>
+                <mxCell id="3" value="&lt;b&gt;Domain&lt;/b&gt;&lt;hr&gt;@Inject&lt;br&gt;ClockFactory clockFactory;" style="whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=10;fillColor=#FFE6CC;strokeColor=#D79B00;fontColor=#333333;strokeWidth=2;" parent="1" vertex="1">
+                    <mxGeometry x="50" y="90" width="180" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="4" value="project-env" style="shape=folder;fontStyle=1;spacingTop=10;tabWidth=40;tabHeight=14;tabPosition=left;html=1;whiteSpace=wrap;align=center;verticalAlign=top;fillColor=#B3D9FF;strokeColor=#6699CC;fontColor=#333333;strokeWidth=2;" parent="1" vertex="1">
+                    <mxGeometry x="400" y="50" width="380" height="360" as="geometry"/>
+                </mxCell>
+                <mxCell id="5" value="default プロファイル" style="shape=folder;fontStyle=0;spacingTop=10;tabWidth=40;tabHeight=14;tabPosition=left;html=1;whiteSpace=wrap;align=center;verticalAlign=top;fillColor=#D5E8D4;strokeColor=#82B366;fontColor=#333333;strokeWidth=2;" parent="1" vertex="1">
+                    <mxGeometry x="420" y="80" width="340" height="150" as="geometry"/>
+                </mxCell>
+                <mxCell id="6" value="&lt;b&gt;Config&lt;/b&gt;&lt;hr&gt;@Bean&lt;br&gt;Public&amp;nbsp;&lt;span style=&quot;color: rgb(51, 51, 51);&quot;&gt;DefaultClockFactory&amp;nbsp;&lt;/span&gt;clockFactory(){&lt;br&gt;&amp;nbsp; &amp;nbsp;&amp;nbsp;return new DefaultClockFactory();&lt;div&gt;}&lt;/div&gt;" style="whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=10;fillColor=#FFE6CC;strokeColor=#D79B00;fontColor=#333333;strokeWidth=2;" parent="1" vertex="1">
+                    <mxGeometry x="430" y="120" width="320" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="7" value="test-server プロファイル" style="shape=folder;fontStyle=0;spacingTop=10;tabWidth=40;tabHeight=14;tabPosition=left;html=1;whiteSpace=wrap;align=center;verticalAlign=top;fillColor=#D5E8D4;strokeColor=#82B366;fontColor=#333333;strokeWidth=2;" parent="1" vertex="1">
+                    <mxGeometry x="420" y="240" width="340" height="160" as="geometry"/>
+                </mxCell>
+                <mxCell id="8" value="&lt;b&gt;Config&lt;/b&gt;&lt;hr&gt;@Bean&lt;br&gt;Public&amp;nbsp;&lt;span style=&quot;color: rgb(51, 51, 51);&quot;&gt;JdbcClockFactory&amp;nbsp;&lt;/span&gt;clockFactory(){&lt;br&gt;&amp;nbsp; &amp;nbsp; return new JdbcClockFactory(dataSource, &quot;SELECT now FROM system_date&quot;);&lt;div&gt;}&lt;/div&gt;" style="whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=10;fillColor=#FFE6CC;strokeColor=#D79B00;fontColor=#333333;strokeWidth=2;" parent="1" vertex="1">
+                    <mxGeometry x="430" y="280" width="320" height="110" as="geometry"/>
+                </mxCell>
+                <mxCell id="9" value="" style="endArrow=open;endFill=0;dashed=1;html=1;rounded=0;exitX=1;exitY=0.25;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="3" target="6" edge="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="390" y="300" as="sourcePoint"/>
+                        <mxPoint x="440" y="250" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="10" value="mvn package&lt;br&gt;でビルドした場合" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="9" vertex="1" connectable="0">
+                    <mxGeometry x="-0.1" y="2" relative="1" as="geometry">
+                        <mxPoint x="-10" y="-20" as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="11" value="" style="endArrow=open;endFill=0;dashed=1;html=1;rounded=0;exitX=1;exitY=0.75;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="3" target="8" edge="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="390" y="300" as="sourcePoint"/>
+                        <mxPoint x="440" y="250" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="12" value="mvn package -P test-server&lt;br&gt;でビルドした場合" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="11" vertex="1" connectable="0">
+                    <mxGeometry x="-0.1" y="2" relative="1" as="geometry">
+                        <mxPoint x="8" y="20" as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>

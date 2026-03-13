@@ -37,7 +37,7 @@ Ajax向けのアプリケーションの設定について説明する。
 
   XML形式のデータについてStAXを使用して解析する場合は、DTDを使ったDoS攻撃を受けないように対応する必要がある。
 
-  詳細は、\ `CVE-2015-3192 - DoS Attack with XML Input <https://tanzu.vmware.com/security/cve-2015-3192>`_\ を参照されたい。
+  詳細は、\ :url_spring_io:`CVE-2015-3192 - DoS Attack with XML Input </security/cve-2015-3192>`\ を参照されたい。
 
 Spring MVCのAjax関連の機能を有効化するための設定
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -111,7 +111,7 @@ Ajax通信時で使用されるContent-Type(\ ``application/xml``\ や\ ``applic
         | MappingJackson2HttpMessageConverter
       - | JSON
       - | リクエストBody又はレスポンスBodyとしてJSONを扱うための\ ``HttpMessageConverter``\ 。
-        | ブランクプロジェクトでは、\ `Jackson <https://github.com/FasterXML/jackson/>`_\ を同封しているため、デフォルトの状態で使用することができる。
+        | ブランクプロジェクトでは、\ :url_jackson_github:`Jackson </>`\ を同封しているため、デフォルトの状態で使用することができる。
     * - 2.
       - | org.springframework.http.converter.xml.
         | Jaxb2RootElementHttpMessageConverter
@@ -123,9 +123,9 @@ Ajax通信時で使用されるContent-Type(\ ``application/xml``\ や\ ``applic
 
   .. note:: \ **XXE(XML External Entity) 対策について**\
 
-    Ajax通信でXML形式のデータを扱う場合は、\ `XXE(XML External Entity) <https://owasp.org/www-community/vulnerabilities/XML_External_Entity_(XXE)_Processing>`_\ 対策を行う必要がある。
+    Ajax通信でXML形式のデータを扱う場合は、\ :url_owasp_community:`XXE(XML External Entity) </vulnerabilities/XML_External_Entity_(XXE)_Processing>`\ 対策を行う必要がある。
 
-    Macchinetta Server Framework (1.x)では、XXE 対策が行われているSpring MVC(3.2.10.RELEASE以上)に依存しているため、個別に対策を行う必要はない。
+    \ |framework_name|\では、XXE 対策が行われているSpring MVC(3.2.10.RELEASE以上)に依存しているため、個別に対策を行う必要はない。
 
 |
 
@@ -134,7 +134,7 @@ Controllerの実装
 以降で説明するサンプルコードの前提は以下の通りである。
 
 * 応答データの形式にはJSONを使用する。
-* クライアント側には、JQueryを使用する。バージョンは執筆時点の1.x系の最新バージョン(1.10.2)を使用する。
+* クライアント側には、JQueryを使用する。
 
 .. warning:: \ **循環参照への対策**\
 
@@ -284,6 +284,88 @@ Ajaxを使ってデータを取得する方法について説明する。
 
 |
 
+- pom.xml
+
+  JQueryはWebJarsから提供されるものを使用する。pom.xmlに以下の依存関係を追加する。
+
+  .. code-block:: xml
+
+    <dependency>
+        <groupId>org.webjars</groupId>
+        <artifactId>jquery</artifactId>
+        <version>${jquery.version}</version>
+    </dependency>
+
+|
+
+- 設定ファイル
+
+  ブランクプロジェクトにあらかじめ用意されているリソースファイルを公開するための設定に、WebJarsを使用するための設定を追加する。
+
+.. tabs::
+  .. group-tab:: Java Config
+
+    * \ :file:`SpringMvcConfig.java`\
+
+      .. code-block:: java
+
+        @EnableAspectJAutoProxy
+        @EnableWebMvc
+        @Configuration
+        public class SpringMvcConfig implements WebMvcConfigurer {
+
+            @Override
+            public void addResourceHandlers(final ResourceHandlerRegistry registry) {
+                registry.addResourceHandler("/resources/**")
+                        .addResourceLocations("/resources/", "classpath:META-INF/resources/")
+                        .setCachePeriod(60 * 60);
+                // (10)
+                registry.addResourceHandler("/webjars/**")
+                        .addResourceLocations("/webjars/", "classpath:/META-INF/resources/webjars/")
+                        .setCachePeriod(60 * 60).resourceChain(true)
+                        .addResolver(new LiteWebJarsResourceResolver());
+            }
+
+      .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
+      .. list-table::
+        :header-rows: 1
+        :widths: 10 90
+
+        * - | 項番
+          - | 説明
+        * - | (10)
+          - | 上記設定例では、\ ``/webjars/``\ から始まるパスに対してリクエストがあった場合に、warファイル内の\ ``/webjars/``\ ディレクトリ又はクラスパス内の\ ``/META-INF/resources/webjars/``\ ディレクトリに格納されているファイルが応答される。
+
+  .. group-tab:: XML Config
+
+    * \ :file:`spring-mvc.xml`\
+
+      .. code-block:: xml
+
+        <mvc:resources mapping="/resources/**"
+            location="/resources/,classpath:META-INF/resources/" cache-period="#{60 * 60}" />
+        <!-- (10) -->
+        <mvc:resources mapping="/webjars/**"
+            location="/webjars/,classpath:/META-INF/resources/webjars/"
+            cache-period="#{60 * 60}">
+            <mvc:resource-chain resource-cache="true">
+                <mvc:resolvers>
+                    <bean class="org.springframework.web.servlet.resource.LiteWebJarsResourceResolver" />
+                </mvc:resolvers>
+            </mvc:resource-chain>
+        </mvc:resources>
+
+      .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
+      .. list-table::
+        :header-rows: 1
+        :widths: 10 90
+
+        * - | 項番
+          - | 説明
+        * - | (10)
+          - | 上記設定例では、\ ``/webjars/``\ から始まるパスに対してリクエストがあった場合に、warファイル内の\ ``/webjars/``\ ディレクトリ又はクラスパス内の\ ``/META-INF/resources/webjars/``\ ディレクトリに格納されているファイルが応答される。
+
+
 - HTML
 
 .. tabs::
@@ -299,7 +381,7 @@ Ajaxを使ってデータを取得する方法について説明する。
     
         <!-- omitted -->
     
-        <!-- (10)  -->
+        <!-- (11)  -->
         <form id="searchForm">
           <input name="freeWord" type="text">
           <button onclick="return searchByFreeWord()">Search</button>
@@ -312,15 +394,14 @@ Ajaxを使ってデータを取得する方法について説明する。
     
         * - | 項番
           - | 説明
-        * - | (10)
+        * - | (11)
           - | 検索条件を入力するためのフォーム。
             | 上記例では、検索条件を入力するためのテキストボックスと検索ボタンをもっている。
     
       .. code-block:: jsp
     
-        <!-- (11) -->
-        <script type="text/javascript"
-            src="${pageContext.request.contextPath}/resources/vendor/jquery/jquery-1.10.2.js">
+        <!-- (12) -->
+        <script type="text/javascript" src="${pageContext.request.contextPath}/webjars/jquery/jquery.min.js">
         </script>
     
       .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
@@ -330,77 +411,9 @@ Ajaxを使ってデータを取得する方法について説明する。
     
         * - | 項番
           - | 説明
-        * - | (11)
+        * - | (12)
           - | JQueryのJavaScriptファイルを読み込む。
-            | 上記例では、JQueryのJavaScriptファイルを読み込むために、\ ``/resources/vendor/jquery/jquery-1.10.2.js``\ というパスに対してリクエストが送信される。
-    
-      .. note::
-    
-        JQueryのJavaScriptファイルを読み込みための設定は、以下の通り。
-     
-        以下はブランクプロジェクトで提供されている設定値である。
-
-          .. tabs::
-            .. group-tab:: Java Config
-      
-              * \ :file:`SpringMvcConfig.java`\
-          
-                .. code-block:: java
-  
-                  @EnableAspectJAutoProxy
-                  @EnableWebMvc
-                  @Configuration
-                  public class SpringMvcConfig implements WebMvcConfigurer {
-  
-                      // (12)
-                      @Override
-                      public void addResourceHandlers(final ResourceHandlerRegistry registry) {
-                          registry.addResourceHandler("/resources/**").addResourceLocations(
-                                  "/resources/", "classpath:META-INF/resources/").setCachePeriod(
-                                          60 * 60);
-                      }
-          
-                .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
-                .. list-table::
-                  :header-rows: 1
-                  :widths: 10 90
-          
-                  * - | 項番
-                    - | 説明
-                  * - | (12)
-                    - | リソースファイル(JavaScriptファイル, Stylesheetファイル, 画像ファイルなど)を公開するための設定。
-                      | 上記設定例では、\ ``/resources/``\ から始まるパスに対してリクエストがあった場合に、warファイル内の\ ``/resources/``\ ディレクトリ又はクラスパス内の\ ``/META-INF/resources/``\ ディレクトリに格納されているファイルが応答される。
-  
-            .. group-tab:: XML Config
-      
-              * \ :file:`spring-mvc.xml`\
-          
-                .. code-block:: xml
-          
-                  <!-- (12) -->
-                  <mvc:resources mapping="/resources/**"
-                      location="/resources/,classpath:META-INF/resources/"
-                      cache-period="#{60 * 60}" />
-          
-                .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
-                .. list-table::
-                  :header-rows: 1
-                  :widths: 10 90
-          
-                  * - | 項番
-                    - | 説明
-                  * - | (12)
-                    - | リソースファイル(JavaScriptファイル, Stylesheetファイル, 画像ファイルなど)を公開するための設定。
-                      | 上記設定例では、\ ``/resources/``\ から始まるパスに対してリクエストがあった場合に、warファイル内の\ ``/resources/``\ ディレクトリ又はクラスパス内の\ ``/META-INF/resources/``\ ディレクトリに格納されているファイルが応答される。
-
-        |
-    
-        上記設定の場合、JQueryのJavaScriptファイルは以下の何れかのパスに配置する必要がある。
-    
-        * | warファイル内の\ ``/resources/vendor/jquery/jquery-1.10.2.js``\
-          | プロジェクト内のパスで表現すると、\ ``src/main/webapp/resources/vendor/jquery/jquery-1.10.2.js``\ となる。
-        * | クラスパス内の\ ``/META-INF/resources/vendor/jquery/jquery-1.10.2.js``\
-          | プロジェクト内のパスで表現すると、\ ``src/main/resources/META-INF/resources/vendor/jquery/jquery-1.10.2.js``\ となる。
+            | 上記例では、JQueryのJavaScriptファイルを読み込むために、\ ``/webjars/jquery/jquery.min.js``\ というパスに対してリクエストが送信される。
 
   .. group-tab:: Thymeleaf
 
@@ -408,7 +421,7 @@ Ajaxを使ってデータを取得する方法について説明する。
     
       .. code-block:: html
     
-        <!--/* (10)  */-->
+        <!--/* (11)  */-->
         <form id="searchForm">
           <input name="freeWord" type="text">
           <button onclick="return searchByFreeWord()">Search</button>
@@ -421,15 +434,15 @@ Ajaxを使ってデータを取得する方法について説明する。
     
         * - | 項番
           - | 説明
-        * - | (10)
+        * - | (11)
           - | 検索条件を入力するためのフォーム。
             | 上記例では、検索条件を入力するためのテキストボックスと検索ボタンをもっている。
     
       .. code-block:: html
     
-        <!--/* (11) */-->
+        <!--/* (12) */-->
         <script type="text/javascript"
-            th:src="@{/resources/vendor/jquery/jquery-1.10.2.js}">
+            th:src="@{/webjars/jquery/jquery.min.js}">
         </script>
     
       .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
@@ -439,75 +452,9 @@ Ajaxを使ってデータを取得する方法について説明する。
     
         * - | 項番
           - | 説明
-        * - | (11)
+        * - | (12)
           - | JQueryのJavaScriptファイルを読み込む。
-            | 上記例では、JQueryのJavaScriptファイルを読み込むために、\ ``/resources/vendor/jquery/jquery-1.10.2.js``\ というパスに対してリクエストが送信される。
-    
-      .. note::
-    
-        JQueryのJavaScriptファイルを読み込みための設定は、以下の通り。
-     
-        以下はブランクプロジェクトで提供されている設定値である。
-    
-          .. tabs::
-            .. group-tab:: Java Config
-      
-              * \ :file:`SpringMvcConfig.java`\
-          
-                .. code-block:: java
-  
-                  @EnableAspectJAutoProxy
-                  @EnableWebMvc
-                  @Configuration
-                  public class SpringMvcConfig implements WebMvcConfigurer {
-  
-                      // (12)
-                      @Override
-                      public void addResourceHandlers(final ResourceHandlerRegistry registry) {
-                          registry.addResourceHandler("/resources/**").addResourceLocations(
-                                  "/resources/", "classpath:META-INF/resources/").setCachePeriod(
-                                          60 * 60);
-                      }
-          
-                .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
-                .. list-table::
-                  :header-rows: 1
-                  :widths: 10 90
-          
-                  * - | 項番
-                    - | 説明
-                  * - | (12)
-                    - | リソースファイル(JavaScriptファイル, Stylesheetファイル, 画像ファイルなど)を公開するための設定。
-                      | 上記設定例では、\ ``/resources/``\ から始まるパスに対してリクエストがあった場合に、warファイル内の\ ``/resources/``\ ディレクトリ又はクラスパス内の\ ``/META-INF/resources/``\ ディレクトリに格納されているファイルが応答される。
-  
-            .. group-tab:: XML Config
-      
-              * \ :file:`spring-mvc.xml`\
-          
-                .. code-block:: xml
-          
-                  <!-- (12) -->
-                  <mvc:resources mapping="/resources/**"
-                      location="/resources/,classpath:META-INF/resources/"
-                      cache-period="#{60 * 60}" />
-          
-                .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
-                .. list-table::
-                  :header-rows: 1
-                  :widths: 10 90
-          
-                  * - | 項番
-                    - | 説明
-                  * - | (12)
-                    - | リソースファイル(JavaScriptファイル, Stylesheetファイル, 画像ファイルなど)を公開するための設定。
-                      | 上記設定例では、\ ``/resources/``\ から始まるパスに対してリクエストがあった場合に、warファイル内の\ ``/resources/``\ ディレクトリ又はクラスパス内の\ ``/META-INF/resources/``\ ディレクトリに格納されているファイルが応答される。
-    
-        上記設定の場合、JQueryのJavaScriptファイルは以下の何れかのパスに配置する必要がある。
-    
-        * | warファイル内の\ ``/resources/vendor/jquery/jquery-1.10.2.js``\
-          | プロジェクト内のパスで表現すると、\ ``src/main/webapp/resources/vendor/jquery/jquery-1.10.2.js``\ となる。
-        * | クラスパス内の\ ``/META-INF/resources/vendor/jquery/jquery-1.10.2.js``\
-          | プロジェクト内のパスで表現すると、\ ``src/main/resources/META-INF/resources/vendor/jquery/jquery-1.10.2.js``\ となる。
+            | 上記例では、JQueryのJavaScriptファイルを読み込むために、\ ``/webjars/jquery/jquery.min.js``\ というパスに対してリクエストが送信される。
 
 |
 

@@ -2149,7 +2149,7 @@ WebAppContextSetupを利用したテスト
       * - 項番
         - 説明
       * - | (1)
-        - | セッションのモックオブジェクトを生成する。クラスの詳細については、\ `MockHttpSession のJavadoc <https://docs.spring.io/spring-framework/docs/6.2.1/javadoc-api/org/springframework/mock/web/MockHttpSession.html>`_\ を参照されたい。
+        - | セッションのモックオブジェクトを生成する。クラスの詳細については、\ :url_spring_javadoc:`MockHttpSession のJavadoc </org/springframework/mock/web/MockHttpSession.html>`\ を参照されたい。
       * - | (2)
         - | 生成したセッションのモックオブジェクトに、格納したいオブジェクトをセットする。
       * - | (3)

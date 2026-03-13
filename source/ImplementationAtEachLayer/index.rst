@@ -1,13 +1,13 @@
 アプリケーション開発
 ================================================================================
-Macchinetta Server Framework (1.x)を使用する上での各種ルールや推奨実装方法を記述する。
+\ |framework_name|\を使用する上での各種ルールや推奨実装方法を記述する。
 
 本ガイドラインでは以下のような開発の流れを想定している。
 
 .. toctree::
   :maxdepth: 1
 
-  CreateWebApplicationProject
+  BlankProject
   DomainLayer
   InfrastructureLayer
   ApplicationLayer

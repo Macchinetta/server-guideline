@@ -16,7 +16,7 @@ Spring Security概要
 
 | Spring Securityは、本ガイドラインで紹介していない機能も多く提供している。
 
-| Spring Securityが提供するすべての機能を知りたい場合は、\ `Spring Security Reference -Servlet Applications- <https://docs.spring.io/spring-security/reference/servlet/index.html>`_\ を参照されたい。
+| Spring Securityが提供するすべての機能を知りたい場合は、\ :url_spring_security_reference:`Spring Security Reference -Servlet Applications- </servlet/index.html>`\ を参照されたい。
 
 |
 
@@ -214,7 +214,7 @@ Spring Securityは、サーブレットフィルタの仕組みを使用してWe
 |
 
 | Webアプリケーション向けのフレームワーク処理を構成する主要なコンポーネントは以下の通りである。
-| 詳細は\ `Spring Security Reference -Servlet Applications:Architecture- <https://docs.spring.io/spring-security/reference/servlet/architecture.html>`_\ を参照されたい。
+| 詳細は\ :url_spring_security_reference:`Spring Security Reference -Servlet Applications:Architecture- </servlet/architecture.html>`\ を参照されたい。
 |
 
 FilterChainProxy
@@ -234,11 +234,11 @@ HttpFirewall
 
   Spring Security 5.0.1, 4.2.4, 4.1.5より、デフォルトで使用される\ ``HttpFirewall``\ インタフェースの実装クラスは\ ``DefaultHttpFirewall``\ から\ ``StrictHttpFirewall``\ へ変更された。
     
-  \ ``DefaultHttpFirewall``\ は\ `RFC 2396 <https://www.ietf.org/rfc/rfc2396.txt>`_\ に基づきリクエストURLの正規化を行うことで悪意あるURLを拒否するが、\ ``StrictHttpFirewall``\ はより厳密にURLを構成する文字に不正な値がないことをチェックし、悪意あるURLを拒否する。これにより、認証認可のバイパスやReflected File Download(RFD)攻撃への対策がなされている。
+  \ ``DefaultHttpFirewall``\ は\ :url_ietf_rfc:`RFC 2396 </rfc2396.txt>`\ に基づきリクエストURLの正規化を行うことで悪意あるURLを拒否するが、\ ``StrictHttpFirewall``\ はより厳密にURLを構成する文字に不正な値がないことをチェックし、悪意あるURLを拒否する。これにより、認証認可のバイパスやReflected File Download(RFD)攻撃への対策がなされている。
     
   URLの正規化は脆弱性対策としては不十分であるため、従来通り\ ``DefaultHttpFirewall``\ を利用するように変更することは推奨しない。また、\ ``StrictHttpFirewall``\ のチェックについても、一部カスタマイズ可能なパラメータも存在するが、脆弱性の原因となりうるため変更することは推奨しない。
     
-  \ ``StrictHttpFirewall``\ の詳細については、\ `Javadoc <https://docs.spring.io/spring-security/site/docs/6.4.2/api/org/springframework/security/web/firewall/StrictHttpFirewall.html>`_\ を参照されたい。
+  \ ``StrictHttpFirewall``\ の詳細については、\ :url_spring_security_site:`Javadoc </web/firewall/StrictHttpFirewall.html>`\ を参照されたい。
 
 |
 
@@ -282,16 +282,16 @@ SecurityFilterChain
         - 説明
       * - | (1)
         - | \ ``HttpSecurity#securityMatcher``\ メソッドを呼び出し、SecurityFilterChainを適用するRequestMatcherオブジェクトを指定する。\ ``HttpSecurity#securityMatcher``\ メソッドを呼び出さない場合は、"\ ``/**``\ "がパスパターンとして使用される。
-          | 指定可能なパスパターンはRequestMatcherに依存しており、\ `ブランクプロジェクトのデフォルト設定 <https://github.com/Macchinetta/macchinetta-web-multi-blank/tree/1.11.0.RELEASE/parts/XMLConfig-JSP/projectName-web/src/main/resources/META-INF/spring/spring-security.xml#L11>`_\ で使用される\ ``AntPathRequestMatcher``\ では\ `Ant形式の記述 <https://docs.spring.io/spring-framework/docs/6.1.3/javadoc-api/org/springframework/util/AntPathMatcher.html>`_\ が利用できる。
+          | 指定可能なパスパターンはRequestMatcherに依存しており、\ :url_multi_blank:`ブランクプロジェクトのデフォルト設定 </parts/JavaConfig-JSP/projectName-web/src/main/java/xxxxxx/yyyyyy/zzzzzz/config/web/SpringSecurityConfig.java#L35>`\ で使用される\ ``AntPathRequestMatcher``\ では\ :url_spring_javadoc:`Ant形式の記述 </org/springframework/util/AntPathMatcher.html>`\ が利用できる。
           | また、RequestMatcherオブジェクトではなくパスパターンを直接指定することも可能であるが、\ ``MvcRequestMatcher``\ が適用されるため、本ガイドラインでは\ ``AntPathRequestMatcher#antMatcher``\ を呼び出して\ ``AntPathRequestMatcher``\ を指定する。詳しくは\ :ref:`パスパターンの解析に利用する仕組みの設定について <SpringSecurityPathPatternJava>`\ を参照されたい。
     
     .. _SpringSecurityPathPatternJava:
     
     .. tip:: \ **パスパターンの解析に利用する仕組みの設定について**\
     
-      Spring SecurityはSpring MVCと同時に使用する場合、パス解析にはデフォルトで\ ``MvcRequestMatcher``\ が使用される。ただし、\ ``MvcRequestMatcher``\ を使用するためには\ `Spring Securityが案内する方法 <https://docs.spring.io/spring-security/reference/servlet/integrations/mvc.html#mvc-requestmatcher>`_\ に従い、Spring MVCとSpring Securityを同一コンテキスト(DIコンテナ)内に設定する必要がある。
+      Spring SecurityはSpring MVCと同時に使用する場合、パス解析にはデフォルトで\ ``MvcRequestMatcher``\ が使用される。ただし、\ ``MvcRequestMatcher``\ を使用するためには\ :url_spring_security_reference:`Spring Securityが案内する方法 </servlet/integrations/mvc.html#mvc-requestmatcher>`\ に従い、Spring MVCとSpring Securityを同一コンテキスト(DIコンテナ)内に設定する必要がある。
       
-      Macchinetta Server Framework (1.x)では以下のような懸念から\ ``AntPathRequestMatcher``\ (必要に応じて\ ``RegexRequestMatcher``\ )の使用を前提としている。
+      \ |framework_name|\では以下のような懸念から\ ``AntPathRequestMatcher``\ (必要に応じて\ ``RegexRequestMatcher``\ )の使用を前提としている。
     
       - \ :ref:`RESTHowToUseApplicationSettingsOfSpringMVC`\ の\ ``SpringMvcRestConfig.java``\ のように、\ ``SpringMvcConfig.java``\ の設定バリエーションを1つのアプリケーション内に複数持つ必要がある場合、\ ``SpringMvcConfig.java``\ に相当するファイルごとにアプリケーションコンテキスト(DIコンテナ)を分け、複数のServletにそれぞれを割り当てる必要があり、 \ ``MvcRequestMatcher``\ を使用できる条件を満たさない。また、設定方法によっては、\ ``MvcRequestMatcher``\ を利用するとSpring MVCと連携せずに動作するという意図しない動作となり、脆弱性に繋がる。
       - \ ``MvcRequestMatcher``\ では、Spring MVCがHandlerMappingやハンドラ(ハンドラメソッド等)を決定する時と同じ処理をパターンマッチングの度に行う(\ ``SpringSecurityConfig.java``\ に記載したpattern毎に実施される)ため、1リクエストあたりの処理コストが増加しやすいと推測される。特に、RESTで使用するパス変数のように、パスの条件にワイルドカードを持つハンドラメソッドを呼び出す際は、「Spring MVCがHandlerMappingやハンドラ(ハンドラメソッド等)を決定する」部分の処理コストがアプリケーションコンテキスト(DIコンテナ)内のハンドラメソッドの定義量に大きく依存するため、アプリケーションコンテキスト(DIコンテナ)を1つにまとめる構造では、性能上の懸念がある。
@@ -319,7 +319,7 @@ SecurityFilterChain
         - 説明
       * - | (1)
         - | \ ``pattern``\ 属性を設定し、SecurityFilterChainを適用するパスパターンを指定する。\ ``pattern``\ 属性を指定しない場合は、"\ ``/**``\ "がパスパターンとして使用される。
-          | 指定可能なパスパターンはRequestMatcherに依存しており、\ `ブランクプロジェクトのデフォルト設定 <https://github.com/Macchinetta/macchinetta-web-multi-blank/tree/1.11.0.RELEASE/parts/XMLConfig-JSP/projectName-web/src/main/resources/META-INF/spring/spring-security.xml#L11>`_\ で使用される\ ``AntPathRequestMatcher``\ では\ `Ant形式の記述 <https://docs.spring.io/spring-framework/docs/6.1.3/javadoc-api/org/springframework/util/AntPathMatcher.html>`_\ が利用できる。
+          | 指定可能なパスパターンはRequestMatcherに依存しており、\ :url_multi_blank:`ブランクプロジェクトのデフォルト設定 </parts/XMLConfig-JSP/projectName-web/src/main/resources/META-INF/spring/spring-security.xml#L9>`\ で使用される\ ``AntPathRequestMatcher``\ では\ :url_spring_javadoc:`Ant形式の記述 </org/springframework/util/AntPathMatcher.html>`\ が利用できる。
           | また、\ ``pattern``\ と\ ``request-matcher``\ の代わりに\ ``request-matcher-ref``\ 属性を設定し、RequestMatcherオブジェクトを直接指定することも可能である。
       * - | (2)
         - | \ ``request-matcher``\ 属性で\ ``ant``\ を指定し、\ ``AntPathRequestMatcher``\ を使用するように設定する。詳しくは\ :ref:`パスパターンの解析に利用する仕組みの設定について <SpringSecurityPathPatternXML>`\ を参照されたい。
@@ -328,9 +328,9 @@ SecurityFilterChain
     
     .. tip:: \ **パスパターンの解析に利用する仕組みの設定について**\
     
-      Spring SecurityはSpring MVCと同時に使用する場合、パス解析にはデフォルトで\ ``MvcRequestMatcher``\ が使用される。ただし、\ ``MvcRequestMatcher``\ を使用するためには\ `Spring Securityが案内する方法 <https://docs.spring.io/spring-security/reference/servlet/integrations/mvc.html#mvc-requestmatcher>`_\ に従い、Spring MVCとSpring Securityを同一コンテキスト(DIコンテナ)内に設定する必要がある。
+      Spring SecurityはSpring MVCと同時に使用する場合、パス解析にはデフォルトで\ ``MvcRequestMatcher``\ が使用される。ただし、\ ``MvcRequestMatcher``\ を使用するためには\ :url_spring_security_reference:`Spring Securityが案内する方法 </servlet/integrations/mvc.html#mvc-requestmatcher>`\ に従い、Spring MVCとSpring Securityを同一コンテキスト(DIコンテナ)内に設定する必要がある。
       
-      Macchinetta Server Framework (1.x)では以下のような懸念から\ ``AntPathRequestMatcher``\ (必要に応じて\ ``RegexRequestMatcher``\ )の使用を前提としている。これに伴い、\ `ブランクプロジェクトのデフォルト設定 <https://github.com/Macchinetta/macchinetta-web-multi-blank/tree/1.11.0.RELEASE/parts/XMLConfig-JSP/projectName-web/src/main/resources/META-INF/spring/spring-security.xml#L11>`_\ では\ ``<sec:http>``\ タグに\ ``request-matcher="ant"``\ を設定している。
+      \ |framework_name|\では以下のような懸念から\ ``AntPathRequestMatcher``\ (必要に応じて\ ``RegexRequestMatcher``\ )の使用を前提としている。これに伴い、\ :url_multi_blank:`ブランクプロジェクトのデフォルト設定 </parts/XMLConfig-JSP/projectName-web/src/main/resources/META-INF/spring/spring-security.xml#L9>`\ では\ ``<sec:http>``\ タグに\ ``request-matcher="ant"``\ を設定している。
     
       - \ :ref:`RESTHowToUseApplicationSettingsOfSpringMVC`\ の\ ``spring-mvc-rest.xml``\ のように、\ ``spring-mvc.xml``\ の設定バリエーションを1つのアプリケーション内に複数持つ必要がある場合、\ ``spring-mvc.xml``\ に相当するファイルごとにアプリケーションコンテキスト(DIコンテナ)を分け、複数のServletにそれぞれを割り当てる必要があり、 \ ``MvcRequestMatcher``\ を使用できる条件を満たさない。また、設定方法によっては、\ ``MvcRequestMatcher``\ を利用するとSpring MVCと連携せずに動作するという意図しない動作となり、脆弱性に繋がる。
       - \ ``MvcRequestMatcher``\ では、Spring MVCがHandlerMappingやハンドラ(ハンドラメソッド等)を決定する時と同じ処理をパターンマッチングの度に行う(\ ``spring-security.xml``\ に記載したpattern毎に実施される)ため、1リクエストあたりの処理コストが増加しやすいと推測される。特に、RESTで使用するパス変数のように、パスの条件にワイルドカードを持つハンドラメソッドを呼び出す際は、「Spring MVCがHandlerMappingやハンドラ(ハンドラメソッド等)を決定する」部分の処理コストがアプリケーションコンテキスト(DIコンテナ)内のハンドラメソッドの定義量に大きく依存するため、アプリケーションコンテキスト(DIコンテナ)を1つにまとめる構造では、性能上の懸念がある。
@@ -344,7 +344,7 @@ Security Filterクラスは、フレームワーク機能やセキュリティ�
 
 | Spring Securityは、複数のSecurity Filterを連鎖させることでWebアプリケーションのセキュリティ対策を行う仕組みになっている。
 | ここでは、認証と認可機能を実現するために必要となるコアなクラスを紹介する。
-| 詳細は \ `Spring Security Reference -Security Filters- <https://docs.spring.io/spring-security/reference/servlet/architecture.html#servlet-security-filters>`_\ を参照されたい。
+| 詳細は \ :url_spring_security_reference:`Spring Security Reference -Security Filters- </servlet/architecture.html#servlet-security-filters>`\ を参照されたい。
 
 .. _SpringSecurityTableSecurityFilter:
 
@@ -360,7 +360,7 @@ Security Filterクラスは、フレームワーク機能やセキュリティ�
       
       .. note:: 
 
-        \ `Spring Security Reference -Security Filters- <https://docs.spring.io/spring-security/reference/servlet/architecture.html#servlet-security-filters>`_\ には記載がないが、Spring Security 5.7.0より非推奨となった\ ``SecurityContextPersistenceFilter``\ の代替クラスである。
+        \ :url_spring_security_reference:`Spring Security Reference -Security Filters- </servlet/architecture.html#servlet-security-filters>`\ には記載がないが、Spring Security 5.7.0より非推奨となった\ ``SecurityContextPersistenceFilter``\ の代替クラスである。
 
   * - \ ``UsernamePasswordAuthenticationFilter``\
     - リクエストパラメータで指定されたユーザー名とパスワードを使用して認証処理を行うクラス。
@@ -395,9 +395,9 @@ WebアプリケーションにSpring Securityを適用するためのセット�
 
 .. note::
 
-  開発プロジェクトを\ `ブランクプロジェクト <https://github.com/Macchinetta/macchinetta-web-multi-blank/tree/1.11.0.RELEASE>`_\ から作成すると、ここで説明する各設定はセットアップ済みの状態になっている。
+  開発プロジェクトを\ :url_multi_blank:`ブランクプロジェクト <>`\ から作成すると、ここで説明する各設定はセットアップ済みの状態になっている。
 
-  開発プロジェクトの作成方法については、「\ :doc:`../ImplementationAtEachLayer/CreateWebApplicationProject`\ 」を参照されたい。
+  開発プロジェクトの作成方法については、「\ :doc:`../ImplementationAtEachLayer/BlankProject`\ 」を参照されたい。
 
 |
 
@@ -482,15 +482,11 @@ WebアプリケーションにSpring Securityを適用するためのセット�
       * - \ (3)
         - アプリケーション層のプロジェクトでThymeleafのHTMLテンプレートにてSpring Securityの機能を使用する場合は、thymeleaf-extras-springsecurity6をdependencyに追加する。
 
-.. note::
-
-    上記設定例は、依存ライブラリのバージョンを親プロジェクトである terasoluna-gfw-parent およびBOMプロジェクトである terasoluna-dependencies で管理する前提であるため、pom.xmlでのバージョンの指定は不要である。
-
 |
 
 bean定義ファイルの作成
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-Spring Securityのコンポーネントをbean定義するため、以下のようなXMLファイルを作成する。（\ `ブランクプロジェクト <https://github.com/Macchinetta/macchinetta-web-multi-blank/tree/1.11.0.RELEASE>`_\ より抜粋）
+Spring Securityのコンポーネントをbean定義するため、以下のようなXMLファイルを作成する。（\ :url_multi_blank:`ブランクプロジェクト <>`\ より抜粋）
 
 .. tabs::
   .. group-tab:: Java Config

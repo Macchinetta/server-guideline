@@ -18,7 +18,7 @@ Overview
 
 .. tip:: \ **Spring Security が提供するOAuth 2.0のリファレンス**\
 
-  Spring Security が提供するOAuth 2.0は、本ガイドラインで紹介していない機能も提供している。Spring Security が提供するOAuth 2.0について詳しく知りたい場合は、\ `OAuth2 <https://docs.spring.io/spring-security/reference/servlet/oauth2/index.html>`__\ を参照されたい。
+  Spring Security が提供するOAuth 2.0は、本ガイドラインで紹介していない機能も提供している。Spring Security が提供するOAuth 2.0について詳しく知りたい場合は、\ :url_spring_security_reference:`OAuth2 </servlet/oauth2/index.html>`\ を参照されたい。
 
 |
 
@@ -43,24 +43,24 @@ OAuth 2.0はRFCとして仕様化されており、関連する複数の技術�
     - 概要
     - 説明
   * - | RFC 6749
-    - | \ `The OAuth 2.0 Authorization Framework <http://tools.ietf.org/html/rfc6749>`_\
+    - | \ :url_rfc:`The OAuth 2.0 Authorization Framework </rfc6749>`\
     - | 用語や認可方式などの、OAuth 2.0としてのもっとも基本的な内容が記載されている技術仕様。
   * - | RFC 6750
-    - | \ `Bearer Token Usage <https://tools.ietf.org/html/rfc6750>`_\
+    - | \ :url_rfc:`Bearer Token Usage </rfc6750>`\
     - | RFC 6749に記載されている認可制御を実現する場合に利用する、「署名なしアクセストークン」（以降、アクセストークンと表す）のサーバ間の受け渡し方法に関する技術仕様。
       | アクセストークンについては後述する。
   * - | RFC 6819
-    - | \ `Threat Model and Security Considerations <https://tools.ietf.org/html/rfc6819>`_\
+    - | \ :url_rfc:`Threat Model and Security Considerations </rfc6819>`\
     - | OAuth 2.0を使用するうえで考慮が必要となるセキュリティ要件に関する技術仕様。
       | 本ガイドラインでは検討項目の具体的な説明は割愛する。
   * - | RFC 7519
-    - | \ `JSON Web Token (JWT) <https://tools.ietf.org/html/rfc7519>`_\
+    - | \ :url_rfc:`JSON Web Token (JWT) </rfc7519>`\
     - | 署名が可能なJSONを含んだトークンであるJSON Web Token (JWT)に関する技術仕様。
   * - | RFC 7523
-    - | \ `JSON Web Token (JWT) Profile for OAuth 2.0 Client Authentication and Authorization Grants <https://tools.ietf.org/html/rfc7523>`_\
+    - | \ :url_rfc:`JSON Web Token (JWT) Profile for OAuth 2.0 Client Authentication and Authorization Grants </rfc7523>`\
     - | RFC 6749に記載されている認可制御の実現する場合に利用するアクセストークンとして、RFC 6819で定められているJWTを利用する方法に関する技術仕様。
   * - | RFC 7009
-    - | \ `OAuth 2.0 Token Revocation <https://tools.ietf.org/html/rfc7009>`_\
+    - | \ :url_rfc:`OAuth 2.0 Token Revocation </rfc7009>`\
     - | トークンの無効化を行う追加エンドポイントに関する技術仕様。
 
 |
@@ -528,7 +528,7 @@ Spring Security を使用してリソースサーバ、クライアントを構�
 
 .. tip::
 
-  Spring Securityでは\ `認可サーバをサポートしない旨 <https://spring.io/blog/2019/11/14/spring-security-oauth-2-0-roadmap-update>`_\ が報告されている。
+  Spring Securityでは\ :url_spring_io:`認可サーバをサポートしない旨 </blog/2019/11/14/spring-security-oauth-2-0-roadmap-update>`\ が報告されている。
     
   本ガイドラインでは、認可サーバについては詳細な説明を行わないため、要件に合う認可サーバの使用を検討されたい。
 
@@ -601,7 +601,7 @@ Spring Securityでは、アクセストークンが付与されていないリ�
           
         \ ``AuthenticationManager``\ はリソースサーバの構成によって、JWT認証、Opaqueトークン認証のどちらかの処理が行われる。本ガイドラインではJWT認証を用いた認証方法で説明を行う。
              
-        それぞれの認証方法の詳細は\ `JWT <https://docs.spring.io/spring-security/reference/servlet/oauth2/resource-server/jwt.html>`_\ 及び\ `Opaqueトークン <https://docs.spring.io/spring-security/reference/servlet/oauth2/resource-server/opaque-token.html>`_\ を参照されたい。
+        それぞれの認証方法の詳細は\ :url_spring_security_reference:`JWT </servlet/oauth2/resource-server/jwt.html>`\ 及び\ :url_spring_security_reference:`Opaqueトークン </servlet/oauth2/resource-server/opaque-token.html>`\ を参照されたい。
         
   * - | (4)
     - | (3)の検証結果より、クライアントから受け取ったアクセストークンでの認証が成功した場合、認証情報を\ ``SecurityContextHolder``\ に保存する。
@@ -642,7 +642,7 @@ Spring Securityは、アクセストークンを取得してリソースサー�
   * - 項番
     - 説明
   * - | (1)
-    - | ユーザエージェントがクライアントのServiceの呼び出しが行われるよう、\ `Security Filter <https://docs.spring.io/spring-security/reference/servlet/architecture.html#servlet-security-filters>`_\ の処理を実施後にControllerへアクセスする。
+    - | ユーザエージェントがクライアントのServiceの呼び出しが行われるよう、\ :url_spring_security_reference:`Security Filter </servlet/architecture.html#servlet-security-filters>`\ の処理を実施後にControllerへアクセスする。
   * - | (2)
     - | Serviceより\ ``OAuth2AuthorizedClientManager``\ を呼び出し、\ ``OAuth2AuthorizedClient``\ を要求する。
   * - | (3)
@@ -681,7 +681,7 @@ Spring Securityは、アクセストークンを取得してリソースサー�
   * - 項番
     - 説明
   * - | (1)
-    - | ユーザエージェントがクライアントのServiceの呼び出しが行われるよう、\ `Security Filter <https://docs.spring.io/spring-security/reference/servlet/architecture.html#servlet-security-filters>`_\ の処理を実施後にControllerへアクセスする。
+    - | ユーザエージェントがクライアントのServiceの呼び出しが行われるよう、\ :url_spring_security_reference:`Security Filter </servlet/architecture.html#servlet-security-filters>`\ の処理を実施後にControllerへアクセスする。
   * - | (2)
     - | Serviceより\ ``OAuth2AuthorizedClientManager``\ を呼び出し、\ ``OAuth2AuthorizedClient``\ を要求する。
   * - | (3)
@@ -747,10 +747,6 @@ How to Useの構成
         <groupId>org.springframework.security</groupId>
         <artifactId>spring-security-oauth2-jose</artifactId>
     </dependency>
-
-  .. note::
-
-    上記設定例の\ ``spring-security-oauth2-resource-server``\ と\ ``spring-security-oauth2-jose``\ は、依存ライブラリのバージョンをBOMプロジェクトである terasoluna-dependencies で管理する前提であるため、pom.xmlでのバージョンの指定は不要である。
 
 |
 
@@ -1044,10 +1040,6 @@ Spring Security のOAuth2.0クライアント機能を使用するため、\ ``p
       <scope>provided</scope>
     </dependency>
 
-  .. note::
-  
-    上記設定例は、依存ライブラリのバージョンをBOMプロジェクトである terasoluna-dependencies で管理する前提であるため、pom.xmlでのバージョンの指定は不要である。
-
 |
 
 設定ファイルの作成（クライアント）
@@ -1124,7 +1116,7 @@ Spring Security のOAuth2.0クライアント機能を使用するため、\ ``p
 
   本ガイドラインではOAuth 2.0 クライアント機能をデフォルトの状態で使用している。\ ``OAuth2AuthorizedClient``\ を管理するための\ ``ClientRegistrationRepository``\ 及び\ ``OAuth2AuthorizedClientRepository``\ が自動的にBean定義されるが、要件に応じ適切にカスタマイズされたい。
   
-  カスタマイズ可能な構成オプションについては\ `OAuth 2.0 Client <https://docs.spring.io/spring-security/reference/servlet/oauth2/client/index.html>`_\ を参照されたい。
+  カスタマイズ可能な構成オプションについては\ :url_spring_security_reference:`OAuth 2.0 Client </servlet/oauth2/client/index.html>`\ を参照されたい。
 
 |
 
@@ -1303,7 +1295,7 @@ Spring Security のOAuth2.0クライアント機能を使用するため、\ ``p
           - | \ ``authorizationGrantType``\ に、グラントタイプを設定する。認可コードグラントの場合\ ``AuthorizationGrantType.AUTHORIZATION_CODE``\ を指定する。
         * - | (5)
           - | \ ``redirectUri``\ 属性に、認可サーバが認可コード発行後にユーザエージェントからクライアントへリダイレクトさせるためのリダイレクトURIを設定する。このURIへリダイレクト後、Spring Securityは\ ``ClientAuthorizationRequiredException``\ を発生させたリクエストの再処理を行う。リダイレクトURIは認可サーバに登録されているリダイレクトURIと一致させる必要がある。
-            | 詳しくは\ `RFC6749#section-3.1.2 <https://datatracker.ietf.org/doc/html/rfc6749#section-3.1.2>`_\ を参照されたい。
+            | 詳しくは\ :url_rfc:`RFC6749#section-3.1.2 </rfc6749#section-3.1.2>`\ を参照されたい。
     
             .. note::
     
@@ -1311,7 +1303,7 @@ Spring Security のOAuth2.0クライアント機能を使用するため、\ ``p
     
               URIテンプレートを使用することで、展開時に\ ``X-Forwarded-*``\ ヘッダが使用される。これにより、User agentとクライアントがProxy Serverを経由して通信している場合であっても、クライアント側のURIを取得することが可能となる。
     
-              詳しくは、\ `Initiating the Authorization Request <https://docs.spring.io/spring-security/reference/reactive/oauth2/client/authorization-grants.html#_initiating_the_authorization_request>`_\ を参照されたい。
+              詳しくは、\ :url_spring_security_reference:`Initiating the Authorization Request </reactive/oauth2/client/authorization-grants.html#_initiating_the_authorization_request>`\ を参照されたい。
                 
             .. note::
     
@@ -1380,7 +1372,7 @@ Spring Security のOAuth2.0クライアント機能を使用するため、\ ``p
           - | \ ``authorization-grant-type``\ 属性に、グラントタイプを設定する。認可コードグラントの場合\ ``authorization_code``\ を指定する。
         * - | (5)
           - | \ ``redirect-uri``\ 属性に、認可サーバが認可コード発行後にユーザエージェントからクライアントへリダイレクトさせるためのリダイレクトURIを設定する。このURIへリダイレクト後、Spring Securityは\ ``ClientAuthorizationRequiredException``\ を発生させたリクエストの再処理を行う。リダイレクトURIは認可サーバに登録されているリダイレクトURIと一致させる必要がある。
-            | 詳しくは\ `RFC6749#section-3.1.2 <https://datatracker.ietf.org/doc/html/rfc6749#section-3.1.2>`_\ を参照されたい。
+            | 詳しくは\ :url_rfc:`RFC6749#section-3.1.2 </rfc6749#section-3.1.2>`\ を参照されたい。
     
             .. note::
     
@@ -1388,7 +1380,7 @@ Spring Security のOAuth2.0クライアント機能を使用するため、\ ``p
     
               URIテンプレートを使用することで、展開時に\ ``X-Forwarded-*``\ ヘッダが使用される。これにより、User agentとクライアントがProxy Serverを経由して通信している場合であっても、クライアント側のURIを取得することが可能となる。
     
-              詳しくは、\ `Initiating the Authorization Request <https://docs.spring.io/spring-security/reference/reactive/oauth2/client/authorization-grants.html#_initiating_the_authorization_request>`_\ を参照されたい。
+              詳しくは、\ :url_spring_security_reference:`Initiating the Authorization Request </reactive/oauth2/client/authorization-grants.html#_initiating_the_authorization_request>`\ を参照されたい。
                 
             .. note::
     
@@ -1426,7 +1418,7 @@ OAuth2AuthorizedClientManagerの実装
 ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 
 | \ ``OAuth2AuthorizedClient``\ を管理するための、\ ``OAuth2AuthorizedClientManager``\ をBean定義する。
-| \ ``OAuth2AuthorizedClientManager``\ が管理する内容及び処理については\ `OAuth2AuthorizedClientManager/OAuth2AuthorizedClientProvider <https://docs.spring.io/spring-security/reference/servlet/oauth2/client/core.html#oauth2Client-authorized-manager-provider>`_\ を参照されたい。
+| \ ``OAuth2AuthorizedClientManager``\ が管理する内容及び処理については\ :url_spring_security_reference:`OAuth2AuthorizedClientManager/OAuth2AuthorizedClientProvider </servlet/oauth2/client/core.html#oauth2Client-authorized-manager-provider>`\ を参照されたい。
 
 以下にJavaConfigクラスを用いたBean定義の実装例を示す。
 
@@ -1434,7 +1426,7 @@ OAuth2AuthorizedClientManagerの実装
 
   \ ``OAuth2AuthorizedClientManager``\ のBean定義に関してはJava-based configurationを用いている。
   
-  \ ``OAuth2AuthorizedClientManager``\ に設定する\ ``OAuth2AuthorizedClientProvider``\ がBuilderパターンを使用していることに加え、Spring Securityが\ ``OAuth2AuthorizedClientManager``\ に対するXML DLSを提供していないため、\ `OAuth2AuthorizedClientManager/OAuth2AuthorizedClientProvider <https://docs.spring.io/spring-security/reference/servlet/oauth2/client/core.html#oauth2Client-authorized-manager-provider>`_\ の実装例に従いJava-based configurationで実装している。Java-based configurationで定義するクラスは、コンポーネントスキャンが有効となるパッケージ配下に配置されたい。詳しくは\ `Java-based configuration <https://docs.spring.io/spring-framework/docs/6.2.1/reference/html/core.html#beans-java>`_\ を参照されたい。
+  \ ``OAuth2AuthorizedClientManager``\ に設定する\ ``OAuth2AuthorizedClientProvider``\ がBuilderパターンを使用していることに加え、Spring Securityが\ ``OAuth2AuthorizedClientManager``\ に対するXML DSLを提供していないため、\ :url_spring_security_reference:`OAuth2AuthorizedClientManager/OAuth2AuthorizedClientProvider </servlet/oauth2/client/core.html#oauth2Client-authorized-manager-provider>`\ の実装例に従いJava-based configurationで実装している。Java-based configurationで定義するクラスは、コンポーネントスキャンが有効となるパッケージ配下に配置されたい。詳しくは\ :url_spring_reference:`Java-based configuration </core/beans/java.html>`\ を参照されたい。
 
 * \ ``SecurityConfig.java``\
 
@@ -1570,7 +1562,7 @@ OAuth2AuthorizedClientManagerの実装
           
         .. note::
           
-          \ ``invalid_grant``\ は、\ `RFC6749#section-5.2 <https://datatracker.ietf.org/doc/html/rfc6749#section-5.2>`_\ に記載されている通りリフレッシュトークンの有効期限切れ以外の場合にもスローされる。そのため、短時間で該当箇所のログが大量に出力されるような場合は不正なアクティビティの可能性がある点に注意されたい。
+          \ ``invalid_grant``\ は、\ :url_rfc:`RFC6749#section-5.2 </rfc6749#section-5.2>`\ に記載されている通りリフレッシュトークンの有効期限切れ以外の場合にもスローされる。そのため、短時間で該当箇所のログが大量に出力されるような場合は不正なアクティビティの可能性がある点に注意されたい。
       
     * - | (4)
       - | 認可済みの\ ``OAuth2AuthorizedClient``\ からアクセストークンを取得する。
@@ -1629,7 +1621,7 @@ OAuth2AuthorizedClientManagerの実装
         | アクセストークンの取得方法は\ :ref:`アクセストークンの取得 <OAuth2GetAccessToken>`\ を参照されたい。
     * - | (3)
       - | アクセストークンでの認証を行うために、\ ``Authorization: Bearer``\ ヘッダに(2)で取得したアクセストークンを設定する。
-        | \ ``Authorization: Bearer``\ ヘッダについては\ `RFC6750 <https://datatracker.ietf.org/doc/html/rfc6750>`_\ を参照されたい。
+        | \ ``Authorization: Bearer``\ ヘッダについては\ :url_rfc:`RFC6750 </rfc6750>`\ を参照されたい。
 
 |
 
@@ -1729,24 +1721,19 @@ RestTemplateを用いてリソースサーバへアクセスする方法を説�
     
         @Inject
         RestTemplate restTemplate; // (1)
-
+    
         @Override
         @Transactional(readOnly = true)
         public Todo findOne(@NotEmpty String todoId) {
     
-            // @formatter:off
-            RequestEntity<Void> requestEntity = RequestEntity
-                    .get(this.resourceServerUri + todoId) // (2)
-                    .build();
-            // @formatter:on
+            RequestEntity<Void> requestEntity =
+                    RequestEntity.get(this.resourceServerUri + todoId).build(); // (2)
     
-            ResponseEntity<Todo> responseEntity = getRestTemplate(registrationId)
-                    .exchange(requestEntity, Todo.class); // (3)
-            Todo todo = responseEntity.getBody();
+            ResponseEntity<Todo> responseEntity = restTemplate.exchange(requestEntity, Todo.class); // (3)
     
-            return todo;
+            return responseEntity.getBody();
         }
-
+    
         // omitted
     
     }

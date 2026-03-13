@@ -3,7 +3,7 @@
 
 .. only:: html
 
-.. contents::
+.. contents:: 目次
   :depth: 3
   :local:
 
@@ -28,7 +28,7 @@ Overview
 | 作業の時間、証跡、解析を考えると、ロギングライブラリを導入することを推奨する。
 
 | Javaでは、ログ出力の方法は複数あり、多くの方法が選べるが、コーディングの簡易性、変更の容易性、性能を判断して、
-| 本ガイドラインでは、ロギングライブラリに、\ `SLF4J <https://www.slf4j.org/>`_\ (インタフェース) + \ `Logback <https://logback.qos.ch/>`_\ (実装)を推奨している。
+| 本ガイドラインでは、ロギングライブラリに、\ :url_slf4j:`SLF4J </>`\ (インタフェース) + \ :url_logback:`Logback </>`\ (実装)を推奨している。
 |
 
 ログの種類
@@ -208,13 +208,13 @@ SLF4J + Logbackでログを出力するには、
 Logbackの設定
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 | Logbackの設定は、クラスパス直下のlogback.xmlに記述する。以下に、設定例を示す。
-| logback.xmlの詳細な設定方法については、\ `Logbackの公式マニュアル -Logback configuration- <https://logback.qos.ch/manual/configuration.html>`_\ を参照されたい。
+| logback.xmlの詳細な設定方法については、\ :url_logback:`Logbackの公式マニュアル -Logback configuration- </manual/configuration.html>`\ を参照されたい。
 
 .. note::
 
   Logbackの設定は、以下のルールにより自動で読み込まれる。
 
-  #. \ ``com.qos.logback.classic.spi.Configurator``\ インタフェースの実装クラスの設定内容 (\ `ServiceLoader <https://docs.oracle.com/javase/8/docs/api/java/util/ServiceLoader.html>`_\ の仕組みを使用して実装クラスを指定)
+  #. \ ``com.qos.logback.classic.spi.Configurator``\ インタフェースの実装クラスの設定内容 (\ :url_serviceloader:`ServiceLoader <>`\ の仕組みを使用して実装クラスを指定)
   #.  \ ``Configurator``\ インタフェースの実装クラスが見つからない場合、\ ``ch.qos.logback.classic.util.DefaultJoranConfigurator``\ を使用し、クラスパス上の\ ``META-INF/services/ch.qos.logback.classic.spi.Configurator``\ を検索することにより\ ``Configurator``\ インタフェースの実装を解決する。\ ``META-INF/services/ch.qos.logback.classic.spi.Configurator``\ には、期待する\ ``Configurator``\ インタフェースの実装クラスの完全修飾クラス名を指定する必要がある。
   #. 「2」のファイルが見つからない場合、クラスパス上のlogback-test.xml
   #. 「3」のファイルが見つからない場合、クラスパス上のlogback.xml
@@ -222,7 +222,7 @@ Logbackの設定
 
   本ガイドラインでは、logback.xmlをクラスパス上に配置することを推奨する。
 
-  このほか、自動読み込み以外にも、\ `APIによってプログラマティックに読み込んだり <https://logback.qos.ch/manual/configuration.html#joranDirectly>`_\ 、\ `システムプロパティで設定ファイルを指定 <https://logback.qos.ch/manual/configuration.html#configFileProperty>`_\ することができる。
+  このほか、自動読み込み以外にも、\ :url_logback:`APIによってプログラマティックに読み込んだり </manual/configuration.html#joranDirectly>`\ 、\ :url_logback:`システムプロパティで設定ファイルを指定 </manual/configuration.html#configFileProperty>`\ することができる。
 
 |
 
@@ -235,7 +235,7 @@ Logbackの設定
 
       <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender"> <!-- (1) -->
           <encoder>
-              <pattern><![CDATA[date:%d{yyyy-MM-dd HH:mm:ss}\tthread:%thread\tX-Track:%X{X-Track}\tlevel:%-5level\tlogger:%-48logger{48}\tmessage:%replace(%msg){'(\r\n|\r|\n)','$1  '}%n%replace(%replace(%xEx){'(\r\n|\r|\n)','$1  '}){'  $',''}%nopex]]></pattern> <!-- (2) -->
+              <pattern><![CDATA[date:%d{yyyy-MM-dd HH:mm:ss}\tthread:%thread\tX-Track:%replace(%X{X-Track}){'[\p{IsControl}&&[^\t\r\n]]','<CTRL>'}\tlevel:%-5level\tlogger:%-48logger{48}\tmessage:%replace(%replace(%msg){'[\p{IsControl}&&[^\t\r\n]]','<CTRL>'}){'(\r\n|\r|\n)','$1  '}%n%replace(%replace(%replace(%xEx){'[\p{IsControl}&&[^\t\r\n]]','<CTRL>'}){'(\r\n|\r|\n)','$1  '}){'  $',''}%nopex]]></pattern> <!-- (2) -->
           </encoder>
       </appender>
 
@@ -247,7 +247,7 @@ Logbackの設定
           </rollingPolicy>
           <encoder>
               <charset>UTF-8</charset> <!-- (7) -->
-              <pattern><![CDATA[date:%d{yyyy-MM-dd HH:mm:ss}\tthread:%thread\tX-Track:%X{X-Track}\tlevel:%-5level\tlogger:%-48logger{48}\tmessage:%replace(%msg){'(\r\n|\r|\n)','$1  '}%n%replace(%replace(%xEx){'(\r\n|\r|\n)','$1  '}){'  $',''}%nopex]]></pattern>
+              <pattern><![CDATA[date:%d{yyyy-MM-dd HH:mm:ss}\tthread:%thread\tX-Track:%replace(%X{X-Track}){'[\p{IsControl}&&[^\t\r\n]]','<CTRL>'}\tlevel:%-5level\tlogger:%-48logger{48}\tmessage:%replace(%replace(%msg){'[\p{IsControl}&&[^\t\r\n]]','<CTRL>'}){'(\r\n|\r|\n)','$1  '}%n%replace(%replace(%replace(%xEx){'[\p{IsControl}&&[^\t\r\n]]','<CTRL>'}){'(\r\n|\r|\n)','$1  '}){'  $',''}%nopex]]></pattern>
           </encoder>
       </appender>
 
@@ -259,7 +259,7 @@ Logbackの設定
           </rollingPolicy>
           <encoder>
               <charset>UTF-8</charset>
-              <pattern><![CDATA[date:%d{yyyy-MM-dd HH:mm:ss}\tX-Track:%X{X-Track}\tlevel:%-5level\tmessage:%replace(%msg){'(\r\n|\r|\n)','$1  '}%n%replace(%replace(%xEx){'(\r\n|\r|\n)','$1  '}){'  $',''}%nopex]]></pattern>
+              <pattern><![CDATA[date:%d{yyyy-MM-dd HH:mm:ss}\tX-Track:%replace(%X{X-Track}){'[\p{IsControl}&&[^\t\r\n]]','<CTRL>'}\tlevel:%-5level\tmessage:%replace(%replace(%msg){'[\p{IsControl}&&[^\t\r\n]]','<CTRL>'}){'(\r\n|\r|\n)','$1  '}%n%replace(%replace(%replace(%xEx){'[\p{IsControl}&&[^\t\r\n]]','<CTRL>'}){'(\r\n|\r|\n)','$1  '}){'  $',''}%nopex]]></pattern>
           </encoder>
       </appender>
 
@@ -343,7 +343,7 @@ Logbackの設定
 
 .. tip:: \ **LTSV(Labeled Tab Separated Value)について**\
 
-  \ `LTSV <http://ltsv.org/>`_\ は、テキストデータのフォーマットの一つであり、主にログのフォーマットとして使用される。
+  \ :url_ltsv:`LTSV </>`\ は、テキストデータのフォーマットの一つであり、主にログのフォーマットとして使用される。
 
   LTSVは、
 
@@ -399,16 +399,16 @@ logback.xmlで設定するものは、次の3つになる。
 
   * - Appender
     - 概要
-  * - \ `ConsoleAppender <https://logback.qos.ch/manual/appenders.html#ConsoleAppender>`_\
+  * - \ :url_logback:`ConsoleAppender </manual/appenders.html#ConsoleAppender>`\
     - コンソール出力
-  * - \ `FileAppender <https://logback.qos.ch/manual/appenders.html#FileAppender>`_\
+  * - \ :url_logback:`FileAppender </manual/appenders.html#FileAppender>`\
     - ファイル出力
-  * - \ `RollingFileAppender <https://logback.qos.ch/manual/appenders.html#RollingFileAppender>`_\
+  * - \ :url_logback:`RollingFileAppender </manual/appenders.html#RollingFileAppender>`\
     - ファイル出力(ローリング可能)
-  * - \ `AsyncAppender <https://logback.qos.ch/manual/appenders.html#AsyncAppender>`_\
+  * - \ :url_logback:`AsyncAppender </manual/appenders.html#AsyncAppender>`\
     - 非同期出力。性能を求められる処理中のロギングに使用する。（出力先は、他のAppenderで設定する必要がある。）
 
-Appenderの詳細な種類は、\ `Logbackの公式マニュアル -Appenders- <https://logback.qos.ch/manual/appenders.html>`_\ を参照されたい。
+Appenderの詳細な種類は、\ :url_logback:`Logbackの公式マニュアル -Appenders- </manual/appenders.html>`\ を参照されたい。
 
 |
 
@@ -748,7 +748,7 @@ How to extend
       | 詳細は、\ :doc:`../../ArchitectureInDetail/WebApplicationDetail/MessageManagement`\ の\ :ref:`properties-display`\ を参照されたい。
   * - | (5)
     - | 国際化を考慮し\ ``setBasenames``\ メソッドを使用してプロパティファイルを指定する。
-      | \ ``setBasenames``\ の詳細は\ ``ResourceBundleMessageSource``\ が継承する\ ``AbstractResourceBasedMessageSource``\ クラスの\ `JavaDoc <https://docs.spring.io/spring-framework/docs/6.2.1/javadoc-api/org/springframework/context/support/AbstractResourceBasedMessageSource.html#setBasenames-java.lang.String...->`_\を参照されたい。
+      | \ ``setBasenames``\ の詳細は\ ``ResourceBundleMessageSource``\ が継承する\ ``AbstractResourceBasedMessageSource``\ クラスの\ :url_spring_javadoc:`JavaDoc </org/springframework/context/support/AbstractResourceBasedMessageSource.html#setBasenames-java.lang.String...->`\を参照されたい。
   * - | (6)
     - | Loggerラッパークラスにおいても、SLF4Jを使用する。ロギングライブラリの実装を直接使用しない。
   * - | (7)
@@ -1048,7 +1048,7 @@ Appendix
 MDCの使用
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-| \ `MDC <https://logback.qos.ch/manual/mdc.html>`_\ (Mapped Diagnostic Context)を利用することで、横断的なログ出力が可能となる。
+| \ :url_logback:`MDC </manual/mdc.html>`\ (Mapped Diagnostic Context)を利用することで、横断的なログ出力が可能となる。
 | 1リクエスト中に出力されるログに、同じ情報(ユーザー名やリクエストで一意なID)を
 | 埋め込んで出力することにより、ログのトレーサビリティが向上する。
 
@@ -1092,7 +1092,7 @@ logback.xmlの\ ``<pattern>``\ に\ ``%X{キー名}``\ 形式で出力フォー�
 
   <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
       <encoder>
-          <pattern><![CDATA[date:%d{yyyy-MM-dd HH:mm:ss}\tthread:%thread\tmdcSample:%X{MDC_SAMPLE}\tlevel:%-5level\t\tmessage::%replace(%msg){'(\r\n|\r|\n)','$1  '}%n%replace(%replace(%xEx){'(\r\n|\r|\n)','$1  '}){'  $',''}%nopex]]></pattern>
+          <pattern><![CDATA[date:%d{yyyy-MM-dd HH:mm:ss}\tthread:%thread\tmdcSample:%X{MDC_SAMPLE}\tlevel:%-5level\t\tmessage::%replace(%replace(%msg){'[\p{IsControl}&&[^\t\r\n]]','<CTRL>'}){'(\r\n|\r|\n)','$1  '}%n%replace(%replace(%replace(%xEx){'[\p{IsControl}&&[^\t\r\n]]','<CTRL>'}){'(\r\n|\r|\n)','$1  '}){'  $',''}%nopex]]></pattern>
       </encoder>
   </appender>
 
@@ -1201,7 +1201,7 @@ logback.xmlの\ ``<pattern>``\ に\ ``%X{X-Track}``\ および、\ ``%X{USER}``\
       </rollingPolicy>
       <encoder>
           <charset>UTF-8</charset>
-          <pattern><![CDATA[date:%d{yyyy-MM-dd HH:mm:ss}\tthread:%thread\tUSER:%X{USER}\tX-Track:%X{X-Track}\tlevel:%-5level\tlogger:%-48logger{48}\tmessage:%replace(%msg){'(\r\n|\r|\n)','$1  '}%n%replace(%replace(%xEx){'(\r\n|\r|\n)','$1  '}){'  $',''}%nopex]]></pattern>
+          <pattern><![CDATA[date:%d{yyyy-MM-dd HH:mm:ss}\tthread:%thread\tUSER:%X{USER}\tX-Track:%replace(%X{X-Track}){'[\p{IsControl}&&[^\t\r\n]]','<CTRL>'}\tlevel:%-5level\tlogger:%-48logger{48}\tmessage:%replace(%replace(%msg){'[\p{IsControl}&&[^\t\r\n]]','<CTRL>'}){'(\r\n|\r|\n)','$1  '}%n%replace(%replace(%replace(%xEx){'[\p{IsControl}&&[^\t\r\n]]','<CTRL>'}){'(\r\n|\r|\n)','$1  '}){'  $',''}%nopex]]></pattern>
       </encoder>
   </appender>
   <!-- omitted -->
@@ -1336,6 +1336,8 @@ logback.xmlには、以下のように\ ``org.terasoluna.gfw.web.logging.HttpSes
 \ ``@SessionAttributes``\ など、Sessionを使用してオブジェクトのライフサイクルを管理している場合、本リスナーを利用して、セッションへ追加した属性が、想定通りに削除されているか確認することを、強く推奨する。
 
 |
+
+.. _LoggingTraceLoggingInterceptor:
 
 TraceLoggingInterceptor
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""

@@ -15,7 +15,7 @@
 このチュートリアルで学ぶこと
 --------------------------------------------------------------------------------
 
-* Macchinetta Server Framework (1.x)による基本的なRESTful Webサービスの構築方法
+* \ |framework_name|\による基本的なRESTful Webサービスの構築方法
 
 |
 
@@ -40,7 +40,7 @@
   * - 種別
     - プロダクト
   * - REST Client
-    - \ `Talend API Tester <https://chrome.google.com/webstore/detail/talend-api-tester-free-ed/aejoelaoggembcahagimdiliamlcdmfm>`_\  25.10.2
+    - \ :url_talend_api_tester:`Talend API Tester <>`\  |talend_api_tester_version|
   * - 上記以外のプロダクト
     - \ :doc:`./TutorialTodo`\ または
       \ :doc:`./TutorialTodoThymeleaf`\と同様
@@ -59,7 +59,7 @@ Talend API Testerのインストール
 
 RESTクライアントとして、Chromeの拡張機能である「Talend API Tester」をインストールする。
 
-\ `Talend API Tester <https://chrome.google.com/webstore/detail/talend-api-tester-free-ed/aejoelaoggembcahagimdiliamlcdmfm>`_\ にアクセスし、「Chromeに追加」を押下する。
+\ :url_talend_api_tester:`Talend API Tester <>`\ にアクセスし、「Chromeに追加」を押下する。
 
 .. figure:: ./images_TutorialREST/install-dev-http-client1.png
  :width: 80%
@@ -192,7 +192,7 @@ GET Todos
   < HTTP/1.1 200
   < Content-Type: application/json;charset=UTF-8
   <
-  [{"todoId":"9aef3ee3-30d4-4a7c-be4a-bc184ca1d558","todoTitle":"Hello World!","finished":false,"createdAt":"2014-02-25T02:21:48.493+0000"}]
+  [{"todoId":"9aef3ee3-30d4-4a7c-be4a-bc184ca1d558","todoTitle":"Hello World!","finished":false,"createdAt":"2014-02-25T02:21:48.493"}]
 
 |
 
@@ -220,7 +220,7 @@ POST Todos
   < HTTP/1.1 201
   < Content-Type: application/json;charset=UTF-8
   <
-  {"todoId":"d6101d61-b22c-48ee-9110-e106af6a1404","todoTitle":"Study Spring","finished":false,"createdAt":"2014-02-25T04:05:58.752+0000"}
+  {"todoId":"d6101d61-b22c-48ee-9110-e106af6a1404","todoTitle":"Study Spring","finished":false,"createdAt":"2014-02-25T04:05:58.752"}
 
 |
 
@@ -246,7 +246,7 @@ GET Todo
   < HTTP/1.1 200
   < Content-Type: application/json;charset=UTF-8
   <
-  {"todoId":"9aef3ee3-30d4-4a7c-be4a-bc184ca1d558","todoTitle":"Hello World!","finished":false,"createdAt":"2014-02-25T02:21:48.493+0000"}
+  {"todoId":"9aef3ee3-30d4-4a7c-be4a-bc184ca1d558","todoTitle":"Hello World!","finished":false,"createdAt":"2014-02-25T02:21:48.493"}
 
 |
 
@@ -271,7 +271,7 @@ PUT Todo
   < HTTP/1.1 200
   < Content-Type: application/json;charset=UTF-8
   <
-  {"todoId":"9aef3ee3-30d4-4a7c-be4a-bc184ca1d558","todoTitle":"Hello World!","finished":true,"createdAt":"2014-02-25T02:21:48.493+0000"}
+  {"todoId":"9aef3ee3-30d4-4a7c-be4a-bc184ca1d558","todoTitle":"Hello World!","finished":true,"createdAt":"2014-02-25T02:21:48.493"}
 
 |
 
@@ -1098,7 +1098,6 @@ spring-mvc-restの作成
 
       package com.example.todo.config.web;
 
-      import java.util.List;
       import org.springframework.aop.Advisor;
       import org.springframework.aop.aspectj.AspectJExpressionPointcut;
       import org.springframework.aop.support.DefaultPointcutAdvisor;
@@ -1109,9 +1108,6 @@ spring-mvc-restの作成
       import org.springframework.context.annotation.EnableAspectJAutoProxy;
       import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
       import org.springframework.core.io.Resource;
-      import org.springframework.http.converter.HttpMessageConverter;
-      import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
-      import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
       import org.springframework.web.servlet.HandlerInterceptor;
       import org.springframework.web.servlet.config.annotation.EnableWebMvc;
       import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -1119,14 +1115,12 @@ spring-mvc-restの作成
       import org.terasoluna.gfw.common.exception.ExceptionLogger;
       import org.terasoluna.gfw.web.exception.HandlerExceptionResolverLoggingInterceptor;
       import org.terasoluna.gfw.web.logging.TraceLoggingInterceptor;
-      import com.fasterxml.jackson.databind.ObjectMapper;
-      import com.fasterxml.jackson.databind.util.StdDateFormat;
 
       /**
        * Configure SpringMVCRest.
        */
-      @ComponentScan(basePackages = {"com.example.todo.api"}) // (5)
-      @EnableAspectJAutoProxy // (7)
+      @ComponentScan(basePackages = {"com.example.todo.api"}) // (2)
+      @EnableAspectJAutoProxy // (4)
       @EnableWebMvc
       @Configuration
       public class SpringMvcRestConfig implements WebMvcConfigurer {
@@ -1146,42 +1140,9 @@ spring-mvc-restの作成
           }
 
           /**
-           * Configure {@link MappingJackson2HttpMessageConverter}.
-           * @return configured {@link MappingJackson2HttpMessageConverter}
-           */
-          // (2)
-          @Bean("jsonMessageConverter")
-          public MappingJackson2HttpMessageConverter jsonMessageConverter() {
-              MappingJackson2HttpMessageConverter bean = new MappingJackson2HttpMessageConverter();
-              bean.setObjectMapper(objectMapper());
-              return bean;
-          }
-
-          /**
-           * Configure {@link ObjectMapper}.
-           * @return build to Jackson2ObjectMapper
-           */
-          @Bean("objectMapper")
-          public ObjectMapper objectMapper() {
-              // (3)
-              return Jackson2ObjectMapperBuilder.json().build().setDateFormat(new StdDateFormat());
-          }
-
-          /**
            * {@inheritDoc}
            */
-          // (4)
-          @Override
-          public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
-              // If you want to add a converter after adding the default converter,
-              // use extendMessageConverters(List<HttpMessageConverter<?>> converters).
-              converters.add(jsonMessageConverter());
-          }
-
-          /**
-           * {@inheritDoc}
-           */
-          // (6)
+          // (3)
           @Override
           public void addInterceptors(InterceptorRegistry registry) {
               addInterceptor(registry, traceLoggingInterceptor());
@@ -1192,7 +1153,7 @@ spring-mvc-restの作成
            * @param registry {@link InterceptorRegistry}
            * @param interceptor {@link HandlerInterceptor}
            */
-          // (6)
+          // (3)
           private void addInterceptor(InterceptorRegistry registry, HandlerInterceptor interceptor) {
               registry.addInterceptor(interceptor).addPathPatterns("/**")
                       .excludePathPatterns("/resources/**", "/*/*.html");
@@ -1202,7 +1163,7 @@ spring-mvc-restの作成
            * Configure {@link TraceLoggingInterceptor} bean.
            * @return Bean of configured {@link TraceLoggingInterceptor}
            */
-          // (6)
+          // (3)
           @Bean
           public TraceLoggingInterceptor traceLoggingInterceptor() {
               return new TraceLoggingInterceptor();
@@ -1210,11 +1171,11 @@ spring-mvc-restの作成
 
           /**
            * Configure messages logging AOP.
-           * @param exceptionLogger Bean defined by ApplicationContext#exceptionLogger
-           * @see com.example.todo.config.app.ApplicationContext#exceptionLogger()
+           * @param exceptionLogger Bean defined by ApplicationContextConfig#exceptionLogger
+           * @see com.example.todo.config.app.ApplicationContextConfig#exceptionLogger()
            * @return Bean of configured {@link HandlerExceptionResolverLoggingInterceptor}
            */
-          // (7)
+          // (4)
           @Bean(name = "handlerExceptionResolverLoggingInterceptor")
           public HandlerExceptionResolverLoggingInterceptor handlerExceptionResolverLoggingInterceptor(
                   ExceptionLogger exceptionLogger) {
@@ -1231,7 +1192,7 @@ spring-mvc-restの作成
            * @see #handlerExceptionResolverLoggingInterceptor(ExceptionLogger)
            * @return Advisor configured for PointCut
            */
-          // (7)
+          // (4)
           @Bean
           public Advisor handlerExceptionResolverLoggingInterceptorAdvisor(
                   HandlerExceptionResolverLoggingInterceptor handlerExceptionResolverLoggingInterceptor) {
@@ -1251,29 +1212,15 @@ spring-mvc-restの作成
         - 説明
       * - | (1)
         - \ アプリケーション層のコンポーネントでプロパティファイルに定義されている値を参照する必要がある場合は、\ ``PropertySourcesPlaceholderConfigurer.class``\ を使用してプロパティファイルを読み込む必要がある。
+
       * - | (2)
-        - \ Controllerの引数と返り値で扱うJavaBeanをシリアライズ/デシリアライズするためのクラス(\ ``org.springframework.http.converter.HttpMessageConverter``\ )を設定する。
-          ここではJSON形式を扱う\ ``MappingJackson2HttpMessageConverter``\ を使用する。
-
-          \ ``MappingJackson2HttpMessageConverter``\ の\ ``objectMapper``\ プロパティに、Jacksonより提供されている\ ``ObjectMapper``\ (「JSON <-> JavaBean」の変換を行うためのコンポーネント)を指定する。
-          本チュートリアルでは、日時型のフォーマットをカスタマイズしたObjectMapperを指定している。 カスタマイズする必要がない場合は\ ``objectMapper``\ プロパティは省略可能である。
-
-      * - | (3)
-        - \ ``ObjectMapper``\ の\ ``dateFormat``\ プロパティに、日時型フィールドの形式を指定する。
-
-          本チュートリアルでは、\ ``java.util.Date``\ オブジェクトをシリアライズする際にISO-8601形式とする。
-          \ ``Date``\ オブジェクトをシリアライズする際にISO-8601形式にする場合は、\ ``com.fasterxml.jackson.databind.util.StdDateFormat``\ を設定する事で実現する事ができる。
-      * - | (4)
-        - \ ``HttpMessageConverter.class``\ に、\ ``MappingJackson2HttpMessageConverter``\ を登録する。
-
-      * - | (5)
         - REST API用のパッケージ配下のコンポーネントをスキャンする。
 
           本チュートリアルでは、REST API用のパッケージを\ ``com.example.todo.api``\ にしている。
           画面遷移用のControllerは、\ ``app``\ パッケージ配下に格納していたが、REST API用のControllerは、\ ``api``\ パッケージ配下に格納する事を推奨する。
-      * - | (6)
+      * - | (3)
         - \ Controllerの処理開始、終了時の情報をログに出力するために、共通ライブラリから提供されている\ ``TraceLoggingInterceptor``\ を定義する。
-      * - | (7)
+      * - | (4)
         - \ Spring MVCのフレームワークでハンドリングされた例外を、ログ出力するためのAOP定義を指定する。
 
   .. group-tab:: XML Config
@@ -1303,28 +1250,11 @@ spring-mvc-restの作成
               location="classpath*:/META-INF/spring/*.properties" />
 
           <!-- (2) -->
-          <bean id="jsonMessageConverter"
-              class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
-              <property name="objectMapper" ref="objectMapper" />
-          </bean>
+          <mvc:annotation-driven />
 
-          <bean id="objectMapper" class="org.springframework.http.converter.json.Jackson2ObjectMapperFactoryBean">
-              <!-- (3) -->
-              <property name="dateFormat">
-                  <bean class="com.fasterxml.jackson.databind.util.StdDateFormat" />
-              </property>
-          </bean>
+          <context:component-scan base-package="com.example.todo.api" /> <!-- (3) -->
 
           <!-- (4) -->
-          <mvc:annotation-driven>
-              <mvc:message-converters register-defaults="false">
-                  <ref bean="jsonMessageConverter" />
-              </mvc:message-converters>
-          </mvc:annotation-driven>
-
-          <context:component-scan base-package="com.example.todo.api" /> <!-- (5) -->
-
-          <!-- (6) -->
           <mvc:interceptors>
               <mvc:interceptor>
                   <mvc:mapping path="/**" />
@@ -1335,7 +1265,7 @@ spring-mvc-restの作成
               </mvc:interceptor>
           </mvc:interceptors>
 
-          <!-- (7) -->
+          <!-- (5) -->
           <!-- Setting AOP. -->
           <bean id="handlerExceptionResolverLoggingInterceptor"
               class="org.terasoluna.gfw.web.exception.HandlerExceptionResolverLoggingInterceptor">
@@ -1358,29 +1288,17 @@ spring-mvc-restの作成
       * - | (1)
         - \ アプリケーション層のコンポーネントでプロパティファイルに定義されている値を参照する必要がある場合は、\ ``<context:property-placeholder>``\ 要素を使用してプロパティファイルを読み込む必要がある。
       * - | (2)
-        - \ Controllerの引数と返り値で扱うJavaBeanをシリアライズ/デシリアライズするためのクラス(\ ``org.springframework.http.converter.HttpMessageConverter``\ )を設定する。
-          ここではJSON形式を扱う\ ``MappingJackson2HttpMessageConverter``\ を使用する。
-
-          \ ``MappingJackson2HttpMessageConverter``\ の\ ``objectMapper``\ プロパティに、Jacksonより提供されている\ ``ObjectMapper``\ (「JSON <-> JavaBean」の変換を行うためのコンポーネント)を指定する。
-          本チュートリアルでは、日時型のフォーマットをカスタマイズしたObjectMapperを指定している。 カスタマイズする必要がない場合は\ ``objectMapper``\ プロパティは省略可能である。
-
-      * - | (3)
-        - \ ``ObjectMapper``\ の\ ``dateFormat``\ プロパティに、日時型フィールドの形式を指定する。
-
-          本チュートリアルでは、\ ``java.util.Date``\ オブジェクトをシリアライズする際にISO-8601形式とする。
-          \ ``Date``\ オブジェクトをシリアライズする際にISO-8601形式にする場合は、\ ``com.fasterxml.jackson.databind.util.StdDateFormat``\ を設定する事で実現する事ができる。
-      * - | (4)
-        - \ ``<mvc:message-converters>``\ に、\ ``MappingJackson2HttpMessageConverter``\ を登録する
+        - \ JSONの型変換を有効にするために、\ ``<mvc:annotation-driven />``\ を設定する
 
           Spring MVCのデフォルト設定ではアプリケーションのクラスパスに応じて使用可能な\ ``HttpMessageConverter``\ が自動的に登録されるが、ここではリソースの形式をJSONに限定したいため、register-defaults属性を\ ``false``\ に設定し、上で定義した\ ``MappingJackson2HttpMessageConverter``\ のみを登録している。
-      * - | (5)
+      * - | (3)
         - REST API用のパッケージ配下のコンポーネントをスキャンする。
 
           本チュートリアルでは、REST API用のパッケージを\ ``com.example.todo.api``\ にしている。
           画面遷移用のControllerは、\ ``app``\ パッケージ配下に格納していたが、REST API用のControllerは、\ ``api``\ パッケージ配下に格納する事を推奨する。
-      * - | (6)
+      * - | (4)
         - \ Controllerの処理開始、終了時の情報をログに出力するために、共通ライブラリから提供されている\ ``TraceLoggingInterceptor``\ を定義する。
-      * - | (7)
+      * - | (5)
         - \ Spring MVCのフレームワークでハンドリングされた例外を、ログ出力するためのAOP定義を指定する。
 
 |
@@ -1706,8 +1624,7 @@ REST API用のSpring Securityの定義追加
               <bean id="webSecurityExpressionHandler" class="org.springframework.security.web.access.expression.DefaultWebSecurityExpressionHandler" />
 
               <!-- Put UserID into MDC -->
-              <bean id="userIdMDCPutFilter" class="org.terasoluna.gfw.security.web.logging.UserIdMDCPutFilter">
-              </bean>
+              <bean id="userIdMDCPutFilter" class="org.terasoluna.gfw.security.web.logging.UserIdMDCPutFilter" />
 
           </beans>
 
@@ -1787,8 +1704,7 @@ REST API用のSpring Securityの定義追加
               <bean id="webSecurityExpressionHandler" class="org.springframework.security.web.access.expression.DefaultWebSecurityExpressionHandler" />
 
               <!-- Put UserID into MDC -->
-              <bean id="userIdMDCPutFilter" class="org.terasoluna.gfw.security.web.logging.UserIdMDCPutFilter">
-              </bean>
+              <bean id="userIdMDCPutFilter" class="org.terasoluna.gfw.security.web.logging.UserIdMDCPutFilter" />
 
           </beans>
 
@@ -1850,7 +1766,7 @@ Resourceクラスの作成
   package com.example.todo.api.todo;
 
   import java.io.Serializable;
-  import java.util.Date;
+  import java.time.LocalDate;
   import jakarta.validation.constraints.NotNull;
   import jakarta.validation.constraints.Size;
 
@@ -1866,7 +1782,7 @@ Resourceクラスの作成
 
       private boolean finished;
 
-      private Date createdAt;
+      private LocalDate createdAt;
 
       public String getTodoId() {
           return todoId;
@@ -1892,11 +1808,11 @@ Resourceクラスの作成
           this.finished = finished;
       }
 
-      public Date getCreatedAt() {
+      public LocalDate getCreatedAt() {
           return createdAt;
       }
 
-      public void setCreatedAt(Date createdAt) {
+      public void setCreatedAt(LocalDate createdAt) {
           this.createdAt = createdAt;
       }
   }
@@ -2059,7 +1975,7 @@ GET Todosの実装
 Application Serverを起動し、実装したAPIの動作確認を行う。
 
 | REST API(Get Todos)にアクセスする。
-| Talend API Testerを開いてURLに\ ``http://localhost:8080/todo/api/v1/todos``\ を入力し、メソッドにGETを指定して、"Send"ボタンをクリックする。
+| Talend API Testerを開いてURLに\ :url_todo_api:`/todos`\ を入力し、メソッドにGETを指定して、"Send"ボタンをクリックする。
 
 .. figure:: ./images_TutorialREST/get-todos1.png
   :width: 80%
@@ -2157,7 +2073,7 @@ Todoリソースを新規作成するAPI(POST Todos)の処理を、\ ``TodoRestC
 |
 
 | Talend API Testerを使用して、実装したAPIの動作確認を行う。
-| Talend API Testerを開いてURLに\ ``http://localhost:8080/todo/api/v1/todos``\ を入力し、メソッドにPOSTを指定する。
+| Talend API Testerを開いてURLに\ :url_todo_api:`/todos`\ を入力し、メソッドにPOSTを指定する。
 | 「REQUEST」の「BODY」に以下のJSONを入力する。
 
 .. code-block:: json
@@ -2224,8 +2140,8 @@ GET Todoの実装
 
   package com.example.todo.domain.service.todo;
 
+  import java.time.LocalDate;
   import java.util.Collection;
-  import java.util.Date;
   import java.util.UUID;
   import org.springframework.stereotype.Service;
   import org.springframework.transaction.annotation.Transactional;
@@ -2277,7 +2193,7 @@ GET Todoの実装
           }
 
           String todoId = UUID.randomUUID().toString();
-          Date createdAt = new Date();
+          LocalDate createdAt = LocalDate.now();
 
           todo.setTodoId(todoId);
           todo.setCreatedAt(createdAt);
@@ -2391,7 +2307,7 @@ GET Todoの実装
 |
 
 | Talend API Testerを使用して、実装したAPIの動作確認を行う。
-| Talend API Testerを開いてURLに\ ``http://localhost:8080/todo/api/v1/todos/{todoId}``\ を入力し、メソッドにGETを指定する。
+| Talend API Testerを開いてURLに\ :url_todo_api:`/todos/{todoId}`\ を入力し、メソッドにGETを指定する。
 | \ ``{todoId}``\ の部分は実際のIDを入れる必要があるので、POST TodosまたはGET Todosを実行してResponse中の\ ``todoId``\ をコピーして貼り付けてから、"Send"ボタンをクリックする。
 
 "200"のHTTPステータスが返却され、「RESPONSE」の「Body」に指定したTodoリソースのJSONが表示される。
@@ -2494,7 +2410,7 @@ Todoリソースを一件更新(完了状態へ更新)するAPI(PUT Todo)の処�
 |
 
 | Talend API Testerを使用して、実装したAPIの動作確認を行う。
-| Talend API Testerを開いてURLに\ ``http://localhost:8080/todo/api/v1/todos/{todoId}``\ を入力し、メソッドにPUTを指定する。
+| Talend API Testerを開いてURLに\ :url_todo_api:`/todos/{todoId}`\ を入力し、メソッドにPUTを指定する。
 | \ ``{todoId}``\ の部分は実際のIDを入れる必要があるので、POST TodosまたはGET Todosを実行してResponse中の\ ``todoId``\ をコピーして貼り付けてから、"Send"ボタンをクリックする。
 
 .. figure:: ./images_TutorialREST/put-todo1.png
@@ -2613,7 +2529,7 @@ DELETE Todoの実装
 |
 
 | Talend API Testerを使用して、実装したAPIの動作確認を行う。
-| Talend API Testerを開いてURLに\ ``http://localhost:8080/todo/api/v1/todos/{todoId}``\ を入力し、メソッドにDELETEを指定する。
+| Talend API Testerを開いてURLに\ :url_todo_api:`/todos/{todoId}`\ を入力し、メソッドにDELETEを指定する。
 | \ ``{todoId}``\ の部分は実際のIDを入れる必要があるので、POST TodosまたはGET Todosを実行してResponse中の\ ``todoId``\ をコピーして貼り付けてから、"Send"ボタンをクリックする。
 
 .. figure:: ./images_TutorialREST/delete-todo1.png
@@ -2628,7 +2544,7 @@ DELETE Todoの実装
 
 |
 
-| Talend API TesterのURLに\ ``http://localhost:8080/todo/api/v1/todos``\ を入力し、メソッドにGETを指定してから"Send"ボタンをクリックする。
+| Talend API TesterのURLに\ :url_todo_api:`/todos`\ を入力し、メソッドにGETを指定してから"Send"ボタンをクリックする。
 | Todoリソースが削除されている事が確認できる。
 
 .. figure:: ./images_TutorialREST/delete-todo3.png
@@ -2655,8 +2571,8 @@ DELETE Todoの実装
 
   package com.example.todo.domain.service.todo;
 
+  import java.time.LocalDate;
   import java.util.Collection;
-  import java.util.Date;
   import java.util.UUID;
   import org.springframework.stereotype.Service;
   import org.springframework.transaction.annotation.Transactional;
@@ -2704,7 +2620,7 @@ DELETE Todoの実装
           }
 
           String todoId = UUID.randomUUID().toString();
-          Date createdAt = new Date();
+          LocalDate createdAt = LocalDate.now();
 
           todo.setTodoId(todoId);
           todo.setCreatedAt(createdAt);
@@ -2777,7 +2693,7 @@ DELETE Todoの実装
   typeMismatch.java.lang.Long="{0}" must be a long.
   typeMismatch.java.lang.Short="{0}" must be a short.
   typeMismatch.java.lang.Boolean="{0}" is not a boolean.
-  typeMismatch.java.util.Date="{0}" is not a date.
+  typeMismatch.java.time.LocalDate="{0}" is not a date.
   typeMismatch.java.lang.Enum="{0}" is not a valid value.
 
   # For this tutorial
@@ -2952,12 +2868,12 @@ HTTPレスポンスBODYにエラー情報を出力するための実装
   }
 
 | 上記実装を行う事で、\ ``ResponseEntityExceptionHandler``\ でハンドリングされる例外については、HTTPレスポンスBODYにエラー情報が出力される。
-| \ ``ResponseEntityExceptionHandler``\ でハンドリングされる例外については、\ :ref:`exception-handling-appendix-defaulthandlerexceptionresolver-label`\ を参照されたい。
+| \ ``ResponseEntityExceptionHandler``\ でハンドリングされる例外については、\ :url_spring_javadoc:`ResponseEntityExceptionHandlerのJavaDoc </org/springframework/web/servlet/mvc/method/annotation/ResponseEntityExceptionHandler.html>`\ を参照されたい。
 
 |
 
 | Talend API Testerを使用して、実装したエラーハンドリングの動作確認を行う。
-| Talend API Testerを開いてURLに\ ``http://localhost:8080/todo/api/v1/todos``\ を入力し、メソッドにPUTを指定してから、"Send"ボタンをクリックする。
+| Talend API Testerを開いてURLに\ :url_todo_api:`/todos`\ を入力し、メソッドにPUTを指定してから、"Send"ボタンをクリックする。
 
 "405"のHTTPステータスが返却され、「RESPONSE」の「Body」には、エラー情報のJSONが表示される。
 
@@ -3045,7 +2961,7 @@ HTTPレスポンスBODYにエラー情報を出力するための実装
 |
 
 | Talend API Testerを使用して、実装したエラーハンドリングの動作確認を行う。
-| Talend API Testerを開いてURLに\ ``http://localhost:8080/todo/api/v1/todos``\ を入力し、メソッドにPOSTを指定する。
+| Talend API Testerを開いてURLに\ :url_todo_api:`/todos`\ を入力し、メソッドにPOSTを指定する。
 | 「REQUEST」の「BODY」に以下のJSONを入力する。
 
 .. code-block:: json
@@ -3156,7 +3072,7 @@ HTTPレスポンスBODYにエラー情報を出力するための実装
 |
 
 | Talend API Testerを使用して、実装したエラーハンドリングの動作確認を行う。
-| Talend API Testerを開いてURLに\ ``http://localhost:8080/todo/api/v1/todos/{todoId}``\ を入力し、メソッドにPUTを指定する。
+| Talend API Testerを開いてURLに\ :url_todo_api:`/todos/{todoId}`\ を入力し、メソッドにPUTを指定する。
 | {todoId}の部分は実際のIDを入れる必要があるので、POST TodosまたはGET Todosを実行してResponse中の\ ``todoId``\ をコピーして貼り付けてから、”Send”ボタンを2回クリックする。
 | 未完了状態のTodoの\ ``todoId``\ を指定すること。
 
@@ -3267,7 +3183,7 @@ HTTPレスポンスBODYにエラー情報を出力するための実装
 |
 
 | Talend API Testerを使用して、実装したエラーハンドリングの動作確認を行う。
-| Talend API Testerを開いてURLに\ ``http://localhost:8080/todo/api/v1/todos/{todoId}``\ を入力し、メソッドにGETを指定する。
+| Talend API Testerを開いてURLに\ :url_todo_api:`/todos/{todoId}`\ を入力し、メソッドにGETを指定する。
 | {todoId}の部分には存在しないIDを指定して、”Send”ボタンをクリックする。
 
 "404"のHTTPステータスが返却され、「RESPONSE」の「Body」には、エラー情報のJSONが表示される。
@@ -3405,7 +3321,7 @@ HTTPレスポンスBODYにエラー情報を出力するための実装
 
 |
 
-Talend API Testerを開いてURLに\ ``http://localhost:8080/todo/api/v1/todos``\ を入力し、メソッドにGETを指定して、”Send”ボタンをクリックする。
+Talend API Testerを開いてURLに\ :url_todo_api:`/todos`\ を入力し、メソッドにGETを指定して、”Send”ボタンをクリックする。
 
 "500"のHTTPステータスが返却され、「RESPONSE」の「Body」には、エラー情報のJSONが表示される。
 
@@ -3445,7 +3361,7 @@ Talend API Testerを開いてURLに\ ``http://localhost:8080/todo/api/v1/todos``
 ================================================================================
 このチュートリアルでは、以下の内容を学習した。
 
-* Macchinetta Server Framework (1.x)による基本的なRESTful Webサービスの構築方法
+* \ |framework_name|\による基本的なRESTful Webサービスの構築方法
 * REST API(GET, POST, PUT, DELETE)を提供するControllerクラスの実装
 * JavaBeanとJSONの相互変換方法
 * エラーメッセージの定義方法

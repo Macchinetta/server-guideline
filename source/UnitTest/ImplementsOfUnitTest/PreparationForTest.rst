@@ -68,10 +68,6 @@ OSSライブラリの設定
   </dependency>
   <!-- == End Unit Test == -->
 
-.. note::
-
-  上記設定例は、依存ライブラリのバージョンを親プロジェクトであるterasoluna-gfw-parentで管理する前提であるため、\ ``pom.xml``\ でのバージョン指定は不要である。また、\ ``hamcrest``\ については、\ ``junit``\ が依存関係を解決しているため、改めて定義する必要はない。
-
 .. tip:: \ **PostgreSQLドライバの追加方法について**\
 
   データアクセスを伴うテストでPostgreSQLのドライバを使用する場合は、POMファイル内のPostgreSQLのドライバのコメントアウトを外すこと。なお、テストのために依存ライブラリが必要になる場合のスコープは\ ``test``\ が適切である。
@@ -114,7 +110,7 @@ OSSライブラリの設定
 
 | 単体テストで利用するスキーマのセットアップは、テストごとではなくテスト実施前にまとめて実施されることが想定される。
 | そのため、本章ではテストと分離したinitdbプロジェクトを使用してスキーマを作成することを前提に説明する。
-| initdbプロジェクトについては、\ :ref:`CreateWebApplicationProjectConfigurationInitdb`\ を参照されたい。
+| initdbプロジェクトについては、\ :ref:`BlankProjectInitdbModuleConfiguration`\ を参照されたい。
 
 | 一方、テストデータのセットアップはテストごとに実施されることが想定される。
 | そのため、本章ではテストクラスまたはテストメソッド毎にSQLを発行できる\ ``@Sql``\ アノテーションを使用することを前提に説明する。
@@ -159,7 +155,7 @@ OSSライブラリの設定
 
   また、\ ``@Sql``\ アノテーションはデフォルトで有効になっている\ ``SqlScriptsTestExecutionListener``\ によって実行される。
 
-  詳細は、\ `Executing SQL scripts declaratively with @Sql <https://docs.spring.io/spring-framework/docs/6.2.1/reference/html/testing.html#testcontext-executing-sql-declaratively>`_\ を参照されたい。
+  詳細は、\ :url_spring_reference:`Executing SQL scripts declaratively with @Sql </testing/testcontext-framework/executing-sql.html#testcontext-executing-sql-declaratively>`\ を参照されたい。
 
   なお、\ ``@Sql``\ アノテーションと\ ``@SqlConfig``\ アノテーションによる構成は\ ``<jdbc:initialize-database>``\ 要素による構成の上位セットである。
 
